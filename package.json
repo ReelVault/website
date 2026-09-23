@@ -24,7 +24,7 @@
 		"lint:biome": "biome check --write",
 		"lint:oxlint": "oxlint --type-aware",
 		"deadcode": "knip-bun --config ./knip.json",
-		"check-types": "tsc --noEmit --pretty",
+		"check-types": "bun run i18n && tsc --noEmit --pretty",
 		"test": "bun test",
 		"----MISC": "",
 		"tauri": "tauri",
