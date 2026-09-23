@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Copy, Eye, Shield } from "lucide-react";
 import { startTransition } from "react";
-import type { MetadataWithRelation, RequireFields } from "reelvault-sdk";
+import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { defineFields } from "@/client/utils/fields";
 import { AspectRatio } from "@/components/ui/aspect-ratio";

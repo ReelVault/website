@@ -1,4 +1,4 @@
-import type { TaskTrigger } from "reelvault-sdk";
+import type { TaskTrigger } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 import { formatTriggerDescription, getTriggerIcon } from "./triggers/trigger-utils";
 

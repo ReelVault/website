@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { Zap } from "lucide-react";
 import { useId, useState } from "react";
-import type { TaskTrigger, TaskTriggerType } from "reelvault-sdk";
+import type { TaskTrigger, TaskTriggerType } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

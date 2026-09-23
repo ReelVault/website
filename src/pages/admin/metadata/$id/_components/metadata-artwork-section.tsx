@@ -1,4 +1,4 @@
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { getMetadataBackdrop, getMetadataPoster } from "@/utils/metadata-utils";

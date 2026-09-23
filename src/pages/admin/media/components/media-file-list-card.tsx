@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { AudioLines, Clock, FileVideo, HardDrive, Pencil, Play, Subtitles, Trash2 } from "lucide-react";
 import { Suspense, useState } from "react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { Badge } from "@/components/ui/badge";

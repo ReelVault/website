@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { CheckCircle2, Cpu, Gpu, RefreshCw, TriangleAlert } from "lucide-react";
-import type { AdminFfmpegCapabilities } from "reelvault-sdk";
+import type { AdminFfmpegCapabilities } from "@reelvault/sdk";
 import { useFfmpegCapabilities } from "@/client/hooks/use-ffmpeg-capabilities";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

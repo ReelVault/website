@@ -1,4 +1,4 @@
-import type { LibraryWithRelations, MetadataStorageMode } from "reelvault-sdk";
+import type { LibraryWithRelations, MetadataStorageMode } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 export function getPathStats(_lib: LibraryWithRelations, path: LibraryWithRelations["paths"][number]) {

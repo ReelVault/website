@@ -1,4 +1,4 @@
-import type { DiscoverResponse } from "reelvault-sdk";
+import type { DiscoverResponse } from "@reelvault/sdk";
 import { MetadataCard } from "@/components/cards/metadata-card";
 import { LazyRender } from "@/components/lazy-render";
 import { SimpleAnimation } from "@/components/simple-animation";

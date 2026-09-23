@@ -1,4 +1,4 @@
-import type { MediaMarker, MediaMarkerType } from "reelvault-sdk";
+import type { MediaMarker, MediaMarkerType } from "@reelvault/sdk";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { m } from "@/paraglide/messages";
 import { MarkerDialogForm } from "./marker-dialog-form";

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, HardDrive, Play, Zap } from "lucide-react";
-import type { AdminStats } from "reelvault-sdk";
+import type { AdminStats } from "@reelvault/sdk";
 import { AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState } from "react";
-import type { AdminLiveStreamItem } from "reelvault-sdk";
+import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { usePlaybackCommand } from "@/client/hooks/use-playback-session";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";

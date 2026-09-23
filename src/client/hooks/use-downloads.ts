@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { AdminDownloadJob, DownloadJob } from "reelvault-sdk";
+import type { AdminDownloadJob, DownloadJob } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";

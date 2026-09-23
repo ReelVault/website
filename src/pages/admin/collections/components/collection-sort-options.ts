@@ -1,4 +1,4 @@
-import type { CollectionSortMode, MetadataSorting } from "reelvault-sdk";
+import type { CollectionSortMode, MetadataSorting } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 export const COLLECTION_SORT_OPTIONS: Array<{

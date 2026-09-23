@@ -1,4 +1,4 @@
-import type { LibraryWithRelations } from "reelvault-sdk";
+import type { LibraryWithRelations } from "@reelvault/sdk";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { EditLibraryForm } from "./edit-library-form";
 

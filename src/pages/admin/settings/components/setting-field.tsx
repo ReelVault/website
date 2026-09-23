@@ -1,6 +1,6 @@
 import { RotateCcw } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
-import type { SystemSettingItemView } from "reelvault-sdk";
+import type { SystemSettingItemView } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

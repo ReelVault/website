@@ -1,4 +1,4 @@
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { MediaFileDiagnosticsSection } from "./media-file-diagnostics-section";
 import { MediaFileLocationSection } from "./media-file-location-section";
 import { MediaFileParamsSection } from "./media-file-params-section";

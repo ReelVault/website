@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import type { ChangeEvent } from "react";
 import { startTransition, useState } from "react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { reelvault } from "@/client/client";
 import { useRefreshMetadata, useRefreshMetadataImages } from "@/client/hooks/use-admin-metadata";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";

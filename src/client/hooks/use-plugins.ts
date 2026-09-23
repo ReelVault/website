@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { PluginRuntimeStatus } from "reelvault-sdk";
+import type { PluginRuntimeStatus } from "@reelvault/sdk";
 import { reelvault } from "../client";
 import { pluginKeys } from "../utils/query-keys";
 

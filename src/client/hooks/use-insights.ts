@@ -1,5 +1,5 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { AdminAnalytics, InsightsRange, ProfileInsights, WrappedInsights } from "reelvault-sdk";
+import type { AdminAnalytics, InsightsRange, ProfileInsights, WrappedInsights } from "@reelvault/sdk";
 import { reelvault } from "../client";
 import { adminKeys, watchedHistoryKeys } from "../utils/query-keys";
 

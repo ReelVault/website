@@ -7,7 +7,7 @@ import type {
 	PluginSchemaCondition,
 	PluginSchemaNode,
 	PluginUiSchemaSurface,
-} from "reelvault-sdk/plugin";
+} from "@reelvault/sdk/plugin";
 import { reelvault } from "@/client/client";
 import { detach } from "@/lib/detach";
 import { toast } from "@/utils/toast-facade";

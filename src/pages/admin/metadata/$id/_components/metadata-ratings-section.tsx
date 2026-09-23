@@ -1,5 +1,5 @@
 import { ExternalLink, Star, ThumbsUp } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { formatProviderName, formatProviderShortName, getProviderUrl } from "@/client/utils/provider-links";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import type { MetadataType } from "reelvault-sdk";
+import type { MetadataType } from "@reelvault/sdk";
 import { useLibrariesQuery } from "@/client/hooks/use-libraries";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { detach } from "@/lib/detach";

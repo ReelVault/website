@@ -1,5 +1,5 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { MetadataSorting, MetadataType } from "reelvault-sdk";
+import type { MetadataSorting, MetadataType } from "@reelvault/sdk";
 import { reelvault } from "../client";
 import { metadataCardFields, metadataDetailsFields, metadataInfoFields, metadataRecentlyAddedFields } from "../utils/fields";
 import { metadataKeys } from "../utils/query-keys";

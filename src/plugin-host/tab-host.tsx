@@ -1,4 +1,4 @@
-import type { PluginTabHostName } from "reelvault-sdk/plugin";
+import type { PluginTabHostName } from "@reelvault/sdk/plugin";
 import { resolvePluginText, usePluginTabs } from "@/client/hooks/use-plugin-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getPluginIcon } from "./icons";

@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { WorkerOperation } from "reelvault-sdk";
+import type { WorkerOperation } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 import { formatFullDateTime } from "@/utils/format-utils";
 

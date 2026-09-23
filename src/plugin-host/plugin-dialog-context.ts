@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { PluginUiPlayerContext } from "reelvault-sdk/plugin";
+import type { PluginUiPlayerContext } from "@reelvault/sdk/plugin";
 
 export interface PluginDialogRequest {
 	pluginId: string;

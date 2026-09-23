@@ -2,7 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Star } from "lucide-react";
 import { startTransition } from "react";
-import type { MetadataWithRelation, RequireFields } from "reelvault-sdk";
+import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import type { metadataCardFields } from "@/client/utils/fields";
 import { Badge } from "@/components/ui/badge";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";

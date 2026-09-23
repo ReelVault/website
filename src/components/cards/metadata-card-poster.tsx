@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Bookmark, Play, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
-import type { MetadataWithRelation, RequireFields } from "reelvault-sdk";
+import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import type { metadataCardFields } from "@/client/utils/fields";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { TranscodeProgressResponse } from "reelvault-sdk";
+import type { TranscodeProgressResponse } from "@reelvault/sdk";
 import { reelvault } from "../client";
 import { playbackSessionKeys, subtitleKeys } from "../utils/query-keys";
 

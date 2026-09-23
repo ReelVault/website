@@ -6,7 +6,7 @@ import {
 	type PluginUiApiCallOptions,
 	type PluginUiContext,
 	type PluginUiToastLevel,
-} from "reelvault-sdk/plugin";
+} from "@reelvault/sdk/plugin";
 import { reelvault } from "@/client/client";
 import { realtimeConnection } from "@/client/hooks/use-realtime";
 import { detach } from "@/lib/detach";

@@ -1,5 +1,5 @@
 import { Clapperboard, ExternalLink, Lock, Radio, Star, Tv, Unlock } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { formatProviderName, formatProviderShortName, getProviderUrl } from "@/client/utils/provider-links";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";

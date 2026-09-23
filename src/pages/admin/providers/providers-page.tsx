@@ -2,7 +2,7 @@ import { move } from "@dnd-kit/helpers";
 import { DragDropProvider, type DragEndEvent } from "@dnd-kit/react";
 import { ServerCog } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { MetadataProviderConfiguration } from "reelvault-sdk";
+import type { MetadataProviderConfiguration } from "@reelvault/sdk";
 import { useAdminMetadataProviders, useReorderMetadataProviders, useUpdateMetadataProvider } from "@/client/hooks/use-admin-providers";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { detach } from "@/lib/detach";

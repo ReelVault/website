@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from "react";
-import type { PluginSchemaFieldNode } from "reelvault-sdk/plugin";
+import type { PluginSchemaFieldNode } from "@reelvault/sdk/plugin";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

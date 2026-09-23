@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { PluginCatalogEntry, PluginRepository } from "reelvault-sdk";
+import type { PluginCatalogEntry, PluginRepository } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";

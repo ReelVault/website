@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { Tv } from "lucide-react";
-import type { PlaybackSessionSummary } from "reelvault-sdk";
+import type { PlaybackSessionSummary } from "@reelvault/sdk";
 import { ApiImage } from "@/components/ui/api-image";
 import { m } from "@/paraglide/messages";
 import { formatDateTime } from "@/utils/format-utils";

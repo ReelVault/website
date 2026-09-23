@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { ListTree, RotateCcw } from "lucide-react";
 import { useState } from "react";
-import type { WorkerOperation } from "reelvault-sdk";
+import type { WorkerOperation } from "@reelvault/sdk";
 import { useAdminOperationJobs } from "@/client/hooks/use-admin-jobs";
 import { AppErrorState } from "@/components/app-states";
 import {

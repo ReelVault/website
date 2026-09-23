@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import type Hls from "hls.js";
 import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { MediaMarker, PlaybackCommand, TranscodeProgressResponse } from "reelvault-sdk";
+import type { MediaMarker, PlaybackCommand, TranscodeProgressResponse } from "@reelvault/sdk";
 import { reelvault } from "@/client/client";
 import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { useNextEpisode } from "@/client/hooks/use-episodes";

@@ -1,6 +1,6 @@
 import { Clock, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { TaskTrigger, WorkerSummary } from "reelvault-sdk";
+import type { TaskTrigger, WorkerSummary } from "@reelvault/sdk";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { detach } from "@/lib/detach";

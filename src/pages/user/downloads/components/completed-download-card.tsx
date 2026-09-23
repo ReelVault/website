@@ -1,5 +1,5 @@
 import { Check, Download, Trash2 } from "lucide-react";
-import type { DownloadJob } from "reelvault-sdk";
+import type { DownloadJob } from "@reelvault/sdk";
 import { getDownloadFileUrl } from "@/client/hooks/use-downloads";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";

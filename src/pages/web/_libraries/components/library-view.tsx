@@ -1,4 +1,4 @@
-import type { MetadataType } from "reelvault-sdk";
+import type { MetadataType } from "@reelvault/sdk";
 import { useLibraryData } from "@/client/hooks/use-libraries";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Skeleton } from "@/components/ui/skeleton";

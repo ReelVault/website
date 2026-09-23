@@ -1,4 +1,4 @@
-import type { MediaMarkerType } from "reelvault-sdk";
+import type { MediaMarkerType } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 export const TYPE_CONFIG: Record<MediaMarkerType, { label: string; badgeClass: string }> = {

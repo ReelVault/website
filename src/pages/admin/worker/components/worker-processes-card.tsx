@@ -1,6 +1,6 @@
 import { ChevronDown, Cpu } from "lucide-react";
 import { useState } from "react";
-import type { AdminProcessPurpose } from "reelvault-sdk";
+import type { AdminProcessPurpose } from "@reelvault/sdk";
 import { useAdminProcesses } from "@/client/hooks/use-admin-processes";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

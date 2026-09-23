@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import type { PlaybackCommand, RealtimeEventMap, RealtimeEventMessage } from "reelvault-sdk";
+import type { PlaybackCommand, RealtimeEventMap, RealtimeEventMessage } from "@reelvault/sdk";
 import { safeUuid } from "@/utils/id-utils";
 import { reelvault } from "../client";
 

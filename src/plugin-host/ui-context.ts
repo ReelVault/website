@@ -4,7 +4,7 @@ import {
 	type PluginUiContext,
 	type PluginUiDeviceContext,
 	type PluginUiPlayerContext,
-} from "reelvault-sdk/plugin";
+} from "@reelvault/sdk/plugin";
 import { getReelVaultApiUrl } from "@/client/client";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { getAppLocale } from "@/utils/locale";

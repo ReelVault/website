@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { Check, Film, Tv } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 interface ReassignLocalCardProps {

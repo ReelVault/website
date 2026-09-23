@@ -1,6 +1,6 @@
 import { Pause, Play, RotateCcw, RotateCw, Square, Volume2, VolumeX } from "lucide-react";
 import { useRef, useState } from "react";
-import type { PlaybackCommand, PlaybackSessionSummary } from "reelvault-sdk";
+import type { PlaybackCommand, PlaybackSessionSummary } from "@reelvault/sdk";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";

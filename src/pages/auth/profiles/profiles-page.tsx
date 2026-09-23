@@ -1,8 +1,8 @@
 import { useSearch, useRouter as useTanStackRouter } from "@tanstack/react-router";
 import { Lock, Plus, User } from "lucide-react";
 import { useState } from "react";
-import type { Profile } from "reelvault-sdk";
-import { ReelVaultError } from "reelvault-sdk/client";
+import type { Profile } from "@reelvault/sdk";
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { resolveApiAssetUrl } from "@/client/client";
 import { useProfiles, useSwitchProfile } from "@/client/hooks/use-profiles";
 import { AppErrorState } from "@/components/app-states";

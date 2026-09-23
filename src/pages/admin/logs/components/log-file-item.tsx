@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { Download, Trash2 } from "lucide-react";
 import { createElement, type MouseEvent } from "react";
-import type { AdminLogFileInfo } from "reelvault-sdk";
+import type { AdminLogFileInfo } from "@reelvault/sdk";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuTrigger } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";

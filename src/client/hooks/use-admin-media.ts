@@ -1,6 +1,6 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { startTransition, useEffect, useRef, useState } from "react";
-import type { MediaFileSorting, ReassignMediaFile, UpdateMediaFile } from "reelvault-sdk";
+import type { MediaFileSorting, ReassignMediaFile, UpdateMediaFile } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";

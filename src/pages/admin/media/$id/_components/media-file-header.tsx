@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Clapperboard, Clock, FileVideo, HardDrive, Layers, RefreshCw, Save, ShieldCheck, Tv } from "lucide-react";
 import { Suspense, useState } from "react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { AsyncButton } from "@/components/async-button";
 import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { StatusBadge } from "@/components/status-badge";

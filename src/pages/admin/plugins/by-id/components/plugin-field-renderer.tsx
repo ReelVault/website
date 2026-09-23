@@ -1,5 +1,5 @@
 import { Eye, EyeOff, KeyRound } from "lucide-react";
-import type { PluginConfigDetails } from "reelvault-sdk";
+import type { PluginConfigDetails } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

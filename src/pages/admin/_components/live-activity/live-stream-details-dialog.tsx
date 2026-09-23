@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { Activity } from "lucide-react";
-import type { AdminLiveStreamItem } from "reelvault-sdk";
+import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { m } from "@/paraglide/messages";

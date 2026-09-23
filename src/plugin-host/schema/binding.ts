@@ -1,4 +1,4 @@
-import type { PluginLocalizedText, PluginSchemaCondition, PluginUiContext } from "reelvault-sdk/plugin";
+import type { PluginLocalizedText, PluginSchemaCondition, PluginUiContext } from "@reelvault/sdk/plugin";
 import { resolvePluginText } from "@/client/hooks/use-plugin-ui";
 
 /**

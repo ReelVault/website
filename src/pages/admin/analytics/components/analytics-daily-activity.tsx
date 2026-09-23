@@ -1,4 +1,4 @@
-import type { AdminAnalytics } from "reelvault-sdk";
+import type { AdminAnalytics } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 export function AnalyticsDailyActivity({ dailyActivity }: { dailyActivity: AdminAnalytics["dailyActivity"] }) {

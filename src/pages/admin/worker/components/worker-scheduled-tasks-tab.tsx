@@ -1,4 +1,4 @@
-import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "reelvault-sdk";
+import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TabsContent } from "@/components/ui/tabs";

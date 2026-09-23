@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ReelVaultError } from "reelvault-sdk/client";
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { mediaFileQueryOptions } from "@/client/hooks/use-media";
 import { playbackViewQueryOptions, usePlaybackSession } from "@/client/hooks/use-playback-session";

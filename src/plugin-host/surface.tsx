@@ -1,4 +1,4 @@
-import type { PluginUiPlayerContext, PluginUiSchemaSurface } from "reelvault-sdk/plugin";
+import type { PluginUiPlayerContext, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { getPluginUiFileUrl, usePluginUiManifest } from "@/client/hooks/use-plugin-ui";
 import { m } from "@/paraglide/messages";
 import { PluginCustomElement } from "./custom-element";

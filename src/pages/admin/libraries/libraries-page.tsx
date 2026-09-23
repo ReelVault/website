@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { LibraryWithRelations } from "reelvault-sdk";
+import type { LibraryWithRelations } from "@reelvault/sdk";
 import { useAdminLibraries, useCheckLibraryErrors } from "@/client/hooks/use-libraries";
 import { AppErrorState } from "@/components/app-states";
 import { detach } from "@/lib/detach";

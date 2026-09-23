@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { MediaMarker } from "reelvault-sdk";
+import type { MediaMarker } from "@reelvault/sdk";
 import { AppEmptyState } from "@/components/app-states";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AdminSection } from "@/pages/admin/admin-ui";

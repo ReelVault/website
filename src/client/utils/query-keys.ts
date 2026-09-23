@@ -1,4 +1,4 @@
-import type { MetadataType } from "reelvault-sdk";
+import type { MetadataType } from "@reelvault/sdk";
 
 export const metadataKeys = {
 	all: ["metadata"] as const,

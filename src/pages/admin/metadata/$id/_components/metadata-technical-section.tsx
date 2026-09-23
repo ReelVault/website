@@ -1,5 +1,5 @@
 import { Check, Copy, Globe, Info, Sparkles, TrendingUp } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { formatProviderShortName } from "@/client/utils/provider-links";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

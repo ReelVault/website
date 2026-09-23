@@ -1,5 +1,5 @@
 import { Download, Puzzle, RefreshCcw } from "lucide-react";
-import type { PluginCatalogEntry } from "reelvault-sdk";
+import type { PluginCatalogEntry } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";

@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import type { MetadataWithRelation, RequireFields } from "reelvault-sdk";
+import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { useMetadataSimilarByActor } from "@/client/hooks/use-metadata-queries";
 import { defineFields } from "@/client/utils/fields";
 import { MetadataCard } from "@/components/cards/metadata-card";

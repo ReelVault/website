@@ -1,5 +1,5 @@
 import { Activity, Maximize2, Minimize2, Trash2 } from "lucide-react";
-import type { AdminLogFileInfo } from "reelvault-sdk";
+import type { AdminLogFileInfo } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";

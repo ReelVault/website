@@ -1,5 +1,5 @@
 import { PieChart, Sparkles } from "lucide-react";
-import type { GenreDistribution } from "reelvault-sdk";
+import type { GenreDistribution } from "@reelvault/sdk";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { m } from "@/paraglide/messages";

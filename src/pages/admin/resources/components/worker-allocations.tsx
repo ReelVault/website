@@ -1,4 +1,4 @@
-import type { AdminWorkerAllocation } from "reelvault-sdk";
+import type { AdminWorkerAllocation } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";

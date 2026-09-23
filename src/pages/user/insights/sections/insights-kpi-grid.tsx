@@ -1,4 +1,4 @@
-import type { InsightsRange, ProfileInsights } from "reelvault-sdk";
+import type { InsightsRange, ProfileInsights } from "@reelvault/sdk";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { m } from "@/paraglide/messages";
 import { formatWeekday } from "@/utils/format-utils";

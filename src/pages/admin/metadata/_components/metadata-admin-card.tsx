@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle, Clapperboard, Copy, ImageDown, Pencil, RefreshCw, Star, Trash2, Tv } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { useRefreshMetadata, useRefreshMetadataImages } from "@/client/hooks/use-admin-metadata";
 import { ConfirmAction } from "@/components/confirm-action";
 import { ApiImage } from "@/components/ui/api-image";

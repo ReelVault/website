@@ -1,5 +1,5 @@
 import { Database } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { AppEmptyState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { Button } from "@/components/ui/button";

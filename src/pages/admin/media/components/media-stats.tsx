@@ -1,5 +1,5 @@
 import { BadgeCheck, FileVideo, Film, Tv } from "lucide-react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 import { AdminStatCard } from "../../admin-ui";
 

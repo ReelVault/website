@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import type { MetadataFilters, MetadataSorting, MetadataType, MetadataWithRelation, PaginatedResponse, RequireFields } from "reelvault-sdk";
+import type { MetadataFilters, MetadataSorting, MetadataType, MetadataWithRelation, PaginatedResponse, RequireFields } from "@reelvault/sdk";
 import { reelvault } from "../client";
 import { metadataCardFields } from "../utils/fields";
 import { genreKeys, metadataKeys } from "../utils/query-keys";

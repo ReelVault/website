@@ -1,4 +1,4 @@
-import type { AdminActiveDeviceItem } from "reelvault-sdk";
+import type { AdminActiveDeviceItem } from "@reelvault/sdk";
 import { formatTimeAgo } from "@/utils/format-utils";
 import { DeviceIcon } from "./device-icon";
 import { clientLabel } from "./live-activity-utils";

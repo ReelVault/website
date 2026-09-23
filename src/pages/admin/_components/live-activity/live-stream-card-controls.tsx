@@ -1,5 +1,5 @@
 import { Info, Pause, Play, Square } from "lucide-react";
-import type { AdminLiveStreamItem } from "reelvault-sdk";
+import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 

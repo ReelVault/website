@@ -1,4 +1,4 @@
-import type { MetadataWithRelation, SelectFields } from "reelvault-sdk";
+import type { MetadataWithRelation, SelectFields } from "@reelvault/sdk";
 import type { metadataCardFields } from "@/client/utils/fields";
 import { MetadataCard } from "@/components/cards/metadata-card";
 import { LazyRender } from "@/components/lazy-render";

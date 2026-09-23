@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState } from "react";
-import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "reelvault-sdk";
+import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { LazyRender } from "@/components/lazy-render";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ScheduledTasksCategoryGroup } from "./scheduled-tasks-category-group";

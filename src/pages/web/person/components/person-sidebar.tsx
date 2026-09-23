@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Cake, Clapperboard, Film, Quote } from "lucide-react";
-import type { MetadataWithRelation, PersonWithRelations, RequireFields } from "reelvault-sdk";
+import type { MetadataWithRelation, PersonWithRelations, RequireFields } from "@reelvault/sdk";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { ApiImage } from "@/components/ui/api-image";
 import { ScrollArea } from "@/components/ui/scroll-area";

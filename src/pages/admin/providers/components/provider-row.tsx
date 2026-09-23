@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/react/sortable";
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Check, Copy, GripVertical } from "lucide-react";
-import type { MetadataProviderConfiguration } from "reelvault-sdk";
+import type { MetadataProviderConfiguration } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { detach } from "@/lib/detach";

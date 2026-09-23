@@ -9,7 +9,7 @@ import type {
 	PluginTabHostName,
 	PluginUiManifest,
 	PluginUiManifestResponse,
-} from "reelvault-sdk/plugin";
+} from "@reelvault/sdk/plugin";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";

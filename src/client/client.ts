@@ -1,4 +1,4 @@
-import { ReelVaultClient, ReelVaultValidationError } from "reelvault-sdk/client";
+import { ReelVaultClient, ReelVaultValidationError } from "@reelvault/sdk/client";
 import { isNativeShell } from "@/lib/capacitor-native";
 import { queryClient } from "@/lib/query-client";
 import { translateError } from "@/utils/translate-error";

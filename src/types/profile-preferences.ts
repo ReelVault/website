@@ -1,4 +1,4 @@
-import type { ProfilePreferences, UpdateProfilePreferences } from "reelvault-sdk";
+import type { ProfilePreferences, UpdateProfilePreferences } from "@reelvault/sdk";
 
 export interface ProfilePreferencesState {
 	language: string;

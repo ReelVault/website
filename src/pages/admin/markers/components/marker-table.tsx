@@ -1,4 +1,4 @@
-import type { MediaMarker } from "reelvault-sdk";
+import type { MediaMarker } from "@reelvault/sdk";
 import { ResponsiveDataList } from "@/components/responsive-data-list";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { m } from "@/paraglide/messages";

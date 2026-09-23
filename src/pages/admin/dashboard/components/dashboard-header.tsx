@@ -1,6 +1,6 @@
 import { RefreshCw, Server } from "lucide-react";
 import { useState } from "react";
-import type { LibraryWithRelations } from "reelvault-sdk";
+import type { LibraryWithRelations } from "@reelvault/sdk";
 import { AsyncButton } from "@/components/async-button";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader } from "@/pages/admin/admin-ui";

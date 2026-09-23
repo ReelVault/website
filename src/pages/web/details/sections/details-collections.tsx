@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Layers } from "lucide-react";
-import type { Collection, RequireFields } from "reelvault-sdk";
+import type { Collection, RequireFields } from "@reelvault/sdk";
 import { useMetadataCollection } from "@/client/hooks/use-metadata-queries";
 import { CollectionCard } from "@/components/cards/collection-card";
 import { Button } from "@/components/ui/button";

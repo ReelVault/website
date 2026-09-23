@@ -1,6 +1,6 @@
 import { CalendarClock, ListTree } from "lucide-react";
 import { lazy, Suspense } from "react";
-import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "reelvault-sdk";
+import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { m } from "@/paraglide/messages";

@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { Activity, AlertCircle, Check, CheckCircle2, Copy, Layers, ListTree, Play, Sparkles, Square, Volume2, Wrench } from "lucide-react";
 import { createElement, type ReactNode } from "react";
-import type { WorkerOperation } from "reelvault-sdk";
+import type { WorkerOperation } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

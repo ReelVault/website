@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { CheckCircle2, CircleAlert, Info, Settings, Tv } from "lucide-react";
-import type { Notification } from "reelvault-sdk";
+import type { Notification } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 /** Interpolation value accepted by paraglide message inputs. */

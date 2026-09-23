@@ -11,7 +11,7 @@ import type {
 	Profile,
 	Season,
 	Watchlist,
-} from "reelvault-sdk";
+} from "@reelvault/sdk";
 
 type JoinPaths<Paths extends readonly string[], Result extends string = ""> = Paths extends readonly [
 	infer Head extends string,
@@ -22,7 +22,7 @@ type JoinPaths<Paths extends readonly string[], Result extends string = ""> = Pa
 
 /**
  * Local copy of the SDK `defineFields` helper (trivial `paths.join(",")`) so field
- * definitions do not pull the full reelvault-sdk barrel into route chunks.
+ * definitions do not pull the full @reelvault/sdk barrel into route chunks.
  */
 export function defineFields<T>(): <const Paths extends ReadonlyArray<FieldPath<T>>>(...paths: Paths) => JoinPaths<Paths>;
 

@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import type { MouseEvent } from "react";
-import type { CollectionSortMode } from "reelvault-sdk";
+import type { CollectionSortMode } from "@reelvault/sdk";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { m } from "@/paraglide/messages";
 import { COLLECTION_SORT_OPTIONS } from "../../components/collection-sort-options";

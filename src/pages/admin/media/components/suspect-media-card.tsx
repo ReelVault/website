@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle, FileVideo, Layers } from "lucide-react";
 import { Suspense, useState } from "react";
-import type { MediaFileAuditItem } from "reelvault-sdk";
+import type { MediaFileAuditItem } from "@reelvault/sdk";
 import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";

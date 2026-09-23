@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Check, Copy } from "lucide-react";
 import { createElement } from "react";
-import type { Notification } from "reelvault-sdk";
+import type { Notification } from "@reelvault/sdk";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
 import {

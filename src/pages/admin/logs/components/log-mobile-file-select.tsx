@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { RefreshCw } from "lucide-react";
-import type { AdminLogFileInfo } from "reelvault-sdk";
+import type { AdminLogFileInfo } from "@reelvault/sdk";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { m } from "@/paraglide/messages";

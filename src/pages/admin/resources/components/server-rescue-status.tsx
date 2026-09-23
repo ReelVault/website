@@ -1,5 +1,5 @@
 import { AlertTriangle, HeartPulse, Shield } from "lucide-react";
-import type { AdminRescueState } from "reelvault-sdk";
+import type { AdminRescueState } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";

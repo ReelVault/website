@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import type { AdminLogEntry } from "reelvault-sdk";
+import type { AdminLogEntry } from "@reelvault/sdk";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { extractErrorMessage, stringifyLogDetail } from "./log-types";
 

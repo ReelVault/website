@@ -1,6 +1,6 @@
 import { Pause, Play, Square } from "lucide-react";
 import { useState } from "react";
-import type { AdminLiveStreamItem } from "reelvault-sdk";
+import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { CopyIcon } from "@/components/copy-icon";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";

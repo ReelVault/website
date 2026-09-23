@@ -1,4 +1,4 @@
-import type { PluginPlayerState } from "reelvault-sdk/plugin";
+import type { PluginPlayerState } from "@reelvault/sdk/plugin";
 
 /**
  * Latest playback state of the mounted player, exposed to plugin surfaces

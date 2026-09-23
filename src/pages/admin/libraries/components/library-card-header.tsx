@@ -14,7 +14,7 @@ import {
 	Trash2,
 	Tv,
 } from "lucide-react";
-import type { LibraryWithRelations } from "reelvault-sdk";
+import type { LibraryWithRelations } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";

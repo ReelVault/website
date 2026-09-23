@@ -1,6 +1,6 @@
 // biome-ignore-all lint/suspicious/noArrayIndexKey: schema nodes carry no ids; list order is static per surface
 import { createElement } from "react";
-import type { PluginSchemaNode, PluginUiSchemaSurface } from "reelvault-sdk/plugin";
+import type { PluginSchemaNode, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

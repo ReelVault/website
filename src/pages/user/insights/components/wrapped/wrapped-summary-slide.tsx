@@ -1,5 +1,5 @@
 import { Clapperboard, Share2 } from "lucide-react";
-import type { WrappedInsights } from "reelvault-sdk";
+import type { WrappedInsights } from "@reelvault/sdk";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 

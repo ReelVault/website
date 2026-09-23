@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { Download, Puzzle, Upload } from "lucide-react";
 import { useState } from "react";
-import type { PluginCatalogEntry, PluginRuntimeStatus } from "reelvault-sdk";
+import type { PluginCatalogEntry, PluginRuntimeStatus } from "@reelvault/sdk";
 import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
 import { usePluginCatalog } from "@/client/hooks/use-plugin-catalog";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";

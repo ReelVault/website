@@ -1,4 +1,4 @@
-import type { MediaFile, MediaFileWithRelation, PlaybackSession } from "reelvault-sdk";
+import type { MediaFile, MediaFileWithRelation, PlaybackSession } from "@reelvault/sdk";
 
 /**
  * Single source of truth for the media file shape the player needs.

@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { ExternalLink, FileVideo, Pencil, Play, Star } from "lucide-react";
 import type { ReactNode } from "react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { reelvault } from "@/client/client";
 import { useAdminUpdateMediaFile } from "@/client/hooks/use-admin-media";
 import { mediaKeys } from "@/client/utils/query-keys";

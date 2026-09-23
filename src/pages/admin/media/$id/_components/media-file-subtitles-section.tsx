@@ -1,5 +1,5 @@
 import { Check, Copy, FileText, Subtitles } from "lucide-react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";

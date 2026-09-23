@@ -1,5 +1,5 @@
 import { useId, useState } from "react";
-import type { MediaMarker } from "reelvault-sdk";
+import type { MediaMarker } from "@reelvault/sdk";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";

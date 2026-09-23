@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { MediaFileMetadataCard } from "./media-file-metadata-card";
 import { MediaFileRelationsSection } from "./media-file-relations-section";

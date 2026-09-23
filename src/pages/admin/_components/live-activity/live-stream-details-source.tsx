@@ -1,5 +1,5 @@
 import { Film } from "lucide-react";
-import type { AdminLiveStreamItem } from "reelvault-sdk";
+import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 interface LiveStreamDetailsSourceProps {

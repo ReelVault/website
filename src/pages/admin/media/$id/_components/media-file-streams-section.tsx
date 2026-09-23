@@ -1,5 +1,5 @@
 import { AudioLines, Video } from "lucide-react";
-import type { MediaFileWithRelation } from "reelvault-sdk";
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";

@@ -1,6 +1,6 @@
 import { Save } from "lucide-react";
 import { useState } from "react";
-import type { LibraryWithRelations, SidecarFlavor } from "reelvault-sdk";
+import type { LibraryWithRelations, SidecarFlavor } from "@reelvault/sdk";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";

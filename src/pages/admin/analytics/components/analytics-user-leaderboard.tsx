@@ -1,6 +1,6 @@
 import { Award } from "lucide-react";
 import type { ReactNode } from "react";
-import type { AdminAnalytics } from "reelvault-sdk";
+import type { AdminAnalytics } from "@reelvault/sdk";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";

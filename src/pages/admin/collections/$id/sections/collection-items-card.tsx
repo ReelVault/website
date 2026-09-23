@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { CollectionSortMode } from "reelvault-sdk";
+import type { CollectionSortMode } from "@reelvault/sdk";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SkeletonList } from "@/components/ui/skeleton";

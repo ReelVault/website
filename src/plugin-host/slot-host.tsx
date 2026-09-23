@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import type { PluginSlotAction, PluginSlotName, PluginUiPlayerContext } from "reelvault-sdk/plugin";
+import type { PluginSlotAction, PluginSlotName, PluginUiPlayerContext } from "@reelvault/sdk/plugin";
 import { resolvePluginText, usePluginSlots, usePluginUiManifest } from "@/client/hooks/use-plugin-ui";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";

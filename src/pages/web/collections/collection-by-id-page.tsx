@@ -1,4 +1,4 @@
-import type { CollectionSortMode, MetadataSorting } from "reelvault-sdk";
+import type { CollectionSortMode, MetadataSorting } from "@reelvault/sdk";
 import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
 import { useMetadataCollection } from "@/client/hooks/use-metadata-queries";

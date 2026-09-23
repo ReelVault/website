@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Library, RequireFields } from "reelvault-sdk";
+import type { Library, RequireFields } from "@reelvault/sdk";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 

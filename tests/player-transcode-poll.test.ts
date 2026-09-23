@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import type { TranscodeProgressResponse } from "reelvault-sdk";
+import type { TranscodeProgressResponse } from "@reelvault/sdk";
 import { TRANSCODE_POLL_INTERVAL_MS, transcodePollInterval } from "../src/client/hooks/use-player-playback";
 
 function progress(overrides: Partial<TranscodeProgressResponse> = {}): TranscodeProgressResponse {

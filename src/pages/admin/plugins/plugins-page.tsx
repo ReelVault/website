@@ -2,7 +2,7 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Puzzle, RefreshCw, Store, Upload } from "lucide-react";
 import { useState } from "react";
-import type { PluginCatalogEntry } from "reelvault-sdk";
+import type { PluginCatalogEntry } from "@reelvault/sdk";
 import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
 import { usePluginCatalog } from "@/client/hooks/use-plugin-catalog";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";

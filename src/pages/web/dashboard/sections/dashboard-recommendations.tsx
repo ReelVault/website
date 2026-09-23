@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Sparkles } from "lucide-react";
-import type { MetadataWithRelation } from "reelvault-sdk";
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { useDiscovery } from "@/client/hooks/use-discovery";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { MetadataCard } from "@/components/cards/metadata-card";

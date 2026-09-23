@@ -1,4 +1,4 @@
-import type { MetadataStorageMode } from "reelvault-sdk";
+import type { MetadataStorageMode } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
 export interface PathField {

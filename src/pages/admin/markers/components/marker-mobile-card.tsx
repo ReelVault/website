@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Clock, Play, Trash2 } from "lucide-react";
-import type { MediaMarker } from "reelvault-sdk";
+import type { MediaMarker } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

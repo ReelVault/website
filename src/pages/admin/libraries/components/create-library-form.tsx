@@ -1,6 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { FolderPlus } from "lucide-react";
-import type { SidecarFlavor } from "reelvault-sdk";
+import type { SidecarFlavor } from "@reelvault/sdk";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { AsyncButton } from "@/components/async-button";
 import {

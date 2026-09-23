@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { HardDrive, MemoryStick, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
-import type { AdminCacheStats } from "reelvault-sdk";
+import type { AdminCacheStats } from "@reelvault/sdk";
 import { useAdminCacheStats } from "@/client/hooks/use-admin-cache-stats";
 import { AppErrorState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";

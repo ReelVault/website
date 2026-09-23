@@ -13,7 +13,7 @@ import {
 	Wrench,
 } from "lucide-react";
 import { createElement, type ReactNode } from "react";
-import type { WorkerCategory, WorkerOperation, WorkerSummary } from "reelvault-sdk";
+import type { WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { m } from "@/paraglide/messages";
