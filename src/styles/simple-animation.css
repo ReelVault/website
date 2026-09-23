@@ -1,0 +1,11 @@
+.simple-animation {
+	contain: layout style;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.simple-animation {
+		transform: none !important;
+		opacity: 1 !important;
+		transition: none !important;
+	}
+}

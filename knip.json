@@ -1,0 +1,11 @@
+{
+	"$schema": "https://unpkg.com/knip@latest/schema.json",
+	"entry": ["src/routes/**", "tests/**/*.test.ts", "scripts/**/*.ts"],
+	"project": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts", "tests/**/*.ts", "src/**/*.css"],
+	"ignoreExportsUsedInFile": true,
+	"rules": {
+		"exports": "off",
+		"types": "off",
+		"duplicates": "off"
+	}
+}

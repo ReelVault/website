@@ -1,0 +1,301 @@
+@import "./shadcn.css";
+
+:root {
+	--radius: 0.6rem;
+
+	--background: oklch(0.98 0.005 240);
+	--foreground: oklch(0.2 0.01 240);
+
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.2 0.01 240);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.2 0.01 240);
+
+	--primary: oklch(0.52 0.18 148.3463);
+	--primary-foreground: oklch(0.98 0 0);
+
+	--secondary: oklch(0.9 0.12 100);
+	--secondary-foreground: oklch(0.2 0.01 240);
+	--accent: oklch(0.94 0.02 240);
+	--accent-foreground: oklch(0.2 0.01 240);
+	--muted: oklch(0.94 0.01 240);
+	--muted-foreground: oklch(0.47 0.015 240);
+
+	--success: oklch(0.5 0.14 151);
+	--success-foreground: oklch(0.98 0.02 151);
+	--warning: oklch(0.62 0.14 76);
+	--warning-foreground: oklch(0.2 0.04 76);
+	--info: oklch(0.55 0.13 237);
+	--info-foreground: oklch(0.98 0.02 237);
+	--destructive: oklch(0.55 0.2 25);
+	--destructive-foreground: oklch(0.98 0.01 240);
+
+	--ring: oklch(0.52 0.18 148.3463);
+	--input: oklch(0.92 0.01 240);
+	--border: oklch(0.87 0.01 240);
+
+	--chart-1: oklch(0.52 0.18 148.3463);
+	--chart-2: oklch(0.62 0.16 148.3463);
+	--chart-3: oklch(0.7 0.14 148.3463);
+	--chart-4: oklch(0.78 0.12 148.3463);
+	--chart-5: oklch(0.84 0.1 148.3463);
+
+	--sidebar: oklch(1 0 0);
+	--sidebar-foreground: oklch(0.2 0.01 240);
+	--sidebar-primary: oklch(0.52 0.18 148.3463);
+	--sidebar-primary-foreground: oklch(0.98 0 0);
+	--sidebar-accent: oklch(0.94 0.02 240);
+	--sidebar-accent-foreground: oklch(0.2 0.01 240);
+	--sidebar-ring: oklch(0.52 0.18 148.3463);
+	--sidebar-border: oklch(0.87 0.01 240);
+
+	--frame: oklch(1 0 0 / 0.78);
+	--frame-strong: oklch(1 0 0 / 0.94);
+	--cinema-shadow: 0 10px 24px oklch(0.2 0.01 240 / 0.08);
+}
+
+.dark {
+	--background: oklch(0.12 0.005 240);
+	--foreground: oklch(0.95 0.01 240);
+
+	--card: oklch(0.16 0.005 240);
+	--card-foreground: oklch(0.95 0.01 240);
+	--popover: oklch(0.16 0.005 240);
+	--popover-foreground: oklch(0.95 0.01 240);
+
+	--primary: oklch(0.8724 0.250277 148.3463);
+	--primary-foreground: oklch(0.12 0 0);
+
+	--secondary: oklch(0.88 0.16 100);
+	--secondary-foreground: oklch(0.15 0 0);
+	--accent: oklch(0.25 0.03 240);
+	--accent-foreground: oklch(0.98 0 0);
+	--muted: oklch(0.22 0.01 240);
+	--muted-foreground: oklch(0.7 0.015 240);
+
+	--success: oklch(0.62 0.15 151);
+	--success-foreground: oklch(0.15 0.05 151);
+	--warning: oklch(0.76 0.15 76);
+	--warning-foreground: oklch(0.15 0.05 76);
+	--info: oklch(0.65 0.13 237);
+	--info-foreground: oklch(0.15 0.05 237);
+	--destructive: oklch(0.6 0.22 25);
+	--destructive-foreground: oklch(0.95 0.01 240);
+
+	--ring: oklch(0.8724 0.250277 148.3463);
+	--input: oklch(0.22 0.01 240);
+	--border: oklch(0.28 0.01 240);
+
+	--chart-1: oklch(0.8724 0.250277 148.3463);
+	--chart-2: oklch(0.78 0.2 148.3463);
+	--chart-3: oklch(0.68 0.17 148.3463);
+	--chart-4: oklch(0.58 0.14 148.3463);
+	--chart-5: oklch(0.48 0.11 148.3463);
+
+	--sidebar: oklch(0.14 0.005 240);
+	--sidebar-foreground: oklch(0.95 0.01 240);
+	--sidebar-primary: oklch(0.8724 0.250277 148.3463);
+	--sidebar-primary-foreground: oklch(0.12 0 0);
+	--sidebar-accent: oklch(0.2 0.01 240);
+	--sidebar-accent-foreground: oklch(0.95 0.01 240);
+	--sidebar-ring: oklch(0.8724 0.250277 148.3463);
+	--sidebar-border: oklch(0.28 0.01 240);
+
+	/* Shared cinema interface vocabulary. Primary and secondary remain the brand colours. */
+	--frame: oklch(0.18 0.008 240 / 0.72);
+	--frame-strong: oklch(0.2 0.01 240 / 0.92);
+	--cinema-shadow: 0 10px 24px oklch(0.04 0.01 240 / 0.25);
+}
+
+/** Global Styles **/
+@layer base {
+	* {
+		@apply border-border;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	*:focus-visible {
+		@apply outline-ring rounded-xs shadow-none outline-2 outline-offset-3 transition-none!;
+	}
+
+	html {
+		-webkit-text-size-adjust: 100%;
+		touch-action: manipulation;
+	}
+
+	body {
+		@apply bg-background font-sans text-foreground;
+		font-synthesis-weight: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	/* Better text selection */
+	::selection {
+		@apply bg-primary/20 text-primary-foreground;
+	}
+
+	/* Improved scrollbar for webkit browsers */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-muted/30 rounded-full;
+	}
+
+	::-webkit-scrollbar-thumb {
+		transition: background-color 0.2s ease;
+		@apply bg-muted-foreground/30 rounded-full;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-muted-foreground/50;
+	}
+
+	/* Firefox scrollbar */
+	* {
+		scrollbar-color: var(--muted-foreground) transparent;
+		scrollbar-width: thin;
+	}
+}
+
+@layer components {
+	.cinema-page {
+		@apply relative min-h-screen overflow-x-clip bg-background pt-20 pb-28 xl:pt-28 xl:pb-20;
+	}
+
+	.cinema-shell {
+		@apply relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+	}
+
+	.cinema-kicker {
+		@apply flex items-center gap-3 font-bold text-[11px] text-primary uppercase tracking-[0.22em];
+	}
+
+	.cinema-kicker::before {
+		content: "";
+		@apply h-px w-7 bg-primary;
+	}
+
+	.cinema-title {
+		@apply text-balance font-black text-4xl tracking-[-0.055em] sm:text-5xl lg:text-7xl;
+	}
+
+	.cinema-copy {
+		@apply max-w-2xl text-pretty text-base text-muted-foreground leading-relaxed sm:text-lg;
+	}
+
+	.cinema-surface {
+		@apply rounded-xl border border-border/70 bg-card/60;
+	}
+
+	.cinema-section-heading {
+		@apply flex flex-col gap-1 border-primary border-l-2 pl-4;
+	}
+
+	.cinema-section-heading h2 {
+		@apply font-black text-2xl tracking-[-0.035em] sm:text-3xl;
+	}
+
+	.cinema-section-heading p {
+		@apply text-muted-foreground text-sm;
+	}
+
+	.poster-shelf {
+		@apply grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6;
+	}
+}
+
+/** Animations **/
+@keyframes loading {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(200%);
+	}
+}
+
+/* Accessibility utilities */
+@utility sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	white-space: nowrap;
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	:root {
+		--border: oklch(0.1 0.01 240);
+		--muted: oklch(0.9 0.01 240);
+		--muted-foreground: oklch(0.2 0.01 240);
+	}
+
+	.dark {
+		--border: oklch(0.8 0.01 240);
+		--muted: oklch(0.1 0.01 240);
+		--muted-foreground: oklch(0.8 0.01 240);
+	}
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* View Transitions (React <ViewTransition>) */
+::view-transition-old(*),
+::view-transition-new(*) {
+	animation-duration: 180ms;
+	animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
+/* ── TV mode (10-foot UI) ────────────────────────────────────────────────
+   Enabled by `data-tv` on <html> (Tizen/webOS/Android TV/Fire TV detection —
+   @/utils/tv-device). A larger typographic base scales everything expressed in
+   rem, and the thicker focus outline is visible from across the room. */
+html[data-tv] {
+	font-size: 112.5%;
+}
+
+html[data-tv] *:focus-visible {
+	outline: 3px solid var(--primary);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+/* The player opts out of the document cross-fade — entering playback should be
+   instant (view-transition-name: player in the layout). */
+/* biome-ignore lint/correctness/noUnknownTypeSelector: named-VT pseudo-element */
+::view-transition-group(player),
+/* biome-ignore lint/correctness/noUnknownTypeSelector: pseudo-element z nazwanym VT */
+::view-transition-image-pair(player),
+/* biome-ignore lint/correctness/noUnknownTypeSelector: pseudo-element z nazwanym VT */
+::view-transition-old(player),
+/* biome-ignore lint/correctness/noUnknownTypeSelector: pseudo-element z nazwanym VT */
+::view-transition-new(player) {
+	animation: none;
+}
