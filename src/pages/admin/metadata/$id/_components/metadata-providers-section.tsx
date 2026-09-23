@@ -1,5 +1,5 @@
-import { Check, Copy, Database, ExternalLink, Link2, Radio, Search } from "lucide-react";
 import type { MetadataWithRelation } from "@reelvault/sdk";
+import { Check, Copy, Database, ExternalLink, Link2, Radio, Search } from "lucide-react";
 import { formatProviderName, formatProviderShortName, getProviderUrl } from "@/client/utils/provider-links";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

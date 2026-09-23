@@ -1,6 +1,6 @@
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { ChevronDown, ChevronUp, Clapperboard, User, Users } from "lucide-react";
 import { useState } from "react";
-import type { MetadataWithRelation } from "@reelvault/sdk";
 import { ApiImage } from "@/components/ui/api-image";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

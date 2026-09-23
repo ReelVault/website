@@ -1,6 +1,6 @@
+import type { PluginRuntimeStatus } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, Sliders, XCircle } from "lucide-react";
-import type { PluginRuntimeStatus } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";

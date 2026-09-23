@@ -1,8 +1,8 @@
+import type { Profile } from "@reelvault/sdk";
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { useSearch, useRouter as useTanStackRouter } from "@tanstack/react-router";
 import { Lock, Plus, User } from "lucide-react";
 import { useState } from "react";
-import type { Profile } from "@reelvault/sdk";
-import { ReelVaultError } from "@reelvault/sdk/client";
 import { resolveApiAssetUrl } from "@/client/client";
 import { useProfiles, useSwitchProfile } from "@/client/hooks/use-profiles";
 import { AppErrorState } from "@/components/app-states";
@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { useSpatialNavigation } from "@/lib/use-spatial-navigation";
 import { m } from "@/paraglide/messages";
@@ -19,6 +20,7 @@ import { CreateProfileModal } from "./components/create-profile.modal";
 import { PinVerificationModal } from "./components/pin-verification.modal";
 
 export default function ProfilesSelectionPage() {
+	usePageTitle(m.auth_welcome_back());
 	// TV: pick a profile with the remote (D-pad).
 	useSpatialNavigation();
 	const { redirect } = useSearch({ from: "/auth/profiles" });

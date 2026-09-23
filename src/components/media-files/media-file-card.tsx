@@ -1,3 +1,4 @@
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import {
 	Check,
@@ -15,7 +16,6 @@ import {
 	Volume2,
 } from "lucide-react";
 import { Suspense, startTransition, useState } from "react";
-import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshMediaFile } from "@/client/hooks/use-media";
 import { LazyOfflineDownloadDialog, LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";

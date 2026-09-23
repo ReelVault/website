@@ -1,6 +1,6 @@
+import type { TaskTrigger } from "@reelvault/sdk";
 import { Trash2 } from "lucide-react";
 import { createElement } from "react";
-import type { TaskTrigger } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";

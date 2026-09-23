@@ -1,6 +1,6 @@
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle, Clapperboard, Copy, ImageDown, Pencil, RefreshCw, Star, Trash2, Tv } from "lucide-react";
-import type { MetadataWithRelation } from "@reelvault/sdk";
 import { useRefreshMetadata, useRefreshMetadataImages } from "@/client/hooks/use-admin-metadata";
 import { ConfirmAction } from "@/components/confirm-action";
 import { ApiImage } from "@/components/ui/api-image";
@@ -48,7 +48,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete }: 
 				<Link
 					to="/admin/metadata/$id"
 					params={{ id: item.id }}
-					className="relative overflow-hidden rounded-xl bg-card ring-primary/0 ring-offset-4 ring-offset-background transition-[box-shadow] duration-200 group-hover:ring-2"
+					className="relative overflow-hidden rounded-xl bg-card ring-primary/0 ring-offset-4 ring-offset-background transition-shadow duration-200 group-hover:ring-2"
 				>
 					<AspectRatio ratio={2 / 3}>
 						<ApiImage
@@ -87,7 +87,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete }: 
 				</Link>
 
 				<div className="flex flex-col gap-1 px-0.5">
-					<p className="line-clamp-1 font-bold text-foreground text-sm uppercase tracking-tight transition-colors group-hover:text-primary">
+					<p className="line-clamp-1 font-bold text-foreground text-sm tracking-tight transition-colors group-hover:text-primary">
 						{item.title}
 					</p>
 					<div className="flex flex-wrap items-center gap-1.5">

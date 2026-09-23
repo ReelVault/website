@@ -1,6 +1,6 @@
+import type { HourlyHeatmapPoint } from "@reelvault/sdk";
 import { cn } from "cn";
 import { Calendar, Flame, Info } from "lucide-react";
-import type { HourlyHeatmapPoint } from "@reelvault/sdk";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { m } from "@/paraglide/messages";

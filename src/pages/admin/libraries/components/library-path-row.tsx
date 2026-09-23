@@ -1,5 +1,5 @@
-import { Check, Copy, RefreshCw } from "lucide-react";
 import type { LibraryWithRelations } from "@reelvault/sdk";
+import { Check, Copy, RefreshCw } from "lucide-react";
 import { AsyncButton } from "@/components/async-button";
 import { Badge } from "@/components/ui/badge";
 import { detach } from "@/lib/detach";

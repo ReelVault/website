@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import type { PlaybackCommand, RealtimeEventMap, RealtimeEventMessage } from "@reelvault/sdk";
+import { useEffect, useRef } from "react";
 import { safeUuid } from "@/utils/id-utils";
 import { reelvault } from "../client";
 
@@ -85,6 +85,12 @@ export function subscribeRealtimeStatus(listener: () => void): () => void {
 
 	return () => statusListeners.delete(listener);
 }
+
+// Auth gate: without a session every connect attempt is a guaranteed 401
+// handshake (public pages like /setup subscribe through hooks mounted above the
+// session provider), so connections and reconnect loops stay disabled until the
+// session provider confirms an authenticated user.
+let connectionAllowed = false;
 
 class RealtimeConnection {
 	private socket: WebSocket | null = null;
@@ -264,7 +270,7 @@ class RealtimeConnection {
 	}
 
 	connect(): void {
-		if (typeof window === "undefined" || this.socket || this.isConnecting) return;
+		if (typeof window === "undefined" || !connectionAllowed || this.socket || this.isConnecting) return;
 
 		this.isConnecting = true;
 		setRealtimeStatus(this.reconnectAttempts > 0 ? "reconnecting" : "connecting");
@@ -424,6 +430,9 @@ class RealtimeConnection {
 	private scheduleReconnect(): void {
 		if (this.reconnectTimer) return;
 
+		// No session: retrying cannot succeed until the provider re-enables it.
+		if (!connectionAllowed) return;
+
 		// Hidden page: skip scheduling entirely — handleVisibilityChange reconnects
 		// as soon as the page is visible again.
 		if (typeof document === "undefined") return;
@@ -443,6 +452,11 @@ class RealtimeConnection {
 }
 
 export const realtimeConnection = new RealtimeConnection();
+
+export function setRealtimeConnectionAllowed(allowed: boolean): void {
+	connectionAllowed = allowed;
+	if (!allowed) realtimeConnection.disconnect();
+}
 
 export function useRealtimeEvent<T = undefined, E extends string = string>(
 	eventType: E,

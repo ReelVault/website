@@ -1,6 +1,6 @@
+import type { WorkerJob } from "@reelvault/sdk";
 import { cn } from "cn";
 import { AlertCircle, ChevronDown, ChevronRight, Code2 } from "lucide-react";
-import type { WorkerJob } from "@reelvault/sdk";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";

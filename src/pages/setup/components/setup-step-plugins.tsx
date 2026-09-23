@@ -1,7 +1,7 @@
-import { cn } from "cn";
-import { Download, Puzzle, Upload } from "lucide-react";
-import { useState } from "react";
 import type { PluginCatalogEntry, PluginRuntimeStatus } from "@reelvault/sdk";
+import { cn } from "cn";
+import { Download, Puzzle, Settings, Upload } from "lucide-react";
+import { useState } from "react";
 import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
 import { usePluginCatalog } from "@/client/hooks/use-plugin-catalog";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
@@ -13,6 +13,7 @@ import { pluginCatalogCategoryLabel } from "@/pages/admin/plugins/components/plu
 import { PluginUploadDialog } from "@/pages/admin/plugins/components/plugin-upload-dialog";
 import { PluginUploadProgress } from "@/pages/admin/plugins/components/plugin-upload-progress";
 import { m } from "@/paraglide/messages";
+import { SetupPluginConfig } from "./setup-plugin-config";
 
 function entryKey(entry: PluginCatalogEntry): string {
 	return `${entry.repositoryId}:${entry.id}`;
@@ -48,6 +49,7 @@ export function SetupStepPlugins() {
 	const { plugins } = useAdminPlugins();
 	const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(() => new Set());
 	const [isUploadOpen, setIsUploadOpen] = useState(false);
+	const [configPluginId, setConfigPluginId] = useState<string | null>(null);
 
 	const available = catalog.filter((entry) => entry.status !== "installed");
 	const isBusy = isInstalling || isInstallingArchive;
@@ -109,13 +111,26 @@ export function SetupStepPlugins() {
 												{m.common_version_badge({ version: plugin.version })}
 											</span>
 										</div>
-										<StatusBadge status={badge.status} label={badge.label} />
+										<div className="flex items-center gap-2">
+											<StatusBadge status={badge.status} label={badge.label} />
+											<Button
+												type="button"
+												variant="outline"
+												size="sm"
+												className="gap-1.5 text-xs"
+												onClick={() => setConfigPluginId((current) => (current === plugin.id ? null : plugin.id))}
+											>
+												<Settings className="size-3.5" />
+												{m.setup_plugins_configure()}
+											</Button>
+										</div>
 									</div>
 									{plugin.error && (
 										<p className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 font-mono text-[11px] text-destructive">
 											{plugin.error}
 										</p>
 									)}
+									{configPluginId === plugin.id && <SetupPluginConfig pluginId={plugin.id} />}
 								</li>
 							);
 						})}

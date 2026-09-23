@@ -23,8 +23,15 @@ describe("translateByKey", () => {
 		expect(translateByKey("sequel_mismatch")).not.toBe("sequel_mismatch");
 	});
 
+	test("translates live-activity warning codes", () => {
+		// Regression: these arrive as warning `code`s from the server and used to
+		// render literally ("admin.live_active_streams") because the catalog index
+		// had no entry for them.
+		expect(translateByKey("admin.live_active_streams", { viewers: "Alice" })).toContain("Alice");
+		expect(translateByKey("admin.live_no_streams")).not.toBe("admin.live_no_streams");
+	});
+
 	test("returns raw code for codes outside the dynamic subset", () => {
-		expect(translateByKey("admin.live_active_streams")).toBe("admin.live_active_streams");
 		expect(translateByKey("totally_unknown_code")).toBe("totally_unknown_code");
 	});
 

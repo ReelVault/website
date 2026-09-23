@@ -1,5 +1,5 @@
-import { Cpu, Gauge, Zap } from "lucide-react";
 import type { AdminSystemCpu } from "@reelvault/sdk";
+import { Cpu, Gauge, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";

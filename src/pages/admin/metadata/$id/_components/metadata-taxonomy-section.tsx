@@ -1,7 +1,7 @@
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { cn } from "cn";
 import { Building2, Hash, Layers, type LucideIcon, Tag } from "lucide-react";
 import type { ReactNode } from "react";
-import type { MetadataWithRelation } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";

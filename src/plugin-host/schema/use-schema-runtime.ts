@@ -1,6 +1,5 @@
 /* oxlint-disable react/exhaustive-effect-dependencies, react/set-state-in-effect, react-hooks/exhaustive-deps -- mount-only schema initialization */
-import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+
 import type {
 	PluginLocalizedText,
 	PluginSchemaAction,
@@ -8,6 +7,8 @@ import type {
 	PluginSchemaNode,
 	PluginUiSchemaSurface,
 } from "@reelvault/sdk/plugin";
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { detach } from "@/lib/detach";
 import { toast } from "@/utils/toast-facade";

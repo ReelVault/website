@@ -114,7 +114,7 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 					{/* Seek +10s */}
 					<PlayerControlButton
 						description="+10s"
-						render={<button type="button" onClick={() => seekRelative(10)} aria-label={m.player_shift_subtitles_10s()} />}
+						render={<button type="button" onClick={() => seekRelative(10)} aria-label={m.player_seek_forward_10s()} />}
 					>
 						<FastForward className="size-5" />
 					</PlayerControlButton>

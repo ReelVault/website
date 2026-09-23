@@ -1,5 +1,5 @@
-import { Trash2 } from "lucide-react";
 import type { DownloadJob } from "@reelvault/sdk";
+import { Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";

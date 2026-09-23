@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import type { ClientCapabilities } from "@reelvault/sdk";
+import { useEffect, useState } from "react";
 import { detach } from "../utils/player-utils";
 
 interface CodecProbe {

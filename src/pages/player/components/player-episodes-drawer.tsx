@@ -255,7 +255,7 @@ export function PlayerEpisodesDrawer() {
 		<Drawer open={isOpen} onOpenChange={handleOpenChange} swipeDirection="right">
 			<PlayerControlButton
 				description={isCollectionMode ? m.web_movie_collection() : m.player_seasons_and_episodes()}
-				render={<DrawerTrigger />}
+				render={<DrawerTrigger aria-label={isCollectionMode ? m.web_movie_collection() : m.player_seasons_and_episodes()} />}
 			>
 				{isCollectionMode ? <Layers className="size-5" aria-hidden="true" /> : <SquareStack className="size-5" aria-hidden="true" />}
 			</PlayerControlButton>

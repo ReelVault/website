@@ -1,7 +1,7 @@
+import type { MetadataType } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Broccoli } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import type { MetadataType } from "@reelvault/sdk";
 import { useMetadataRecentlyAdded } from "@/client/hooks/use-metadata-queries";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { MetadataCard } from "@/components/cards/metadata-card";

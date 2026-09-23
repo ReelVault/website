@@ -1,7 +1,7 @@
+import type { PluginCatalogEntry, PluginCatalogVersion } from "@reelvault/sdk";
 import { cn } from "cn";
 import { AlertTriangle, ChevronDown, Download, ExternalLink, Puzzle, RefreshCcw, Trash2 } from "lucide-react";
 import { useState } from "react";
-import type { PluginCatalogEntry, PluginCatalogVersion } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";

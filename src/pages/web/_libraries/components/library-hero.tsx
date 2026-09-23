@@ -1,6 +1,6 @@
+import type { Library, RequireFields } from "@reelvault/sdk";
 import { cn } from "cn";
 import { Zap } from "lucide-react";
-import type { Library, RequireFields } from "@reelvault/sdk";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";

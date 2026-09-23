@@ -1,6 +1,6 @@
+import type { SidecarFlavor } from "@reelvault/sdk";
 import { useForm } from "@tanstack/react-form";
 import { FolderPlus } from "lucide-react";
-import type { SidecarFlavor } from "@reelvault/sdk";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { AsyncButton } from "@/components/async-button";
 import {
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { toastError } from "@/utils/toast-utils";
 import type { PathField } from "./library-constants";
 import { createPathField } from "./library-constants";
 import { LibraryPathsSection } from "./library-paths-section";
@@ -57,7 +58,7 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				});
 				onClose();
 			} catch (error) {
-				console.error("Failed to create library", error);
+				toastError(m.admin_libraries_create_failed(), error);
 			}
 		},
 	});

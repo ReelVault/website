@@ -1,5 +1,5 @@
-import { useState } from "react";
 import type { InsightsRange } from "@reelvault/sdk";
+import { useState } from "react";
 import { useInsights } from "@/client/hooks/use-insights";
 import { AppErrorState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";

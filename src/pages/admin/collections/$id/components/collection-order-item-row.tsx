@@ -1,6 +1,6 @@
+import type { CollectionSortMode } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { ArrowDown, ArrowUp, GripVertical } from "lucide-react";
-import type { CollectionSortMode } from "@reelvault/sdk";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

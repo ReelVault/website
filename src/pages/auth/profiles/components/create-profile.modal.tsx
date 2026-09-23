@@ -110,7 +110,7 @@ export function CreateProfileModal({ isOpen, onClose, onSuccess }: CreateProfile
 					<AsyncButton
 						type="submit"
 						isPending={isSubmitting}
-						pendingLabel="Inicjalizacja…"
+						pendingLabel={m.admin_users_creating_profile()}
 						disabled={!name.trim()}
 						className="w-full rounded-2xl py-5 font-black uppercase tracking-widest"
 					>

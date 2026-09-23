@@ -1,5 +1,5 @@
-import { Clock, Film, Play } from "lucide-react";
 import type { WrappedInsights } from "@reelvault/sdk";
+import { Clock, Film, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";
 

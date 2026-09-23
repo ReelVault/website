@@ -1,5 +1,5 @@
-import { CalendarDays, Clock, Hourglass, Rocket, Zap } from "lucide-react";
 import type { TaskTrigger, TaskTriggerType } from "@reelvault/sdk";
+import { CalendarDays, Clock, Hourglass, Rocket, Zap } from "lucide-react";
 import { m } from "@/paraglide/messages";
 
 export const DAYS_OF_WEEK = [

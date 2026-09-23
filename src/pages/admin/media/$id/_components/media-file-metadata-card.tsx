@@ -1,7 +1,7 @@
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Clapperboard, ExternalLink, Layers, Tv } from "lucide-react";
 import type { ReactNode } from "react";
-import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { useMetadata } from "@/client/hooks/use-metadata-queries";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";

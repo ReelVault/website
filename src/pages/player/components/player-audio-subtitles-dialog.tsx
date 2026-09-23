@@ -281,7 +281,10 @@ export function PlayerAudioSubtitlesDialog() {
 
 	return (
 		<FullscreenDialog open={isOpen} onOpenChange={handleOpenChange}>
-			<PlayerControlButton description={m.player_audio_subtitles()} render={<FullscreenDialogTrigger />}>
+			<PlayerControlButton
+				description={m.player_audio_subtitles()}
+				render={<FullscreenDialogTrigger aria-label={m.player_audio_subtitles()} />}
+			>
 				<Subtitles className="size-5" aria-hidden="true" />
 			</PlayerControlButton>
 

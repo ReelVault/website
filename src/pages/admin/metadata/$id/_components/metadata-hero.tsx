@@ -1,5 +1,5 @@
-import { Pencil } from "lucide-react";
 import type { MetadataWithRelation } from "@reelvault/sdk";
+import { Pencil } from "lucide-react";
 import { ApiImage } from "@/components/ui/api-image";
 import { Card } from "@/components/ui/card";
 import { m } from "@/paraglide/messages";

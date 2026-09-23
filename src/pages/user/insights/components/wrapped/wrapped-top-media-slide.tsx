@@ -1,5 +1,5 @@
-import { Film, Tv } from "lucide-react";
 import type { WrappedInsights } from "@reelvault/sdk";
+import { Film, Tv } from "lucide-react";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";

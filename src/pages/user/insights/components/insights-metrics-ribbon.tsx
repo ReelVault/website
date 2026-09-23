@@ -1,5 +1,5 @@
-import { Award, CheckCircle2, Zap } from "lucide-react";
 import type { ProfileInsights } from "@reelvault/sdk";
+import { Award, CheckCircle2, Zap } from "lucide-react";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Card, CardContent } from "@/components/ui/card";
 import { m } from "@/paraglide/messages";

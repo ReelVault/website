@@ -1,5 +1,5 @@
-import { Flame } from "lucide-react";
 import type { AdminAnalytics } from "@reelvault/sdk";
+import { Flame } from "lucide-react";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

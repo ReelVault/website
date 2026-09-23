@@ -1,5 +1,5 @@
-import { Calendar, Clock, HardDrive, Zap } from "lucide-react";
 import type { MediaFileWithRelation } from "@reelvault/sdk";
+import { Calendar, Clock, HardDrive, Zap } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AdminSection } from "@/pages/admin/admin-ui";

@@ -1,7 +1,7 @@
+import type { SystemSettingItemView } from "@reelvault/sdk";
 import { useForm } from "@tanstack/react-form";
 import { Check, RotateCcw, Save } from "lucide-react";
 import { useEffect } from "react";
-import type { SystemSettingItemView } from "@reelvault/sdk";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";

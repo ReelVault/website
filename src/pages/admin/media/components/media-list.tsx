@@ -1,5 +1,5 @@
-import { FileVideo } from "lucide-react";
 import type { MediaFileWithRelation } from "@reelvault/sdk";
+import { FileVideo } from "lucide-react";
 import { AppEmptyState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { Button } from "@/components/ui/button";

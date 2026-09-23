@@ -1,7 +1,7 @@
+import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { Search } from "lucide-react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import type { metadataCardFields } from "@/client/utils/fields";
 import { AppEmptyState } from "@/components/app-states";
 import { MetadataCard } from "@/components/cards/metadata-card";

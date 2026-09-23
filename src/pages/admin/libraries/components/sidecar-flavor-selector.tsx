@@ -1,5 +1,5 @@
-import { ScrollText } from "lucide-react";
 import type { SidecarFlavor } from "@reelvault/sdk";
+import { ScrollText } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { m } from "@/paraglide/messages";
 

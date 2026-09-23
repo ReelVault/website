@@ -1,6 +1,6 @@
+import type { MetadataWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Calendar, Clock, Info, Play, Star } from "lucide-react";
-import type { MetadataWithRelation } from "@reelvault/sdk";
 import { usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
 import { useIsOnWatchlist, useWatchlistToggle } from "@/client/hooks/use-watchlist";
 import { AsyncButton } from "@/components/async-button";

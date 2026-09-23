@@ -1,7 +1,7 @@
+import type { PluginRuntimeStatus } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { AppWindow, ChevronRight, Puzzle } from "lucide-react";
-import type { PluginRuntimeStatus } from "@reelvault/sdk";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
 	SidebarGroup,

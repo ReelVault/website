@@ -1,7 +1,7 @@
+import type { Profile } from "@reelvault/sdk";
 import { cn } from "cn";
 import { Lock, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { Profile } from "@reelvault/sdk";
 import { getSdkErrorMessage, resolveApiAssetUrl } from "@/client/client";
 import { useSwitchProfile } from "@/client/hooks/use-profiles";
 import { AppErrorState } from "@/components/app-states";

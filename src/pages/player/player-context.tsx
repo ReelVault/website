@@ -1,6 +1,6 @@
+import type { MediaMarker, PlaybackDiagnostics } from "@reelvault/sdk";
 import type Hls from "hls.js";
 import { createContext, type ReactNode, type RefObject, useContext, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import type { MediaMarker, PlaybackDiagnostics } from "@reelvault/sdk";
 import { type BufferedRange, type PlayerVolumeState, usePlayerController, usePlayerVolumeState } from "./hooks/use-player-controller.hook";
 import type {
 	AudioStream,

@@ -1,5 +1,5 @@
-import { Calendar, Flame, Zap } from "lucide-react";
 import type { WrappedInsights } from "@reelvault/sdk";
+import { Calendar, Flame, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";
 import { formatMonthName, formatWeekdayName } from "@/utils/date-utils";

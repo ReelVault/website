@@ -1,6 +1,6 @@
+import type { AdminStats } from "@reelvault/sdk";
 import { Activity } from "lucide-react";
 import type { ReactNode } from "react";
-import type { AdminStats } from "@reelvault/sdk";
 import { AppErrorState } from "@/components/app-states";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";

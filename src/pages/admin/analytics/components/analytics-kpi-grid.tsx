@@ -1,5 +1,5 @@
-import { Clock, Play, Trophy, Users } from "lucide-react";
 import type { AdminAnalytics } from "@reelvault/sdk";
+import { Clock, Play, Trophy, Users } from "lucide-react";
 import { AdminStat } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 

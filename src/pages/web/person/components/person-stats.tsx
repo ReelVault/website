@@ -1,5 +1,5 @@
-import { Calendar, Clapperboard, Star } from "lucide-react";
 import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
+import { Calendar, Clapperboard, Star } from "lucide-react";
 import { defineFields } from "@/client/utils/fields";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { m } from "@/paraglide/messages";

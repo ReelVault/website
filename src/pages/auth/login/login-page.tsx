@@ -4,6 +4,7 @@ import { KeyRound, Shield, Tv } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useLogin, useVerifyBackupCode, useVerifyTotp } from "@/client/hooks/use-auth";
 import { SimpleAnimation } from "@/components/simple-animation";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { useSpatialNavigation } from "@/lib/use-spatial-navigation";
 import { m } from "@/paraglide/messages";
@@ -23,6 +24,7 @@ const welcomeTitleMarkup: { dot: DotMarkupRenderer } = {
 };
 
 export default function LoginPage() {
+	usePageTitle(m.auth_access_authorization());
 	// TV: arrows/D-pad move focus on the login screen too.
 	useSpatialNavigation();
 	const navigate = useNavigate();

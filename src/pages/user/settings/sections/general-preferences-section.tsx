@@ -5,6 +5,8 @@ import { useProfilePreferences } from "@/client/hooks/use-profiles";
 import { AsyncButton } from "@/components/async-button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { isLocale } from "@/paraglide/runtime";
+import { getAppLocale, setAppLocale } from "@/utils/locale";
 import { GeneralPreferencesGrid } from "../components/general-preferences-grid";
 import { SettingsCategory } from "../components/settings-category";
 
@@ -21,10 +23,13 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 	const { setTheme } = useTheme();
 	const preferencesQuery = useProfilePreferences(profileId);
 	const serverPreferences = preferencesQuery.preferences;
+	// The select mirrors the locale the UI is actually rendered in (paraglide's
+	// localStorage/browser strategies), not the server default — otherwise a
+	// Polish browser showed "English" here. Saving persists the choice server-side.
 	const [preferences, setPreferences] = useState<GeneralPreferences | undefined>(
 		serverPreferences
 			? {
-					language: serverPreferences.language,
+					language: getAppLocale(),
 					theme: serverPreferences.theme,
 					continueWatchingMinutes: serverPreferences.continueWatchingMinutes,
 				}
@@ -37,7 +42,7 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 	if (serverPreferences && serverPreferences !== lastSynced) {
 		setLastSynced(serverPreferences);
 		setPreferences({
-			language: serverPreferences.language,
+			language: getAppLocale(),
 			theme: serverPreferences.theme,
 			continueWatchingMinutes: serverPreferences.continueWatchingMinutes,
 		});
@@ -72,6 +77,9 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 
 		await preferencesQuery.updatePreferences(patch);
 		setTheme(preferences.theme);
+		// A language change only lands in the UI after paraglide re-resolves its
+		// locale (full reload) — switch once the patch is safely persisted.
+		if (patch.language !== undefined && isLocale(patch.language)) setAppLocale(patch.language);
 	};
 
 	const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {

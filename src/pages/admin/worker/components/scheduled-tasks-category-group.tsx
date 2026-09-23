@@ -1,6 +1,6 @@
+import type { WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { ChevronDown, Loader2, Play } from "lucide-react";
 import { useState } from "react";
-import type { WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";

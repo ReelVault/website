@@ -69,9 +69,7 @@ export function LiveMaintenanceBanner({
 
 					<Badge variant="outline" className="gap-1.5 border-border font-mono text-muted-foreground text-xs">
 						<Users className="size-3.5" />
-						<span>
-							{activeDevicesCount} {m.admin_live_connected_devices()}
-						</span>
+						<span>{m.admin_live_connected_devices({ count: activeDevicesCount })}</span>
 					</Badge>
 				</div>
 			</div>

@@ -1,7 +1,7 @@
 import { type QueryKey, useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, startTransition, useEffect, useRef } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
-import { realtimeConnection, useRealtimeEvent } from "@/client/hooks/use-realtime";
+import { realtimeConnection, setRealtimeConnectionAllowed, useRealtimeEvent } from "@/client/hooks/use-realtime";
 import {
 	adminKeys,
 	discoveryKeys,
@@ -57,11 +57,10 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 	useEffect(() => {
 		if (isLoading) return;
 
+		setRealtimeConnectionAllowed(isAuthenticated);
 		if (isAuthenticated) {
 			realtimeConnection.setProfileId(profile?.id);
 			realtimeConnection.connect();
-		} else {
-			realtimeConnection.disconnect();
 		}
 	}, [isAuthenticated, isLoading, profile?.id]);
 

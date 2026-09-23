@@ -12,16 +12,20 @@ interface DetailsHeaderSpecsProps {
 }
 
 export function DetailsHeaderSpecs({ directors, studios, keywords, providers, mediaType }: DetailsHeaderSpecsProps) {
+	// TV shows have no series-level directors (TMDB carries creators separately),
+	// so the empty section is hidden instead of showing "no data".
+	const showDirecting = directors.length > 0;
+
 	return (
 		<div className="mt-8 flex flex-col gap-4 border-border/70 border-y py-5">
 			<div className="flex flex-col gap-6">
 				{/* Directing */}
-				<div className="flex flex-col gap-1.5">
-					<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-						<Clapperboard className="size-3.5 text-primary" aria-hidden="true" />
-						{m.web_directed_by()}
-					</span>
-					{directors.length > 0 ? (
+				{showDirecting ? (
+					<div className="flex flex-col gap-1.5">
+						<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+							<Clapperboard className="size-3.5 text-primary" aria-hidden="true" />
+							{m.web_directed_by()}
+						</span>
 						<div className="flex flex-wrap gap-x-3 gap-y-1">
 							{directors.map((director) => (
 								<Link
@@ -34,10 +38,8 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 								</Link>
 							))}
 						</div>
-					) : (
-						<span className="font-medium text-muted-foreground text-sm">{m.common_no_data()}</span>
-					)}
-				</div>
+					</div>
+				) : null}
 
 				{/* Studios */}
 				<div className="flex flex-col gap-1.5">

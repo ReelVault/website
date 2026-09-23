@@ -1,4 +1,5 @@
 import { CheckCircle2, Circle, Loader2, X, XCircle } from "lucide-react";
+import { useEffect } from "react";
 import type { PluginArchiveEntry, PluginArchiveSummary } from "@/client/hooks/use-plugin-catalog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -53,10 +54,24 @@ interface PluginUploadProgressProps {
 
 /**
  * Fixed bottom-right card tracking a plugin archive upload batch: overall
- * progress + ETA, per-file status, and inline errors. Stays visible (with a
- * close button) after the batch finishes so failures can be reviewed.
+ * progress + ETA, per-file status, and inline errors. Auto-closes after a
+ * fully successful batch; stays visible when anything failed so the errors
+ * can be reviewed.
  */
 export function PluginUploadProgress({ entries, summary, onClose }: PluginUploadProgressProps) {
+	const allDone = summary !== null && summary.doneCount >= summary.total;
+	const anyFailed = entries.some((entry) => entry.status === "failed");
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (!allDone || anyFailed || entries.length === 0) return;
+
+			onClose();
+		}, 2000);
+
+		return () => clearTimeout(timer);
+	}, [allDone, anyFailed, entries.length, onClose]);
+
 	if (entries.length === 0) return null;
 
 	const isRunning = summary !== null && summary.doneCount < summary.total;
@@ -120,7 +135,7 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 								)}
 							</div>
 							{entry.error && (
-								<span className="break-words rounded-md bg-destructive/10 px-2 py-1 text-[11px] text-destructive">{entry.error}</span>
+								<span className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 text-[11px] text-destructive">{entry.error}</span>
 							)}
 						</div>
 					);

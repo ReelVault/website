@@ -1,6 +1,6 @@
+import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Check, Copy, Layers, LucideLink } from "lucide-react";
-import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";

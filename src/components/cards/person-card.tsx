@@ -1,7 +1,7 @@
+import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Copy, ImageDown, RefreshCw, Shield, User } from "lucide-react";
 import { startTransition } from "react";
-import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshPerson, useRefreshPersonImage } from "@/client/hooks/use-person-data";
 import { defineFields } from "@/client/utils/fields";

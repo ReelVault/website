@@ -1,10 +1,10 @@
-import { useTheme } from "next-themes";
 import {
 	PLUGIN_UI_PROTOCOL_VERSION,
 	type PluginUiContext,
 	type PluginUiDeviceContext,
 	type PluginUiPlayerContext,
 } from "@reelvault/sdk/plugin";
+import { useTheme } from "next-themes";
 import { getReelVaultApiUrl } from "@/client/client";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { getAppLocale } from "@/utils/locale";

@@ -10,6 +10,7 @@ import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { SetupProgress } from "./components/setup-progress";
@@ -43,8 +44,50 @@ const SETUP_STEPS_DEFAULT: readonly SetupStepId[] = ["account", "confirm", "plug
 
 const INITIAL_FORM: SetupForm = { setupToken: "", name: "", email: "", password: "", confirmPassword: "" };
 
+/**
+ * Wizard steps are component state, so a refresh after the admin account was
+ * created (required flips to false) would otherwise lock the remaining optional
+ * steps behind the "already done" screen. The index survives in sessionStorage —
+ * per-tab, like the setup-complete flag in the root guard — and is cleared once
+ * the wizard finishes.
+ */
+const SETUP_RESUMABLE_KEY = "reelvault:setup:resumable";
+
+function readResumableStep(): number {
+	if (typeof window === "undefined") return 0;
+
+	try {
+		const parsed = Number.parseInt(window.sessionStorage.getItem(SETUP_RESUMABLE_KEY) ?? "", 10);
+
+		return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+	} catch {
+		return 0;
+	}
+}
+
+function writeResumableStep(step: number): void {
+	if (typeof window === "undefined") return;
+
+	try {
+		window.sessionStorage.setItem(SETUP_RESUMABLE_KEY, String(step));
+	} catch {
+		// Privacy mode may reject storage — resume silently degrades.
+	}
+}
+
+function clearResumable(): void {
+	if (typeof window === "undefined") return;
+
+	try {
+		window.sessionStorage.removeItem(SETUP_RESUMABLE_KEY);
+	} catch {
+		// Ignore — same as write.
+	}
+}
+
 export default function SetupPage() {
-	const [currentStep, setCurrentStep] = useState(0);
+	usePageTitle(m.setup_configure_reelvault());
+	const [currentStep, setCurrentStep] = useState(() => readResumableStep());
 	const [isFinished, setIsFinished] = useState(false);
 	const [form, setForm] = useState<SetupForm>(INITIAL_FORM);
 	const [error, setError] = useState<string>();
@@ -101,6 +144,13 @@ export default function SetupPage() {
 		return errors;
 	};
 
+	// Persisted from the post-account steps onward so a refresh mid-wizard
+	// resumes instead of hitting the "already done" screen.
+	const advance = (index: number) => {
+		setCurrentStep(index);
+		writeResumableStep(index);
+	};
+
 	const submitSetup = async () => {
 		if (setupMutation.isPending) return;
 
@@ -124,18 +174,19 @@ export default function SetupPage() {
 			// The sign-up response set the admin session cookie; drop any stale
 			// "signed out" cache entry so the /dashboard auth guard refetches.
 			queryClient.removeQueries({ queryKey: authKeys.me() });
-			setCurrentStep(stepIndex + 1);
+			advance(stepIndex + 1);
 
 			return;
 		}
 
 		if (isLastStep) {
+			clearResumable();
 			setIsFinished(true);
 
 			return;
 		}
 
-		setCurrentStep(stepIndex + 1);
+		advance(stepIndex + 1);
 	};
 
 	// Non-async wrapper: React event handlers must return void; failures surface
@@ -174,7 +225,7 @@ export default function SetupPage() {
 
 		if (isInputStep) {
 			return (
-				<form onSubmit={handleSubmit} className="flex flex-col gap-8">
+				<form onSubmit={handleSubmit} noValidate className="flex flex-col gap-8">
 					{(error !== undefined || setupMutation.isError) && (
 						<AppErrorState
 							title={setupMutation.isError ? m.setup_failed_to_configure() : m.setup_fill_form()}
@@ -233,7 +284,7 @@ export default function SetupPage() {
 		);
 	}
 
-	if (!(isRequired || setupMutation.isSuccess)) {
+	if (!(isRequired || setupMutation.isSuccess || readResumableStep() > 0)) {
 		return (
 			<div className="flex min-h-svh items-center justify-center bg-background px-4">
 				<div className="flex max-w-md flex-col items-center gap-4 rounded-lg border border-border bg-card p-6 text-center">

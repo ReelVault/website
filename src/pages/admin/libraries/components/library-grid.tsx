@@ -1,5 +1,5 @@
-import { FolderOpen, Plus } from "lucide-react";
 import type { LibraryWithRelations } from "@reelvault/sdk";
+import { FolderOpen, Plus } from "lucide-react";
 import { AppEmptyState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

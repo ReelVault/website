@@ -13,6 +13,9 @@ type CatalogMessage = (inputs?: MessageParams) => string;
  * client chunk.
  */
 const dynamicMessages = {
+	admin_live_active_streams: (inputs) => m.admin_live_active_streams({ viewers: String(inputs?.viewers ?? "") }),
+	admin_live_no_streams: () => m.admin_live_no_streams(),
+	auth_invalid_credentials: () => m.auth_invalid_credentials(),
 	conflict: () => m.conflict(),
 	episode_mismatch: (inputs) =>
 		m.episode_mismatch({
@@ -74,7 +77,7 @@ function getCatalog(): Map<string, CatalogMessage> {
  * contract the old `t()` had.
  */
 export function translateByKey(code: string, params?: MessageParams): string {
-	const normalizedCode = code.replace(/\./g, "_");
+	const normalizedCode = code.replace(/\./g, "_").toLowerCase();
 	const message = getCatalog().get(normalizedCode);
 
 	return message ? message(params) : code;

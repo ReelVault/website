@@ -322,21 +322,21 @@ export function moveFocus(direction: SpatialDirection): boolean {
 	return true;
 }
 
+function onKeyDown(event: KeyboardEvent): void {
+	if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+
+	const direction = DIRECTION_KEYS[event.key];
+	if (!direction) return;
+
+	const target = event.target;
+	if (target instanceof HTMLElement && isFormElement(target)) return;
+
+	if (moveFocus(direction)) {
+		event.preventDefault();
+	}
+}
+
 export function initSpatialNavigation(): () => void {
-	const onKeyDown = (event: KeyboardEvent) => {
-		if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
-
-		const direction = DIRECTION_KEYS[event.key];
-		if (!direction) return;
-
-		const target = event.target;
-		if (target instanceof HTMLElement && isFormElement(target)) return;
-
-		if (moveFocus(direction)) {
-			event.preventDefault();
-		}
-	};
-
 	window.addEventListener("keydown", onKeyDown);
 
 	return () => window.removeEventListener("keydown", onKeyDown);

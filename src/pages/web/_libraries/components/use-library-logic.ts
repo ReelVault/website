@@ -1,6 +1,6 @@
+import type { Library, RequireFields } from "@reelvault/sdk";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import type { Library, RequireFields } from "@reelvault/sdk";
 import { useLibraryGenres } from "@/client/hooks/use-library-metadata";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";

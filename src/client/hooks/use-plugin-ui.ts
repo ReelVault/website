@@ -1,4 +1,3 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
 	PluginDialogContribution,
 	PluginLocalizedText,
@@ -10,6 +9,7 @@ import type {
 	PluginUiManifest,
 	PluginUiManifestResponse,
 } from "@reelvault/sdk/plugin";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";

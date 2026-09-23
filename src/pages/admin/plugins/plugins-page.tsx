@@ -1,8 +1,8 @@
+import type { PluginCatalogEntry } from "@reelvault/sdk";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Puzzle, RefreshCw, Store, Upload } from "lucide-react";
 import { useState } from "react";
-import type { PluginCatalogEntry } from "@reelvault/sdk";
 import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
 import { usePluginCatalog } from "@/client/hooks/use-plugin-catalog";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
@@ -245,6 +245,7 @@ export default function AdminPluginsPage() {
 						<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
 							{plugins.map((plugin) => {
 								const catalogEntry = catalog.find((entry) => entry.id === plugin.id);
+
 								return (
 									<PluginCard
 										key={plugin.id}

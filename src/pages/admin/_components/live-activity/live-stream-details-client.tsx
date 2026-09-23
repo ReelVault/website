@@ -1,5 +1,5 @@
-import { Layers, Monitor } from "lucide-react";
 import type { AdminLiveStreamItem } from "@reelvault/sdk";
+import { Layers, Monitor } from "lucide-react";
 import { m } from "@/paraglide/messages";
 import { formatTimeAgo, formatTimestamp } from "@/utils/format-utils";
 import { browserLabel, clientLabel, osLabel } from "./live-activity-utils";

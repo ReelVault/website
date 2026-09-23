@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { ExternalLink, Home, Zap } from "lucide-react";
+import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { useSetupStatus } from "@/client/hooks/use-setup-status";
 import { RequireAdmin } from "@/components/auth/require-admin";
@@ -101,10 +102,17 @@ function AdminHeader() {
 	const { pathname } = useLocation();
 	const setupStatus = useSetupStatus();
 	const statsQuery = useAdminStats();
+	const { plugins } = useAdminPlugins();
 
 	const segments = pathname.split("/").filter(Boolean);
 	const resourceKey = toAdminResource(segments[1] ?? "dashboard");
 	const subId = segments[2];
+	// Plugin ids are noisy in the breadcrumb — show the display name from the
+	// shared plugins cache when the segment is a plugin id.
+	const breadcrumbId =
+		resourceKey === "plugins" && subId && subId !== "pages"
+			? (plugins.find((plugin) => plugin.id === decodeURIComponent(subId))?.name ?? subId)
+			: (subId ?? "");
 	usePageTitle(`${resourceLabels[resourceKey] ?? resourceKey} (admin)`);
 
 	let apiStatus: Status = "success";
@@ -144,7 +152,7 @@ function AdminHeader() {
 									<BreadcrumbSeparator />
 									<BreadcrumbItem>
 										<BreadcrumbPage className="max-w-48 truncate font-mono text-xs">
-											{subId === "pages" ? (segments[3] ?? m.admin_plugins_singular()) : subId}
+											{subId === "pages" ? (segments[3] ?? m.admin_plugins_singular()) : breadcrumbId}
 										</BreadcrumbPage>
 									</BreadcrumbItem>
 								</>
