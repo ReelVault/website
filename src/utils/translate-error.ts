@@ -31,6 +31,7 @@ const dynamicMessages = {
 	not_found: () => m.not_found(),
 	profile_name_conflict: () => m.profile_name_conflict(),
 	profile_pin_invalid: () => m.profile_pin_invalid(),
+	rate_limit_exceeded: (inputs) => m.rate_limit_exceeded({ retryAfterSeconds: String(inputs?.retryAfterSeconds ?? "") }),
 	request_timeout: () => m.request_timeout(),
 	scan_reason_no_metadata_match: () => m.scan_reason_no_metadata_match(),
 	scan_reason_recognition_failed: () => m.scan_reason_recognition_failed(),

@@ -1,6 +1,8 @@
 import type { SidecarFlavor } from "@reelvault/sdk";
 import { useForm } from "@tanstack/react-form";
-import { FolderPlus } from "lucide-react";
+import { FolderPlus, TriangleAlert } from "lucide-react";
+import { useState } from "react";
+import { getSdkErrorMessage } from "@/client/client";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { AsyncButton } from "@/components/async-button";
 import {
@@ -9,12 +11,12 @@ import {
 	FullscreenDialogHeader,
 	FullscreenDialogTitle,
 } from "@/components/fullscreen-dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { toastError } from "@/utils/toast-utils";
 import type { PathField } from "./library-constants";
 import { createPathField } from "./library-constants";
 import { LibraryPathsSection } from "./library-paths-section";
@@ -28,6 +30,7 @@ interface CreateLibraryFormProps {
 /** TanStack Form pilot (T5): static-shape form — typed fields + submit gating. */
 export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 	const { createLibrary, isCreating: isSubmitting } = useAdminLibraries();
+	const [submitError, setSubmitError] = useState<string>();
 
 	const form = useForm({
 		defaultValues: {
@@ -49,6 +52,7 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 			);
 			if (!value.name.trim() || validPaths.length === 0) return;
 
+			setSubmitError(undefined);
 			try {
 				await createLibrary({
 					name: value.name.trim(),
@@ -58,7 +62,9 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				});
 				onClose();
 			} catch (error) {
-				toastError(m.admin_libraries_create_failed(), error);
+				// The mutation already toasts; the dialog itself must show the reason
+				// inline (e.g. 409 path_conflict) or it looks frozen on failure.
+				setSubmitError(getSdkErrorMessage(error) ?? m.admin_libraries_create_failed());
 			}
 		},
 	});
@@ -120,6 +126,13 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				<form.Field name="sidecarFlavor">
 					{(field) => <SidecarFlavorSelector value={field.state.value} onChange={(next) => field.handleChange(next)} />}
 				</form.Field>
+
+				{submitError && (
+					<Alert variant="destructive">
+						<TriangleAlert />
+						<AlertDescription>{submitError}</AlertDescription>
+					</Alert>
+				)}
 
 				{/* Footer */}
 				<FullscreenDialogFooter className="gap-3 border-border/60 border-t pt-4 sm:justify-end">

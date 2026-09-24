@@ -1,3 +1,4 @@
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { useQuery } from "@tanstack/react-query";
 import { reelvault } from "../client";
 import { authKeys } from "../utils/query-keys";
@@ -14,14 +15,21 @@ export const currentProfileQueryOptions = () => ({
 		return result;
 	},
 	staleTime: 300_000,
+	// A signed-out visitor produces a 401 by design — retrying only doubles the
+	// console noise (and the load) for an answer that will not change.
+	retry: (failureCount: number, error: unknown): boolean => {
+		if (error instanceof ReelVaultError && error.status === 401) return false;
+
+		return failureCount < 1;
+	},
 });
 
-function useCurrentProfile() {
-	return useQuery(currentProfileQueryOptions());
+function useCurrentProfile(enabled = true) {
+	return useQuery({ ...currentProfileQueryOptions(), enabled });
 }
 
-export function useCurrentUser() {
-	const query = useCurrentProfile();
+export function useCurrentUser(options?: { enabled?: boolean }) {
+	const query = useCurrentProfile(options?.enabled ?? true);
 
 	return {
 		user: query.data?.user ?? null,

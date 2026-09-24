@@ -10,10 +10,12 @@ import type {
 	PluginUiManifestResponse,
 } from "@reelvault/sdk/plugin";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "@tanstack/react-router";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { getAppLocale } from "@/utils/locale";
+import { isPublicNoSessionPath } from "@/utils/public-paths";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { getReelVaultApiUrl, reelvault } from "../client";
@@ -36,11 +38,15 @@ export type ResolvedPluginDialog = PluginDialogContribution & { pluginId: string
 export type ResolvedPluginSlot = PluginSlotContribution & { pluginId: string } & PluginLocaleHint;
 
 export function usePluginUiManifest() {
+	const { pathname } = useLocation();
+
 	return useQuery<PluginUiManifestResponse>({
 		queryKey: pluginKeys.uiManifest(),
 		queryFn: async () => await reelvault.plugins.getUiManifest(),
 		staleTime: 300_000,
 		refetchOnWindowFocus: false,
+		// The manifest needs a session — on signed-out-only pages it can only 401.
+		enabled: !isPublicNoSessionPath(pathname),
 	});
 }
 

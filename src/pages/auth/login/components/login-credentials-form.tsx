@@ -38,8 +38,9 @@ export function LoginCredentialsForm({
 	const isNative = isNativeShell();
 	const storedServerUrl = isNative ? getStoredServerUrl() : undefined;
 	// Native validation blocks submit silently; surface a localized hint instead
-	// of the browser's own bubble.
-	const [showRequiredHint, setShowRequiredHint] = useState(false);
+	// of the browser's own bubble. A typeMismatch means the email format (not a
+	// missing field) is the problem, so the hint names it.
+	const [hint, setHint] = useState<"none" | "required" | "email-format">("none");
 
 	const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -64,16 +65,19 @@ export function LoginCredentialsForm({
 			onSubmit={handleSubmit}
 			onInvalid={(event) => {
 				event.preventDefault();
-				setShowRequiredHint(true);
+				const target = event.target;
+				const isEmailFormat = target instanceof HTMLInputElement && target.validity.typeMismatch;
+				setHint(isEmailFormat ? "email-format" : "required");
 			}}
+			onInput={() => setHint("none")}
 			className="mt-10 flex flex-col gap-6"
 			name="login"
 			autoComplete="on"
 		>
 			{error && <AppErrorState title={m.auth_authorization_error()} error={error} />}
-			{showRequiredHint && (
+			{hint !== "none" && (
 				<p role="alert" className="text-destructive text-sm">
-					{m.auth_login_required_hint()}
+					{hint === "email-format" ? m.auth_login_email_format_hint() : m.auth_login_required_hint()}
 				</p>
 			)}
 			<FieldGroup>

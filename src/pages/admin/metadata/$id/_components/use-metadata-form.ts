@@ -24,6 +24,20 @@ export const ALL_LOCKABLE_FIELDS = [
 type MetadataQueryData = NonNullable<ReturnType<typeof useAdminMetadataEditor>["metadataQuery"]["data"]>;
 type UpdateMutation = ReturnType<typeof useAdminMetadataEditor>["updateMutation"];
 
+const ISO_DATE_PREFIX_PATTERN = /^\d{4}-\d{2}-\d{2}/;
+const YEAR_ONLY_PATTERN = /^\d{4}$/;
+
+/** `<input type="date">` rejects anything but a real YYYY-MM-DD — a provider
+ * value like "1994" or "" would silently blank the field and then trip save
+ * validation, so normalize the seed before it reaches the form. */
+function normalizeReleaseDateSeed(value: string): string {
+	if (ISO_DATE_PREFIX_PATTERN.test(value)) return value.slice(0, 10);
+
+	if (YEAR_ONLY_PATTERN.test(value)) return `${value}-01-01`;
+
+	return "";
+}
+
 /**
  * Form seed built straight from the loaded metadata. `useForm` treats this as
  * the baseline: because the same object shape is passed on every render,
@@ -42,7 +56,7 @@ export function seedFromMetadata(metadata: MetadataQueryData): {
 			originalTitle: metadata.originalTitle ?? "",
 			tagline: metadata.tagline ?? "",
 			status: metadata.status ?? "",
-			releaseDate: metadata.releaseDate.slice(0, 10),
+			releaseDate: normalizeReleaseDateSeed(metadata.releaseDate),
 			budget: metadata.budget?.toString() ?? "",
 			revenue: metadata.revenue?.toString() ?? "",
 		},
@@ -104,7 +118,10 @@ export function useMetadataForm(metadata: MetadataQueryData, updateMutation: Upd
 	};
 
 	const handleSave = async () => {
-		if (!(basic.title.trim() && basic.releaseDate)) {
+		// An empty date is only an error when the user created it — a record that
+		// never had one stays savable (the server accepts an empty string).
+		const releaseDateUnchanged = basic.releaseDate === normalizeReleaseDateSeed(metadata.releaseDate);
+		if (!(basic.title.trim() && (basic.releaseDate || releaseDateUnchanged))) {
 			toast.error(m.admin_metadata_title_date_required());
 
 			return;

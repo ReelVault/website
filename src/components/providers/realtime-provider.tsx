@@ -1,4 +1,5 @@
 import { type QueryKey, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "@tanstack/react-router";
 import { type ReactNode, startTransition, useEffect, useRef } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { realtimeConnection, setRealtimeConnectionAllowed, useRealtimeEvent } from "@/client/hooks/use-realtime";
@@ -13,6 +14,7 @@ import {
 	seasonKeys,
 } from "@/client/utils/query-keys";
 import { m } from "@/paraglide/messages";
+import { isPublicNoSessionPath } from "@/utils/public-paths";
 import { toast } from "@/utils/toast-facade";
 
 // A worker-heavy operation (library scan, metadata refresh) emits one
@@ -23,7 +25,10 @@ const INVALIDATION_COALESCE_MS = 400;
 
 export function RealtimeProvider({ children }: { children: ReactNode }) {
 	const queryClient = useQueryClient();
-	const { profile, isAuthenticated, isLoading } = useCurrentUser();
+	const { pathname } = useLocation();
+	// On signed-out-only pages the /v1/me probe is guaranteed to 401 — skip it
+	// instead of logging noise the user can do nothing about.
+	const { profile, isAuthenticated, isLoading } = useCurrentUser({ enabled: !isPublicNoSessionPath(pathname) });
 
 	const pendingInvalidations = useRef(new Map<string, QueryKey>());
 	const invalidationTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

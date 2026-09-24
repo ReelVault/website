@@ -3,9 +3,12 @@ import { Link } from "@tanstack/react-router";
 import { AlertTriangleIcon, HomeIcon, RefreshCwIcon } from "@/components/router/route-screen-icons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
+import { translateError } from "@/utils/translate-error";
 
 export function RouteErrorScreen({ error, reset }: ErrorComponentProps) {
-	const errorMessage = error instanceof Error ? error.message : m.components_route_error_description();
+	// Rendered for route-level loader/render failures — show a human message
+	// (e.g. translated 429 with retry seconds), never the raw technical string.
+	const errorMessage = translateError(error, m.components_route_error_description());
 
 	return (
 		<main className="relative flex min-h-[60vh] w-full flex-col items-center justify-center p-6 text-foreground">

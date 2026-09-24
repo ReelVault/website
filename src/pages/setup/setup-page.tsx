@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { getSdkErrorMessage } from "@/client/client";
 import { useCreateAdmin } from "@/client/hooks/use-setup";
 import { useIsSetupRequired } from "@/client/hooks/use-setup-status";
 import { authKeys } from "@/client/utils/query-keys";
@@ -120,8 +121,15 @@ export default function SetupPage() {
 
 	const update = (field: keyof SetupForm, value: string) => {
 		setError(undefined);
+		if (setupMutation.isError) setupMutation.reset();
 		setFieldErrors((current) => (current[field] ? { ...current, [field]: undefined } : current));
 		setForm((current) => ({ ...current, [field]: value }));
+	};
+
+	// A stale mutation error must not follow the user across steps — the banner
+	// would otherwise pin "server configuration failed" onto unrelated steps.
+	const resetMutationError = () => {
+		if (setupMutation.isError) setupMutation.reset();
 	};
 
 	const validateStep = () => {
@@ -196,13 +204,24 @@ export default function SetupPage() {
 		detach(submitSetup());
 	};
 
+	const mutationErrorDescription = (): string => {
+		if (setupMutation.isError) {
+			return getSdkErrorMessage(setupMutation.error) ?? (tokenRequired ? m.setup_check_token_hint() : m.setup_review_details_hint());
+		}
+
+		return tokenRequired ? m.setup_check_token_hint() : m.setup_review_details_hint();
+	};
+
 	const stepFooter = (
 		<div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
 			<Button
 				type="button"
 				variant="outline"
 				disabled={!canGoBack || setupMutation.isPending}
-				onClick={() => setCurrentStep(stepIndex - 1)}
+				onClick={() => {
+					resetMutationError();
+					setCurrentStep(stepIndex - 1);
+				}}
 			>
 				<ArrowLeft className="size-4" /> {m.common_back()}
 			</Button>
@@ -229,7 +248,7 @@ export default function SetupPage() {
 					{(error !== undefined || setupMutation.isError) && (
 						<AppErrorState
 							title={setupMutation.isError ? m.setup_failed_to_configure() : m.setup_fill_form()}
-							description={error ?? (tokenRequired ? m.setup_check_token_hint() : m.setup_review_details_hint())}
+							description={error ?? mutationErrorDescription()}
 						/>
 					)}
 
