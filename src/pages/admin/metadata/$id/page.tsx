@@ -33,35 +33,56 @@ const MetadataArtworkDialog = lazy(async () => ({
 }));
 const MergeMetadataDialog = lazy(async () => ({ default: (await import("./_components/merge-metadata-dialog")).MergeMetadataDialog }));
 
+type MetadataEditorController = ReturnType<typeof useAdminMetadataEditor>;
+type MetadataEditorData = NonNullable<MetadataEditorController["metadataQuery"]["data"]>;
+
 export default function MetadataEditor() {
 	const { id: metadataId } = useParams({ from: "/admin/metadata/$id" });
 	const navigate = useNavigate();
-	const [dialogOpen, setDialogOpen] = useState(false);
-	const [dialogType, setDialogType] = useState<"poster" | "backdrop">("poster");
-	const [identifyOpen, setIdentifyOpen] = useState(false);
-	const [mergeOpen, setMergeOpen] = useState(false);
 
-	const { metadataQuery, updateMutation, deleteMutation, refreshMutation, refreshImagesMutation, deleteImageMutation, mergeMutation } =
-		useAdminMetadataEditor(metadataId, () => detach(() => navigate({ to: "/admin/metadata", replace: true })));
-
-	const { basic, overview, lockedFields, setField, toggleFieldLock, handleLockAll, handleUnlockAll, handleSave } = useMetadataForm(
-		metadataQuery.data,
-		updateMutation,
-	);
+	const editor = useAdminMetadataEditor(metadataId, () => detach(() => navigate({ to: "/admin/metadata", replace: true })));
 
 	if (!metadataId) {
 		return <EditorMessage message={m.admin_metadata_no_identifier_back_to_list()} />;
 	}
 
-	if (metadataQuery.isLoading) {
+	if (editor.metadataQuery.isLoading) {
 		return <MetadataEditorSkeleton />;
 	}
 
-	if (metadataQuery.isError || !metadataQuery.data) {
+	if (editor.metadataQuery.isError || !editor.metadataQuery.data) {
 		return <EditorMessage message={m.admin_metadata_failed_to_fetch()} />;
 	}
 
-	const metadata = metadataQuery.data;
+	const metadata = editor.metadataQuery.data;
+
+	// Remount on id/version change so the form is always seeded synchronously from
+	// the loaded metadata (TanStack Form `update` must never race an async reset).
+	const versionKey = new Date(metadata.updatedAt).getTime();
+
+	return <MetadataEditorContent key={`${metadata.id}:${versionKey}`} metadataId={metadataId} metadata={metadata} editor={editor} />;
+}
+
+function MetadataEditorContent({
+	metadataId,
+	metadata,
+	editor,
+}: {
+	metadataId: string;
+	metadata: MetadataEditorData;
+	editor: MetadataEditorController;
+}) {
+	const [dialogOpen, setDialogOpen] = useState(false);
+	const [dialogType, setDialogType] = useState<"poster" | "backdrop">("poster");
+	const [identifyOpen, setIdentifyOpen] = useState(false);
+	const [mergeOpen, setMergeOpen] = useState(false);
+
+	const { updateMutation, deleteMutation, refreshMutation, refreshImagesMutation, deleteImageMutation, mergeMutation } = editor;
+
+	const { basic, overview, lockedFields, setField, toggleFieldLock, handleLockAll, handleUnlockAll, handleSave } = useMetadataForm(
+		metadata,
+		updateMutation,
+	);
 
 	const openArtworkDialog = (type: "poster" | "backdrop") => {
 		setDialogType(type);

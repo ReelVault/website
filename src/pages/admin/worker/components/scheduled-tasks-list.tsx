@@ -2,6 +2,7 @@ import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from
 import { lazy, Suspense, useState } from "react";
 import { LazyRender } from "@/components/lazy-render";
 import { useDebounce } from "@/hooks/use-debounce";
+import type { WorkerRunParams } from "./scheduled-task-actions";
 import { ScheduledTasksCategoryGroup } from "./scheduled-tasks-category-group";
 import { ScheduledTasksFilters } from "./scheduled-tasks-filters";
 import { getScheduledTaskMeta } from "./worker-utils";
@@ -24,7 +25,7 @@ const PREFERRED_CATEGORIES_SET = new Set<string>(PREFERRED_CATEGORIES);
 interface ScheduledTasksListProps {
 	tasks: WorkerSummary[];
 	activeOperations?: WorkerOperation[];
-	onRunTask: (taskId: string) => Promise<unknown>;
+	onRunTask: (params: WorkerRunParams) => Promise<unknown>;
 	onCancelTask: (taskId: string) => Promise<unknown>;
 	onRunCategory: (category: WorkerCategory) => Promise<unknown>;
 	onUpdateTriggers: (taskId: string, triggers: TaskTrigger[]) => Promise<unknown>;

@@ -252,6 +252,7 @@ export default function AdminPluginsPage() {
 										plugin={plugin}
 										isBusy={isBusy}
 										onOpenDetails={catalogEntry ? () => setSelectedEntry(catalogEntry) : undefined}
+										onUninstall={catalogEntry ? undefined : () => detach(uninstallPlugin(plugin.id))}
 										onEnable={(id) => detach(enablePlugin(id))}
 										onDisable={(id) => detach(disablePlugin(id))}
 										onReload={(id) => detach(reloadPlugin(id))}

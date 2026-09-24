@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { Check, Eye, EyeOff, Minus, Plus, RotateCcw, Search, SlidersHorizontal, Subtitles, Timer } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import {
 	FullscreenDialog,
 	FullscreenDialogContent,
@@ -245,9 +245,6 @@ export function PlayerAudioSubtitlesDialog() {
 		setSubtitleOffset,
 		adjustSubtitleOffset,
 	} = usePlayerSubtitles();
-
-	// Stable render prop for the shortcut hint — avoids unstable inline components.
-	const renderKbd = useCallback((chunks: string) => <Kbd>{chunks}</Kbd>, []);
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<"media" | "equalizer" | "styling" | "sync" | "search">("media");
@@ -697,7 +694,10 @@ export function PlayerAudioSubtitlesDialog() {
 									<Timer className="size-4 text-primary" />
 									<span>{m.player_shortcuts_on_the_fly()}</span>
 								</div>
-								<p className="mt-1 leading-relaxed">{m.player_shortcuts_subtitle_timing_hint({ g: renderKbd, h: renderKbd })}</p>
+								<p className="mt-1 leading-relaxed">
+									{m.player_shortcuts_subtitle_timing_press()} <Kbd>{"G"}</Kbd> {m.player_shortcuts_subtitle_timing_advance()}{" "}
+									<Kbd>{"H"}</Kbd> {m.player_shortcuts_subtitle_timing_delay()}
+								</p>
 							</div>
 						</div>
 					</TabsContent>

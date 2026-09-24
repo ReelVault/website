@@ -1,4 +1,5 @@
 import { ArrowRight, Lock, QrCode as QrCodeIcon, Server, User } from "lucide-react";
+import { useState } from "react";
 import { getStoredServerUrl, setStoredServerUrl } from "@/client/client";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
@@ -36,6 +37,9 @@ export function LoginCredentialsForm({
 	// URL heuristics in client.ts — the user has to point at the media server.
 	const isNative = isNativeShell();
 	const storedServerUrl = isNative ? getStoredServerUrl() : undefined;
+	// Native validation blocks submit silently; surface a localized hint instead
+	// of the browser's own bubble.
+	const [showRequiredHint, setShowRequiredHint] = useState(false);
 
 	const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -56,8 +60,22 @@ export function LoginCredentialsForm({
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-6" name="login" autoComplete="on">
+		<form
+			onSubmit={handleSubmit}
+			onInvalid={(event) => {
+				event.preventDefault();
+				setShowRequiredHint(true);
+			}}
+			className="mt-10 flex flex-col gap-6"
+			name="login"
+			autoComplete="on"
+		>
 			{error && <AppErrorState title={m.auth_authorization_error()} error={error} />}
+			{showRequiredHint && (
+				<p role="alert" className="text-destructive text-sm">
+					{m.auth_login_required_hint()}
+				</p>
+			)}
 			<FieldGroup>
 				{isNative && (
 					<Field>

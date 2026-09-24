@@ -13,7 +13,7 @@ export default function GenreByIdPage() {
 	return (
 		<TaxonomyPage
 			icon={Clapperboard}
-			taxonomyLabel="Gatunek"
+			taxonomyLabel={m.common_genre_word()}
 			sectionTitle={m.web_titles_in_genre()}
 			errorMessage={m.web_genre_fetch_failed()}
 			taxonomyQuery={taxonomyQuery}

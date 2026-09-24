@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { m } from "@/paraglide/messages";
+import type { WorkerRunParams } from "./scheduled-task-actions";
 import type { WorkerTotals } from "./worker-queue-operations-tab";
 import { WorkerScheduledTasksTab } from "./worker-scheduled-tasks-tab";
 import type { WorkerStatsItem } from "./worker-stats-grid";
@@ -59,7 +60,7 @@ export function WorkerTabsSection({
 	autoRefresh: boolean;
 	tasks: WorkerSummary[];
 	tasksStatus: { isLoading: boolean; isError: boolean };
-	runTask: (taskId: string) => Promise<unknown>;
+	runTask: (params: WorkerRunParams) => Promise<unknown>;
 	runningTaskId?: string;
 	cancelTask: (taskId: string) => Promise<unknown>;
 	cancellingTaskId?: string;

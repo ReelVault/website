@@ -35,7 +35,7 @@ export function CollectionTimelineItem({ movie, index }: CollectionTimelineItemP
 						<div className="min-w-0 lg:pt-3">
 							<div className="flex flex-wrap items-center gap-3 text-primary text-xs uppercase tracking-wider">
 								<span className="lg:hidden">{String(index + 1).padStart(2, "0")}</span>
-								<span>{movie.type === "movie" ? "Film" : "Serial"}</span>
+								<span>{movie.type === "movie" ? m.common_movie_word() : m.common_series_word()}</span>
 								<Separator orientation="vertical" className="h-4" />
 								<span>{getYearFromDate(movie.releaseDate) || m.web_year_unknown()}</span>
 								<Badge variant="secondary" className="gap-1">

@@ -80,7 +80,7 @@ export default function AdminPeoplePage() {
 				}
 			/>
 
-			<AdminSection title="Zindeksowane osoby" description={m.admin_people_imported_database()}>
+			<AdminSection title={m.admin_people_indexed_people()} description={m.admin_people_imported_database()}>
 				{peopleContent}
 			</AdminSection>
 		</div>

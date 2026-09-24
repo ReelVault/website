@@ -50,7 +50,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 						<div className="flex flex-wrap items-center gap-1.5">
 							<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 text-[11px] capitalize">
 								{isMovie ? <Clapperboard className="size-3" /> : <Tv className="size-3" />}
-								<span>{isMovie ? "Film" : "Serial"}</span>
+								<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 							</Badge>
 							{releaseYear && (
 								<Badge variant="outline" size="sm" className="font-mono text-[10px]">

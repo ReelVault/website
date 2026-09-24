@@ -37,34 +37,48 @@ function NumberSettingInput({
 	disabled?: boolean | undefined;
 }) {
 	const [draft, setDraft] = useState(initial);
+	const [isInvalid, setIsInvalid] = useState(false);
 
 	const commit = () => {
 		const trimmed = draft.trim();
 		if (trimmed === "" || !Number.isFinite(Number(trimmed))) {
 			setDraft(initial);
+			setIsInvalid(true);
 
 			return;
 		}
 
+		setIsInvalid(false);
 		onCommit(Number(trimmed));
 	};
 
 	return (
-		<Input
-			id={id}
-			type="number"
-			value={draft}
-			onChange={(event) => setDraft(event.target.value)}
-			onBlur={commit}
-			onKeyDown={(event) => {
-				if (event.key === "Enter") {
-					commit();
-					event.currentTarget.blur();
-				}
-			}}
-			disabled={disabled}
-			className="min-w-0 flex-1 text-right text-xs sm:w-32 sm:flex-none"
-		/>
+		<div className="flex flex-col items-stretch gap-1 sm:items-end">
+			<Input
+				id={id}
+				type="number"
+				value={draft}
+				onChange={(event) => {
+					setDraft(event.target.value);
+					setIsInvalid(false);
+				}}
+				onBlur={commit}
+				onKeyDown={(event) => {
+					if (event.key === "Enter") {
+						commit();
+						event.currentTarget.blur();
+					}
+				}}
+				disabled={disabled}
+				aria-invalid={isInvalid}
+				className="min-w-0 flex-1 text-right text-xs sm:w-32 sm:flex-none"
+			/>
+			{isInvalid && (
+				<p role="alert" className="text-[11px] text-destructive">
+					{m.admin_settings_number_invalid()}
+				</p>
+			)}
+		</div>
 	);
 }
 

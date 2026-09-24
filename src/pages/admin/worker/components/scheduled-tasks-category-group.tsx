@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import type { WorkerRunParams } from "./scheduled-task-actions";
 import { ScheduledTaskCard } from "./scheduled-task-card";
 
 export const CATEGORY_NAMES: Record<string, { title: string; description: string }> = {
@@ -58,7 +59,7 @@ interface ScheduledTasksCategoryGroupProps {
 	runningTaskId?: string;
 	cancellingTaskId?: string;
 	runningCategoryId?: string;
-	onRunTask: (taskId: string) => Promise<unknown>;
+	onRunTask: (params: WorkerRunParams) => Promise<unknown>;
 	onCancelTask: (taskId: string) => Promise<unknown>;
 	onRunCategory: (category: WorkerCategory) => Promise<unknown>;
 	onConfigureTriggers: (taskId: string) => void;
@@ -132,7 +133,7 @@ export function ScheduledTasksCategoryGroup({
 								matchingOp={activeOperationsByType.get(task.id)}
 								runningTaskId={runningTaskId}
 								cancellingTaskId={cancellingTaskId}
-								onRunTask={(taskId) => detach(onRunTask(taskId))}
+								onRunTask={(params) => detach(onRunTask(params))}
 								onCancelTask={(taskId) => detach(onCancelTask(taskId))}
 								onConfigureTriggers={onConfigureTriggers}
 							/>

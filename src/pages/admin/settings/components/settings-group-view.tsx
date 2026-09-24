@@ -21,13 +21,51 @@ function resolveFieldValue(fieldValue: unknown, fallback: unknown): unknown {
 	return fieldValue ?? fallback;
 }
 
-function buildInitial(items: SystemSettingItemView[]): Record<string, unknown> {
+/**
+ * Setting keys contain dots (`system.resources.monitoringEnabled`), which
+ * TanStack Form interprets as nested paths. Build the baseline nested too, so
+ * field reads/writes and the dirty check all resolve the same location.
+ */
+export function buildInitial(items: SystemSettingItemView[]): Record<string, unknown> {
 	const initial: Record<string, unknown> = {};
 	for (const item of items) {
-		initial[item.key] = item.value;
+		setNestedValue(initial, item.key.split("."), item.value);
 	}
 
 	return initial;
+}
+
+/** Reads a dotted setting key from the nested form values. */
+export function readItemValue(values: Record<string, unknown>, key: string): unknown {
+	let cursor: unknown = values;
+	for (const segment of key.split(".")) {
+		if (!isRecord(cursor)) return undefined;
+
+		cursor = cursor[segment];
+	}
+
+	return cursor;
+}
+
+function setNestedValue(target: Record<string, unknown>, path: string[], value: unknown): void {
+	let cursor = target;
+	for (const key of path.slice(0, -1)) {
+		const next = cursor[key];
+		if (isRecord(next)) {
+			cursor = next;
+		} else {
+			const created: Record<string, unknown> = {};
+			cursor[key] = created;
+			cursor = created;
+		}
+	}
+
+	const last = path.at(-1);
+	if (last !== undefined) cursor[last] = value;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /** TanStack Form pilot (T5): dynamic-key form — one field per setting, dirty diff at submit. */
@@ -49,7 +87,7 @@ export function SettingsGroupView({
 		onSubmit: async ({ value }) => {
 			const changed: Record<string, unknown> = {};
 			for (const item of items) {
-				const current = value[item.key];
+				const current = readItemValue(value, item.key);
 				if (current !== undefined && isItemModified(item, current)) {
 					changed[item.key] = current;
 				}
@@ -121,7 +159,13 @@ export function SettingsGroupView({
 
 				<div className="flex items-center gap-2">
 					<form.Subscribe
-						selector={(state) => items.some((item) => state.values[item.key] !== undefined && isItemModified(item, state.values[item.key]))}
+						selector={(state) =>
+							items.some((item) => {
+								const current = readItemValue(state.values, item.key);
+
+								return current !== undefined && isItemModified(item, current);
+							})
+						}
 					>
 						{(hasChanges) => (
 							<>

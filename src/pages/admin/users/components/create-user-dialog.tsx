@@ -1,4 +1,5 @@
 import { UserPlus } from "lucide-react";
+import { useState } from "react";
 import { useDialogForm } from "@/client/hooks/use-dialog-form";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,13 @@ export function CreateUserDialog({
 		password: "",
 		role: "user",
 	});
+	// Native validation blocks submit silently; surface a localized hint instead.
+	const [showRequiredHint, setShowRequiredHint] = useState(false);
+
+	const updateField = <K extends keyof typeof formState>(key: K, value: (typeof formState)[K]) => {
+		setShowRequiredHint(false);
+		setFormState((prev) => ({ ...prev, [key]: value }));
+	};
 
 	const submitCreate = () => {
 		if (isCreating) return;
@@ -61,8 +69,17 @@ export function CreateUserDialog({
 						event.preventDefault();
 						submitCreate();
 					}}
+					onInvalid={(event) => {
+						event.preventDefault();
+						setShowRequiredHint(true);
+					}}
 					className="flex flex-col gap-5"
 				>
+					{showRequiredHint && (
+						<p role="alert" className="text-destructive text-sm">
+							{m.admin_users_invalid_fields_hint()}
+						</p>
+					)}
 					<Field className="gap-2">
 						<Label htmlFor="create-user-name">{m.common_name()}</Label>
 						<Input
@@ -71,7 +88,7 @@ export function CreateUserDialog({
 							autoComplete="name"
 							required
 							value={formState.name}
-							onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
+							onChange={(event) => updateField("name", event.target.value)}
 							maxLength={100}
 						/>
 					</Field>
@@ -84,7 +101,7 @@ export function CreateUserDialog({
 							autoComplete="email"
 							required
 							value={formState.email}
-							onChange={(event) => setFormState((prev) => ({ ...prev, email: event.target.value }))}
+							onChange={(event) => updateField("email", event.target.value)}
 						/>
 					</Field>
 					<Field className="gap-2">
@@ -97,12 +114,12 @@ export function CreateUserDialog({
 							required
 							minLength={8}
 							value={formState.password}
-							onChange={(event) => setFormState((prev) => ({ ...prev, password: event.target.value }))}
+							onChange={(event) => updateField("password", event.target.value)}
 						/>
 					</Field>
 					<Field className="gap-2">
 						<FieldLabel>{m.admin_users_role_label()}</FieldLabel>
-						<Select value={formState.role} onValueChange={(value) => value !== null && setFormState((prev) => ({ ...prev, role: value }))}>
+						<Select value={formState.role} onValueChange={(value) => value !== null && updateField("role", value)}>
 							<SelectTrigger className="h-9 w-full">
 								<SelectValue />
 							</SelectTrigger>

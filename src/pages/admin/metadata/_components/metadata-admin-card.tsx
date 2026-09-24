@@ -93,7 +93,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete }: 
 					<div className="flex flex-wrap items-center gap-1.5">
 						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 font-medium text-[10px] capitalize">
 							{isMovie ? <Clapperboard className="size-2.5" /> : <Tv className="size-2.5" />}
-							<span>{isMovie ? "Film" : "Serial"}</span>
+							<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 						</Badge>
 						<span className="font-bold text-[10px] text-muted-foreground tabular-nums">{year}</span>
 						{rating !== "—" && (

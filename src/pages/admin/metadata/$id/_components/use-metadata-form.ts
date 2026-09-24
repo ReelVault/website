@@ -1,9 +1,8 @@
 import { useForm, useSelector } from "@tanstack/react-form";
-import { useEffect } from "react";
 import type { useAdminMetadataEditor } from "@/client/hooks/use-admin-metadata-editor";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
-import { emptyMetadataForm, type MetadataBasicFields, type MetadataFormState } from "./types";
+import type { MetadataBasicFields, MetadataFormState } from "./types";
 
 export const ALL_LOCKABLE_FIELDS = [
 	"title",
@@ -25,18 +24,33 @@ export const ALL_LOCKABLE_FIELDS = [
 type MetadataQueryData = NonNullable<ReturnType<typeof useAdminMetadataEditor>["metadataQuery"]["data"]>;
 type UpdateMutation = ReturnType<typeof useAdminMetadataEditor>["updateMutation"];
 
-function pickBasic(form: typeof emptyMetadataForm): MetadataBasicFields {
-	const { title, sortTitle, numberingMode, originalTitle, tagline, status, releaseDate, budget, revenue } = form;
-
-	return { title, sortTitle, numberingMode, originalTitle, tagline, status, releaseDate, budget, revenue };
+/**
+ * Form seed built straight from the loaded metadata. `useForm` treats this as
+ * the baseline: because the same object shape is passed on every render,
+ * `formApi.update` sees no diff and never overwrites in-progress edits.
+ */
+export function seedFromMetadata(metadata: MetadataQueryData): {
+	basic: MetadataBasicFields;
+	overview: string;
+	lockedFields: string[];
+} {
+	return {
+		basic: {
+			title: metadata.title,
+			sortTitle: metadata.sortTitle ?? "",
+			numberingMode: metadata.numberingMode ?? "",
+			originalTitle: metadata.originalTitle ?? "",
+			tagline: metadata.tagline ?? "",
+			status: metadata.status ?? "",
+			releaseDate: metadata.releaseDate.slice(0, 10),
+			budget: metadata.budget?.toString() ?? "",
+			revenue: metadata.revenue?.toString() ?? "",
+		},
+		overview: metadata.overview ?? "",
+		lockedFields: metadata.lockedFields,
+	};
 }
 
-/**
- * Form state on TanStack Form (T5 pilot). Public API unchanged for the sections.
- * Slicing: three separate `useStore` selectors — editing `overview` changes the identity
- * of `overview` only, so the basic/lockedFields sections do not re-render (React Compiler
- * compares props per section).
- */
 function toNumberingMode(value: string): "absolute" | "seasonal" | null {
 	if (value === "absolute") return "absolute";
 
@@ -45,35 +59,18 @@ function toNumberingMode(value: string): "absolute" | "seasonal" | null {
 	return null;
 }
 
-export function useMetadataForm(metadata: MetadataQueryData | undefined, updateMutation: UpdateMutation) {
+/**
+ * Form state on TanStack Form (T5 pilot). Public API unchanged for the sections.
+ * The editor mounts this hook only once the metadata is loaded (the page gates
+ * on the query), so the form starts seeded — no async `reset` effect.
+ * Slicing: three separate `useSelector` selectors — editing `overview` changes the identity
+ * of `overview` only, so the basic/lockedFields sections do not re-render (React Compiler
+ * compares props per section).
+ */
+export function useMetadataForm(metadata: MetadataQueryData, updateMutation: UpdateMutation) {
 	const form = useForm({
-		defaultValues: {
-			basic: pickBasic(emptyMetadataForm),
-			overview: "",
-			lockedFields: [] as string[],
-		},
+		defaultValues: seedFromMetadata(metadata),
 	});
-
-	// Metadata arrives async — re-seed the form when it lands or on navigation.
-	useEffect(() => {
-		if (!metadata) return;
-
-		form.reset({
-			basic: {
-				title: metadata.title,
-				sortTitle: metadata.sortTitle ?? "",
-				numberingMode: metadata.numberingMode ?? "",
-				originalTitle: metadata.originalTitle ?? "",
-				tagline: metadata.tagline ?? "",
-				status: metadata.status ?? "",
-				releaseDate: metadata.releaseDate.slice(0, 10),
-				budget: metadata.budget?.toString() ?? "",
-				revenue: metadata.revenue?.toString() ?? "",
-			},
-			overview: metadata.overview ?? "",
-			lockedFields: metadata.lockedFields,
-		});
-	}, [metadata, form]);
 
 	// Per-slice selectors keep the editing isolation the useState slices provided.
 	const basic = useSelector(form.store, (state) => state.values.basic);

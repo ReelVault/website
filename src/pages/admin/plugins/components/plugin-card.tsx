@@ -1,6 +1,6 @@
 import type { PluginRuntimeStatus } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, Sliders, XCircle } from "lucide-react";
+import { Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, Sliders, Trash2, XCircle } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
@@ -12,12 +12,14 @@ interface PluginCardProps {
 	isBusy: boolean;
 	/** Present when the plugin exists in a catalog repository — opens the details dialog with its version history. */
 	onOpenDetails?: () => void;
+	/** Present for installed plugins without a catalog entry (side-loaded archives). */
+	onUninstall?: (() => void) | undefined;
 	onEnable: (id: string) => void;
 	onDisable: (id: string) => void;
 	onReload: (id: string) => void;
 }
 
-export function PluginCard({ plugin, isBusy, onOpenDetails, onEnable, onDisable, onReload }: PluginCardProps) {
+export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnable, onDisable, onReload }: PluginCardProps) {
 	const isEnabled = plugin.state === "enabled";
 	const isFailed = plugin.state === "failed" || Boolean(plugin.error);
 
@@ -103,6 +105,26 @@ export function PluginCard({ plugin, isBusy, onOpenDetails, onEnable, onDisable,
 							<Info className="size-3.5" />
 							{m.admin_plugins_catalog_details()}
 						</Button>
+					)}
+
+					{onUninstall && (
+						<ConfirmAction
+							trigger={
+								<Button
+									variant="outline"
+									size="sm"
+									disabled={isBusy}
+									className="gap-1.5 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
+								>
+									<Trash2 className="size-3.5" />
+									{m.admin_plugins_catalog_uninstall()}
+								</Button>
+							}
+							title={m.admin_plugins_catalog_uninstall_confirm_title({ name: plugin.name })}
+							description={m.admin_plugins_catalog_uninstall_confirm_description()}
+							confirmLabel={m.admin_plugins_catalog_uninstall()}
+							onConfirm={onUninstall}
+						/>
 					)}
 
 					{isEnabled ? (

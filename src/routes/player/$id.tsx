@@ -3,6 +3,7 @@ import { mediaFileQueryOptions } from "@/client/hooks/use-media";
 import { playbackViewQueryOptions } from "@/client/hooks/use-playback-session";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
+import { coerceSearchBoolean } from "@/types/search-params";
 import { ensureAuthenticated } from "../-auth-guard";
 
 const PlayerLayout = lazyRouteComponent(async () => {
@@ -12,7 +13,7 @@ const PlayerLayout = lazyRouteComponent(async () => {
 });
 
 // zod-free validateSearch — see src/types/search-params.ts for the rationale.
-// Boolean() matches the previous z.coerce.boolean() coercion exactly.
+// Booleans arrive as plain URL strings, so coerce the canonical spellings.
 interface PlayerSearch {
 	collection?: boolean;
 	collectionId?: string;
@@ -20,7 +21,7 @@ interface PlayerSearch {
 
 function playerSearchValidator(search: Record<string, unknown>): PlayerSearch {
 	return {
-		collection: search.collection !== undefined ? Boolean(search.collection) : undefined,
+		collection: coerceSearchBoolean(search.collection),
 		collectionId: typeof search.collectionId === "string" ? search.collectionId : undefined,
 	};
 }

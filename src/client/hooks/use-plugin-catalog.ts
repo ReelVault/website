@@ -87,6 +87,16 @@ export function usePluginCatalog() {
 		onSuccess: async (result) => {
 			await invalidateCatalogViews();
 			toast.success(m.admin_plugins_catalog_toast_installed(result));
+
+			// Catalog installs enable the plugin immediately; a load failure (e.g. a
+			// missing API token) would otherwise stay silent in the installed list.
+			const installed = await reelvault.admin.getPlugins();
+			const status = installed.find((plugin) => plugin.id === result.pluginId);
+			if (status?.state === "failed") {
+				toast.warning(m.admin_plugins_install_failed_to_start({ name: status.name }), {
+					description: status.error,
+				});
+			}
 		},
 		onError: (error) => {
 			toastError(m.admin_plugins_catalog_install_failed(), error, m.toast_plugins_unexpected_error());

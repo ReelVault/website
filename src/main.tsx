@@ -6,6 +6,7 @@ import { NotFoundScreen } from "./components/router/not-found-screen";
 import { RouteErrorScreen } from "./components/router/route-error-screen";
 import { queryClient } from "./lib/query-client";
 import { routeTree } from "./routeTree.gen";
+import { parseSearchParams, stringifySearchParams } from "./types/search-params";
 
 // Create a new router instance with production-grade defaults
 const router = createRouter({
@@ -19,6 +20,8 @@ const router = createRouter({
 	defaultViewTransition: true,
 	defaultNotFoundComponent: NotFoundScreen,
 	defaultErrorComponent: RouteErrorScreen,
+	parseSearch: parseSearchParams,
+	stringifySearch: stringifySearchParams,
 });
 
 declare module "@tanstack/react-router" {

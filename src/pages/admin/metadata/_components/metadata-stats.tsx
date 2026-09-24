@@ -37,7 +37,13 @@ export function MetadataStats({
 				icon={Clapperboard}
 				tone="success"
 			/>
-			<AdminStatCard label="Seriale" value={shows} description={m.admin_metadata_series_episodes()} icon={Tv} tone="default" />
+			<AdminStatCard
+				label={m.common_series_word()}
+				value={shows}
+				description={m.admin_metadata_series_episodes()}
+				icon={Tv}
+				tone="default"
+			/>
 			<AdminStatCard
 				label={m.admin_metadata_low_match()}
 				value={lowConfidence}

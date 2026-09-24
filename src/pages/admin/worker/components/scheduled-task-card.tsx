@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { m } from "@/paraglide/messages";
 import { formatTimeAgo } from "@/utils/format-utils";
-import { ScheduledTaskActions } from "./scheduled-task-actions";
+import { ScheduledTaskActions, type WorkerRunParams } from "./scheduled-task-actions";
 import { ScheduledTaskTriggersLine } from "./scheduled-task-triggers-line";
 import { formatMsDuration, getScheduledTaskMeta } from "./worker-utils";
 
@@ -53,7 +53,7 @@ interface ScheduledTaskCardProps {
 	matchingOp?: WorkerOperation;
 	runningTaskId?: string;
 	cancellingTaskId?: string;
-	onRunTask: (taskId: string) => void;
+	onRunTask: (params: WorkerRunParams) => void;
 	onCancelTask: (taskId: string) => void;
 	onConfigureTriggers: (taskId: string) => void;
 }
@@ -153,6 +153,7 @@ export function ScheduledTaskCard({
 				{/* Action Buttons Right */}
 				<ScheduledTaskActions
 					taskId={task.id}
+					taskName={task.name}
 					isRunning={isRunning}
 					isQueued={isQueued}
 					isBusy={isBusy}

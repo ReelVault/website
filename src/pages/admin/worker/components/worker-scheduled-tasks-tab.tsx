@@ -3,13 +3,14 @@ import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TabsContent } from "@/components/ui/tabs";
 import { m } from "@/paraglide/messages";
+import type { WorkerRunParams } from "./scheduled-task-actions";
 import { ScheduledTasksList } from "./scheduled-tasks-list";
 
 interface WorkerScheduledTasksTabProps {
 	tasks: WorkerSummary[];
 	tasksStatus: { isLoading: boolean; isError: boolean };
 	activeOperations: WorkerOperation[];
-	runTask: (taskId: string) => Promise<unknown>;
+	runTask: (params: WorkerRunParams) => Promise<unknown>;
 	runningTaskId?: string;
 	cancelTask: (taskId: string) => Promise<unknown>;
 	cancellingTaskId?: string;
