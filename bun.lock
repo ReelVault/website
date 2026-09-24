@@ -34,6 +34,7 @@
         "@tailwindcss/vite": "^4.3.3",
         "@tanstack/react-query-devtools": "^5.103.2",
         "@tanstack/react-router-devtools": "^1.167.2",
+        "@tanstack/router-generator": "1.167.38",
         "@tanstack/router-plugin": "^1.168.40",
         "@tauri-apps/cli": "^2.11.5",
         "@types/bun": "^1.4.2",
