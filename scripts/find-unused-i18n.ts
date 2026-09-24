@@ -21,7 +21,7 @@
  * static `m.*` references or static code→message maps). The one dynamic
  * channel is `translateByKey` with codes arriving from the server (error or
  * warning envelopes) — keys for those are hard-defined in the server sources
- * and are detected by scanning the sibling `ReelVault.Server` tree for the
+ * and are detected by scanning the sibling `reelvault` tree for the
  * key in dotted or underscore form; they are reported as `dynamic-only` and
  * never deleted.
  */
@@ -29,7 +29,7 @@ import path from "node:path";
 
 const repo = `${import.meta.dir}/..`;
 const MESSAGES_DIR = `${repo}/messages`;
-const SERVER_DIR = path.resolve(repo, "../ReelVault.Server/src");
+const SERVER_DIR = path.resolve(repo, "../reelvault/src");
 const SCAN_DIRS = ["src", "tests"] as const;
 const EXCLUDED = ["src/paraglide"];
 const deleteMode = process.argv.includes("--delete");

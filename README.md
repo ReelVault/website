@@ -1,6 +1,6 @@
 # ReelVault — Web & Desktop
 
-ReelVault frontend: an SPA (Vite + React 19 + TanStack Router + TanStack Query) and a desktop shell (Tauri v2) built from the same code. Requires [ReelVault.Server](https://github.com/ReelVault/ReelVault.Server).
+ReelVault frontend: an SPA (Vite + React 19 + TanStack Router + TanStack Query) and a desktop shell (Tauri v2) built from the same code. Requires [reelvault](https://github.com/ReelVault/reelvault).
 
 ## Stack
 
@@ -13,7 +13,7 @@ ReelVault frontend: an SPA (Vite + React 19 + TanStack Router + TanStack Query) 
 ## Requirements
 
 - Bun
-- SDK client: `reelvault-sdk` — published on npm, or `bun link` the local build: run `bun link` in `ReelVault.Server/sdk`, then `bun link reelvault-sdk` here
+- SDK client: `reelvault-sdk` — published on npm, or `bun link` the local build: run `bun link` in `reelvault/sdk`, then `bun link reelvault-sdk` here
 
 ## Commands
 
