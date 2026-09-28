@@ -31,13 +31,25 @@ export function getNotificationText(notification: Notification): { title: string
 		return { title, body };
 	}
 
+	if (notification.type === "update_available") {
+		const version = fieldToText(notification.data.version);
+
+		return {
+			title:
+				notification.data.component === "web"
+					? m.notification_update_available_web({ version })
+					: m.notification_update_available_server({ version }),
+			body: null,
+		};
+	}
+
 	return { title: notification.title, body: notification.message ?? null };
 }
 
 export function getNotificationIcon(type: string): LucideIcon {
 	if (type === "security") return CircleAlert;
 
-	if (type === "update") return CheckCircle2;
+	if (type === "update" || type === "update_available") return CheckCircle2;
 
 	if (type === "system") return Settings;
 
@@ -55,7 +67,7 @@ type NotificationColorClass =
 export function getNotificationColor(type: string): NotificationColorClass {
 	if (type === "security") return "bg-destructive/10 text-destructive";
 
-	if (type === "update") return "bg-success/10 text-success";
+	if (type === "update" || type === "update_available") return "bg-success/10 text-success";
 
 	if (type === "new_episode") return "bg-warning/10 text-warning";
 

@@ -6,36 +6,49 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  LEFTHOOK: "0" # skip git hooks installed by the `prepare` script
+
 jobs:
   quality:
-    name: Code Quality & Tests
+    name: Code quality and tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 'latest'
+          bun-version-file: package.json
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Check types (TypeScript)
+      - name: Check types
         run: bun run check-types
 
-      - name: Lint (Biome)
-        run: bun run lint
+      - name: Lint
+        run: bun run lint:ci
 
-      - name: Deadcode analysis (Knip)
+      - name: Dead code analysis
         run: bun run deadcode
 
-      - name: Run Tests
+      - name: Run tests
         run: bun test
+
   desktop:
     name: Desktop shell (Tauri)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,10 +58,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Setup Rust
+      - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Cargo cache
+      - name: Cache Cargo
         uses: swatinem/rust-cache@v2
         with:
           workspaces: src-tauri

@@ -15,6 +15,7 @@ import {
 	Layers,
 	ListChecks,
 	PieChart,
+	RefreshCw,
 	ServerCog,
 	Settings,
 	ShieldCheck,
@@ -82,6 +83,7 @@ export const staticMenuGroups: MenuGroup[] = [
 		group: m.admin_sidebar_system(),
 		items: [
 			{ name: m.admin_nav_server_settings(), href: "/admin/settings", icon: Settings },
+			{ name: m.admin_nav_updates(), href: "/admin/updates", icon: RefreshCw },
 			{ name: m.admin_libraries_mode_database(), href: "/admin/database", icon: Database },
 			{ name: m.admin_nav_workers(), href: "/admin/worker", icon: ListChecks },
 			{ name: m.admin_downloads_heading(), href: "/admin/downloads", icon: Download },

@@ -1,10 +1,33 @@
+import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, type Plugin } from "vite";
 import { compression } from "vite-plugin-compression2";
+
+/**
+ * Writes the web client version into the build output. The server reads this
+ * file to report the UI version (self-update status) — it must ride along with
+ * every deployable `dist/`, including Docker and the release archives.
+ */
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === "object" && value !== null;
+}
+
+function webVersionPlugin(): Plugin {
+	const parsed: unknown = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf8"));
+	const version = isRecord(parsed) && typeof parsed.version === "string" ? parsed.version : "0.0.0";
+
+	return {
+		name: "reelvault-web-version",
+		apply: "build",
+		closeBundle() {
+			writeFileSync(new URL("./dist/version.json", import.meta.url), JSON.stringify({ version }));
+		},
+	};
+}
 
 // Precompressed .br/.gz siblings for every text asset — server.ts picks
 // them by Accept-Encoding so LAN/WAN clients never see uncompressed JS.
@@ -41,6 +64,7 @@ export default defineConfig(({ mode }) => {
 			react({
 				compiler: true,
 			}),
+			webVersionPlugin(),
 			tailwindcss(),
 			compression({
 				include: [COMPRESSIBLE_ASSETS],

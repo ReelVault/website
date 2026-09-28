@@ -13,7 +13,6 @@ function envValue(name: string, fallback: string): string {
 const PORT = Number(envValue("PORT", "3000"));
 const HOST = envValue("HOST", "0.0.0.0");
 const DIST_DIR = path.resolve(import.meta.dirname, "./dist");
-const SAFE_PATH_TRAVERSAL_REGEX = /^(\.\.[/\\])+/;
 
 const indexHtml = Bun.file(path.join(DIST_DIR, "index.html"));
 
@@ -33,6 +32,9 @@ const HEAD_TAG = "<head>";
  * loaded a blank app pointed at the wrong port.
  */
 const API_ORIGIN_META_TAG = '<meta name="reelvault-api-origin" content="same-origin">';
+
+/** Files that must never be served from a stale cache (update checks read them). */
+const NO_CACHE_FILES = new Set(["version.json"]);
 
 let indexBody: Promise<string> | undefined;
 
@@ -54,10 +56,41 @@ function htmlResponse(body: string): Response {
 	return new Response(body, { headers: { "Content-Type": HTML_CONTENT_TYPE, "Cache-Control": "no-cache" } });
 }
 
+/** True when the Accept-Encoding header lists `encoding` with a non-zero q-value. */
+// `includes("br")` also matched e.g. "gzip;q=0" tokens and substrings.
+function acceptsEncoding(header: string, encoding: string): boolean {
+	return header.split(",").some((part) => {
+		const [token, ...params] = part.trim().split(";");
+		if (token?.trim().toLowerCase() !== encoding) return false;
+
+		const q = params.map((p) => p.trim()).find((p) => p.startsWith("q="));
+
+		return q === undefined || Number(q.slice(2)) > 0;
+	});
+}
+
+/** Resolves a request pathname to a file inside DIST_DIR, or undefined if it escapes it. */
+// previously only leading `../` was stripped and the joined path was never
+// checked against DIST_DIR.
+function resolveDistPath(pathname: string): string | undefined {
+	let decoded: string;
+	try {
+		decoded = decodeURIComponent(pathname);
+	} catch {
+		return undefined;
+	}
+	if (decoded.includes("\0")) return undefined;
+
+	const resolved = path.resolve(DIST_DIR, `.${path.normalize(decoded)}`);
+
+	return resolved === DIST_DIR || resolved.startsWith(DIST_DIR + path.sep) ? resolved : undefined;
+}
+
 Bun.serve({
 	port: PORT,
 	hostname: HOST,
-	async fetch(req) {
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <TODO>
+	async fetch(req, server) {
 		const url = new URL(req.url);
 
 		if (API_PROXY_TARGET && (url.pathname.startsWith("/api") || url.pathname.startsWith("/v1"))) {
@@ -69,6 +102,20 @@ Bun.serve({
 			const proxyHeaders = new Headers(req.headers);
 			proxyHeaders.set("accept-encoding", "identity");
 
+			// let the backend see the original client instead of this server.
+			// `host` is dropped so fetch sets it for the target; the original goes
+			// into x-forwarded-host.
+			const originalHost = proxyHeaders.get("host");
+			proxyHeaders.delete("host");
+			if (originalHost) proxyHeaders.set("x-forwarded-host", originalHost);
+			proxyHeaders.set("x-forwarded-proto", url.protocol.replace(":", ""));
+
+			const clientIp = server.requestIP(req)?.address;
+			if (clientIp) {
+				const previous = proxyHeaders.get("x-forwarded-for");
+				proxyHeaders.set("x-forwarded-for", previous ? `${previous}, ${clientIp}` : clientIp);
+			}
+
 			return fetch(targetUrl.toString(), {
 				method: req.method,
 				headers: proxyHeaders,
@@ -77,8 +124,10 @@ Bun.serve({
 			});
 		}
 
-		const safePath = path.normalize(url.pathname).replace(SAFE_PATH_TRAVERSAL_REGEX, "");
-		const filePath = path.join(DIST_DIR, safePath);
+		const filePath = resolveDistPath(url.pathname);
+		if (filePath === undefined) {
+			return new Response("Forbidden", { status: 403, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+		}
 		const fileName = path.basename(filePath);
 
 		const file = Bun.file(filePath);
@@ -90,8 +139,18 @@ Bun.serve({
 				if (fileName === "index.html") return htmlResponse(await getIndexBody());
 
 				const isHashedAsset = url.pathname.startsWith("/assets/");
+				// version.json is polled for update checks; an hour of caching
+				// would keep showing the previous version after a deploy.
+				let cacheControl: string;
+				if (NO_CACHE_FILES.has(fileName)) {
+					cacheControl = "no-cache";
+				} else if (isHashedAsset) {
+					cacheControl = "public, max-age=31536000, immutable";
+				} else {
+					cacheControl = "public, max-age=3600";
+				}
 				const headers: Record<string, string> = {
-					"Cache-Control": isHashedAsset ? "public, max-age=31536000, immutable" : "public, max-age=3600",
+					"Cache-Control": cacheControl,
 					Vary: "Accept-Encoding",
 				};
 
@@ -99,8 +158,8 @@ Bun.serve({
 				// (.br/.gz) when the client advertises support. Bun.file(.type) keeps the
 				// MIME of the *original* asset, not of the .br/.gz suffix.
 				const acceptEncoding = req.headers.get("accept-encoding") ?? "";
-				const brFile = acceptEncoding.includes("br") ? Bun.file(`${filePath}.br`) : undefined;
-				const gzFile = !brFile && acceptEncoding.includes("gzip") ? Bun.file(`${filePath}.gz`) : undefined;
+				const brFile = acceptsEncoding(acceptEncoding, "br") ? Bun.file(`${filePath}.br`) : undefined;
+				const gzFile = !brFile && acceptsEncoding(acceptEncoding, "gzip") ? Bun.file(`${filePath}.gz`) : undefined;
 				const compressed = brFile ?? gzFile;
 				if (compressed && (await compressed.exists())) {
 					return new Response(compressed, {

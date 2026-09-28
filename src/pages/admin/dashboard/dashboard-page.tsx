@@ -7,6 +7,7 @@ import { DashboardHeader } from "./components/dashboard-header";
 import { DashboardKpiStats } from "./components/dashboard-kpi-stats";
 import { DashboardServerResources } from "./components/dashboard-server-resources";
 import { DashboardStorageBreakdown } from "./components/dashboard-storage-breakdown";
+import { DashboardUpdateStatus } from "./components/dashboard-update-status";
 import { DashboardWorkerQueue } from "./components/dashboard-worker-queue";
 
 export default function AdminDashboardPage() {
@@ -51,6 +52,8 @@ export default function AdminDashboardPage() {
 				/>
 
 				<DashboardStorageBreakdown libraries={libraries} totalMediaFiles={totalMediaFiles} totalMediaSize={totalMediaSize} />
+
+				<DashboardUpdateStatus />
 			</div>
 
 			{/* 4. WORKER QUEUE + AUDIT FEED + WARNING LOGS */}

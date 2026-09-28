@@ -174,6 +174,7 @@ export const adminKeys = {
 			: ([...adminKeys.all, "worker-operation-jobs", operationId] as const),
 	workerOperationJobsPrefix: () => [...adminKeys.all, "worker-operation-jobs"] as const,
 	stats: () => [...adminKeys.all, "stats"] as const,
+	updateStatus: () => [...adminKeys.all, "update-status"] as const,
 	cacheStats: () => [...adminKeys.all, "cache-stats"] as const,
 	logFiles: () => [...adminKeys.all, "log-files"] as const,
 	logsAll: ["admin-logs"] as const,
