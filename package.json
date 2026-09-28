@@ -14,7 +14,7 @@
 	"scripts": {
 		"----RUN": "",
 		"dev": "vite --force",
-		"build": "vite build",
+		"build": "bun run generate-routes && bun run i18n && vite build",
 		"preview": "vite preview",
 		"start": "bun run server.ts",
 		"i18n": "bunx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",

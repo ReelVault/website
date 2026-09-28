@@ -71,6 +71,7 @@ export default defineConfig(({ mode }) => {
 			}),
 			paraglideVitePlugin({
 				project: "./project.inlang",
+				outdir: "./src/paraglide",
 				outputStructure: mode === "development" ? "locale-modules" : "message-modules",
 			}),
 			tanstackRouter({
