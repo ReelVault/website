@@ -99,10 +99,6 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_concurrency_analysis_ffprobe_0(),
 		description: m.admin_settings_max_ffprobe_processes(),
 	},
-	"media.supportedVideoExtensions": {
-		label: m.admin_settings_supported_extensions(),
-		description: m.admin_settings_video_extensions_list(),
-	},
 
 	// ==================== OBRAZY & MEDIA ====================
 	"images.defaultQuality": {
@@ -311,6 +307,160 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 	"network.trustLocalNetworks": {
 		label: m.admin_settings_label_lan_trust(),
 		description: m.admin_settings_private_networks_description(),
+	},
+
+	// ==================== MONITORING / RESCUE (RAW KEYS FILLED) ====================
+	"system.resources.monitoringEnabled": {
+		label: m.admin_settings_monitoring_enabled(),
+		description: m.admin_settings_monitoring_enabled_description(),
+	},
+	"system.resources.monitoringIntervalMs": {
+		label: m.admin_settings_monitoring_interval_ms(),
+		description: m.admin_settings_monitoring_interval_ms_description(),
+	},
+	"system.resources.memoryThresholdPercent": {
+		label: m.admin_settings_memory_threshold_percent(),
+		description: m.admin_settings_memory_threshold_percent_description(),
+	},
+	"system.resources.memoryCriticalPercent": {
+		label: m.admin_settings_memory_critical_percent(),
+		description: m.admin_settings_memory_critical_percent_description(),
+	},
+	"system.resources.diskThresholdPercent": {
+		label: m.admin_settings_disk_threshold_percent(),
+		description: m.admin_settings_disk_threshold_percent_description(),
+	},
+	"system.resources.enableDynamicThrottling": {
+		label: m.admin_settings_dynamic_throttling(),
+		description: m.admin_settings_dynamic_throttling_description(),
+	},
+	"system.resources.throttleLowPriorityAbovePercent": {
+		label: m.admin_settings_throttle_above_percent(),
+		description: m.admin_settings_throttle_above_percent_description(),
+	},
+	"system.resources.streamingGuaranteedCores": {
+		label: m.admin_settings_streaming_guaranteed_cores(),
+		description: m.admin_settings_streaming_guaranteed_cores_description(),
+	},
+	"system.rescue.enabled": {
+		label: m.admin_settings_rescue_enabled(),
+		description: m.admin_settings_rescue_enabled_description(),
+	},
+	"system.rescue.eventLoopLagMs": {
+		label: m.admin_settings_rescue_event_loop_lag(),
+		description: m.admin_settings_rescue_event_loop_lag_description(),
+	},
+	"system.rescue.sustainMs": {
+		label: m.admin_settings_rescue_sustain(),
+		description: m.admin_settings_rescue_sustain_description(),
+	},
+	"system.rescue.releaseMs": {
+		label: m.admin_settings_rescue_release(),
+		description: m.admin_settings_rescue_release_description(),
+	},
+
+	// ==================== FFMPEG / FFPROBE BINARIES & QUALITY ====================
+	"ffmpeg.path": {
+		label: m.admin_settings_ffmpeg_path(),
+		description: m.admin_settings_ffmpeg_path_description(),
+	},
+	"ffmpeg.preset": {
+		label: m.admin_settings_ffmpeg_preset(),
+		description: m.admin_settings_ffmpeg_preset_description(),
+	},
+	"ffmpeg.crf": {
+		label: m.admin_settings_ffmpeg_crf(),
+		description: m.admin_settings_ffmpeg_crf_description(),
+	},
+	"ffmpeg.threads": {
+		label: m.admin_settings_ffmpeg_threads(),
+		description: m.admin_settings_ffmpeg_threads_description(),
+	},
+	"ffmpeg.toneMapping": {
+		label: m.admin_settings_ffmpeg_tone_mapping(),
+		description: m.admin_settings_ffmpeg_tone_mapping_description(),
+	},
+	"ffmpeg.toneMapAlgorithm": {
+		label: m.admin_settings_ffmpeg_tone_map_algorithm(),
+		description: m.admin_settings_ffmpeg_tone_map_algorithm_description(),
+	},
+	"ffprobe.path": {
+		label: m.admin_settings_ffprobe_path(),
+		description: m.admin_settings_ffprobe_path_description(),
+	},
+
+	// ==================== TRICKPLAY ====================
+	"trickplay.enabled": {
+		label: m.admin_settings_trickplay_enabled(),
+		description: m.admin_settings_trickplay_enabled_description(),
+	},
+	"trickplay.autoOnRefresh": {
+		label: m.admin_settings_trickplay_auto_on_refresh(),
+		description: m.admin_settings_trickplay_auto_on_refresh_description(),
+	},
+	"trickplay.intervalSeconds": {
+		label: m.admin_settings_trickplay_interval_seconds(),
+		description: m.admin_settings_trickplay_interval_seconds_description(),
+	},
+	"trickplay.tileWidth": {
+		label: m.admin_settings_trickplay_tile_width(),
+		description: m.admin_settings_trickplay_tile_width_description(),
+	},
+	"trickplay.columns": {
+		label: m.admin_settings_trickplay_columns(),
+		description: m.admin_settings_trickplay_columns_description(),
+	},
+
+	// ==================== MARKERS ====================
+	"markers.introKeywords": {
+		label: m.admin_settings_markers_intro_keywords(),
+		description: m.admin_settings_markers_intro_keywords_description(),
+	},
+	"markers.creditsKeywords": {
+		label: m.admin_settings_markers_credits_keywords(),
+		description: m.admin_settings_markers_credits_keywords_description(),
+	},
+	"markers.recapKeywords": {
+		label: m.admin_settings_markers_recap_keywords(),
+		description: m.admin_settings_markers_recap_keywords_description(),
+	},
+
+	// ==================== SCANNING / PLUGINS / SYSTEM ====================
+	"scanning.autoWatcherCooldownSeconds": {
+		label: m.admin_settings_scanning_watcher_cooldown(),
+		description: m.admin_settings_scanning_watcher_cooldown_description(),
+	},
+	"scanning.supportedVideoExtensions": {
+		label: m.admin_settings_scanning_video_extensions(),
+		description: m.admin_settings_scanning_video_extensions_description(),
+	},
+	"scanning.ignorePatterns": {
+		label: m.admin_settings_scanning_ignore_patterns(),
+		description: m.admin_settings_scanning_ignore_patterns_description(),
+	},
+	"plugins.http.allowedDomains": {
+		label: m.admin_settings_plugins_allowed_domains(),
+		description: m.admin_settings_plugins_allowed_domains_description(),
+	},
+	"system.logs.retentionDays": {
+		label: m.admin_settings_logs_retention_days(),
+		description: m.admin_settings_logs_retention_days_description(),
+	},
+	"auth.enforceTwoFactor": {
+		label: m.admin_settings_enforce_two_factor(),
+		description: m.admin_settings_enforce_two_factor_description(),
+	},
+	"system.database.watchedHistoryRetentionDays": {
+		label: m.admin_settings_watched_history_retention(),
+		description: m.admin_settings_watched_history_retention_description(),
+	},
+	"system.database.backupRetentionCount": {
+		label: m.admin_settings_backup_retention_count(),
+		description: m.admin_settings_backup_retention_count_description(),
+	},
+	"system.analytics.windowDays": {
+		label: m.admin_settings_analytics_window_days(),
+		description: m.admin_settings_analytics_window_days_description(),
 	},
 };
 
