@@ -4,6 +4,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
+import { purgeMetadataCaches } from "../utils/purge-metadata-caches";
 import { metadataKeys } from "../utils/query-keys";
 import { useRefreshMetadata, useRefreshMetadataImages } from "./use-admin-metadata";
 
@@ -29,9 +30,7 @@ export function useAdminMetadataEditor(metadataId: string, onDeleted: () => void
 	const deleteMutation = useMutation({
 		mutationFn: () => reelvault.metadata.delete(metadataId),
 		onSuccess: async () => {
-			queryClient.removeQueries({ queryKey: metadataKeys.byId(metadataId) });
-			queryClient.removeQueries({ queryKey: metadataKeys.details(metadataId) });
-			queryClient.removeQueries({ queryKey: metadataKeys.detailsView(metadataId) });
+			purgeMetadataCaches(queryClient, metadataId);
 			await invalidateMetadata();
 			toast.success(m.toast_metadata_deleted_editor());
 			onDeleted();

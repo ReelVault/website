@@ -10,7 +10,6 @@ import { setNativeKeepAwake, setNativeLandscapeLock } from "@/lib/capacitor-nati
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { PlayerChrome } from "./components/player-chrome";
-import { toPlaybackError } from "./hooks/use-player-controller.hook";
 import { usePlayerShortcuts } from "./hooks/use-player-shortcuts";
 import { usePlayerTouchGestures } from "./hooks/use-player-touch-gestures";
 import {
@@ -25,6 +24,7 @@ import {
 	usePlayerVolume,
 } from "./player-context";
 import type { PlaybackSettings, PlaybackSettingsActions, PlayerMediaFile, PlayerSession } from "./utils/player.types";
+import { toPlaybackError } from "./utils/player-preferences.storage";
 import { detach, noopCleanup, toggleFullscreen, togglePlayPause } from "./utils/player-utils";
 import { getShortcutsDisabledCookie, setShortcutsDisabledCookie } from "./utils/shortcuts-cookie";
 

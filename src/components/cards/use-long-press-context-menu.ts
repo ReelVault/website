@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Long-press (touch) opens the card's context menu — the touch equivalent of a
@@ -28,15 +28,15 @@ export function useLongPressContextMenu() {
 		[],
 	);
 
-	const cancel = useCallback(() => {
+	const cancel = () => {
 		const s = stateRef.current;
 		if (s.timer) {
 			clearTimeout(s.timer);
 			s.timer = null;
 		}
-	}, []);
+	};
 
-	const onPointerDown = useCallback((event: React.PointerEvent) => {
+	const onPointerDown = (event: React.PointerEvent) => {
 		if (event.pointerType !== "touch") return;
 
 		const s = stateRef.current;
@@ -68,42 +68,36 @@ export function useLongPressContextMenu() {
 				s.suppressClick = false;
 			}, CLICK_SUPPRESS_MS);
 		}, LONG_PRESS_MS);
-	}, []);
+	};
 
-	const onPointerMove = useCallback(
-		(event: React.PointerEvent) => {
-			if (event.pointerType !== "touch") return;
+	const onPointerMove = (event: React.PointerEvent) => {
+		if (event.pointerType !== "touch") return;
 
-			const s = stateRef.current;
-			s.lastX = event.clientX;
-			s.lastY = event.clientY;
-			if (Math.abs(event.clientX - s.startX) > MOVE_THRESHOLD_PX || Math.abs(event.clientY - s.startY) > MOVE_THRESHOLD_PX) {
-				cancel();
-			}
-		},
-		[cancel],
-	);
-
-	const onPointerUp = useCallback(
-		(event: React.PointerEvent) => {
-			if (event.pointerType !== "touch") return;
-
+		const s = stateRef.current;
+		s.lastX = event.clientX;
+		s.lastY = event.clientY;
+		if (Math.abs(event.clientX - s.startX) > MOVE_THRESHOLD_PX || Math.abs(event.clientY - s.startY) > MOVE_THRESHOLD_PX) {
 			cancel();
-			// Swallow the synthetic click right after an opened long-press menu.
-			if (stateRef.current.suppressClick) {
-				event.preventDefault();
-				event.stopPropagation();
-			}
-		},
-		[cancel],
-	);
+		}
+	};
 
-	const onClickCapture = useCallback((event: React.MouseEvent) => {
+	const onPointerUp = (event: React.PointerEvent) => {
+		if (event.pointerType !== "touch") return;
+
+		cancel();
+		// Swallow the synthetic click right after an opened long-press menu.
 		if (stateRef.current.suppressClick) {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-	}, []);
+	};
+
+	const onClickCapture = (event: React.MouseEvent) => {
+		if (stateRef.current.suppressClick) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	};
 
 	return { onPointerDown, onPointerMove, onPointerUp, onPointerCancel: cancel, onClickCapture };
 }

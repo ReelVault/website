@@ -396,3 +396,48 @@ export function disposeAudioBoost(video: HTMLVideoElement): void {
 		console.warn("Failed to dispose audio graph:", error);
 	}
 }
+
+/** Pushes stored volume/muted/rate onto the native element. While the Web
+ * Audio pipeline is active it owns loudness, so native volume stays pinned at
+ * 1 — otherwise the two would multiply together. */
+export function syncMediaElementSettings(
+	video: HTMLVideoElement,
+	settings: { volume: number; isMuted: boolean; playbackRate: number },
+): void {
+	const eqConfig = getStoredEqualizerConfig();
+	const pipelineActive = isAudioPipelineActive(video) || settings.volume > 1 || isEqualizerActive(eqConfig);
+
+	video.volume = pipelineActive ? 1 : Math.min(1, settings.volume);
+	video.muted = settings.isMuted;
+	video.playbackRate = settings.playbackRate;
+
+	if (pipelineActive) {
+		applyAudioPipeline(video, settings.volume, eqConfig);
+	}
+}
+
+/** Settles native volume for a requested value: the Web Audio pipeline pins
+ * native volume at 1 while it owns loudness, or the raw (clamped) value applies. */
+export function applyVolumeToElement(video: HTMLVideoElement, requested: number): void {
+	const eqConfig = getStoredEqualizerConfig();
+	const pipelineActive = isAudioPipelineActive(video) || requested > 1 || isEqualizerActive(eqConfig);
+
+	if (pipelineActive) {
+		video.volume = 1;
+		applyAudioPipeline(video, requested, eqConfig);
+	} else {
+		video.volume = requested;
+	}
+}
+
+/** Applies the muted flag straight onto the native element (module-scope so
+ * the compiler never sees a DOM write inside a hook). */
+export function setElementMuted(video: HTMLVideoElement, muted: boolean): void {
+	video.muted = muted;
+}
+
+/** Applies the playback rate straight onto the native element (module-scope so
+ * the compiler never sees a DOM write inside a hook). */
+export function setElementPlaybackRate(video: HTMLVideoElement, rate: number): void {
+	video.playbackRate = rate;
+}

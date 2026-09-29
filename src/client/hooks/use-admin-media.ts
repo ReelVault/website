@@ -5,6 +5,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
+import { pollWhile } from "../utils/poll-while";
 import { adminKeys, mediaKeys, mePlaybackKeys, metadataKeys } from "../utils/query-keys";
 
 export type AdminMediaFileSortBy = NonNullable<MediaFileSorting["sortBy"]>;
@@ -150,11 +151,14 @@ export function useAdminRefreshMediaFile() {
 		enabled: Boolean(refreshState.operationId),
 		queryFn: () => reelvault.admin.getWorkerOperation(refreshState.operationId ?? ""),
 		staleTime: 15_000,
-		refetchInterval: (query) => {
-			const status = query.state.data?.status;
+		refetchInterval: pollWhile({
+			isActive: (data) => {
+				const status = data?.status;
 
-			return status && TERMINAL_OPERATION_STATUSES.has(status) ? false : 2_000;
-		},
+				return !(status && TERMINAL_OPERATION_STATUSES.has(status));
+			},
+			activeMs: 2_000,
+		}),
 	});
 	useEffect(() => {
 		if (!(refreshState.operationId && operationQuery.data) || completedOperationRef.current === refreshState.operationId) return;
@@ -285,11 +289,14 @@ export function useAdminMediaFileAudit() {
 		enabled: Boolean(operationId),
 		queryFn: () => reelvault.media.getAuditStatus(operationId ?? ""),
 		staleTime: 0,
-		refetchInterval: (query) => {
-			const status = query.state.data?.status;
+		refetchInterval: pollWhile({
+			isActive: (data) => {
+				const status = data?.status;
 
-			return status && TERMINAL_OPERATION_STATUSES.has(status) ? false : 2_000;
-		},
+				return !(status && TERMINAL_OPERATION_STATUSES.has(status));
+			},
+			activeMs: 2_000,
+		}),
 	});
 
 	const result = statusQuery.data?.result ?? null;

@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Generated i18n modules (4.5 MB of message catalogs) must never be scanned —
+   their prose can only ever produce phantom utilities and slow the build. */
+@source not "./../paraglide";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

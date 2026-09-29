@@ -15,6 +15,12 @@ import { m } from "@/paraglide/messages";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+
+// Module-scope so the compiler never sees a DOM write inside the component.
+function persistSidebarCookie(openState: boolean): void {
+	// biome-ignore lint/suspicious/noDocumentCookie: shadcn upstream pattern — sync cookie write is the only way to persist sidebar state on navigation
+	document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+}
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
@@ -76,9 +82,8 @@ function SidebarProvider({
 				_setOpen(openState);
 			}
 
-			// This sets the cookie to keep the sidebar state.
-			// biome-ignore lint/suspicious/noDocumentCookie: shadcn upstream pattern — sync cookie write is the only way to persist sidebar state on navigation
-			document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+			// Persist the sidebar state across navigations.
+			persistSidebarCookie(openState);
 		},
 		[open, setOpenProp],
 	);

@@ -36,6 +36,9 @@ const COMPRESSIBLE_ASSETS = /\.(js|mjs|css|html|svg|json|txt|vtt)$/;
 // Rolldown-native chunking (Vite 8): stable vendor groups, everything else
 // follows automatic chunking. First match wins — `ui-button` keeps the eager
 // graph (404/error screens) from pulling the whole @base-ui set via ui-core.
+// No "lucide" group on purpose: one merged icon chunk turned eager through the
+// two icons the 404/error screens use; per-chunk placement keeps icons with
+// their owners instead.
 const CHUNK_GROUPS = [
 	{ name: "hls", test: /node_modules[\\/]hls\.js[\\/]/ },
 	{ name: "router", test: /node_modules[\\/]@tanstack[\\/]react-router[\\/]/ },
@@ -49,7 +52,6 @@ const CHUNK_GROUPS = [
 	// (react-dom is imported by the shell, so ui-core would load on first paint).
 	{ name: "react-dom", test: /node_modules[\\/]react-dom[\\/]/ },
 	{ name: "ui-core", test: /node_modules[\\/]@base-ui[\\/]/ },
-	{ name: "lucide", test: /node_modules[\\/]lucide-react[\\/]/ },
 	{ name: "i18n-runtime", test: /src[\\/]paraglide[\\/]runtime/ },
 	{ name: "vendor", test: /node_modules[\\/]react-dom[\\/]|node_modules[\\/]react[\\/]/ },
 ];
@@ -72,7 +74,10 @@ export default defineConfig(({ mode }) => {
 			paraglideVitePlugin({
 				project: "./project.inlang",
 				outdir: "./src/paraglide",
-				outputStructure: mode === "development" ? "locale-modules" : "message-modules",
+				// locale-modules also for production: message-modules emit one JS chunk
+				// per translated message (3300+ keys), which pages then pull through a
+				// 100+ request dynamic-import waterfall.
+				outputStructure: "locale-modules",
 			}),
 			tanstackRouter({
 				routesDirectory: "./src/routes",

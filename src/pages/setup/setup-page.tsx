@@ -122,6 +122,7 @@ export default function SetupPage() {
 	const update = (field: keyof SetupForm, value: string) => {
 		setError(undefined);
 		if (setupMutation.isError) setupMutation.reset();
+
 		setFieldErrors((current) => (current[field] ? { ...current, [field]: undefined } : current));
 		setForm((current) => ({ ...current, [field]: value }));
 	};

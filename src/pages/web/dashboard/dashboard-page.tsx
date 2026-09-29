@@ -1,7 +1,7 @@
 import { LazyRender } from "@/components/lazy-render";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { m } from "@/paraglide/messages";
-import { PluginSlotHost } from "@/plugin-host/slot-host";
+import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 import DashboardContinueWatching from "./sections/dashboard-continue-watching";
 import DashboardHero from "./sections/dashboard-hero";
 import DashboardLastAdded from "./sections/dashboard-last-added";

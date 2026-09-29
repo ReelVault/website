@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
+import { pollWhile } from "../utils/poll-while";
 import { downloadKeys } from "../utils/query-keys";
 
 export type DownloadQuality = "original" | "1080p-high" | "720p-mobile" | "480p-low";
@@ -19,12 +20,10 @@ export const userDownloadsQueryOptions = () => ({
 export function useUserDownloads() {
 	return useQuery<DownloadJob[]>({
 		...userDownloadsQueryOptions(),
-		refetchInterval: (query) => {
-			const list = query.state.data ?? [];
-			const hasActive = list.some((item) => item.status === "pending" || item.status === "processing");
-
-			return hasActive ? 1500 : false;
-		},
+		refetchInterval: pollWhile({
+			isActive: (data) => data?.some((item) => item.status === "pending" || item.status === "processing") ?? false,
+			activeMs: 1500,
+		}),
 	});
 }
 
@@ -97,12 +96,10 @@ export function useAdminDownloadJobs() {
 
 			return response.jobs;
 		},
-		refetchInterval: (query) => {
-			const list = query.state.data ?? [];
-			const hasActive = list.some((item) => item.status === "pending" || item.status === "processing");
-
-			return hasActive ? 1500 : false;
-		},
+		refetchInterval: pollWhile({
+			isActive: (data) => data?.some((item) => item.status === "pending" || item.status === "processing") ?? false,
+			activeMs: 1500,
+		}),
 	});
 }
 

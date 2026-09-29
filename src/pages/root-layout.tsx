@@ -6,7 +6,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { RealtimeProvider } from "@/components/providers/realtime-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PluginDialogProvider } from "@/plugin-host/plugin-dialogs";
-import { PluginSlotHost } from "@/plugin-host/slot-host";
+import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 import { getAppLocale } from "@/utils/locale";
 import { isTvDevice } from "@/utils/tv-device";
 import "@/styles/globals.css";

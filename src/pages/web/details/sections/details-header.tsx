@@ -7,7 +7,7 @@ import { SimpleAnimation } from "@/components/simple-animation";
 import { ApiImage } from "@/components/ui/api-image";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { PluginSlotHost } from "@/plugin-host/slot-host";
+import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 import { copyToClipboard } from "@/utils/clipboard-utils";
 import { getYearFromDate } from "@/utils/date-utils";
 import { getMetadataBackdrop, getMetadataPoster } from "@/utils/metadata-utils";

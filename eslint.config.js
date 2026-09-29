@@ -1,23 +1,49 @@
+import babelParser from "@babel/eslint-parser";
 import stylistic from "@stylistic/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import reactCompiler from "eslint-plugin-react-compiler";
 
-// ESLint is used ONLY as a formatter here (via `eslint --fix`).
-// Linting is handled by Biome (`.biome.json`) and oxlint (`.oxlintrc.json`).
-// Keep only formatting rules that those two do not support, e.g. `padding-line-between-statements`.
+// ESLint is used ONLY as a formatter here (via `eslint --fix`) and for the one
+// analysis oxlint does not ship: the React Compiler healthcheck.
+// Everything else is handled by Biome (`.biome.json`) and oxlint (`.oxlintrc.json`).
+// The Babel parser is syntactic-only (TS + JSX, no typescript package needed) —
+// typescript-eslint does not support TS 7.
+const babelOptions = {
+	parserOptions: {
+		requireConfigFile: false,
+		babelOptions: {
+			presets: [["@babel/preset-typescript", { ignoreExtensions: true }]],
+			parserOpts: { plugins: ["jsx"] },
+		},
+	},
+};
+
 export default [
 	{
 		// Generated / build output — keep in sync with biome.json and .oxlintrc.json
 		ignores: ["dist/**", "build/**", "src-tauri/**", "node_modules/**", "**/routeTree.gen.ts", "**/*.gen.ts", "drizzle/**"],
 	},
 	{
+		name: "reelvault/react-compiler",
+		files: ["src/**/*.{ts,tsx}"],
+		languageOptions: {
+			parser: babelParser,
+			...babelOptions,
+		},
+		plugins: {
+			"react-compiler": reactCompiler,
+		},
+		rules: {
+			// Reports components the compiler must skip (Rules of React violations).
+			// Warn-level: findings become refactor TODOs, not gate failures.
+			"react-compiler/react-compiler": "warn",
+		},
+	},
+	{
 		name: "reelvault/formatting",
 		files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
 		languageOptions: {
-			// ESLint's default parser (espree) cannot parse TypeScript syntax.
-			// No `parserOptions.project` needed — formatting rules are purely syntactic.
-			parser: tsParser,
-			ecmaVersion: "latest",
-			sourceType: "module",
+			parser: babelParser,
+			...babelOptions,
 		},
 		plugins: {
 			"@stylistic": stylistic,

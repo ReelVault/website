@@ -16,7 +16,7 @@ import {
 	SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { m } from "@/paraglide/messages";
-import { PluginSlotHost } from "@/plugin-host/slot-host";
+import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 
 interface AdminSidebarPluginsGroupProps {
 	pathname: string;

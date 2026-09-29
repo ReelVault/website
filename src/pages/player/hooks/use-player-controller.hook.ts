@@ -26,15 +26,36 @@ import { toast } from "@/utils/toast-facade";
 import type { PlaybackSettings, PlayerMediaFile, PlayerSession, SubtitlePreferences } from "../utils/player.types";
 import { toCaptionFormat } from "../utils/player.types";
 import {
-	applyAudioPipeline,
+	applyVolumeToElement,
 	disposeAudioBoost,
-	getStoredEqualizerConfig,
-	isAudioPipelineActive,
-	isEqualizerActive,
 	MAX_PLAYER_VOLUME,
+	setElementMuted,
+	setElementPlaybackRate,
+	syncMediaElementSettings,
 } from "../utils/player-audio-boost";
+import {
+	getStoredMuted,
+	getStoredPlaybackRate,
+	getStoredVolume,
+	isForbiddenPlaybackError,
+	toPlaybackError,
+} from "../utils/player-preferences.storage";
 import type { PlayerTimeStore } from "../utils/player-time-store";
 import { detach, hasBufferAt, isSafeSeek, noopCleanup } from "../utils/player-utils";
+
+// Same for "no markers" — applyTime/markersValue must not get fresh identities
+// on every controller render.
+const EMPTY_MEDIA_MARKERS: MediaMarker[] = [];
+
+/** Volume/mute/playback-rate slice owned by the provider (PlayerVolumeContext). */
+export interface PlayerVolumeState {
+	volume: number;
+	isMuted: boolean;
+	playbackRate: number;
+	setVolume: (value: number) => void;
+	setMuted: (muted: boolean) => void;
+	setPlaybackRate: (rate: number) => void;
+}
 
 const HEARTBEAT_INTERVAL_MS = 10_000;
 const DIAGNOSTICS_POLL_INTERVAL_MS = 2500;
@@ -53,100 +74,6 @@ export interface BufferedRange {
 // every closure that captures transcodedRanges (seek → actions slice).
 const EMPTY_BUFFERED_RANGES: BufferedRange[] = [];
 
-// Same for "no markers" — applyTime/markersValue must not get fresh identities
-// on every controller render.
-const EMPTY_MEDIA_MARKERS: MediaMarker[] = [];
-
-/** Error fields the player reacts to across client/server failure paths. */
-interface PlaybackErrorShape {
-	status?: number;
-	code?: string;
-	message?: string;
-}
-
-/** Extracts known error fields without asserting an unknown rejection's shape. */
-export function toPlaybackError(value: unknown): PlaybackErrorShape {
-	const shape: PlaybackErrorShape = {};
-	if (typeof value === "object" && value !== null) {
-		if ("status" in value && typeof value.status === "number") shape.status = value.status;
-
-		if ("code" in value && typeof value.code === "string") shape.code = value.code;
-
-		if ("message" in value && typeof value.message === "string") shape.message = value.message;
-	}
-
-	return shape;
-}
-
-/** The server ends the session on admin stop or expiry — both surface as 403. */
-function isForbiddenPlaybackError(error: PlaybackErrorShape): boolean {
-	return (
-		error.status === 403 ||
-		error.code === "forbidden" ||
-		(typeof error.message === "string" && (error.message.includes("administratora") || error.message.includes("admin")))
-	);
-}
-
-const getStoredVolume = (): number => {
-	if (typeof window === "undefined") return 1;
-
-	try {
-		const stored = localStorage.getItem("reelvault:player:volume");
-		if (stored !== null) {
-			const parsed = Number.parseFloat(stored);
-			if (!Number.isNaN(parsed) && parsed >= 0 && parsed <= MAX_PLAYER_VOLUME) return parsed;
-		}
-	} catch {
-		// ignore
-	}
-
-	return 1;
-};
-
-const getStoredMuted = (): boolean => {
-	if (typeof window === "undefined") return false;
-
-	try {
-		return localStorage.getItem("reelvault:player:muted") === "true";
-	} catch {
-		// ignore
-	}
-
-	return false;
-};
-
-const PLAYBACK_RATE_STORAGE_KEY = "reelvault:player:playbackRate";
-
-const getStoredPlaybackRate = (): number => {
-	if (typeof window === "undefined") return 1;
-
-	try {
-		const parsed = Number.parseFloat(localStorage.getItem(PLAYBACK_RATE_STORAGE_KEY) ?? "");
-		if (Number.isNaN(parsed)) return 1;
-
-		return Math.min(2, Math.max(0.25, parsed));
-	} catch {
-		return 1;
-	}
-};
-
-/**
- * Owns the volume/mute/playback-rate state on behalf of the provider
- * (PlayerVolumeContext). Kept next to the controller because the setters
- * write through to <video> using the audio-pipeline helpers; the provider
- * passes the returned slice back into usePlayerController and publishes the
- * primitives through a dedicated context so volume-only consumers (equalizer,
- * settings menu, footer) never re-render on unrelated playback state.
- */
-export interface PlayerVolumeState {
-	volume: number;
-	isMuted: boolean;
-	playbackRate: number;
-	setVolume: (value: number) => void;
-	setMuted: (muted: boolean) => void;
-	setPlaybackRate: (rate: number) => void;
-}
-
 export function usePlayerVolumeState(videoRef: RefObject<HTMLVideoElement | null>): PlayerVolumeState {
 	const [volume, setVolumeState] = useState<number>(getStoredVolume);
 	const [isMuted, setIsMutedState] = useState<boolean>(getStoredMuted);
@@ -155,19 +82,7 @@ export function usePlayerVolumeState(videoRef: RefObject<HTMLVideoElement | null
 	const setVolume = (value: number) => {
 		const clamped = Math.max(0, Math.min(MAX_PLAYER_VOLUME, value));
 		const video = videoRef.current;
-		if (video) {
-			const eqConfig = getStoredEqualizerConfig();
-			const pipelineActive = isAudioPipelineActive(video) || clamped > 1 || isEqualizerActive(eqConfig);
-
-			if (pipelineActive) {
-				// Web Audio owns volume entirely once active — native volume must
-				// stay pinned at 1, or the two multiply together.
-				video.volume = 1;
-				applyAudioPipeline(video, clamped, eqConfig);
-			} else {
-				video.volume = clamped;
-			}
-		}
+		if (video) applyVolumeToElement(video, clamped);
 
 		setVolumeState(clamped);
 		try {
@@ -178,7 +93,7 @@ export function usePlayerVolumeState(videoRef: RefObject<HTMLVideoElement | null
 	};
 
 	const setMuted = (muted: boolean) => {
-		if (videoRef.current) videoRef.current.muted = muted;
+		if (videoRef.current) setElementMuted(videoRef.current, muted);
 
 		setIsMutedState(muted);
 		try {
@@ -193,11 +108,11 @@ export function usePlayerVolumeState(videoRef: RefObject<HTMLVideoElement | null
 	};
 
 	const setPlaybackRate = (rate: number) => {
-		if (videoRef.current) videoRef.current.playbackRate = rate;
+		if (videoRef.current) setElementPlaybackRate(videoRef.current, rate);
 
 		setPlaybackRateState(rate);
 		try {
-			localStorage.setItem(PLAYBACK_RATE_STORAGE_KEY, String(rate));
+			localStorage.setItem("reelvault:player:playbackRate", String(rate));
 		} catch {
 			// ignore
 		}
@@ -209,16 +124,7 @@ export function usePlayerVolumeState(videoRef: RefObject<HTMLVideoElement | null
 		const video = videoRef.current;
 		if (!video) return;
 
-		const eqConfig = getStoredEqualizerConfig();
-		const pipelineActive = isAudioPipelineActive(video) || volume > 1 || isEqualizerActive(eqConfig);
-
-		video.volume = pipelineActive ? 1 : Math.min(1, volume);
-		video.muted = isMuted;
-		video.playbackRate = playbackRate;
-
-		if (pipelineActive) {
-			applyAudioPipeline(video, volume, eqConfig);
-		}
+		syncMediaElementSettings(video, { volume, isMuted, playbackRate });
 	}, [videoRef, volume, isMuted, playbackRate]);
 
 	return { volume, isMuted, playbackRate, setVolume, setMuted, setPlaybackRate };
@@ -583,7 +489,13 @@ export function usePlayerController({
 			setPlayerError(false);
 			hasStartedInitialResumeRef.current = false;
 		}
-	}, [applyTime, playbackConfigKey, videoRef]);
+	}, [
+		applyTime,
+		playbackConfigKey,
+		// oxlint-disable-next-line react/memo-dependencies react-hooks/exhaustive-deps react-hooks/memo-dependencies -- setState identity is stable by definition; oxlint flags it as extra while its exhaustive-deps demands it and biome agrees
+		setBufferedRanges,
+		videoRef,
+	]);
 
 	// -------------------------------------------------------------------------
 	// Restore playback position (after playlist reload or seek)

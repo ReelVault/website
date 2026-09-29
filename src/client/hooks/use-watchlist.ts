@@ -115,14 +115,37 @@ export function useWatchlistToggle() {
 
 	return useMutation({
 		mutationFn: (metadataId: string) => reelvault.me.toggleWatchlist(metadataId),
-		onSettled: async (_, __, metadataId) => {
+		// Optimistic flip: the card heart reacts instantly; the server response is
+		// the source of truth and a failure rolls the flip back (with a toast).
+		onMutate: async (metadataId) => {
+			await queryClient.cancelQueries({ queryKey: watchlistKeys.status(metadataId) });
+
+			const previous = queryClient.getQueryData<{ inWatchlist: boolean }>(watchlistKeys.status(metadataId));
+
+			if (previous) {
+				queryClient.setQueryData<{ inWatchlist: boolean }>(watchlistKeys.status(metadataId), {
+					inWatchlist: !previous.inWatchlist,
+				});
+			}
+
+			return { previous };
+		},
+		onSuccess: async (_, metadataId) => {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: watchlistKeys.items() }),
-				queryClient.invalidateQueries({ queryKey: watchlistKeys.status(metadataId) }),
 				// The details view keeps userState.inWatchlist from the composite.
 				queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(metadataId) }),
 			]);
 		},
-		onError: (error) => toastError(m.components_metadata_card_list_update_failed(), error),
+		onError: (error, metadataId, context) => {
+			if (context?.previous) {
+				queryClient.setQueryData(watchlistKeys.status(metadataId), context.previous);
+			}
+			toastError(m.components_metadata_card_list_update_failed(), error);
+		},
+		onSettled: async (_, __, metadataId) => {
+			// The server response wins over the optimistic flip either way.
+			await queryClient.invalidateQueries({ queryKey: watchlistKeys.status(metadataId) });
+		},
 	});
 }

@@ -3,7 +3,7 @@ import { lazy, type PointerEvent as ReactPointerEvent, Suspense, useEffect } fro
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { setPlayerBridgeState } from "@/plugin-host/player-bridge-state";
-import { PluginSlotHost } from "@/plugin-host/slot-host";
+import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 import { usePlayerMediaSession } from "../hooks/use-player-media-session";
 import type { usePlayerTouchGestures } from "../hooks/use-player-touch-gestures";
 import { usePlayerActions, usePlayerInfo, usePlayerNextEpisode, usePlayerStatus, usePlayerTime, usePlayerVolume } from "../player-context";

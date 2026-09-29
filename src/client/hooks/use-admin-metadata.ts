@@ -4,6 +4,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
+import { purgeMetadataCaches } from "../utils/purge-metadata-caches";
 import { metadataKeys } from "../utils/query-keys";
 
 export const adminMetadataQueryOptions = ({
@@ -62,9 +63,7 @@ export function useAdminMetadata(
 		},
 		onSuccess: async (_, variables) => {
 			toast.success(m.hooks_metadata_deleted_named({ title: variables.title }));
-			queryClient.removeQueries({ queryKey: metadataKeys.byId(variables.id) });
-			queryClient.removeQueries({ queryKey: metadataKeys.details(variables.id) });
-			queryClient.removeQueries({ queryKey: metadataKeys.detailsView(variables.id) });
+			purgeMetadataCaches(queryClient, variables.id);
 			await queryClient.invalidateQueries({ queryKey: metadataKeys.adminAll() });
 		},
 		onError: (error, variables) => {

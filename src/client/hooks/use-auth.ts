@@ -5,6 +5,22 @@ import { reelvault } from "../client";
 import { authKeys } from "../utils/query-keys";
 import { resetWatchlistBatch } from "./use-watchlist";
 
+/** Module-scope so the compiler never sees DOM writes inside the mutation. */
+function clearSessionCookies(): void {
+	if (typeof document === "undefined") return;
+
+	// react-doctor-disable-next-line react-doctor/insecure-session-cookie
+	/* biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async) */
+	document.cookie = "better-auth.session_token=; Max-Age=0; path=/;";
+	// react-doctor-disable-next-line react-doctor/insecure-session-cookie
+	/* biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async) */
+	document.cookie = "__Secure-better-auth.session_token=; Max-Age=0; path=/;";
+	// biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async)
+	document.cookie = "current_profile_id=; Max-Age=0; path=/;";
+	// biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async)
+	document.cookie = "profile_unlock=; Max-Age=0; path=/;";
+}
+
 export function useLogin() {
 	const queryClient = useQueryClient();
 
@@ -52,18 +68,7 @@ export function useLogout() {
 	return useMutation({
 		mutationFn: () => reelvault.auth.logout(),
 		onSuccess: () => {
-			if (typeof document !== "undefined") {
-				// react-doctor-disable-next-line react-doctor/insecure-session-cookie
-				/* biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async) */ document.cookie =
-					"better-auth.session_token=; Max-Age=0; path=/;";
-				// react-doctor-disable-next-line react-doctor/insecure-session-cookie
-				/* biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async) */ document.cookie =
-					"__Secure-better-auth.session_token=; Max-Age=0; path=/;";
-				// biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async)
-				document.cookie = "current_profile_id=; Max-Age=0; path=/;";
-				// biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async)
-				document.cookie = "profile_unlock=; Max-Age=0; path=/;";
-			}
+			clearSessionCookies();
 
 			queryClient.clear();
 			resetWatchlistBatch();

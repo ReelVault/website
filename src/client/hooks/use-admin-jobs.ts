@@ -5,6 +5,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
+import { pollWhile } from "../utils/poll-while";
 import { adminKeys } from "../utils/query-keys";
 
 const ACTIVE_OPERATION_STATUSES = new Set(["pending", "running", "queued"]);
@@ -37,13 +38,11 @@ export function useAdminOperationJobs(
 		enabled: Boolean(operationId),
 		queryFn: operationId ? () => reelvault.admin.getWorkerOperationJobs(operationId, options) : skipToken,
 		staleTime: 15_000,
-		refetchInterval: (q) => {
-			if (!autoRefresh) return false;
-
-			const hasActive = q.state.data?.items.some((i: WorkerJob) => i.status === "pending" || i.status === "running");
-
-			return hasActive ? 5_000 : false;
-		},
+		refetchInterval: pollWhile({
+			enabled: autoRefresh,
+			isActive: (data) => data?.items.some((i: WorkerJob) => i.status === "pending" || i.status === "running") ?? false,
+			activeMs: 5_000,
+		}),
 	});
 
 	const cancelJobMutation = useMutation({
@@ -89,13 +88,12 @@ export function useAdminActiveOperations(autoRefresh = true) {
 		staleTime: 5_000,
 		// Fast while work is running; back off when empty so an idle admin page is
 		// not polling every 3 s (a new operation is still noticed within 15 s).
-		refetchInterval: (query) => {
-			if (!autoRefresh) return false;
-
-			const hasActive = (query.state.data?.data.length ?? 0) > 0;
-
-			return hasActive ? 3_000 : 15_000;
-		},
+		refetchInterval: pollWhile({
+			enabled: autoRefresh,
+			isActive: (data) => (data?.data.length ?? 0) > 0,
+			activeMs: 3_000,
+			idleMs: 15_000,
+		}),
 	});
 }
 
@@ -113,13 +111,11 @@ export function useAdminJobs(
 		placeholderData: keepPreviousData,
 		queryFn: () => reelvault.admin.getWorkerOperations({ page, limit, status }),
 		staleTime: 15_000,
-		refetchInterval: (query) => {
-			if (!autoRefresh) return false;
-
-			const hasActive = query.state.data?.data.some((op: WorkerOperation) => ACTIVE_OPERATION_STATUSES.has(op.status));
-
-			return hasActive ? 5_000 : false;
-		},
+		refetchInterval: pollWhile({
+			enabled: autoRefresh,
+			isActive: (data) => data?.data.some((op: WorkerOperation) => ACTIVE_OPERATION_STATUSES.has(op.status)) ?? false,
+			activeMs: 5_000,
+		}),
 	});
 
 	const operationQuery = useQuery({
@@ -127,11 +123,15 @@ export function useAdminJobs(
 		enabled: Boolean(operationId),
 		queryFn: operationId ? () => reelvault.admin.getWorkerOperation(operationId) : skipToken,
 		staleTime: 15_000,
-		refetchInterval: (query) => {
-			const opStatus = query.state.data?.status;
+		refetchInterval: pollWhile({
+			enabled: autoRefresh,
+			isActive: (data) => {
+				const opStatus = data?.status;
 
-			return autoRefresh && opStatus && !TERMINAL_OPERATION_STATUSES.has(opStatus) ? 5_000 : false;
-		},
+				return Boolean(opStatus && !TERMINAL_OPERATION_STATUSES.has(opStatus));
+			},
+			activeMs: 5_000,
+		}),
 	});
 
 	const operationItemsQuery = useQuery({
@@ -139,24 +139,26 @@ export function useAdminJobs(
 		enabled: Boolean(operationId),
 		queryFn: operationId ? () => reelvault.admin.getWorkerOperationJobs(operationId) : skipToken,
 		staleTime: 15_000,
-		refetchInterval: () => {
-			const opStatus = operationQuery.data?.status;
+		refetchInterval: pollWhile({
+			enabled: autoRefresh,
+			isActive: () => {
+				const opStatus = operationQuery.data?.status;
 
-			return autoRefresh && opStatus && !TERMINAL_OPERATION_STATUSES.has(opStatus) ? 5_000 : false;
-		},
+				return Boolean(opStatus && !TERMINAL_OPERATION_STATUSES.has(opStatus));
+			},
+			activeMs: 5_000,
+		}),
 	});
 
 	const statsQuery = useQuery({
 		queryKey: adminKeys.workers(),
 		queryFn: () => reelvault.admin.getWorkers(),
 		staleTime: 15_000,
-		refetchInterval: (query) => {
-			if (!autoRefresh) return false;
-
-			const hasBusyWorker = query.state.data?.some((w) => w.stats.active > 0 || w.stats.waiting > 0);
-
-			return hasBusyWorker ? 5_000 : false;
-		},
+		refetchInterval: pollWhile({
+			enabled: autoRefresh,
+			isActive: (data) => data?.some((w) => w.stats.active > 0 || w.stats.waiting > 0) ?? false,
+			activeMs: 5_000,
+		}),
 	});
 
 	const cancelMutation = useMutation({

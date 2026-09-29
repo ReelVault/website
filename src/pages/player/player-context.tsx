@@ -1,7 +1,7 @@
 import type { MediaMarker, PlaybackDiagnostics } from "@reelvault/sdk";
 import type Hls from "hls.js";
 import { createContext, type ReactNode, type RefObject, useContext, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { type BufferedRange, type PlayerVolumeState, usePlayerController, usePlayerVolumeState } from "./hooks/use-player-controller.hook";
+import { type PlayerVolumeState, usePlayerController, usePlayerVolumeState } from "./hooks/use-player-controller.hook";
 import type {
 	AudioStream,
 	CaptionFormat,
@@ -20,9 +20,7 @@ import type {
 	SubtitleSize,
 } from "./utils/player.types";
 import { createPlayerTimeStore, type PlayerTimeStore } from "./utils/player-time-store";
-
-// Re-export BufferedRange so consumers can import from one place
-export type { BufferedRange } from "./hooks/use-player-controller.hook";
+import type { BufferedRange } from "./utils/player-utils";
 
 // ---------------------------------------------------------------------------
 // Helper: creates a typed context + hook with a built-in guard.
