@@ -51,11 +51,17 @@ export default function DashboardHero() {
 	const activeItem = items[current];
 	if (!activeItem) return null;
 
+	const nextIndex = items.length > 1 ? (current + 1) % items.length : current;
+
 	return (
 		<section className="relative h-[88svh] overflow-hidden bg-background lg:h-screen lg:min-h-150">
-			{/* Backdrops: crossfade, no remount */}
+			{/* Backdrops: crossfade, no remount. The rotator steps forward, so only
+			the active and next slides stay mounted — the remaining backdrops are
+			near-viewport-width downloads that first paint would never show. */}
 			<div className="absolute inset-0">
 				{items.map((item, index) => {
+					if (index !== current && index !== nextIndex) return null;
+
 					const backdrop = getMetadataBackdrop(item);
 
 					return (

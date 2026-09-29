@@ -12,9 +12,9 @@ export const notificationsQueryOptions = (unreadOnly = false) =>
 		staleTime: 1000 * 60 * 5,
 	});
 
-export function useNotifications(unreadOnly = false) {
+export function useNotifications(unreadOnly = false, options?: { enabled?: boolean }) {
 	const queryClient = useQueryClient();
-	const query = useQuery(notificationsQueryOptions(unreadOnly));
+	const query = useQuery({ ...notificationsQueryOptions(unreadOnly), enabled: options?.enabled ?? true });
 
 	const invalidateNotifications = () => queryClient.invalidateQueries({ queryKey: notificationKeys.all });
 	const markReadMutation = useMutation({

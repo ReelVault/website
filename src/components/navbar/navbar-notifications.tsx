@@ -17,7 +17,9 @@ export function NavbarNotifications() {
 	const navigate = useNavigate();
 	const unreadNotifications = useUnreadNotificationCount();
 	const unreadCount = unreadNotifications.data?.count ?? 0;
-	const { notifications, isLoading, markRead, markAllRead, isMarkingRead, isMarkingAllRead } = useNotifications(false);
+	// The dropdown preview needs at most 5 items — keep the list request until
+	// the user actually opens the menu; the unread count badge stays live.
+	const { notifications, isLoading, markRead, markAllRead, isMarkingRead, isMarkingAllRead } = useNotifications(false, { enabled: open });
 
 	const quickNotifications = notifications.slice(0, 5);
 
