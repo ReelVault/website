@@ -69,7 +69,7 @@ export default function PluginAdminPage() {
 
 	if (adminPages.length === 0) {
 		return (
-			<div className="flex flex-col gap-6 text-foreground">
+			<div className="flex flex-col gap-6">
 				{header}
 				<AdminSection title={m.admin_plugins_subpage_heading()}>
 					<AppEmptyState
@@ -85,7 +85,7 @@ export default function PluginAdminPage() {
 		const page = adminPages[0];
 
 		return (
-			<div className="flex flex-col gap-6 text-foreground">
+			<div className="flex flex-col gap-6">
 				{header}
 				{page ? (
 					<PluginSurface pluginId={pluginId} tag={page.tag} schema={page.schema} page={page.id} className="min-h-[32rem] w-full" />
@@ -97,7 +97,7 @@ export default function PluginAdminPage() {
 	const first = adminPages[0];
 
 	return (
-		<div className="flex flex-col gap-6 text-foreground">
+		<div className="flex flex-col gap-6">
 			{header}
 			<Tabs defaultValue={first ? `${pluginId}:${first.id}` : undefined}>
 				<TabsList className="w-full justify-start overflow-x-auto">

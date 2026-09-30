@@ -50,7 +50,7 @@ export function MetadataHero({
 	const lockedCount = lockedFields.length;
 
 	return (
-		<Card className="overflow-hidden border-border/80 bg-card shadow-xs">
+		<Card className="overflow-hidden border-border/80 bg-card/60 shadow-none">
 			<div className="flex flex-col gap-5 p-6 sm:p-7">
 				{/* Poster & title details */}
 				<div className="flex flex-col gap-5 sm:flex-row sm:items-start">

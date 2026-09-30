@@ -134,7 +134,7 @@ export default function AdminUsersPage() {
 	}
 
 	return (
-		<main className="flex flex-col gap-6 text-foreground">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={Users}
 				eyebrow={m.admin_users_accounts()}
@@ -175,6 +175,6 @@ export default function AdminUsersPage() {
 				}}
 				onConfirm={(reason) => detach(() => confirmBan(reason))}
 			/>
-		</main>
+		</div>
 	);
 }

@@ -29,7 +29,7 @@ export function DashboardKpiStats({
 	}
 
 	return (
-		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			<Link to="/admin/analytics" className="block transition-transform active:scale-[0.99]">
 				<AdminStatCard
 					label={m.admin_dashboard_active_video_sessions()}

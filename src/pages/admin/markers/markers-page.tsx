@@ -79,7 +79,7 @@ export default function AdminMediaMarkersPage() {
 	};
 
 	return (
-		<main className="flex flex-col gap-6 text-foreground">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={Bookmark}
 				eyebrow={m.admin_markers_content_player()}
@@ -132,6 +132,6 @@ export default function AdminMediaMarkersPage() {
 					/>
 				</Suspense>
 			)}
-		</main>
+		</div>
 	);
 }

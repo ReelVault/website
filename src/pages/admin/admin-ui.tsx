@@ -1,10 +1,31 @@
+import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
-import { ArrowDownRight, ArrowUpRight, Search } from "lucide-react";
+import { ArrowDownRight, ArrowLeft, ArrowUpRight, Search } from "lucide-react";
 import type { ChangeEvent, ComponentType, ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { m } from "@/paraglide/messages";
+
+/** Detail-page admin routes a back link can return to. */
+const ADMIN_BACK_LINK_ROUTES = ["/admin/users", "/admin/collections", "/admin/media", "/admin/metadata"] as const;
+
+/** Shared back-navigation affordance for admin detail pages, rendered above the page header. */
+export function AdminBackLink({ to, label }: { to: (typeof ADMIN_BACK_LINK_ROUTES)[number]; label: string }) {
+	return (
+		<Button
+			variant="ghost"
+			size="sm"
+			className="h-8 w-fit gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground"
+			nativeButton={false}
+			render={<Link to={to} />}
+		>
+			<ArrowLeft className="size-3.5" />
+			<span>{label}</span>
+		</Button>
+	);
+}
 
 export function AdminPageHeader({
 	icon: Icon,
@@ -18,7 +39,7 @@ export function AdminPageHeader({
 	icon?: ComponentType<{ className?: string }>;
 	eyebrow: string;
 	title: string;
-	description?: string;
+	description?: ReactNode;
 	count?: number | string;
 	badge?: ReactNode;
 	actions?: ReactNode;
@@ -39,7 +60,7 @@ export function AdminPageHeader({
 					)}
 					{badge}
 				</div>
-				{description !== undefined && <p className="max-w-3xl text-muted-foreground text-sm leading-relaxed">{description}</p>}
+				{description !== undefined && <div className="max-w-3xl text-muted-foreground text-sm leading-relaxed">{description}</div>}
 			</div>
 			{actions !== undefined && <div className="flex flex-row flex-wrap items-center gap-2 pt-2 lg:pt-0">{actions}</div>}
 		</header>

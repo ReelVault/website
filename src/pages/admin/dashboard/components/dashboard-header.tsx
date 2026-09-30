@@ -46,9 +46,10 @@ export function DashboardHeader({
 			title={m.admin_dashboard_command_center()}
 			description={m.admin_dashboard_live_monitoring_description()}
 			actions={
-				<div className="flex flex-wrap items-center gap-2.5">
+				<div className="flex flex-wrap items-center gap-2">
 					<AsyncButton
 						type="button"
+						size="sm"
 						onClick={() => {
 							detach(scanAllLibraries());
 						}}

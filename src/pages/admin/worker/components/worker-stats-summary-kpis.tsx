@@ -13,7 +13,7 @@ interface WorkerStatsSummaryKpisProps {
 
 export function WorkerStatsSummaryKpis({ totals }: WorkerStatsSummaryKpisProps) {
 	return (
-		<div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			{/* Waiting */}
 			<div
 				className={cn(

@@ -7,7 +7,6 @@ import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
@@ -52,18 +51,16 @@ function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; targ
 
 function VersionCard({ icon, label, version, badge }: { icon: ReactNode; label: string; version: string | null; badge: ReactNode }) {
 	return (
-		<Card className="border-border/80 bg-card/60 shadow-none">
-			<CardContent className="flex items-center justify-between gap-4 p-5">
-				<div className="flex min-w-0 items-center gap-3">
-					<div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">{icon}</div>
-					<div className="min-w-0">
-						<p className="font-medium text-muted-foreground text-xs uppercase tracking-wide">{label}</p>
-						<p className="truncate font-semibold text-foreground text-xl tabular-nums">{version ?? m.admin_updates_version_unknown()}</p>
-					</div>
+		<AdminSection contentClassName="flex items-center justify-between gap-4 p-5">
+			<div className="flex min-w-0 items-center gap-3">
+				<div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">{icon}</div>
+				<div className="min-w-0">
+					<p className="font-medium text-muted-foreground text-xs uppercase tracking-wide">{label}</p>
+					<p className="truncate font-semibold text-foreground text-xl tabular-nums">{version ?? m.admin_updates_version_unknown()}</p>
 				</div>
-				{badge}
-			</CardContent>
-		</Card>
+			</div>
+			{badge}
+		</AdminSection>
 	);
 }
 
@@ -167,20 +164,18 @@ function JobCard({ status }: { status: AdminUpdateStatus }) {
 	const targetLabel = job.target === "server" ? m.admin_updates_server_component() : m.admin_updates_web_component();
 
 	return (
-		<Card className="border-primary/30 bg-primary/5 shadow-none">
-			<CardContent className="flex flex-col gap-2 p-5">
-				<div className="flex items-center justify-between text-sm">
-					<span className="flex items-center gap-2 font-medium">
-						<RefreshCw className="size-4 animate-spin text-primary" />
-						{m.admin_updates_job_state_label({ component: targetLabel, state: JOB_STATE_LABELS[job.state]?.() ?? job.state })}
-						{job.message ? <span className="text-muted-foreground">{m.admin_updates_job_message({ message: job.message })}</span> : null}
-					</span>
-					<span className="text-muted-foreground tabular-nums">{m.common_percent_value({ value: job.progressPercent })}</span>
-				</div>
-				<Progress value={job.progressPercent} className="h-2" />
-				{job.target === "server" && <p className="text-muted-foreground text-xs">{m.admin_updates_restart_notice()}</p>}
-			</CardContent>
-		</Card>
+		<AdminSection className="border-primary/30 bg-primary/5" contentClassName="flex flex-col gap-2 p-5">
+			<div className="flex items-center justify-between text-sm">
+				<span className="flex items-center gap-2 font-medium">
+					<RefreshCw className="size-4 animate-spin text-primary" />
+					{m.admin_updates_job_state_label({ component: targetLabel, state: JOB_STATE_LABELS[job.state]?.() ?? job.state })}
+					{job.message ? <span className="text-muted-foreground">{m.admin_updates_job_message({ message: job.message })}</span> : null}
+				</span>
+				<span className="text-muted-foreground tabular-nums">{m.common_percent_value({ value: job.progressPercent })}</span>
+			</div>
+			<Progress value={job.progressPercent} className="h-2" />
+			{job.target === "server" && <p className="text-muted-foreground text-xs">{m.admin_updates_restart_notice()}</p>}
+		</AdminSection>
 	);
 }
 
@@ -259,7 +254,7 @@ export default function AdminUpdatesPage() {
 	};
 
 	return (
-		<div className="flex flex-col gap-8">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={RefreshCw}
 				eyebrow={m.admin_updates_eyebrow()}
@@ -269,6 +264,7 @@ export default function AdminUpdatesPage() {
 					<AsyncButton
 						type="button"
 						variant="outline"
+						size="sm"
 						onClick={() => {
 							detach(statusQuery.refetch());
 						}}

@@ -1,11 +1,11 @@
-import { Clapperboard, RefreshCw, Wand2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clapperboard, Film, RefreshCw, Wand2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useGenerateAllTrickplay, useTrickplayStats } from "@/client/hooks/use-admin-trickplay";
 import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
-import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
+import { AdminPageHeader, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
 export default function AdminTrickplayPage() {
@@ -14,9 +14,15 @@ export default function AdminTrickplayPage() {
 
 	const cards = stats
 		? [
-				{ key: "total", label: m.admin_trickplay_total(), value: stats.total },
-				{ key: "with", label: m.admin_trickplay_with(), value: stats.withTrickplay },
-				{ key: "missing", label: m.admin_trickplay_missing(), value: stats.missingTrickplay },
+				{ key: "total", label: m.admin_trickplay_total(), value: stats.total, icon: Film, tone: "default" as const },
+				{ key: "with", label: m.admin_trickplay_with(), value: stats.withTrickplay, icon: CheckCircle2, tone: "success" as const },
+				{
+					key: "missing",
+					label: m.admin_trickplay_missing(),
+					value: stats.missingTrickplay,
+					icon: AlertTriangle,
+					tone: "warning" as const,
+				},
 			]
 		: [];
 
@@ -27,19 +33,16 @@ export default function AdminTrickplayPage() {
 		content = <AppErrorState error={error} onRetry={() => detach(refetch())} />;
 	} else {
 		content = (
-			<div className="grid gap-4 sm:grid-cols-3">
+			<div className="grid gap-3 sm:grid-cols-3">
 				{cards.map((card) => (
-					<div key={card.key} className="flex flex-col gap-1 rounded-xl border border-border/60 bg-card/40 p-4">
-						<span className="text-muted-foreground text-xs">{card.label}</span>
-						<span className="font-bold font-mono text-2xl text-foreground">{card.value}</span>
-					</div>
+					<AdminStatCard key={card.key} label={card.label} value={card.value} icon={card.icon} tone={card.tone} />
 				))}
 			</div>
 		);
 	}
 
 	return (
-		<div className="flex flex-col gap-6 pb-10">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={Clapperboard}
 				eyebrow={m.admin_nav_trickplay()}

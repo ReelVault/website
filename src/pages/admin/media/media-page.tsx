@@ -119,7 +119,7 @@ export default function AdminMediaFilesPage() {
 	}
 
 	return (
-		<main className="flex flex-col gap-6">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={FileVideo}
 				eyebrow={m.admin_libraries_resource_management()}
@@ -144,6 +144,6 @@ export default function AdminMediaFilesPage() {
 			<MediaViewModeToggle viewMode={viewMode} onViewModeChange={setViewMode} total={total} suspectCount={suspectCount} />
 
 			{viewContent}
-		</main>
+		</div>
 	);
 }

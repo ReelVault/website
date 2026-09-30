@@ -13,7 +13,7 @@ export function AnalyticsKpiGrid({ data }: AnalyticsKpiGridProps) {
 	const formattedTotalTime = `${totalHours}h ${totalMins}m`;
 
 	return (
-		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			<AdminStat label={m.admin_analytics_total_play_time()} value={formattedTotalTime} icon={Clock} />
 			<AdminStat label={m.admin_analytics_session_count()} value={data.totalPlaysCount} icon={Play} />
 			<AdminStat label={m.admin_analytics_active_viewers()} value={data.activeUsersCount} icon={Users} />

@@ -5,9 +5,8 @@ import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { detach } from "@/lib/detach";
-import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
+import { AdminPageHeader, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { formatDateTime } from "@/utils/format-utils";
@@ -55,10 +54,10 @@ export default function AdminDownloadsPage() {
 	}
 
 	return (
-		<div className="space-y-6 text-foreground">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={Download}
-				eyebrow={m.admin_settings_tab_system()}
+				eyebrow={m.admin_sidebar_operations()}
 				title={m.admin_downloads_heading()}
 				description={m.admin_downloads_description()}
 				actions={
@@ -83,39 +82,27 @@ export default function AdminDownloadsPage() {
 			/>
 
 			{/* Statistics */}
-			<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-				<Card className="rounded-2xl border-border/60 bg-card/60 shadow-xs">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-medium text-muted-foreground text-sm">{m.admin_downloads_active_jobs()}</CardTitle>
-						<Download className="size-4 text-primary" />
-					</CardHeader>
-					<CardContent>
-						<div className="font-bold text-2xl">{activeDownloads.length}</div>
-						<p className="text-muted-foreground text-xs">{m.admin_downloads_processing_hint()}</p>
-					</CardContent>
-				</Card>
-
-				<Card className="rounded-2xl border-border/60 bg-card/60 shadow-xs">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-medium text-muted-foreground text-sm">{m.admin_downloads_finished_files()}</CardTitle>
-						<HardDrive className="size-4 text-success" />
-					</CardHeader>
-					<CardContent>
-						<div className="font-bold text-2xl">{completedDownloads.length}</div>
-						<p className="text-muted-foreground text-xs">{m.admin_downloads_processed_files()}</p>
-					</CardContent>
-				</Card>
-
-				<Card className="rounded-2xl border-border/60 bg-card/60 shadow-xs">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-medium text-muted-foreground text-sm">{m.admin_downloads_total_jobs()}</CardTitle>
-						<Download className="size-4 text-muted-foreground" />
-					</CardHeader>
-					<CardContent>
-						<div className="font-bold text-2xl">{downloads.length}</div>
-						<p className="text-muted-foreground text-xs">{m.admin_downloads_all_user_jobs()}</p>
-					</CardContent>
-				</Card>
+			<div className="grid gap-3 sm:grid-cols-3">
+				<AdminStatCard
+					label={m.admin_downloads_active_jobs()}
+					value={activeDownloads.length}
+					icon={Download}
+					description={m.admin_downloads_processing_hint()}
+				/>
+				<AdminStatCard
+					label={m.admin_downloads_finished_files()}
+					value={completedDownloads.length}
+					icon={HardDrive}
+					tone="success"
+					description={m.admin_downloads_processed_files()}
+				/>
+				<AdminStatCard
+					label={m.admin_downloads_total_jobs()}
+					value={downloads.length}
+					icon={Download}
+					tone="muted"
+					description={m.admin_downloads_all_user_jobs()}
+				/>
 			</div>
 
 			{/* Job list */}

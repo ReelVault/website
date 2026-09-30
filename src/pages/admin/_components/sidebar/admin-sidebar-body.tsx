@@ -88,8 +88,8 @@ export function AdminSidebarBody() {
 						<div key={group.id}>
 							<AdminSidebarGroup group={group} pathname={pathname} stats={stats} />
 
-							{/* Dynamic plugins section inserted after taxonomy group */}
-							{group.id === "taxonomy" && showPluginsSection ? (
+							{/* Dynamic plugins section inserted after the last static group */}
+							{group.id === "operations" && showPluginsSection ? (
 								<>
 									<SidebarSeparator />
 									<AdminSidebarPluginsGroup

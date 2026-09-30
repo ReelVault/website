@@ -22,7 +22,7 @@ export function LibraryKpiGrid({ libraries, total }: LibraryKpiGridProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			<AdminStat label={m.admin_libraries_kpi_libraries()} value={`${total}`} icon={FolderOpen} />
 			<AdminStat label={m.admin_libraries_kpi_indexed_media()} value={formatNumber(totalMedia)} icon={Video} />
 			<AdminStat label={m.admin_libraries_storage()} value={formatFileSize(totalSize)} icon={HardDrive} />

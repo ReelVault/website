@@ -57,7 +57,7 @@ export default function AdminAnalyticsPage() {
 	}
 
 	return (
-		<div className="flex flex-col gap-8 text-foreground">
+		<div className="flex flex-col gap-6">
 			{/* Page Header */}
 			<AdminPageHeader
 				icon={BarChart3}

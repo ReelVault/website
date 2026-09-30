@@ -138,7 +138,7 @@ export default function AdminMetadataPage() {
 	};
 
 	return (
-		<main className="flex flex-col gap-6">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={Film}
 				eyebrow={m.admin_libraries_resource_management()}
@@ -192,6 +192,6 @@ export default function AdminMetadataPage() {
 					</div>
 				</AdminSection>
 			)}
-		</main>
+		</div>
 	);
 }

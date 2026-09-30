@@ -106,7 +106,7 @@ export default function AdminPluginSettingsPage() {
 	const fields = configDetails.fields;
 
 	return (
-		<main className="flex flex-col gap-6 text-foreground">
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={Sliders}
 				eyebrow={m.admin_plugins_version_eyebrow({ version: configDetails.version })}
@@ -193,6 +193,6 @@ export default function AdminPluginSettingsPage() {
 			<Suspense fallback={null}>
 				<LazyPluginTabHost host="admin-plugin" params={{ pluginId }} />
 			</Suspense>
-		</main>
+		</div>
 	);
 }

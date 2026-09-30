@@ -12,7 +12,7 @@ interface MediaAuditStatsGridProps {
 
 export function MediaAuditStatsGrid({ totalFilesChecked, suspectCount, isFetching, onRefetch }: MediaAuditStatsGridProps) {
 	return (
-		<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+		<div className="grid gap-3 sm:grid-cols-3">
 			<div className="flex items-center gap-4 rounded-xl border border-border/70 bg-card p-4 shadow-2xs">
 				<div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
 					<HardDrive className="size-6" />

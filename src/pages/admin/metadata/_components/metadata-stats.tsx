@@ -22,7 +22,7 @@ export function MetadataStats({
 	const lowConfidence = stats?.lowConfidenceCount ?? 0;
 
 	return (
-		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			<AdminStatCard
 				label={m.admin_metadata_all_items()}
 				value={totalCount}

@@ -104,7 +104,7 @@ export default function AdminUserProfilesPage() {
 	};
 
 	return (
-		<main className="flex flex-col gap-10 text-foreground">
+		<div className="flex flex-col gap-6">
 			<UserAccountHeader user={user} />
 
 			<UserManagementCard
@@ -167,6 +167,6 @@ export default function AdminUserProfilesPage() {
 				onOpenChange={setBanOpen}
 				onConfirm={(reason) => detach(() => confirmBan(reason))}
 			/>
-		</main>
+		</div>
 	);
 }

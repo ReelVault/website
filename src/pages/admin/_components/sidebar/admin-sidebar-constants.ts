@@ -53,17 +53,17 @@ export const staticMenuGroups: MenuGroup[] = [
 		items: [
 			{ name: m.admin_nav_libraries(), href: "/admin/libraries", icon: Film },
 			{ name: m.admin_nav_media_files(), href: "/admin/media", icon: FileVideo },
-			{ name: m.admin_nav_metadata(), href: "/admin/metadata", icon: FileText },
-			{ name: m.admin_nav_providers(), href: "/admin/providers", icon: ServerCog },
+			{ name: m.admin_nav_collections(), href: "/admin/collections", icon: Layers },
 			{ name: m.admin_nav_subtitles(), href: "/admin/subtitles", icon: Languages },
 			{ name: m.admin_nav_video_segments(), href: "/admin/markers", icon: Bookmark },
 		],
 	},
 	{
-		id: "taxonomy",
-		group: m.admin_sidebar_taxonomy(),
+		id: "metadata",
+		group: m.admin_sidebar_metadata(),
 		items: [
-			{ name: m.admin_nav_collections(), href: "/admin/collections", icon: Layers },
+			{ name: m.admin_nav_metadata(), href: "/admin/metadata", icon: FileText },
+			{ name: m.admin_nav_providers(), href: "/admin/providers", icon: ServerCog },
 			{ name: m.admin_nav_genres(), href: "/admin/genres", icon: Tag },
 			{ name: m.admin_nav_keywords(), href: "/admin/keywords", icon: Hash },
 			{ name: m.admin_nav_people(), href: "/admin/people", icon: Users },
@@ -79,17 +79,23 @@ export const staticMenuGroups: MenuGroup[] = [
 		],
 	},
 	{
+		id: "operations",
+		group: m.admin_sidebar_operations(),
+		items: [
+			{ name: m.admin_nav_workers(), href: "/admin/worker", icon: ListChecks },
+			{ name: m.admin_downloads_heading(), href: "/admin/downloads", icon: Download },
+			{ name: m.admin_nav_trickplay(), href: "/admin/trickplay", icon: Clapperboard },
+			{ name: m.admin_nav_updates(), href: "/admin/updates", icon: RefreshCw },
+		],
+	},
+	{
 		id: "system",
 		group: m.admin_sidebar_system(),
 		items: [
 			{ name: m.admin_nav_server_settings(), href: "/admin/settings", icon: Settings },
-			{ name: m.admin_nav_updates(), href: "/admin/updates", icon: RefreshCw },
-			{ name: m.admin_libraries_mode_database(), href: "/admin/database", icon: Database },
-			{ name: m.admin_nav_workers(), href: "/admin/worker", icon: ListChecks },
-			{ name: m.admin_downloads_heading(), href: "/admin/downloads", icon: Download },
 			{ name: m.admin_nav_resources_system(), href: "/admin/resources", icon: Activity },
-			{ name: m.admin_nav_trickplay(), href: "/admin/trickplay", icon: Clapperboard },
 			{ name: m.admin_nav_server_logs(), href: "/admin/logs", icon: Terminal },
+			{ name: m.admin_libraries_mode_database(), href: "/admin/database", icon: Database },
 		],
 	},
 ];

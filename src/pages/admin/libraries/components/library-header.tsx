@@ -29,7 +29,7 @@ export function LibraryHeader({
 					<AsyncButton
 						type="button"
 						variant="outline"
-						size="lg"
+						size="sm"
 						disabled={total === 0}
 						isPending={isScanningAll}
 						pendingLabel={m.common_scanning()}
@@ -39,7 +39,7 @@ export function LibraryHeader({
 						<RefreshCw className={cn("size-4", { "animate-spin": isScanningAll })} />
 						<span>{m.admin_libraries_scan_libraries()}</span>
 					</AsyncButton>
-					<Button type="button" size="lg" onClick={onAddClick} className="gap-2 shadow-xs">
+					<Button type="button" size="sm" onClick={onAddClick} className="gap-2 shadow-xs">
 						<FolderPlus className="size-4" />
 						<span>{m.admin_libraries_add_library()}</span>
 					</Button>

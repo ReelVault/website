@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { usePageTitle } from "@/hooks/use-page-title";
+import { staticMenuGroups } from "@/pages/admin/_components/sidebar/admin-sidebar-constants";
 import { AdminSidebar } from "@/pages/admin/admin-sidebar";
 import { m } from "@/paraglide/messages";
 
@@ -27,9 +28,11 @@ const RESOURCE_KEYS = [
 	"collections",
 	"companies",
 	"database",
+	"downloads",
 	"genres",
 	"keywords",
 	"libraries",
+	"logs",
 	"media",
 	"markers",
 	"metadata",
@@ -39,6 +42,8 @@ const RESOURCE_KEYS = [
 	"resources",
 	"settings",
 	"subtitles",
+	"trickplay",
+	"updates",
 	"users",
 	"worker",
 ] as const;
@@ -58,9 +63,11 @@ const ADMIN_RESOURCE_ROUTES: Record<AdminResource, "/admin" | `/admin/${Resource
 	collections: "/admin/collections",
 	companies: "/admin/companies",
 	database: "/admin/database",
+	downloads: "/admin/downloads",
 	genres: "/admin/genres",
 	keywords: "/admin/keywords",
 	libraries: "/admin/libraries",
+	logs: "/admin/logs",
 	media: "/admin/media",
 	markers: "/admin/markers",
 	metadata: "/admin/metadata",
@@ -70,32 +77,17 @@ const ADMIN_RESOURCE_ROUTES: Record<AdminResource, "/admin" | `/admin/${Resource
 	resources: "/admin/resources",
 	settings: "/admin/settings",
 	subtitles: "/admin/subtitles",
+	trickplay: "/admin/trickplay",
+	updates: "/admin/updates",
 	users: "/admin/users",
 	worker: "/admin/worker",
 };
 
+/** Breadcrumb and document-title labels come from the sidebar so the two never drift. */
+const sidebarItemLabels = new Map(staticMenuGroups.flatMap((group) => group.items).map((item) => [item.href, item.name] as const));
 const resourceLabels: Record<string, string> = {
 	dashboard: m.admin_nav_dashboard(),
-	analytics: m.admin_nav_analytics(),
-	libraries: m.admin_nav_libraries(),
-	metadata: m.admin_nav_metadata(),
-	media: m.admin_nav_media_files(),
-	providers: m.admin_nav_providers(),
-	subtitles: m.admin_nav_subtitles(),
-	markers: m.admin_nav_video_segments(),
-	collections: m.admin_nav_collections(),
-	genres: m.admin_nav_genres(),
-	keywords: m.admin_nav_keywords(),
-	people: m.admin_nav_people(),
-	companies: m.admin_nav_companies(),
-	users: m.admin_nav_users(),
-	worker: m.admin_nav_workers(),
-	plugins: m.admin_nav_plugins(),
-	database: m.admin_nav_database_backups(),
-	resources: m.admin_nav_resources_system(),
-	logs: m.admin_nav_server_logs(),
-	audit: m.admin_nav_security_audit(),
-	settings: m.admin_nav_server_settings(),
+	...Object.fromEntries(RESOURCE_KEYS.map((key) => [key, sidebarItemLabels.get(`/admin/${key}`) ?? key])),
 };
 
 function AdminHeader() {

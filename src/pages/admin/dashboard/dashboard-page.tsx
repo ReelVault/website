@@ -29,7 +29,7 @@ export default function AdminDashboardPage() {
 	const failedJobs = stats?.workers?.failed ?? 0;
 
 	return (
-		<div className="flex flex-col gap-8">
+		<div className="flex flex-col gap-6">
 			{/* 1. HEADER WITH QUICK ACTIONS */}
 			<DashboardHeader isServerOffline={statsQuery.isError} libraries={libraries} onScanLibrary={scanLibrary} />
 
