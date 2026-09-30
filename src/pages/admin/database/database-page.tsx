@@ -61,9 +61,10 @@ export default function AdminDatabasePage() {
 						}}
 						onRestore={(fileName) => {
 							detach(
-								restoreMutation.mutateAsync(fileName).then(() => {
+								(async () => {
+									await restoreMutation.mutateAsync(fileName);
 									toast.success(m.admin_database_restore_queued());
-								}),
+								})(),
 							);
 						}}
 						restorePending={restoreMutation.isPending}

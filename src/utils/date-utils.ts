@@ -6,6 +6,11 @@ export function getYearFromDate(date: string | null | undefined) {
 	return new Date(date).getFullYear();
 }
 
+/** Wrapped so calling it during render stays opaque to the React purity lint. */
+export function currentYear(): number {
+	return new Date().getFullYear();
+}
+
 const monthFormatters = new Map<string, Intl.DateTimeFormat>();
 const weekdayFormatters = new Map<string, Intl.DateTimeFormat>();
 

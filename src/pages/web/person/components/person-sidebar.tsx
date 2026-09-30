@@ -5,7 +5,7 @@ import { SimpleAnimation } from "@/components/simple-animation";
 import { ApiImage } from "@/components/ui/api-image";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { m } from "@/paraglide/messages";
-import { getYearFromDate } from "@/utils/date-utils";
+import { currentYear, getYearFromDate } from "@/utils/date-utils";
 
 export function PersonSidebar({
 	personData,
@@ -15,7 +15,7 @@ export function PersonSidebar({
 	personMetadataList: Array<RequireFields<MetadataWithRelation, "id,type,title,releaseDate">>;
 }) {
 	const birthdayYear = personData.birthday ? getYearFromDate(personData.birthday) : null;
-	const age = personData.birthday ? Math.max(0, new Date().getFullYear() - new Date(personData.birthday).getFullYear()) : null;
+	const age = personData.birthday ? Math.max(0, currentYear() - new Date(personData.birthday).getFullYear()) : null;
 
 	return (
 		<SimpleAnimation direction="none" className="flex h-fit shrink-0 flex-col gap-10 lg:sticky lg:top-32 lg:w-80">

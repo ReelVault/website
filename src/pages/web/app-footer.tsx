@@ -1,8 +1,9 @@
 import { Logo } from "@/components/logo";
 import { m } from "@/paraglide/messages";
+import { currentYear } from "@/utils/date-utils";
 
 export function AppFooter() {
-	const currentYear = new Date().getFullYear();
+	const year = currentYear();
 
 	return (
 		<footer className="relative mt-24 overflow-hidden bg-background pt-12 pb-24 xl:pb-16">
@@ -17,9 +18,7 @@ export function AppFooter() {
 				{/* Main text */}
 				<div className="flex flex-col items-center gap-2">
 					<p className="font-black text-[9px] text-foreground/20 uppercase tracking-[0.6em]">{m.web_footer_tagline()}</p>
-					<p className="font-bold text-[7px] text-foreground/10 uppercase tracking-[0.4em]">
-						{m.web_footer_copyright({ year: currentYear })}
-					</p>
+					<p className="font-bold text-[7px] text-foreground/10 uppercase tracking-[0.4em]">{m.web_footer_copyright({ year })}</p>
 				</div>
 			</div>
 

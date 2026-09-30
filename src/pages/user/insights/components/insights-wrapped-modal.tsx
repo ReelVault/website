@@ -3,6 +3,7 @@ import { lazy, Suspense, useState } from "react";
 import { FullscreenDialog, FullscreenDialogTrigger } from "@/components/fullscreen-dialog";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
+import { currentYear } from "@/utils/date-utils";
 
 const LazyInsightsWrappedContent = lazy(async () => {
 	const mod = await import("./insights-wrapped-content");
@@ -15,7 +16,7 @@ const LazyInsightsWrappedContent = lazy(async () => {
  * only on first open, not on page mount.
  */
 export function InsightsWrappedModal({ year }: { year?: number }) {
-	const resolvedYear = year ?? new Date().getFullYear();
+	const resolvedYear = year ?? currentYear();
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (

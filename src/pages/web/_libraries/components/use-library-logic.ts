@@ -105,7 +105,7 @@ export function useLibraryLogic(
 	const rawRating = readString("rating");
 	const initialUserRating: LibraryRatingFilter = isOneOf(LIBRARY_RATING_VALUES, rawRating) ? rawRating : "all";
 	const initialYearFrom = readNumber("yearFrom") ?? 1900;
-	const initialYearTo = readNumber("yearTo") ?? new Date().getFullYear();
+	const initialYearTo = readNumber("yearTo") ?? CURRENT_YEAR;
 	const initialGenres = readString("genres")?.split(",") ?? [];
 	const initialIsGenreMode = readString("genreMode") === "true";
 	const rawGenreIndex = readNumber("genreIndex");
