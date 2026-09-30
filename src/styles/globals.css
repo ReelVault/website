@@ -289,13 +289,9 @@ html[data-tv] *:focus-visible {
 
 /* The player opts out of the document cross-fade — entering playback should be
    instant (view-transition-name: player in the layout). */
-/* biome-ignore lint/correctness/noUnknownTypeSelector: named-VT pseudo-element */
 ::view-transition-group(player),
-/* biome-ignore lint/correctness/noUnknownTypeSelector: pseudo-element z nazwanym VT */
 ::view-transition-image-pair(player),
-/* biome-ignore lint/correctness/noUnknownTypeSelector: pseudo-element z nazwanym VT */
 ::view-transition-old(player),
-/* biome-ignore lint/correctness/noUnknownTypeSelector: pseudo-element z nazwanym VT */
 ::view-transition-new(player) {
 	animation: none;
 }
