@@ -15,6 +15,7 @@ import type { PathField } from "./library-constants";
 import { createPathField } from "./library-constants";
 import { LibraryPathsSection } from "./library-paths-section";
 import { LibraryTypeSelector } from "./library-type-selector";
+import { MetadataLanguageSelector } from "./metadata-language-selector";
 import { SidecarFlavorSelector } from "./sidecar-flavor-selector";
 
 interface EditLibraryFormProps {
@@ -28,6 +29,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 	const [name, setName] = useState(library.name);
 	const [type, setType] = useState<"movies" | "tv_shows">(library.type);
 	const [sidecarFlavor, setSidecarFlavor] = useState<SidecarFlavor>(library.sidecarFlavor);
+	const [metadataLanguage, setMetadataLanguage] = useState<string | null>(library.metadataLanguage ?? null);
 	const [paths, setPaths] = useState<PathField[]>(() =>
 		library.paths.map((p) => createPathField(p.path, p.metadataStorageMode ?? undefined)),
 	);
@@ -69,6 +71,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 						name: name.trim(),
 						type,
 						sidecarFlavor,
+						metadataLanguage,
 						paths: validPaths,
 						...(providerPriorities.length > 0 && { providerPriorities }),
 					},
@@ -119,6 +122,9 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 
 				{/* Step 4: Sidecar NFO format */}
 				<SidecarFlavorSelector value={sidecarFlavor} onChange={setSidecarFlavor} />
+
+				{/* Step 4b: Per-library metadata language */}
+				<MetadataLanguageSelector value={metadataLanguage} onChange={setMetadataLanguage} />
 
 				{/* Step 5: Metadata provider overrides (empty = global order) */}
 				{providers.length > 0 && (

@@ -21,6 +21,7 @@ import type { PathField } from "./library-constants";
 import { createPathField } from "./library-constants";
 import { LibraryPathsSection } from "./library-paths-section";
 import { LibraryTypeSelector } from "./library-type-selector";
+import { MetadataLanguageSelector } from "./metadata-language-selector";
 import { SidecarFlavorSelector } from "./sidecar-flavor-selector";
 
 interface CreateLibraryFormProps {
@@ -37,6 +38,7 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 			name: "",
 			type: "movies" as "movies" | "tv_shows",
 			sidecarFlavor: "reelvault" as SidecarFlavor,
+			metadataLanguage: null as string | null,
 			paths: [createPathField()] as PathField[],
 		},
 		onSubmit: async ({ value }) => {
@@ -58,6 +60,7 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 					name: value.name.trim(),
 					type: value.type,
 					sidecarFlavor: value.sidecarFlavor,
+					metadataLanguage: value.metadataLanguage,
 					paths: validPaths,
 				});
 				onClose();
@@ -125,6 +128,11 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				{/* Step 4: Sidecar NFO format */}
 				<form.Field name="sidecarFlavor">
 					{(field) => <SidecarFlavorSelector value={field.state.value} onChange={(next) => field.handleChange(next)} />}
+				</form.Field>
+
+				{/* Step 4b: Per-library metadata language */}
+				<form.Field name="metadataLanguage">
+					{(field) => <MetadataLanguageSelector value={field.state.value} onChange={(next) => field.handleChange(next)} />}
 				</form.Field>
 
 				{submitError && (
