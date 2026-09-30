@@ -10,7 +10,7 @@
         "@dnd-kit/react": "^0.5.0",
         "@inlang/paraglide-js": "^2.25.4",
         "@inlang/paraglide-js-react": "^1.0.3",
-        "@reelvault/sdk": "^1.1.0",
+        "@reelvault/sdk": "^1.1.1",
         "@tanstack/react-form": "^1.33.5",
         "@tanstack/react-query": "^5.104.0",
         "@tanstack/react-router": "^1.170.40",
@@ -551,7 +551,7 @@
 
     "@react-grab/cli": ["@react-grab/cli@0.2.0", "", { "dependencies": { "agent-install": "^0.0.6", "commander": "^14.0.3", "ignore": "^7.0.5", "ora": "^9.4.0", "package-manager-detector": "^1.6.0", "picocolors": "^1.1.1", "prompts": "^2.4.2", "tinyexec": "^1.1.2" }, "bin": { "react-grab": "bin/cli.js" } }, "sha512-LVfA+j5cFT0Szd958WRD8W/B8ucCtz4ViiveDKWLqAwBkZFW9VRW1ZvwOUhp/M3SmVPtjDaRkW12GvAuTArP+Q=="],
 
-    "@reelvault/sdk": ["@reelvault/sdk@1.1.0", "", { "dependencies": { "@sinclair/typebox": "^0.34.52", "elysia": "^1.4.30" } }, "sha512-QpKvm2IWkJmqIeQrXiJiqm9z3yQai82WHq9+qUzSVGpoVGn+6HQVgXkq64uvWIRtnzRs5TGMYCIieTlRv9hMrA=="],
+    "@reelvault/sdk": ["@reelvault/sdk@1.1.1", "", { "dependencies": { "@sinclair/typebox": "^0.34.52", "elysia": "^1.4.30" } }, "sha512-/SLEEWEm0ivn3uNXEz1uZ64IIRsL6YqBkKFDopPDJgiIU5b8uMpNSLmWv6vdbd+sU2h/LBQBpVKw/sICgHSrqQ=="],
 
     "@rolldown/binding-android-arm-eabi": ["@rolldown/binding-android-arm-eabi@1.2.12", "", { "os": "android", "cpu": "arm" }, "sha512-dB/a1214qKfHMXCpgqR4OZT+jS4kTyEXbQGJPqzobt5EwH5rX080pxE37alt3RzvR1bf1Yz/yGqRfrYAxuPw0A=="],
 

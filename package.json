@@ -58,7 +58,7 @@
 		"react": "19.3.0",
 		"react-dom": "19.3.0",
 		"react-intersection-observer": "^11.0.1",
-		"@reelvault/sdk": "^1.1.0",
+		"@reelvault/sdk": "^1.1.1",
 		"sonner": "^2.0.8"
 	},
 	"devDependencies": {
