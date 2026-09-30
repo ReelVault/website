@@ -77,6 +77,11 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 							{m.admin_plugins_catalog_installed_version({ version: entry.installedVersion })}
 						</Badge>
 					)}
+					{entry.minServerVersion && (
+						<Badge variant="outline" className="gap-1 font-normal">
+							{m.admin_plugins_catalog_min_server_version({ version: entry.minServerVersion })}
+						</Badge>
+					)}
 				</div>
 			</div>
 
