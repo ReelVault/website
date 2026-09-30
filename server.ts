@@ -79,6 +79,7 @@ function resolveDistPath(pathname: string): string | undefined {
 	} catch {
 		return undefined;
 	}
+
 	if (decoded.includes("\0")) return undefined;
 
 	const resolved = path.resolve(DIST_DIR, `.${path.normalize(decoded)}`);
@@ -108,6 +109,7 @@ Bun.serve({
 			const originalHost = proxyHeaders.get("host");
 			proxyHeaders.delete("host");
 			if (originalHost) proxyHeaders.set("x-forwarded-host", originalHost);
+
 			proxyHeaders.set("x-forwarded-proto", url.protocol.replace(":", ""));
 
 			const clientIp = server.requestIP(req)?.address;
@@ -128,6 +130,7 @@ Bun.serve({
 		if (filePath === undefined) {
 			return new Response("Forbidden", { status: 403, headers: { "Content-Type": "text/plain; charset=utf-8" } });
 		}
+
 		const fileName = path.basename(filePath);
 
 		const file = Bun.file(filePath);
@@ -149,6 +152,7 @@ Bun.serve({
 				} else {
 					cacheControl = "public, max-age=3600";
 				}
+
 				const headers: Record<string, string> = {
 					"Cache-Control": cacheControl,
 					Vary: "Accept-Encoding",

@@ -45,6 +45,7 @@ export function useUserRatingMutations(metadataId: string) {
 			if (previous) {
 				queryClient.setQueryData(metadataKeys.detailsView(metadataId), previous);
 			}
+
 			toastError(m.toast_rating_save_failed(), error);
 		},
 	});
@@ -59,6 +60,7 @@ export function useUserRatingMutations(metadataId: string) {
 			if (previous) {
 				queryClient.setQueryData(metadataKeys.detailsView(metadataId), previous);
 			}
+
 			toastError(m.toast_rating_delete_failed(), error);
 		},
 	});

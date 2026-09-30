@@ -141,6 +141,7 @@ export function useWatchlistToggle() {
 			if (context?.previous) {
 				queryClient.setQueryData(watchlistKeys.status(metadataId), context.previous);
 			}
+
 			toastError(m.components_metadata_card_list_update_failed(), error);
 		},
 		onSettled: async (_, __, metadataId) => {
