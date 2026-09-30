@@ -64,7 +64,7 @@ Some formatters intentionally differ in edge-case output across call sites — v
 - New dependency → check bundle impact (`bun run build`, `dist/index.html`). No unreferenced assets in `public/`.
 - URL state: TanStack Router `validateSearch` + sync hand-rolled validators (`src/types/search-params.ts`; no zod — route modules are in the eager graph). No manual `window.location`/`history`.
 - `Route.useSearch()` / `useSearch({ from })` and `useParams({ from: "/route/$id" })` — never `strict: false` + cast.
-- After backend contract changes: `bun run build-sdk` in `reelvault`, then `cp -r sdk/dist node_modules/reelvault-sdk/` inside `website`.
+- After backend contract changes: build the sdk (`bun run build` in the sibling `sdk/` repo), then refresh the local copy: `rm -rf node_modules/@reelvault/sdk && mkdir -p node_modules/@reelvault/sdk && cp -r ../sdk/dist node_modules/@reelvault/sdk/dist && cp ../sdk/package.json node_modules/@reelvault/sdk/package.json`. For releases the version comes from npm (tag `v*` in `sdk/` publishes).
 
 ## Player (`src/pages/player/`) — fragile zone
 - Don't touch effect deps/async timing without deep analysis — the current guards are intentional race protection.

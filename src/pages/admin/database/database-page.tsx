@@ -15,7 +15,7 @@ import { DatabaseStatsGrid } from "./components/database-stats-grid";
 const SKELETON_KEYS = ["1", "2", "3"] as const;
 
 export default function AdminDatabasePage() {
-	const { backupsQuery, backups, createBackupMutation, deleteBackupMutation } = useAdminBackups();
+	const { backupsQuery, backups, createBackupMutation, deleteBackupMutation, restoreMutation } = useAdminBackups();
 
 	const handleRefetch = () => {
 		detach(backupsQuery.refetch());
@@ -59,6 +59,14 @@ export default function AdminDatabasePage() {
 						onDelete={(fileName) => {
 							detach(handleDeleteBackup(fileName));
 						}}
+						onRestore={(fileName) => {
+							detach(
+								restoreMutation.mutateAsync(fileName).then(() => {
+									toast.success(m.admin_database_restore_queued());
+								}),
+							);
+						}}
+						restorePending={restoreMutation.isPending}
 					/>
 				))}
 			</div>

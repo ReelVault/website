@@ -153,6 +153,7 @@ export const pluginKeys = {
 
 export const adminKeys = {
 	all: ["admin"] as const,
+	apiKeys: () => [...adminKeys.all, "api-keys"] as const,
 	usersAll: () => [...adminKeys.all, "users"] as const,
 	users: (search: string, params?: { page?: number; limit?: number }) => {
 		const base = [...adminKeys.all, "users", search] as const;

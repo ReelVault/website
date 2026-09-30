@@ -278,6 +278,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_query_cache_ms(),
 		description: m.admin_settings_external_api_buffer(),
 	},
+	"metadata.minMatchScore": {
+		label: m.admin_settings_min_match_score(),
+		description: m.admin_settings_min_match_score_description(),
+	},
 	"metadata.ratingAggregation": {
 		label: m.admin_settings_label_rating_strategy(),
 		description: m.admin_settings_rating_calc_description(),
@@ -449,6 +453,22 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 	"auth.enforceTwoFactor": {
 		label: m.admin_settings_enforce_two_factor(),
 		description: m.admin_settings_enforce_two_factor_description(),
+	},
+	"auth.sessionLifetimeDays": {
+		label: m.admin_settings_session_lifetime_days(),
+		description: m.admin_settings_session_lifetime_days_description(),
+	},
+	"auth.rateLimit.loginAccountMaxAttempts": {
+		label: m.admin_settings_login_max_attempts(),
+		description: m.admin_settings_login_max_attempts_description(),
+	},
+	"network.rateLimit.globalMax": {
+		label: m.admin_settings_rate_limit_global_max(),
+		description: m.admin_settings_rate_limit_global_max_description(),
+	},
+	"network.rateLimit.routeMultiplier": {
+		label: m.admin_settings_rate_limit_route_multiplier(),
+		description: m.admin_settings_rate_limit_route_multiplier_description(),
 	},
 	"system.database.watchedHistoryRetentionDays": {
 		label: m.admin_settings_watched_history_retention(),

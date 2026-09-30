@@ -11,6 +11,7 @@ import {
 	FileVideo,
 	Film,
 	Hash,
+	KeyRound,
 	Languages,
 	Layers,
 	ListChecks,
@@ -75,6 +76,7 @@ export const staticMenuGroups: MenuGroup[] = [
 		group: m.admin_sidebar_administration(),
 		items: [
 			{ name: m.admin_nav_users(), href: "/admin/users", icon: UserCog },
+			{ name: m.admin_api_keys_heading(), href: "/admin/api-keys", icon: KeyRound },
 			{ name: m.admin_nav_security_audit(), href: "/admin/audit", icon: ShieldCheck },
 		],
 	},

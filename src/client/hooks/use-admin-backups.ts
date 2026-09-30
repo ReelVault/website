@@ -29,10 +29,16 @@ export function useAdminBackups() {
 		onError: (error) => toastError(m.admin_database_failed_to_delete(), error),
 	});
 
+	const restoreMutation = useMutation({
+		mutationFn: (fileName: string) => reelvault.admin.restoreDatabase(fileName),
+		onError: (error) => toastError(m.admin_database_failed_to_restore(), error),
+	});
+
 	return {
 		backupsQuery,
 		backups: backupsQuery.data ?? [],
 		createBackupMutation,
 		deleteBackupMutation,
+		restoreMutation,
 	};
 }

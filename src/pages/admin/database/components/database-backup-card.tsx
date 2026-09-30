@@ -1,4 +1,4 @@
-import { Clock, Database, Trash2 } from "lucide-react";
+import { ArchiveRestore, Clock, Database, Trash2 } from "lucide-react";
 import type { useAdminBackups } from "@/client/hooks/use-admin-backups";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,11 @@ interface DatabaseBackupCardProps {
 	backup: BackupItem;
 	isPending: boolean;
 	onDelete: (fileName: string) => void;
+	onRestore: (fileName: string) => void;
+	restorePending: boolean;
 }
 
-export function DatabaseBackupCard({ backup, isPending, onDelete }: DatabaseBackupCardProps) {
+export function DatabaseBackupCard({ backup, isPending, onDelete, onRestore, restorePending }: DatabaseBackupCardProps) {
 	return (
 		<div className="flex flex-col gap-3 rounded-xl border border-border/80 bg-card/60 p-4 transition-colors hover:border-primary/40 sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex items-center gap-3.5">
@@ -35,6 +37,18 @@ export function DatabaseBackupCard({ backup, isPending, onDelete }: DatabaseBack
 			</div>
 
 			<div className="flex shrink-0 items-center gap-2">
+				<ConfirmAction
+					trigger={
+						<Button variant="ghost" size="sm" disabled={restorePending} className="gap-1.5 text-xs">
+							<ArchiveRestore className="size-3.5" />
+							{m.admin_database_restore()}
+						</Button>
+					}
+					title={m.admin_database_restore_title({ name: backup.fileName })}
+					description={m.admin_database_restore_description()}
+					confirmLabel={m.admin_database_restore()}
+					onConfirm={() => onRestore(backup.fileName)}
+				/>
 				<ConfirmAction
 					trigger={
 						<Button

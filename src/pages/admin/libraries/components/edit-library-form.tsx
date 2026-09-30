@@ -1,12 +1,14 @@
-import type { LibraryWithRelations, SidecarFlavor } from "@reelvault/sdk";
+import type { LibraryProviderPriority, LibraryWithRelations, SidecarFlavor } from "@reelvault/sdk";
 import { Save } from "lucide-react";
 import { useState } from "react";
+import { useAdminMetadataProviders } from "@/client/hooks/use-admin-providers";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
 import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import type { PathField } from "./library-constants";
@@ -29,6 +31,22 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 	const [paths, setPaths] = useState<PathField[]>(() =>
 		library.paths.map((p) => createPathField(p.path, p.metadataStorageMode ?? undefined)),
 	);
+	const [providerPriorities, setProviderPriorities] = useState<LibraryProviderPriority[]>(() => library.providerPriorities ?? []);
+	const { data: metadataProviders = [] } = useAdminMetadataProviders();
+	const providers = metadataProviders.map((provider) => ({
+		id: provider.id,
+		name: provider.name,
+		priority: provider.priority,
+		enabled: provider.enabled,
+	}));
+
+	function upsertPriority(providerId: string, globalPriority: number, enabled: boolean, priority: number): void {
+		setProviderPriorities((previous) => {
+			const rest = previous.filter((item) => item.providerId !== providerId);
+
+			return [...rest, { providerId, priority: priority || globalPriority, enabled }];
+		});
+	}
 
 	const submitChanges = () => {
 		const validPaths = paths.flatMap(({ value, metadataStorageMode }) =>
@@ -52,6 +70,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 						type,
 						sidecarFlavor,
 						paths: validPaths,
+						...(providerPriorities.length > 0 && { providerPriorities }),
 					},
 				});
 				onClose();
@@ -100,6 +119,53 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 
 				{/* Step 4: Sidecar NFO format */}
 				<SidecarFlavorSelector value={sidecarFlavor} onChange={setSidecarFlavor} />
+
+				{/* Step 5: Metadata provider overrides (empty = global order) */}
+				{providers.length > 0 && (
+					<div className="flex flex-col gap-2 rounded-2xl border border-border p-4">
+						<div className="flex items-center justify-between gap-2">
+							<Label className="font-medium text-sm">{m.admin_libraries_provider_overrides()}</Label>
+							{providerPriorities.length > 0 && (
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									className="text-muted-foreground text-xs"
+									onClick={() => setProviderPriorities([])}
+								>
+									{m.admin_libraries_provider_overrides_reset()}
+								</Button>
+							)}
+						</div>
+						<p className="text-muted-foreground text-xs">{m.admin_libraries_provider_overrides_desc()}</p>
+						{providers.map((provider) => {
+							const override = providerPriorities.find((item) => item.providerId === provider.id);
+							const priority = override?.priority ?? provider.priority;
+
+							return (
+								<div key={provider.id} className="flex items-center justify-between gap-3">
+									<Label className="min-w-0 flex-1 truncate font-normal">{provider.name}</Label>
+									<Input
+										type="number"
+										min={1}
+										max={10_000}
+										value={priority}
+										onChange={(event) => {
+											const nextPriority = Number(event.target.value);
+											if (Number.isNaN(nextPriority)) return;
+											upsertPriority(provider.id, provider.priority, override?.enabled ?? provider.enabled, nextPriority);
+										}}
+										className="h-8 w-20 bg-background text-sm"
+									/>
+									<Switch
+										checked={override?.enabled ?? provider.enabled}
+										onCheckedChange={(checked) => upsertPriority(provider.id, provider.priority, checked, priority)}
+									/>
+								</div>
+							);
+						})}
+					</div>
+				)}
 
 				{/* Footer */}
 				<DialogFooter className="gap-3 border-border/60 border-t pt-4 sm:justify-end">
