@@ -49,7 +49,7 @@ export function MetadataFilterBar({ searchQuery, onSearchChange, mediaFilter, on
 						{m.admin_metadata_low_recognition()}
 					</ToggleGroupItem>
 					<ToggleGroupItem value="missing_translation" className="gap-1 text-xs">
-						<AlertTriangle className="size-3 text-orange-400" />
+						<AlertTriangle className="size-3 text-warning" />
 						{m.admin_metadata_fallback_chip()}
 					</ToggleGroupItem>
 					<ToggleGroupItem value="with_media" className="gap-1 text-xs">

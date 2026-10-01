@@ -76,7 +76,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete }: 
 									</Badge>
 								)}
 								{item.hasMissingTranslation && (
-									<Badge variant="outline" className="gap-1 border-orange-500/40 bg-background/80 text-[10px] text-orange-400">
+									<Badge variant="outline" className="gap-1 border-warning/40 bg-background/80 text-[10px] text-warning">
 										<AlertTriangle className="size-2.5" />
 										{m.admin_metadata_no_pl_fallback()}
 									</Badge>
