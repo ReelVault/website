@@ -1,4 +1,5 @@
 import type { AdminLogEntry } from "@reelvault/sdk";
+import { cn } from "cn";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -8,12 +9,14 @@ import { m } from "@/paraglide/messages";
 import { shortTimeFormatter } from "@/utils/format-utils";
 import { extractErrorMessage, extractErrorStack, stringifyLogDetail } from "./log-types";
 
-const LEVEL_VARIANTS: Record<string, "destructive" | "default" | "secondary" | "outline"> = {
-	error: "destructive",
-	fatal: "destructive",
-	warn: "secondary",
-	info: "default",
-	debug: "outline",
+// Subtle per-level tints instead of solid pills — a wall of saturated badges
+// made the log body unreadable.
+const LEVEL_CLASSES: Record<string, string> = {
+	error: "border-destructive/30 bg-destructive/10 text-destructive",
+	fatal: "border-destructive/30 bg-destructive/10 text-destructive",
+	warn: "border-warning/30 bg-warning/10 text-warning",
+	info: "border-info/30 bg-info/10 text-info",
+	debug: "border-border bg-muted/40 text-muted-foreground",
 };
 
 interface LogFormattedViewerProps {
@@ -52,7 +55,7 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 								<span className="mr-1.5 shrink-0 text-muted-foreground">
 									{isExpanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
 								</span>
-								<Badge variant={LEVEL_VARIANTS[level] ?? "outline"} className="shrink-0 px-1.5 py-0 text-[9px] uppercase">
+								<Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-[9px] uppercase", LEVEL_CLASSES[level])}>
 									{level}
 								</Badge>
 								{log.module !== undefined && (

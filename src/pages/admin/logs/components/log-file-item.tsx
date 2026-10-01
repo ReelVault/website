@@ -17,7 +17,7 @@ interface LogFileItemProps {
 
 export function LogFileItem({ file, isSelected, onSelect, onDelete, onDownload }: LogFileItemProps) {
 	const icon = createElement(getLogIcon(file), {
-		className: cn("size-4 shrink-0", isSelected ? "text-primary-foreground" : "text-muted-foreground"),
+		className: cn("size-4 shrink-0", isSelected ? "text-primary" : "text-muted-foreground"),
 	});
 
 	return (
@@ -30,7 +30,7 @@ export function LogFileItem({ file, isSelected, onSelect, onDelete, onDownload }
 						data-file-id={file.id}
 						className={cn(
 							"group flex w-full flex-col gap-1 rounded-lg p-2.5 text-left transition-[border-color,background-color,color,box-shadow]",
-							isSelected ? "bg-primary text-primary-foreground shadow-sm" : "text-foreground hover:bg-muted/60",
+							isSelected ? "bg-primary/10 text-primary ring-1 ring-primary/30" : "text-foreground hover:bg-muted/60",
 						)}
 					/>
 				}
@@ -42,7 +42,7 @@ export function LogFileItem({ file, isSelected, onSelect, onDelete, onDownload }
 				<div
 					className={cn(
 						"flex items-center justify-between text-[11px] tabular-nums",
-						isSelected ? "text-primary-foreground/80" : "text-muted-foreground",
+						isSelected ? "text-primary/70" : "text-muted-foreground",
 					)}
 				>
 					<span>{formatLogDate(file.modifiedAt)}</span>
