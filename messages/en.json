@@ -557,6 +557,7 @@
 	"admin_media_audio_streams_section": "Audio streams",
 	"admin_media_audio_tracks_count_title": "{count} audio tracks",
 	"admin_media_audio_tracks_detected": "Audio tracks detected in the file.",
+	"admin_media_audit_running": "Auditing…",
 	"admin_media_audit_clean_notice": "The audit engine found no mismatches, sequel conflicts, or anomalies in media-to-metadata assignments.",
 	"admin_media_audit_mismatch_desc": "The files below show part (sequel) mismatches, release date discrepancies, or episode numbering issues.",
 	"admin_media_audit_zero": "0",
