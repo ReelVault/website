@@ -1,12 +1,10 @@
 import { ArchiveRestore, Clock, Database, Trash2 } from "lucide-react";
-import type { useAdminBackups } from "@/client/hooks/use-admin-backups";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { formatFullDateTime } from "@/utils/format-utils";
-
-type BackupItem = ReturnType<typeof useAdminBackups>["backups"][number];
+import type { BackupItem } from "./database-stats-grid";
 
 interface DatabaseBackupCardProps {
 	backup: BackupItem;

@@ -4,7 +4,7 @@ import { AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 
-type BackupItem = ReturnType<typeof useAdminBackups>["backups"][number];
+export type BackupItem = ReturnType<typeof useAdminBackups>["backups"][number];
 
 interface DatabaseStatsGridProps {
 	backups: BackupItem[];
