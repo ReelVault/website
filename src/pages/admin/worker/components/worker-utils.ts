@@ -5,6 +5,13 @@ import { formatFullDateTime } from "@/utils/format-utils";
 
 export type ItemStatus = WorkerOperation["status"];
 
+export interface WorkerTotals {
+	waiting: number;
+	active: number;
+	completed: number;
+	failed: number;
+}
+
 export const WORKER_ITEMS_PAGE_SIZE = 25;
 
 export const labels: Record<ItemStatus, string> = {
@@ -43,40 +50,40 @@ export function formatMsDuration(ms: number): string {
 	return `${seconds}s`;
 }
 
-export function getWorkerMeta(workerId: string): { title: string; category: string } {
+export function getWorkerMeta(workerId: string): { title: string } {
 	switch (workerId) {
 		case "library-scan":
-			return { title: m.admin_workers_operation_type_scan_library(), category: m.admin_workers_category_library() };
+			return { title: m.admin_workers_operation_type_scan_library() };
 		case "media-files-refresh-all":
-			return { title: m.admin_worker_refreshing_ffprobe(), category: "Biblioteka" };
+			return { title: m.admin_worker_refreshing_ffprobe() };
 		case "media-file-technical-refresh":
-			return { title: m.admin_workers_operation_type_tech_analysis(), category: m.admin_workers_category_media() };
+			return { title: m.admin_workers_operation_type_tech_analysis() };
 		case "media-file-analysis":
-			return { title: m.admin_worker_deep_stream_analysis(), category: "Media" };
+			return { title: m.admin_worker_deep_stream_analysis() };
 		case "media-file-ingest":
-			return { title: m.admin_workers_operation_type_index_import(), category: m.admin_workers_category_media() };
+			return { title: m.admin_workers_operation_type_index_import() };
 		case "metadata-refresh":
-			return { title: m.admin_workers_operation_type_metadata_fetch(), category: m.admin_workers_category_metadata() };
+			return { title: m.admin_workers_operation_type_metadata_fetch() };
 		case "image-processing":
-			return { title: m.admin_workers_operation_type_image_optimization(), category: m.admin_workers_category_images() };
+			return { title: m.admin_workers_operation_type_image_optimization() };
 		case "library-errors-check":
-			return { title: m.admin_worker_integrity_verification(), category: m.admin_workers_category_diagnostics() };
+			return { title: m.admin_worker_integrity_verification() };
 		case "stream-init":
-			return { title: m.admin_workers_operation_type_transcode_init(), category: m.admin_workers_category_streaming() };
+			return { title: m.admin_workers_operation_type_transcode_init() };
 		case "trickplay-generate":
-			return { title: m.admin_workers_operation_type_trickplay(), category: m.admin_workers_category_media() };
+			return { title: m.admin_workers_operation_type_trickplay() };
 		case "offline-sync":
-			return { title: m.admin_worker_offline_job_sync(), category: "System" };
+			return { title: m.admin_worker_offline_job_sync() };
 		default:
 			if (workerId.startsWith("org.reelvault.")) {
 				const parts = workerId.split(":");
 				const pluginName = parts[0]?.replace("org.reelvault.", "") ?? "plugin";
 				const actionName = parts.slice(1).join(" ") || m.admin_worker_plugin_job();
 
-				return { title: `${pluginName}: ${actionName}`, category: m.admin_nav_plugins() };
+				return { title: `${pluginName}: ${actionName}` };
 			}
 
-			return { title: workerId, category: "Worker" };
+			return { title: workerId };
 	}
 }
 

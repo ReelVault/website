@@ -30,8 +30,6 @@ export function useAdminOperationJobs(
 	} = {},
 	autoRefresh = true,
 ) {
-	const queryClient = useQueryClient();
-
 	const query = useQuery({
 		queryKey: adminKeys.workerOperationJobs(operationId ?? "none", options),
 		placeholderData: keepPreviousData,
@@ -43,23 +41,6 @@ export function useAdminOperationJobs(
 			isActive: (data) => data?.items.some((i: WorkerJob) => i.status === "pending" || i.status === "running") ?? false,
 			activeMs: 5_000,
 		}),
-	});
-
-	const cancelJobMutation = useMutation({
-		mutationFn: (jobId: string) => reelvault.admin.cancelWorkerJob(jobId),
-		onSuccess: async () => {
-			if (operationId) {
-				await Promise.all([
-					queryClient.invalidateQueries({ queryKey: adminKeys.workerOperationJobs(operationId) }),
-					queryClient.invalidateQueries({ queryKey: adminKeys.workerOperation(operationId) }),
-				]);
-			}
-
-			await invalidateWorkerQueries(queryClient);
-		},
-		onError: (error) => {
-			toastError(m.toast_job_cancel_failed(), error);
-		},
 	});
 
 	return {
@@ -74,10 +55,6 @@ export function useAdminOperationJobs(
 		isFetching: query.isFetching,
 		isError: query.isError,
 		refetch: query.refetch,
-		cancelJob: cancelJobMutation.mutateAsync,
-		cancelItem: cancelJobMutation.mutateAsync,
-		cancellingJobId: cancelJobMutation.isPending ? cancelJobMutation.variables : undefined,
-		cancellingItemId: cancelJobMutation.isPending ? cancelJobMutation.variables : undefined,
 	};
 }
 
@@ -97,6 +74,39 @@ export function useAdminActiveOperations(autoRefresh = true) {
 	});
 }
 
+/** Cancel/resume actions for a single worker operation, shared by every view that renders operation cards. */
+export function useWorkerOperationActions() {
+	const queryClient = useQueryClient();
+
+	const cancelMutation = useMutation({
+		mutationFn: (id: string) => reelvault.admin.cancelWorkerOperation(id),
+		onSuccess: async (_, id) => {
+			await invalidateWorkerQueries(queryClient, id);
+		},
+		onError: (error) => {
+			toastError(m.toast_operation_cancel_failed(), error);
+		},
+	});
+
+	const resumeMutation = useMutation({
+		mutationFn: (id: string) => reelvault.admin.resumeWorkerOperation(id),
+		onSuccess: async (data, id) => {
+			toast.success(m.toast_operation_resumed({ count: data.resumed }));
+			await invalidateWorkerQueries(queryClient, id);
+		},
+		onError: (error) => {
+			toastError(m.toast_operation_resume_failed(), error);
+		},
+	});
+
+	return {
+		cancelOperation: cancelMutation.mutateAsync,
+		cancellingOperationId: cancelMutation.isPending ? cancelMutation.variables : undefined,
+		resumeOperation: resumeMutation.mutateAsync,
+		resumingOperationId: resumeMutation.isPending ? resumeMutation.variables : undefined,
+	};
+}
+
 export function useAdminJobs(
 	operationId?: string,
 	limit = 25,
@@ -104,8 +114,6 @@ export function useAdminJobs(
 	status?: "pending" | "running" | "completed" | "failed" | "cancelled",
 	page = 1,
 ) {
-	const queryClient = useQueryClient();
-
 	const operationsQuery = useQuery({
 		queryKey: adminKeys.workerOperations({ page, limit, status }),
 		placeholderData: keepPreviousData,
@@ -150,39 +158,31 @@ export function useAdminJobs(
 		}),
 	});
 
-	const statsQuery = useQuery({
-		queryKey: adminKeys.workers(),
-		queryFn: () => reelvault.admin.getWorkers(),
-		staleTime: 15_000,
-		refetchInterval: pollWhile({
-			enabled: autoRefresh,
-			isActive: (data) => data?.some((w) => w.stats.active > 0 || w.stats.waiting > 0) ?? false,
-			activeMs: 5_000,
-		}),
-	});
+	return {
+		operations: operationsQuery.data?.data ?? [],
+		total: operationsQuery.data?.total ?? 0,
+		totalPages: operationsQuery.data?.totalPages ?? 1,
+		page: operationsQuery.data?.page ?? page,
+		limit: operationsQuery.data?.limit ?? limit,
+		operationsQuery,
+		operation: operationQuery.data,
+		operationItems: operationItemsQuery.data?.items ?? [],
+		operationJobs: operationItemsQuery.data?.items ?? [],
+		operationItemsSummary: operationItemsQuery.data?.summary,
+		operationJobsSummary: operationItemsQuery.data?.summary,
+		operationQuery,
+		operationItemsQuery,
+		operationJobsQuery: operationItemsQuery,
+		isRefetching: operationsQuery.isRefetching || operationQuery.isRefetching || operationItemsQuery.isRefetching,
+		...useWorkerOperationActions(),
+	};
+}
 
-	const cancelMutation = useMutation({
-		mutationFn: (id: string) => reelvault.admin.cancelWorkerOperation(id),
-		onSuccess: async (_, id) => {
-			await invalidateWorkerQueries(queryClient, id);
-		},
-		onError: (error) => {
-			toastError(m.toast_operation_cancel_failed(), error);
-		},
-	});
+/** Cancels every queued/running worker operation — the "stop the flood" button. */
+export function useCancelAllWorkerOperations() {
+	const queryClient = useQueryClient();
 
-	const resumeMutation = useMutation({
-		mutationFn: (id: string) => reelvault.admin.resumeWorkerOperation(id),
-		onSuccess: async (data, id) => {
-			toast.success(m.toast_operation_resumed({ count: data.resumed }));
-			await invalidateWorkerQueries(queryClient, id);
-		},
-		onError: (error) => {
-			toastError(m.toast_operation_resume_failed(), error);
-		},
-	});
-
-	const cancelAllOperationsMutation = useMutation({
+	return useMutation({
 		mutationFn: () => reelvault.admin.cancelAllWorkerOperations(),
 		onSuccess: async (data) => {
 			if (data.cancelledCount > 0) {
@@ -197,33 +197,6 @@ export function useAdminJobs(
 			toastError(m.toast_operation_cancel_failed_short(), error);
 		},
 	});
-
-	return {
-		operations: operationsQuery.data?.data ?? [],
-		total: operationsQuery.data?.total ?? 0,
-		totalPages: operationsQuery.data?.totalPages ?? 1,
-		page: operationsQuery.data?.page ?? page,
-		limit: operationsQuery.data?.limit ?? limit,
-		stats: statsQuery.data ?? [],
-		operationsQuery,
-		operation: operationQuery.data,
-		operationItems: operationItemsQuery.data?.items ?? [],
-		operationJobs: operationItemsQuery.data?.items ?? [],
-		operationItemsSummary: operationItemsQuery.data?.summary,
-		operationJobsSummary: operationItemsQuery.data?.summary,
-		operationQuery,
-		operationItemsQuery,
-		operationJobsQuery: operationItemsQuery,
-		statsQuery,
-		isRefetching:
-			operationsQuery.isRefetching || operationQuery.isRefetching || operationItemsQuery.isRefetching || statsQuery.isRefetching,
-		cancelOperation: cancelMutation.mutateAsync,
-		cancellingOperationId: cancelMutation.isPending ? cancelMutation.variables : undefined,
-		resumeOperation: resumeMutation.mutateAsync,
-		resumingOperationId: resumeMutation.isPending ? resumeMutation.variables : undefined,
-		cancelAllOperations: cancelAllOperationsMutation.mutateAsync,
-		isCancellingAllOperations: cancelAllOperationsMutation.isPending,
-	};
 }
 
 export function usePurgeWorkerHistory() {

@@ -1,4 +1,5 @@
 import type { WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
+import { cn } from "cn";
 import { ChevronDown, Loader2, Play } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -15,11 +16,11 @@ export const CATEGORY_NAMES: Record<string, { title: string; description: string
 		description: m.admin_worker_indexing_jobs(),
 	},
 	media: {
-		title: "Media",
+		title: m.admin_workers_category_media(),
 		description: m.admin_worker_technical_analysis(),
 	},
 	stream: {
-		title: "Streaming",
+		title: m.admin_workers_category_streaming(),
 		description: m.admin_worker_session_transcoding(),
 	},
 	sync: {
@@ -89,41 +90,34 @@ export function ScheduledTasksCategoryGroup({
 
 	return (
 		<section className="flex flex-col gap-3">
-			<div className="flex items-center justify-between gap-3">
-				<div>
-					<div className="flex items-center gap-2">
-						<h3 className="font-bold text-foreground text-sm tracking-tight">{meta.title}</h3>
-						<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
-							{tasks.length}
-						</Badge>
-					</div>
-					<p className="text-muted-foreground text-xs">{meta.description}</p>
-				</div>
-				<div className="flex shrink-0 items-center gap-1.5">
+			<Collapsible open={expanded} className="flex flex-col gap-3">
+				<div className="flex items-start justify-between gap-3">
+					<CollapsibleTrigger type="button" onClick={() => setExpanded((v) => !v)} className="group min-w-0 flex-1 rounded-lg text-left">
+						<div className="flex items-center gap-2">
+							<ChevronDown
+								className={cn("size-4 shrink-0 text-muted-foreground transition-transform duration-200", !expanded && "-rotate-90")}
+							/>
+							<h3 className="font-bold text-foreground text-sm tracking-tight">{meta.title}</h3>
+							<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+								{tasks.length}
+							</Badge>
+						</div>
+						<p className="pl-6 text-muted-foreground text-xs">{meta.description}</p>
+					</CollapsibleTrigger>
 					<Button
 						type="button"
 						variant="outline"
 						size="sm"
 						disabled={isRunningCategory}
 						onClick={() => detach(onRunCategory(category))}
-						className="h-8.5 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
+						className="h-8.5 shrink-0 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
 						title={m.admin_workers_run_all()}
 					>
 						{isRunningCategory ? <Loader2 className="size-3.5 animate-spin" /> : <Play className="size-3.5 fill-current" />}
 						<span>{m.admin_workers_run_all()}</span>
 					</Button>
 				</div>
-			</div>
 
-			<Collapsible open={expanded}>
-				<CollapsibleTrigger
-					type="button"
-					onClick={() => setExpanded((v) => !v)}
-					className="flex size-8.5 items-center justify-center rounded-lg border border-border/60 text-muted-foreground hover:bg-secondary hover:text-foreground"
-					title={meta.title}
-				>
-					<ChevronDown className={`size-4 transition-transform ${expanded ? "" : "-rotate-90"}`} />
-				</CollapsibleTrigger>
 				<CollapsibleContent>
 					<div className="flex flex-col gap-2.5">
 						{tasks.map((task) => (

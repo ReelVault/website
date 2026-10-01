@@ -1,21 +1,19 @@
 import type { TaskTrigger, WorkerCategory } from "@reelvault/sdk";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys } from "../utils/query-keys";
 import { invalidateWorkerQueries } from "./use-admin-jobs";
+import { useWorkerStats } from "./use-worker-stats";
 
 export function useScheduledTasks(autoRefresh = true) {
 	const queryClient = useQueryClient();
 
-	const scheduledTasksQuery = useQuery({
-		queryKey: adminKeys.workers(),
-		queryFn: () => reelvault.admin.getWorkers(),
-		staleTime: 15_000,
-		refetchInterval: autoRefresh ? 5_000 : false,
-	});
+	// Shared subscription (see useWorkerStats) — one poller serves the task list
+	// and the queue stats.
+	const scheduledTasksQuery = useWorkerStats(autoRefresh);
 
 	const runTaskMutation = useMutation({
 		mutationFn: (params: string | { workerId: string; data?: unknown }) => {

@@ -3,14 +3,7 @@ import { ListChecks, RefreshCw, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminPageHeader } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
-import { PurgeHistoryAction } from "./purge-history-action";
-
-interface WorkerTotals {
-	waiting: number;
-	active: number;
-	completed: number;
-	failed: number;
-}
+import type { WorkerTotals } from "./worker-utils";
 
 /** Worker page header: title + global refresh bar. */
 export function WorkerPageHeader({
@@ -68,8 +61,6 @@ export function WorkerPageHeader({
 						<RefreshCw className={cn("size-3.5", isAnyRefetching && "animate-spin text-primary")} />
 						<span>{m.common_refresh()}</span>
 					</Button>
-
-					<PurgeHistoryAction />
 
 					{totals.waiting > 0 || totals.active > 0 ? (
 						<Button

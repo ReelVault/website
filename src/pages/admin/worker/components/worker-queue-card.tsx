@@ -1,9 +1,9 @@
+import type { WorkerSummary } from "@reelvault/sdk";
 import { cn } from "cn";
 import { Cog, Layers, Puzzle, Sparkles, Volume2, Wrench } from "lucide-react";
 import { createElement, type ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";
-import type { WorkerStatsItem } from "./worker-stats-grid";
 import { formatMsDuration, getWorkerMeta } from "./worker-utils";
 
 function getWorkerIcon(workerId: string) {
@@ -21,7 +21,7 @@ function getWorkerIcon(workerId: string) {
 }
 
 interface WorkerQueueCardProps {
-	worker: WorkerStatsItem;
+	worker: WorkerSummary;
 }
 
 export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
