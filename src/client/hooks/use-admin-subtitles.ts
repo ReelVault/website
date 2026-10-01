@@ -7,7 +7,11 @@ import { subtitleKeys } from "../utils/query-keys";
 
 const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
-export function useAdminSubtitles(page: number, limit: number, filters: { mediaFileId?: string; language?: string }) {
+export function useAdminSubtitles(
+	page: number,
+	limit: number,
+	filters: { mediaFileId?: string; language?: string; type?: "embedded" | "external" },
+) {
 	return useQuery({
 		queryKey: subtitleKeys.admin({ page, limit, ...filters }),
 		placeholderData: keepPreviousData,
@@ -17,6 +21,7 @@ export function useAdminSubtitles(page: number, limit: number, filters: { mediaF
 				limit,
 				mediaFileId: emptyToUndefined(filters.mediaFileId),
 				language: emptyToUndefined(filters.language),
+				type: filters.type,
 			}),
 		staleTime: 60_000,
 	});
