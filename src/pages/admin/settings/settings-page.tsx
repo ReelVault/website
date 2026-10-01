@@ -1,3 +1,4 @@
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import {
 	Activity,
@@ -15,7 +16,7 @@ import {
 	Tv,
 	UserCheck,
 } from "lucide-react";
-import { lazy, Suspense, useState, ViewTransition } from "react";
+import { lazy, Suspense, ViewTransition } from "react";
 import { useAdminSettings } from "@/client/hooks/use-admin-settings";
 import { AppErrorState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
@@ -42,9 +43,29 @@ const LazyPluginTabContents = lazy(async () => {
 /** Compact pills in the mobile scroll row, comfortable full-width rows in the desktop nav column. */
 const settingsTabTriggerClass = "gap-2 px-2.5 py-1.5 text-xs lg:text-sm";
 
+const SETTINGS_TABS = [
+	"resources",
+	"workers",
+	"streaming",
+	"scanning",
+	"images",
+	"markers",
+	"trickplay",
+	"playback_defaults",
+	"downloads",
+	"network",
+	"system",
+] as const;
+const DEFAULT_SETTINGS_TAB = "resources";
+
 export default function AdminSettingsPage() {
 	const { settings, isLoading, isFetching, error, refetch, updateSettings, isUpdating, resetSettings, isResetting } = useAdminSettings();
-	const [activeTab, setActiveTab] = useState("resources");
+	const { tab } = useSearch({ from: "/admin/settings" });
+	const navigate = useNavigate({ from: "/admin/settings" });
+	const activeTab = SETTINGS_TABS.find((candidate) => candidate === tab) ?? DEFAULT_SETTINGS_TAB;
+	const setActiveTab = (next: string) => {
+		detach(navigate({ search: (prev) => ({ ...prev, tab: next === DEFAULT_SETTINGS_TAB ? undefined : next }), replace: true }));
+	};
 
 	const handleSave = (updates: Record<string, unknown>) => updateSettings(updates);
 	const handleResetKeys = (keys: string[]) => resetSettings(keys);
