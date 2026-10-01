@@ -81,6 +81,7 @@
 	"admin_audit_copy_actor_id": "Copy actor ID",
 	"admin_audit_copy_ip": "Copy IP",
 	"admin_audit_copy_resource_id": "Copy resource ID",
+	"admin_audit_entries_section": "Audit entries",
 	"admin_audit_creations": "Creations",
 	"admin_audit_deletions": "Deletions",
 	"admin_audit_description": "Track who changed what resource, and when.",

@@ -83,6 +83,7 @@
 	"admin_audit_copy_actor_id": "Kopiuj ID wykonawcy",
 	"admin_audit_copy_ip": "Kopiuj IP",
 	"admin_audit_copy_resource_id": "Kopiuj ID zasobu",
+	"admin_audit_entries_section": "Wpisy audytu",
 	"admin_audit_creations": "Utworzenia",
 	"admin_audit_deletions": "Usunięcia",
 	"admin_audit_description": "Sprawdzaj kto, kiedy i na jakim zasobie wykonał zmianę.",

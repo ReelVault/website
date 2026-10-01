@@ -1,18 +1,20 @@
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { History, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { type AdminAuditAction, useAdminAudit } from "@/client/hooks/use-admin-audit";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
-import { AdminPageHeader, AdminSearch } from "@/pages/admin/admin-ui";
+import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import type { AdminAuditSearch } from "@/routes/admin/audit";
 import { AuditEntryRow } from "./components/audit-entry-row";
 
 const SKELETON_KEYS = ["one", "two", "three", "four", "five", "six"] as const;
@@ -34,15 +36,23 @@ function toIsoDateTime(value: string): string | undefined {
 }
 
 function AdminAuditContent() {
-	const [action, setAction] = useState<AdminAuditAction>("all");
-	const [resourceType, setResourceType] = useState("");
-	const [actorUserId, setActorUserId] = useState("");
-	const [ipAddress, setIpAddress] = useState("");
-	const [requestId, setRequestId] = useState("");
-	const [from, setFrom] = useState("");
-	const [to, setTo] = useState("");
-	const [page, setPage] = useState(1);
-	// Text filters are debounced before they enter the query key — otherwise every
+	const search = useSearch({ from: "/admin/audit" });
+	const navigate = useNavigate({ from: "/admin/audit" });
+
+	const action = search.action ?? "all";
+	const resourceType = search.resourceType ?? "";
+	const actorUserId = search.actorUserId ?? "";
+	const ipAddress = search.ipAddress ?? "";
+	const requestId = search.requestId ?? "";
+	const from = search.from ?? "";
+	const to = search.to ?? "";
+	const page = search.page ?? 1;
+
+	const patchSearch = (patch: Partial<AdminAuditSearch>) => {
+		detach(navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true }));
+	};
+
+	// Text filters are debounced copies of the URL values — otherwise every
 	// keystroke fired an audit request.
 	const debouncedResourceType = useDebounce({ value: resourceType, delay: 400 });
 	const debouncedActorUserId = useDebounce({ value: actorUserId, delay: 400 });
@@ -61,8 +71,7 @@ function AdminAuditContent() {
 	});
 
 	const handleResourceTypeChange = (value: string) => {
-		setResourceType(value);
-		setPage(1);
+		patchSearch({ resourceType: value || undefined, page: undefined });
 	};
 
 	const handleActionChange = (value: string[]) => {
@@ -72,8 +81,11 @@ function AdminAuditContent() {
 		const matched = ACTIONS.find((item) => item.value === next);
 		if (!matched) return;
 
-		setAction(matched.value);
-		setPage(1);
+		patchSearch({ action: matched.value === "all" ? undefined : matched.value, page: undefined });
+	};
+
+	const setPage = (next: number) => {
+		patchSearch({ page: next > 1 ? next : undefined });
 	};
 
 	const handleRefetch = () => {
@@ -147,24 +159,21 @@ function AdminAuditContent() {
 						value={actorUserId}
 						placeholder={m.admin_audit_filter_actor()}
 						onChange={(event) => {
-							setActorUserId(event.target.value);
-							setPage(1);
+							patchSearch({ actorUserId: event.target.value || undefined, page: undefined });
 						}}
 					/>
 					<Input
 						value={ipAddress}
 						placeholder={m.admin_audit_filter_ip()}
 						onChange={(event) => {
-							setIpAddress(event.target.value);
-							setPage(1);
+							patchSearch({ ipAddress: event.target.value || undefined, page: undefined });
 						}}
 					/>
 					<Input
 						value={requestId}
 						placeholder={m.admin_audit_filter_request()}
 						onChange={(event) => {
-							setRequestId(event.target.value);
-							setPage(1);
+							patchSearch({ requestId: event.target.value || undefined, page: undefined });
 						}}
 					/>
 					<Input
@@ -172,8 +181,7 @@ function AdminAuditContent() {
 						value={from}
 						aria-label={m.admin_audit_filter_from()}
 						onChange={(event) => {
-							setFrom(event.target.value);
-							setPage(1);
+							patchSearch({ from: event.target.value || undefined, page: undefined });
 						}}
 					/>
 					<Input
@@ -181,16 +189,23 @@ function AdminAuditContent() {
 						value={to}
 						aria-label={m.admin_audit_filter_to()}
 						onChange={(event) => {
-							setTo(event.target.value);
-							setPage(1);
+							patchSearch({ to: event.target.value || undefined, page: undefined });
 						}}
 					/>
 				</div>
 			</div>
 
-			<Card>
-				<CardContent className="p-0">
-					{auditContent}
+			<AdminSection
+				title={m.admin_audit_entries_section()}
+				badge={
+					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+						{pagination.total}
+					</Badge>
+				}
+				contentClassName="p-0"
+			>
+				{auditContent}
+				<div className="border-border border-t p-3">
 					<SimplePagination
 						variant="admin"
 						currentPage={page}
@@ -198,8 +213,8 @@ function AdminAuditContent() {
 						isLoading={isLoading}
 						onPageChange={setPage}
 					/>
-				</CardContent>
-			</Card>
+				</div>
+			</AdminSection>
 		</div>
 	);
 }

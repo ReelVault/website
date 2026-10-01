@@ -16,7 +16,8 @@ function auditEntryLabel(entry: {
 	const type = entry.resourceType ?? "resource";
 	if (entry.resourceName) return `${type}: ${entry.resourceName}`;
 
-	return `${type} / ${entry.resourceId ?? "—"}`;
+	// Raw ids are long UUIDs — the row stays scannable with the short form.
+	return `${type} / ${entry.resourceId?.slice(0, 8) ?? "—"}`;
 }
 
 export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
