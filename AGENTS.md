@@ -18,15 +18,15 @@ bun run test
 ```
 
 - Run them after your LAST code change, not just once midway. Any edit invalidates earlier results.
-- `lint` = Biome (`check --write`: auto-fixes and sorts imports) + type-aware oxlint. `format` = Biome + ESLint padding rules. Never hand-format.
+- `lint` = Biome (`check --write`: auto-fixes and sorts imports) + type-aware oxlint. `format` = Biome. Never hand-format.
 - Fix failures at the root cause. Never report "done" with a red check. If a failure is pre-existing and unrelated, say so explicitly and show the evidence.
 - Report what you ran and the outcome. Do not claim a check passed unless you actually ran it.
 - Changed React components/hooks → also run `npx react-doctor@latest -y --score`; the score must stay ≥70. Debug findings: `bunx react-doctor@latest why <file:line>`, `bunx react-doctor@latest rules explain <rule>`.
 
 ## Forbidden: silencing tools
 Never suppress a problem instead of fixing it. No linter blocks these, so YOU must not:
-- Suppression comments: `// biome-ignore`, `// oxlint-disable`, `// eslint-disable`, `@ts-ignore`, `@ts-expect-error`, `@ts-nocheck`.
-- Config weakening: turning a rule off or downgrading it in `biome.json`, `.oxlintrc.json`, `eslint.config.js` or `tsconfig.json`; adding paths to `ignores`/`ignorePatterns` or to the per-file `overrides` in `.oxlintrc.json` (`react/set-state-in-effect`, `react/no-danger`, ...). Existing entries are legacy debt, not precedent.
+- Suppression comments: `// biome-ignore`, `// oxlint-disable`, `@ts-ignore`, `@ts-expect-error`, `@ts-nocheck`.
+- Config weakening: turning a rule off or downgrading it in `biome.json`, `.oxlintrc.json` or `tsconfig.json`; adding paths to `ignores`/`ignorePatterns` or to the per-file `overrides` in `.oxlintrc.json` (`react/set-state-in-effect`, `react/no-danger`, ...). Existing entries are legacy debt, not precedent.
 - Dead-code hiding: `knip.json` ignore entries. Delete the code.
 - Test evasion: `test.skip`, `test.todo`, loosened assertions, deleting a failing test to get green.
 - Bypassing git hooks (`--no-verify`).

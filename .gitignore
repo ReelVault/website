@@ -119,3 +119,4 @@ repomix-output*
 certificates
 .zcode
 benchmark-results
+.zcodeignore

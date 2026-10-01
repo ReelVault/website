@@ -1,12 +1,14 @@
 import type { AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpCircle, ExternalLink, History, Info, Monitor, RefreshCw, Server } from "lucide-react";
+import { ArrowUpCircle, ChevronDown, ExternalLink, History, Info, Monitor, RefreshCw, Server } from "lucide-react";
 import type { ReactNode } from "react";
 import { useAdminUpdate } from "@/client/hooks/use-admin-update";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
+import { MarkdownText } from "@/components/markdown-text";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Progress } from "@/components/ui/progress";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
@@ -134,9 +136,14 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 				)}
 
 				{latest && (
-					<div className="rounded-lg border border-border/60 p-3">
+					<Collapsible className="rounded-lg border border-border/60 p-3">
 						<div className="flex items-center justify-between gap-3">
-							<p className="font-medium text-foreground text-sm">{m.admin_updates_release_notes({ version: latest.version })}</p>
+							<CollapsibleTrigger className="group flex min-w-0 items-center gap-1">
+								<span className="truncate font-medium text-foreground text-sm group-hover:underline">
+									{m.admin_updates_release_notes({ version: latest.version })}
+								</span>
+								<ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 data-panel-open:rotate-180" />
+							</CollapsibleTrigger>
 							{latest.url ? (
 								<a
 									href={latest.url}
@@ -149,8 +156,16 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 								</a>
 							) : null}
 						</div>
-						<p className="mt-2 whitespace-pre-wrap text-muted-foreground text-xs">{latest.notes ?? m.admin_updates_no_release_notes()}</p>
-					</div>
+						<CollapsibleContent>
+							<div className="mt-2 border-border/60 border-t pt-1">
+								{latest.notes ? (
+									<MarkdownText>{latest.notes}</MarkdownText>
+								) : (
+									<p className="text-muted-foreground text-xs">{m.admin_updates_no_release_notes()}</p>
+								)}
+							</div>
+						</CollapsibleContent>
+					</Collapsible>
 				)}
 			</div>
 		</AdminSection>
