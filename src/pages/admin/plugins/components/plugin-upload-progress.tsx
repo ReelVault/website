@@ -36,7 +36,7 @@ function StatusIcon({ entry }: { entry: PluginArchiveEntry }) {
 		case "installing":
 			return <Loader2 className="size-4 animate-spin text-primary" aria-hidden="true" />;
 		case "installed":
-			return <CheckCircle2 className="size-4 text-emerald-500" aria-hidden="true" />;
+			return <CheckCircle2 className="size-4 text-success" aria-hidden="true" />;
 		case "queued":
 			return <Circle className="size-4 text-muted-foreground" aria-hidden="true" />;
 		case "failed":

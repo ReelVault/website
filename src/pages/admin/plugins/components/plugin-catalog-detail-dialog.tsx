@@ -158,7 +158,7 @@ export function PluginCatalogDetailDialog({ entry, isBusy, onClose, onInstall, o
 								</div>
 							</section>
 
-							<div className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-amber-700 text-xs dark:text-amber-400">
+							<div className="flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/10 p-3 text-warning text-xs">
 								<AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
 								<span>{m.admin_plugins_catalog_trust_warning()}</span>
 							</div>
