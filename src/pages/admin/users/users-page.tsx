@@ -1,3 +1,4 @@
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useAdminUsers } from "@/client/hooks/use-admin-users";
@@ -18,15 +19,26 @@ import type { AdminUser } from "./components/user-item-parts";
 import { UserTable } from "./components/user-table";
 
 export default function AdminUsersPage() {
-	const [search, setSearch] = useState("");
-	const [page, setPage] = useState(1);
+	const { q, page: urlPage = 1 } = useSearch({ from: "/admin/users/" });
+	const navigate = useNavigate({ from: "/admin/users/" });
 	const [createOpen, setCreateOpen] = useState(false);
 	const [banTarget, setBanTarget] = useState<AdminUser | null>(null);
+	// The search input is the URL value itself — typing rewrites ?q= (replace),
+	// the query fires on the debounced copy, so Back/refresh restore everything.
+	const search = q ?? "";
+	const setSearch = (value: string) => {
+		detach(navigate({ search: (prev) => ({ ...prev, q: value || undefined, page: undefined }), replace: true }));
+	};
 	const debouncedSearch = useDebounce({ value: search, delay: 500 });
+	const page = urlPage;
 	const { users, total, totalPages, isLoading, error, refetch, updateUser, deleteUser, createUser, isCreating, updatingId } = useAdminUsers(
 		debouncedSearch,
 		page,
 	);
+
+	const setPage = (next: number) => {
+		detach(navigate({ search: (prev) => ({ ...prev, page: next > 1 ? next : undefined }), replace: true }));
+	};
 
 	const handleCreate = async (body: Parameters<typeof createUser>[0]) => {
 		if (isCreating) return;
