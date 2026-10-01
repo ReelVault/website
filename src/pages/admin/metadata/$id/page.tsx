@@ -1,13 +1,11 @@
-import { Link, useNavigate, useParams } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { lazy, Suspense, useState } from "react";
 import { useAdminMetadataEditor } from "@/client/hooks/use-admin-metadata-editor";
 import { LazyIdentifyDialog } from "@/components/lazy-dialogs";
 import { LazyRender } from "@/components/lazy-render";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
-import { EditorMessage } from "@/pages/admin/admin-ui";
+import { AdminBackLink, EditorMessage } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { MetadataArtworkSection } from "./_components/metadata-artwork-section";
 import { MetadataBasicInfoSection } from "./_components/metadata-basic-info-section";
@@ -93,16 +91,7 @@ function MetadataEditorContent({
 		<div className="flex flex-col gap-6">
 			{/* Top breadcrumb navigation */}
 			<div className="flex items-center gap-2">
-				<Button
-					variant="ghost"
-					size="sm"
-					className="h-8 gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground"
-					nativeButton={false}
-					render={<Link to="/admin/metadata" />}
-				>
-					<ArrowLeft className="size-3.5" />
-					<span>{m.admin_metadata_back_to_list()}</span>
-				</Button>
+				<AdminBackLink to="/admin/metadata" label={m.admin_metadata_back_to_list()} />
 			</div>
 
 			{/* Hero Header Card */}

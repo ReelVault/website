@@ -81,9 +81,7 @@ export function MetadataHero({
 						<MetadataHeroBadges metadata={metadata} releaseYear={releaseYear} rating={rating} lockedCount={lockedCount} />
 
 						<div>
-							<h1 className="wrap-break-word font-bold text-2xl text-foreground tracking-tight sm:text-3xl lg:text-4xl">
-								{metadata.title}
-							</h1>
+							<h1 className="wrap-break-word font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{metadata.title}</h1>
 							{metadata.originalTitle && metadata.originalTitle !== metadata.title && (
 								<p className="mt-1 text-muted-foreground text-sm italic">{metadata.originalTitle}</p>
 							)}
