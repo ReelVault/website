@@ -48,7 +48,7 @@ export function ResourceCacheStats() {
 						<HardDrive className="size-4 text-primary" aria-hidden="true" />
 						<p className="font-medium text-[11px] uppercase tracking-wider">{m.admin_resources_on_disk()}</p>
 					</div>
-					<div className="grid gap-3 md:grid-cols-3">
+					<div className="grid gap-3 sm:grid-cols-2">
 						{DISK_ROWS.map((row) => {
 							const stats = data.disk[row.key];
 
@@ -83,7 +83,7 @@ export function ResourceCacheStats() {
 							{m.admin_resources_no_memory_caches()}
 						</p>
 					) : (
-						<div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+						<div className="grid gap-3 sm:grid-cols-2">
 							{memoryCaches.map((cache) => (
 								<div
 									key={cache.name}
@@ -114,8 +114,8 @@ export function ResourceCacheStats() {
 			title={m.admin_server_cache()}
 			description={m.admin_resources_cache_stats_description()}
 			actions={
-				<Button variant="outline" onClick={() => detach(refetch)} disabled={isFetching}>
-					<RefreshCw className={cn("size-4", { "animate-spin": isFetching })} />
+				<Button variant="outline" size="sm" onClick={() => detach(refetch)} disabled={isFetching}>
+					<RefreshCw className={cn("size-3.5", { "animate-spin": isFetching })} />
 				</Button>
 			}
 		>

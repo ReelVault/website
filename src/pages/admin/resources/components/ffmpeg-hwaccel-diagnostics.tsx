@@ -1,10 +1,12 @@
 import type { AdminFfmpegCapabilities } from "@reelvault/sdk";
 import { cn } from "cn";
-import { CheckCircle2, Cpu, Gpu, RefreshCw, TriangleAlert } from "lucide-react";
+import { CheckCircle2, Gpu, RefreshCw, TriangleAlert } from "lucide-react";
+import type { ReactNode } from "react";
 import { useFfmpegCapabilities } from "@/client/hooks/use-ffmpeg-capabilities";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { translateByKey } from "@/utils/translate-error";
 
@@ -17,7 +19,7 @@ const HWACCEL_LABELS: Record<AdminFfmpegCapabilities["effective"]["type"], strin
 	videotoolbox: "VideoToolbox",
 };
 
-function InfoRow({ label, children }: { label: string; children: React.ReactNode }) {
+function InfoRow({ label, children }: { label: string; children: ReactNode }) {
 	return (
 		<div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
 			<span className="min-w-56 shrink-0 text-muted-foreground text-sm">{label}</span>
@@ -58,12 +60,14 @@ export function FfmpegHwaccelDiagnostics() {
 
 	if (isLoading) {
 		return (
-			<div className="mt-4 flex flex-col gap-3 rounded-xl border border-border p-4">
-				<Skeleton className="h-5 w-64" />
-				<Skeleton className="h-4 w-full" />
-				<Skeleton className="h-4 w-3/4" />
-				<Skeleton className="h-4 w-1/2" />
-			</div>
+			<AdminSection title={m.admin_resources_detected_capabilities()}>
+				<div className="flex flex-col gap-3">
+					<Skeleton className="h-5 w-64" />
+					<Skeleton className="h-4 w-full" />
+					<Skeleton className="h-4 w-3/4" />
+					<Skeleton className="h-4 w-1/2" />
+				</div>
+			</AdminSection>
 		);
 	}
 
@@ -73,7 +77,7 @@ export function FfmpegHwaccelDiagnostics() {
 	const isHardware = effective.type !== "none";
 	const configuredLabel = capabilities.configured === "auto" ? m.admin_resources_hwaccel_auto() : HWACCEL_LABELS[capabilities.configured];
 
-	let toneMappingStatus: React.ReactNode;
+	let toneMappingStatus: ReactNode;
 	if (capabilities.toneMapping === "auto" && capabilities.toneMappingMethod !== "none") {
 		toneMappingStatus = (
 			<span>
@@ -89,20 +93,17 @@ export function FfmpegHwaccelDiagnostics() {
 	}
 
 	return (
-		<div className="mt-4 flex flex-col gap-4 rounded-xl border border-border p-4">
-			<div className="flex flex-wrap items-center justify-between gap-3">
+		<AdminSection
+			title={m.admin_resources_detected_capabilities()}
+			badge={
 				<div className="flex flex-wrap items-center gap-2">
-					<span className="font-medium text-sm">{m.admin_resources_detected_capabilities()}</span>
 					{isHardware ? (
 						<Badge className="border-success/30 bg-success/10 text-success" variant="outline">
 							<Gpu data-icon="inline-start" />
 							{HWACCEL_LABELS[effective.type]}
 						</Badge>
 					) : (
-						<Badge variant="secondary">
-							<Cpu data-icon="inline-start" />
-							{m.player_hwaccel_cpu()}
-						</Badge>
+						<Badge variant="secondary">{m.player_hwaccel_cpu()}</Badge>
 					)}
 					{decodeTest && (
 						<Badge
@@ -116,12 +117,14 @@ export function FfmpegHwaccelDiagnostics() {
 						</Badge>
 					)}
 				</div>
+			}
+			actions={
 				<Button variant="outline" size="sm" disabled={isRefreshing} onClick={() => refresh()}>
 					<RefreshCw className={cn("size-4", { "animate-spin": isRefreshing })} />
 					{m.admin_resources_redetect()}
 				</Button>
-			</div>
-
+			}
+		>
 			<div className="flex flex-col gap-2.5">
 				<InfoRow label={m.admin_resources_ffmpeg_version()}>{capabilities.version}</InfoRow>
 				<InfoRow label={m.admin_resources_binary_path()}>
@@ -198,6 +201,6 @@ export function FfmpegHwaccelDiagnostics() {
 					{m.admin_resources_accel_failed_notice()}
 				</p>
 			)}
-		</div>
+		</AdminSection>
 	);
 }

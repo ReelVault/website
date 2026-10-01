@@ -1,9 +1,9 @@
-import { cn } from "cn";
 import { Activity, Cpu, HardDrive, MemoryStick } from "lucide-react";
 import type { useAdminResources } from "@/client/hooks/use-admin-resources";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { shortTimeFormatter } from "@/utils/format-utils";
@@ -35,92 +35,89 @@ export function getPressureLabel(pressure: string) {
 	}
 }
 
+function getPressureTone(pressure: string): "success" | "warning" | "destructive" {
+	switch (pressure) {
+		case "critical":
+			return "destructive";
+		case "high":
+		case "medium":
+			return "warning";
+		default:
+			return "success";
+	}
+}
+
+function UsageBar({ percent }: { percent: number }) {
+	return <Progress value={percent} className="h-1.5" />;
+}
+
 export function ResourceMetricsGrid({ current }: { current: ResourceCurrent }) {
 	const activeWorkers = Object.entries(current.workers).filter(([, count]) => count > 0);
 
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-				<Card className="border-border/80 bg-card/60 shadow-none">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.admin_resources_cpu()}
-						</CardTitle>
-						<div className="flex size-7 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
-							<Cpu className="size-4" />
+				<AdminStatCard
+					label={m.admin_resources_cpu()}
+					value={m.common_percent_value({ value: current.cpu.usedPercent.toFixed(1) })}
+					icon={Cpu}
+					description={
+						<div className="flex flex-col gap-1.5">
+							<UsageBar percent={current.cpu.usedPercent} />
+							<span>{m.admin_resources_load_average({ load: current.cpu.loadAvg.map((v) => v.toFixed(2)).join(" / ") })}</span>
 						</div>
-					</CardHeader>
-					<CardContent className="flex flex-col gap-2">
-						<div className="font-bold text-2xl tabular-nums">{m.common_percent_value({ value: current.cpu.usedPercent.toFixed(1) })}</div>
-						<Progress value={current.cpu.usedPercent} className="h-1.5" />
-						<p className="text-muted-foreground text-xs">
-							{m.admin_resources_load_average({ load: current.cpu.loadAvg.map((v) => v.toFixed(2)).join(" / ") })}
-						</p>
-					</CardContent>
-				</Card>
-
-				<Card className="border-border/80 bg-card/60 shadow-none">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.admin_resources_ram()}
-						</CardTitle>
-						<div className="flex size-7 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
-							<MemoryStick className="size-4" />
+					}
+					tone="default"
+				/>
+				<AdminStatCard
+					label={m.admin_resources_ram()}
+					value={m.common_percent_value({ value: current.memory.percent.toFixed(1) })}
+					icon={MemoryStick}
+					description={
+						<div className="flex flex-col gap-1.5">
+							<UsageBar percent={current.memory.percent} />
+							<span>
+								{m.admin_resources_used_of_total({
+									used: formatFileSize(current.memory.usedMb * 1024 * 1024),
+									total: formatFileSize(current.memory.totalMb * 1024 * 1024),
+								})}
+							</span>
 						</div>
-					</CardHeader>
-					<CardContent className="flex flex-col gap-2">
-						<div className="font-bold text-2xl tabular-nums">{m.common_percent_value({ value: current.memory.percent.toFixed(1) })}</div>
-						<Progress value={current.memory.percent} className="h-1.5" />
-						<p className="text-muted-foreground text-xs">
-							{m.admin_resources_used_of_total({
-								used: formatFileSize(current.memory.usedMb * 1024 * 1024),
-								total: formatFileSize(current.memory.totalMb * 1024 * 1024),
-							})}
-						</p>
-					</CardContent>
-				</Card>
-
-				<Card className="border-border/80 bg-card/60 shadow-none">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.admin_resource_disk()}
-						</CardTitle>
-						<div className="flex size-7 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
-							<HardDrive className="size-4" />
+					}
+					tone="default"
+				/>
+				<AdminStatCard
+					label={m.admin_resource_disk()}
+					value={m.common_percent_value({ value: current.disk.percent.toFixed(1) })}
+					icon={HardDrive}
+					description={
+						<div className="flex flex-col gap-1.5">
+							<UsageBar percent={current.disk.percent} />
+							<span>
+								{m.admin_resources_used_of_total({
+									used: formatFileSize(current.disk.usedGb * 1024 * 1024 * 1024),
+									total: formatFileSize(current.disk.totalGb * 1024 * 1024 * 1024),
+								})}
+							</span>
 						</div>
-					</CardHeader>
-					<CardContent className="flex flex-col gap-2">
-						<div className="font-bold text-2xl tabular-nums">{m.common_percent_value({ value: current.disk.percent.toFixed(1) })}</div>
-						<Progress value={current.disk.percent} className="h-1.5" />
-						<p className="text-muted-foreground text-xs">
-							{m.admin_resources_used_of_total({
-								used: formatFileSize(current.disk.usedGb * 1024 * 1024 * 1024),
-								total: formatFileSize(current.disk.totalGb * 1024 * 1024 * 1024),
-							})}
-						</p>
-					</CardContent>
-				</Card>
-
-				<Card className="border-border/80 bg-card/60 shadow-none">
-					<CardHeader className="flex flex-row items-center justify-between pb-2">
-						<CardTitle className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.admin_resources_pressure()}
-						</CardTitle>
-						<div className="flex size-7 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
-							<Activity className="size-4" />
+					}
+					tone="default"
+				/>
+				<AdminStatCard
+					label={m.admin_resources_pressure()}
+					value={getPressureLabel(current.pressure)}
+					icon={Activity}
+					description={
+						<div className="flex flex-col gap-1.5">
+							<span>
+								{m.admin_resources_active_streams()}
+								<span className="font-medium font-mono text-foreground">{current.activeStreams}</span>
+							</span>
+							<span className="text-[11px]">{shortTimeFormatter.format(new Date(current.timestamp))}</span>
 						</div>
-					</CardHeader>
-					<CardContent className="flex flex-col gap-2">
-						<Badge variant="outline" className={cn("w-fit text-xs", getPressureColor(current.pressure))}>
-							{getPressureLabel(current.pressure)}
-						</Badge>
-						<p className="text-muted-foreground text-xs">
-							{m.admin_resources_active_streams()}
-							<span className="font-medium font-mono text-foreground">{current.activeStreams}</span>
-						</p>
-						<p className="text-[11px] text-muted-foreground">{shortTimeFormatter.format(new Date(current.timestamp))}</p>
-					</CardContent>
-				</Card>
+					}
+					tone={getPressureTone(current.pressure)}
+				/>
 			</div>
 
 			{activeWorkers.length > 0 && (

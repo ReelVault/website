@@ -1135,6 +1135,7 @@
 	"admin_resources_active_streams": "Active streams:",
 	"admin_resources_active_workers": "Active background jobs",
 	"admin_resources_alert_worker_label": "· Worker:",
+	"admin_resources_alert_value_threshold": "Value: {metric}% · threshold: {threshold}%",
 	"admin_resources_alerts_section": "Recent alerts",
 	"admin_resources_allocation_label": "Allocation:",
 	"admin_resources_array_buffers": "Array buffers",

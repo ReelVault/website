@@ -1141,6 +1141,7 @@
 	"admin_resources_active_streams": "Aktywne streamy:",
 	"admin_resources_active_workers": "Aktywne zadania w tle",
 	"admin_resources_alert_worker_label": "· Worker:",
+	"admin_resources_alert_value_threshold": "Wartość: {metric}% · próg: {threshold}%",
 	"admin_resources_alerts_section": "Ostatnie alarmy",
 	"admin_resources_allocation_label": "Alokacja:",
 	"admin_resources_array_buffers": "Bufory Array",

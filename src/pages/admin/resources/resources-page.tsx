@@ -9,7 +9,7 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { FfmpegHwaccelDiagnostics } from "./components/ffmpeg-hwaccel-diagnostics";
-import { ResourceAggregatesSection } from "./components/resource-aggregates-section";
+import { ResourceAggregatesGrid } from "./components/resource-aggregates-section";
 import { ResourceAlertsSection } from "./components/resource-alerts-section";
 import { ResourceCacheStats } from "./components/resource-cache-stats";
 import { ResourceConfigSection } from "./components/resource-config-section";
@@ -50,39 +50,39 @@ export default function AdminResourcesPage() {
 	} else {
 		content = (
 			<div className="flex flex-col gap-6">
-				{/* Current Metrics */}
+				{/* Stall-protection: prominent banner while rescuing, slim strip when healthy */}
+				<ServerRescueStatus rescue={data.rescue} />
+
+				{/* Current metrics */}
 				<ResourceMetricsGrid current={data.current} />
+
+				{/* Monitoring / throttling configuration — compact strip */}
+				<ResourceConfigSection config={data.config} />
+
+				{/* 24h history chart + aggregates, the page's primary overview */}
+				{data.history.length > 0 && (
+					<AdminSection title={m.admin_resources_history_24h()} description={m.admin_resources_load_chart_description()}>
+						<div className="flex flex-col gap-4">
+							<ResourceHistoryChart history={data.history} />
+							<ResourceAggregatesGrid aggregates={data.aggregates} />
+						</div>
+					</AdminSection>
+				)}
 
 				{/* Threshold alerts (renders nothing when there are none) */}
 				<ResourceAlertsSection alerts={data.alerts} />
 
-				{/* Monitoring / throttling configuration */}
-				<ResourceConfigSection config={data.config} />
+				{/* Compute capacity + per-worker concurrency, side by side */}
+				<div className="grid gap-6 lg:grid-cols-2">
+					<SystemCpuInfo cpu={data.systemCpu} />
+					<WorkerAllocations allocations={data.workerAllocations} />
+				</div>
 
-				{/* System CPU Info */}
-				<SystemCpuInfo cpu={data.systemCpu} />
-
-				{/* Server Rescue Status */}
-				<ServerRescueStatus rescue={data.rescue} />
-
-				{/* Worker Allocations */}
-				<WorkerAllocations allocations={data.workerAllocations} />
-
-				{/* Resource cache */}
-				<ResourceCacheStats />
-
-				{/* FFmpeg */}
-				<FfmpegHwaccelDiagnostics />
-
-				{/* Aggregates */}
-				<ResourceAggregatesSection aggregates={data.aggregates} />
-
-				{/* History Chart */}
-				{data.history.length > 0 && (
-					<AdminSection title={m.admin_resources_history_24h()} description={m.admin_resources_load_chart_description()}>
-						<ResourceHistoryChart history={data.history} />
-					</AdminSection>
-				)}
+				{/* Storage caches + ffmpeg diagnostics, side by side */}
+				<div className="grid gap-6 lg:grid-cols-2">
+					<ResourceCacheStats />
+					<FfmpegHwaccelDiagnostics />
+				</div>
 			</div>
 		);
 	}

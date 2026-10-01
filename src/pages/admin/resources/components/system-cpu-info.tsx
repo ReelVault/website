@@ -6,9 +6,9 @@ import { m } from "@/paraglide/messages";
 
 const PROFILE_LABELS: Record<AdminSystemCpu["cpuProfile"], { label: string; badgeClass: string }> = {
 	conservative: { label: "Conservative", badgeClass: "border-info/30 bg-info/10 text-info" },
-	balanced: { label: "Balanced", badgeClass: "border-green-500/30 bg-green-500/10 text-green-500" },
-	performance: { label: "Performance", badgeClass: "border-orange-500/30 bg-orange-500/10 text-orange-500" },
-	custom: { label: "Custom", badgeClass: "border-purple-500/30 bg-purple-500/10 text-purple-500" },
+	balanced: { label: "Balanced", badgeClass: "border-success/30 bg-success/10 text-success" },
+	performance: { label: "Performance", badgeClass: "border-warning/30 bg-warning/10 text-warning" },
+	custom: { label: "Custom", badgeClass: "border-primary/30 bg-primary/10 text-primary" },
 };
 
 function MetricItem({ label, value, unit }: { label: string; value: number; unit?: string }) {

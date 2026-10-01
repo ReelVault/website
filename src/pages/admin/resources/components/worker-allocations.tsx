@@ -30,9 +30,7 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 					<div
 						key={alloc.workerId}
 						className={`flex flex-col justify-between gap-3 rounded-lg border p-4 transition-colors ${
-							alloc.throttled
-								? "border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10"
-								: "border-border/70 bg-muted/20 hover:bg-muted/35"
+							alloc.throttled ? "border-warning/30 bg-warning/5 hover:bg-warning/10" : "border-border/70 bg-muted/20 hover:bg-muted/35"
 						}`}
 					>
 						<div className="flex items-start justify-between gap-2">
@@ -43,7 +41,7 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 								</p>
 							</div>
 							{alloc.throttled && (
-								<Badge variant="outline" className="shrink-0 border-orange-500/30 bg-orange-500/10 text-[10px] text-orange-500">
+								<Badge variant="outline" className="shrink-0 border-warning/30 bg-warning/10 text-[10px] text-warning">
 									{m.admin_resources_throttled()}
 								</Badge>
 							)}
@@ -53,7 +51,7 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 								{m.admin_resources_allocation_label()} <span className="font-bold font-mono text-foreground">{alloc.allocated}</span>
 							</span>
 							{alloc.reason && (
-								<span className="truncate text-[10px] text-orange-500" title={alloc.reason}>
+								<span className="truncate text-[10px] text-warning" title={alloc.reason}>
 									{REASON_LABELS[alloc.reason] ?? alloc.reason}
 								</span>
 							)}
