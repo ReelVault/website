@@ -23,79 +23,83 @@ const SKELETON_KEYS = ["1", "2", "3"] as const;
 export default function AdminApiKeysPage() {
 	const page = useAdminApiKeysPageState();
 
-	if (page.apiKeysQuery.isError) {
-		return (
-			<AdminSection>
-				<AppErrorState title={m.admin_api_keys_heading()} onRetry={() => detachRefetch(page.apiKeysQuery.refetch)} />
-			</AdminSection>
-		);
-	}
-
 	return (
-		<AdminSection>
+		<div className="flex flex-col gap-6">
 			<AdminPageHeader
 				icon={KeyRound}
 				eyebrow={m.admin_api_keys_eyebrow()}
 				title={m.admin_api_keys_heading()}
 				description={m.admin_api_keys_description()}
 				count={page.apiKeys.length}
-				actions={<Button onClick={page.openCreate}>{m.admin_api_keys_create()}</Button>}
+				actions={
+					<Button size="sm" onClick={page.openCreate}>
+						{m.admin_api_keys_create()}
+					</Button>
+				}
 			/>
 
-			{page.apiKeysQuery.isPending ? (
-				<div className="flex flex-col gap-3">
-					{SKELETON_KEYS.map((key) => (
-						<Skeleton key={key} className="h-16 w-full" />
-					))}
-				</div>
-			) : null}
-			{!page.apiKeysQuery.isPending && page.apiKeys.length === 0 ? (
-				<AppEmptyState title={m.admin_api_keys_empty()} description={m.admin_api_keys_empty_description()} />
-			) : null}
-			{!page.apiKeysQuery.isPending && page.apiKeys.length > 0 ? (
-				<div className="flex flex-col gap-3">
-					{page.apiKeys.map((apiKey) => (
-						<div key={apiKey.id} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border p-4">
-							<div className="flex min-w-0 flex-col gap-1">
-								<div className="flex items-center gap-2">
-									<span className="font-semibold text-sm">{apiKey.name}</span>
-									<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} className="font-mono text-[11px]">
-										{apiKey.scope === "full" ? m.admin_api_keys_scope_full() : m.admin_api_keys_scope_read_only()}
-									</Badge>
-									{apiKey.expiresAt && isExpired(apiKey.expiresAt) && (
-										<Badge variant="destructive" className="text-[11px]">
-											{m.admin_api_keys_expired()}
-										</Badge>
-									)}
-								</div>
-								<div className="flex flex-wrap gap-x-4 text-muted-foreground text-xs">
-									<span className="font-mono">{`${apiKey.keyPrefix}…`}</span>
-									<span>{m.admin_api_keys_created_value({ date: formatDate(apiKey.createdAt) })}</span>
-									{apiKey.expiresAt && <span>{m.admin_api_keys_expires_value({ date: formatDate(apiKey.expiresAt) })}</span>}
-									{apiKey.lastUsedAt && <span>{m.admin_api_keys_last_used_value({ date: formatDate(apiKey.lastUsedAt) })}</span>}
-								</div>
-							</div>
-							<ConfirmAction
-								title={m.admin_api_keys_revoke_title({ name: apiKey.name })}
-								description={m.admin_api_keys_revoke_description()}
-								confirmLabel={m.admin_api_keys_revoke()}
-								onConfirm={async () => {
-									if (page.revokeMutation.isPending) return;
-
-									await page.revokeMutation.mutateAsync(apiKey.id);
-								}}
-							>
-								<Button variant="outline" size="sm" disabled={page.revokeMutation.isPending}>
-									{m.admin_api_keys_revoke()}
-								</Button>
-							</ConfirmAction>
+			{page.apiKeysQuery.isError ? (
+				<AdminSection>
+					<AppErrorState title={m.admin_api_keys_heading()} onRetry={() => detachRefetch(page.apiKeysQuery.refetch)} />
+				</AdminSection>
+			) : (
+				<AdminSection>
+					{page.apiKeysQuery.isPending ? (
+						<div className="flex flex-col gap-3">
+							{SKELETON_KEYS.map((key) => (
+								<Skeleton key={key} className="h-16 w-full" />
+							))}
 						</div>
-					))}
-				</div>
-			) : null}
+					) : null}
+					{!page.apiKeysQuery.isPending && page.apiKeys.length === 0 ? (
+						<AppEmptyState title={m.admin_api_keys_empty()} description={m.admin_api_keys_empty_description()} />
+					) : null}
+					{!page.apiKeysQuery.isPending && page.apiKeys.length > 0 ? (
+						<div className="flex flex-col gap-3">
+							{page.apiKeys.map((apiKey) => (
+								<div key={apiKey.id} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border p-4">
+									<div className="flex min-w-0 flex-col gap-1">
+										<div className="flex items-center gap-2">
+											<span className="font-semibold text-sm">{apiKey.name}</span>
+											<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} className="font-mono text-[11px]">
+												{apiKey.scope === "full" ? m.admin_api_keys_scope_full() : m.admin_api_keys_scope_read_only()}
+											</Badge>
+											{apiKey.expiresAt && isExpired(apiKey.expiresAt) && (
+												<Badge variant="destructive" className="text-[11px]">
+													{m.admin_api_keys_expired()}
+												</Badge>
+											)}
+										</div>
+										<div className="flex flex-wrap gap-x-4 text-muted-foreground text-xs">
+											<span className="font-mono">{`${apiKey.keyPrefix}…`}</span>
+											<span>{m.admin_api_keys_created_value({ date: formatDate(apiKey.createdAt) })}</span>
+											{apiKey.expiresAt && <span>{m.admin_api_keys_expires_value({ date: formatDate(apiKey.expiresAt) })}</span>}
+											{apiKey.lastUsedAt && <span>{m.admin_api_keys_last_used_value({ date: formatDate(apiKey.lastUsedAt) })}</span>}
+										</div>
+									</div>
+									<ConfirmAction
+										title={m.admin_api_keys_revoke_title({ name: apiKey.name })}
+										description={m.admin_api_keys_revoke_description()}
+										confirmLabel={m.admin_api_keys_revoke()}
+										onConfirm={async () => {
+											if (page.revokeMutation.isPending) return;
+
+											await page.revokeMutation.mutateAsync(apiKey.id);
+										}}
+									>
+										<Button variant="outline" size="sm" disabled={page.revokeMutation.isPending}>
+											{m.admin_api_keys_revoke()}
+										</Button>
+									</ConfirmAction>
+								</div>
+							))}
+						</div>
+					) : null}
+				</AdminSection>
+			)}
 
 			<CreateKeyDialog state={page} onCreate={page.onCreate} pending={page.createMutation.isPending} />
-		</AdminSection>
+		</div>
 	);
 }
 

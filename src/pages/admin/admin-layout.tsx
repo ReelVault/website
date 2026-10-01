@@ -24,6 +24,7 @@ import { m } from "@/paraglide/messages";
 /** Only these resource segments have admin routes; anything else falls back to the index. */
 const RESOURCE_KEYS = [
 	"analytics",
+	"api-keys",
 	"audit",
 	"collections",
 	"companies",
@@ -59,6 +60,7 @@ function toAdminResource(segment: string): AdminResource {
 const ADMIN_RESOURCE_ROUTES: Record<AdminResource, "/admin" | `/admin/${ResourceKey}`> = {
 	dashboard: "/admin",
 	analytics: "/admin/analytics",
+	"api-keys": "/admin/api-keys",
 	audit: "/admin/audit",
 	collections: "/admin/collections",
 	companies: "/admin/companies",
