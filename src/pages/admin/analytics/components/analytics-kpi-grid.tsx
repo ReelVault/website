@@ -1,6 +1,6 @@
 import type { AdminAnalytics } from "@reelvault/sdk";
 import { Clock, Play, Trophy, Users } from "lucide-react";
-import { AdminStat } from "@/pages/admin/admin-ui";
+import { AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
 interface AnalyticsKpiGridProps {
@@ -14,10 +14,10 @@ export function AnalyticsKpiGrid({ data }: AnalyticsKpiGridProps) {
 
 	return (
 		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-			<AdminStat label={m.admin_analytics_total_play_time()} value={formattedTotalTime} icon={Clock} />
-			<AdminStat label={m.admin_analytics_session_count()} value={data.totalPlaysCount} icon={Play} />
-			<AdminStat label={m.admin_analytics_active_viewers()} value={data.activeUsersCount} icon={Users} />
-			<AdminStat label={m.admin_analytics_most_popular_title()} value={data.mostWatchedTitle?.title ?? "—"} icon={Trophy} />
+			<AdminStatCard label={m.admin_analytics_total_play_time()} value={formattedTotalTime} icon={Clock} />
+			<AdminStatCard label={m.admin_analytics_session_count()} value={data.totalPlaysCount} icon={Play} />
+			<AdminStatCard label={m.admin_analytics_active_viewers()} value={data.activeUsersCount} icon={Users} />
+			<AdminStatCard label={m.admin_analytics_most_popular_title()} value={data.mostWatchedTitle?.title ?? "—"} icon={Trophy} />
 		</div>
 	);
 }
