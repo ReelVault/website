@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Eye, FileText, MoreVertical, Pencil, Trash2 } from "lucide-react";
 import type { useAdminSubtitles } from "@/client/hooks/use-admin-subtitles";
 import { Badge } from "@/components/ui/badge";
@@ -47,7 +48,18 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete }: Subtitle
 							</Badge>
 						)}
 					</div>
-					<p className="mt-1 font-mono text-muted-foreground text-xs">{subtitle.mediaFileId}</p>
+					<div className="flex items-center gap-1.5">
+						{/* The API exposes only the media-file id here — link to it instead of
+						    printing an unreadable hash; short form keeps the row scannable. */}
+						<Link
+							to="/admin/media/$id"
+							params={{ id: subtitle.mediaFileId }}
+							className="font-mono text-muted-foreground text-xs hover:text-primary hover:underline"
+							title={m.admin_subtitles_open_media_file()}
+						>
+							{subtitle.mediaFileId.slice(0, 8)}
+						</Link>
+					</div>
 				</div>
 			</div>
 

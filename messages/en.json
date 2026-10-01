@@ -1555,6 +1555,7 @@
 	"admin_subtitles_media_file_id": "Media file ID",
 	"admin_subtitles_modified_at": "Modified: {date}",
 	"admin_subtitles_no_matches": "No subtitles match the filters.",
+	"admin_subtitles_open_media_file": "Open media file",
 	"admin_subtitles_none": "No subtitles",
 	"admin_subtitles_preview": "Subtitle preview",
 	"admin_subtitles_provider_plugins": "Active plugins that provide subtitles from external sources.",

@@ -1561,6 +1561,7 @@
 	"admin_subtitles_media_file_id": "ID pliku mediów",
 	"admin_subtitles_modified_at": "Zmodyfikowano: {date}",
 	"admin_subtitles_no_matches": "Nie znaleziono napisów pasujących do filtrów.",
+	"admin_subtitles_open_media_file": "Otwórz plik mediów",
 	"admin_subtitles_none": "Brak napisów",
 	"admin_subtitles_preview": "Podgląd napisów",
 	"admin_subtitles_provider_plugins": "Aktywne pluginy dostarczające napisy z zewnętrznych źródeł.",
