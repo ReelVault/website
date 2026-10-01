@@ -43,8 +43,8 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 						<Skeleton className="h-14 rounded-xl" />
 					) : (
 						<div className="mb-2 flex items-center gap-3 rounded-xl border border-border/60 p-3">
-							<Avatar className="size-10 shrink-0 rounded-xl">
-								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" />
+							<Avatar className="size-10 shrink-0 rounded-xl after:hidden">
+								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" className="rounded-xl" />
 								<AvatarFallback className="rounded-xl bg-primary/10 text-primary">
 									<UserRound aria-hidden="true" />
 								</AvatarFallback>

@@ -116,9 +116,9 @@ export default function ProfilesSelectionPage() {
 								<div className="relative">
 									<Avatar
 										size="default"
-										className="size-32 rounded-3xl border-2 border-border bg-muted transition-[border-color,box-shadow,transform] duration-500 group-hover:scale-110 group-hover:border-primary group-hover:shadow-xl sm:size-44"
+										className="size-32 rounded-3xl bg-muted transition-[box-shadow,transform] duration-500 after:hidden group-hover:scale-110 group-hover:shadow-xl group-hover:ring-2 group-hover:ring-primary sm:size-44"
 									>
-										{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" className="rounded-lg" />}
+										{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" className="rounded-3xl" />}
 										<AvatarFallback className="rounded-3xl">
 											<User className="size-10 text-muted-foreground/50" />
 										</AvatarFallback>

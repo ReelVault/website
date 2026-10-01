@@ -86,8 +86,8 @@ export function PinVerificationModal({
 				</DialogHeader>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-8 p-5 sm:p-8">
 					<div className="flex flex-col items-center gap-4 text-center">
-						<Avatar size="lg" className="size-24 rounded-2xl border-2 border-primary shadow-lg">
-							{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" className="rounded-lg" />}
+						<Avatar size="lg" className="size-24 rounded-2xl border-2 border-primary shadow-lg after:hidden">
+							{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" className="rounded-2xl" />}
 							<AvatarFallback className="rounded-2xl">
 								<User className="size-8 text-muted-foreground/40" />
 							</AvatarFallback>

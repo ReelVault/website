@@ -44,8 +44,8 @@ export function UserSidebar() {
 						<Skeleton className="h-11 rounded-xl" />
 					) : (
 						<div className="flex items-center gap-3 px-2">
-							<Avatar className="size-10 shrink-0 rounded-xl">
-								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" />
+							<Avatar className="size-10 shrink-0 rounded-xl after:hidden">
+								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" className="rounded-xl" />
 								<AvatarFallback className="rounded-xl bg-primary/10 text-primary">
 									<UserRound aria-hidden="true" />
 								</AvatarFallback>
