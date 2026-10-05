@@ -7,8 +7,8 @@ import { TaxonomyPage } from "../taxonomy-page";
 
 export default function GenreByIdPage() {
 	const { id } = useParams({ from: "/_web/genres/$id" });
-	const { page } = useSearch({ from: "/_web/genres/$id" });
-	const navigate = useNavigate({ from: "/_web/genres/$id" });
+	const { page = 1 } = useSearch({ from: "/_web/genres/$id" });
+	const navigate = useNavigate({ from: "/genres/$id" });
 	const setPage = (next: number) => {
 		detach(navigate({ search: { page: next > 1 ? next : undefined }, replace: true }));
 	};

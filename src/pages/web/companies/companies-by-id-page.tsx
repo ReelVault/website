@@ -7,8 +7,8 @@ import { TaxonomyPage } from "../taxonomy-page";
 
 export default function CompanyByIdPage() {
 	const { id } = useParams({ from: "/_web/companies/$id" });
-	const { page } = useSearch({ from: "/_web/companies/$id" });
-	const navigate = useNavigate({ from: "/_web/companies/$id" });
+	const { page = 1 } = useSearch({ from: "/_web/companies/$id" });
+	const navigate = useNavigate({ from: "/companies/$id" });
 	const setPage = (next: number) => {
 		detach(navigate({ search: { page: next > 1 ? next : undefined }, replace: true }));
 	};

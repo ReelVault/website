@@ -7,8 +7,8 @@ import { TaxonomyPage } from "../taxonomy-page";
 
 export default function KeywordByIdPage() {
 	const { id } = useParams({ from: "/_web/keywords/$id" });
-	const { page } = useSearch({ from: "/_web/keywords/$id" });
-	const navigate = useNavigate({ from: "/_web/keywords/$id" });
+	const { page = 1 } = useSearch({ from: "/_web/keywords/$id" });
+	const navigate = useNavigate({ from: "/keywords/$id" });
 	const setPage = (next: number) => {
 		detach(navigate({ search: { page: next > 1 ? next : undefined }, replace: true }));
 	};

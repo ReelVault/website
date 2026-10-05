@@ -16,7 +16,7 @@ const SKELETON_KEYS = ["1", "2", "3", "4", "5", "6"] as const;
 export default function CollectionsPage() {
 	usePageTitle(m.navbar_collections());
 	const { page = 1 } = useSearch({ from: "/_web/collections/" });
-	const navigate = useNavigate({ from: "/_web/collections/" });
+	const navigate = useNavigate({ from: "/collections/" });
 	const setPage = (next: number) => {
 		detach(navigate({ search: { page: next > 1 ? next : undefined }, replace: true }));
 	};
