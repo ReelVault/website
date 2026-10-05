@@ -174,7 +174,7 @@ export function LibraryLayout({
 
 			<LibraryFilterSection
 				searchTerm={state.searchTerm}
-				setSearchTerm={(value) => runTransition("filter", () => actions.setSearchTerm(value))}
+				setSearchTerm={actions.setSearchTerm}
 				range={state.range}
 				setRange={(value) => runTransition("filter", () => actions.setRange(value))}
 				yearRange={data.yearRange}

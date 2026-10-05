@@ -129,7 +129,9 @@ export function useLibraryLogic(
 	const [userRating, setUserRating] = useState<LibraryRatingFilter>(initialUserRating);
 	const [activeLetter, setActiveLetter] = useState(initialLetter);
 
-	const debouncedSearch = useDebounce({ value: searchTerm, delay: 300 });
+	// 500 ms matches the app-wide search debounce (global search, admin pages) —
+	// a shorter window fires requests mid-word while the user is still typing.
+	const debouncedSearch = useDebounce({ value: searchTerm, delay: 500 });
 	const debouncedRange = useDebounce({ value: range, delay: 300 });
 	const debouncedDurationRange = useDebounce({ value: durationRange, delay: 300 });
 	const genresQuery = useLibraryGenres();
