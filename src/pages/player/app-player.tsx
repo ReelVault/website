@@ -25,7 +25,7 @@ import {
 } from "./player-context";
 import type { PlaybackSettings, PlaybackSettingsActions, PlayerMediaFile, PlayerSession } from "./utils/player.types";
 import { toPlaybackError } from "./utils/player-preferences.storage";
-import { detach, noopCleanup, toggleFullscreen, togglePlayPause } from "./utils/player-utils";
+import { detach, noopCleanup, toggleFullscreen } from "./utils/player-utils";
 import { getShortcutsDisabledCookie, setShortcutsDisabledCookie } from "./utils/shortcuts-cookie";
 
 export function AppPlayer({
@@ -347,9 +347,15 @@ function AppPlayerSurface() {
 			}
 
 			// Auto-play only on first start, after a reload that interrupted active
-			// playback, or when already playing. A user pause must stick across
-			// playlist reloads (seek, quality change, session reconnect).
-			const shouldAutoPlay = !hasStartedInitialPlayRef.current || wasPlayingBeforeReloadRef.current || !video.paused;
+			// playback, or when already playing — and never against the user's last
+			// explicit play/pause decision. A user pause must stick across playlist
+			// reloads (seek, quality change, session reconnect). The was-playing flag
+			// describes exactly one reload: consume it so a later canplay (e.g. after
+			// recoverMediaError) cannot replay a long-paused stream.
+			const wasPlayingBeforeReload = wasPlayingBeforeReloadRef.current;
+			wasPlayingBeforeReloadRef.current = false;
+			const shouldAutoPlay =
+				actionsRef.current.userPlayIntentRef.current && (!hasStartedInitialPlayRef.current || wasPlayingBeforeReload || !video.paused);
 			if (shouldAutoPlay) {
 				hasStartedInitialPlayRef.current = true;
 				detach(async () => {
@@ -572,14 +578,6 @@ function AppPlayerSurface() {
 		};
 	}, []);
 
-	const handleTogglePlay = () => {
-		const video = actionsRef.current.videoRef.current;
-		if (!video) return;
-
-		togglePlayPause(video);
-		showControls();
-	};
-
 	// Touch: gestures (double-tap seek, long-press 2×, volume swipe) live in
 	// usePlayerTouchGestures; a single tap — after the 300 ms decision window —
 	// shows/hides the controls. Mouse/keyboard: the existing path with a 200-ms
@@ -614,9 +612,19 @@ function AppPlayerSurface() {
 			return;
 		}
 
+		// Decide play/pause at click time: a pause from another input (keyboard,
+		// media keys, remote) landing inside the 200 ms double-click window must
+		// not be inverted by re-reading video.paused when the timer fires.
+		const video = actionsRef.current.videoRef.current;
+		if (!video) return;
+
+		const playAfterToggle = video.paused;
 		clickTimerRef.current = setTimeout(() => {
 			clickTimerRef.current = null;
-			handleTogglePlay();
+			if (playAfterToggle) detach(() => video.play());
+			else video.pause();
+			actionsRef.current.setUserPlayIntent(playAfterToggle);
+			showControls();
 		}, 200);
 	};
 

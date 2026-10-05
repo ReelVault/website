@@ -156,6 +156,7 @@ function PlayerMediaSessionBridge() {
 
 	usePlayerMediaSession({
 		videoRef: actions.videoRef,
+		userPlayIntentRef: actions.userPlayIntentRef,
 		title: info.title,
 		currentEpisode: nextEpisode.currentEpisode,
 		nextEpisode: nextEpisode.nextEpisode,

@@ -4,6 +4,7 @@ import { detach, noopCleanup } from "../utils/player-utils";
 
 interface UsePlayerMediaSessionProps {
 	videoRef: React.RefObject<HTMLVideoElement | null>;
+	userPlayIntentRef: React.RefObject<boolean>;
 	title: string;
 	currentEpisode: CurrentEpisodeInfo | null;
 	nextEpisode: NextEpisodeInfo | null;
@@ -18,6 +19,7 @@ interface UsePlayerMediaSessionProps {
 
 export function usePlayerMediaSession({
 	videoRef,
+	userPlayIntentRef,
 	title,
 	currentEpisode,
 	nextEpisode,
@@ -31,6 +33,7 @@ export function usePlayerMediaSession({
 }: UsePlayerMediaSessionProps) {
 	const callbacksRef = useRef({
 		videoRef,
+		userPlayIntentRef,
 		seek,
 		getAbsoluteTime,
 		playNextEpisode,
@@ -40,6 +43,7 @@ export function usePlayerMediaSession({
 	useEffect(() => {
 		callbacksRef.current = {
 			videoRef,
+			userPlayIntentRef,
 			seek,
 			getAbsoluteTime,
 			playNextEpisode,
@@ -114,10 +118,12 @@ export function usePlayerMediaSession({
 			const video = callbacksRef.current.videoRef.current;
 			if (!video) return;
 
+			callbacksRef.current.userPlayIntentRef.current = true;
 			detach(() => video.play());
 		});
 
 		setActionHandler("pause", () => {
+			callbacksRef.current.userPlayIntentRef.current = false;
 			callbacksRef.current.videoRef.current?.pause();
 		});
 

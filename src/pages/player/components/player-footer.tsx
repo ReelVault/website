@@ -74,7 +74,7 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 
 	const handlePlay = () => {
 		const video = actions.videoRef.current;
-		if (video) togglePlayPause(video);
+		if (video) actions.setUserPlayIntent(togglePlayPause(video));
 	};
 
 	// -------------------------------------------------------------------------

@@ -116,6 +116,9 @@ export { usePlayerProgressRangesRaw as usePlayerProgressRanges };
 export interface PlayerActionsValue {
 	videoRef: RefObject<HTMLVideoElement | null>;
 	hlsRef: RefObject<Hls | null>;
+	/** Last explicit user play/pause decision — delayed/auto play paths must respect it. */
+	userPlayIntentRef: RefObject<boolean>;
+	setUserPlayIntent: (playing: boolean) => void;
 	seek: (position: number) => Promise<void>;
 	restorePlaybackPosition: () => void;
 	isPlaybackHeld: () => boolean;

@@ -191,6 +191,10 @@ export function usePlayerController({
 	const isRecoveringSessionRef = useRef(false);
 	const isTerminatedRef = useRef(false);
 	const isMountedRef = useRef(true);
+	// Last explicit user play/pause decision (default: autoplay on open). Every
+	// delayed/auto path that would start playback must respect it, so a user
+	// pause survives playlist reloads, quality changes and session reconnects.
+	const userPlayIntentRef = useRef(true);
 
 	useEffect(() => {
 		isMountedRef.current = true;
@@ -716,16 +720,19 @@ export function usePlayerController({
 				setIsBuffering(false);
 				if (initialPositionRef.current > 0 && !hasAppliedInitialResumeRef.current) {
 					// This seek was the initial resume — no later canplay will start
-					// playback, so do it here (mirrors the reusedBuffer path).
+					// playback, so do it here (mirrors the reusedBuffer path). A user
+					// pause pressed before the resume landed must stick.
 					hasAppliedInitialResumeRef.current = true;
-					detach(async () => {
-						try {
-							await video.play();
-						} catch (err: unknown) {
-							console.warn("Autoplay was blocked or deferred:", err);
-							setIsPaused(true);
-						}
-					});
+					if (userPlayIntentRef.current) {
+						detach(async () => {
+							try {
+								await video.play();
+							} catch (err: unknown) {
+								console.warn("Autoplay was blocked or deferred:", err);
+								setIsPaused(true);
+							}
+						});
+					}
 				}
 
 				return;
@@ -764,10 +771,11 @@ export function usePlayerController({
 						setCanPlay(true);
 						if (initialPositionRef.current > 0 && !hasAppliedInitialResumeRef.current) {
 							// This seek is the initial resume and took the no-reload path —
-							// no later canplay will start playback, so do it here.
+							// no later canplay will start playback, so do it here. A user
+							// pause pressed before the resume landed must stick.
 							hasAppliedInitialResumeRef.current = true;
 							setIsBuffering(false);
-							if (isMountedRef.current && !isTerminatedRef.current) {
+							if (userPlayIntentRef.current && isMountedRef.current && !isTerminatedRef.current) {
 								detach(async () => {
 									try {
 										await video.play();
@@ -826,7 +834,7 @@ export function usePlayerController({
 				hasAppliedInitialResumeRef.current = true;
 				console.error("Initial resume seek failed:", error);
 				const video = videoRef.current;
-				if (video) {
+				if (video && userPlayIntentRef.current) {
 					try {
 						await video.play();
 					} catch (playError: unknown) {
@@ -1038,6 +1046,9 @@ export function usePlayerController({
 		const targetEpisode = nextEpisodeRef.current;
 		if (!targetEpisode?.mediaFileId) return;
 
+		// The controller instance survives the /player/$id param change — without
+		// this the previous episode's pause intent would keep the next one paused.
+		userPlayIntentRef.current = true;
 		detach(() => syncPlaybackProgress(true));
 		const cleanId = targetEpisode.mediaFileId.replace(PLAYER_PATH_PREFIX_REGEX, "").split("?")[0] ?? "";
 		detach(() =>
@@ -1143,11 +1154,15 @@ export function usePlayerController({
 			switch (cmd.type) {
 				case "play": {
 					const video = videoRef.current;
-					if (video) detach(() => video.play());
+					if (video) {
+						userPlayIntentRef.current = true;
+						detach(() => video.play());
+					}
 
 					break;
 				}
 				case "pause":
+					userPlayIntentRef.current = false;
 					videoRef.current?.pause();
 					break;
 				case "seek":
@@ -1204,9 +1219,18 @@ export function usePlayerController({
 
 	const status = useMemo(() => ({ canPlay, isBuffering, playerError, isPaused }), [canPlay, isBuffering, playerError, isPaused]);
 
+	// Function, not a bare ref write from consumers: hook-returned objects are
+	// immutable to the React Compiler lint, and navigation call sites (drawer,
+	// footer) hold no local ref to write through.
+	const setUserPlayIntent = (playing: boolean) => {
+		userPlayIntentRef.current = playing;
+	};
+
 	const actions = {
 		videoRef,
 		hlsRef,
+		userPlayIntentRef,
+		setUserPlayIntent,
 		seek,
 		restorePlaybackPosition,
 		isPlaybackHeld,

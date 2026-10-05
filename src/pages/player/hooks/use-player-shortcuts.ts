@@ -155,7 +155,7 @@ export function usePlayerShortcuts({
 				case "k":
 				case "K":
 					e.preventDefault();
-					togglePlayPause(video);
+					controller.userPlayIntentRef.current = togglePlayPause(video);
 					showPlayerFeedback({ type: video.paused ? "pause" : "play" });
 					break;
 

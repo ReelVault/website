@@ -26,15 +26,20 @@ export function formatTime(time: number, totalDuration?: number): string {
 	return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
 
-/** Toggle play/pause on a video element. */
-export function togglePlayPause(video: HTMLVideoElement): void {
+/**
+ * Toggle play/pause on a video element.
+ * Returns the resulting play intent (true = playing requested, false = paused).
+ */
+export function togglePlayPause(video: HTMLVideoElement): boolean {
 	if (video.paused) {
 		detach(() => video.play());
 
-		return;
+		return true;
 	}
 
 	video.pause();
+
+	return false;
 }
 
 /** iPhone Safari exposes a proprietary native-video fullscreen entry point. */
