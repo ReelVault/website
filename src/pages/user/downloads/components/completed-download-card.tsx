@@ -13,7 +13,7 @@ export function CompletedDownloadCard({ job, onDelete }: { job: DownloadJob; onD
 	return (
 		<div className="flex flex-col gap-4 rounded-2xl border border-border/70 bg-card/70 p-5 transition-[border-color,background-color] hover:border-primary/40 hover:bg-card sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex min-w-0 items-center gap-4">
-				<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-green-500/10 text-green-500">
+				<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-success/10 text-success">
 					<Check className="size-5" />
 				</div>
 				<div className="min-w-0">
@@ -22,7 +22,7 @@ export function CompletedDownloadCard({ job, onDelete }: { job: DownloadJob; onD
 						<Badge size="sm" variant="outline" className="font-mono text-[10px] uppercase">
 							{job.quality}
 						</Badge>
-						<span className="rounded-full bg-green-500/10 px-2 py-0.5 font-bold text-[9px] text-green-500 uppercase">
+						<span className="rounded-full bg-success/10 px-2 py-0.5 font-bold text-[9px] text-success uppercase">
 							{m.user_download_status_ready()}
 						</span>
 					</div>

@@ -363,14 +363,14 @@ export function PlayerAudioSubtitlesDialog() {
 															{isDirectCompatible ? (
 																<Badge
 																	variant="outline"
-																	className="shrink-0 border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0 text-[10px] text-emerald-500"
+																	className="shrink-0 border-success/30 bg-success/10 px-1.5 py-0 text-[10px] text-success"
 																>
 																	{m.player_best_compat()}
 																</Badge>
 															) : (
 																<Badge
 																	variant="outline"
-																	className="shrink-0 border-amber-500/30 bg-amber-500/10 px-1.5 py-0 text-[10px] text-amber-500"
+																	className="shrink-0 border-warning/30 bg-warning/10 px-1.5 py-0 text-[10px] text-warning"
 																>
 																	{m.player_needs_transcoding()}
 																</Badge>
@@ -651,7 +651,7 @@ export function PlayerAudioSubtitlesDialog() {
 										onClick={() => adjustSubtitleOffset(0.1)}
 										aria-label={m.player_delay_plus_point1()}
 									>
-										<Plus className="size-3 text-emerald-400" /> {m.player_delay_point_1_second()}
+										<Plus className="size-3 text-success" /> {m.player_delay_point_1_second()}
 									</Button>
 									<Button
 										type="button"
@@ -661,7 +661,7 @@ export function PlayerAudioSubtitlesDialog() {
 										onClick={() => adjustSubtitleOffset(1.0)}
 										aria-label={m.player_delay_plus_1()}
 									>
-										<Plus className="size-3 text-emerald-400" /> {m.player_delay_1_second()}
+										<Plus className="size-3 text-success" /> {m.player_delay_1_second()}
 									</Button>
 								</div>
 							</div>

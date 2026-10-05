@@ -65,9 +65,9 @@ export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 											"size-11 rounded-full transition-[border-color,background-color,color,box-shadow] duration-200 sm:size-8",
 											{
 												"border-border/50 text-muted-foreground hover:bg-muted hover:text-foreground": !isActive,
-												"border-rose-500/40 bg-rose-500/15 text-rose-500 hover:bg-rose-500/20": isActive && opt.value === 0,
+												"border-destructive/40 bg-destructive/15 text-destructive hover:bg-destructive/20": isActive && opt.value === 0,
 												"border-primary/40 bg-primary/15 text-primary hover:bg-primary/20": isActive && opt.value === 1,
-												"border-amber-400/40 bg-amber-400/15 text-amber-400 hover:bg-amber-400/20": isActive && opt.value === 2,
+												"border-warning/40 bg-warning/15 text-warning hover:bg-warning/20": isActive && opt.value === 2,
 											},
 										)}
 									/>

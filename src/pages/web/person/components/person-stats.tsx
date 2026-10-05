@@ -24,7 +24,7 @@ export function PersonStats({ metadata }: { metadata: Array<RequireFields<Metada
 					<p className="font-bold text-foreground/40 text-xs uppercase tracking-widest">{m.web_body_of_work_titles()}</p>
 				</div>
 				<div className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/60 p-8 text-center transition-transform hover:scale-[1.02]">
-					<Star className="mb-2 size-6 fill-yellow-500/50 text-yellow-500/50" />
+					<Star className="mb-2 size-6 fill-warning/50 text-warning/50" />
 					<p className="font-black text-2xl text-foreground">
 						{averageRating == null ? m.common_not_available() : formatRating(averageRating)}
 					</p>
