@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
+import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { MetadataCard } from "@/components/cards/metadata-card";
 import { LazyRender } from "@/components/lazy-render";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { SimplePagination } from "@/components/simple-pagination";
 import { ApiImage } from "@/components/ui/api-image";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { m } from "@/paraglide/messages";
 
@@ -93,15 +93,7 @@ export function TaxonomyPage({
 					</div>
 				)}
 				{!taxonomyQuery.isLoading && (taxonomyQuery.isError || !item) && (
-					<div role="alert" className="cinema-surface mt-8 max-w-xl p-6">
-						<p className="font-semibold">{errorMessage}</p>
-						<p className="mt-1 text-muted-foreground text-sm">{m.web_check_connection()}</p>
-						{onTaxonomyRetry && (
-							<Button type="button" variant="outline" className="mt-4" onClick={onTaxonomyRetry}>
-								{m.common_try_again()}
-							</Button>
-						)}
-					</div>
+					<AppErrorState title={errorMessage} description={m.web_check_connection()} onRetry={onTaxonomyRetry} className="mt-8 max-w-xl" />
 				)}
 				{item && (
 					<>
@@ -141,17 +133,10 @@ export function TaxonomyPage({
 								</div>
 							)}
 							{metadataQuery.isError && (
-								<div role="alert" className="cinema-surface mt-8 p-6">
-									<p className="font-semibold">{metadataErrorMessage ?? m.web_titles_fetch_failed()}</p>
-									{onMetadataRetry && (
-										<Button type="button" variant="outline" className="mt-4" onClick={onMetadataRetry}>
-											{m.common_try_again()}
-										</Button>
-									)}
-								</div>
+								<AppErrorState title={metadataErrorMessage ?? m.web_titles_fetch_failed()} onRetry={onMetadataRetry} className="mt-8" />
 							)}
 							{!(metadataQuery.isLoading || metadataQuery.isError) && metadata.length === 0 && (
-								<div className="cinema-surface mt-8 p-6 text-muted-foreground">{m.web_no_assigned_titles()}</div>
+								<AppEmptyState title={m.web_no_assigned_titles()} className="mt-8" />
 							)}
 							{metadata.length > 0 && !metadataQuery.isLoading && (
 								<>
