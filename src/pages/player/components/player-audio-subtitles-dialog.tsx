@@ -478,8 +478,7 @@ export function PlayerAudioSubtitlesDialog() {
 
 					{/* Audio equalizer and compressor tab */}
 					<TabsContent value="equalizer" className="mt-0 outline-none">
-						{/* TODO: fix */}
-						<ScrollArea className="h-102">
+						<ScrollArea className="max-h-102">
 							<PlayerEqualizerPanel />
 						</ScrollArea>
 					</TabsContent>
