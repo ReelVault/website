@@ -2,7 +2,6 @@ import { Tv } from "lucide-react";
 import { useState } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useDetailsView } from "@/client/hooks/use-metadata-queries";
-import { useSeasons } from "@/client/hooks/use-seasons";
 import { AppErrorState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -16,12 +15,12 @@ const isKnownSeason = (seasons: Array<{ id: string }>, seasonId: string | null |
 	seasonId !== null && seasonId !== undefined && seasons.some((season) => season.id === seasonId);
 
 export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; isAdmin?: boolean }) {
-	const seasonsQuery = useSeasons(metadataId);
-	// Episode progress comes from the details-view composite.
-	const { data: view } = useDetailsView(metadataId);
+	// Seasons AND their full episode lists ride the details-view composite —
+	// no separate seasons/episodes fetches.
+	const { data: view, isPending: isViewPending, isError: isViewError, error: viewError, refetch: refetchView } = useDetailsView(metadataId);
 	const { profile } = useCurrentUser();
 	const playback = view?.userState.progress ?? undefined;
-	const seasons = seasonsQuery.data?.data ?? [];
+	const seasons = view?.seasons ?? [];
 	const defaultSeasonId = (seasons.find((season) => season.seasonNumber === 1) ?? seasons[0])?.id ?? null;
 	// Profile-scoped: the picked season belongs to the profile, not the device.
 	const storageKey = `reelvault:season:${profile?.id ?? "none"}:${metadataId}`;
@@ -45,20 +44,20 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 		localStorage.setItem(storageKey, id);
 	};
 
-	if (seasonsQuery.isError) {
+	if (isViewError) {
 		return (
 			<DetailsSection title={m.player_seasons_and_episodes()} icon={Tv}>
 				<AppErrorState
 					title={m.web_seasons_fetch_failed()}
 					description={m.web_check_connection()}
-					error={seasonsQuery.error}
-					onRetry={() => detach(seasonsQuery.refetch())}
+					error={viewError}
+					onRetry={() => detach(refetchView())}
 				/>
 			</DetailsSection>
 		);
 	}
 
-	if (seasonsQuery.isLoading) {
+	if (isViewPending) {
 		return (
 			<DetailsSection title={m.player_seasons_and_episodes_caps()} icon={Tv}>
 				<div className="space-y-6" role="status" aria-label={m.web_loading_seasons()}>
@@ -117,7 +116,13 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 				</ScrollArea>
 
 				<div aria-live="polite">
-					<DetailsEpisodes metadataId={metadataId} seasonId={selectedSeasonId} playback={playback} isAdmin={isAdmin} />
+					<DetailsEpisodes
+						metadataId={metadataId}
+						seasonId={selectedSeasonId}
+						episodes={seasons.find((season) => season.id === selectedSeasonId)?.episodes ?? []}
+						playback={playback}
+						isAdmin={isAdmin}
+					/>
 				</div>
 			</div>
 		</DetailsSection>

@@ -109,7 +109,7 @@ export default function DetailsHeader({
 
 						{/* Action Buttons & Rating */}
 						<div className="mb-8 flex flex-wrap items-center gap-3">
-							<DetailsPlayButton metadataId={metadata.id} />
+							<DetailsPlayButton suggestion={view?.smartPlay} />
 							<DetailsWatchlistButton metadataId={metadata.id} />
 							<PluginSlotHost
 								name="details-action-bar"

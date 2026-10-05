@@ -46,7 +46,7 @@ export default function AdminMediaFilesPage() {
 		setSearchQuery(search.q ?? "");
 	}, [search.q]);
 	const { refreshAllMediaFiles, isRefreshingAll } = useAdminRefreshAllMediaFiles();
-	const audit = useAdminMediaFileAudit();
+	const audit = useAdminMediaFileAudit({ enabled: viewMode === "audit" });
 	const { suspectCount } = audit;
 
 	const statsQuery = useAdminStats();

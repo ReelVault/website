@@ -14,12 +14,12 @@ export function usePlaybackSuggestion(metadataId: string, options?: { enabled?: 
 	});
 }
 
-export function usePlaybackProgress(metadataId: string) {
+export function usePlaybackProgress(metadataId: string, options?: { enabled?: boolean }) {
 	return useQuery({
 		queryKey: mePlaybackKeys.progress(metadataId),
 		queryFn: () => reelvault.me.getPlaybackProgress(metadataId),
 		staleTime: 1000 * 15,
-		enabled: metadataId.trim().length > 0,
+		enabled: (options?.enabled ?? true) && metadataId.trim().length > 0,
 	});
 }
 

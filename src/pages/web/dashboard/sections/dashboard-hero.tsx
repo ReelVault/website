@@ -1,6 +1,10 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import { ChevronDown } from "lucide-react";
+import { useEffect } from "react";
+import { reelvault } from "@/client/client";
 import { useDiscovery } from "@/client/hooks/use-discovery";
+import { mePlaybackKeys } from "@/client/utils/query-keys";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -18,6 +22,27 @@ export default function DashboardHero() {
 	const trending = discoverView?.trending ?? [];
 	const items = (recommendations.length > 0 ? recommendations : trending).slice(0, 5);
 	const { current, goTo } = useHeroRotator({ length: items.length });
+
+	// Warm every slide's smart-play suggestion in one parallel wave so slide
+	// rotation reads the cache instead of firing a request per rotation.
+	const queryClient = useQueryClient();
+	const slideIds = items.map((item) => item.id).join(",");
+	useEffect(() => {
+		if (!slideIds) return;
+		detach(async () => {
+			for (const metadataId of slideIds.split(",")) {
+				try {
+					await queryClient.query({
+						queryKey: mePlaybackKeys.suggestions(metadataId),
+						queryFn: () => reelvault.me.getPlaybackSuggestions(metadataId),
+						staleTime: 5 * 60 * 1000,
+					});
+				} catch {
+					// Best-effort warm — the slide's own hook refetches on miss.
+				}
+			}
+		});
+	}, [queryClient, slideIds]);
 
 	if (discoverQuery.isPending) {
 		return (

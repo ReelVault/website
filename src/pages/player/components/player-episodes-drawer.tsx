@@ -1,10 +1,13 @@
+import type { SmartPlaySuggestion } from "@reelvault/sdk";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Check, Layers, Play, SquareStack, Tv } from "lucide-react";
 import { type ReactNode, useRef, useState } from "react";
+import { reelvault } from "@/client/client";
 import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { useEpisodes } from "@/client/hooks/use-episodes";
-import { usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
+import { usePlaybackProgress } from "@/client/hooks/use-me-playback";
 import { useMetadataCollection } from "@/client/hooks/use-metadata-queries";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +43,7 @@ function DrawerSkeletonList() {
 export function PlayerEpisodesDrawer() {
 	const { episodeId, mediaFileId: currentMediaFileId, metadataId } = usePlayerInfo();
 	const { currentEpisode } = usePlayerNextEpisode();
-	const { seasons, playback } = usePlayerEpisodes();
+	const { seasons } = usePlayerEpisodes();
 	const actions = usePlayerActions();
 	const navigate = useNavigate();
 	const search = useSearch({ from: "/player/$id" });
@@ -62,6 +65,16 @@ export function PlayerEpisodesDrawer() {
 		{ enabled: isOpen },
 	);
 	const collectionItems = collectionQuery.data?.data ?? [];
+	// ONE batched call for every collection item's smart-play suggestion + watchlist
+	// flag — per-item hooks fired N requests the moment the drawer opened.
+	const collectionIds = collectionItems.map((movie) => movie.id).join(",");
+	const collectionSuggestionsQuery = useQuery({
+		queryKey: ["me", "playback-suggestions", "batch", collectionIds],
+		queryFn: () => reelvault.me.getPlaybackSuggestionsBatch(collectionIds.split(",")),
+		enabled: isCollectionMode && collectionIds.length > 0,
+		staleTime: 30_000,
+	});
+	const suggestionsById = new Map((collectionSuggestionsQuery.data?.suggestions ?? []).map((entry) => [entry.metadataId, entry]));
 
 	const currentRowRef = useRef<HTMLButtonElement | null>(null);
 
@@ -70,6 +83,18 @@ export function PlayerEpisodesDrawer() {
 
 	const episodesQuery = useEpisodes(episodeId && isOpen ? activeSeasonId : null);
 	const episodes = episodesQuery.data?.data ?? [];
+
+	// Per-title watched state feeds the checkmarks/progress rows — fetched only
+	// while the drawer is open (the controller no longer preloads it).
+	const playbackQuery = usePlaybackProgress(metadataId, { enabled: isOpen && metadataId.trim().length > 0 });
+	// Optional-shaped view: rows render for episodes missing from the map.
+	const playback:
+		| {
+				totalEpisodes?: number;
+				completedEpisodes?: number;
+				episodes?: Record<string, { status?: string; progress?: { position?: number; duration?: number } | null }>;
+		  }
+		| undefined = playbackQuery.data ?? undefined;
 
 	// If it is a movie and we are not in collection mode, do not render the button
 	if (!(episodeId || (isCollectionMode && collectionId))) return null;
@@ -133,6 +158,8 @@ export function PlayerEpisodesDrawer() {
 						movie={movie}
 						index={index}
 						isCurrent={movie.id === metadataId}
+						entry={suggestionsById.get(movie.id)}
+						isBatchLoading={collectionSuggestionsQuery.isPending}
 						onSelect={handleSelectEpisode}
 					/>
 				))}
@@ -335,6 +362,8 @@ function CollectionDrawerItem({
 	movie,
 	index,
 	isCurrent,
+	entry,
+	isBatchLoading,
 	onSelect,
 }: {
 	movie: {
@@ -345,10 +374,12 @@ function CollectionDrawerItem({
 	};
 	index: number;
 	isCurrent: boolean;
+	entry?: { suggestion: SmartPlaySuggestion | null; inWatchlist: boolean };
+	isBatchLoading: boolean;
 	onSelect: (mediaFileId: string) => void;
 }) {
-	const { data: streamData, isLoading } = usePlaybackSuggestion(movie.id);
-	const targetMediaFileId = streamData?.suggestion?.mediaFileId;
+	const targetMediaFileId = entry?.suggestion?.mediaFileId;
+	const isLoading = isBatchLoading;
 	const poster = movie.images?.find((img) => img.imageType === "poster")?.data;
 
 	return (

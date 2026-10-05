@@ -6,12 +6,12 @@ import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } fro
 import { reelvault } from "@/client/client";
 import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { useNextEpisode } from "@/client/hooks/use-episodes";
-import { savePlaybackProgress, usePlaybackProgress, usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
+import { savePlaybackProgress, usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
 import { useMetadataCollection } from "@/client/hooks/use-metadata-queries";
+import { playbackViewQueryOptions } from "@/client/hooks/use-playback-session";
 import {
 	seekPlaybackSession,
 	usePlaybackDiagnostics,
-	usePlayerSubtitles,
 	useSubtitleContent,
 	useSubtitleDownload,
 	useSubtitleSearch,
@@ -19,7 +19,7 @@ import {
 } from "@/client/hooks/use-player-playback";
 import { realtimeConnection, useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { useSeasons } from "@/client/hooks/use-seasons";
-import { mediaKeys, mePlaybackKeys, playbackSessionKeys, profileKeys, watchedHistoryKeys } from "@/client/utils/query-keys";
+import { mePlaybackKeys, playbackSessionKeys, profileKeys, watchedHistoryKeys } from "@/client/utils/query-keys";
 import { useInterval } from "@/hooks/use-interval";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -295,11 +295,9 @@ export function usePlayerController({
 	// Queries & mutations
 	// -------------------------------------------------------------------------
 
-	const playbackQuery = usePlaybackProgress(mediaFile.metadataId);
-	// TV-series-only data: both hooks key off episodeId, so movies skip these
-	// requests entirely.
+	const viewQuery = useQuery({ ...playbackViewQueryOptions(mediaFileId) });
+	// TV-series-only data: the hook keys off episodeId, so movies skip it.
 	const seasonsQuery = useSeasons(mediaFile.episodeId ? mediaFile.metadataId : "");
-	const subtitlesQuery = usePlayerSubtitles(mediaFileId);
 	const diagnosticsQuery = usePlaybackDiagnostics(sessionId, isDiagnosticsOpen, DIAGNOSTICS_POLL_INTERVAL_MS);
 	// Server ranges show how far the transcode has gotten (the bar's buffered
 	// overlay can span hours); hls.js only appends ~30-60 s to video.buffered.
@@ -325,14 +323,9 @@ export function usePlayerController({
 		transcodedRangesRef.current = EMPTY_BUFFERED_RANGES;
 	}, [queryClient, sessionId]);
 
-	const playbackQueryRef = useRef(playbackQuery);
-	useEffect(() => {
-		playbackQueryRef.current = playbackQuery;
-	}, [playbackQuery]);
-
 	// Memoized so effect dependencies and query consumers keep a stable identity
-	// while the query holds no data (a fresh [] per render would re-fire effects).
-	const subtitles = useMemo(() => subtitlesQuery.data?.data ?? [], [subtitlesQuery.data]);
+	// while the view query holds no data (a fresh [] per render would re-fire effects).
+	const subtitles = useMemo(() => viewQuery.data?.subtitles ?? [], [viewQuery.data?.subtitles]);
 	const selectedSubtitle = subtitles.find((subtitle) => subtitle.id === selectedSubtitleId);
 	const subtitleFormat = toCaptionFormat(selectedSubtitle?.format);
 
@@ -376,13 +369,8 @@ export function usePlayerController({
 	// and callback dependencies without re-firing them.
 	// -------------------------------------------------------------------------
 
-	const markersQuery = useQuery({
-		queryKey: mediaKeys.markers(mediaFileId),
-		queryFn: () => reelvault.media.getMarkers(mediaFileId),
-		staleTime: 5 * 60 * 1000,
-	});
-
-	const markers = markersQuery.data ?? EMPTY_MEDIA_MARKERS;
+	// Markers ride the playback view (session-init composite) — no separate fetch.
+	const markers = viewQuery.data?.markers ?? EMPTY_MEDIA_MARKERS;
 
 	const applyTime = useCallback(
 		(absoluteTime: number) => {
@@ -401,11 +389,12 @@ export function usePlayerController({
 	// Initial resume position
 	// -------------------------------------------------------------------------
 
-	// Server returns per-file playback status (fileProgress); just index into it.
-	const playbackProgress = playbackQuery.data?.fileProgress[mediaFileId] ?? undefined;
-	const rawPosition = playbackProgress?.progress?.position ?? 0;
+	// Server returns this file's playback status inside the playback view
+	// (session-init composite) — no separate progress fetch at open.
+	const playbackProgress = viewQuery.data?.progress ?? undefined;
+	const rawPosition = playbackProgress?.position ?? 0;
 	const isNearEnd = mediaFile.duration && mediaFile.duration > 0 ? rawPosition >= mediaFile.duration - 5 : false;
-	const initialPosition = playbackProgress?.progress?.completed || isNearEnd ? 0 : rawPosition;
+	const initialPosition = playbackProgress?.completed || isNearEnd ? 0 : rawPosition;
 
 	const initialPositionRef = useRef(initialPosition);
 	useEffect(() => {
@@ -1360,6 +1349,5 @@ export function usePlayerController({
 		nextEpisode: nextEpisodeValue,
 		markers: markersValue,
 		seasons: seasonsQuery.data?.data ?? [],
-		playback: playbackQuery.data,
 	};
 }

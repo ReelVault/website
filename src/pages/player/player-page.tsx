@@ -4,7 +4,6 @@ import { useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
-import { mediaFileQueryOptions } from "@/client/hooks/use-media";
 import { playbackViewQueryOptions, usePlaybackSession } from "@/client/hooks/use-playback-session";
 import { usePlaybackPreRoll } from "@/client/hooks/use-plugin-ui";
 import { useProfilePreferences } from "@/client/hooks/use-profiles";
@@ -34,12 +33,11 @@ export default function PlayerByIdPage() {
 
 	const { profile, isLoading: isProfileLoading } = useCurrentUser();
 	const profilePreferencesQuery = useProfilePreferences(profile?.id);
-	const mediaFileQuery = useQuery({ ...mediaFileQueryOptions(id), enabled: Boolean(id) });
 	const clientCapabilities = useClientCapabilities();
 
-	// One composite request for session-init data (progress: position, audio
-	// stream selection, completed) — the full media-file fetch runs in parallel
-	// and only gates the player surface, not session creation.
+	// One composite request carries the session-init surface (progress, markers,
+	// subtitles, next-episode); the controller reads the same query — no
+	// duplicated fetches for those.
 	const viewQuery = useQuery({ ...playbackViewQueryOptions(id), enabled: Boolean(id) });
 	usePageTitle(viewQuery.data?.metadata.title);
 
@@ -59,6 +57,8 @@ export default function PlayerByIdPage() {
 	// Only a manual in-session audio switch sets this — the initial session is
 	// always decided server-side (preferences, per-title resume state).
 	const [audioStreamIndex, setAudioStreamIndex] = useState<number | undefined>();
+
+	// The playback view carries the FULL media-file row — no separate getById.
 
 	const isInitialDataLoading = isProfileLoading || profilePreferencesQuery.isLoading || viewQuery.isPending;
 
@@ -89,7 +89,7 @@ export default function PlayerByIdPage() {
 		);
 	}
 
-	if (isInitialDataLoading || sessionQuery.isPending || mediaFileQuery.isPending || !id) {
+	if (isInitialDataLoading || sessionQuery.isPending || !viewQuery.data || !id) {
 		return <AppLoadingState label={m.player_preparing_playback()} className="min-h-screen bg-background" />;
 	}
 
@@ -97,7 +97,7 @@ export default function PlayerByIdPage() {
 		profilePreferencesQuery.error ||
 		!profile ||
 		(sessionQuery.isError && !sessionQuery.data) ||
-		mediaFileQuery.isError ||
+		viewQuery.isError ||
 		!sessionQuery.data
 	) {
 		const isTerminatedError = sessionQuery.error instanceof ReelVaultError && sessionQuery.error.code === "stream.session_terminated";
@@ -113,7 +113,7 @@ export default function PlayerByIdPage() {
 					onRetry={
 						isTerminatedError
 							? undefined
-							: () => detach(() => Promise.all([profilePreferencesQuery.refetch(), sessionQuery.refetch(), mediaFileQuery.refetch()]))
+							: () => detach(() => Promise.all([profilePreferencesQuery.refetch(), sessionQuery.refetch(), viewQuery.refetch()]))
 					}
 				/>
 				<div className="flex flex-wrap justify-center gap-3">
@@ -128,7 +128,7 @@ export default function PlayerByIdPage() {
 	return (
 		<AppPlayer
 			mediaFileId={id}
-			mediaFile={mediaFileQuery.data}
+			mediaFile={viewQuery.data.mediaFile}
 			session={sessionQuery.data}
 			onSessionExpired={sessionQuery.reconnect}
 			settings={{ maxBitrate, audioStreamIndex }}

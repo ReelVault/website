@@ -1,13 +1,11 @@
+import type { SmartPlaySuggestion } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Play } from "lucide-react";
-import { usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 
-export function DetailsPlayButton({ metadataId }: { metadataId: string }) {
-	const { data: streamData } = usePlaybackSuggestion(metadataId);
-	const suggestion = streamData?.suggestion;
-
+// smartPlay rides the details-view composite — no separate suggestion fetch.
+export function DetailsPlayButton({ suggestion }: { suggestion?: SmartPlaySuggestion | null }) {
 	if (!suggestion) return null;
 
 	return (

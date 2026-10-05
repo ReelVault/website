@@ -1,15 +1,17 @@
+import type { HydratedWatchlistItem } from "@reelvault/sdk";
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
 import { watchlistFields } from "../utils/fields";
 import { metadataKeys, watchlistKeys } from "../utils/query-keys";
-import { useMetadataWatchlist } from "./use-metadata-queries";
 
+// Server-side hydration: every item embeds its metadata card — the old
+// list→metadata waterfall is gone (one request for the whole page).
 export const watchlistQueryOptions = () =>
 	queryOptions({
 		queryKey: watchlistKeys.items(),
-		queryFn: () => reelvault.me.getWatchlist({ fields: watchlistFields }),
+		queryFn: () => reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true }),
 		staleTime: 1000 * 60 * 5,
 		gcTime: 1000 * 60 * 30,
 	});
@@ -17,17 +19,16 @@ export const watchlistQueryOptions = () =>
 export function useWatchlist() {
 	const watchlistQuery = useQuery(watchlistQueryOptions());
 
-	const watchlist = watchlistQuery.data ?? { data: [], total: 0, page: 1, limit: 0, totalPages: 0 };
-	const metadataIds = watchlist.data.map((item) => item.metadataId);
-	const metadataQuery = useMetadataWatchlist(metadataIds);
+	const watchlist = watchlistQuery.data ?? { data: [] as HydratedWatchlistItem[], total: 0, page: 1, limit: 0, totalPages: 0 };
+	const metadata = watchlist.data.map((item) => item.metadata);
 
 	return {
 		watchlist,
-		metadata: metadataQuery.data?.data ?? [],
-		isLoading: watchlistQuery.isLoading || metadataQuery.isLoading,
-		error: watchlistQuery.error ?? metadataQuery.error,
+		metadata,
+		isLoading: watchlistQuery.isLoading,
+		error: watchlistQuery.error,
 		refetch: async () => {
-			await Promise.all([watchlistQuery.refetch(), metadataQuery.refetch()]);
+			await watchlistQuery.refetch();
 		},
 	};
 }

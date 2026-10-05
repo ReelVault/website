@@ -267,7 +267,10 @@ export function useAdminReassignMediaFile() {
 	};
 }
 
-export function useAdminMediaFileAudit() {
+export function useAdminMediaFileAudit(options?: { enabled?: boolean }) {
+	// The audit queues a server-side scan of every media file — only run it when
+	// the audit view is actually opened, not on every trip through the page.
+	const enabled = options?.enabled ?? true;
 	const [operationId, setOperationId] = useState<string | null>(null);
 
 	// The endpoint is queued (202): start the run, then poll its status until terminal.
@@ -281,8 +284,8 @@ export function useAdminMediaFileAudit() {
 	const { mutate: startAudit } = startMutation;
 
 	useEffect(() => {
-		startAudit();
-	}, [startAudit]);
+		if (enabled && operationId === null) startAudit();
+	}, [enabled, operationId, startAudit]);
 
 	const statusQuery = useQuery({
 		queryKey: mediaKeys.audit(operationId ?? undefined),

@@ -51,9 +51,21 @@ export function useAdminUsers(search: string, page = 1, limit = ADMIN_USERS_PAGE
 }
 
 export function useAdminUserFull(userId?: string) {
+	const queryClient = useQueryClient();
+
 	return useQuery({
 		queryKey: adminKeys.userFull(userId),
-		queryFn: () => (userId ? reelvault.admin.getUserFull(userId) : Promise.reject(new Error("userId is required"))),
+		// Seed the plain-user cache from the composite: the detail page reads the
+		// user through useAdminUser too, and this turns that into a cache hit
+		// instead of a third fetch of the same row.
+		queryFn: async () => {
+			if (!userId) throw new Error("userId is required");
+
+			const full = await reelvault.admin.getUserFull(userId);
+			queryClient.setQueryData(adminKeys.user(userId), full.user);
+
+			return full;
+		},
 		enabled: Boolean(userId),
 		staleTime: 60_000,
 	});

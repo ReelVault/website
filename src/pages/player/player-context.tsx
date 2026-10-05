@@ -290,19 +290,6 @@ export { usePlayerMarkersRaw as usePlayerMarkers };
 
 interface PlayerEpisodesValue {
 	seasons: Array<{ id: string; seasonNumber: number }>;
-	playback:
-		| {
-				totalEpisodes?: number;
-				completedEpisodes?: number;
-				episodes?: Record<
-					string,
-					{
-						status?: string;
-						progress?: { position?: number; duration?: number } | null;
-					}
-				>;
-		  }
-		| undefined;
 }
 
 const [PlayerEpisodesContext, usePlayerEpisodesRaw] = createContextHook<PlayerEpisodesValue>("usePlayerEpisodes");
@@ -439,10 +426,7 @@ export function PlayerProvider({
 		settingsActions.onQualityChange,
 	]);
 
-	const episodesValue: PlayerEpisodesValue = useMemo(
-		() => ({ seasons: controller.seasons, playback: controller.playback }),
-		[controller.playback, controller.seasons],
-	);
+	const episodesValue: PlayerEpisodesValue = useMemo(() => ({ seasons: controller.seasons }), [controller.seasons]);
 
 	return (
 		<PlayerInfoContext.Provider value={infoValue}>

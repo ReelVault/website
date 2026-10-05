@@ -1,5 +1,5 @@
+import type { SeasonWithEpisodes } from "@reelvault/sdk";
 import { cn } from "cn";
-import type { useEpisodes } from "@/client/hooks/use-episodes";
 import { LazyRender } from "@/components/lazy-render";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
@@ -8,7 +8,7 @@ import { DetailsEpisodeInfo } from "./details-episode-info";
 import { DetailsEpisodePlayAction } from "./details-episode-play-action";
 import { DetailsEpisodeThumbnail } from "./details-episode-thumbnail";
 
-type EpisodeItem = NonNullable<ReturnType<typeof useEpisodes>["data"]>["data"][number];
+type EpisodeItem = SeasonWithEpisodes["episodes"][number];
 
 interface DetailsEpisodeCardProps {
 	episode: EpisodeItem;
