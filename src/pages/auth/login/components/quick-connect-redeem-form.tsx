@@ -8,6 +8,7 @@ import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { m } from "@/paraglide/messages";
+import { formatQuickConnectCode } from "@/utils/form-utils";
 
 interface QuickConnectRedeemFormProps {
 	onSuccess: () => void;
@@ -20,15 +21,7 @@ export function QuickConnectRedeemForm({ onSuccess, onSwitchToPair, isInitiating
 	const [qcCode, setQcCode] = useState("");
 
 	const handleQcCodeChange = (value: string) => {
-		const raw = value
-			.replace(/[^0-9a-zA-Z]/g, "")
-			.toUpperCase()
-			.slice(0, 8);
-		if (raw.length > 4) {
-			setQcCode(`${raw.slice(0, 4)}-${raw.slice(4)}`);
-		} else {
-			setQcCode(raw);
-		}
+		setQcCode(formatQuickConnectCode(value));
 	};
 
 	const handleQuickConnectRedeem = (event: React.SubmitEvent<HTMLFormElement>) => {

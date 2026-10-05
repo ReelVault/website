@@ -7,6 +7,7 @@ import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { m } from "@/paraglide/messages";
+import { formatQuickConnectCode } from "@/utils/form-utils";
 import { toast } from "@/utils/toast-facade";
 
 interface QuickConnectAuthorizeBoxProps {
@@ -18,17 +19,8 @@ export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: Quick
 	const authorizeMutation = useQuickConnectAuthorize();
 	const [authorizeCode, setAuthorizeCode] = useState(initialCode ?? "");
 
-	// Format code input with dash: XXX-XXX
 	const handleAuthorizeCodeChange = (value: string) => {
-		const raw = value
-			.replace(/[^0-9a-zA-Z]/g, "")
-			.toUpperCase()
-			.slice(0, 6);
-		if (raw.length > 3) {
-			setAuthorizeCode(`${raw.slice(0, 3)}-${raw.slice(3)}`);
-		} else {
-			setAuthorizeCode(raw);
-		}
+		setAuthorizeCode(formatQuickConnectCode(value));
 	};
 
 	const handleAuthorize = (event: React.SubmitEvent<HTMLFormElement>) => {

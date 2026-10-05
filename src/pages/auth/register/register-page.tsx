@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { detach } from "@/lib/detach";
 import { useSpatialNavigation } from "@/lib/use-spatial-navigation";
 import { m } from "@/paraglide/messages";
+import { getFormValue } from "@/utils/form-utils";
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -29,14 +30,6 @@ const alreadyHaveAccountMarkup: { link: InlineMarkupRenderer } = {
 			{children}
 		</Link>
 	),
-};
-
-// FormData.get returns `string | File | null`; only plain string fields are
-// meaningful here, so anything else is treated as missing.
-const getFormValue = (data: FormData, key: string): string => {
-	const value = data.get(key);
-
-	return typeof value === "string" ? value : "";
 };
 
 export default function RegisterPage() {

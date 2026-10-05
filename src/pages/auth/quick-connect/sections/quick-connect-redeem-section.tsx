@@ -10,6 +10,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { Label } from "@/components/ui/label";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { formatQuickConnectCode } from "@/utils/form-utils";
 
 interface QuickConnectRedeemSectionProps {
 	initialCode?: string;
@@ -29,15 +30,7 @@ export function QuickConnectRedeemSection({
 	const [manualCode, setManualCode] = useState(initialCode);
 
 	const handleManualCodeChange = (value: string) => {
-		const raw = value
-			.replace(/[^0-9a-zA-Z]/g, "")
-			.toUpperCase()
-			.slice(0, 6);
-		if (raw.length > 3) {
-			setManualCode(`${raw.slice(0, 3)}-${raw.slice(3)}`);
-		} else {
-			setManualCode(raw);
-		}
+		setManualCode(formatQuickConnectCode(value));
 	};
 
 	const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {

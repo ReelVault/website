@@ -10,16 +10,9 @@ import { Label } from "@/components/ui/label";
 import { isNativeShell } from "@/lib/capacitor-native";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { getFormValue } from "@/utils/form-utils";
 
 const TRAILING_SLASHES = /\/+$/;
-
-// FormData.get returns `string | File | null`; only plain string fields are
-// meaningful here, so anything else is treated as missing.
-const getFormValue = (data: FormData, key: string): string => {
-	const value = data.get(key);
-
-	return typeof value === "string" ? value : "";
-};
 
 /** "credentials" step: email + password + switch to quick-connect. */
 export function LoginCredentialsForm({
