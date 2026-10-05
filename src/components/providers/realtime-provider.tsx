@@ -104,6 +104,12 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 		]);
 	});
 
+	// Progress ticks (≤1/s per job, throttled server-side) keep the operations
+	// list fresh between the poll fallbacks — lighter than shortening the poll.
+	useRealtimeEvent("worker:progress", () => {
+		invalidateCoalesced([adminKeys.workerOperations()]);
+	});
+
 	// Listen for new notifications
 	useRealtimeEvent("notification:created", (data) => {
 		if (data.title) {

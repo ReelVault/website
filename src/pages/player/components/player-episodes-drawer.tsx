@@ -197,7 +197,7 @@ export function PlayerEpisodesDrawer() {
 					return (
 						<DrawerItemRow
 							key={episode.id}
-							ref={isCurrent ? currentRowRef : undefined}
+							ref={isCurrent ? (el) => (currentRowRef.current = el) : undefined}
 							number={episode.episodeNumber}
 							title={episode.title ?? m.player_episode_number_word({ number: episode.episodeNumber })}
 							overview={episode.overview}

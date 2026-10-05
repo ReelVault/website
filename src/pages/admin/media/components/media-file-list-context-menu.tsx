@@ -1,4 +1,5 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
+
 import { Link } from "@tanstack/react-router";
 import { Layers, Pencil, Play, Trash2 } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
@@ -11,8 +12,11 @@ import {
 } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
 
+/** Same projection the admin list requests — the menu renders ids/names only. */
+type MediaListRow = Pick<MediaFileWithRelation, "id" | "fileName" | "filePath" | "library">;
+
 interface MediaFileListContextMenuProps {
-	file: MediaFileWithRelation;
+	file: MediaListRow;
 	isDeleting: boolean;
 	onDelete: (id: string, fileName: string) => Promise<unknown>;
 	onOpenReassign: () => void;

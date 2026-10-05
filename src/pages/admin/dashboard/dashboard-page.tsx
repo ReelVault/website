@@ -1,4 +1,4 @@
-import { useAdminStats } from "@/client/hooks/use-admin-stats";
+import { useAdminDashboardView } from "@/client/hooks/use-admin-dashboard-view";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { detach } from "@/lib/detach";
 import { DashboardAuditFeed } from "./components/dashboard-audit-feed";
@@ -11,13 +11,35 @@ import { DashboardUpdateStatus } from "./components/dashboard-update-status";
 import { DashboardWorkerQueue } from "./components/dashboard-worker-queue";
 
 export default function AdminDashboardPage() {
-	const statsQuery = useAdminStats();
+	// ONE composite request; its response seeds the individual hook caches
+	// below before they mount, so the child sections issue no fetches of their
+	// own on a warm composite.
+	const dashboardViewQuery = useAdminDashboardView();
+	const statsQuery = { data: dashboardViewQuery.data?.stats, isPending: dashboardViewQuery.isPending, isError: dashboardViewQuery.isError };
 	const stats = statsQuery.data;
 
 	const { libraries, scanLibrary } = useAdminLibraries();
 
+	if (dashboardViewQuery.isPending) {
+		return (
+			<div className="flex flex-col gap-6" role="status" aria-label="Dashboard loading">
+				<div className="h-24 animate-pulse rounded-xl bg-muted/60" />
+				<div className="grid gap-6 lg:grid-cols-3">
+					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
+					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
+					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
+				</div>
+				<div className="grid gap-6 lg:grid-cols-3">
+					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
+					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
+					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
+				</div>
+			</div>
+		);
+	}
+
 	const handleRefetchStats = () => {
-		detach(statsQuery.refetch());
+		detach(dashboardViewQuery.refetch());
 	};
 
 	// Server media and queue data from the database

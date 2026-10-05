@@ -38,6 +38,9 @@ export const adminMediaFilesQueryOptions = ({
 			fileName: emptyToUndefined(fileName),
 			sortBy,
 			sortOrder,
+			// The admin list card renders these only — dropping videoStreams and
+			// metadata skips the widest relation hydration server-side.
+			fields: "id,fileName,filePath,formatName,duration,size,isDefault,qualityTag,source,library,audioStreams,subtitles",
 		}),
 	staleTime: 15_000,
 });

@@ -12,8 +12,24 @@ import { formatDuration } from "@/utils/duration-utils";
 import { formatFileSize } from "@/utils/file-utils";
 import { MediaFileListContextMenu } from "./media-file-list-context-menu";
 
+type MediaListRow = Pick<
+	MediaFileWithRelation,
+	| "id"
+	| "fileName"
+	| "filePath"
+	| "formatName"
+	| "duration"
+	| "size"
+	| "isDefault"
+	| "qualityTag"
+	| "source"
+	| "library"
+	| "audioStreams"
+	| "subtitles"
+>;
+
 interface MediaFileListCardProps {
-	file: MediaFileWithRelation;
+	file: MediaListRow;
 	isDeleting: boolean;
 	onDelete: (id: string, fileName: string) => Promise<unknown>;
 }

@@ -1,4 +1,5 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
+
 import { FileVideo } from "lucide-react";
 import { AppEmptyState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
@@ -7,6 +8,25 @@ import { SkeletonGrid } from "@/components/ui/skeleton";
 import { m } from "@/paraglide/messages";
 import { MediaFileListCard } from "./media-file-list-card";
 
+/** The exact projection the admin list requests (see use-admin-media.ts) —
+ * rendering needs these only; videoStreams and the rare root columns stay
+ * unfetched. */
+type MediaListRow = Pick<
+	MediaFileWithRelation,
+	| "id"
+	| "fileName"
+	| "filePath"
+	| "formatName"
+	| "duration"
+	| "size"
+	| "isDefault"
+	| "qualityTag"
+	| "source"
+	| "library"
+	| "audioStreams"
+	| "subtitles"
+>;
+
 export function MediaList({
 	mediaFiles,
 	isLoading,
@@ -14,7 +34,7 @@ export function MediaList({
 	onDelete,
 	onResetSearch,
 }: {
-	mediaFiles: MediaFileWithRelation[];
+	mediaFiles: MediaListRow[];
 	isLoading: boolean;
 	deletingIds: Set<string>;
 	onDelete: (id: string, fileName: string) => Promise<unknown>;
