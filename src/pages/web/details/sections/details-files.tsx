@@ -16,6 +16,7 @@ import {
 	ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { detach } from "@/lib/detach";
+import { getVersionLabel } from "@/pages/player/utils/player-utils";
 import { m } from "@/paraglide/messages";
 import { formatDuration } from "@/utils/duration-utils";
 import { formatFileSize } from "@/utils/file-utils";
@@ -48,14 +49,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 		<DetailsSection title={m.web_available_video_versions()} icon={FileVideo}>
 			<div className="flex flex-col gap-3">
 				{files.map((file, index) => {
-					let versionTitle: string;
-					if (file.edition) {
-						versionTitle = file.edition;
-					} else if (file.qualityTag) {
-						versionTitle = m.web_episode_version_version({ qualityTag: file.qualityTag });
-					} else {
-						versionTitle = m.web_episode_release_number({ number: index + 1 });
-					}
+					const versionTitle = getVersionLabel(file.edition, file.qualityTag, index);
 
 					// Server returns per-file playback status (fileProgress) — index by file id.
 					const progress = playback?.fileProgress[file.id];

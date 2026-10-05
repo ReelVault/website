@@ -19,7 +19,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { useIsMobile } from "@/hooks/use-mobile";
 import { m } from "@/paraglide/messages";
 import { usePlayerActions, usePlayerInfo, usePlayerSettings, usePlayerVolume } from "../player-context";
-import { detach } from "../utils/player-utils";
+import { detach, getVersionLabel } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 import { PlayerShortcutsDialog } from "./player-shortcuts-dialog";
 
@@ -61,11 +61,42 @@ const QUALITY_OPTIONS: ReadonlyArray<{
 /** Available playback speed steps (mirrors what Vidstack SpeedSlider offered). */
 const SPEED_STEPS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
 
-function versionLabel(edition: string | null | undefined, qualityTag: string | null | undefined, index: number): string {
-	const trimmedEdition = edition?.trim();
-	if (trimmedEdition !== undefined && trimmedEdition.length > 0) return trimmedEdition;
+function SpeedSlider({
+	playbackRate,
+	onRateChange,
+	className,
+}: {
+	playbackRate: number;
+	onRateChange: (rate: number) => void;
+	className?: string;
+}) {
+	// Percentage fill for the speed slider (0.25 → 2)
+	const speedMin = SPEED_STEPS[0];
+	const speedMax = 2;
+	const fillPercent = ((playbackRate - speedMin) / (speedMax - speedMin)) * 100;
 
-	return qualityTag ? m.web_episode_version_version({ qualityTag }) : m.web_episode_release_number({ number: index + 1 });
+	return (
+		<div className={cn("relative flex h-8 items-center", className)}>
+			<div className="relative z-0 h-1.25 w-full rounded-sm bg-foreground/30">
+				<div className="absolute inset-y-0 left-0 rounded-sm bg-primary transition-[width]" style={{ width: `${fillPercent}%` }} />
+				<div className="absolute inset-0 flex items-center justify-between px-0">
+					{SPEED_STEPS.map((step) => (
+						<div key={step} className="h-1.5 w-0.5 bg-muted-foreground opacity-60" />
+					))}
+				</div>
+			</div>
+			<input
+				type="range"
+				min={speedMin}
+				max={speedMax}
+				step={0.25}
+				value={playbackRate}
+				aria-label={m.player_speed_playback_playbackrate_2({ playbackRate })}
+				className="absolute inset-0 z-10 h-full w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-foreground [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-foreground"
+				onChange={(e) => onRateChange(Number(e.target.value))}
+			/>
+		</div>
+	);
 }
 
 export function PlayerSettingsMenu({
@@ -94,11 +125,6 @@ export function PlayerSettingsMenu({
 	const availableVersions = info.episodeId ? episodeFiles : metadataFiles;
 
 	const activeQualityLabel = QUALITY_OPTIONS.find((option) => option.bitrate === maxBitrate)?.label ?? m.player_quality_auto();
-
-	// Percentage fill for the speed slider (0 → SPEED_STEPS[0], 100 → SPEED_STEPS.last)
-	const speedMin = SPEED_STEPS[0]; // 0.25 — always defined (const tuple)
-	const speedMax = 2 as const; // SPEED_STEPS last element — matches tuple type
-	const speedFillPercent = ((playbackRate - speedMin) / (speedMax - speedMin)) * 100;
 
 	const selectVersion = (newId: string) => {
 		if (newId && newId !== info.mediaFileId) {
@@ -134,7 +160,7 @@ export function PlayerSettingsMenu({
 								{m.player_version_named({ count: availableVersions.length })}
 							</p>
 							{availableVersions.map((file, idx) => {
-								const label = versionLabel(file.edition, file.qualityTag, idx);
+								const label = getVersionLabel(file.edition, file.qualityTag, idx);
 								const meta = [file.qualityTag, file.source].filter(Boolean).join(" • ");
 								const isSelected = file.id === info.mediaFileId;
 
@@ -190,29 +216,7 @@ export function PlayerSettingsMenu({
 						<p className="px-1 font-bold text-muted-foreground text-xs uppercase tracking-wider">
 							{m.player_speed_playback_playbackrate({ playbackRate })}
 						</p>
-						<div className="relative mx-1 flex h-8 items-center">
-							<div className="relative z-0 h-1.25 w-full rounded-sm bg-foreground/30">
-								<div
-									className="absolute inset-y-0 left-0 rounded-sm bg-primary transition-[width]"
-									style={{ width: `${speedFillPercent}%` }}
-								/>
-								<div className="absolute inset-0 flex items-center justify-between px-0">
-									{SPEED_STEPS.map((step) => (
-										<div key={step} className="h-1.5 w-0.5 bg-muted-foreground opacity-60" />
-									))}
-								</div>
-							</div>
-							<input
-								type="range"
-								min={speedMin}
-								max={speedMax}
-								step={0.25}
-								value={playbackRate}
-								aria-label={m.player_speed_playback_playbackrate_2({ playbackRate })}
-								className="absolute inset-0 z-10 h-full w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-foreground [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-foreground"
-								onChange={(e) => actions.setPlaybackRate(Number(e.target.value))}
-							/>
-						</div>
+						<SpeedSlider playbackRate={playbackRate} onRateChange={(rate) => actions.setPlaybackRate(rate)} className="mx-1" />
 					</section>
 
 					<section className="flex flex-col gap-1">
@@ -265,21 +269,13 @@ export function PlayerSettingsMenu({
 					<DropdownMenuContent side="top" align="end" className="w-72">
 						{availableVersions.length > 1 && (
 							<>
-								<DropdownMenuRadioGroup
-									value={info.mediaFileId}
-									onValueChange={(newId) => {
-										const targetId = String(newId);
-										if (targetId && targetId !== info.mediaFileId) {
-											detach(() => navigate({ to: "/player/$id", params: { id: targetId } }));
-										}
-									}}
-								>
+								<DropdownMenuRadioGroup value={info.mediaFileId} onValueChange={(newId) => selectVersion(String(newId))}>
 									<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-muted-foreground text-xs uppercase tracking-wider">
 										<Layers className="size-3.5 text-primary" />
 										<span>{m.player_version_named({ count: availableVersions.length })}</span>
 									</DropdownMenuLabel>
 									{availableVersions.map((file, idx) => {
-										const label = versionLabel(file.edition, file.qualityTag, idx);
+										const label = getVersionLabel(file.edition, file.qualityTag, idx);
 										const meta = [file.qualityTag, file.source].filter(Boolean).join(" • ");
 
 										return (
@@ -299,10 +295,7 @@ export function PlayerSettingsMenu({
 							</>
 						)}
 
-						<DropdownMenuRadioGroup
-							value={maxBitrate ? String(maxBitrate) : "auto"}
-							onValueChange={(value) => onQualityChange(value === "auto" ? undefined : Number(value))}
-						>
+						<DropdownMenuRadioGroup value={maxBitrate ? String(maxBitrate) : "auto"} onValueChange={selectQuality}>
 							<DropdownMenuLabel>{m.player_quality_label({ activeQualityLabel })}</DropdownMenuLabel>
 							{QUALITY_OPTIONS.map((option) => (
 								<DropdownMenuRadioItem key={option.value} value={option.value}>
@@ -315,34 +308,7 @@ export function PlayerSettingsMenu({
 						<DropdownMenuGroup>
 							<DropdownMenuLabel>{m.player_speed_playback_playbackrate({ playbackRate })}</DropdownMenuLabel>
 							<div className="px-2 pt-1 pb-2">
-								{/* Native speed slider — steps at SPEED_STEPS */}
-								<div className="relative flex h-8 w-full items-center">
-									{/* Track background */}
-									<div className="relative z-0 h-1.25 w-full rounded-sm bg-foreground/30">
-										{/* Filled portion */}
-										<div
-											className="absolute inset-y-0 left-0 rounded-sm bg-primary transition-[width]"
-											style={{ width: `${speedFillPercent}%` }}
-										/>
-										{/* Step markers */}
-										<div className="absolute inset-0 flex items-center justify-between px-0">
-											{SPEED_STEPS.map((step) => (
-												<div key={step} className="h-1.5 w-0.5 bg-muted-foreground opacity-60" />
-											))}
-										</div>
-									</div>
-									{/* Invisible range input on top */}
-									<input
-										type="range"
-										min={speedMin}
-										max={speedMax}
-										step={0.25}
-										value={playbackRate}
-										aria-label={m.player_speed_playback_playbackrate_2({ playbackRate })}
-										className="absolute inset-0 z-10 h-full w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-foreground [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-foreground"
-										onChange={(e) => actions.setPlaybackRate(Number(e.target.value))}
-									/>
-								</div>
+								<SpeedSlider playbackRate={playbackRate} onRateChange={(rate) => actions.setPlaybackRate(rate)} className="w-full" />
 							</div>
 						</DropdownMenuGroup>
 

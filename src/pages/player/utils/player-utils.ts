@@ -1,5 +1,6 @@
 import { setNativeLandscapeLock } from "@/lib/capacitor-native";
 import { detach as detachTask, noopCleanup as noopCleanupTask } from "@/lib/detach";
+import { m } from "@/paraglide/messages";
 
 // Shared fire-and-forget helpers live in @/lib/detach; re-exported here for
 // the player module's local convenience imports.
@@ -117,4 +118,12 @@ export function isSafeSeek(
 	}
 
 	return isPositionInRanges(targetPosition, transcodedRanges);
+}
+
+/** Human label for a media-file version: custom edition, quality tag, or "Release N". */
+export function getVersionLabel(edition: string | null | undefined, qualityTag: string | null | undefined, index: number): string {
+	const trimmedEdition = edition?.trim();
+	if (trimmedEdition !== undefined && trimmedEdition.length > 0) return trimmedEdition;
+
+	return qualityTag ? m.web_episode_version_version({ qualityTag }) : m.web_episode_release_number({ number: index + 1 });
 }
