@@ -61,7 +61,7 @@ export function QuickConnectAuthorizeSection({
 							className="w-full rounded-2xl py-6 font-black uppercase tracking-widest"
 							onClick={onAuthorize}
 							isPending={isPending}
-							pendingLabel="Autoryzacja…"
+							pendingLabel={m.auth_quick_connect_authorizing()}
 						>
 							<Sparkles className="size-5" />
 							{m.auth_authorize_device()}

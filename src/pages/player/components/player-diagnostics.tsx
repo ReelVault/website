@@ -200,7 +200,7 @@ export function PlayerDiagnostics() {
 										? m.player_video_transcode_named({
 												encoder: diagnostics.session?.videoEncoder ?? "libx264",
 												limit: diagnostics.session?.targetVideoBitrateKbps
-													? ` (limit ${diagnostics.session.targetVideoBitrateKbps} kbps)`
+													? m.player_video_transcode_bitrate_limit({ value: String(diagnostics.session.targetVideoBitrateKbps) })
 													: "",
 											})
 										: m.player_lossless_copy()}

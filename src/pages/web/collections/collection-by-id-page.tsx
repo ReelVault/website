@@ -72,7 +72,7 @@ export default function CollectionByIdPage({ id = "" }: { id?: string }) {
 		);
 	}
 
-	const collectionName = collectionDetailsQuery.data?.name ?? "Kolekcja";
+	const collectionName = collectionDetailsQuery.data?.name ?? m.web_collection_fallback_name();
 	const posterImages = collectionDetailsQuery.data?.posterImages;
 
 	return (

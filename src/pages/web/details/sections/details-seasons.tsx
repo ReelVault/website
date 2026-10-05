@@ -107,7 +107,9 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 											? m.components_special_episodes()
 											: m.components_season_number_label({ number: season.seasonNumber })}
 									</span>
-									<span className="inline md:hidden">{season.seasonNumber === 0 ? "Spec" : `S${season.seasonNumber}`}</span>
+									<span className="inline md:hidden">
+										{season.seasonNumber === 0 ? m.components_special_episodes_short() : `S${season.seasonNumber}`}
+									</span>
 								</Button>
 							);
 						})}

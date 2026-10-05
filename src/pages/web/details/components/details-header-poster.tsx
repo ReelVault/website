@@ -36,7 +36,7 @@ export function DetailsHeaderPoster({ metadataId, title, posterId, posterUpdated
 						<ApiImage
 							fileId={posterId}
 							cacheKey={posterUpdatedAt}
-							alt={title ?? "Poster"}
+							alt={title ?? m.web_details_poster_alt()}
 							width={384}
 							aspectRatio={2 / 3}
 							priority

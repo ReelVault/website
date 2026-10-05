@@ -105,7 +105,7 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 
 					{/* Seek -10s */}
 					<PlayerControlButton
-						description="-10s"
+						description={m.player_seek_back_10s()}
 						render={<button type="button" onClick={() => seekRelative(-10)} aria-label={m.player_seek_back_10s()} />}
 					>
 						<Rewind className="size-5" />
@@ -113,7 +113,7 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 
 					{/* Seek +10s */}
 					<PlayerControlButton
-						description="+10s"
+						description={m.player_seek_forward_10s()}
 						render={<button type="button" onClick={() => seekRelative(10)} aria-label={m.player_seek_forward_10s()} />}
 					>
 						<FastForward className="size-5" />

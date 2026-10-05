@@ -60,7 +60,7 @@ export function QuickConnectRedeemForm({ onSuccess, onSwitchToPair, isInitiating
 							type="text"
 							value={qcCode}
 							onChange={(e) => handleQcCodeChange(e.target.value)}
-							placeholder="np. AB2C-9FGH"
+							placeholder={m.auth_quick_connect_code_placeholder()}
 							className="text-center font-bold font-mono text-lg uppercase tracking-widest"
 							maxLength={9}
 							autoFocus

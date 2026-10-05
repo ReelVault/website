@@ -2,6 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { cn } from "cn";
 import { resolvePluginText, usePluginNavPages } from "@/client/hooks/use-plugin-ui";
 import { RealtimeStatusIndicator } from "@/components/realtime-status-indicator";
+import { m } from "@/paraglide/messages";
 import { getPluginIcon } from "@/plugin-host/icons";
 import { Logo } from "../logo";
 import { NavbarBottomBar } from "./navbar-bottom-bar";
@@ -25,7 +26,7 @@ export function AppNavbar() {
 			)}
 		>
 			<div className="mx-auto flex h-14 w-full items-center px-4 sm:px-6 lg:px-24 xl:h-11">
-				<Link to="/dashboard" className="group flex min-h-11 items-center gap-2.5" aria-label="ReelVault — dashboard">
+				<Link to="/dashboard" className="group flex min-h-11 items-center gap-2.5" aria-label={m.web_navbar_home_aria()}>
 					<Logo className="h-7 w-auto transition-transform group-hover:scale-[1.02]" />
 				</Link>
 

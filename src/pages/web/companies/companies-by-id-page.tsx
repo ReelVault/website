@@ -15,7 +15,7 @@ export default function CompanyByIdPage() {
 	return (
 		<TaxonomyPage
 			icon={Building2}
-			taxonomyLabel="Firma produkcyjna"
+			taxonomyLabel={m.web_company()}
 			sectionTitle={m.web_studio_titles()}
 			errorMessage={m.web_company_fetch_failed()}
 			taxonomyQuery={companyQuery}
