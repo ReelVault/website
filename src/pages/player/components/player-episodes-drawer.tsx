@@ -1,4 +1,3 @@
-import type { SmartPlaySuggestion } from "@reelvault/sdk";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
@@ -152,17 +151,26 @@ export function PlayerEpisodesDrawer() {
 			<DrawerSkeletonList />
 		) : (
 			<div className="flex flex-col gap-2 pb-6">
-				{collectionItems.map((movie, index) => (
-					<CollectionDrawerItem
-						key={movie.id}
-						movie={movie}
-						index={index}
-						isCurrent={movie.id === metadataId}
-						entry={suggestionsById.get(movie.id)}
-						isBatchLoading={collectionSuggestionsQuery.isPending}
-						onSelect={handleSelectEpisode}
-					/>
-				))}
+				{collectionItems.map((movie, index) => {
+					const poster = movie.images.find((img) => img.imageType === "poster")?.data;
+					const entry = suggestionsById.get(movie.id);
+					const targetMediaFileId = entry?.suggestion?.mediaFileId;
+
+					return (
+						<DrawerItemRow
+							key={movie.id}
+							number={index + 1}
+							title={movie.title}
+							overview={movie.overview}
+							imageFileId={poster?.id}
+							imageCacheKey={poster?.updatedAt}
+							imageAlt={movie.title}
+							isCurrent={movie.id === metadataId}
+							isDisabled={!targetMediaFileId || collectionSuggestionsQuery.isPending}
+							onSelect={() => targetMediaFileId && handleSelectEpisode(targetMediaFileId)}
+						/>
+					);
+				})}
 			</div>
 		);
 	} else if (episodesQuery.isPending) {
@@ -182,96 +190,26 @@ export function PlayerEpisodesDrawer() {
 					const defaultFile = files.find((f) => f.isDefault) ?? files[0];
 					const targetMediaFileId = defaultFile?.id;
 					const isCurrent = episode.id === episodeId || targetMediaFileId === currentMediaFileId;
-					const isWatched = playback?.episodes?.[episode.id]?.status === "watched";
 					const progress = playback?.episodes?.[episode.id]?.progress;
 					const progressPercent = progress?.duration ? Math.round(((progress.position ?? 0) / progress.duration) * 100) : 0;
+					const isWatched = playback?.episodes?.[episode.id]?.status === "watched";
 
 					return (
-						<button
+						<DrawerItemRow
 							key={episode.id}
 							ref={isCurrent ? currentRowRef : undefined}
-							type="button"
-							disabled={!targetMediaFileId}
-							onClick={() => targetMediaFileId && handleSelectEpisode(targetMediaFileId)}
-							className={cn(
-								"group relative flex w-full cursor-pointer items-start gap-4 rounded-xl border p-3 text-left outline-none transition-[border-color,background-color,color,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-								isCurrent
-									? "border-primary/60 border-l-4 bg-primary/[0.07] shadow-sm"
-									: "border-transparent bg-muted/30 hover:border-border/60 hover:bg-muted/60",
-								!targetMediaFileId && "cursor-not-allowed opacity-50 grayscale-50",
-							)}
-						>
-							{/* Episode number — readable, fixed slot independent of the thumbnail */}
-							<div className="flex w-7 shrink-0 items-center justify-center pt-1">
-								<span className={cn("font-bold text-base tabular-nums", isCurrent ? "text-primary" : "text-muted-foreground/70")}>
-									{episode.episodeNumber}
-								</span>
-							</div>
-
-							{/* Episode thumbnail */}
-							<div className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-md border border-border/40 shadow-sm sm:w-32">
-								<ApiImage
-									fileId={episode.imageId}
-									alt={episode.title ?? m.player_episode_number_word({ number: episode.episodeNumber })}
-									fill
-									sizes="128px"
-									className="object-cover transition-transform duration-500 group-hover:scale-105"
-								/>
-
-								<div
-									className={cn(
-										"absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300",
-										isCurrent ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-									)}
-								>
-									<div className="flex size-9 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-lg transition-transform group-hover:scale-110 sm:size-10">
-										<Play className="ml-1 size-4 fill-current sm:size-5" />
-									</div>
-								</div>
-
-								{defaultFile?.duration && (
-									<span className="absolute right-1.5 bottom-1.5 rounded-md bg-black/80 px-1.5 py-0.5 font-medium text-[10px] text-white/90">
-										{formatDuration(defaultFile.duration)}
-									</span>
-								)}
-							</div>
-
-							{/* Episode information */}
-							<div className="flex h-full min-w-0 flex-1 flex-col justify-center space-y-1.5 py-0.5">
-								<div className="flex items-center gap-2">
-									{isCurrent && (
-										<Badge className="border-none bg-primary/20 px-1.5 py-0 font-semibold text-[10px] text-primary uppercase tracking-wider hover:bg-primary/20">
-											{m.player_playing_word()}
-										</Badge>
-									)}
-									{isWatched && !isCurrent && (
-										<span className="flex items-center gap-1 font-medium text-[11px] text-success">
-											<Check className="size-3.5" /> {m.player_watched_word()}
-										</span>
-									)}
-								</div>
-
-								<h4
-									className={cn(
-										"line-clamp-1 font-semibold text-base transition-colors",
-										isCurrent ? "text-primary" : "text-foreground group-hover:text-foreground/90",
-									)}
-								>
-									{episode.title ?? m.player_episode_number_word({ number: episode.episodeNumber })}
-								</h4>
-
-								{episode.overview && <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">{episode.overview}</p>}
-
-								{progressPercent > 0 && progressPercent < 100 && (
-									<div className="flex items-center gap-2 pt-1">
-										<Progress value={progressPercent} className="h-1.5 flex-1 bg-muted-foreground/20" />
-										<span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
-											{m.common_percent_value({ value: progressPercent })}
-										</span>
-									</div>
-								)}
-							</div>
-						</button>
+							number={episode.episodeNumber}
+							title={episode.title ?? m.player_episode_number_word({ number: episode.episodeNumber })}
+							overview={episode.overview}
+							imageFileId={episode.imageId}
+							imageAlt={episode.title ?? m.player_episode_number_word({ number: episode.episodeNumber })}
+							durationLabel={defaultFile?.duration ? formatDuration(defaultFile.duration) : undefined}
+							isCurrent={isCurrent}
+							isWatched={isWatched && !isCurrent}
+							progressPercent={progressPercent > 0 && progressPercent < 100 ? progressPercent : undefined}
+							isDisabled={!targetMediaFileId}
+							onSelect={() => targetMediaFileId && handleSelectEpisode(targetMediaFileId)}
+						/>
 					);
 				})}
 			</div>
@@ -358,55 +296,67 @@ export function PlayerEpisodesDrawer() {
 	);
 }
 
-function CollectionDrawerItem({
-	movie,
-	index,
-	isCurrent,
-	entry,
-	isBatchLoading,
-	onSelect,
-}: {
-	movie: {
-		id: string;
-		title: string;
-		overview?: string | null;
-		images?: Array<{ imageType: string; data?: { id: string; updatedAt?: Date | string } | null }>;
-	};
-	index: number;
+interface DrawerItemRowProps {
+	number: number;
+	title: string;
+	overview?: string | null;
+	imageFileId?: string | null;
+	imageCacheKey?: Date | string | null;
+	imageAlt: string;
+	durationLabel?: string;
 	isCurrent: boolean;
-	entry?: { suggestion: SmartPlaySuggestion | null; inWatchlist: boolean };
-	isBatchLoading: boolean;
-	onSelect: (mediaFileId: string) => void;
-}) {
-	const targetMediaFileId = entry?.suggestion?.mediaFileId;
-	const isLoading = isBatchLoading;
-	const poster = movie.images?.find((img) => img.imageType === "poster")?.data;
+	isWatched?: boolean;
+	progressPercent?: number;
+	isDisabled?: boolean;
+	ref?: (el: HTMLButtonElement | null) => void;
+	onSelect: () => void;
+}
 
+function DrawerItemRow({
+	number,
+	title,
+	overview,
+	imageFileId,
+	imageCacheKey,
+	imageAlt,
+	durationLabel,
+	isCurrent,
+	isWatched = false,
+	progressPercent = 0,
+	isDisabled = false,
+	ref,
+	onSelect,
+}: DrawerItemRowProps) {
 	return (
 		<button
 			type="button"
-			disabled={!targetMediaFileId || isLoading}
-			onClick={() => targetMediaFileId && onSelect(targetMediaFileId)}
+			ref={ref}
+			disabled={isDisabled}
+			onClick={onSelect}
 			className={cn(
 				"group relative flex w-full cursor-pointer items-start gap-4 rounded-xl border p-3 text-left outline-none transition-[border-color,background-color,color,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 				isCurrent
 					? "border-primary/60 border-l-4 bg-primary/[0.07] shadow-sm"
 					: "border-transparent bg-muted/30 hover:border-border/60 hover:bg-muted/60",
-				(!targetMediaFileId || isLoading) && "cursor-not-allowed opacity-50 grayscale-50",
+				isDisabled && "cursor-not-allowed opacity-50 grayscale-50",
 			)}
 		>
+			{/* Number — readable, fixed slot independent of the thumbnail */}
 			<div className="flex w-7 shrink-0 items-center justify-center pt-1">
-				<span className={cn("font-bold text-base tabular-nums", isCurrent ? "text-primary" : "text-muted-foreground/70")}>{index + 1}</span>
+				<span className={cn("font-bold text-base tabular-nums", isCurrent ? "text-primary" : "text-muted-foreground/70")}>{number}</span>
 			</div>
+
+			{/* Thumbnail */}
 			<div className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-md border border-border/40 shadow-sm sm:w-32">
 				<ApiImage
-					fileId={poster?.id}
-					cacheKey={poster?.updatedAt}
-					alt={movie.title}
+					fileId={imageFileId}
+					cacheKey={imageCacheKey}
+					alt={imageAlt}
 					fill
 					sizes="128px"
 					className="object-cover transition-transform duration-500 group-hover:scale-105"
 				/>
+
 				<div
 					className={cn(
 						"absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300",
@@ -417,7 +367,15 @@ function CollectionDrawerItem({
 						<Play className="ml-1 size-4 fill-current sm:size-5" />
 					</div>
 				</div>
+
+				{durationLabel && (
+					<span className="absolute right-1.5 bottom-1.5 rounded-md bg-black/80 px-1.5 py-0.5 font-medium text-[10px] text-white/90">
+						{durationLabel}
+					</span>
+				)}
 			</div>
+
+			{/* Information */}
 			<div className="flex h-full min-w-0 flex-1 flex-col justify-center space-y-1.5 py-0.5">
 				<div className="flex items-center gap-2">
 					{isCurrent && (
@@ -425,16 +383,32 @@ function CollectionDrawerItem({
 							{m.player_playing_word()}
 						</Badge>
 					)}
+					{isWatched && (
+						<span className="flex items-center gap-1 font-medium text-[11px] text-success">
+							<Check className="size-3.5" /> {m.player_watched_word()}
+						</span>
+					)}
 				</div>
+
 				<h4
 					className={cn(
 						"line-clamp-1 font-semibold text-base transition-colors",
 						isCurrent ? "text-primary" : "text-foreground group-hover:text-foreground/90",
 					)}
 				>
-					{movie.title}
+					{title}
 				</h4>
-				{movie.overview && <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">{movie.overview}</p>}
+
+				{overview && <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">{overview}</p>}
+
+				{progressPercent > 0 && progressPercent < 100 && (
+					<div className="flex items-center gap-2 pt-1">
+						<Progress value={progressPercent} className="h-1.5 flex-1 bg-muted-foreground/20" />
+						<span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
+							{m.common_percent_value({ value: progressPercent })}
+						</span>
+					</div>
+				)}
 			</div>
 		</button>
 	);
