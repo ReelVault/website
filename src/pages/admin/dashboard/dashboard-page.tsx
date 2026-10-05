@@ -1,6 +1,8 @@
 import { useAdminDashboardView } from "@/client/hooks/use-admin-dashboard-view";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
+import { AppErrorState } from "@/components/app-states";
 import { detach } from "@/lib/detach";
+import { m } from "@/paraglide/messages";
 import { DashboardAuditFeed } from "./components/dashboard-audit-feed";
 import { DashboardErrorLogs } from "./components/dashboard-error-logs";
 import { DashboardHeader } from "./components/dashboard-header";
@@ -19,6 +21,20 @@ export default function AdminDashboardPage() {
 	const stats = statsQuery.data;
 
 	const { libraries, scanLibrary } = useAdminLibraries();
+
+	// Server <= 1.1 has no dashboard-view route (404) — the composite requires
+	// a matching 1.2 server; the rest of the admin panel keeps working.
+	if (dashboardViewQuery.isError) {
+		return (
+			<div className="flex flex-col gap-6">
+				<AppErrorState
+					title={m.admin_dashboard_server_too_old()}
+					description={m.user_check_server_connection()}
+					onRetry={() => detach(dashboardViewQuery.refetch())}
+				/>
+			</div>
+		);
+	}
 
 	if (dashboardViewQuery.isPending) {
 		return (

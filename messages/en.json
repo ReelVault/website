@@ -3816,5 +3816,6 @@
 	"wrapped_personality_sci_fi_explorer_title": "Cosmic Explorer",
 	"wrapped_title_year": "Wrapped {year}",
 	"wrapped_titles_and_sessions": "{titles} titles • {sessions} sessions",
-	"year_mismatch": "Year mismatch: file says {recognizedYear}, metadata says {assignedYear} ({diff} years apart)."
+	"year_mismatch": "Year mismatch: file says {recognizedYear}, metadata says {assignedYear} ({diff} years apart).",
+	"admin_dashboard_server_too_old": "This screen needs ReelVault Server 1.2.0 or newer. Update the server, then retry."
 }

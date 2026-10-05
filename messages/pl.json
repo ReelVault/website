@@ -3855,5 +3855,6 @@
 	"wrapped_personality_sci_fi_explorer_title": "Kosmiczny Odkrywca",
 	"wrapped_title_year": "Wrapped {year}",
 	"wrapped_titles_and_sessions": "{titles} różnych produkcji • {sessions} seansów",
-	"year_mismatch": "Rozbieżność roku: w pliku {recognizedYear}, w metadanych {assignedYear} (różnica {diff} lat)."
+	"year_mismatch": "Rozbieżność roku: w pliku {recognizedYear}, w metadanych {assignedYear} (różnica {diff} lat).",
+	"admin_dashboard_server_too_old": "Ten ekran wymaga ReelVault Server 1.2.0 lub nowszego. Zaktualizuj serwer i spróbuj ponownie."
 }
