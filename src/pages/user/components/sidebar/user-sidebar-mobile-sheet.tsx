@@ -1,12 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { House, LogOut, RotateCcw, UserRound } from "lucide-react";
-import { resolveApiAssetUrl } from "@/client/client";
 import { ConfirmAction } from "@/components/confirm-action";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
+import { SidebarProfileCard } from "./sidebar-profile-card";
 
 interface UserSidebarMobileSheetProps {
 	open: boolean;
@@ -39,22 +38,7 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 					<SheetDescription>{account?.email ?? m.user_active_profile()}</SheetDescription>
 				</SheetHeader>
 				<div className="flex flex-col gap-1 px-4 pb-6">
-					{isLoading ? (
-						<Skeleton className="h-14 rounded-xl" />
-					) : (
-						<div className="mb-2 flex items-center gap-3 rounded-xl border border-border/60 p-3">
-							<Avatar className="size-10 shrink-0 rounded-xl after:hidden">
-								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" className="rounded-xl" />
-								<AvatarFallback className="rounded-xl bg-primary/10 text-primary">
-									<UserRound aria-hidden="true" />
-								</AvatarFallback>
-							</Avatar>
-							<div className="min-w-0">
-								<p className="truncate font-semibold text-sm">{profile?.name ?? m.user_your_profile()}</p>
-								<p className="truncate text-muted-foreground text-xs">{account?.email ?? m.user_active_profile()}</p>
-							</div>
-						</div>
-					)}
+					{isLoading ? <Skeleton className="h-14 rounded-xl" /> : <SidebarProfileCard profile={profile} account={account} />}
 					<SheetClose render={<Link to="/auth/profiles" />}>
 						<span className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-muted-foreground text-sm hover:bg-muted/60 hover:text-foreground">
 							<RotateCcw className="size-4.5" />

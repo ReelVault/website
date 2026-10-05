@@ -1,14 +1,12 @@
 import { Link, useLocation, useNavigate, useRouter as useTanStackRouter } from "@tanstack/react-router";
-import { UserRound } from "lucide-react";
 import { useState } from "react";
-import { resolveApiAssetUrl } from "@/client/client";
 import { useLogout } from "@/client/hooks/use-auth";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useUnreadNotificationCount } from "@/client/hooks/use-notifications";
 import { Logo } from "@/components/logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { m } from "@/paraglide/messages";
+import { SidebarProfileCard } from "./sidebar/sidebar-profile-card";
 import { UserSidebarDesktopFooter } from "./sidebar/user-sidebar-desktop-footer";
 import { UserSidebarMobileSheet } from "./sidebar/user-sidebar-mobile-sheet";
 import { UserSidebarNav } from "./sidebar/user-sidebar-nav";
@@ -40,22 +38,7 @@ export function UserSidebar() {
 				</Link>
 
 				<div className="hidden border-border/60 border-y py-4 lg:block">
-					{isLoading ? (
-						<Skeleton className="h-11 rounded-xl" />
-					) : (
-						<div className="flex items-center gap-3 px-2">
-							<Avatar className="size-10 shrink-0 rounded-xl after:hidden">
-								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" className="rounded-xl" />
-								<AvatarFallback className="rounded-xl bg-primary/10 text-primary">
-									<UserRound aria-hidden="true" />
-								</AvatarFallback>
-							</Avatar>
-							<div className="min-w-0">
-								<p className="truncate font-semibold text-sm">{profile?.name ?? m.user_your_profile()}</p>
-								<p className="truncate text-muted-foreground text-xs">{account?.email ?? m.common_active_profile()}</p>
-							</div>
-						</div>
-					)}
+					{isLoading ? <Skeleton className="h-11 rounded-xl" /> : <SidebarProfileCard profile={profile} account={account} />}
 				</div>
 
 				<UserSidebarNav pathname={pathname} unreadCount={data?.count ?? 0} />
