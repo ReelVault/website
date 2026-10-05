@@ -24,7 +24,9 @@ function adminAuditSearchValidator(search: Record<string, unknown>): AdminAuditS
 	const rawPage = Number(search.page);
 
 	return {
-		action: AUDIT_ACTIONS.find((candidate) => candidate === search.action && candidate !== "all"),
+		action: AUDIT_ACTIONS.find(
+			(candidate): candidate is Exclude<AdminAuditActionFilter, "all"> => candidate === search.action && candidate !== "all",
+		),
 		resourceType: typeof search.resourceType === "string" && search.resourceType !== "" ? search.resourceType : undefined,
 		actorUserId: typeof search.actorUserId === "string" && search.actorUserId !== "" ? search.actorUserId : undefined,
 		ipAddress: typeof search.ipAddress === "string" && search.ipAddress !== "" ? search.ipAddress : undefined,
