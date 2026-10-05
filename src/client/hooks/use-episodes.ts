@@ -80,14 +80,15 @@ export function useNextEpisode({
 	const seasonsQuery = useSeasons(metadataId);
 
 	const episodesQuery = useQuery({
-		queryKey: episodeKeys.byMetadata(metadataId, 50),
+		queryKey: episodeKeys.byMetadata(metadataId, 500),
 		queryFn: () =>
 			reelvault.episodes.getAll({
 				metadataId,
 				fields: episodeFields,
-				// Only the next-episode computation consumes this — 50 covers every
-				// realistic season while keeping the payload (with mediaFiles) sane.
-				limit: 50,
+				// One call must cover the whole show (server clamps at 500): the server
+				// sorts by episodeNumber only, so a small slice mixes seasons and drops
+				// the deepest-watched episode — the one continue-watching resumes.
+				limit: 500,
 			}),
 		enabled: Boolean(metadataId),
 		staleTime: 1000 * 60 * 60 * 24,
@@ -109,12 +110,16 @@ export function useNextEpisode({
 				seasonNumber: seasonMap.get(ep.seasonId) ?? 1,
 				episodeNumber: ep.episodeNumber,
 				title: ep.title,
-				mediaFileId: ep.mediaFiles[0]?.id ?? null,
+				// Continue-watching navigates to the watched file, which on a
+				// multi-version episode need not be the first — match against all
+				// files, link out via the default one (mirrors the drawer choice).
+				mediaFileIds: ep.mediaFiles.map((file) => file.id),
+				mediaFileId: (ep.mediaFiles.find((file) => file.isDefault) ?? ep.mediaFiles[0])?.id ?? null,
 			}))
 			.toSorted((a, b) => a.seasonNumber - b.seasonNumber || a.episodeNumber - b.episodeNumber);
 
 		const currentIndex = allEpisodes.findIndex(
-			(ep) => (Boolean(episodeId) && ep.episodeId === episodeId) || ep.mediaFileId === currentMediaFileId,
+			(ep) => (Boolean(episodeId) && ep.episodeId === episodeId) || ep.mediaFileIds.includes(currentMediaFileId),
 		);
 		const current = allEpisodes[currentIndex];
 		if (currentIndex === -1 || !current) return { currentEpisode: null, nextEpisode: null };
