@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Check, Layers, Play, SquareStack, Tv } from "lucide-react";
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { useEpisodes } from "@/client/hooks/use-episodes";
@@ -76,11 +76,14 @@ export function PlayerEpisodesDrawer() {
 	const suggestionsById = new Map((collectionSuggestionsQuery.data?.suggestions ?? []).map((entry) => [entry.metadataId, entry]));
 
 	const currentRowRef = useRef<HTMLButtonElement | null>(null);
+	const hasScrolledToCurrentRef = useRef(false);
 
 	const activeSeasonId =
 		selectedSeasonId ?? seasons.find((s) => s.seasonNumber === currentEpisode?.seasonNumber)?.id ?? seasons[0]?.id ?? null;
 
-	const episodesQuery = useEpisodes(episodeId && isOpen ? activeSeasonId : null);
+	// No explicit limit = the server's default page size (20) silently truncates
+	// the season; 500 is the server hard max and covers any real season.
+	const episodesQuery = useEpisodes(episodeId && isOpen ? activeSeasonId : null, { limit: 500 });
 	const episodes = episodesQuery.data?.data ?? [];
 
 	// Per-title watched state feeds the checkmarks/progress rows — fetched only
@@ -95,6 +98,15 @@ export function PlayerEpisodesDrawer() {
 		  }
 		| undefined = playbackQuery.data ?? undefined;
 
+	// The list mounts only after the drawer opens (the query is enabled then) —
+	// scroll once the episodes have actually rendered, not in handleOpenChange.
+	useEffect(() => {
+		if (!isOpen || episodesQuery.isPending || hasScrolledToCurrentRef.current) return;
+
+		hasScrolledToCurrentRef.current = true;
+		currentRowRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+	}, [episodesQuery.isPending, isOpen]);
+
 	// If it is a movie and we are not in collection mode, do not render the button
 	if (!(episodeId || (isCollectionMode && collectionId))) return null;
 
@@ -105,6 +117,9 @@ export function PlayerEpisodesDrawer() {
 			return;
 		}
 
+		// Explicit episode choice — the next episode must start playing even though
+		// the controller instance (and its play intent) survives the navigation.
+		actions.setUserPlayIntent(true);
 		detach(() => actions.syncPlaybackProgress(true));
 		setIsOpen(false);
 		detach(() =>
@@ -120,10 +135,10 @@ export function PlayerEpisodesDrawer() {
 	const handleOpenChange = (open: boolean) => {
 		setIsOpen(open);
 		if (open) {
-			// Scroll to the currently playing episode / movie on open
-			requestAnimationFrame(() => {
-				currentRowRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
-			});
+			// A fresh open re-anchors on the episode being watched: drop the season
+			// the user last browsed for a previous episode.
+			setSelectedSeasonId(null);
+			hasScrolledToCurrentRef.current = false;
 		}
 	};
 
