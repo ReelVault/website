@@ -1,9 +1,10 @@
-import { ChevronLeft, ChevronRight, Layers } from "lucide-react";
-import { useState } from "react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import { Layers } from "lucide-react";
 import { useCollections } from "@/client/hooks/use-collections";
+import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { SimpleAnimation } from "@/components/simple-animation";
-import { Button } from "@/components/ui/button";
+import { SimplePagination } from "@/components/simple-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
@@ -14,7 +15,11 @@ const SKELETON_KEYS = ["1", "2", "3", "4", "5", "6"] as const;
 
 export default function CollectionsPage() {
 	usePageTitle(m.navbar_collections());
-	const [page, setPage] = useState(1);
+	const { page = 1 } = useSearch({ from: "/_web/collections/" });
+	const navigate = useNavigate({ from: "/_web/collections/" });
+	const setPage = (next: number) => {
+		detach(navigate({ search: { page: next > 1 ? next : undefined }, replace: true }));
+	};
 	const { data: collections, isLoading, isError, refetch } = useCollections(page);
 
 	return (
@@ -44,27 +49,20 @@ export default function CollectionsPage() {
 						</div>
 					)}
 					{isError && (
-						<div role="alert" className="cinema-surface max-w-xl p-6">
-							<p className="font-semibold">{m.admin_collections_failed_to_fetch()}</p>
-							<p className="mt-1 text-muted-foreground text-sm">{m.web_check_connection()}</p>
-							<Button
-								type="button"
-								variant="outline"
-								className="mt-4"
-								onClick={() => {
-									detach(refetch());
-								}}
-							>
-								{m.common_try_again()}
-							</Button>
-						</div>
+						<AppErrorState
+							title={m.web_collections_fetch_failed()}
+							description={m.web_check_connection()}
+							onRetry={() => detach(refetch())}
+							className="max-w-xl"
+						/>
 					)}
 					{!(isLoading || isError) && collections?.data.length === 0 && (
-						<div className="cinema-surface max-w-xl p-8 text-center">
-							<Layers className="mx-auto size-7 text-primary" />
-							<h2 className="mt-4 font-bold text-xl">{m.admin_collections_no_collections()}</h2>
-							<p className="mt-2 text-muted-foreground text-sm">{m.web_collections_appear_when_assigned()}</p>
-						</div>
+						<AppEmptyState
+							icon={Layers}
+							title={m.web_collections_empty_heading()}
+							description={m.web_collections_appear_when_assigned()}
+							className="max-w-xl"
+						/>
 					)}
 					{!(isLoading || isError) && collections && collections.data.length > 0 && (
 						<div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -80,31 +78,9 @@ export default function CollectionsPage() {
 						</div>
 					)}
 					{!(isLoading || isError) && collections && collections.totalPages > 1 && (
-						<nav aria-label={m.web_collections_pagination()} className="mt-12 flex items-center justify-center gap-4">
-							<Button
-								variant="outline"
-								size="icon"
-								className="size-10 sm:size-8"
-								onClick={() => setPage(collections.page - 1)}
-								disabled={collections.page === 1}
-								aria-label={m.common_prev_page()}
-							>
-								<ChevronLeft className="size-4" />
-							</Button>
-							<p className="text-muted-foreground text-sm">
-								{m.common_page_x_of_y({ page: collections.page, total: collections.totalPages })}
-							</p>
-							<Button
-								variant="outline"
-								size="icon"
-								className="size-10 sm:size-8"
-								onClick={() => setPage(collections.page + 1)}
-								disabled={collections.page === collections.totalPages}
-								aria-label={m.web_next_page()}
-							>
-								<ChevronRight className="size-4" />
-							</Button>
-						</nav>
+						<div className="mt-12">
+							<SimplePagination currentPage={collections.page} totalPages={collections.totalPages} onPageChange={setPage} />
+						</div>
 					)}
 				</section>
 			</main>

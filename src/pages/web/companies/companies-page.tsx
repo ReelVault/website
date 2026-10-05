@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Building2 } from "lucide-react";
 import { useCompanies } from "@/client/hooks/use-companies";
+import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { ApiImage } from "@/components/ui/api-image";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -44,27 +44,20 @@ export default function CompaniesPage() {
 						</div>
 					)}
 					{isError && (
-						<div role="alert" className="cinema-surface max-w-xl p-6">
-							<p className="font-semibold">{m.web_companies_fetch_failed()}</p>
-							<p className="mt-1 text-muted-foreground text-sm">{m.web_check_connection()}</p>
-							<Button
-								type="button"
-								variant="outline"
-								className="mt-4"
-								onClick={() => {
-									detach(refetch());
-								}}
-							>
-								{m.common_try_again()}
-							</Button>
-						</div>
+						<AppErrorState
+							title={m.web_companies_fetch_failed()}
+							description={m.web_check_connection()}
+							onRetry={() => detach(refetch())}
+							className="max-w-xl"
+						/>
 					)}
 					{!(isLoading || isError) && companies.length === 0 && (
-						<div className="cinema-surface max-w-xl p-8 text-center">
-							<Building2 className="mx-auto size-7 text-primary" aria-hidden="true" />
-							<h2 className="mt-4 font-bold text-xl">{m.web_no_companies_heading()}</h2>
-							<p className="mt-2 text-muted-foreground text-sm">{m.web_producers_appear_hint()}</p>
-						</div>
+						<AppEmptyState
+							icon={Building2}
+							title={m.web_no_companies_heading()}
+							description={m.web_producers_appear_hint()}
+							className="max-w-xl"
+						/>
 					)}
 					{companies.length > 0 && (
 						<SimpleAnimation direction="up" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

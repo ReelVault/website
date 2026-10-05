@@ -1,8 +1,10 @@
 import type { CollectionSortMode, MetadataSorting } from "@reelvault/sdk";
+import { Layers } from "lucide-react";
+import type { ReactNode } from "react";
 import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
 import { useMetadataCollection } from "@/client/hooks/use-metadata-queries";
-import { Button } from "@/components/ui/button";
+import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { CollectionByIdSkeleton } from "./components/collection-by-id-skeleton";
@@ -51,25 +53,33 @@ export default function CollectionByIdPage({ id = "" }: { id?: string }) {
 		return <CollectionByIdSkeleton />;
 	}
 
-	if (collectionQuery.isError || collectionDetailsQuery.isError) {
+	if (collectionDetailsQuery.isError) {
 		return (
 			<div className="flex min-h-screen items-center justify-center p-6">
-				<div role="alert" className="cinema-surface max-w-xl p-6 text-center">
-					<p className="font-semibold">{m.admin_collections_failed_to_fetch()}</p>
-					<p className="mt-1 text-muted-foreground text-sm">{m.web_check_connection()}</p>
-					<Button
-						type="button"
-						variant="outline"
-						className="mt-4"
-						onClick={() => {
-							detach(Promise.all([collectionQuery.refetch(), collectionDetailsQuery.refetch()]));
-						}}
-					>
-						{m.common_try_again()}
-					</Button>
-				</div>
+				<AppErrorState
+					title={m.web_collection_fetch_failed()}
+					description={m.web_check_connection()}
+					onRetry={() => detach(Promise.all([collectionQuery.refetch(), collectionDetailsQuery.refetch()]))}
+					className="max-w-xl"
+				/>
 			</div>
 		);
+	}
+
+	let timelineContent: ReactNode;
+	if (collectionQuery.isError) {
+		timelineContent = (
+			<AppErrorState
+				title={m.web_collection_fetch_failed()}
+				description={m.web_check_connection()}
+				onRetry={() => detach(collectionQuery.refetch())}
+				className="mx-auto max-w-xl"
+			/>
+		);
+	} else if (items.length === 0) {
+		timelineContent = <AppEmptyState icon={Layers} title={m.web_collection_no_titles()} className="mx-auto max-w-xl" />;
+	} else {
+		timelineContent = <CollectionTimeline items={items} />;
 	}
 
 	const collectionName = collectionDetailsQuery.data?.name ?? m.web_collection_fallback_name();
@@ -87,7 +97,7 @@ export default function CollectionByIdPage({ id = "" }: { id?: string }) {
 				firstItemId={firstItem?.id}
 			/>
 
-			<CollectionTimeline items={items} />
+			{timelineContent}
 		</div>
 	);
 }

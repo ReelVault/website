@@ -1,6 +1,5 @@
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Building2 } from "lucide-react";
-import { useState } from "react";
 import { useCompanyDetails } from "@/client/hooks/use-companies";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -8,7 +7,11 @@ import { TaxonomyPage } from "../taxonomy-page";
 
 export default function CompanyByIdPage() {
 	const { id } = useParams({ from: "/_web/companies/$id" });
-	const [page, setPage] = useState(1);
+	const { page } = useSearch({ from: "/_web/companies/$id" });
+	const navigate = useNavigate({ from: "/_web/companies/$id" });
+	const setPage = (next: number) => {
+		detach(navigate({ search: { page: next > 1 ? next : undefined }, replace: true }));
+	};
 	const { companyQuery, metadataQuery, metadata, totalPages, total } = useCompanyDetails(id, page, 24);
 	const company = companyQuery.data;
 
