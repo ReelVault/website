@@ -167,14 +167,6 @@ function AppPlayerSurface() {
 	// Subtitle blob URL management
 	// -------------------------------------------------------------------------
 
-	useEffect(() => {
-		const video = actionsRef.current.videoRef.current;
-		if (!video) return;
-
-		const existingTracks = video.querySelectorAll("track");
-		for (const t of existingTracks) t.remove();
-	}, []);
-
 	// -------------------------------------------------------------------------
 	// HLS.js initialisation and cleanup
 	// -------------------------------------------------------------------------
@@ -193,10 +185,6 @@ function AppPlayerSurface() {
 		const HlsClass = hlsModule.cls;
 		let hls = actionsRef.current.hlsRef.current;
 		const { hlsRef } = actionsRef.current;
-
-		const onManifestParsed = () => {
-			// Manifest ready
-		};
 
 		const onError = (
 			_event: unknown,
@@ -300,7 +288,6 @@ function AppPlayerSurface() {
 					},
 				});
 
-				hls.on(HlsClass.Events.MANIFEST_PARSED, onManifestParsed);
 				hls.on(HlsClass.Events.ERROR, onError);
 
 				actionsRef.current.hlsRef.current = hls;
@@ -324,7 +311,6 @@ function AppPlayerSurface() {
 			video.removeAttribute("src");
 			video.load();
 			if (hls) {
-				hls.off(HlsClass.Events.MANIFEST_PARSED, onManifestParsed);
 				hls.off(HlsClass.Events.ERROR, onError);
 				hls.destroy();
 				hlsRef.current = null;
@@ -668,9 +654,7 @@ function AppPlayerSurface() {
 					onPointerMove={touchGestures.onPointerMove}
 					onPointerUp={handleSurfacePointerUp}
 					onPointerCancel={touchGestures.onPointerCancel}
-				>
-					<track kind="captions" />
-				</video>
+				/>
 
 				<PlayerChrome
 					diagnosticsOpen={diagnosticsToggle.isOpen}

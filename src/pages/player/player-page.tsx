@@ -104,7 +104,6 @@ export default function PlayerByIdPage() {
 		const title = isTerminatedError ? (sessionQuery.error?.message ?? m.player_stopped_by_admin()) : m.player_playback_start_failed();
 		const description = isTerminatedError ? m.player_stopped_by_admin_notice() : m.user_check_server_connection();
 
-		// TODO: Add error
 		return (
 			<main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background px-6 text-center">
 				<AppErrorState

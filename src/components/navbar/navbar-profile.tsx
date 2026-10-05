@@ -48,11 +48,6 @@ export function NavbarProfile() {
 						{isLoading && m.common_loading_dots()}
 						{!isLoading && profileName}
 					</span>
-					{/* "Pro Plan" badge — commented out until a Pro Plan plugin exists. */}
-					{/* <Badge className="mt-0.5 flex items-center gap-1 px-2 py-0.5 text-xs">
-						<Crown className="size-3 text-secondary-foreground" />
-						Pro Plan
-					</Badge> */}
 				</div>
 
 				<Avatar className="size-9 ring-2 ring-background transition-shadow group-hover:ring-primary/50">
