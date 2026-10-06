@@ -58,7 +58,7 @@ function AdminAuditContent() {
 	const debouncedActorUserId = useDebounce({ value: actorUserId, delay: 400 });
 	const debouncedIpAddress = useDebounce({ value: ipAddress, delay: 400 });
 	const debouncedRequestId = useDebounce({ value: requestId, delay: 400 });
-	const { entries, pagination, isLoading, isFetching, error, refetch } = useAdminAudit({
+	const { entries, total, totalPages, isLoading, isFetching, error, refetch } = useAdminAudit({
 		action,
 		resourceType: debouncedResourceType,
 		actorUserId: debouncedActorUserId,
@@ -199,20 +199,14 @@ function AdminAuditContent() {
 				title={m.admin_audit_entries_section()}
 				badge={
 					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
-						{pagination.total}
+						{total}
 					</Badge>
 				}
 				contentClassName="p-0"
 			>
 				{auditContent}
 				<div className="border-border border-t p-3">
-					<SimplePagination
-						variant="admin"
-						currentPage={page}
-						totalPages={pagination.totalPages}
-						isLoading={isLoading}
-						onPageChange={setPage}
-					/>
+					<SimplePagination variant="admin" currentPage={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
 				</div>
 			</AdminSection>
 		</div>

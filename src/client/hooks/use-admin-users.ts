@@ -35,9 +35,9 @@ export function useAdminUsers(search: string, page = 1, limit = ADMIN_USERS_PAGE
 
 	return {
 		users: usersQuery.data?.data ?? [],
-		total: usersQuery.data?.pagination.total ?? 0,
-		totalPages: usersQuery.data?.pagination.totalPages ?? 1,
-		page: usersQuery.data?.pagination.page ?? page,
+		total: usersQuery.data?.total ?? 0,
+		totalPages: usersQuery.data?.totalPages ?? 0,
+		page: usersQuery.data?.page ?? page,
 		isLoading: usersQuery.isLoading,
 		error: usersQuery.error,
 		refetch: usersQuery.refetch,

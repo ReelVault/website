@@ -78,7 +78,7 @@ describe("query key factories", () => {
 
 describe("query helpers", () => {
 	it("emptyPagination keeps the requested limit", () => {
-		expect(emptyPagination(50)).toEqual({ total: 0, page: 1, limit: 50, totalPages: 1 });
+		expect(emptyPagination(50)).toEqual({ total: 0, page: 1, limit: 50, totalPages: 0 });
 	});
 });
 

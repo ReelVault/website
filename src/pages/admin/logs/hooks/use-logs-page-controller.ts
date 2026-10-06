@@ -42,7 +42,7 @@ export function useLogsPageController() {
 	const activeFile = filteredFiles.find((f) => f.id === selectedFileId) ?? filteredFiles[0] ?? files[0];
 	const effectiveFileId = activeFile ? activeFile.id : "";
 
-	const { logs, pagination, isLoading, isFetching, error, refetch } = useAdminLogs(
+	const { logs, total, totalPages, isLoading, isFetching, error, refetch } = useAdminLogs(
 		{
 			fileId: effectiveFileId,
 			level: selectedLevel,
@@ -133,7 +133,8 @@ export function useLogsPageController() {
 		cleanupLogs,
 		isCleaningUp,
 		logs,
-		pagination,
+		total,
+		totalPages,
 		isLoading,
 		isFetching,
 		error,

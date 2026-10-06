@@ -41,9 +41,12 @@ export function useAdminAudit(params: UseAdminAuditParams = {}) {
 		staleTime: 600_000,
 	});
 
+	const empty = emptyPagination(limit);
+
 	return {
 		entries: query.data?.data ?? [],
-		pagination: query.data?.pagination ?? emptyPagination(limit),
+		total: query.data?.total ?? empty.total,
+		totalPages: query.data?.totalPages ?? empty.totalPages,
 		isLoading: query.isLoading,
 		isFetching: query.isFetching,
 		error: query.error,

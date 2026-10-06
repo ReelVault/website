@@ -29,7 +29,7 @@ export function useAdminDashboardView() {
 			page: 1,
 			limit: query.data.libraries.length,
 			total: query.data.libraries.length,
-			totalPages: 1,
+			totalPages: query.data.libraries.length > 0 ? 1 : 0,
 			data: query.data.libraries,
 		});
 		queryClient.setQueryData(adminKeys.workerOperations({ page: 1, limit: 8, status: undefined }), query.data.operations);

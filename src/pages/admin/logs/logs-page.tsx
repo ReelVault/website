@@ -117,14 +117,14 @@ export default function AdminLogsPage() {
 						effectiveFileId={c.effectiveFileId}
 						viewMode={c.viewMode}
 						hasCopied={c.hasCopied}
-						totalEntries={c.pagination.total}
+						totalEntries={c.total}
 						isFullscreen={c.isFullscreen}
 						isDeleting={c.isDeleting}
 						isLoading={c.isLoading}
 						error={c.error}
 						logs={c.logs}
 						page={c.page}
-						totalPages={c.pagination.totalPages}
+						totalPages={c.totalPages}
 						onCopyRaw={() => detach(() => c.handleCopyRaw())}
 						onDeleteFile={(id) => detach(() => c.handleDeleteFile(id))}
 						onToggleFullscreen={() => c.setIsFullscreen((prev) => !prev)}
