@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { copyToClipboard } from "@/utils/clipboard-utils";
+import { translateByKey } from "@/utils/translate-error";
 
 function CopyBlock({ label, text }: { label: string; text: string }) {
 	return (
@@ -66,10 +67,7 @@ export function RemoteAccessCard() {
 				{checks.map((check) => (
 					<div key={check.id} className="flex items-start gap-2.5">
 						<CheckIcon ok={check.ok} />
-						<div className="min-w-0">
-							<p className="font-medium text-foreground text-sm">{check.title}</p>
-							<p className="text-muted-foreground text-xs">{check.detail}</p>
-						</div>
+						<p className="min-w-0 font-medium text-foreground text-sm">{translateByKey(check.code, check.params)}</p>
 					</div>
 				))}
 			</div>
