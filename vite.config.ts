@@ -39,10 +39,28 @@ const INDEX_HTML_ASSET = /index\.html$/;
 
 // Rolldown-native chunking (Vite 8): stable vendor groups, everything else
 // follows automatic chunking. First match wins — `ui-button` keeps the eager
-// graph (404/error screens) from pulling the whole @base-ui set via ui-core.
+// graph (404/error screens) from pulling the whole @base-ui set.
 // No "lucide" group on purpose: one merged icon chunk turned eager through the
 // two icons the 404/error screens use; per-chunk placement keeps icons with
 // their owners instead.
+const BASE_UI_COMPONENT_DIR = /node_modules[\\/]@base-ui[\\/]react[\\/]([^\\/]+)[\\/]/;
+
+// @base-ui sub-packages shared between primitives (floating-ui positioning,
+// prop merging, render helpers) — collapse them into one `ui-base` chunk rather
+// than duplicating them across every `ui-<primitive>` chunk.
+const BASE_UI_SHARED_DIRS = new Set([
+	"csp-provider",
+	"direction-provider",
+	"docs",
+	"floating-ui-react",
+	"internals",
+	"merge-props",
+	"types",
+	"unstable-use-media-query",
+	"use-render",
+	"utils",
+]);
+
 const CHUNK_GROUPS = [
 	{ name: "hls", test: /node_modules[\\/]hls\.js[\\/]/ },
 	{ name: "router", test: /node_modules[\\/]@tanstack[\\/]react-router[\\/]/ },
@@ -51,11 +69,22 @@ const CHUNK_GROUPS = [
 		name: "ui-button",
 		test: /node_modules[\\/]@base-ui[\\/]react[\\/]esm[\\/]button[\\/]|node_modules[\\/]@base-ui[\\/]react[\\/]button[\\/]/,
 	},
-	// react-dom must get its own group BEFORE ui-core — otherwise rolldown merges
-	// it into the @base-ui chunk and the whole component library turns eager
-	// (react-dom is imported by the shell, so ui-core would load on first paint).
+	// react-dom must get its own group BEFORE the base-ui groups — otherwise
+	// rolldown merges it into the @base-ui chunk and the whole component library
+	// turns eager (react-dom is imported by the shell, so ui-core would load on
+	// first paint).
 	{ name: "react-dom", test: /node_modules[\\/]react-dom[\\/]/ },
-	{ name: "ui-core", test: /node_modules[\\/]@base-ui[\\/]/ },
+	{
+		// One chunk per @base-ui primitive so a page pulls only the primitives it
+		// actually renders, instead of the whole component library through the
+		// first one it touches. Shared internals collapse into `ui-base`.
+		name: (moduleId: string) => {
+			const component = BASE_UI_COMPONENT_DIR.exec(moduleId)?.[1];
+
+			return component === undefined || BASE_UI_SHARED_DIRS.has(component) ? "ui-base" : `ui-${component}`;
+		},
+		test: /node_modules[\\/]@base-ui[\\/]/,
+	},
 	{ name: "i18n-runtime", test: /src[\\/]paraglide[\\/]runtime/ },
 	{ name: "vendor", test: /node_modules[\\/]react-dom[\\/]|node_modules[\\/]react[\\/]/ },
 ];
