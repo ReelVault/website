@@ -66,6 +66,17 @@ This release is dominated by collapsing per-view request waterfalls into server 
 - **Narrower admin list payloads** — the admin media list requests only the columns it renders (`?fields=`), skipping the widest `videoStreams`/`metadata` relation hydration.
 - **Cache seeding** — `useAdminUserFull` seeds the plain-user cache so the user-detail page reuses the row instead of fetching it a third time; `worker:progress` realtime ticks coalesce-invalidate the operations list rather than triggering per-event refetches.
 
+#### Retry, polling & build hygiene
+
+- **Bounded retries** — the SDK now retries transient failures once (`maxRetries: 3 → 1`) and React Query only retries what the SDK deems retryable (`ReelVaultError.retryable`); non-retryable 4xx (403/404/validation) settle on the first response instead of being retried.
+- **Admin stats polling** — `useAdminStats` no longer keeps every admin page on a flat 15 s interval: it polls at 15 s only while streams or worker jobs are active and backs off to 60 s when idle.
+- **Compression artifacts** — precompressed `.br`/`.gz` siblings are now emitted only for files ≥ 1 KB, and `index.html` is skipped (its siblings are never served — the page always goes through the injected body): **659 → 362** compressed files, total `dist/assets` **11 MB → 8.9 MB**.
+
+#### Startup bundle
+
+- **Navbar command palette deferred** — the cmdk-based search palette is now a lazy chunk mounted only on ≥1536px screens or when opened (Ctrl+K / the icon); the `web-layout` chunk every authenticated page loads dropped **26.9 KB → 8.4 KB** (brotli), and its 20.9 KB palette chunk is fetched on demand.
+- **Base-UI split per primitive** — the single 262 KB `ui-core` chunk (every `@base-ui` primitive in one file) is now one chunk per primitive, with shared positioning/prop-merging internals collapsed into `ui-base`, so a page pulls only what it renders. The shell's first-load graph dropped **367,189 B → 347,632 B** (brotli) and its base-ui payload **76,690 B → 56,763 B** (−26%). Trade-off: +22 lazy vendor chunks for finer, longer-lived caching.
+
 ### Performance benchmarks
 
 The table counts API requests fired by a cold open of each view (for the details page, requests beyond the composite it already calls). These are request-count and polling-frequency reductions, not timings.
@@ -79,6 +90,13 @@ The table counts API requests fired by a cold open of each view (for the details
 | Network | Collection drawer, 50 items — smart-play calls | 50 | 1 | **-98%** |
 | Network | Admin worker page — `getWorkers` pollers | 2 | 1 | **-50%** |
 | Polling | Worker processes — idle poll interval | 5 s | 30 s | **-83%** |
+| Polling | `admin/stats` — idle poll interval | 15 s | 60 s | **-75%** |
+| Network | Failing transient request — max attempts | 8 | 4 | **-50%** |
+| Network | Non-retryable 4xx request — attempts | 2 | 1 | **-50%** |
+| Build | Precompressed artifacts (`.br` + `.gz`) | 659 | 362 | **-45%** |
+| Bundle | `web-layout` chunk (every authenticated page) | 26.9 KB | 8.4 KB | **-69%** |
+| Bundle | Shell first-load graph (entry + layout, brotli) | 367,189 B | 347,632 B | **-5.3%** |
+| Bundle | Shell base-ui payload (brotli) | 76,690 B | 56,763 B | **-26%** |
 
 ### Additional measurements
 
@@ -88,3 +106,5 @@ The table counts API requests fired by a cold open of each view (for the details
 - Hero slides — smart-play requests: 5 fired one per rotation → 5 warmed once on mount, then read from cache.
 - i18n — 16 orphaned keys removed; new strings added 1:1 to `en.json` and `pl.json`.
 - Updates route — lazy chunk ~171 KB raw after adding `react-markdown`, `remark-gfm` and `remark-github-blockquote-alert`; off the eager graph, so the entry bundle is unaffected.
+- Dead code — removed the unused `app-tooltip.tsx` (single caller inlined), the redundant nested `QueryProvider` (the router is already inside a `QueryClientProvider`), `useThrottleDebounce` (folded into `useDebounce`) and dead exports (`applyAudioBoost`, `findPluginPage`, `useMetadataWatchlist`, `emptyMetadataForm`, `mediaKeys.markers`, `metadataKeys.watchlist`): net **−138 lines** across 32 files, 3 files deleted.
+- `react-doctor` score: **70** (threshold ≥ 70).
