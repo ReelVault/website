@@ -32,6 +32,7 @@
 - **Server-version gating** — `minServerVersion` is now `1.2.0` (the dashboard composite is 1.2-only); on an older server the dashboard shows an explicit update-required state instead of an endless skeleton, while the rest of the admin panel keeps working.
 - **Flat pagination envelopes** — admin hooks and pages read `{ page, limit, total, totalPages, data }` directly, matching the server's flat envelope.
 - **Subtitle → media-file links** — subtitle rows show a shortened `mediaFileId` that links to the media file page instead of an unreadable full id.
+- **Offline-capable app shell (PWA)** — a service worker precaches the app shell (HTML + icons) and runtime-caches the content-hashed JS/CSS chunks, so repeat loads are served from cache and the app opens without a connection. API, realtime and media/subtitle requests are never intercepted; the two-factor login/setup flows are unaffected. The web app is now installable with a correct `start_url`/`scope`.
 
 ### Fixes
 
@@ -95,6 +96,7 @@ This release is dominated by collapsing per-view request waterfalls into server 
 - **Finish-time clock** — the player formatted `Intl` on every playhead tick though the value only changes once a minute; the formatted string is now cached per minute.
 - **Equalizer config** — was re-read from `localStorage` (3 reads + `JSON.parse`) on every volume gesture/`pointermove`; now cached in memory and invalidated on save.
 - **Hero rotation** — skips its tick while the tab is hidden, so no state updates (or backdrop decoding) run offscreen.
+- **Offline shell** — a service worker serves the app from cache: the shell and icons are precached (8 entries / 42.3 KiB) and the content-hashed chunks are cached on first visit, so a repeat load re-downloads nothing but the revalidated `index.html`. Installing the worker does not download the ~4.5 MB app (JS is runtime-cached, not precached).
 
 ### Performance benchmarks
 
@@ -138,3 +140,5 @@ The table counts API requests fired by a cold open of each view (for the details
 - Player progress bar — renders per playhead tick: 2 → 1 (dropped the mirrored scrub state).
 - Player finish clock — `Intl` formatting runs once per minute instead of ~4×/s.
 - Player equalizer — `localStorage` reads + `JSON.parse` per volume gesture → 0 (cached).
+- Offline shell — service worker `sw.js` (1.6 KB) + `workbox-*.js` (21.9 KB), both build-only (off the app bundle); precache is 8 entries / 42.3 KiB and install never downloads the JS chunks.
+- Repeat load — content-hashed chunks are served from the service-worker cache; only `index.html` is revalidated (`no-cache`).
