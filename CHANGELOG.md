@@ -156,6 +156,12 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 # v1.2.1
 
+### Features
+
+- **Trickplay storage usage** — Admin → Trickplay adds a `used / budget` card (core artifact bytes vs `system.artifacts.coreMaxStorageGb`), so the preview storage budget is visible next to the coverage counts.
+
 ### Fixes
 
+- **Admin libraries page crash** — the dashboard composite seeded the admin libraries cache with objects whose `paths`/stats were stripped by the response schema, so the page threw `can't access property "length", e.paths is undefined` on first render. The dashboard contract now returns full library relations (and the dashboard storage breakdown gets real counts/sizes).
 - **Core artifact storage setting** — Admin → Settings → Trickplay now exposes `system.artifacts.coreMaxStorageGb` (`0` = automatic, 5% of the artifacts volume clamped to 5–100 GB). It caps preview sprites and other server-generated artifacts after they stopped being charged against the per-plugin artifact quota, so large libraries no longer stop generating trickplay at 512 MB.
+- **Scan trickplay operations** — a library scan no longer creates one trickplay operation per file; all files from a scan join one active operation per library.
