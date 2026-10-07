@@ -1,10 +1,11 @@
-import type { ClientCapabilities, PlaybackCommand, PlaybackSession } from "@reelvault/sdk";
+import type { ClientCapabilities, MyPlaybackSessionsResponse, PlaybackCommand, PlaybackSession } from "@reelvault/sdk";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
 import { safeUuid } from "@/utils/id-utils";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
+import { pollWhile } from "../utils/poll-while";
 import { playbackSessionKeys } from "../utils/query-keys";
 import { realtimeConnection } from "./use-realtime";
 
@@ -191,7 +192,14 @@ export function useMyPlaybackSessions(options?: { refetchInterval?: number }) {
 	return useQuery({
 		queryKey: playbackSessionKeys.mine(),
 		queryFn: () => reelvault.playbackSessions.listMine(),
-		refetchInterval: options?.refetchInterval ?? 15_000,
+		// Realtime `playback:session:started/ended` events refresh the list, so the
+		// poll only needs to be fast while a session is actually running; back off
+		// when the list is empty.
+		refetchInterval: pollWhile<MyPlaybackSessionsResponse>({
+			isActive: (data) => (data?.sessions.length ?? 0) > 0,
+			activeMs: options?.refetchInterval ?? 15_000,
+			idleMs: 60_000,
+		}),
 		refetchIntervalInBackground: false,
 	});
 }
