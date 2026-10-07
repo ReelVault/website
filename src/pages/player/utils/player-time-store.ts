@@ -19,24 +19,33 @@ export interface PlayerTimeStore {
 	setDuration: (duration: number) => void;
 }
 
-// Same formatting as the previous getFinishTime() in the controller — do not
-// clamp remaining time (negative remaining intentionally renders a past time).
-const formatFinishTime = (remainingSeconds: number): string => {
-	const finishDate = new Date(Date.now() + remainingSeconds * 1000);
-
-	return finishDate.toLocaleTimeString(getLocaleTag(), { hour: "2-digit", minute: "2-digit" });
-};
-
 export function createPlayerTimeStore(initialDuration = 0): PlayerTimeStore {
 	let duration = initialDuration;
 	let currentTime = 0;
+	// The finish clock only changes once a minute, but commit() runs ~4x/s; cache
+	// the formatted string and re-run Intl only when the minute bucket rolls over.
+	// Same formatting as the previous getFinishTime() — do not clamp remaining time
+	// (a negative remaining intentionally renders a past time).
+	let lastFinishMinute = Number.NaN;
+	let lastFinishTime = "";
+	const finishTimeFor = (remainingSeconds: number): string => {
+		const finishMs = Date.now() + remainingSeconds * 1000;
+		const minute = Math.floor(finishMs / 60_000);
+		if (minute !== lastFinishMinute) {
+			lastFinishMinute = minute;
+			lastFinishTime = new Date(finishMs).toLocaleTimeString(getLocaleTag(), { hour: "2-digit", minute: "2-digit" });
+		}
+
+		return lastFinishTime;
+	};
+
 	// remaining = duration - currentTime = duration at position 0 — matches the
 	// controller's previous getFinishTime() output before the first tick.
-	let snapshot: PlayerTimeSnapshot = { currentTime: 0, finishTime: formatFinishTime(initialDuration) };
+	let snapshot: PlayerTimeSnapshot = { currentTime: 0, finishTime: finishTimeFor(initialDuration) };
 	const listeners = new Set<() => void>();
 
 	const commit = () => {
-		snapshot = { currentTime, finishTime: formatFinishTime(duration - currentTime) };
+		snapshot = { currentTime, finishTime: finishTimeFor(duration - currentTime) };
 		for (const listener of listeners) listener();
 	};
 
