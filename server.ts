@@ -34,7 +34,10 @@ const HEAD_TAG = "<head>";
 const API_ORIGIN_META_TAG = '<meta name="reelvault-api-origin" content="same-origin">';
 
 /** Files that must never be served from a stale cache (update checks read them). */
-const NO_CACHE_FILES = new Set(["version.json"]);
+const NO_CACHE_FILES = new Set(["version.json", "sw.js", "registerSW.js"]);
+// Workbox runtime file is content-hashed (`workbox-<hash>.js`) — must not be
+// cached long-term or the service worker can keep loading a stale runtime.
+const NO_CACHE_PREFIXES = ["workbox-"];
 
 let indexBody: Promise<string> | undefined;
 
@@ -145,7 +148,7 @@ Bun.serve({
 				// version.json is polled for update checks; an hour of caching
 				// would keep showing the previous version after a deploy.
 				let cacheControl: string;
-				if (NO_CACHE_FILES.has(fileName)) {
+				if (NO_CACHE_FILES.has(fileName) || NO_CACHE_PREFIXES.some((prefix) => fileName.startsWith(prefix))) {
 					cacheControl = "no-cache";
 				} else if (isHashedAsset) {
 					cacheControl = "public, max-age=31536000, immutable";
