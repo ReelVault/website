@@ -1266,6 +1266,8 @@
 	"admin_settings_allowed_urls_description": "Lista dodatkowych adresów URL lub masek wieloznacznych (np. http://*.ts:*, https://mojadomena.pl, http://reelvault.lan:3000), które mogą łączyć się z serwerem i autoryzować sesje.",
 	"admin_settings_analytics_window_days": "Okno analityki",
 	"admin_settings_analytics_window_days_description": "Domyślny zakres (dni) widoku „Cała historia” analityki admina.",
+	"admin_settings_artifacts_core_max_storage_gb": "Limit pamięci artefaktów serwera (GB)",
+	"admin_settings_artifacts_core_max_storage_gb_description": "Ogranicza sprite’y podglądu i inne artefakty generowane przez sam serwer. 0 = automatycznie (5% pojemności wolumenu artefaktów, w przedziale 5–100 GB).",
 	"admin_settings_auto_next_at_credits": "Automatyczne przechodzenie do kolejnego materiału przy napisach końcowych.",
 	"admin_settings_auto_skip_intro": "Automatyczne przeskakiwanie intro na podstawie wykrytych znaczników.",
 	"admin_settings_auto_skip_recap": "Automatyczne pomijanie skrótu poprzednich odcinków.",

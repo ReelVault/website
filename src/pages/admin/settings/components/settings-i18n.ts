@@ -415,6 +415,12 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		description: m.admin_settings_trickplay_columns_description(),
 	},
 
+	// ==================== CORE ARTIFACTS ====================
+	"system.artifacts.coreMaxStorageGb": {
+		label: m.admin_settings_artifacts_core_max_storage_gb(),
+		description: m.admin_settings_artifacts_core_max_storage_gb_description(),
+	},
+
 	// ==================== MARKERS ====================
 	"markers.introKeywords": {
 		label: m.admin_settings_markers_intro_keywords(),

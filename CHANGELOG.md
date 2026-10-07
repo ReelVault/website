@@ -153,3 +153,9 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - Player next-episode — season/episode map + sort runs only when its inputs change.
 - Offline shell — `sw.js` (1.6 KB) + `workbox-*.js` (21.9 KB) are build-only; precache is 8 entries / 42.3 KiB and installation never downloads JS chunks.
 - Repeat load — content-hashed chunks are served from the service-worker cache; only `index.html` is revalidated.
+
+# v1.2.1
+
+### Fixes
+
+- **Core artifact storage setting** — Admin → Settings → Trickplay now exposes `system.artifacts.coreMaxStorageGb` (`0` = automatic, 5% of the artifacts volume clamped to 5–100 GB). It caps preview sprites and other server-generated artifacts after they stopped being charged against the per-plugin artifact quota, so large libraries no longer stop generating trickplay at 512 MB.
