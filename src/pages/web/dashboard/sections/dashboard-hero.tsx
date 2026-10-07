@@ -30,17 +30,17 @@ export default function DashboardHero() {
 	useEffect(() => {
 		if (!slideIds) return;
 		detach(async () => {
-			for (const metadataId of slideIds.split(",")) {
-				try {
-					await queryClient.query({
+			// One parallel wave — a serial loop made each later slide wait for the
+			// previous request's full round-trip on slow links.
+			await Promise.allSettled(
+				slideIds.split(",").map((metadataId) =>
+					queryClient.query({
 						queryKey: mePlaybackKeys.suggestions(metadataId),
 						queryFn: () => reelvault.me.getPlaybackSuggestions(metadataId),
 						staleTime: 5 * 60 * 1000,
-					});
-				} catch {
-					// Best-effort warm — the slide's own hook refetches on miss.
-				}
-			}
+					}),
+				),
+			);
 		});
 	}, [queryClient, slideIds]);
 
