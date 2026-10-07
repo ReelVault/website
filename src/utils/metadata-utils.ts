@@ -16,7 +16,8 @@ export function getMetadataBackdrop(item?: MetadataImageHolder | null) {
 	return item?.images?.find((img) => img.imageType === "backdrop")?.data;
 }
 
-const IMAGE_ID_URL_REGEX = /\/api\/images\/([^/]+)/;
+/** Server image URLs are `/v1/images/<id>`; accept a version prefix so a future v2 keeps working. */
+const IMAGE_ID_URL_REGEX = /\/v\d+\/images\/([^/?#]+)/;
 
 export function extractFileIdFromUrl(url: string | null | undefined): string | null {
 	if (!url) return null;
