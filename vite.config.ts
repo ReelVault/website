@@ -33,6 +33,10 @@ function webVersionPlugin(): Plugin {
 // them by Accept-Encoding so LAN/WAN clients never see uncompressed JS.
 const COMPRESSIBLE_ASSETS = /\.(js|mjs|css|html|svg|json|txt|vtt)$/;
 
+// index.html is always served through the injected body in server.ts, so its
+// .br/.gz siblings are never read — skip compressing it.
+const INDEX_HTML_ASSET = /index\.html$/;
+
 // Rolldown-native chunking (Vite 8): stable vendor groups, everything else
 // follows automatic chunking. First match wins — `ui-button` keeps the eager
 // graph (404/error screens) from pulling the whole @base-ui set via ui-core.
@@ -70,6 +74,11 @@ export default defineConfig(({ mode }) => {
 			tailwindcss(),
 			compression({
 				include: [COMPRESSIBLE_ASSETS],
+				// Skip tiny files (compression saves nothing and doubles the artifact
+				// count) and index.html — it is always served through the injected
+				// body in server.ts, so its .br/.gz siblings are never read.
+				threshold: 1024,
+				exclude: [INDEX_HTML_ASSET],
 			}),
 			paraglideVitePlugin({
 				project: "./project.inlang",
