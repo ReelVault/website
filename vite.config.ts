@@ -6,6 +6,7 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import { compression } from "vite-plugin-compression2";
+import { VitePWA } from "vite-plugin-pwa";
 
 /**
  * Writes the web client version into the build output. The server reads this
@@ -36,6 +37,10 @@ const COMPRESSIBLE_ASSETS = /\.(js|mjs|css|html|svg|json|txt|vtt)$/;
 // index.html is always served through the injected body in server.ts, so its
 // .br/.gz siblings are never read — skip compressing it.
 const INDEX_HTML_ASSET = /index\.html$/;
+
+// Service-worker routing patterns (top-level so Biome's useTopLevelRegex is happy).
+const PWA_NAVIGATE_FALLBACK_DENYLIST = [/^\/api/, /^\/v1/, /^\/realtime/];
+const PWA_ASSET_URL_PATTERN = /\/assets\//;
 
 // Rolldown-native chunking (Vite 8): stable vendor groups, everything else
 // follows automatic chunking. First match wins — `ui-button` keeps the eager
@@ -116,6 +121,33 @@ export default defineConfig(({ mode }) => {
 				// per translated message (3300+ keys), which pages then pull through a
 				// 100+ request dynamic-import waterfall.
 				outputStructure: "locale-modules",
+			}),
+			// Offline / repeat-load app shell. Precache only the HTML and static icons;
+			// the content-hashed JS/CSS chunks are cached at runtime as they are
+			// visited (precaching all ~350 chunks would download the whole app on
+			// install). Never intercept API, realtime or media requests.
+			VitePWA({
+				registerType: "autoUpdate",
+				injectRegister: "auto",
+				// The project ships its own manifest (public/site.webmanifest).
+				manifest: false,
+				workbox: {
+					globPatterns: ["**/*.{html,ico,png,svg,webmanifest}"],
+					navigateFallback: "/",
+					navigateFallbackDenylist: PWA_NAVIGATE_FALLBACK_DENYLIST,
+					cleanupOutdatedCaches: true,
+					runtimeCaching: [
+						{
+							urlPattern: PWA_ASSET_URL_PATTERN,
+							handler: "CacheFirst",
+							options: {
+								cacheName: "reelvault-assets",
+								expiration: { maxEntries: 400, maxAgeSeconds: 60 * 60 * 24 * 365 },
+								cacheableResponse: { statuses: [0, 200] },
+							},
+						},
+					],
+				},
 			}),
 			tanstackRouter({
 				routesDirectory: "./src/routes",
