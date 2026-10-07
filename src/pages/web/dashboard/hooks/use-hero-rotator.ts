@@ -12,6 +12,11 @@ export function useHeroRotator({ length, delay = 10000 }: { length: number; dela
 		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 		if (!prefersReducedMotion && length > 1) {
 			timerRef.current = setInterval(() => {
+				// Skip the advance while the tab is hidden — an offscreen hero does not
+				// need to keep cycling (and decoding backdrops); browsers throttle the
+				// timer in the background anyway, and the next visible tick resumes it.
+				if (document.hidden) return;
+
 				setCurrent((prev) => (prev + 1) % length);
 			}, delay);
 		}
