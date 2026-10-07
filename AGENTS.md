@@ -23,6 +23,18 @@ bun run test
 - Report what you ran and the outcome. Do not claim a check passed unless you actually ran it.
 - Changed React components/hooks → also run `npx react-doctor@latest -y --score`; the score must stay ≥70. Debug findings: `bunx react-doctor@latest why <file:line>`, `bunx react-doctor@latest rules explain <rule>`.
 
+## Changelog (MANDATORY)
+- Update `CHANGELOG.md` in the same task as any behavior change, under the current unreleased version heading (`# vX.Y.Z`).
+- Sections and their intent:
+  - `### Features` — user-facing functionality and API changes.
+  - `### Fixes` — concrete bugs and their causes.
+  - `### Performance` — what was optimized, as prose/bullets. Keep smaller measurements and request counts inline in the change description; do not turn every change into a table row.
+  - `### Performance benchmarks` — a short table of only the most important, actually measurable A/B results (`Before` / `After` / `Change`), with the measurement context.
+  - `### Additional measurements` — optional compact bullet list of smaller results that do not warrant a table row.
+- No `### Internal` section — refactors and tooling without user-visible or measurable impact are not logged.
+- Write entries in English, without commit hashes.
+- Never a bare "improved performance": every claimed change carries measured before/after numbers (bundle size and chunk counts from `bun run build` → `dist/`, API request counts per view, or the `react-doctor` score); include regressions.
+
 ## Forbidden: silencing tools
 Never suppress a problem instead of fixing it. No linter blocks these, so YOU must not:
 - Suppression comments: `// biome-ignore`, `// oxlint-disable`, `@ts-ignore`, `@ts-expect-error`, `@ts-nocheck`.
