@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, Clapperboard, Film, RefreshCw, Wand2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clapperboard, Film, HardDrive, RefreshCw, Wand2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useGenerateAllTrickplay, useTrickplayStats } from "@/client/hooks/use-admin-trickplay";
 import { AppErrorState, AppLoadingState } from "@/components/app-states";
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { formatFileSize } from "@/utils/file-utils";
 
 export default function AdminTrickplayPage() {
 	const { stats, isLoading, isFetching, error, refetch } = useTrickplayStats();
@@ -23,6 +24,13 @@ export default function AdminTrickplayPage() {
 					icon: AlertTriangle,
 					tone: "warning" as const,
 				},
+				{
+					key: "storage",
+					label: m.admin_trickplay_storage(),
+					value: `${formatFileSize(stats.storageBytes)} / ${formatFileSize(stats.storageBudgetBytes)}`,
+					icon: HardDrive,
+					tone: "muted" as const,
+				},
 			]
 		: [];
 
@@ -33,7 +41,7 @@ export default function AdminTrickplayPage() {
 		content = <AppErrorState error={error} onRetry={() => detach(refetch())} />;
 	} else {
 		content = (
-			<div className="grid gap-3 sm:grid-cols-3">
+			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				{cards.map((card) => (
 					<AdminStatCard key={card.key} label={card.label} value={card.value} icon={card.icon} tone={card.tone} />
 				))}

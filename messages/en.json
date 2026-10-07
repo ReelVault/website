@@ -1569,6 +1569,7 @@
 	"admin_trickplay_hint": "Trickplay files are generated automatically for new media when the feature is enabled in settings. Use the button above to backfill files that are still missing previews.",
 	"admin_trickplay_missing": "Missing previews",
 	"admin_trickplay_section_description": "Background preview coverage across the library.",
+	"admin_trickplay_storage": "Artifact storage (used / budget)",
 	"admin_trickplay_total": "Media files",
 	"admin_trickplay_with": "With previews",
 	"admin_updates_both_available": " (a new web UI version is available too)",

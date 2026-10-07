@@ -1575,6 +1575,7 @@
 	"admin_trickplay_hint": "Pliki trickplay są generowane automatycznie dla nowych mediów, gdy funkcja jest włączona w ustawieniach. Użyj przycisku powyżej, aby dogenerować brakujące podglądy.",
 	"admin_trickplay_missing": "Bez podglądu",
 	"admin_trickplay_section_description": "Pokrycie podglądami w całej bibliotece (praca w tle).",
+	"admin_trickplay_storage": "Pamięć artefaktów (zużycie / budżet)",
 	"admin_trickplay_total": "Pliki mediów",
 	"admin_trickplay_with": "Z podglądem",
 	"admin_updates_both_available": " (dostępna jest też nowa wersja interfejsu)",
