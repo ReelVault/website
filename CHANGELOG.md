@@ -96,6 +96,7 @@ This release is dominated by collapsing per-view request waterfalls into server 
 - **Finish-time clock** — the player formatted `Intl` on every playhead tick though the value only changes once a minute; the formatted string is now cached per minute.
 - **Equalizer config** — was re-read from `localStorage` (3 reads + `JSON.parse`) on every volume gesture/`pointermove`; now cached in memory and invalidated on save.
 - **Hero rotation** — skips its tick while the tab is hidden, so no state updates (or backdrop decoding) run offscreen.
+- **Next-episode lookup** — the player's season/episode sort (up to 500 episodes) moved out of an inline per-render closure into a pure module-level function, so React Compiler memoizes it; it now recomputes only when the seasons/episodes data or the current episode changes instead of on every player render.
 - **Offline shell** — a service worker serves the app from cache: the shell and icons are precached (8 entries / 42.3 KiB) and the content-hashed chunks are cached on first visit, so a repeat load re-downloads nothing but the revalidated `index.html`. Installing the worker does not download the ~4.5 MB app (JS is runtime-cached, not precached).
 
 ### Performance benchmarks
@@ -140,5 +141,6 @@ The table counts API requests fired by a cold open of each view (for the details
 - Player progress bar — renders per playhead tick: 2 → 1 (dropped the mirrored scrub state).
 - Player finish clock — `Intl` formatting runs once per minute instead of ~4×/s.
 - Player equalizer — `localStorage` reads + `JSON.parse` per volume gesture → 0 (cached).
+- Player next-episode — season/episode map + sort over up to 500 episodes: every render → only when data/current episode changes.
 - Offline shell — service worker `sw.js` (1.6 KB) + `workbox-*.js` (21.9 KB), both build-only (off the app bundle); precache is 8 entries / 42.3 KiB and install never downloads the JS chunks.
 - Repeat load — content-hashed chunks are served from the service-worker cache; only `index.html` is revalidated (`no-cache`).
