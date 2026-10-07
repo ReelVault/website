@@ -7,6 +7,18 @@ import { reelvault } from "../client";
 import { adminKeys } from "../utils/query-keys";
 
 /**
+ * Human-readable labels for the states of a running update install job. Shared
+ * by the updates page and the dashboard update card so the two stay in sync.
+ */
+export const UPDATE_JOB_STATE_LABELS: Record<string, () => string> = {
+	downloading: m.admin_updates_job_downloading,
+	verifying: m.admin_updates_job_verifying,
+	extracting: m.admin_updates_job_extracting,
+	swapping: m.admin_updates_job_swapping,
+	restarting: m.admin_updates_job_restarting,
+};
+
+/**
  * Version + update status of the server and web UI. While an install job is
  * running the query polls every 2 s; the server disappears during the restart,
  * so the refetch failures in that window are expected and the UI shows the

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpCircle, CheckCircle2, Monitor, Server } from "lucide-react";
 import type { ReactNode } from "react";
-import { useAdminUpdate } from "@/client/hooks/use-admin-update";
+import { UPDATE_JOB_STATE_LABELS, useAdminUpdate } from "@/client/hooks/use-admin-update";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Badge } from "@/components/ui/badge";
@@ -9,14 +9,6 @@ import { SkeletonList } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
-
-const JOB_STATE_LABELS: Record<string, () => string> = {
-	downloading: m.admin_updates_job_downloading,
-	verifying: m.admin_updates_job_verifying,
-	extracting: m.admin_updates_job_extracting,
-	swapping: m.admin_updates_job_swapping,
-	restarting: m.admin_updates_job_restarting,
-};
 
 /**
  * Compact dashboard card: current server/UI versions and a prominent CTA when
@@ -42,7 +34,7 @@ export function DashboardUpdateStatus() {
 				<span className="font-medium text-foreground">
 					{m.admin_updates_job_state_label({
 						component: status.job.target === "server" ? m.admin_updates_server_component() : m.admin_updates_web_component(),
-						state: JOB_STATE_LABELS[status.job.state]?.() ?? status.job.state,
+						state: UPDATE_JOB_STATE_LABELS[status.job.state]?.() ?? status.job.state,
 					})}
 				</span>
 			</div>

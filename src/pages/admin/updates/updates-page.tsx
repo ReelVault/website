@@ -2,7 +2,7 @@ import type { AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpCircle, ChevronDown, ExternalLink, History, Info, Monitor, RefreshCw, Server } from "lucide-react";
 import type { ReactNode } from "react";
-import { useAdminUpdate } from "@/client/hooks/use-admin-update";
+import { UPDATE_JOB_STATE_LABELS, useAdminUpdate } from "@/client/hooks/use-admin-update";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { MarkdownText } from "@/components/markdown-text";
@@ -14,21 +14,13 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
-const JOB_STATE_LABELS: Record<string, () => string> = {
-	downloading: m.admin_updates_job_downloading,
-	verifying: m.admin_updates_job_verifying,
-	extracting: m.admin_updates_job_extracting,
-	swapping: m.admin_updates_job_swapping,
-	restarting: m.admin_updates_job_restarting,
-};
-
 function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
 	const isServer = target === "server";
 	if (status.job?.target === target) {
 		return (
 			<Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
 				<RefreshCw className="size-3 animate-spin" />
-				{JOB_STATE_LABELS[status.job.state]?.() ?? status.job.state}
+				{UPDATE_JOB_STATE_LABELS[status.job.state]?.() ?? status.job.state}
 			</Badge>
 		);
 	}
@@ -183,7 +175,7 @@ function JobCard({ status }: { status: AdminUpdateStatus }) {
 			<div className="flex items-center justify-between text-sm">
 				<span className="flex items-center gap-2 font-medium">
 					<RefreshCw className="size-4 animate-spin text-primary" />
-					{m.admin_updates_job_state_label({ component: targetLabel, state: JOB_STATE_LABELS[job.state]?.() ?? job.state })}
+					{m.admin_updates_job_state_label({ component: targetLabel, state: UPDATE_JOB_STATE_LABELS[job.state]?.() ?? job.state })}
 					{job.message ? <span className="text-muted-foreground">{m.admin_updates_job_message({ message: job.message })}</span> : null}
 				</span>
 				<span className="text-muted-foreground tabular-nums">{m.common_percent_value({ value: job.progressPercent })}</span>

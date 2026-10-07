@@ -7,12 +7,11 @@ import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
 import { pollWhile } from "../utils/poll-while";
 import { adminKeys, mediaKeys, mePlaybackKeys, metadataKeys } from "../utils/query-keys";
+import { TERMINAL_OPERATION_STATUSES } from "../utils/worker-status";
 
 export type AdminMediaFileSortBy = NonNullable<MediaFileSorting["sortBy"]>;
 
 const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
-
-const TERMINAL_OPERATION_STATUSES = new Set(["completed", "failed", "cancelled"]);
 
 interface UseAdminMediaFilesParams {
 	page?: number;

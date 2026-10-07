@@ -7,9 +7,9 @@ import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { pollWhile } from "../utils/poll-while";
 import { adminKeys } from "../utils/query-keys";
+import { TERMINAL_OPERATION_STATUSES } from "../utils/worker-status";
 
 const ACTIVE_OPERATION_STATUSES = new Set(["pending", "running", "queued"]);
-const TERMINAL_OPERATION_STATUSES = new Set(["completed", "failed", "cancelled"]);
 
 export function invalidateWorkerQueries(queryClient: QueryClient, operationId?: string) {
 	return Promise.all([
