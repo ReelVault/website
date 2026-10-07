@@ -448,6 +448,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_scanning_ignore_patterns(),
 		description: m.admin_settings_scanning_ignore_patterns_description(),
 	},
+	"scanning.scheduledScanIntervalHours": {
+		label: m.admin_settings_scanning_scheduled_scan(),
+		description: m.admin_settings_scanning_scheduled_scan_description(),
+	},
 	"plugins.http.allowedDomains": {
 		label: m.admin_settings_plugins_allowed_domains(),
 		description: m.admin_settings_plugins_allowed_domains_description(),

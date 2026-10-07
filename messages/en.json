@@ -1457,6 +1457,8 @@
 	"admin_settings_scanning_formats": "Library scanning and format support",
 	"admin_settings_scanning_ignore_patterns": "Ignore patterns",
 	"admin_settings_scanning_ignore_patterns_description": "Wildcards (*, ?) matched against file names and scan-relative paths — matching files or folders are skipped.",
+	"admin_settings_scanning_scheduled_scan": "Periodic library rescan (hours)",
+	"admin_settings_scanning_scheduled_scan_description": "Rescans every library every N hours — a safety net for network shares where file watching is unreliable. 0 disables it.",
 	"admin_settings_scanning_video_extensions": "Supported video extensions",
 	"admin_settings_scanning_video_extensions_description": "Containers treated as media candidates during scans.",
 	"admin_settings_scanning_watcher_cooldown": "Watcher cooldown",
