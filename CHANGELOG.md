@@ -22,84 +22,90 @@
 
 # v1.2.0
 
-### Features
+## Features
 
 - **Admin dashboard composite view** — the dashboard now loads from a single `GET /admin/dashboard-view`; its response seeds the stats, libraries, worker-operations, audit-feed, error-log and update-status caches with their exact keys before their sections mount, so those sections issue no fetches of their own.
 - **Localized remote-access checks** — the remote-access card renders each check through `translateByKey(check.code, check.params)` from the server's structured `{ id, ok, code, params }` result; every `remote_access_*` code has matching `en`/`pl` messages.
-- **Markdown release notes** — the updates page renders release notes through a new `MarkdownText` component (react-markdown + GFM + GitHub alert blocks) inside a collapsible section.
-- **URL-driven admin state** — the settings tab (`?tab=`), user search and paging (`?q=`, `?page=`), all eight audit filters, subtitle filters (`?type`, `?language`, `?q`, `?page=`) with an All/Embedded/External KPI strip, worker tabs (`?tab=`, `?status`, `?page`), and collections/companies/taxonomy paging now live in the URL, so views are linkable and survive reloads.
-- **Redesigned admin resources page** — the resource history is a hand-rolled SVG chart (CPU/RAM/disk in theme tokens) with a hover tooltip showing exact values and per-sample active-worker counts, 24h aggregates and alert values against their thresholds; the rescue state becomes a prominent banner and the page uses semantic tokens throughout.
-- **Server-version gating** — `minServerVersion` is now `1.2.0` (the dashboard composite is 1.2-only); on an older server the dashboard shows an explicit update-required state instead of an endless skeleton, while the rest of the admin panel keeps working.
-- **Flat pagination envelopes** — admin hooks and pages read `{ page, limit, total, totalPages, data }` directly, matching the server's flat envelope.
-- **Subtitle → media-file links** — subtitle rows show a shortened `mediaFileId` that links to the media file page instead of an unreadable full id.
-- **Offline-capable app shell (PWA)** — a service worker precaches the app shell (HTML + icons) and runtime-caches the content-hashed JS/CSS chunks, so repeat loads are served from cache and the app opens without a connection. API, realtime and media/subtitle requests are never intercepted; the two-factor login/setup flows are unaffected. The web app is now installable with a correct `start_url`/`scope`.
+- **Markdown release notes** — the updates page now renders release notes through `MarkdownText` with react-markdown, GFM and GitHub alert blocks inside a collapsible section.
+- **URL-driven admin state** — settings, user search/paging, audit filters, subtitle filters, worker tabs/filters/paging, and collections/companies/taxonomy paging now live in the URL, making views linkable and preserving state across reloads.
+- **Redesigned admin resources page** — resource history now uses a hand-rolled SVG chart for CPU/RAM/disk with theme tokens, exact-value tooltips, active-worker counts, 24h aggregates and threshold alerts; rescue state is shown as a prominent banner.
+- **Server-version gating** — `minServerVersion` is now `1.2.0`; older servers show an explicit update-required state instead of an endless skeleton, while the rest of the admin panel remains usable.
+- **Flat pagination envelopes** — admin hooks and pages now read `{ page, limit, total, totalPages, data }` directly from the server response.
+- **Subtitle → media-file links** — subtitle rows show a shortened `mediaFileId` linking to the media-file page.
+- **Offline-capable app shell (PWA)** — a service worker precaches the app shell and icons, runtime-caches content-hashed JS/CSS chunks, and allows repeat loads to work without a connection. API, realtime and media/subtitle requests are never intercepted, and the web app is installable with the correct `start_url`/`scope`.
+"""
 
-### Fixes
+## Fixes
 
-- **Quick Connect codes could not be entered** — the login page masked codes as `####-####` while the Quick Connect page used the canonical `XXX-XXX`, so a real six-character code could never be typed there; both surfaces now share `formatQuickConnectCode`, and the duplicated `getFormValue` helper moved to `form-utils`.
-- **A user pause did not survive reloads** — the controller now records the last explicit play/pause decision (`userPlayIntentRef`) and gates every delayed or automatic play path (initial-resume seeks, `canplay` autoplay, the 200 ms surface-click toggle, remote commands) on it. The toggle decides at click time, and `wasPlayingBeforeReload` is consumed once so a later `canplay` (for example after `recoverMediaError`) cannot replay a long-paused stream.
-- **Next-episode could vanish on long shows** — the 50-episode slice was sorted by episode number only, so the deepest-watched episode (the one continue-watching resumes) fell outside it and `nextEpisode` resolved to `null`, hiding the skip button. The lookup now fetches up to the server maximum (500), links out through the default file, and matches the current episode against all of its files.
-- **The episodes drawer truncated seasons** — requesting no explicit limit let the server's default page size (20) silently cut a season short; the drawer now asks for 500, re-anchors on the watched season every time it opens, and scrolls to the current episode only after the list has rendered. Picking an episode publishes the play intent, so the controller (which survives the route navigation) does not keep the next episode paused.
-- **Library search dropped letters mid-typing** — updating the search term inside `startTransition` let React revert the controlled input to its last committed value while a transition was pending; the wrap is gone and the debounce matches the app-wide 500 ms.
-- **The collections/taxonomy pager failed to navigate** — `useNavigate` `from` resolves against URL paths, not the pathless `_web` layout ids; the calls now use URL paths and the taxonomy page parameter is defaulted.
-- **Hardcoded UI strings** — user-visible Polish literals (company taxonomy label, collection name fallback, Quick Connect redeem placeholder, authorizing label) and English leaks (poster alt, navbar aria-label, seek tooltips, mobile season pills, transcode-limit fragment) now go through paraglide keys.
-- **Off-palette colors** — rating, compatibility and status accents, plugin colors, metadata-fallback highlights and the log viewer's file selection/level badges now use semantic tokens instead of raw palette classes.
-- **Inverted API-keys hierarchy** — the API-keys header rendered inside an `AdminSection` card and the `api-keys` segment was missing from `RESOURCE_KEYS`, so the breadcrumb fell back to Dashboard; the header now sits above the section with a correct breadcrumb.
+### Playback
 
-### Performance
+- **Quick Connect codes** — login and Quick Connect now share `formatQuickConnectCode`, so both surfaces use the canonical `XXX-XXX` format; the duplicated `getFormValue` helper was moved to `form-utils`.
+- **User pause state** — explicit play/pause intent now survives reloads and gates delayed or automatic playback paths, preventing a later `canplay` or media-error recovery from unexpectedly resuming a paused stream.
+- **Next episode on long shows** — the lookup now uses up to the server maximum (500), follows the default file and matches the current episode against all of its files.
+- **Episodes drawer** — seasons are no longer truncated by the server's default page size; it requests up to 500 episodes, re-anchors on the watched season and scrolls after rendering. Selecting an episode also publishes the play intent.
 
-This release is dominated by collapsing per-view request waterfalls into server composites, plus a few polling and payload reductions. Request counts are per cold open of the view.
+### Admin & navigation
 
-#### Composite views
+- **Library search** — removing `startTransition` from the controlled search input prevents letters from disappearing while typing; the debounce remains the app-wide 500 ms.
+- **Collections/taxonomy pager** — navigation now uses URL paths instead of pathless `_web` layout IDs, and the taxonomy page parameter has a default.
+- **Translations** — remaining hardcoded Polish/English UI strings now use paraglide keys.
+- **Colors** — rating, compatibility, status, plugin, metadata-fallback and log-viewer accents now use semantic tokens instead of raw palette classes.
+- **API-keys hierarchy** — the header now sits outside the `AdminSection` card and `api-keys` is included in `RESOURCE_KEYS`, fixing the breadcrumb fallback to Dashboard.
 
-- **Admin dashboard** — one `GET /admin/dashboard-view` replaces the six requests the page fired on mount (stats, libraries, worker operations, audit feed, error logs, update status) and seeds each consumer's cache with its exact key.
-- **Player** — progress, markers, subtitles and the full media-file row ride the single playback view instead of four parallel fetches; the page and the controller read the same query.
-- **Details** — seasons and their full episode lists come from the details-view composite, so the separate seasons fetch and the infinite episode paging (with its skeleton and "load more" control) are gone; the play button consumes `view.smartPlay`.
-- **Watchlist** — `GET /me/watchlist?hydrate=true` embeds every item's metadata card, removing the list → metadata waterfall.
-- **Collection drawer** — one batch smart-play call (`?metadataIds=`, up to 50 ids) replaces a request per collection item.
-- **Hero slides** — all five slides warm their smart-play suggestions in one parallel wave on mount, so rotation reads the cache instead of firing per rotation.
+## Performance
 
-#### Polling & payload
+This release is dominated by collapsing per-view request waterfalls into server composites, plus reducing polling, payload size, startup work and unnecessary main-thread work.
 
-- **Shared worker subscription** — scheduled tasks and queue stats now share one `useWorkerStats` poller instead of polling `getWorkers` twice.
-- **Adaptive process polling** — `useAdminProcesses` polls at 5 s only while a process is running and at 30 s when idle (previously a flat 5 s).
-- **Media audit on demand** — the media-file audit (a full server-side scan of every file) starts only when the audit view is opened, not on every trip through the page.
-- **Narrower admin list payloads** — the admin media list requests only the columns it renders (`?fields=`), skipping the widest `videoStreams`/`metadata` relation hydration.
-- **Cache seeding** — `useAdminUserFull` seeds the plain-user cache so the user-detail page reuses the row instead of fetching it a third time; `worker:progress` realtime ticks coalesce-invalidate the operations list rather than triggering per-event refetches.
+### Composite views
 
-#### Retry, polling & build hygiene
+- **Admin dashboard** — one `GET /admin/dashboard-view` replaces the six requests fired on mount and seeds each consumer's exact cache key.
+- **Player** — progress, markers, subtitles and the full media-file row now come from the single playback view instead of four parallel fetches.
+- **Details** — seasons and complete episode lists now come from the details-view composite; the separate seasons fetch and infinite episode paging are removed, and the play button uses `view.smartPlay`.
+- **Watchlist** — `GET /me/watchlist?hydrate=true` embeds each item's metadata card, removing the list → metadata waterfall.
+- **Collection drawer** — one batch smart-play request (`metadataIds`, up to 50 IDs) replaces one request per collection item.
+- **Hero slides** — all five smart-play suggestions are warmed in one parallel wave on mount and then read from cache.
 
-- **Bounded retries** — the SDK now retries transient failures once (`maxRetries: 3 → 1`) and React Query only retries what the SDK deems retryable (`ReelVaultError.retryable`); non-retryable 4xx (403/404/validation) settle on the first response instead of being retried.
-- **Admin stats polling** — `useAdminStats` no longer keeps every admin page on a flat 15 s interval: it polls at 15 s only while streams or worker jobs are active and backs off to 60 s when idle.
-- **Compression artifacts** — precompressed `.br`/`.gz` siblings are now emitted only for files ≥ 1 KB, and `index.html` is skipped (its siblings are never served — the page always goes through the injected body): **659 → 362** compressed files, total `dist/assets` **11 MB → 8.9 MB**.
+### Polling & payloads
 
-#### Startup bundle
+- **Shared worker subscription** — scheduled tasks and queue stats now share one `useWorkerStats` poller.
+- **Adaptive process polling** — `useAdminProcesses` polls every 5 s while a process is running and every 30 s while idle.
+- **On-demand media audit** — the full server-side media-file audit starts only when the audit view is opened.
+- **Narrow admin payloads** — the admin media list requests only rendered columns instead of hydrating wide `videoStreams`/`metadata` relations.
+- **Cache seeding** — `useAdminUserFull` seeds the plain-user cache; worker progress ticks coalesce-invalidate the operations list instead of refetching per event.
 
-- **Navbar command palette deferred** — the cmdk-based search palette is now a lazy chunk mounted only on ≥1536px screens or when opened (Ctrl+K / the icon); the `web-layout` chunk every authenticated page loads dropped **26.9 KB → 8.4 KB** (brotli), and its 20.9 KB palette chunk is fetched on demand.
-- **Base-UI split per primitive** — the single 262 KB `ui-core` chunk (every `@base-ui` primitive in one file) is now one chunk per primitive, with shared positioning/prop-merging internals collapsed into `ui-base`, so a page pulls only what it renders. The shell's first-load graph dropped **367,189 B → 347,632 B** (brotli) and its base-ui payload **76,690 B → 56,763 B** (−26%). Trade-off: +22 lazy vendor chunks for finer, longer-lived caching.
+### Retry, polling & build
 
-#### Request waterfalls & polling
+- **Bounded retries** — the SDK now retries transient failures once (`maxRetries: 3 → 1`), while React Query retries only errors marked `ReelVaultError.retryable`; non-retryable 4xx responses settle immediately.
+- **Admin stats polling** — stats poll every 15 s while streams/jobs are active and back off to 60 s while idle.
+- **Compression artifacts** — `.br`/`.gz` siblings are emitted only for files ≥ 1 KB and `index.html` is skipped, reducing compressed files from **659 → 362** and `dist/assets` from **11 MB → 8.9 MB**.
 
-- **Player open** — dropped the redundant full `metadata.getById` fetch (the title now rides the playback view) and the unused `media.getById` route prefetch: **2 fewer requests**, and the wide metadata-details payload is gone from the most latency-sensitive navigation.
-- **Admin dashboard** — removed the loader prefetch of `admin/stats` that the composite view already seeds: **1 fewer request** per dashboard entry.
-- **Hero slides** — the five smart-play suggestions are warmed in one parallel wave (`Promise.allSettled`) instead of a serial loop that queued five round-trips.
-- **Navbar plugin search** — debounced like the native search: one provider request per settled input instead of one per keystroke.
+### Startup bundle
+
+- **Navbar command palette** — cmdk is now a lazy chunk mounted only on ≥1536px screens or when opened; `web-layout` drops from **26.9 KB → 8.4 KB** brotli, with the palette fetched on demand.
+- **Base-UI splitting** — the monolithic `ui-core` chunk is split per primitive, with shared internals moved into `ui-base`; the shell first-load graph drops from **367,189 B → 347,632 B** brotli and the base-ui payload from **76,690 B → 56,763 B**. The trade-off is 22 additional lazy vendor chunks.
+
+### Request waterfalls
+
+- **Player open** — removed the redundant metadata fetch and unused media prefetch.
+- **Admin dashboard** — removed the loader prefetch for `admin/stats`, which is already seeded by the composite.
+- **Hero slides** — five smart-play suggestions now warm in parallel with `Promise.allSettled` instead of a serial loop.
+- **Navbar plugin search** — input is debounced like native search, issuing one provider request per settled value instead of one per keystroke.
 - **Missing-translation refresh** — pages are fetched in parallel instead of up to 50 serial requests.
-- **Remote control** — playback-session polling backs off from 15 s to 60 s when no session is running (realtime `session:started`/`ended` still refreshes immediately): idle requests **−75%**.
-- **Plugin catalog** — a plugin mutation no longer invalidates `pluginKeys.catalog()` twice (covered by `pluginKeys.all`), and the four repository mutations issue their two invalidations in parallel instead of sequentially.
-- **Batch suggestions key** — the episodes-drawer batch smart-play query moved under the `["me","playback","suggestions"]` prefix, so playback invalidations reach it instead of leaving stale watch states.
-- **Dashboard seeding** — the composite's cache seeding moved out of the render body into the query function (no cache writes during render).
+- **Remote control** — playback-session polling backs off from 15 s to 60 s when no session is running; realtime start/end events still refresh immediately.
+- **Plugin catalog** — redundant catalog invalidation was removed and repository mutations now perform their invalidations in parallel.
+- **Batch suggestions key** — the episodes-drawer query now uses the `["me","playback","suggestions"]` prefix so playback invalidations reach it.
+- **Dashboard seeding** — cache seeding moved from render time into the query function.
 
-#### Render & main-thread work
+### Render & main-thread work
 
-- **Progress bar** — removed the mirrored scrub state that re-rendered the bar twice per `timeupdate` (~4×/s): the controlled thumb now reads `currentTime` directly and only stores a scrub value while dragging (**2 renders/tick → 1**).
-- **Finish-time clock** — the player formatted `Intl` on every playhead tick though the value only changes once a minute; the formatted string is now cached per minute.
-- **Equalizer config** — was re-read from `localStorage` (3 reads + `JSON.parse`) on every volume gesture/`pointermove`; now cached in memory and invalidated on save.
-- **Hero rotation** — skips its tick while the tab is hidden, so no state updates (or backdrop decoding) run offscreen.
-- **Next-episode lookup** — the player's season/episode sort (up to 500 episodes) moved out of an inline per-render closure into a pure module-level function, so React Compiler memoizes it; it now recomputes only when the seasons/episodes data or the current episode changes instead of on every player render.
-- **Offline shell** — a service worker serves the app from cache: the shell and icons are precached (8 entries / 42.3 KiB) and the content-hashed chunks are cached on first visit, so a repeat load re-downloads nothing but the revalidated `index.html`. Installing the worker does not download the ~4.5 MB app (JS is runtime-cached, not precached).
+- **Progress bar** — removed mirrored scrub state; the bar now renders once per playhead tick instead of twice.
+- **Finish-time clock** — `Intl` formatting is cached per minute instead of running on every playhead tick.
+- **Equalizer config** — `localStorage`/`JSON.parse` work is cached in memory and invalidated on save.
+- **Hero rotation** — hidden tabs skip rotation ticks, avoiding offscreen state updates and backdrop decoding.
+- **Next-episode lookup** — the season/episode sort moved into a pure module-level function so React Compiler can memoize it.
+- **Offline shell** — the service worker precaches 8 shell/icon entries (42.3 KiB) and runtime-caches content-hashed chunks; installation does not download the ~4.5 MB app.
 
-### Performance benchmarks
+## Performance benchmarks
 
 The table counts API requests fired by a cold open of each view (for the details page, requests beyond the composite it already calls). These are request-count and polling-frequency reductions, not timings.
 
@@ -123,24 +129,27 @@ The table counts API requests fired by a cold open of each view (for the details
 | Network | Admin dashboard — unused `admin/stats` prefetch | 1 | 0 | **-100%** |
 | Polling | Remote sessions — idle poll interval | 15 s | 60 s | **-75%** |
 
-### Additional measurements
 
-- Admin media-file audit — full server-side scans triggered outside the audit view: 1 per page visit → 0.
-- Admin media list — dropped relation fields from the payload projection: `videoStreams`, `metadata`.
-- User-detail page — same-row fetches: 3 → 2 (the `user-full` response seeds the plain-user cache).
-- Hero slides — smart-play requests: 5 fired one per rotation → 5 warmed once on mount, then read from cache.
-- i18n — 16 orphaned keys removed; new strings added 1:1 to `en.json` and `pl.json`.
-- Updates route — lazy chunk ~171 KB raw after adding `react-markdown`, `remark-gfm` and `remark-github-blockquote-alert`; off the eager graph, so the entry bundle is unaffected.
-- Dead code — removed the unused `app-tooltip.tsx` (single caller inlined), the redundant nested `QueryProvider` (the router is already inside a `QueryClientProvider`), `useThrottleDebounce` (folded into `useDebounce`) and dead exports (`applyAudioBoost`, `findPluginPage`, `useMetadataWatchlist`, `emptyMetadataForm`, `mediaKeys.markers`, `metadataKeys.watchlist`): net **−138 lines** across 32 files, 3 files deleted.
+## Additional measurements
+
+Only smaller measurements without a complete Before/After pair are kept here, so the main benchmark table stays limited to directly comparable results.
+
+- Admin media-file audit — full server-side scans outside the audit view: **1 per page visit → 0**.
+- Admin media list — removed `videoStreams` and `metadata` from the payload projection.
+- User-detail page — same-row fetches: **3 → 2**.
+- Hero slides — smart-play requests are warmed once on mount instead of once per rotation.
+- i18n — **16** orphaned keys removed; new strings added 1:1 to `en.json` and `pl.json`.
+- Updates route — lazy chunk is ~171 KB raw after adding Markdown dependencies; it remains outside the eager graph.
+- Dead code — **−138 lines** across 32 files and **3 files deleted**.
 - `react-doctor` score: **70** (threshold ≥ 70).
-- Hero slides — smart-play warm-up: up to 5 serial round-trips → 5 parallel (`Promise.allSettled`).
+- Hero slides — up to 5 serial round-trips → 5 parallel.
 - Missing-translation refresh — up to 50 sequential page fetches → parallel.
-- Navbar plugin search — one provider request per keystroke → one per settled input (500 ms debounce).
-- Plugin catalog — a plugin mutation's catalog query was invalidated twice; the four repository mutations now issue their two invalidations concurrently.
-- Player episodes drawer — batch smart-play key moved under `["me","playback","suggestions"]` so realtime/playback invalidations reach it.
-- Player progress bar — renders per playhead tick: 2 → 1 (dropped the mirrored scrub state).
+- Navbar plugin search — one provider request per keystroke → one per settled input with a 500 ms debounce.
+- Plugin catalog — duplicate invalidation removed; repository invalidations now run concurrently.
+- Player episodes drawer — batch smart-play key moved under `["me","playback","suggestions"]`.
+- Player progress bar — renders per playhead tick: **2 → 1**.
 - Player finish clock — `Intl` formatting runs once per minute instead of ~4×/s.
-- Player equalizer — `localStorage` reads + `JSON.parse` per volume gesture → 0 (cached).
-- Player next-episode — season/episode map + sort over up to 500 episodes: every render → only when data/current episode changes.
-- Offline shell — service worker `sw.js` (1.6 KB) + `workbox-*.js` (21.9 KB), both build-only (off the app bundle); precache is 8 entries / 42.3 KiB and install never downloads the JS chunks.
-- Repeat load — content-hashed chunks are served from the service-worker cache; only `index.html` is revalidated (`no-cache`).
+- Player equalizer — `localStorage` reads + `JSON.parse` per volume gesture → **0**.
+- Player next-episode — season/episode map + sort runs only when its inputs change.
+- Offline shell — `sw.js` (1.6 KB) + `workbox-*.js` (21.9 KB) are build-only; precache is 8 entries / 42.3 KiB and installation never downloads JS chunks.
+- Repeat load — content-hashed chunks are served from the service-worker cache; only `index.html` is revalidated.
