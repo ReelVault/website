@@ -202,8 +202,6 @@ interface PlayerDiagnosticsValue {
 
 const [PlayerDiagnosticsContext, usePlayerDiagnosticsRaw] = createContextHook<PlayerDiagnosticsValue>("usePlayerDiagnostics");
 
-export { usePlayerDiagnosticsRaw as usePlayerDiagnostics };
-
 export function usePlayerDiagnosticsToggle() {
 	const value = usePlayerDiagnosticsRaw();
 

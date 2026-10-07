@@ -370,11 +370,6 @@ export function applyAudioPipeline(video: HTMLVideoElement, volume: number, eqCo
 	}
 }
 
-/** Legacy alias for volume-only callers */
-export function applyAudioBoost(video: HTMLVideoElement, volume: number): void {
-	applyAudioPipeline(video, volume);
-}
-
 /**
  * Disposes the Web Audio graph for a video element when tearing down.
  */

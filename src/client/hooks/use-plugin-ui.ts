@@ -21,8 +21,6 @@ import { toastError } from "@/utils/toast-utils";
 import { getReelVaultApiUrl, reelvault } from "../client";
 import { pluginKeys } from "../utils/query-keys";
 
-export type { PluginDialogContribution, PluginPageContribution, PluginSlotContribution, PluginTabContribution, PluginUiManifest };
-
 /** Contribution types resolved with the owning plugin id and default locale by the host. */
 export interface PluginLocaleHint {
 	/** Locale the plugin falls back to when a localized text lacks the host locale. */
@@ -133,13 +131,6 @@ export function usePluginDialogs() {
 	const getDialog = (pluginId: string, dialogId: string): ResolvedPluginDialog | undefined => byId.get(`${pluginId}:${dialogId}`);
 
 	return { getDialog };
-}
-
-/** Resolves a plugin page by id within a plugin's manifest. */
-export function findPluginPage(manifest: PluginUiManifest | undefined, pluginId: string, pageId: string): ResolvedPluginPage | undefined {
-	const page = (manifest?.pages ?? []).find((candidate) => candidate.id === pageId);
-
-	return page ? { ...page, pluginId } : undefined;
 }
 
 export function getPluginUiFileUrl(pluginId: string, filePath: string): string {

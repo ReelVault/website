@@ -25,17 +25,3 @@ export interface MetadataBasicFields {
 	budget: string;
 	revenue: string;
 }
-
-export const emptyMetadataForm: MetadataFormState = {
-	title: "",
-	sortTitle: "",
-	numberingMode: "",
-	originalTitle: "",
-	overview: "",
-	tagline: "",
-	status: "",
-	releaseDate: "",
-	budget: "",
-	revenue: "",
-	lockedFields: [],
-};

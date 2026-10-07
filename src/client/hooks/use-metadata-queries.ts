@@ -38,19 +38,6 @@ export function useMetadataRelated(metadataId: string, options?: { enabled?: boo
 	});
 }
 
-export function useMetadataWatchlist(metadataIds: readonly string[]) {
-	const normalizedMetadataIds = metadataIds.toSorted();
-
-	return useQuery({
-		queryKey: metadataKeys.watchlist(normalizedMetadataIds),
-		queryFn: () =>
-			normalizedMetadataIds.length > 0
-				? reelvault.metadata.getAll({ metadataIds: normalizedMetadataIds.join(","), fields: metadataCardFields })
-				: Promise.resolve({ data: [], total: 0, page: 1, limit: 0, totalPages: 0 }),
-		staleTime: 1000 * 60 * 5,
-	});
-}
-
 export function useMetadataSimilarByActor(actorId?: string, options?: { enabled?: boolean }) {
 	return useQuery({
 		queryKey: metadataKeys.similarByActor(actorId),

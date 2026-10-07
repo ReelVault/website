@@ -6,7 +6,6 @@ export const metadataKeys = {
 	details: (id: string) => [...metadataKeys.all, "details", id] as const,
 	detailsView: (id: string) => [...metadataKeys.all, "details-view", id] as const,
 	related: (id: string) => [...metadataKeys.all, "related", id] as const,
-	watchlist: (ids: readonly string[]) => [...metadataKeys.all, "watchlist", ids.toSorted()] as const,
 	similarByActor: (id?: string) => [...metadataKeys.all, "similar_by_actor", id] as const,
 	collection: (id?: string, sortBy?: string, sortOrder?: string) => [...metadataKeys.all, "collection", id, sortBy, sortOrder] as const,
 	collectionOrder: (collectionId: string, sortBy?: string, sortOrder?: string) =>
@@ -132,7 +131,6 @@ export const mediaKeys = {
 	byEpisode: (episodeId: string | null | undefined) => ["media-files", "by-episode", episodeId] as const,
 	artifacts: (mediaFileId?: string) => ["media-files", mediaFileId, "artifacts"] as const,
 	artifactContent: (mediaFileId?: string, artifactId?: string) => ["media-files", mediaFileId, "artifacts", artifactId, "vtt"] as const,
-	markers: (mediaFileId: string) => ["media-files", mediaFileId, "markers"] as const,
 	adminFiles: (params?: { page?: number; limit?: number; fileName?: string; sortBy?: string; sortOrder?: string }) =>
 		params ? (["admin", "media-files", params] as const) : (["admin", "media-files"] as const),
 	adminFile: (id: string) => ["admin", "media-file", id] as const,

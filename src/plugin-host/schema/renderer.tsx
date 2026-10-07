@@ -345,5 +345,3 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 			return null;
 	}
 }
-
-export { useSchemaRuntime };
