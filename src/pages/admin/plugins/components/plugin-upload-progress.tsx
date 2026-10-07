@@ -1,8 +1,9 @@
-import { CheckCircle2, Circle, Loader2, X, XCircle } from "lucide-react";
+import { CheckCircle2, Circle, X, XCircle } from "lucide-react";
 import { useEffect } from "react";
 import type { PluginArchiveEntry, PluginArchiveSummary } from "@/client/hooks/use-plugin-catalog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 
 export function formatBytes(bytes: number): string {
@@ -34,7 +35,7 @@ function StatusIcon({ entry }: { entry: PluginArchiveEntry }) {
 	switch (entry.status) {
 		case "uploading":
 		case "installing":
-			return <Loader2 className="size-4 animate-spin text-primary" aria-hidden="true" />;
+			return <Spinner className="text-primary" aria-hidden="true" />;
 		case "installed":
 			return <CheckCircle2 className="size-4 text-success" aria-hidden="true" />;
 		case "queued":

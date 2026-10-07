@@ -1,7 +1,8 @@
-import { Download, Loader2 } from "lucide-react";
+import { Download } from "lucide-react";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
+import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 import { usePlayerSubtitles } from "../player-context";
 
@@ -77,11 +78,7 @@ export function PlayerSubtitleSearchPanel() {
 								onClick={() => downloadSubtitle(candidate.providerId, candidate.id)}
 								aria-label={m.player_subtitles_label({ label: candidate.label ?? candidate.language })}
 							>
-								{isThisDownloading ? (
-									<Loader2 className="size-4 animate-spin text-primary" aria-hidden="true" />
-								) : (
-									<Download aria-hidden="true" />
-								)}
+								{isThisDownloading ? <Spinner className="text-primary" aria-hidden="true" /> : <Download aria-hidden="true" />}
 							</Button>
 						</div>
 					);

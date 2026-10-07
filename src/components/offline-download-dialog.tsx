@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
-import { ArrowRight, Check, Download, Film, HardDrive, Loader2, type LucideIcon, Smartphone, Sparkles, Trash2, Tv } from "lucide-react";
+import { ArrowRight, Check, Download, Film, HardDrive, type LucideIcon, Smartphone, Sparkles, Trash2, Tv } from "lucide-react";
 import { startTransition, useState } from "react";
 import {
 	type DownloadQuality,
@@ -14,6 +14,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { toast } from "@/utils/toast-facade";
@@ -216,7 +217,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 							{isProcessing && (
 								<>
 									<div className="relative flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
-										<Loader2 className="size-7 animate-spin" />
+										<Spinner className="size-7" />
 									</div>
 									<div className="flex flex-col gap-1">
 										<span className="font-bold text-base text-foreground">{m.components_offline_in_progress()}</span>
@@ -312,7 +313,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 							</Button>
 							<Button onClick={handleStartPrepare} disabled={prepareMutation.isPending} className="gap-2 font-medium">
 								{prepareMutation.isPending ? (
-									<Loader2 className="size-4 animate-spin" />
+									<Spinner className="size-4" />
 								) : (
 									<Download data-icon="inline-start" className="size-4" aria-hidden="true" />
 								)}

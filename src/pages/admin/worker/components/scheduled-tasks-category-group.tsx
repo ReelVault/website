@@ -1,10 +1,11 @@
 import type { WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { cn } from "cn";
-import { ChevronDown, Loader2, Play } from "lucide-react";
+import { ChevronDown, Play } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Spinner } from "@/components/ui/spinner";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import type { WorkerRunParams } from "./scheduled-task-actions";
@@ -113,7 +114,7 @@ export function ScheduledTasksCategoryGroup({
 						className="h-8.5 shrink-0 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
 						title={m.admin_workers_run_all()}
 					>
-						{isRunningCategory ? <Loader2 className="size-3.5 animate-spin" /> : <Play className="size-3.5 fill-current" />}
+						{isRunningCategory ? <Spinner className="size-3.5" /> : <Play className="size-3.5 fill-current" />}
 						<span>{m.admin_workers_run_all()}</span>
 					</Button>
 				</div>

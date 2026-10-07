@@ -1,4 +1,4 @@
-import { KeyRound, Loader2, LockOpen, Plus, RefreshCw, Trash2 } from "lucide-react";
+import { KeyRound, LockOpen, Plus, RefreshCw, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type { usePluginCatalog } from "@/client/hooks/use-plugin-catalog";
 import { ConfirmAction } from "@/components/confirm-action";
@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -175,7 +176,7 @@ export function PluginRepositoriesDialog({
 						<p className="text-[11px] text-muted-foreground">{m.admin_plugins_repositories_token_hint()}</p>
 					</div>
 					<Button variant="outline" size="sm" disabled={!canSubmit} onClick={submit} className="gap-1.5 self-start text-xs">
-						{isSubmitting ? <Loader2 className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
+						{isSubmitting ? <Spinner className="size-3.5" /> : <Plus className="size-3.5" />}
 						{m.admin_plugins_repositories_add()}
 					</Button>
 				</div>

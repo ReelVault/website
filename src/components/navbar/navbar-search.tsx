@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
-import { Compass, Film, Globe, Layers, Loader2, Search, Send, Sparkles, Tv, User, X } from "lucide-react";
+import { Compass, Film, Globe, Layers, Search, Send, Sparkles, Tv, User, X } from "lucide-react";
 import { type ReactNode, startTransition, useState } from "react";
 import { useGlobalMetadataSearch } from "@/client/hooks/use-metadata-search";
 import { type PluginSearchItem, usePluginSearch, usePluginSearchProvider } from "@/client/hooks/use-plugin-ui";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
 import { useOverlayHistory } from "@/hooks/use-overlay-history";
 import { detach } from "@/lib/detach";
@@ -216,7 +217,7 @@ function ExternalCatalogGroup({
 										}}
 									>
 										{isRequestingThis ? (
-											<Loader2 className="size-3.5 animate-spin" aria-hidden="true" />
+											<Spinner className="size-3.5" aria-hidden="true" />
 										) : (
 											<Send className="size-3.5" aria-hidden="true" />
 										)}
@@ -353,7 +354,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 	if (isLoading) {
 		listContent = (
 			<div className="flex flex-col items-center justify-center py-14 text-center">
-				<Loader2 className="size-8 animate-spin text-primary" aria-hidden="true" />
+				<Spinner className="size-8 text-primary" aria-hidden="true" />
 				<p className="mt-4 font-semibold text-foreground">{m.components_navbar_searching_catalog()}</p>
 				<p className="mt-1 text-muted-foreground text-sm">{m.components_search_matching()}</p>
 			</div>
@@ -494,7 +495,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 							className="h-12 rounded-xl border-border bg-background/80 pr-20 text-base focus-visible:border-primary focus-visible:ring-primary/30"
 						/>
 						<div className="pointer-events-none absolute top-1/2 right-7 flex -translate-y-1/2 items-center gap-1">
-							{isFetching && <Loader2 className="mr-1 size-4 animate-spin text-primary" aria-label={m.components_search_loading()} />}
+							{isFetching && <Spinner className="mr-1 size-4 text-primary" aria-label={m.components_search_loading()} />}
 							{query && !isFetching && (
 								<Button
 									type="button"

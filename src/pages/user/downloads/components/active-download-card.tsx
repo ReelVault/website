@@ -1,7 +1,7 @@
 import type { DownloadJob } from "@reelvault/sdk";
-import { Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 
 /** Active download card (1.5 s polling comes from the page — here it is presentation only). */
@@ -11,7 +11,7 @@ export function ActiveDownloadCard({ job, onDelete }: { job: DownloadJob; onDele
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<div className="flex min-w-0 items-center gap-3.5">
 					<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-						<Loader2 className="size-5 animate-spin" />
+						<Spinner className="size-5" />
 					</div>
 					<div className="min-w-0">
 						<div className="flex flex-wrap items-center gap-2">

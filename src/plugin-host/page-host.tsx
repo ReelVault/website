@@ -1,6 +1,6 @@
-import { Loader2 } from "lucide-react";
 import { usePluginUiManifest } from "@/client/hooks/use-plugin-ui";
 import { usePlugins } from "@/client/hooks/use-plugins";
+import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 import { PluginSurface } from "./surface";
 
@@ -23,7 +23,7 @@ export function PluginPageHost({ pluginId, pagePath, params }: PluginPageHostPro
 		return (
 			<div className={SHELL_CLASS}>
 				<div className="flex min-h-[50vh] items-center justify-center">
-					<Loader2 className="size-6 animate-spin text-muted-foreground" />
+					<Spinner className="size-6 text-muted-foreground" />
 				</div>
 			</div>
 		);
