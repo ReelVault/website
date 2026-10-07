@@ -89,6 +89,13 @@ This release is dominated by collapsing per-view request waterfalls into server 
 - **Batch suggestions key** — the episodes-drawer batch smart-play query moved under the `["me","playback","suggestions"]` prefix, so playback invalidations reach it instead of leaving stale watch states.
 - **Dashboard seeding** — the composite's cache seeding moved out of the render body into the query function (no cache writes during render).
 
+#### Render & main-thread work
+
+- **Progress bar** — removed the mirrored scrub state that re-rendered the bar twice per `timeupdate` (~4×/s): the controlled thumb now reads `currentTime` directly and only stores a scrub value while dragging (**2 renders/tick → 1**).
+- **Finish-time clock** — the player formatted `Intl` on every playhead tick though the value only changes once a minute; the formatted string is now cached per minute.
+- **Equalizer config** — was re-read from `localStorage` (3 reads + `JSON.parse`) on every volume gesture/`pointermove`; now cached in memory and invalidated on save.
+- **Hero rotation** — skips its tick while the tab is hidden, so no state updates (or backdrop decoding) run offscreen.
+
 ### Performance benchmarks
 
 The table counts API requests fired by a cold open of each view (for the details page, requests beyond the composite it already calls). These are request-count and polling-frequency reductions, not timings.
@@ -128,3 +135,6 @@ The table counts API requests fired by a cold open of each view (for the details
 - Navbar plugin search — one provider request per keystroke → one per settled input (500 ms debounce).
 - Plugin catalog — a plugin mutation's catalog query was invalidated twice; the four repository mutations now issue their two invalidations concurrently.
 - Player episodes drawer — batch smart-play key moved under `["me","playback","suggestions"]` so realtime/playback invalidations reach it.
+- Player progress bar — renders per playhead tick: 2 → 1 (dropped the mirrored scrub state).
+- Player finish clock — `Intl` formatting runs once per minute instead of ~4×/s.
+- Player equalizer — `localStorage` reads + `JSON.parse` per volume gesture → 0 (cached).
