@@ -62,12 +62,6 @@ export function PlayerProgressBar() {
 
 	const trickplayFrame = activeTooltipTime !== null ? getThumbnailAt(activeTooltipTime) : { found: false };
 
-	// Keep the controlled thumb on the playhead while not scrubbing — synced
-	// during render (single commit per tick) instead of a follow-up effect.
-	if (!isScrubbing && scrubTime !== currentTime) {
-		setScrubTime(currentTime);
-	}
-
 	const commitSeek = () => {
 		setIsScrubbing(false);
 		detach(() => seek(scrubTime));
@@ -235,7 +229,7 @@ export function PlayerProgressBar() {
 					min={0}
 					max={safeDuration}
 					step={0.1}
-					value={scrubTime}
+					value={displayedTime}
 					aria-label={m.player_playback_position_aria()}
 					aria-valuetext={m.player_progress_position({ position: formatTime(displayedTime), duration: formatTime(safeDuration) })}
 					className="absolute z-30 h-10 w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-primary [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:-mt-1 [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:shadow-md"
@@ -247,6 +241,7 @@ export function PlayerProgressBar() {
 						}
 
 						setWantsTrickplay(true);
+						setScrubTime(currentTime);
 						setIsScrubbing(true);
 					}}
 					onChange={(event) => setScrubTime(Number(event.target.value))}
