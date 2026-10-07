@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { mediaFileQueryOptions } from "@/client/hooks/use-media";
 import { playbackViewQueryOptions } from "@/client/hooks/use-playback-session";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
@@ -33,7 +32,6 @@ export const Route = createFileRoute("/player/$id")({
 		// kick off the gating fetches while the chunk is still downloading.
 		if (!params.id) return;
 
-		detach(context.queryClient.query(mediaFileQueryOptions(params.id)));
 		detach(context.queryClient.query(playbackViewQueryOptions(params.id)));
 	},
 	component: PlayerLayout,

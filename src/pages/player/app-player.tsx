@@ -2,9 +2,7 @@ import { cn } from "cn";
 import type Hls from "hls.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
-import { useMetadata } from "@/client/hooks/use-metadata-queries";
 import { getPlaybackPlaylistUrl } from "@/client/hooks/use-playback-session";
-import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { PortalContainerProvider } from "@/components/portal-container";
 import { setNativeKeepAwake, setNativeLandscapeLock } from "@/lib/capacitor-native";
 import { m } from "@/paraglide/messages";
@@ -36,6 +34,7 @@ export function AppPlayer({
 	settings,
 	settingsActions,
 	isChangingQuality,
+	title,
 	profileId,
 	profilePreferences,
 }: {
@@ -46,6 +45,7 @@ export function AppPlayer({
 	settings: PlaybackSettings;
 	settingsActions: PlaybackSettingsActions;
 	isChangingQuality: boolean;
+	title: string;
 	profileId: string | undefined;
 	profilePreferences:
 		| {
@@ -61,18 +61,6 @@ export function AppPlayer({
 		  }
 		| undefined;
 }) {
-	const metadataQuery = useMetadata(mediaFile.metadataId);
-
-	if (metadataQuery.isPending) return <AppLoadingState label={m.player_loading_media()} className="min-h-screen bg-background" />;
-
-	if (metadataQuery.isError) {
-		return (
-			<div className="flex min-h-screen items-center justify-center bg-background px-6">
-				<AppErrorState title={m.player_info_fetch_failed()} error={metadataQuery.error} />
-			</div>
-		);
-	}
-
 	return (
 		<PlayerProvider
 			mediaFileId={mediaFileId}
@@ -82,7 +70,7 @@ export function AppPlayer({
 			settings={settings}
 			settingsActions={settingsActions}
 			isChangingQuality={isChangingQuality}
-			title={metadataQuery.data.title}
+			title={title}
 			profileId={profileId}
 			profilePreferences={profilePreferences}
 		>

@@ -5,7 +5,6 @@ import type {
 	EpisodeWithRelations,
 	FieldPath,
 	Library,
-	MediaFile,
 	MetadataWithRelation,
 	Person,
 	Profile,
@@ -125,9 +124,6 @@ export const collectionListFields = defineFields<CollectionList>()(
 export const libraryListFields = defineFields<Library>()("id", "type", "name");
 
 export const libraryDetailFields = defineFields<Library>()("id", "type", "name");
-type MediaFileWithAudio = MediaFile & { audioStreams: unknown[] };
-
-export const mediaFileFields = defineFields<MediaFileWithAudio>()("metadataId", "duration", "audioStreams", "episodeId");
 type SeasonView = Season & { title: string | null; posterId: string | null };
 
 export const seasonFields = defineFields<SeasonView>()("id", "metadataId", "seasonNumber", "title", "overview", "posterId");

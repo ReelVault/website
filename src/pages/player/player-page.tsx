@@ -136,6 +136,7 @@ export default function PlayerByIdPage() {
 				onAudioStreamChange: setAudioStreamIndex,
 			}}
 			isChangingQuality={sessionQuery.isFetching}
+			title={viewQuery.data.metadata.title ?? ""}
 			profileId={profile.id}
 			profilePreferences={profilePreferencesQuery.preferences}
 		/>

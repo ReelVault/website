@@ -3,14 +3,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
-import { mediaFileFields } from "../utils/fields";
 import { mediaKeys, mePlaybackKeys, metadataKeys } from "../utils/query-keys";
-
-export const mediaFileQueryOptions = (mediaFileId: string) => ({
-	queryKey: mediaKeys.file(mediaFileId),
-	queryFn: () => reelvault.media.getById(mediaFileId, { fields: mediaFileFields }),
-	staleTime: Number.POSITIVE_INFINITY,
-});
 
 export function useMediaFilesByMetadata(metadataId: string | null | undefined, options?: { enabled?: boolean }) {
 	return useQuery({
