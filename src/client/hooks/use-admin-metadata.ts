@@ -115,21 +115,26 @@ export function useAdminMetadata(
 	const refreshMissingTranslationsMutation = useMutation({
 		mutationFn: async () => {
 			const MAX_IDS = 1000;
-			const ids: string[] = [];
-			let page = 1;
-			for (;;) {
-				const response = await reelvault.metadata.getAll({ missingTranslation: true, limit: 20, page });
-				ids.push(...response.data.map((item) => item.id));
-				if (ids.length === 0 || ids.length >= MAX_IDS || page >= response.totalPages) break;
-
-				page += 1;
+			const PAGE_SIZE = 20;
+			const first = await reelvault.metadata.getAll({ missingTranslation: true, limit: PAGE_SIZE, page: 1 });
+			const ids = first.data.map((item) => item.id);
+			const pagesToFetch = Math.min(first.totalPages, Math.ceil(MAX_IDS / PAGE_SIZE));
+			if (pagesToFetch > 1) {
+				// Fetch the remaining pages in parallel — a serial loop queued up to
+				// 50 round-trips on slow links.
+				const rest = await Promise.all(
+					Array.from({ length: pagesToFetch - 1 }, (_, index) =>
+						reelvault.metadata.getAll({ missingTranslation: true, limit: PAGE_SIZE, page: index + 2 }),
+					),
+				);
+				for (const response of rest) ids.push(...response.data.map((item) => item.id));
 			}
 
 			if (ids.length === 0) {
 				return { operationId: "" };
 			}
 
-			return await reelvault.admin.refreshMetadata(undefined, ids);
+			return await reelvault.admin.refreshMetadata(undefined, ids.slice(0, MAX_IDS));
 		},
 		onSuccess: async (result) => {
 			if (result.operationId) {
