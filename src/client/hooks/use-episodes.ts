@@ -68,6 +68,81 @@ export function useEpisodesInfinite(seasonId: string | null, options: UseEpisode
 	});
 }
 
+/** Stable empty arrays so the derivation's inputs keep a constant identity. */
+const EMPTY_SEASONS: ReadonlyArray<{ id: string; seasonNumber: number }> = [];
+const EMPTY_EPISODES: readonly EpisodeItem[] = [];
+
+interface CurrentEpisodeInfo {
+	episodeId: string;
+	seasonNumber: number;
+	episodeNumber: number;
+	title: string | null;
+}
+
+interface NextEpisodeInfo extends CurrentEpisodeInfo {
+	mediaFileId: string;
+}
+
+/**
+ * Sorts the whole show by season/episode and resolves the current + next
+ * episode. Module-level and pure so React Compiler can memoize the call — the
+ * previous inline closure re-ran its map/sort over up to 500 episodes on every
+ * player render.
+ */
+function computeEpisodeInfo(
+	seasons: ReadonlyArray<{ id: string; seasonNumber: number }>,
+	rawEpisodes: readonly EpisodeItem[],
+	episodeId: string | null | undefined,
+	currentMediaFileId: string,
+): { currentEpisode: CurrentEpisodeInfo | null; nextEpisode: NextEpisodeInfo | null } {
+	if (seasons.length === 0 || rawEpisodes.length === 0) return { currentEpisode: null, nextEpisode: null };
+
+	const seasonMap = new Map(seasons.map((season) => [season.id, season.seasonNumber]));
+
+	const allEpisodes = rawEpisodes
+		.map((ep) => ({
+			episodeId: ep.id,
+			seasonId: ep.seasonId,
+			seasonNumber: seasonMap.get(ep.seasonId) ?? 1,
+			episodeNumber: ep.episodeNumber,
+			title: ep.title,
+			// Continue-watching navigates to the watched file, which on a
+			// multi-version episode need not be the first — match against all
+			// files, link out via the default one (mirrors the drawer choice).
+			mediaFileIds: ep.mediaFiles.map((file) => file.id),
+			mediaFileId: (ep.mediaFiles.find((file) => file.isDefault) ?? ep.mediaFiles[0])?.id ?? null,
+		}))
+		.toSorted((a, b) => a.seasonNumber - b.seasonNumber || a.episodeNumber - b.episodeNumber);
+
+	const currentIndex = allEpisodes.findIndex(
+		(ep) => (Boolean(episodeId) && ep.episodeId === episodeId) || ep.mediaFileIds.includes(currentMediaFileId),
+	);
+	const current = allEpisodes[currentIndex];
+	if (currentIndex === -1 || !current) return { currentEpisode: null, nextEpisode: null };
+
+	const candidate = allEpisodes.find((ep, idx) => idx > currentIndex && ep.mediaFileId !== null);
+
+	const nextEpisode: NextEpisodeInfo | null = candidate?.mediaFileId
+		? {
+				episodeId: candidate.episodeId,
+				seasonNumber: candidate.seasonNumber,
+				episodeNumber: candidate.episodeNumber,
+				title: candidate.title,
+				mediaFileId: candidate.mediaFileId,
+			}
+		: null;
+
+	return {
+		currentEpisode: {
+			episodeId: current.episodeId,
+			seasonNumber: current.seasonNumber,
+			episodeNumber: current.episodeNumber,
+			title: current.title,
+		},
+		nextEpisode,
+	};
+}
+
 export function useNextEpisode({
 	metadataId,
 	episodeId,
@@ -96,60 +171,12 @@ export function useNextEpisode({
 
 	const isLoading = seasonsQuery.isPending || episodesQuery.isPending;
 
-	const getEpisodeInfo = () => {
-		const seasons = seasonsQuery.data?.data ?? [];
-		const rawEpisodes = episodesQuery.data?.data ?? [];
-		if (seasons.length === 0 || rawEpisodes.length === 0) return { currentEpisode: null, nextEpisode: null };
-
-		const seasonMap = new Map(seasons.map((s: { id: string; seasonNumber: number }) => [s.id, s.seasonNumber]));
-
-		const allEpisodes = rawEpisodes
-			.map((ep) => ({
-				episodeId: ep.id,
-				seasonId: ep.seasonId,
-				seasonNumber: seasonMap.get(ep.seasonId) ?? 1,
-				episodeNumber: ep.episodeNumber,
-				title: ep.title,
-				// Continue-watching navigates to the watched file, which on a
-				// multi-version episode need not be the first — match against all
-				// files, link out via the default one (mirrors the drawer choice).
-				mediaFileIds: ep.mediaFiles.map((file) => file.id),
-				mediaFileId: (ep.mediaFiles.find((file) => file.isDefault) ?? ep.mediaFiles[0])?.id ?? null,
-			}))
-			.toSorted((a, b) => a.seasonNumber - b.seasonNumber || a.episodeNumber - b.episodeNumber);
-
-		const currentIndex = allEpisodes.findIndex(
-			(ep) => (Boolean(episodeId) && ep.episodeId === episodeId) || ep.mediaFileIds.includes(currentMediaFileId),
-		);
-		const current = allEpisodes[currentIndex];
-		if (currentIndex === -1 || !current) return { currentEpisode: null, nextEpisode: null };
-
-		const currentEpisodeInfo = {
-			episodeId: current.episodeId,
-			seasonNumber: current.seasonNumber,
-			episodeNumber: current.episodeNumber,
-			title: current.title,
-		};
-
-		const candidate = allEpisodes.find((ep, idx) => idx > currentIndex && ep.mediaFileId !== null);
-
-		const nextEpisodeInfo = candidate?.mediaFileId
-			? {
-					episodeId: candidate.episodeId,
-					seasonNumber: candidate.seasonNumber,
-					episodeNumber: candidate.episodeNumber,
-					title: candidate.title,
-					mediaFileId: candidate.mediaFileId,
-				}
-			: null;
-
-		return {
-			currentEpisode: currentEpisodeInfo,
-			nextEpisode: nextEpisodeInfo,
-		};
-	};
-
-	const { currentEpisode, nextEpisode } = getEpisodeInfo();
+	const { currentEpisode, nextEpisode } = computeEpisodeInfo(
+		seasonsQuery.data?.data ?? EMPTY_SEASONS,
+		episodesQuery.data?.data ?? EMPTY_EPISODES,
+		episodeId,
+		currentMediaFileId,
+	);
 
 	return {
 		currentEpisode,
