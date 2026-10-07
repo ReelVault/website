@@ -1,9 +1,23 @@
 import { useLocation } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { Button } from "../ui/button";
-import { NavbarSearch } from "./navbar-search";
+
+// cmdk and the whole command palette are interaction-only. Keeping them in a
+// lazy chunk removes them from the eager navbar graph; below the 2xl breakpoint
+// the palette is reachable only via Ctrl+K or the icon, so it is not mounted
+// (nor fetched) until then.
+const loadNavbarSearch = () => import("./navbar-search");
+const NavbarSearch = lazy(async () => {
+	const mod = await loadNavbarSearch();
+
+	return { default: mod.NavbarSearch };
+});
+
+const DESKTOP_SEARCH_QUERY = "(min-width: 1536px)";
 
 /**
  * Search icon button + full search field in one — open state, the Ctrl+K shortcut
@@ -13,11 +27,13 @@ import { NavbarSearch } from "./navbar-search";
 export function NavbarSearchGroup() {
 	const { pathname } = useLocation();
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
+	const isDesktopSearch = useMediaQuery(DESKTOP_SEARCH_QUERY);
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
 				event.preventDefault();
+				detach(loadNavbarSearch());
 				setIsSearchOpen(true);
 			}
 		};
@@ -42,13 +58,20 @@ export function NavbarSearchGroup() {
 				variant="ghost"
 				size="icon-lg"
 				className="2xl:hidden"
-				onClick={() => setIsSearchOpen(true)}
+				onClick={() => {
+					detach(loadNavbarSearch());
+					setIsSearchOpen(true);
+				}}
 			>
 				<Search data-icon="inline-start" aria-hidden="true" />
 			</Button>
-			<div className="hidden 2xl:block">
-				<NavbarSearch isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />
-			</div>
+			{(isDesktopSearch || isSearchOpen) && (
+				<div className={isDesktopSearch ? "hidden 2xl:block" : "hidden"}>
+					<Suspense fallback={null}>
+						<NavbarSearch isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />
+					</Suspense>
+				</div>
+			)}
 		</>
 	);
 }
