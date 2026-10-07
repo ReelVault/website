@@ -2,7 +2,6 @@ import { lazy, type ReactNode, Suspense, useEffect } from "react";
 import { usePluginManifestRealtimeSync } from "@/client/hooks/use-plugin-ui";
 import { OfflineBanner } from "@/components/offline-banner";
 import { ApiContractProvider } from "@/components/providers/api-contract-provider";
-import { QueryProvider } from "@/components/providers/query-provider";
 import { RealtimeProvider } from "@/components/providers/realtime-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PluginDialogProvider } from "@/plugin-host/plugin-dialogs";
@@ -36,25 +35,25 @@ function DocumentLocaleFlag() {
 export function RootLayout({ children }: { children: ReactNode }) {
 	usePluginManifestRealtimeSync();
 
+	// QueryClientProvider lives in main.tsx around the router, so this tree is
+	// already inside a single query client.
 	return (
-		<QueryProvider>
-			<RealtimeProvider>
-				<ApiContractProvider>
-					<TvModeFlag />
-					<DocumentLocaleFlag />
-					<ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-						<PluginDialogProvider>
-							{children}
-							<OfflineBanner />
-							<PluginSlotHost name="root-floating-overlay" excludePaths={["/player"]} />
-							{/* Inside ThemeProvider: sonner's theme="system" reads next-themes from context. */}
-							<Suspense fallback={null}>
-								<Toaster theme="system" richColors closeButton position="top-right" />
-							</Suspense>
-						</PluginDialogProvider>
-					</ThemeProvider>
-				</ApiContractProvider>
-			</RealtimeProvider>
-		</QueryProvider>
+		<RealtimeProvider>
+			<ApiContractProvider>
+				<TvModeFlag />
+				<DocumentLocaleFlag />
+				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+					<PluginDialogProvider>
+						{children}
+						<OfflineBanner />
+						<PluginSlotHost name="root-floating-overlay" excludePaths={["/player"]} />
+						{/* Inside ThemeProvider: sonner's theme="system" reads next-themes from context. */}
+						<Suspense fallback={null}>
+							<Toaster theme="system" richColors closeButton position="top-right" />
+						</Suspense>
+					</PluginDialogProvider>
+				</ThemeProvider>
+			</ApiContractProvider>
+		</RealtimeProvider>
 	);
 }
