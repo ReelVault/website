@@ -137,8 +137,17 @@ function toGainTuple(value: unknown): [number, number, number, number, number] |
 	return [clampGain(a), clampGain(b), clampGain(c), clampGain(d), clampGain(e)];
 }
 
+/** Cached equalizer config — read on every volume gesture/pointermove, so the
+ * localStorage parse must not run per event. Keyed by the window object so the
+ * value never leaks across a swapped `window` (tests), and invalidated by
+ * saveStoredEqualizerConfig. */
+let cachedWindow: unknown;
+let cachedEqualizerConfig: EqualizerConfig | null = null;
+
 export function getStoredEqualizerConfig(): EqualizerConfig {
 	if (typeof window === "undefined") return { ...DEFAULT_EQUALIZER_CONFIG };
+
+	if (cachedEqualizerConfig && cachedWindow === window) return cachedEqualizerConfig;
 
 	try {
 		const storedPreset = window.localStorage.getItem("reelvault:player:eqPreset");
@@ -156,15 +165,24 @@ export function getStoredEqualizerConfig(): EqualizerConfig {
 			if (matchingPreset) gains = [...matchingPreset.gains];
 		}
 
-		return { preset, gains, compressorEnabled };
+		cachedWindow = window;
+		cachedEqualizerConfig = { preset, gains, compressorEnabled };
+
+		return cachedEqualizerConfig;
 	} catch {
-		return { ...DEFAULT_EQUALIZER_CONFIG };
+		cachedWindow = window;
+		cachedEqualizerConfig = { ...DEFAULT_EQUALIZER_CONFIG };
+
+		return cachedEqualizerConfig;
 	}
 }
 
 export function saveStoredEqualizerConfig(config: EqualizerConfig): void {
 	if (typeof window === "undefined") return;
 
+	// Kept in memory so the next volume gesture does not re-read localStorage.
+	cachedWindow = window;
+	cachedEqualizerConfig = config;
 	try {
 		window.localStorage.setItem("reelvault:player:eqPreset", config.preset);
 		window.localStorage.setItem("reelvault:player:eqCompressor", String(config.compressorEnabled));
