@@ -1,8 +1,9 @@
-import { Check, Copy, KeyRound } from "lucide-react";
+import { KeyRound } from "lucide-react";
 import { useState } from "react";
 import { getSdkErrorMessage } from "@/client/client";
 import { useQuickConnectGenerate } from "@/client/hooks/use-auth";
 import { AsyncButton } from "@/components/async-button";
+import { CopyIcon } from "@/components/copy-icon";
 import { QrCode } from "@/components/qr-code";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -82,7 +83,7 @@ export function QuickConnectGenerateBox() {
 
 						<div className="mt-2 flex w-full gap-2">
 							<Button type="button" variant="outline" size="sm" className="flex-1 gap-2" onClick={handleCopy}>
-								{hasCopied ? <Check className="size-4 text-success" /> : <Copy className="size-4" />}
+								<CopyIcon copied={hasCopied} className="size-4" />
 								{hasCopied ? m.auth_copied_word() : m.auth_copy_code()}
 							</Button>
 							<Button type="button" variant="ghost" size="sm" onClick={handleGenerate} disabled={generateMutation.isPending}>

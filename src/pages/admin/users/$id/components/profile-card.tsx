@@ -1,8 +1,9 @@
-import { Check, Copy, Key, Lock, Pencil, Trash2, Unlock } from "lucide-react";
+import { Key, Lock, Pencil, Trash2, Unlock } from "lucide-react";
 import { useState } from "react";
 import type { AdminUserProfile } from "@/client/hooks/use-admin-user-profiles";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
+import { CopyIcon } from "@/components/copy-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -60,7 +61,7 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 									className="text-muted-foreground hover:text-foreground"
 									aria-label={m.admin_users_copy_profile_id()}
 								>
-									{hasCopied ? <Check className="size-3 text-primary" /> : <Copy className="size-3" />}
+									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</Badge>
 							<Badge variant={profile.hasPin ? "secondary" : "outline"} size="sm" className="gap-1">

@@ -1,23 +1,11 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import {
-	Check,
-	Clock,
-	Copy,
-	Download,
-	FileVideo,
-	FolderOpen,
-	HardDrive,
-	Layers,
-	Monitor,
-	Play,
-	RefreshCw,
-	Subtitles,
-	Volume2,
-} from "lucide-react";
+import { Clock, Download, FileVideo, FolderOpen, HardDrive, Layers, Monitor, Play, RefreshCw, Subtitles, Volume2 } from "lucide-react";
 import { Suspense, startTransition, useState } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshMediaFile } from "@/client/hooks/use-media";
+import { isAdminUser } from "@/components/auth/admin-access";
+import { CopyIcon } from "@/components/copy-icon";
 import { LazyOfflineDownloadDialog, LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -100,7 +88,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 						<Download className="size-3.5 text-primary" />
 						<span className="hidden sm:inline">{m.components_offline_download_short()}</span>
 					</Button>
-					{user?.role === "admin" && (
+					{isAdminUser(user) && (
 						<>
 							<Button
 								variant="outline"
@@ -211,7 +199,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 						{file.filePath}
 					</span>
 					<Button variant="outline" size="xs" onClick={handleCopyPath} className="shrink-0 gap-1.5 font-medium text-xs">
-						{copied ? <Check className="size-3 text-success" /> : <Copy className="size-3" />}
+						<CopyIcon copied={copied} className="size-3" />
 						<span>{copied ? m.common_copied() : m.common_copy()}</span>
 					</Button>
 				</div>

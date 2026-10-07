@@ -1,5 +1,6 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
-import { Check, Copy, FileText, Subtitles } from "lucide-react";
+import { FileText, Subtitles } from "lucide-react";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -99,7 +100,7 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 						title={m.admin_media_copy_file_path()}
 						aria-label={m.admin_media_copy_file_path()}
 					>
-						{hasCopied ? <Check className="size-3 text-success" /> : <Copy className="size-3" />}
+						<CopyIcon copied={hasCopied} className="size-3" />
 					</Button>
 				</div>
 			)}

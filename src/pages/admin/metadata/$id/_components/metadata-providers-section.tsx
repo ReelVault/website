@@ -1,6 +1,7 @@
 import type { MetadataWithRelation } from "@reelvault/sdk";
-import { Check, Copy, Database, ExternalLink, Link2, Radio, Search } from "lucide-react";
+import { Database, ExternalLink, Link2, Radio, Search } from "lucide-react";
 import { formatProviderName, formatProviderShortName, getProviderUrl } from "@/client/utils/provider-links";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -147,7 +148,7 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 					title={m.admin_metadata_copy_id_named({ name: shortName })}
 					aria-label={m.admin_metadata_copy_id_named({ name: shortName })}
 				>
-					{hasCopied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
+					<CopyIcon copied={hasCopied} className="size-3.5" />
 				</Button>
 			</div>
 

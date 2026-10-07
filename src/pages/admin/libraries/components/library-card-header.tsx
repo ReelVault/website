@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import {
 	AlertTriangle,
-	Check,
 	Clapperboard,
 	Copy,
 	FileVideo,
@@ -15,6 +14,7 @@ import {
 	Trash2,
 	Tv,
 } from "lucide-react";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
@@ -94,7 +94,7 @@ export function LibraryCardHeader({
 							title={m.admin_libraries_copy_full_id()}
 							aria-label={m.admin_libraries_copy_full_id()}
 						>
-							{hasCopied ? <Check className="size-3 text-success" /> : <Copy className="size-3" />}
+							<CopyIcon copied={hasCopied} className="size-3" />
 						</button>
 					</div>
 				</div>

@@ -1,8 +1,9 @@
 import type { WorkerOperation } from "@reelvault/sdk";
 import { cn } from "cn";
-import { Activity, AlertCircle, Check, CheckCircle2, Copy, Layers, ListTree, Play, Sparkles, Square, Volume2, Wrench } from "lucide-react";
+import { Activity, AlertCircle, CheckCircle2, Layers, ListTree, Play, Sparkles, Square, Volume2, Wrench } from "lucide-react";
 import { createElement, type ReactNode } from "react";
 import { ConfirmAction } from "@/components/confirm-action";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -115,7 +116,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 									className="text-muted-foreground hover:text-foreground"
 									title={m.admin_worker_copy_operation_id()}
 								>
-									{hasCopied ? <Check className="size-2.5 text-primary" /> : <Copy className="size-2.5" />}
+									<CopyIcon copied={hasCopied} className="size-2.5" copiedClassName="text-primary" />
 								</button>
 							</Badge>
 

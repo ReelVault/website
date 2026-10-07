@@ -1,4 +1,5 @@
-import { Check, Copy, Shield, ShieldAlert, ShieldCheck, Users } from "lucide-react";
+import { Shield, ShieldAlert, ShieldCheck, Users } from "lucide-react";
+import { CopyIcon } from "@/components/copy-icon";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { detach } from "@/lib/detach";
@@ -43,7 +44,7 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 								className="text-muted-foreground hover:text-foreground"
 								aria-label={m.admin_users_copy_account_id()}
 							>
-								{hasCopied ? <Check className="size-3 text-primary" /> : <Copy className="size-3" />}
+								<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 							</button>
 						</Badge>
 					)

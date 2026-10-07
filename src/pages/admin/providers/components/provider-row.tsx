@@ -2,7 +2,8 @@ import { useSortable } from "@dnd-kit/react/sortable";
 import type { MetadataProviderConfiguration } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
-import { Check, Copy, GripVertical } from "lucide-react";
+import { GripVertical } from "lucide-react";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { detach } from "@/lib/detach";
@@ -52,7 +53,7 @@ export function ProviderRow({ provider, index, disabled, onToggle }: ProviderRow
 							aria-label={m.admin_providers_copy_id()}
 							title={m.admin_providers_copy_id()}
 						>
-							{hasCopied ? <Check className="size-2.5 text-primary" /> : <Copy className="size-2.5" />}
+							<CopyIcon copied={hasCopied} className="size-2.5" copiedClassName="text-primary" />
 						</button>
 					</Badge>
 					<Badge variant="secondary" className="font-mono text-[10px]">

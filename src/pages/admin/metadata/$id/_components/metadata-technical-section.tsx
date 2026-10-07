@@ -1,6 +1,7 @@
 import type { MetadataWithRelation } from "@reelvault/sdk";
-import { Check, Copy, Globe, Info, Sparkles, TrendingUp } from "lucide-react";
+import { Globe, Info, Sparkles, TrendingUp } from "lucide-react";
 import { formatProviderShortName } from "@/client/utils/provider-links";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -83,7 +84,7 @@ function IdRow({ label, value }: { label: string; value: string }) {
 				title={m.admin_metadata_copy_label({ label })}
 				aria-label={m.admin_metadata_copy_label({ label })}
 			>
-				{hasCopied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
+				<CopyIcon copied={hasCopied} className="size-3.5" />
 			</Button>
 		</div>
 	);

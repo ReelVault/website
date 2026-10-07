@@ -1,5 +1,6 @@
-import { Check, Copy, Layers, Save } from "lucide-react";
+import { Layers, Save } from "lucide-react";
 import { AsyncButton } from "@/components/async-button";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { detach } from "@/lib/detach";
 import { AdminBackLink, AdminPageHeader } from "@/pages/admin/admin-ui";
@@ -40,7 +41,7 @@ export function CollectionEditorHeader({ collectionId, collection, isSubmitting,
 							className="text-muted-foreground hover:text-foreground"
 							aria-label={m.admin_collections_copy_full_id()}
 						>
-							{hasCopied ? <Check className="size-3 text-primary" /> : <Copy className="size-3" />}
+							<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 						</button>
 					</Badge>
 				}

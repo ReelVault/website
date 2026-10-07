@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Check, Copy } from "lucide-react";
 import type { reelvault } from "@/client/client";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -83,7 +83,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 								className="hover:text-foreground"
 								title={m.admin_audit_copy_resource_id()}
 							>
-								{hasCopied ? <Check className="size-3 text-primary" /> : <Copy className="size-3" />}
+								<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 							</button>
 						</div>
 					)}
@@ -107,7 +107,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 									className="hover:text-foreground"
 									title={m.admin_audit_copy_actor_id()}
 								>
-									{hasCopied ? <Check className="size-3 text-primary" /> : <Copy className="size-3" />}
+									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</div>
 						</div>
@@ -133,7 +133,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 									className="hover:text-foreground"
 									title={m.admin_audit_copy_ip()}
 								>
-									{hasCopied ? <Check className="size-3 text-primary" /> : <Copy className="size-3" />}
+									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</div>
 						) : (

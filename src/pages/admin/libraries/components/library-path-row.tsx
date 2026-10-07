@@ -1,6 +1,7 @@
 import type { LibraryWithRelations } from "@reelvault/sdk";
-import { Check, Copy, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { AsyncButton } from "@/components/async-button";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -36,7 +37,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 						title={m.admin_libraries_copy_path()}
 						aria-label={m.admin_libraries_copy_path_named({ path: path.path })}
 					>
-						{isCopied ? <Check className="size-3 text-success" /> : <Copy className="size-3" />}
+						<CopyIcon copied={isCopied} className="size-3" />
 					</button>
 
 					{!path.isActive && (
@@ -69,7 +70,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 									className="text-muted-foreground hover:text-foreground"
 									title={m.admin_libraries_copy_stable_key()}
 								>
-									{isKeyCopied ? <Check className="size-2.5 text-success" /> : <Copy className="size-2.5" />}
+									<CopyIcon copied={isKeyCopied} className="size-2.5" />
 								</button>
 							</span>
 						</>

@@ -1,6 +1,7 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { Check, Copy, Layers, LucideLink } from "lucide-react";
+import { Layers, LucideLink } from "lucide-react";
+import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -50,7 +51,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 							title={m.admin_markers_copy_file_id()}
 							aria-label={m.admin_markers_copy_file_id()}
 						>
-							{hasCopied ? <Check className="size-3 text-success" /> : <Copy className="size-3" />}
+							<CopyIcon copied={hasCopied} className="size-3" />
 						</Button>
 					</div>
 				</InfoRow>
