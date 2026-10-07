@@ -5,6 +5,7 @@ import { startTransition } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshPerson, useRefreshPersonImage } from "@/client/hooks/use-person-data";
 import { defineFields } from "@/client/utils/fields";
+import { isAdminUser } from "@/components/auth/admin-access";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
 	ContextMenu,
@@ -25,7 +26,7 @@ export const personCardFields = defineFields<Cast>()("character", "data.id", "da
 
 export function PersonCard({ person }: { person: RequireFields<Cast, typeof personCardFields> }) {
 	const { user } = useCurrentUser();
-	const isAdmin = user?.role === "admin";
+	const isAdmin = isAdminUser(user);
 	const refreshPersonMutation = useRefreshPerson();
 	const refreshPersonImageMutation = useRefreshPersonImage();
 

@@ -2,13 +2,14 @@ import { cn } from "cn";
 import { ImageDown, RefreshCw } from "lucide-react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshPerson, useRefreshPersonImage } from "@/client/hooks/use-person-data";
+import { isAdminUser } from "@/components/auth/admin-access";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 
 export function PersonHero({ personId, name }: { personId: string; name: string }) {
 	const { user } = useCurrentUser();
-	const isAdmin = user?.role === "admin";
+	const isAdmin = isAdminUser(user);
 	const refreshPersonMutation = useRefreshPerson();
 	const refreshPersonImageMutation = useRefreshPersonImage();
 

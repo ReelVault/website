@@ -4,6 +4,7 @@ import { startTransition } from "react";
 import { resolveApiAssetUrl } from "@/client/client";
 import { useLogout } from "@/client/hooks/use-auth";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
+import { isAdminUser } from "@/components/auth/admin-access";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -110,7 +111,7 @@ export function NavbarProfile() {
 						</DropdownMenuItem>
 					</Link>
 
-					{user?.role === "admin" && (
+					{isAdminUser(user) && (
 						<Link to={"/admin"}>
 							<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-primary text-sm hover:cursor-pointer hover:bg-primary/10">
 								<Shield className="size-4" />

@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useDetailsView } from "@/client/hooks/use-metadata-queries";
 import { AppErrorState } from "@/components/app-states";
+import { isAdminUser } from "@/components/auth/admin-access";
 import { LazyRender } from "@/components/lazy-render";
 import { PageContainer } from "@/components/page-container";
 import { usePageTitle } from "@/hooks/use-page-title";
@@ -54,7 +55,7 @@ export default function DetailsByIdPage() {
 	const detailsViewQuery = useDetailsView(id);
 	usePageTitle(detailsViewQuery.data?.metadata.title);
 	const { user } = useCurrentUser();
-	const isAdmin = user?.role === "admin";
+	const isAdmin = isAdminUser(user);
 
 	if (detailsViewQuery.isLoading) return <DetailsPageSkeleton />;
 

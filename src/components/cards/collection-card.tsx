@@ -5,6 +5,7 @@ import { Copy, Eye, Shield } from "lucide-react";
 import { startTransition } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { defineFields } from "@/client/utils/fields";
+import { isAdminUser } from "@/components/auth/admin-access";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
 	ContextMenu,
@@ -38,7 +39,7 @@ export function CollectionCard({
 	metadata: RequireFields<MetadataWithRelation, typeof collectionFields>;
 }) {
 	const { user } = useCurrentUser();
-	const isAdmin = user?.role === "admin";
+	const isAdmin = isAdminUser(user);
 	const backdropId = getMetadataBackdrop(metadata)?.id;
 
 	const handleCopyLink = (): void => {

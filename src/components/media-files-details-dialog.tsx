@@ -9,6 +9,7 @@ import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshEpisode, useRefreshEpisodeImage } from "@/client/hooks/use-episodes";
 import { mediaKeys } from "@/client/utils/query-keys";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
+import { isAdminUser } from "@/components/auth/admin-access";
 import { LazyRender } from "@/components/lazy-render";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -100,7 +101,7 @@ export function MediaFilesDetailsDialog({ open, onOpenChange, metadataId, episod
 				<MediaFilesDialogHeader
 					filesCount={files.length}
 					title={title}
-					isAdmin={user?.role === "admin"}
+					isAdmin={isAdminUser(user)}
 					episodeId={episodeId}
 					metadataId={metadataId}
 					isRefreshingEpisode={refreshEpisodeMutation.isPending}
