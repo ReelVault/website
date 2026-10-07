@@ -58,6 +58,7 @@ export const mePlaybackKeys = {
 	all: ["me", "playback"] as const,
 	suggestions: (metadataId: string) => [...mePlaybackKeys.all, "suggestions", metadataId] as const,
 	suggestionsAll: () => [...mePlaybackKeys.all, "suggestions"] as const,
+	suggestionsBatch: (metadataIds: readonly string[]) => [...mePlaybackKeys.suggestionsAll(), "batch", metadataIds] as const,
 	progress: (metadataId: string) => [...mePlaybackKeys.all, "progress", metadataId] as const,
 	progressAll: () => [...mePlaybackKeys.all, "progress"] as const,
 	streamPrefs: (mediaFileId: string) => [...mePlaybackKeys.all, "stream-prefs", mediaFileId] as const,

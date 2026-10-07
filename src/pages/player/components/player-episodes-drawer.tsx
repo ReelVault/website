@@ -8,6 +8,7 @@ import { useCollectionDetails } from "@/client/hooks/use-collections";
 import { useEpisodes } from "@/client/hooks/use-episodes";
 import { usePlaybackProgress } from "@/client/hooks/use-me-playback";
 import { useMetadataCollection } from "@/client/hooks/use-metadata-queries";
+import { mePlaybackKeys } from "@/client/utils/query-keys";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -66,10 +67,10 @@ export function PlayerEpisodesDrawer() {
 	const collectionItems = collectionQuery.data?.data ?? [];
 	// ONE batched call for every collection item's smart-play suggestion + watchlist
 	// flag — per-item hooks fired N requests the moment the drawer opened.
-	const collectionIds = collectionItems.map((movie) => movie.id).join(",");
+	const collectionIds = collectionItems.map((movie) => movie.id);
 	const collectionSuggestionsQuery = useQuery({
-		queryKey: ["me", "playback-suggestions", "batch", collectionIds],
-		queryFn: () => reelvault.me.getPlaybackSuggestionsBatch(collectionIds.split(",")),
+		queryKey: mePlaybackKeys.suggestionsBatch(collectionIds),
+		queryFn: () => reelvault.me.getPlaybackSuggestionsBatch(collectionIds),
 		enabled: isCollectionMode && collectionIds.length > 0,
 		staleTime: 30_000,
 	});
