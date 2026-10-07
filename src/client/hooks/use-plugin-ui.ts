@@ -12,6 +12,7 @@ import type {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "@tanstack/react-router";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
+import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { getAppLocale } from "@/utils/locale";
@@ -251,7 +252,10 @@ export function usePluginSearchProvider(): PluginSearchProvider | null {
  */
 export function usePluginSearch(provider: PluginSearchProvider | null, term: string, enabled: boolean) {
 	const queryClient = useQueryClient();
-	const trimmed = term.trim();
+	// Match the native global search: one provider request per settled input, not
+	// one per keystroke.
+	const debouncedTerm = useDebounce({ value: term, delay: 500 });
+	const trimmed = debouncedTerm.trim();
 
 	const query = useQuery({
 		queryKey: pluginKeys.search(provider?.pluginId ?? "", trimmed),
