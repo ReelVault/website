@@ -228,6 +228,12 @@ export function getSdkErrorMessage(error: unknown): string | undefined {
 export const reelvault = new ReelVaultClient({
 	baseUrl: () => getReelVaultApiUrl(),
 	credentials: "include",
+	// The SDK owns transient-failure retries (network/timeout/5xx/429) with its
+	// own backoff. The default of 3 multiplies with React Query's own retry into
+	// up to ~8 attempts per request on flaky links; one SDK retry plus the
+	// query-level predicate below keeps the total bounded while preserving the
+	// transient-recovery behavior.
+	maxRetries: 1,
 	// Native shells need the JSON bearer token from quick-connect; browsers rely on
 	// the HttpOnly session cookie and must not receive it.
 	headers: isNativeShell() ? { "x-client-shell": "native" } : {},
