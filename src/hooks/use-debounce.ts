@@ -1,11 +1,9 @@
-import { useThrottleDebounce } from "./use-throttle-debounce";
+import { useEffect, useState } from "react";
 
 /**
- * React hook that debounces value updates to prevent excessive API calls or re-renders
- *
- * Uses the base useThrottleDebounce hook for implementation. Debounces value
- * changes by delaying updates until a specified time has passed since the
- * last change.
+ * React hook that debounces value updates to prevent excessive API calls or
+ * re-renders. The returned value settles once `delay` has passed since the
+ * last change (or the component unmounted).
  *
  * @param value - The value to debounce
  * @param delay - Debounce delay in milliseconds (default: 500)
@@ -13,21 +11,18 @@ import { useThrottleDebounce } from "./use-throttle-debounce";
  *
  * @example
  * ```tsx
- * // Basic usage for search input
  * const [searchTerm, setSearchTerm] = useState('');
- * const debouncedSearchTerm = useDebounce({
- *   value: searchTerm,
- *   delay: 300
- * });
- *
- * // Use in effect for API calls
- * useEffect(() => {
- *   if (debouncedSearchTerm) {
- *     searchAPI(debouncedSearchTerm);
- *   }
- * }, [debouncedSearchTerm]);
+ * const debouncedSearchTerm = useDebounce({ value: searchTerm, delay: 300 });
  * ```
  */
 export function useDebounce<T>({ delay = 500, value }: { delay?: number; value: T }): T {
-	return useThrottleDebounce({ value, delay, mode: "debounce" });
+	const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => setDebouncedValue(value), delay);
+
+		return () => clearTimeout(timeout);
+	}, [delay, value]);
+
+	return debouncedValue;
 }
