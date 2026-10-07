@@ -77,6 +77,18 @@ This release is dominated by collapsing per-view request waterfalls into server 
 - **Navbar command palette deferred** — the cmdk-based search palette is now a lazy chunk mounted only on ≥1536px screens or when opened (Ctrl+K / the icon); the `web-layout` chunk every authenticated page loads dropped **26.9 KB → 8.4 KB** (brotli), and its 20.9 KB palette chunk is fetched on demand.
 - **Base-UI split per primitive** — the single 262 KB `ui-core` chunk (every `@base-ui` primitive in one file) is now one chunk per primitive, with shared positioning/prop-merging internals collapsed into `ui-base`, so a page pulls only what it renders. The shell's first-load graph dropped **367,189 B → 347,632 B** (brotli) and its base-ui payload **76,690 B → 56,763 B** (−26%). Trade-off: +22 lazy vendor chunks for finer, longer-lived caching.
 
+#### Request waterfalls & polling
+
+- **Player open** — dropped the redundant full `metadata.getById` fetch (the title now rides the playback view) and the unused `media.getById` route prefetch: **2 fewer requests**, and the wide metadata-details payload is gone from the most latency-sensitive navigation.
+- **Admin dashboard** — removed the loader prefetch of `admin/stats` that the composite view already seeds: **1 fewer request** per dashboard entry.
+- **Hero slides** — the five smart-play suggestions are warmed in one parallel wave (`Promise.allSettled`) instead of a serial loop that queued five round-trips.
+- **Navbar plugin search** — debounced like the native search: one provider request per settled input instead of one per keystroke.
+- **Missing-translation refresh** — pages are fetched in parallel instead of up to 50 serial requests.
+- **Remote control** — playback-session polling backs off from 15 s to 60 s when no session is running (realtime `session:started`/`ended` still refreshes immediately): idle requests **−75%**.
+- **Plugin catalog** — a plugin mutation no longer invalidates `pluginKeys.catalog()` twice (covered by `pluginKeys.all`), and the four repository mutations issue their two invalidations in parallel instead of sequentially.
+- **Batch suggestions key** — the episodes-drawer batch smart-play query moved under the `["me","playback","suggestions"]` prefix, so playback invalidations reach it instead of leaving stale watch states.
+- **Dashboard seeding** — the composite's cache seeding moved out of the render body into the query function (no cache writes during render).
+
 ### Performance benchmarks
 
 The table counts API requests fired by a cold open of each view (for the details page, requests beyond the composite it already calls). These are request-count and polling-frequency reductions, not timings.
@@ -97,6 +109,9 @@ The table counts API requests fired by a cold open of each view (for the details
 | Bundle | `web-layout` chunk (every authenticated page) | 26.9 KB | 8.4 KB | **-69%** |
 | Bundle | Shell first-load graph (entry + layout, brotli) | 367,189 B | 347,632 B | **-5.3%** |
 | Bundle | Shell base-ui payload (brotli) | 76,690 B | 56,763 B | **-26%** |
+| Network | Player open — redundant metadata + media prefetches | 2 | 0 | **-100%** |
+| Network | Admin dashboard — unused `admin/stats` prefetch | 1 | 0 | **-100%** |
+| Polling | Remote sessions — idle poll interval | 15 s | 60 s | **-75%** |
 
 ### Additional measurements
 
@@ -108,3 +123,8 @@ The table counts API requests fired by a cold open of each view (for the details
 - Updates route — lazy chunk ~171 KB raw after adding `react-markdown`, `remark-gfm` and `remark-github-blockquote-alert`; off the eager graph, so the entry bundle is unaffected.
 - Dead code — removed the unused `app-tooltip.tsx` (single caller inlined), the redundant nested `QueryProvider` (the router is already inside a `QueryClientProvider`), `useThrottleDebounce` (folded into `useDebounce`) and dead exports (`applyAudioBoost`, `findPluginPage`, `useMetadataWatchlist`, `emptyMetadataForm`, `mediaKeys.markers`, `metadataKeys.watchlist`): net **−138 lines** across 32 files, 3 files deleted.
 - `react-doctor` score: **70** (threshold ≥ 70).
+- Hero slides — smart-play warm-up: up to 5 serial round-trips → 5 parallel (`Promise.allSettled`).
+- Missing-translation refresh — up to 50 sequential page fetches → parallel.
+- Navbar plugin search — one provider request per keystroke → one per settled input (500 ms debounce).
+- Plugin catalog — a plugin mutation's catalog query was invalidated twice; the four repository mutations now issue their two invalidations concurrently.
+- Player episodes drawer — batch smart-play key moved under `["me","playback","suggestions"]` so realtime/playback invalidations reach it.
