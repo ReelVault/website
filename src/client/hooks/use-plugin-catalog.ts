@@ -72,10 +72,10 @@ export function usePluginCatalog() {
 	const invalidateCatalogViews = useCallback(
 		() =>
 			Promise.all([
-				queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() }),
-				queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() }),
-				queryClient.invalidateQueries({ queryKey: adminKeys.plugins() }),
+				// `pluginKeys.all` already covers catalog, repositories and the UI
+				// manifest — invalidating them individually double-fired each.
 				queryClient.invalidateQueries({ queryKey: pluginKeys.all }),
+				queryClient.invalidateQueries({ queryKey: adminKeys.plugins() }),
 			]),
 		[queryClient],
 	);
@@ -218,8 +218,10 @@ export function usePluginCatalog() {
 			return await reelvault.admin.createPluginRepository(body);
 		},
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() });
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() });
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() }),
+				queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() }),
+			]);
 			toast.success(m.admin_plugins_repositories_toast_added());
 		},
 		onError: (error) => {
@@ -235,8 +237,10 @@ export function usePluginCatalog() {
 			return await reelvault.admin.updatePluginRepository(input.repositoryId, input.body);
 		},
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() });
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() });
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() }),
+				queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() }),
+			]);
 		},
 		onError: (error) => {
 			toastError(m.admin_plugins_repositories_update_failed(), error, m.toast_plugins_unexpected_error());
@@ -248,8 +252,10 @@ export function usePluginCatalog() {
 			return await reelvault.admin.deletePluginRepository(repositoryId);
 		},
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() });
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() });
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() }),
+				queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() }),
+			]);
 			toast.success(m.admin_plugins_repositories_toast_deleted());
 		},
 		onError: (error) => {
@@ -262,8 +268,10 @@ export function usePluginCatalog() {
 			return await reelvault.admin.refreshPluginRepository(repositoryId);
 		},
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() });
-			await queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() });
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: pluginKeys.repositories() }),
+				queryClient.invalidateQueries({ queryKey: pluginKeys.catalog() }),
+			]);
 			toast.success(m.admin_plugins_repositories_toast_refreshed());
 		},
 		onError: (error) => {
