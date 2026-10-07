@@ -3,13 +3,11 @@ import { useInView } from "react-intersection-observer";
 
 export function LazyRender({
 	children,
-	placeholder,
 	className,
 	rootMargin = "400px 0px",
 	minHeight,
 }: {
 	children: () => ReactNode;
-	placeholder?: ReactNode;
 	className?: string;
 	rootMargin?: string;
 	minHeight?: string | number;
@@ -21,7 +19,7 @@ export function LazyRender({
 
 	return (
 		<div ref={ref} className={className} style={!inView && minHeight !== undefined ? { minHeight } : undefined}>
-			{inView ? children() : (placeholder ?? null)}
+			{inView ? children() : null}
 		</div>
 	);
 }

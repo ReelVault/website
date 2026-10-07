@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import type { ReactElement, ReactNode } from "react";
-import { AppTooltip } from "@/components/app-tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /**
  * The exact same button styling was previously hand-copied into the footer
@@ -30,8 +30,11 @@ export function PlayerControlButton({
 	className?: string;
 }) {
 	return (
-		<AppTooltip description={description} render={render} className={cn(controlButtonVariants[variant], className)}>
-			{children}
-		</AppTooltip>
+		<Tooltip>
+			<TooltipTrigger render={render} className={cn(controlButtonVariants[variant], className)}>
+				{children}
+			</TooltipTrigger>
+			<TooltipContent>{description}</TooltipContent>
+		</Tooltip>
 	);
 }
