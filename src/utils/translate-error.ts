@@ -15,10 +15,13 @@ type CatalogMessage = (inputs?: MessageParams) => string;
 const dynamicMessages = {
 	admin_live_active_streams: (inputs) => m.admin_live_active_streams({ viewers: String(inputs?.viewers ?? "") }),
 	admin_live_no_streams: () => m.admin_live_no_streams(),
-	auth_change_password_failed: () => m.auth_change_password_failed(),
+	auth_email_registered: () => m.auth_email_registered(),
 	auth_invalid_credentials: () => m.auth_invalid_credentials(),
 	auth_invalid_current_password: () => m.auth_invalid_current_password(),
+	auth_invalid_email: () => m.auth_invalid_email(),
+	auth_request_rejected: () => m.auth_request_rejected(),
 	auth_two_factor_required: () => m.auth_two_factor_required(),
+	auth_user_banned: () => m.auth_user_banned(),
 	auth_weak_password: () => m.auth_weak_password(),
 	conflict: () => m.conflict(),
 	episode_mismatch: (inputs) =>
