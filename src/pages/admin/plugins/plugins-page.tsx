@@ -115,6 +115,13 @@ export default function AdminPluginsPage() {
 		(left, right) => catalogStatusRank(left.status) - catalogStatusRank(right.status) || left.name.localeCompare(right.name),
 	);
 
+	// Search and category narrow the installed list too (category comes from the catalog entry).
+	const installedPlugins = plugins.filter((plugin) => {
+		if (category !== "all" && catalog.find((entry) => entry.id === plugin.id)?.category !== category) return false;
+
+		return query.length === 0 || `${plugin.name} ${plugin.description ?? ""} ${plugin.id}`.toLowerCase().includes(query);
+	});
+
 	const setView = (next: CatalogView) => {
 		detach(navigate({ search: (previous: Record<string, unknown>) => ({ ...previous, view: next === "available" ? undefined : next }) }));
 	};
@@ -146,7 +153,7 @@ export default function AdminPluginsPage() {
 				icon={Puzzle}
 				eyebrow={m.plugins_requests_server_extensions()}
 				title={m.admin_plugins_heading()}
-				count={view === "installed" ? plugins.length : filteredCatalog.length}
+				count={view === "installed" ? installedPlugins.length : filteredCatalog.length}
 				description={m.admin_plugins_manage_description()}
 				actions={
 					<>
@@ -241,9 +248,13 @@ export default function AdminPluginsPage() {
 						<AppEmptyState title={m.admin_plugins_none_installed()} description={m.admin_plugins_install_hint()} />
 					)}
 
-					{!(pluginsQuery.isLoading || pluginsQuery.isError) && plugins.length > 0 && (
+					{!(pluginsQuery.isLoading || pluginsQuery.isError) && plugins.length > 0 && installedPlugins.length === 0 && (
+						<AppEmptyState title={m.admin_plugins_none_installed()} description={m.admin_plugins_catalog_empty_filter()} />
+					)}
+
+					{!(pluginsQuery.isLoading || pluginsQuery.isError) && installedPlugins.length > 0 && (
 						<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-							{plugins.map((plugin) => {
+							{installedPlugins.map((plugin) => {
 								const catalogEntry = catalog.find((entry) => entry.id === plugin.id);
 
 								return (
