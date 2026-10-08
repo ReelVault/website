@@ -2701,7 +2701,12 @@
 			"selectors": ["cat"]
 		}
 	],
+	"downloads_disabled": "Pobieranie jest wyłączone na tym serwerze.",
 	"downloads_download_file": "Pobierz plik",
+	"downloads_duration_unknown": "Nie można przygotować pobrania tego pliku, bo nie znamy jego długości.",
+	"downloads_in_progress": "Masz już trwające pobieranie. Poczekaj, aż się zakończy.",
+	"downloads_media_file_required": "Wybierz plik do pobrania.",
+	"downloads_quota_exceeded": "Limit miejsca na pobrania jest wyczerpany. Najpierw usuń starsze pobrania.",
 	"episode_mismatch": "Niezgodność odcinka: w pliku odcinek {recognizedEpisode}, przypisano do odcinka {assignedEpisode}.",
 	"forbidden": "Brak dostępu.",
 	"hooks_all_notifications_marked": "Oznaczono wszystkie powiadomienia jako przeczytane.",

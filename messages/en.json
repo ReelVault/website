@@ -2676,7 +2676,12 @@
 			"selectors": ["cat"]
 		}
 	],
+	"downloads_disabled": "Downloads are turned off on this server.",
 	"downloads_download_file": "Download file",
+	"downloads_duration_unknown": "This file cannot be converted for download because its duration is unknown.",
+	"downloads_in_progress": "You already have a download in progress. Wait for it to finish.",
+	"downloads_media_file_required": "Choose a file to download.",
+	"downloads_quota_exceeded": "Your download storage is full. Delete older downloads first.",
 	"episode_mismatch": "Episode mismatch: the file contains episode {recognizedEpisode}, assigned to episode {assignedEpisode}.",
 	"forbidden": "Access denied.",
 	"hooks_all_notifications_marked": "All notifications marked as read.",

@@ -24,6 +24,11 @@ const dynamicMessages = {
 	auth_user_banned: () => m.auth_user_banned(),
 	auth_weak_password: () => m.auth_weak_password(),
 	conflict: () => m.conflict(),
+	downloads_disabled: () => m.downloads_disabled(),
+	downloads_duration_unknown: () => m.downloads_duration_unknown(),
+	downloads_in_progress: () => m.downloads_in_progress(),
+	downloads_media_file_required: () => m.downloads_media_file_required(),
+	downloads_quota_exceeded: () => m.downloads_quota_exceeded(),
 	episode_mismatch: (inputs) =>
 		m.episode_mismatch({
 			recognizedEpisode: String(inputs?.recognizedEpisode ?? ""),
