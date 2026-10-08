@@ -40,6 +40,7 @@ import {
 	isForbiddenPlaybackError,
 	toPlaybackError,
 } from "../utils/player-preferences.storage";
+import { consumeSleepAfterEpisode } from "../utils/player-sleep-timer";
 import type { PlayerTimeStore } from "../utils/player-time-store";
 import { detach, hasBufferAt, isSafeSeek, noopCleanup } from "../utils/player-utils";
 
@@ -1067,6 +1068,9 @@ export function usePlayerController({
 		if (typeof window !== "undefined" && !window.location.pathname.startsWith("/player")) return;
 
 		detach(() => syncPlaybackProgress(true));
+		// "Stop after this episode" sleep timer: stay on the ended episode instead of advancing or leaving.
+		if (consumeSleepAfterEpisode()) return;
+
 		const prefs = profilePreferencesRef.current;
 		if (prefs?.autoplay && nextEpisodeRef.current?.mediaFileId && !isNextEpisodeDismissedRef.current) {
 			playNextEpisode();

@@ -12,6 +12,7 @@ import { PlayerFooter } from "./player-footer";
 import { PlayerHeader } from "./player-header";
 import { PlayerMarkerButton } from "./player-marker-button";
 import { PlayerNextEpisodeOverlay } from "./player-next-episode-overlay";
+import { PlayerSleepTimerController } from "./player-sleep-timer";
 import { PlayerErrorOverlay, PlayerLoadingOverlay } from "./player-state-overlays";
 import { PlayerSubtitleOverlay } from "./player-subtitle-overlay";
 
@@ -25,6 +26,7 @@ const PlayerAudioSubtitlesDialog = lazy(async () => ({
 const PlayerDiagnostics = lazy(async () => ({ default: (await import("./player-diagnostics")).PlayerDiagnostics }));
 const PlayerEpisodesDrawer = lazy(async () => ({ default: (await import("./player-episodes-drawer")).PlayerEpisodesDrawer }));
 const PlayerSettingsMenu = lazy(async () => ({ default: (await import("./player-settings-menu")).PlayerSettingsMenu }));
+const PlayerSleepTimerMenu = lazy(async () => ({ default: (await import("./player-sleep-timer-menu")).PlayerSleepTimerMenu }));
 const PlayerShortcutsDialog = lazy(async () => ({ default: (await import("./player-shortcuts-dialog")).PlayerShortcutsDialog }));
 
 export interface PlayerChromeProps {
@@ -63,6 +65,7 @@ export function PlayerChrome({
 		<>
 			{/* Headless subscribers — media session sync; renders null */}
 			<PlayerMediaSessionBridge />
+			<PlayerSleepTimerController />
 
 			{/* Overlays */}
 			<PlayerLoadingOverlay />
@@ -116,6 +119,7 @@ export function PlayerChrome({
 						<Suspense fallback={null}>
 							<PlayerEpisodesDrawer />
 							<PlayerAudioSubtitlesDialog />
+							<PlayerSleepTimerMenu />
 							<PlayerSettingsMenu
 								onOpenShortcuts={() => onShortcutsOpenChange(true)}
 								shortcutsDisabled={shortcutsDisabled}

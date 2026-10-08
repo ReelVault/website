@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 import { usePlayerInfo, usePlayerNextEpisode, usePlayerStatus, usePlayerTime } from "../player-context";
+import { useSleepTimer } from "../utils/player-sleep-timer";
 
 export function PlayerNextEpisodeOverlay() {
 	const { nextEpisode, playNextEpisode, isNextEpisodeDismissed, setIsNextEpisodeDismissed, autoplay } = usePlayerNextEpisode();
@@ -22,7 +23,8 @@ export function PlayerNextEpisodeOverlay() {
 		autoPlayTriggeredRef.current = false;
 	}, [info.mediaFileId, nextEpisode?.mediaFileId, setIsNextEpisodeDismissed]);
 
-	const isAutoplay = autoplay;
+	const sleepTimer = useSleepTimer();
+	const isAutoplay = autoplay && sleepTimer.kind !== "episode";
 	const duration = info.duration;
 	const remainingTime = duration > 0 ? duration - currentTime : Number.POSITIVE_INFINITY;
 	// Automatically show when remaining time is 30 seconds or less (or playback ended), provided duration is valid and past initial 10s
