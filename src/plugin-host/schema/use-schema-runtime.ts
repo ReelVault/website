@@ -1,12 +1,6 @@
 /* oxlint-disable react/exhaustive-effect-dependencies, react/set-state-in-effect, react-hooks/exhaustive-deps -- mount-only schema initialization */
 
-import type {
-	PluginLocalizedText,
-	PluginSchemaAction,
-	PluginSchemaCondition,
-	PluginSchemaNode,
-	PluginUiSchemaSurface,
-} from "@reelvault/sdk/plugin";
+import type { PluginLocalizedText, PluginSchemaAction, PluginSchemaCondition, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
@@ -15,6 +9,7 @@ import { toast } from "@/utils/toast-facade";
 import { usePluginDialogController } from "../plugin-dialog-context";
 import { evaluateCondition, resolveLabel, resolveTemplate, type SchemaScope } from "./binding";
 import { bumpSchemaRefresh, subscribeSchemaRefresh } from "./refresh-bus";
+import { collectSchemaDefaults, mergeSchemaDefaults } from "./schema-defaults";
 
 export interface SchemaRuntime {
 	scope: SchemaScope;
@@ -40,37 +35,6 @@ function toStringRecord(value: unknown): Record<string, string> | undefined {
 	return result;
 }
 
-/** Collects initial form values from every `field` node (defaults are interpolated). */
-function collectInitialValues(nodes: PluginSchemaNode[], scope: SchemaScope): Record<string, unknown> {
-	const values: Record<string, unknown> = {};
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: walks every container node type
-	const walk = (list: PluginSchemaNode[]): void => {
-		for (const node of list) {
-			if (node.type === "field") {
-				if (values[node.name] === undefined && node.default !== undefined) values[node.name] = resolveTemplate(node.default, scope);
-
-				continue;
-			}
-
-			if (node.type === "stack" || node.type === "row" || node.type === "grid" || node.type === "card" || node.type === "section") {
-				walk(node.children);
-			} else if (node.type === "tabs") {
-				for (const tab of node.tabs) walk(tab.children);
-			} else if (node.type === "list" || node.type === "foreach") {
-				walk(node.item);
-			} else if (node.type === "table" && node.rowActions) {
-				walk(node.rowActions);
-			} else if (node.type === "if") {
-				walk(node.content);
-				if (node.otherwise) walk(node.otherwise);
-			}
-		}
-	};
-	walk(nodes);
-
-	return values;
-}
-
 /** Resolves a localized plugin label for toasts/confirmations — module scope: captures nothing. */
 function toastText(value: PluginLocalizedText, scope: SchemaScope): string {
 	return resolveLabel(value, scope);
@@ -86,12 +50,14 @@ export function useSchemaRuntime(
 	const { openDialog } = usePluginDialogController();
 
 	const emptyScope: SchemaScope = { form: {}, data: {}, context };
-	const [formValues, setFormValues] = useState<Record<string, unknown>>(() => collectInitialValues(schema.body, emptyScope));
+	const [formValues, setFormValues] = useState<Record<string, unknown>>(() => collectSchemaDefaults(schema.body, emptyScope));
 	const [dataValues, setDataValues] = useState<Record<string, unknown>>({});
 	const [dataLoading, setDataLoading] = useState(false);
 	const [dataErrors, setDataErrors] = useState<Record<string, string>>({});
 	const scopeRef = useRef<SchemaScope>({ form: formValues, data: dataValues, context });
 	const isMountedRef = useRef(true);
+	/** Fields the user edited — data-driven defaults must never overwrite them. */
+	const touchedFieldsRef = useRef<Set<string>>(new Set());
 	// Monotonic id so a slower earlier load cannot overwrite a newer one, and an
 	// unmounted surface never writes state.
 	const loadRequestIdRef = useRef(0);
@@ -121,7 +87,8 @@ export function useSchemaRuntime(
 
 				try {
 					const query = toStringRecord(resolveTemplate(source.query ?? {}, scope));
-					const result = await reelvault.plugins.call(pluginId, source.path, query ? { query } : undefined);
+					const path = String(resolveTemplate(source.path, scope));
+					const result = await reelvault.plugins.call(pluginId, path, query ? { query } : undefined);
 					if (!isLatest()) return;
 
 					setDataValues((previous) => ({ ...previous, [name]: result }));
@@ -138,8 +105,17 @@ export function useSchemaRuntime(
 	};
 
 	const setField = (name: string, value: unknown): void => {
+		touchedFieldsRef.current.add(name);
 		setFormValues((previous) => ({ ...previous, [name]: value }));
 	};
+
+	// Defaults referencing `{{data.*}}` cannot resolve at mount; fill them for
+	// untouched fields once (and whenever) the data sources arrive.
+	useEffect(() => {
+		setFormValues((previous) =>
+			mergeSchemaDefaults(schema.body, previous, { form: previous, data: dataValues, context }, touchedFieldsRef.current),
+		);
+	}, [dataValues, schema.body, context]);
 
 	const refresh = (scope: SchemaScope, sources?: string[]): void => {
 		detach(loadSources(sources && sources.length > 0 ? sources : allSourceNames, scope));
