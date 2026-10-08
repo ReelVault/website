@@ -16,6 +16,7 @@ export interface ProfilePreferencesState {
 	autoForcedSubtitles: boolean;
 	preferHearingImpaired: boolean;
 	continueWatchingMinutes: number;
+	resumeRewindSeconds: number;
 	subtitleSize: "small" | "normal" | "large" | "extra-large";
 	subtitlePosition: "bottom" | "top" | "middle";
 	subtitleColor: "white" | "yellow" | "cyan" | "green";
@@ -37,6 +38,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	autoForcedSubtitles: true,
 	preferHearingImpaired: false,
 	continueWatchingMinutes: 2,
+	resumeRewindSeconds: 0,
 	subtitleSize: "normal",
 	subtitlePosition: "bottom",
 	subtitleColor: "white",
@@ -58,6 +60,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"autoForcedSubtitles",
 	"preferHearingImpaired",
 	"continueWatchingMinutes",
+	"resumeRewindSeconds",
 	"subtitleSize",
 	"subtitlePosition",
 	"subtitleColor",

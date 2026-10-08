@@ -44,6 +44,7 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 			autoForcedSubtitles: preferences.autoForcedSubtitles,
 			preferHearingImpaired: preferences.preferHearingImpaired,
 			continueWatchingMinutes: preferences.continueWatchingMinutes,
+			resumeRewindSeconds: preferences.resumeRewindSeconds,
 			subtitleSize: preferences.subtitleSize,
 			subtitlePosition: preferences.subtitlePosition,
 			subtitleColor: preferences.subtitleColor,

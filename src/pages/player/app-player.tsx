@@ -50,6 +50,7 @@ export function AppPlayer({
 	profilePreferences:
 		| {
 				autoplay?: boolean;
+				resumeRewindSeconds?: number;
 				autoSkipIntro?: boolean;
 				autoSkipCredits?: boolean;
 				autoSkipRecap?: boolean;

@@ -198,6 +198,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_users_audio_language(),
 		description: m.admin_settings_default_audio_language_desc(),
 	},
+	"profiles.defaultPreferences.resumeRewindSeconds": {
+		label: m.settings_resume_rewind(),
+		description: m.settings_resume_rewind_desc(),
+	},
 	"profiles.defaultPreferences.subtitleLanguage": {
 		label: m.admin_users_subtitle_language(),
 		description: m.admin_settings_default_subtitle_language_desc(),

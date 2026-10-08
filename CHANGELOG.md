@@ -190,6 +190,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Subtitle language priority list** — Settings → Playback has a new "Fallback subtitle languages" picker: add languages as chips, reorder them and remove them. When the preferred language has no subtitles, the next language in the list is used. Admins can set a default in Settings → Profiles. Requires SDK 1.3.0.
 - **Remove from Continue Watching** — each Continue Watching card has a new hide button (and a context-menu entry). Unlike resetting progress it keeps your resume position; the title returns as soon as you play it again. Requires SDK 1.3.0.
 - **Sleep timer** — a moon button in the player pauses playback after 15, 30, 45 or 60 minutes, or at the end of the current episode (which also stops auto-advancing to the next one). The timer survives episode changes and is cleared when you leave the player.
+- **Rewind on resume** — Settings → Playback can rewind 5–30 seconds when you continue a title, so you regain the context of the scene. Requires SDK 1.3.0.
 
 ### Fixes
 

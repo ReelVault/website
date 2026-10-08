@@ -161,6 +161,7 @@ export function usePlayerController({
 	profilePreferences:
 		| {
 				autoplay?: boolean;
+				resumeRewindSeconds?: number;
 				autoSkipIntro?: boolean;
 				autoSkipCredits?: boolean;
 				autoSkipRecap?: boolean;
@@ -400,7 +401,9 @@ export function usePlayerController({
 	const playbackProgress = viewQuery.data?.progress ?? undefined;
 	const rawPosition = playbackProgress?.position ?? 0;
 	const isNearEnd = mediaFile.duration && mediaFile.duration > 0 ? rawPosition >= mediaFile.duration - 5 : false;
-	const initialPosition = playbackProgress?.completed || isNearEnd ? 0 : rawPosition;
+	// Rewind a little on resume so the viewer regains context; never past the start.
+	const resumeRewind = profilePreferences?.resumeRewindSeconds ?? 0;
+	const initialPosition = playbackProgress?.completed || isNearEnd ? 0 : Math.max(0, rawPosition - resumeRewind);
 
 	const initialPositionRef = useRef(initialPosition);
 	useEffect(() => {

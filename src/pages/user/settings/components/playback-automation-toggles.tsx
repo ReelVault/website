@@ -1,6 +1,8 @@
-import { PreferenceToggle } from "@/components/preference-controls";
+import { PreferenceSelect, PreferenceToggle } from "@/components/preference-controls";
 import { m } from "@/paraglide/messages";
 import type { ProfilePreferencesState } from "@/types/profile-preferences";
+
+const RESUME_REWIND_SECONDS = ["0", "5", "10", "15", "30"] as const;
 
 interface PlaybackAutomationTogglesProps {
 	preferences: ProfilePreferencesState;
@@ -34,6 +36,16 @@ export function PlaybackAutomationToggles({ preferences, onChange }: PlaybackAut
 				description={m.settings_skip_recap_desc()}
 				checked={preferences.autoSkipRecap}
 				onChange={(autoSkipRecap) => onChange({ autoSkipRecap })}
+			/>
+			<PreferenceSelect
+				label={m.settings_resume_rewind()}
+				description={m.settings_resume_rewind_desc()}
+				value={String(preferences.resumeRewindSeconds)}
+				onChange={(seconds) => onChange({ resumeRewindSeconds: Number(seconds) })}
+				options={RESUME_REWIND_SECONDS.map((seconds) => [
+					seconds,
+					seconds === "0" ? m.settings_resume_rewind_off() : m.settings_resume_rewind_seconds({ seconds }),
+				])}
 			/>
 		</div>
 	);
