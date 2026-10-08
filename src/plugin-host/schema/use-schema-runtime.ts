@@ -152,7 +152,7 @@ export function useSchemaRuntime(
 				detach(
 					(async () => {
 						try {
-							await reelvault.plugins.call(pluginId, action.path, {
+							await reelvault.plugins.call(pluginId, String(resolveTemplate(action.path, scope)), {
 								method: action.method ?? "POST",
 								body: isRecord(body) ? body : undefined,
 							});
