@@ -8,10 +8,24 @@ import { metadataKeys, watchlistKeys } from "../utils/query-keys";
 
 // Server-side hydration: every item embeds its metadata card — the old
 // list→metadata waterfall is gone (one request for the whole page).
+const WATCHLIST_PAGE_LIMIT = 500;
+
+/** The endpoint paginates (default 20/page); the page shows the whole list, so every page is fetched and merged. */
+async function fetchFullWatchlist() {
+	const first = await reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT });
+	const data = [...first.data];
+	for (let page = 2; page <= first.totalPages; page++) {
+		const next = await reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page });
+		data.push(...next.data);
+	}
+
+	return { ...first, data };
+}
+
 export const watchlistQueryOptions = () =>
 	queryOptions({
 		queryKey: watchlistKeys.items(),
-		queryFn: () => reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true }),
+		queryFn: fetchFullWatchlist,
 		staleTime: 1000 * 60 * 5,
 		gcTime: 1000 * 60 * 30,
 	});
