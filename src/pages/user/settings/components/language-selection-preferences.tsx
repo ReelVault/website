@@ -1,4 +1,4 @@
-import { PreferenceSelect, PreferenceToggle } from "@/components/preference-controls";
+import { PreferenceLanguageList, PreferenceSelect, PreferenceToggle } from "@/components/preference-controls";
 import { m } from "@/paraglide/messages";
 import type { ProfilePreferencesState } from "@/types/profile-preferences";
 import { contentLanguageOptions } from "@/utils/locales";
@@ -28,6 +28,14 @@ export function LanguageSelectionPreferences({ preferences, onChange }: Language
 					options={contentLanguageOptions(m.settings_subtitle_language_same_as_audio())}
 				/>
 			</div>
+
+			<PreferenceLanguageList
+				label={m.user_subtitle_fallback_languages()}
+				description={m.user_subtitle_fallback_languages_desc()}
+				value={preferences.subtitleFallbackLanguages}
+				onChange={(subtitleFallbackLanguages) => onChange({ subtitleFallbackLanguages })}
+				options={contentLanguageOptions("").slice(1)}
+			/>
 
 			<div className="grid gap-3 sm:grid-cols-2">
 				<PreferenceToggle

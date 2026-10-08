@@ -9,6 +9,8 @@ export interface ProfilePreferencesState {
 	autoSkipRecap: boolean;
 	audioLanguage: string;
 	subtitleLanguage: string;
+	/** Comma-separated language priority list tried after `subtitleLanguage`. */
+	subtitleFallbackLanguages: string;
 	subtitlesEnabled: boolean;
 	forcedSubtitlesOnly: boolean;
 	autoForcedSubtitles: boolean;
@@ -29,6 +31,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	autoSkipRecap: false,
 	audioLanguage: "",
 	subtitleLanguage: "",
+	subtitleFallbackLanguages: "",
 	subtitlesEnabled: true,
 	forcedSubtitlesOnly: false,
 	autoForcedSubtitles: true,
@@ -49,6 +52,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"autoSkipRecap",
 	"audioLanguage",
 	"subtitleLanguage",
+	"subtitleFallbackLanguages",
 	"subtitlesEnabled",
 	"forcedSubtitlesOnly",
 	"autoForcedSubtitles",
@@ -66,7 +70,7 @@ export function normalizedPreferenceValue(
 	key: PreferenceStateKey,
 	value: string | number | boolean | null | undefined,
 ): string | number | boolean | null | undefined {
-	if ((key === "audioLanguage" || key === "subtitleLanguage") && value === "") return null;
+	if ((key === "audioLanguage" || key === "subtitleLanguage" || key === "subtitleFallbackLanguages") && value === "") return null;
 
 	return value;
 }

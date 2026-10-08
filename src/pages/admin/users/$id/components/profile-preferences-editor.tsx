@@ -38,6 +38,7 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 			autoSkipRecap: preferences.autoSkipRecap,
 			audioLanguage: preferences.audioLanguage ?? "",
 			subtitleLanguage: preferences.subtitleLanguage ?? "",
+			subtitleFallbackLanguages: preferences.subtitleFallbackLanguages ?? "",
 			subtitlesEnabled: preferences.subtitlesEnabled,
 			forcedSubtitlesOnly: preferences.forcedSubtitlesOnly,
 			autoForcedSubtitles: preferences.autoForcedSubtitles,

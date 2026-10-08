@@ -202,6 +202,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_users_subtitle_language(),
 		description: m.admin_settings_default_subtitle_language_desc(),
 	},
+	"profiles.defaultPreferences.subtitleFallbackLanguages": {
+		label: m.user_subtitle_fallback_languages(),
+		description: m.admin_settings_default_subtitle_fallback_desc(),
+	},
 	"profiles.defaultPreferences.preferHearingImpaired": {
 		label: m.settings_prefer_hearing_impaired(),
 		description: m.admin_settings_prefer_hearing_impaired_desc(),
