@@ -3007,6 +3007,7 @@
 	"remote_access_trusted_proxy_set": "Trusted proxies (APP_TRUSTED_PROXY_COUNT) set to {count} — rate limits and the audit log will see real client addresses.",
 	"request_timeout": "Timed out waiting for the server response.",
 	"scan_reason_no_metadata_match": "No metadata match found",
+	"scan_reason_probe_failed": "Video could not be analysed (probe failed)",
 	"scan_reason_recognition_failed": "File structure not recognized",
 	"scan_reason_type_mismatch": "File type does not match this library",
 	"season_mismatch": "Season mismatch: the file contains season {recognizedSeason}, assigned to season {assignedSeason}.",

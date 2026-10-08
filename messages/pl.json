@@ -3034,6 +3034,7 @@
 	"remote_access_trusted_proxy_set": "Zaufane proxy (APP_TRUSTED_PROXY_COUNT) ustawione na {count} — limity ruchu i dziennik audytu będą widzieć prawdziwe adresy klientów.",
 	"request_timeout": "Przekroczono czas oczekiwania na odpowiedź serwera.",
 	"scan_reason_no_metadata_match": "Nie znaleziono dopasowania metadanych",
+	"scan_reason_probe_failed": "Nie udało się przeanalizować wideo (błąd sondowania)",
 	"scan_reason_recognition_failed": "Nie rozpoznano struktury pliku",
 	"scan_reason_type_mismatch": "Typ pliku nie pasuje do tej biblioteki",
 	"season_mismatch": "Niezgodność sezonu: w pliku sezon {recognizedSeason}, przypisano do sezonu {assignedSeason}.",
