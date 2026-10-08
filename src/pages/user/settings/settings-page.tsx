@@ -6,6 +6,7 @@ import { m } from "@/paraglide/messages";
 import { UserPageHeader } from "../components/user-ui";
 import { DangerZoneSection } from "./sections/danger-zone-section";
 import { GeneralPreferencesSection } from "./sections/general-preferences-section";
+import { PasswordSection } from "./sections/password-section";
 import { PlaybackPreferencesSection } from "./sections/playback-preferences-section";
 import { ProfileInfoSection } from "./sections/profile-info-section";
 import { TwoFactorSection } from "./sections/two-factor-section";
@@ -48,6 +49,8 @@ export default function UserSettingsPage() {
 			<GeneralPreferencesSection profileId={profile.id} />
 
 			<PlaybackPreferencesSection profileId={profile.id} />
+
+			<PasswordSection />
 
 			<TwoFactorSection twoFactorEnabled={user?.twoFactorEnabled === true} />
 

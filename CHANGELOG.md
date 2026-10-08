@@ -184,6 +184,10 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 # v1.3.0
 
+### Features
+
+- **Change password** — Settings now has a Password section: change your password by confirming the current one. Other devices are signed out and API errors (wrong current password, invalid length) are translated. Requires SDK 1.3.0.
+
 ### Fixes
 
 - **Watchlist showed only the first 20 titles** — the page requested a single page of the paginated endpoint, so larger watchlists were silently truncated and the total/movie/series statistics were wrong. The page now loads every page before rendering.
