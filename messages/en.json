@@ -1368,7 +1368,7 @@
 	"admin_settings_ffmpeg_tone_mapping_description": "auto maps HDR10/HLG/DV to SDR when this ffmpeg build ships the filters.",
 	"admin_settings_ffprobe_path": "ffprobe path",
 	"admin_settings_ffprobe_path_description": "Custom binary path (empty = resolve from PATH).",
-	"admin_settings_fmp4_segment_seconds": "Target length of generated fMP4 segments in seconds.",
+	"admin_settings_fmp4_segment_seconds": "Target length of generated fMP4 segments in seconds. Applies after a server restart.",
 	"admin_settings_forced_only_subtitles": "Restrict automatic subtitles to forced tracks only.",
 	"admin_settings_forced_subtitles_description": "Automatically enable forced subtitles matching the language of the active audio track.",
 	"admin_settings_global_operation_cap": "Global cap on operations executed simultaneously across all worker queues.",

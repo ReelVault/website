@@ -1374,7 +1374,7 @@
 	"admin_settings_ffmpeg_tone_mapping_description": "auto mapuje HDR10/HLG/DV do SDR, gdy ta wersja ffmpeg ma odpowiednie filtry.",
 	"admin_settings_ffprobe_path": "Ścieżka do ffprobe",
 	"admin_settings_ffprobe_path_description": "Własna ścieżka binarna (puste = z PATH).",
-	"admin_settings_fmp4_segment_seconds": "Docelowa długość generowanych segmentów fMP4 w sekundach.",
+	"admin_settings_fmp4_segment_seconds": "Docelowa długość generowanych segmentów fMP4 w sekundach. Zmiana działa po restarcie serwera.",
 	"admin_settings_forced_only_subtitles": "Ograniczenie automatycznych napisów wyłącznie do ścieżek wymuszonych.",
 	"admin_settings_forced_subtitles_description": "Automatyczne włączanie napisów wymuszonych (forced) dopasowanych do języka aktywnej ścieżki dźwiękowej.",
 	"admin_settings_global_operation_cap": "Globalny pułap jednocześnie wykonywanych operacji ze wszystkich kolejek workerów.",
