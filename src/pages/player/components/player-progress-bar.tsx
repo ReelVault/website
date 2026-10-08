@@ -41,7 +41,8 @@ export function PlayerProgressBar() {
 
 	// Two layers: transcoded (server, darker — can span hours) under buffered
 	// (what hls.js appended to video.buffered, brighter — right at the playhead)
-	const { bufferedRanges, transcodedRanges } = usePlayerProgressRanges();
+	const { bufferedRanges, transcodedRanges, transcodeProgressPercent } = usePlayerProgressRanges();
+	const preparedPercent = transcodeProgressPercent !== null && transcodeProgressPercent < 99 ? Math.round(transcodeProgressPercent) : null;
 
 	const [isScrubbing, setIsScrubbing] = useState(false);
 	const [scrubTime, setScrubTime] = useState(currentTime);
@@ -139,6 +140,11 @@ export function PlayerProgressBar() {
 									<span className="font-bold font-mono text-white text-xs leading-tight tracking-tight">
 										{formatTime(activeTooltipTime, duration)}
 									</span>
+									{preparedPercent !== null && (
+										<span className="text-[10px] text-white/60 leading-tight">
+											{m.player_transcode_prepared({ percent: preparedPercent })}
+										</span>
+									)}
 								</div>
 							</div>
 						) : (
@@ -149,6 +155,11 @@ export function PlayerProgressBar() {
 								<span className="font-mono font-semibold text-xs leading-tight tracking-tight">
 									{formatTime(activeTooltipTime, duration)}
 								</span>
+								{preparedPercent !== null && (
+									<span className="text-[10px] text-white/60 leading-tight">
+										{m.player_transcode_prepared({ percent: preparedPercent })}
+									</span>
+								)}
 							</div>
 						)}
 					</div>
@@ -164,7 +175,7 @@ export function PlayerProgressBar() {
 						return (
 							<span
 								key={`transcoded-${range.startTime}-${range.endTime}`}
-								className="absolute inset-y-0 rounded-full bg-white/15"
+								className="absolute inset-y-0 rounded-full bg-white/30"
 								style={{ left: `${start}%`, width: `${end - start}%` }}
 							/>
 						);
@@ -178,7 +189,7 @@ export function PlayerProgressBar() {
 						return (
 							<span
 								key={`buffered-${range.startTime}-${range.endTime}`}
-								className="absolute inset-y-0 rounded-full bg-white/40"
+								className="absolute inset-y-0 rounded-full bg-white/55"
 								style={{ left: `${start}%`, width: `${end - start}%` }}
 							/>
 						);

@@ -2872,6 +2872,7 @@
 	"player_seasons_and_episodes_caps": "Seasons & Episodes",
 	"player_seasons_episodes": "Seasons & episodes",
 	"player_seconds_word": "seconds",
+	"player_transcode_prepared": "Prepared {percent}%",
 	"player_video_transcode_bitrate_limit": " (limit {value} kbps)",
 	"player_seek_10s": "Seek 10 seconds back / forward",
 	"player_seek_back_10s": "Seek back 10 seconds",

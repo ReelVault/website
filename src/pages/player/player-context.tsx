@@ -101,6 +101,8 @@ export { usePlayerStatusRaw as usePlayerStatus };
 interface PlayerProgressRangesValue {
 	/** What the server has transcoded/remuxed so far — can span hours. */
 	transcodedRanges: BufferedRange[];
+	/** Server transcode progress 0-100, null while unknown. */
+	transcodeProgressPercent: number | null;
 	/** What hls.js actually appended to video.buffered — ~30-60 s ahead of the playhead. */
 	bufferedRanges: BufferedRange[];
 }
@@ -372,8 +374,12 @@ export function PlayerProvider({
 	);
 
 	const progressRangesValue: PlayerProgressRangesValue = useMemo(
-		() => ({ transcodedRanges: controller.transcodedRanges, bufferedRanges: controller.bufferedRanges }),
-		[controller.transcodedRanges, controller.bufferedRanges],
+		() => ({
+			transcodedRanges: controller.transcodedRanges,
+			transcodeProgressPercent: controller.transcodeProgressPercent,
+			bufferedRanges: controller.bufferedRanges,
+		}),
+		[controller.transcodedRanges, controller.transcodeProgressPercent, controller.bufferedRanges],
 	);
 
 	const diagnosticsValue: PlayerDiagnosticsValue = useMemo(

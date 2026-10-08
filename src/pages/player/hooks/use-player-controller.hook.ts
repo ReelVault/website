@@ -322,7 +322,8 @@ export function usePlayerController({
 	// poll (or the explicit refetch below) repopulates from the fresh playlist.
 	const clearTranscodedRanges = useCallback(() => {
 		queryClient.setQueryData(playbackSessionKeys.transcodeProgress(sessionId), (prev: TranscodeProgressResponse | undefined) =>
-			prev ? { ...prev, ranges: [], transcodedSeconds: 0, transcodedUntil: 0, progressPercent: 0 } : prev,
+			// "pending" keeps the poll alive: a stale "completed" would stop it for good after the restart.
+			prev ? { ...prev, state: "pending", ranges: [], transcodedSeconds: 0, transcodedUntil: 0, progressPercent: 0 } : prev,
 		);
 		transcodedRangesRef.current = EMPTY_BUFFERED_RANGES;
 	}, [queryClient, sessionId]);
@@ -1365,6 +1366,7 @@ export function usePlayerController({
 		// Two distinct signals: transcodedRanges = server transcode progress (can span
 		// hours), bufferedRanges = what hls.js actually appended to video.buffered.
 		transcodedRanges,
+		transcodeProgressPercent: transcodeProgressQuery.data?.progressPercent ?? null,
 		bufferedRanges,
 		actions,
 		subtitles: subtitlesValue,

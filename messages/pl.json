@@ -2899,6 +2899,7 @@
 	"player_seasons_and_episodes_caps": "Sezony i Odcinki",
 	"player_seasons_episodes": "Sezony i odcinki",
 	"player_seconds_word": "sekund",
+	"player_transcode_prepared": "Przygotowano {percent}%",
 	"player_video_transcode_bitrate_limit": " (limit {value} kbps)",
 	"player_seek_10s": "Przewiń o 10 sekund w tył / w przód",
 	"player_seek_back_10s": "Cofnij 10 sekund",
