@@ -7,13 +7,22 @@ import { m } from "@/paraglide/messages";
 import { CreateLibraryDialog } from "./components/create-library-dialog";
 import { EditLibraryDialog } from "./components/edit-library-dialog";
 import { IgnoredAssetsDialog } from "./components/ignored-assets-dialog";
-import { LibraryFilterBar, type LibraryTypeFilter } from "./components/library-filter-bar";
+import { LibraryFilterBar, type LibrarySortOption, type LibraryTypeFilter } from "./components/library-filter-bar";
 import { LibraryGrid } from "./components/library-grid";
 import { LibraryHeader } from "./components/library-header";
 import { LibraryKpiGrid } from "./components/library-kpi-grid";
 import { ScanFindingsDialog } from "./components/scan-findings-dialog";
 
 const EMPTY_SET = new Set<string>();
+
+const fileCountOf = (lib: LibraryWithRelations): number => lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
+
+const LIBRARY_SORTERS: Record<LibrarySortOption, (a: LibraryWithRelations, b: LibraryWithRelations) => number> = {
+	name: (a, b) => a.name.localeCompare(b.name),
+	newest: (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+	files: (a, b) => fileCountOf(b) - fileCountOf(a),
+	size: (a, b) => (b.totalSize ?? 0) - (a.totalSize ?? 0),
+};
 
 export default function AdminLibrariesPage() {
 	const {
@@ -35,6 +44,7 @@ export default function AdminLibrariesPage() {
 
 	const [search, setSearch] = useState("");
 	const [typeFilter, setTypeFilter] = useState<LibraryTypeFilter>("all");
+	const [sort, setSort] = useState<LibrarySortOption>("name");
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [editingLibrary, setEditingLibrary] = useState<LibraryWithRelations | null>(null);
@@ -82,6 +92,7 @@ export default function AdminLibrariesPage() {
 
 		return lib.name.toLowerCase().includes(normalizedQuery) || lib.paths.some((p) => p.path.toLowerCase().includes(normalizedQuery));
 	});
+	const sortedLibraries = filteredLibraries.toSorted(LIBRARY_SORTERS[sort]);
 
 	if (error) {
 		return <AppErrorState title={m.admin_libraries_failed_to_fetch()} error={error} onRetry={() => detach(refetch())} />;
@@ -105,6 +116,8 @@ export default function AdminLibrariesPage() {
 				<LibraryFilterBar
 					typeFilter={typeFilter}
 					onTypeFilterChange={setTypeFilter}
+					sort={sort}
+					onSortChange={setSort}
 					search={search}
 					onSearchChange={setSearch}
 					totalCount={libraries.length}
@@ -115,7 +128,7 @@ export default function AdminLibrariesPage() {
 
 			{/* Libraries Grid */}
 			<LibraryGrid
-				libraries={filteredLibraries}
+				libraries={sortedLibraries}
 				isLoading={isLoading}
 				scanningIds={scanningIds}
 				scanningPathIds={scanningPathIds}
