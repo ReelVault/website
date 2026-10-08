@@ -22,6 +22,9 @@ const PREFERRED_CATEGORIES = [
 ] as const;
 const PREFERRED_CATEGORIES_SET = new Set<string>(PREFERRED_CATEGORIES);
 
+const isScheduled = (task: WorkerSummary) => task.triggers.length > 0;
+const isActive = (task: WorkerSummary) => task.stats.active > 0;
+
 interface ScheduledTasksListProps {
 	tasks: WorkerSummary[];
 	activeOperations?: WorkerOperation[];
@@ -54,9 +57,11 @@ export function ScheduledTasksList({
 	const debouncedQuery = useDebounce({ value: searchQuery, delay: 250 });
 	const q = debouncedQuery.trim().toLowerCase();
 
-	// Filter tasks by search query and category
+	// Filter tasks by quick filter and search query
 	const filteredTasks = tasks.filter((task) => {
-		if (categoryFilter !== "all" && task.category !== categoryFilter) return false;
+		if (categoryFilter === "scheduled" && !isScheduled(task)) return false;
+
+		if (categoryFilter === "active" && !isActive(task)) return false;
 
 		if (q) {
 			const meta = getScheduledTaskMeta(task.id);
@@ -106,8 +111,8 @@ export function ScheduledTasksList({
 				categoryFilter={categoryFilter}
 				onCategoryFilterChange={setCategoryFilter}
 				totalCount={tasks.length}
-				scheduledCount={tasks.filter((t) => t.triggers.length > 0).length}
-				activeCount={tasks.filter((t) => t.stats.active > 0).length}
+				scheduledCount={tasks.filter((t) => isScheduled(t)).length}
+				activeCount={tasks.filter((t) => isActive(t)).length}
 			/>
 
 			{/* Task List by Categories */}
