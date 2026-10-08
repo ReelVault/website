@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Check, Info, Play, RotateCcw } from "lucide-react";
+import { Check, EyeOff, Info, Play, RotateCcw } from "lucide-react";
 import type { useContinueWatching } from "@/client/hooks/use-continue-watching";
 import { ConfirmAction } from "@/components/confirm-action";
 import { ApiImage } from "@/components/ui/api-image";
@@ -24,18 +24,24 @@ export function ContinueWatchingCard({
 	item,
 	isResetting,
 	onReset,
+	isDismissing,
+	onDismiss,
 	isMarkingWatched,
 	onMarkWatched,
 }: {
 	item: ContinueWatchingItem;
 	isResetting: boolean;
 	onReset: (mediaFileId: string) => void;
+	isDismissing: boolean;
+	onDismiss: (metadataId: string) => void;
 	isMarkingWatched: boolean;
 	onMarkWatched: (item: ContinueWatchingItem) => void;
 }) {
 	const isEpisode = Boolean(item.episode);
 	const handleReset = () => onReset(item.mediaFileId);
 	const handleMarkWatched = () => onMarkWatched(item);
+	const handleDismiss = () => onDismiss(item.metadata.id);
+	const isBusy = isResetting || isMarkingWatched || isDismissing;
 
 	let episodeBadgeLabel: string = m.common_movie_word();
 	if (isEpisode && item.episode) {
@@ -98,7 +104,7 @@ export function ContinueWatchingCard({
 							variant="outline"
 							size="icon"
 							className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-focus-within:opacity-100 group-hover:opacity-100"
-							disabled={isMarkingWatched || isResetting}
+							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
 								e.stopPropagation();
@@ -117,7 +123,7 @@ export function ContinueWatchingCard({
 									variant="outline"
 									size="icon"
 									className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-focus-within:opacity-100 group-hover:opacity-100"
-									disabled={isResetting || isMarkingWatched}
+									disabled={isBusy}
 									aria-label={m.components_cw_reset_progress_named({ title: item.metadata.title })}
 									title={m.components_cw_reset_progress()}
 								>
@@ -129,6 +135,23 @@ export function ContinueWatchingCard({
 							confirmLabel={m.components_cw_reset_progress_button()}
 							onConfirm={handleReset}
 						/>
+
+						<Button
+							type="button"
+							variant="outline"
+							size="icon"
+							className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-focus-within:opacity-100 group-hover:opacity-100"
+							disabled={isBusy}
+							onClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								handleDismiss();
+							}}
+							aria-label={m.components_cw_dismiss_named({ title: item.metadata.title })}
+							title={m.components_cw_dismiss()}
+						>
+							{isDismissing ? <Spinner className="size-4" /> : <EyeOff className="size-4" />}
+						</Button>
 					</div>
 				</div>
 			</ContextMenuTrigger>
@@ -153,11 +176,15 @@ export function ContinueWatchingCard({
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem disabled={isMarkingWatched || isResetting} onClick={handleMarkWatched} className="cursor-pointer gap-2.5">
+					<ContextMenuItem disabled={isBusy} onClick={handleMarkWatched} className="cursor-pointer gap-2.5">
 						<Check className="size-4 text-muted-foreground" />
 						<span>{m.components_mark_watched()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem disabled={isResetting || isMarkingWatched} onClick={handleReset} className="cursor-pointer gap-2.5">
+					<ContextMenuItem disabled={isBusy} onClick={handleDismiss} className="cursor-pointer gap-2.5">
+						<EyeOff className="size-4 text-muted-foreground" />
+						<span>{m.components_cw_dismiss()}</span>
+					</ContextMenuItem>
+					<ContextMenuItem disabled={isBusy} onClick={handleReset} className="cursor-pointer gap-2.5">
 						<RotateCcw className="size-4 text-muted-foreground" />
 						<span>{m.components_cw_reset_progress_button()}</span>
 					</ContextMenuItem>

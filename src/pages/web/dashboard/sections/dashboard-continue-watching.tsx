@@ -4,7 +4,8 @@ import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 
 export default function DashboardContinueWatching() {
-	const { items, resetProgress, resettingMediaFileId, markAsWatched, markingMediaFileId } = useContinueWatching();
+	const { items, resetProgress, resettingMediaFileId, dismiss, dismissingMetadataId, markAsWatched, markingMediaFileId } =
+		useContinueWatching();
 
 	if (items.length === 0) return null;
 
@@ -30,6 +31,10 @@ export default function DashboardContinueWatching() {
 							isResetting={resettingMediaFileId === item.mediaFileId}
 							onReset={(mediaFileId) => {
 								detach(resetProgress(mediaFileId));
+							}}
+							isDismissing={dismissingMetadataId === item.metadata.id}
+							onDismiss={(metadataId) => {
+								detach(dismiss(metadataId));
 							}}
 							isMarkingWatched={markingMediaFileId === item.mediaFileId}
 							onMarkWatched={(watchItem) => {

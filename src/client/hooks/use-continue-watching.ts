@@ -30,6 +30,18 @@ export function useContinueWatching() {
 		onError: (error) => toastError(m.toast_me_playback_reset_progress_failed(), error),
 	});
 
+	const dismissMutation = useMutation({
+		mutationFn: (metadataId: string) => reelvault.me.dismissContinueWatching(metadataId),
+		// The server hides the title and keeps its resume positions, so only the row changes.
+		onSuccess: (_, metadataId) => {
+			queryClient.setQueryData<typeof query.data>(mePlaybackKeys.continueWatching(), (current) =>
+				current ? { ...current, items: current.items.filter((item) => item.metadata.id !== metadataId) } : current,
+			);
+			toast.success(m.toast_me_playback_dismissed());
+		},
+		onError: (error) => toastError(m.toast_me_playback_dismiss_failed(), error),
+	});
+
 	const markAsWatchedMutation = useMutation({
 		mutationFn: ({ mediaFileId, duration }: { mediaFileId: string; duration?: number }) =>
 			reelvault.me.updatePlaybackProgress(mediaFileId, {
@@ -53,6 +65,8 @@ export function useContinueWatching() {
 		resetProgress: resetMutation.mutateAsync,
 		isResetting: resetMutation.isPending,
 		resettingMediaFileId: resetMutation.variables,
+		dismiss: dismissMutation.mutateAsync,
+		dismissingMetadataId: dismissMutation.variables,
 		markAsWatched: markAsWatchedMutation.mutateAsync,
 		isMarkingWatched: markAsWatchedMutation.isPending,
 		markingMediaFileId: markAsWatchedMutation.variables?.mediaFileId,
