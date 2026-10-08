@@ -207,3 +207,4 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Deleting an account from the user list had no confirmation** — the context-menu action removed the account and its profiles immediately; it now asks first.
 - **Account error messages** — register, login, first-run setup and the admin user actions now show translated messages for a duplicate email, a blocked account, an invalid email and a rejected request instead of a generic error.
 - **Download error messages** — a disabled feature, a download already in progress and a full download quota now show their own translated message.
+- **Stream limit messages** — hitting the server or per-user stream limit, or starting sessions too fast, now shows a clear translated message with the limit or the wait time.

@@ -3178,6 +3178,8 @@
 	"setup_token_label": "Token konfiguracyjny",
 	"setup_token_masked": "{token}••••",
 	"setup_token_required": "Token konfiguracyjny jest wymagany. Sprawdź logi serwera.",
+	"stream_creation_throttled": "Zwolnij — odczekaj {retryAfterSeconds} s przed uruchomieniem kolejnego strumienia.",
+	"stream_limit_reached": "Osiągnięto limit strumieni ({limit}). Spróbuj ponownie, gdy inny strumień się zakończy.",
 	"timeout": "Przekroczono czas oczekiwania na odpowiedź serwera.",
 	"title_mismatch": "Niskie podobieństwo tytułów: plik „{recognizedTitle}” vs metadane „{assignedTitle}”.",
 	"toast_account_deleted": "Konto zostało usunięte.",

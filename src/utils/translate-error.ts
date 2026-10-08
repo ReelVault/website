@@ -67,6 +67,8 @@ const dynamicMessages = {
 			recognizedSeason: String(inputs?.recognizedSeason ?? ""),
 			assignedSeason: String(inputs?.assignedSeason ?? ""),
 		}),
+	stream_creation_throttled: (inputs) => m.stream_creation_throttled({ retryAfterSeconds: String(inputs?.retryAfterSeconds ?? "") }),
+	stream_limit_reached: (inputs) => m.stream_limit_reached({ limit: String(inputs?.limit ?? "") }),
 	sequel_mismatch: (inputs) =>
 		m.sequel_mismatch({
 			recognizedTitle: String(inputs?.recognizedTitle ?? ""),

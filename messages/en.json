@@ -3151,6 +3151,8 @@
 	"setup_token_label": "Setup token",
 	"setup_token_masked": "{token}••••",
 	"setup_token_required": "A setup token is required. Check the server logs.",
+	"stream_creation_throttled": "Slow down — wait {retryAfterSeconds}s before starting another stream.",
+	"stream_limit_reached": "The stream limit ({limit}) is reached. Try again when another stream ends.",
 	"timeout": "Timed out waiting for the server response.",
 	"title_mismatch": "Low title similarity: file “{recognizedTitle}” vs metadata “{assignedTitle}”.",
 	"toast_account_deleted": "The account has been deleted.",
