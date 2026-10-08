@@ -6,9 +6,11 @@ import { useAdminDeleteSubtitle, useAdminSubtitleProviders, useAdminSubtitles } 
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { SimplePagination } from "@/components/simple-pagination";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSearch, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { contentLanguageOptions } from "@/utils/locales";
 import { SubtitleItemRow } from "./components/subtitle-item-row";
 import { SubtitleProvidersSection } from "./components/subtitle-providers-section";
 
@@ -26,6 +28,7 @@ const TYPE_FILTERS = [
 type SubtitleTypeFilter = (typeof TYPE_FILTERS)[number]["value"];
 
 export default function AdminSubtitlesPage() {
+	const languageOptions = contentLanguageOptions(m.admin_subtitles_any_language());
 	const { page: urlPage = 1, type, language, q } = useSearch({ from: "/admin/subtitles" });
 	const navigate = useNavigate({ from: "/admin/subtitles" });
 	const page = urlPage;
@@ -54,6 +57,10 @@ export default function AdminSubtitlesPage() {
 
 	const setType = (value: SubtitleTypeFilter) => {
 		patchSearch({ type: value === "all" ? undefined : value, page: undefined });
+	};
+
+	const setLanguage = (value: string) => {
+		patchSearch({ language: value || undefined, page: undefined });
 	};
 
 	const setPage = (next: number) => {
@@ -170,6 +177,20 @@ export default function AdminSubtitlesPage() {
 							</span>
 						</button>
 					))}
+					<Select value={language ?? ""} onValueChange={(value) => setLanguage(value ?? "")}>
+						<SelectTrigger className="h-8 w-44 text-xs" aria-label={m.admin_subtitles_language_filter()}>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								{languageOptions.map(([value, label]) => (
+									<SelectItem key={value} value={value}>
+										{label}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
 				</div>
 
 				{listContent}
