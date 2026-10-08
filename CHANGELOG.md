@@ -158,13 +158,18 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
-- **Trickplay storage usage** — Admin → Trickplay adds a `used / budget` card (core artifact bytes vs `system.artifacts.coreMaxStorageGb`), so the preview storage budget is visible next to the coverage counts.
-- **Periodic library rescan setting** — Admin → Settings → Scanning exposes `scanning.scheduledScanIntervalHours` (0 = off), a safety net for network shares where file watching is unreliable.
+- **Trickplay storage usage** — Admin → Trickplay now shows a `used / budget` card with core artifact usage and the configured `system.artifacts.coreMaxStorageGb` budget, alongside the existing coverage counts.
+- **Periodic library rescan setting** — Admin → Settings → Scanning now exposes `scanning.scheduledScanIntervalHours` (`0` = disabled), providing a safety net for network shares where file watching is unreliable.
 
 ### Fixes
 
-- **Probe-failed findings** — the new `probe_failed` reason from the scanner is translated in the library "needs attention" dialog (PL/EN), so unreadable videos show a meaningful reason instead of the raw code.
-- **Admin artwork URLs** — analytics "Most popular productions", live activity and the insights/wrapped slides extracted the image id with a stale `/api/images/` pattern, so every poster rendered as a placeholder. The helper now matches the server's `/v1/images/` URLs.
-- **Admin libraries page crash** — the dashboard composite seeded the admin libraries cache with objects whose `paths`/stats were stripped by the response schema, so the page threw `can't access property "length", e.paths is undefined` on first render. The dashboard contract now returns full library relations (and the dashboard storage breakdown gets real counts/sizes).
-- **Core artifact storage setting** — Admin → Settings → Trickplay now exposes `system.artifacts.coreMaxStorageGb` (`0` = automatic, 5% of the artifacts volume clamped to 5–100 GB). It caps preview sprites and other server-generated artifacts after they stopped being charged against the per-plugin artifact quota, so large libraries no longer stop generating trickplay at 512 MB.
-- **Scan trickplay operations** — a library scan no longer creates one trickplay operation per file; all files from a scan join one active operation per library.
+#### Admin & dashboard
+
+- **Admin libraries page crash** — the dashboard composite seeded the admin libraries cache with objects whose `paths` and statistics had been stripped by the response schema, causing `can't access property "length", e.paths is undefined` on first render. The dashboard contract now returns full library relations, restoring the storage breakdown with correct counts and sizes.
+- **Admin artwork URLs** — analytics "Most popular productions", live activity and Insights/Wrapped slides extracted image IDs using the stale `/api/images/` pattern, causing posters to render as placeholders. The helper now correctly handles the server's `/v1/images/` URLs.
+
+#### Settings & scanning
+
+- **Probe-failed findings** — the new `probe_failed` scanner reason is now translated in the library "needs attention" dialog in both PL and EN, replacing the raw error code with a meaningful explanation.
+- **Core artifact storage setting** — Admin → Settings → Trickplay now exposes `system.artifacts.coreMaxStorageGb` (`0` = automatic, 5% of the artifacts volume clamped to 5–100 GB). This caps preview sprites and other server-generated artifacts now that they are no longer charged against the per-plugin artifact quota, preventing large libraries from hitting the previous 512 MB limit.
+- **Scan trickplay operations** — the website now reflects the consolidated scan behavior where a library scan creates a single trickplay operation per library instead of one operation per file.
