@@ -9,6 +9,8 @@ interface AdminMetadataSearch {
 	q?: string;
 	page?: number;
 	filter?: string;
+	type?: string;
+	sort?: string;
 }
 
 function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMetadataSearch {
@@ -16,6 +18,8 @@ function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMet
 		q: typeof search.q === "string" ? search.q : undefined,
 		page: Number.isFinite(Number(search.page)) && Number(search.page) > 0 ? Number(search.page) : undefined,
 		filter: typeof search.filter === "string" ? search.filter : undefined,
+		type: typeof search.type === "string" ? search.type : undefined,
+		sort: typeof search.sort === "string" ? search.sort : undefined,
 	};
 }
 

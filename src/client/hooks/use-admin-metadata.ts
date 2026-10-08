@@ -7,6 +7,18 @@ import { reelvault } from "../client";
 import { purgeMetadataCaches } from "../utils/purge-metadata-caches";
 import { metadataKeys } from "../utils/query-keys";
 
+export type AdminMetadataTypeFilter = "movie" | "tv_show";
+
+/** Sort choices of the admin catalog: each maps to a server `sortBy` + direction. */
+export const ADMIN_METADATA_SORTS = {
+	recent: { sortBy: "createdAt", sortOrder: "desc" },
+	title: { sortBy: "title", sortOrder: "asc" },
+	year: { sortBy: "releaseDate", sortOrder: "desc" },
+	worstMatch: { sortBy: "matchScore", sortOrder: "asc" },
+} as const;
+
+export type AdminMetadataSort = keyof typeof ADMIN_METADATA_SORTS;
+
 export const adminMetadataQueryOptions = ({
 	page,
 	pageSize,
@@ -14,6 +26,8 @@ export const adminMetadataQueryOptions = ({
 	hasMediaFiles,
 	lowConfidence,
 	missingTranslation,
+	type,
+	sort,
 }: {
 	page: number;
 	pageSize: number;
@@ -21,8 +35,10 @@ export const adminMetadataQueryOptions = ({
 	hasMediaFiles?: boolean;
 	lowConfidence?: boolean;
 	missingTranslation?: boolean;
+	type?: AdminMetadataTypeFilter | undefined;
+	sort?: AdminMetadataSort | undefined;
 }) => ({
-	queryKey: metadataKeys.admin(page, pageSize, search, hasMediaFiles, lowConfidence, missingTranslation),
+	queryKey: metadataKeys.admin(page, pageSize, search, hasMediaFiles, lowConfidence, missingTranslation, type, sort),
 	placeholderData: keepPreviousData,
 	queryFn: () =>
 		reelvault.metadata.getAll({
@@ -32,6 +48,8 @@ export const adminMetadataQueryOptions = ({
 			hasMediaFiles,
 			lowConfidence: lowConfidence ? true : undefined,
 			missingTranslation: missingTranslation ? true : undefined,
+			type,
+			...(sort ? ADMIN_METADATA_SORTS[sort] : {}),
 		}),
 	staleTime: 120_000,
 });
@@ -43,6 +61,7 @@ export function useAdminMetadata(
 	hasMediaFiles?: boolean,
 	lowConfidence?: boolean,
 	missingTranslation?: boolean,
+	view: { type?: AdminMetadataTypeFilter | undefined; sort?: AdminMetadataSort | undefined } = {},
 ) {
 	const queryClient = useQueryClient();
 	const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
@@ -54,6 +73,7 @@ export function useAdminMetadata(
 			hasMediaFiles,
 			lowConfidence,
 			missingTranslation,
+			...view,
 		}),
 	);
 	const deleteMutation = useMutation({

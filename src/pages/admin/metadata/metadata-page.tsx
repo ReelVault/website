@@ -1,7 +1,7 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Film } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useAdminMetadata } from "@/client/hooks/use-admin-metadata";
+import { type ADMIN_METADATA_SORTS, useAdminMetadata } from "@/client/hooks/use-admin-metadata";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
@@ -9,7 +9,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
-import { type MediaFilter, MetadataFilterBar } from "./_components/metadata-filter-bar";
+import { isAdminMetadataSort, isAdminMetadataType, type MediaFilter, MetadataFilterBar } from "./_components/metadata-filter-bar";
 import { MetadataHeaderActions } from "./_components/metadata-header-actions";
 import { MetadataList } from "./_components/metadata-list";
 import { MetadataStats } from "./_components/metadata-stats";
@@ -78,6 +78,9 @@ export default function AdminMetadataPage() {
 			? search.filter
 			: "all";
 
+	const typeFilter = isAdminMetadataType(search.type) ? search.type : undefined;
+	const sort = isAdminMetadataSort(search.sort) ? search.sort : "recent";
+
 	// Typing flows debounce → URL; browser Back/refresh restores both.
 	useEffect(() => {
 		if (debouncedSearch !== (search.q ?? "")) {
@@ -119,6 +122,7 @@ export default function AdminMetadataPage() {
 		hasMediaFiles,
 		isLowConfidence ? true : undefined,
 		isMissingTranslation ? true : undefined,
+		{ type: typeFilter, sort },
 	);
 
 	const handleDelete = (id: string, title: string) => deleteMetadata({ id, title });
@@ -130,6 +134,16 @@ export default function AdminMetadataPage() {
 	const handleFilterChange = (value: MediaFilter) => {
 		detach(() =>
 			navigate({ search: (prev) => ({ ...prev, filter: value !== "all" ? value : undefined, page: undefined }), replace: true }),
+		);
+	};
+
+	const handleTypeChange = (value: "movie" | "tv_show" | undefined) => {
+		detach(() => navigate({ search: (prev) => ({ ...prev, type: value, page: undefined }), replace: true }));
+	};
+
+	const handleSortChange = (value: keyof typeof ADMIN_METADATA_SORTS) => {
+		detach(() =>
+			navigate({ search: (prev) => ({ ...prev, sort: value === "recent" ? undefined : value, page: undefined }), replace: true }),
 		);
 	};
 
@@ -164,6 +178,10 @@ export default function AdminMetadataPage() {
 				onSearchChange={handleSearchChange}
 				mediaFilter={mediaFilter}
 				onFilterChange={handleFilterChange}
+				typeFilter={typeFilter}
+				onTypeChange={handleTypeChange}
+				sort={sort}
+				onSortChange={handleSortChange}
 			/>
 
 			<MetadataStats stats={statsQuery.data?.metadata} total={data.total} />

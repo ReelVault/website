@@ -18,8 +18,16 @@ export const metadataKeys = {
 	reassignSearch: (mediaType?: string, search?: string) => [...metadataKeys.all, "reassign-search", mediaType, search] as const,
 	library: (libraryId: string, type: string, limit: number, filters: object, scope: "ui" | "filtered") =>
 		[...metadataKeys.all, "library", libraryId, type, limit, filters, scope] as const,
-	admin: (page: number, limit: number, title: string, hasMediaFiles?: boolean, lowConfidence?: boolean, missingTranslation?: boolean) =>
-		[...metadataKeys.all, "admin", { page, limit, title, hasMediaFiles, lowConfidence, missingTranslation }] as const,
+	admin: (
+		page: number,
+		limit: number,
+		title: string,
+		hasMediaFiles?: boolean,
+		lowConfidence?: boolean,
+		missingTranslation?: boolean,
+		type?: string,
+		sort?: string,
+	) => [...metadataKeys.all, "admin", { page, limit, title, hasMediaFiles, lowConfidence, missingTranslation, type, sort }] as const,
 	adminAll: () => [...metadataKeys.all, "admin"] as const,
 	mergeCandidates: (type: string, search?: string) => [...metadataKeys.all, "merge-candidates", type, search] as const,
 	adminEditor: (id: string) => [...metadataKeys.all, "admin-edit", id] as const,

@@ -194,6 +194,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Plugin interface switches** — a new "Interface" card on each plugin's settings page lists everything the plugin adds to the app (pages, dialogs, tabs, buttons and widgets, search results, pre-playback content) with a switch for each, plus a master switch for the whole interface. Changes apply immediately without disabling the plugin; "Show everything again" restores the defaults. Requires SDK 1.3.0.
 - **Library sorting** — the admin library list can be sorted by name, newest, most files or size.
 - **Subtitle language filter** — the admin subtitles list can be filtered by language (the filter was supported in the URL but had no control).
+- **Metadata catalog filters** — the admin metadata list can be filtered by movie/series and sorted by recently added, title, release date or weakest match; both choices are kept in the URL.
 
 ### Fixes
 
