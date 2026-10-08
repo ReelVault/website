@@ -10,7 +10,7 @@ interface AdminMediaSearch {
 	q?: string;
 	sort?: string;
 	page?: number;
-	/** Passed by library cards; the page does not consume it yet. */
+	/** Passed by library cards to scope the list to one library. */
 	libraryId?: string;
 }
 

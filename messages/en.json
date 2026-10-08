@@ -652,6 +652,7 @@
 	"admin_media_other_time": "Other time (seconds)",
 	"admin_media_part": "Part",
 	"admin_media_part_mismatch": "Part mismatch",
+	"admin_media_library_filter_clear": "Show all libraries",
 	"admin_media_physical_files_description": "Files on physical disks, video/audio streams, subtitles, and metadata links.",
 	"admin_media_premiere_date_label": "Release date: {date}",
 	"admin_media_quality_placeholder": "e.g. 1080p, 4K, 720p",

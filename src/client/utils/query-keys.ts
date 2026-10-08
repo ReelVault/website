@@ -132,7 +132,7 @@ export const mediaKeys = {
 	byEpisode: (episodeId: string | null | undefined) => ["media-files", "by-episode", episodeId] as const,
 	artifacts: (mediaFileId?: string) => ["media-files", mediaFileId, "artifacts"] as const,
 	artifactContent: (mediaFileId?: string, artifactId?: string) => ["media-files", mediaFileId, "artifacts", artifactId, "vtt"] as const,
-	adminFiles: (params?: { page?: number; limit?: number; fileName?: string; sortBy?: string; sortOrder?: string }) =>
+	adminFiles: (params?: { page?: number; limit?: number; fileName?: string; libraryId?: string; sortBy?: string; sortOrder?: string }) =>
 		params ? (["admin", "media-files", params] as const) : (["admin", "media-files"] as const),
 	adminFile: (id: string) => ["admin", "media-file", id] as const,
 	adminByMetadata: (metadataId: string) => ["admin", "media-files", "by-metadata", metadataId] as const,

@@ -17,6 +17,7 @@ interface UseAdminMediaFilesParams {
 	page?: number;
 	limit?: number;
 	fileName?: string;
+	libraryId?: string;
 	sortBy?: AdminMediaFileSortBy;
 	sortOrder?: "asc" | "desc";
 }
@@ -25,16 +26,18 @@ export const adminMediaFilesQueryOptions = ({
 	page = 1,
 	limit = 20,
 	fileName,
+	libraryId,
 	sortBy = "updatedAt",
 	sortOrder = "desc",
 }: UseAdminMediaFilesParams = {}) => ({
-	queryKey: mediaKeys.adminFiles({ page, limit, fileName, sortBy, sortOrder }),
+	queryKey: mediaKeys.adminFiles({ page, limit, fileName, libraryId, sortBy, sortOrder }),
 	placeholderData: keepPreviousData,
 	queryFn: () =>
 		reelvault.media.getAll({
 			page,
 			limit,
 			fileName: emptyToUndefined(fileName),
+			libraryId,
 			sortBy,
 			sortOrder,
 			// The admin list card renders these only — dropping videoStreams and

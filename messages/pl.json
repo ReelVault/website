@@ -654,6 +654,7 @@
 	"admin_media_other_time": "Inny czas (sekundy)",
 	"admin_media_part": "Część",
 	"admin_media_part_mismatch": "Niezgodność części",
+	"admin_media_library_filter_clear": "Pokaż wszystkie biblioteki",
 	"admin_media_physical_files_description": "Pliki na dyskach fizycznych, strumienie wideo/audio, napisy oraz powiązania z metadanymi.",
 	"admin_media_premiere_date_label": "Premiera: {date}",
 	"admin_media_quality_placeholder": "np. 1080p, 4K, 720p",

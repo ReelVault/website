@@ -1,5 +1,5 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { FileVideo } from "lucide-react";
+import { FileVideo, X } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 import {
 	type AdminMediaFileSortBy,
@@ -10,6 +10,7 @@ import {
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
+import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
@@ -65,6 +66,7 @@ export default function AdminMediaFilesPage() {
 		page: currentPage,
 		limit: 20,
 		fileName: debouncedSearch || undefined,
+		libraryId: search.libraryId,
 		sortBy,
 		sortOrder,
 	});
@@ -79,6 +81,10 @@ export default function AdminMediaFilesPage() {
 		if (!(value && isSortOptionValue(value))) return;
 
 		detach(() => navigate({ search: (prev) => ({ ...prev, sort: value, page: undefined }), replace: true }));
+	};
+
+	const handleClearLibrary = () => {
+		detach(() => navigate({ search: (prev) => ({ ...prev, libraryId: undefined, page: undefined }), replace: true }));
 	};
 
 	const handlePageChange = (page: number) => {
@@ -98,6 +104,12 @@ export default function AdminMediaFilesPage() {
 		viewContent = (
 			<AdminSection title={m.admin_media_heading_files_list({ total })} description={m.admin_media_physical_files_description()}>
 				<div className="flex flex-col gap-4">
+					{search.libraryId && (
+						<Button variant="outline" size="sm" className="w-fit gap-1.5" onClick={handleClearLibrary}>
+							<X className="size-3.5" />
+							{m.admin_media_library_filter_clear()}
+						</Button>
+					)}
 					<MediaList
 						mediaFiles={mediaFiles}
 						isLoading={isLoading || isFetching}
