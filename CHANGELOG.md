@@ -163,6 +163,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Probe-failed findings** — the new `probe_failed` reason from the scanner is translated in the library "needs attention" dialog (PL/EN), so unreadable videos show a meaningful reason instead of the raw code.
 - **Admin artwork URLs** — analytics "Most popular productions", live activity and the insights/wrapped slides extracted the image id with a stale `/api/images/` pattern, so every poster rendered as a placeholder. The helper now matches the server's `/v1/images/` URLs.
 - **Admin libraries page crash** — the dashboard composite seeded the admin libraries cache with objects whose `paths`/stats were stripped by the response schema, so the page threw `can't access property "length", e.paths is undefined` on first render. The dashboard contract now returns full library relations (and the dashboard storage breakdown gets real counts/sizes).
 - **Core artifact storage setting** — Admin → Settings → Trickplay now exposes `system.artifacts.coreMaxStorageGb` (`0` = automatic, 5% of the artifacts volume clamped to 5–100 GB). It caps preview sprites and other server-generated artifacts after they stopped being charged against the per-plugin artifact quota, so large libraries no longer stop generating trickplay at 512 MB.
