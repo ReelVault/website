@@ -191,6 +191,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Remove from Continue Watching** — each Continue Watching card has a new hide button (and a context-menu entry). Unlike resetting progress it keeps your resume position; the title returns as soon as you play it again. Requires SDK 1.3.0.
 - **Sleep timer** — a moon button in the player pauses playback after 15, 30, 45 or 60 minutes, or at the end of the current episode (which also stops auto-advancing to the next one). The timer survives episode changes and is cleared when you leave the player.
 - **Rewind on resume** — Settings → Playback can rewind 5–30 seconds when you continue a title, so you regain the context of the scene. Requires SDK 1.3.0.
+- **Plugin interface switches** — a new "Interface" card on each plugin's settings page lists everything the plugin adds to the app (pages, dialogs, tabs, buttons and widgets, search results, pre-playback content) with a switch for each, plus a master switch for the whole interface. Changes apply immediately without disabling the plugin; "Show everything again" restores the defaults. Requires SDK 1.3.0.
 
 ### Fixes
 

@@ -14,6 +14,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { PluginEmptyConfig } from "./components/plugin-empty-config";
 import { PluginFieldRenderer } from "./components/plugin-field-renderer";
+import { PluginUiSwitches } from "./components/plugin-ui-switches";
 
 const LazyPluginTabHost = lazy(async () => {
 	const mod = await import("@/plugin-host/tab-host");
@@ -188,6 +189,8 @@ export default function AdminPluginSettingsPage() {
 					</div>
 				</form>
 			)}
+
+			<PluginUiSwitches pluginId={pluginId} />
 
 			{/* PLUGIN TABS (host admin-plugin) — renders nothing when there is no contribution */}
 			<Suspense fallback={null}>

@@ -162,6 +162,7 @@ export const adminKeys = {
 	user: (userId: string) => [...adminKeys.all, "user", userId] as const,
 	userFull: (userId?: string) => [...adminKeys.all, "users", userId, "full"] as const,
 	plugins: () => [...adminKeys.all, "plugins"] as const,
+	pluginUi: (pluginId: string) => [...adminKeys.all, "plugins", pluginId, "ui"] as const,
 	pluginConfig: (pluginId: string) => [...adminKeys.plugins(), pluginId, "config"] as const,
 	workerOperations: (params?: { page?: number; limit?: number; status?: string }) =>
 		params ? ([...adminKeys.all, "worker-operations", params] as const) : ([...adminKeys.all, "worker-operations"] as const),
