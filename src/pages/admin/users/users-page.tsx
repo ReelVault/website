@@ -14,6 +14,7 @@ import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { BanUserDialog } from "./components/ban-user-dialog";
 import { CreateUserDialog } from "./components/create-user-dialog";
+import { DeleteUserDialog } from "./components/delete-user-dialog";
 import { UserFilterBar } from "./components/user-filter-bar";
 import type { AdminUser } from "./components/user-item-parts";
 import { UserTable } from "./components/user-table";
@@ -23,6 +24,7 @@ export default function AdminUsersPage() {
 	const navigate = useNavigate({ from: "/admin/users/" });
 	const [createOpen, setCreateOpen] = useState(false);
 	const [banTarget, setBanTarget] = useState<AdminUser | null>(null);
+	const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
 	// The search input is the URL value itself — typing rewrites ?q= (replace),
 	// the query fires on the debounced copy, so Back/refresh restore everything.
 	const search = q ?? "";
@@ -116,14 +118,16 @@ export default function AdminUsersPage() {
 		}
 	};
 
-	const removeUser = async (id: string, name: string) => {
-		if (updatingId === id) return;
+	const confirmDelete = async () => {
+		const target = deleteTarget;
+		if (!target || updatingId === target.id) return;
 
 		try {
-			await deleteUser(id);
-			toast.success(m.admin_users_account_deleted({ name }));
+			await deleteUser(target.id);
+			toast.success(m.admin_users_account_deleted({ name: target.name }));
+			setDeleteTarget(null);
 		} catch (err) {
-			toastError(m.admin_users_account_delete_failed_named({ name }), err);
+			toastError(m.admin_users_account_delete_failed_named({ name: target.name }), err);
 		}
 	};
 
@@ -139,7 +143,7 @@ export default function AdminUsersPage() {
 				updatingId={updatingId}
 				onToggleBan={toggleBan}
 				onToggleRole={toggleRole}
-				onDelete={removeUser}
+				onDelete={(id, name) => Promise.resolve(setDeleteTarget({ id, name }))}
 				onCopy={copyToClipboard}
 			/>
 		);
@@ -179,6 +183,14 @@ export default function AdminUsersPage() {
 			</AdminSection>
 
 			<CreateUserDialog open={createOpen} onOpenChange={setCreateOpen} onCreate={handleCreate} isCreating={isCreating} />
+			<DeleteUserDialog
+				userName={deleteTarget?.name ?? null}
+				isPending={updatingId === deleteTarget?.id}
+				onOpenChange={(open) => {
+					if (!open) setDeleteTarget(null);
+				}}
+				onConfirm={() => detach(confirmDelete)}
+			/>
 			<BanUserDialog
 				userName={banTarget?.name ?? null}
 				isPending={updatingId === banTarget?.id}
