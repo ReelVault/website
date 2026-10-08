@@ -190,3 +190,4 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Worker "Scheduled" and "Active now" filters always showed nothing** — the quick filters compared the filter id with the task category instead of checking triggers and active jobs, so both returned an empty list while their counters were correct.
 - **"Files" on a library card ignored the library** — the admin media list now honors the `libraryId` the card passes, and a button clears the filter.
 - **Installed plugins ignored the search box and category filter** — only the catalog was filtered; the installed list now follows both.
+- **Hardcoded Polish labels in clipboard toasts** — copying logs and operation IDs always said "logi" / "ID operacji" regardless of language; the labels are now translated.

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getReelVaultApiUrl } from "@/client/client";
 import { useAdminLogFiles, useAdminLogs } from "@/client/hooks/use-admin-logs";
 import { useDebounce } from "@/hooks/use-debounce";
+import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { isFfmpegLog, isServerLog } from "../components/log-file-utils";
 
@@ -75,7 +76,7 @@ export function useLogsPageController() {
 
 	const handleCopyRaw = async () => {
 		const text = logs.map((l) => (typeof l.msg === "string" ? l.msg : JSON.stringify(l))).join("\n");
-		await copy(text, "logi");
+		await copy(text, m.admin_logs_word());
 	};
 
 	useEffect(() => {

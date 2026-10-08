@@ -112,7 +112,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 								<span>{m.common_truncated_id({ id: operation.id.slice(0, 8) })}</span>
 								<button
 									type="button"
-									onClick={() => detach(() => copy(operation.id, "ID operacji"))}
+									onClick={() => detach(() => copy(operation.id, m.admin_worker_operation_id_word()))}
 									className="text-muted-foreground hover:text-foreground"
 									title={m.admin_worker_copy_operation_id()}
 								>

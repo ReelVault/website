@@ -1759,6 +1759,8 @@
 	"admin_worker_completed_count": "Finished: {completedItems}",
 	"admin_worker_concurrency_config": "Concurrency limits, timeouts, and the current load state.",
 	"admin_worker_configured_rules": "Configured rules ({triggersCount})",
+	"admin_logs_word": "logs",
+	"admin_worker_operation_id_word": "operation ID",
 	"admin_worker_copy_operation_id": "Copy operation ID",
 	"admin_worker_core_jobs": "Core application jobs and services.",
 	"admin_worker_created_at": "Created: {date}",

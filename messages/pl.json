@@ -1765,6 +1765,8 @@
 	"admin_worker_completed_count": "Ukończono: {completedItems}",
 	"admin_worker_concurrency_config": "Konfiguracja limitów współbieżności, timeoutów i aktualny stan obciążenia.",
 	"admin_worker_configured_rules": "Skonfigurowane reguły ({triggersCount})",
+	"admin_logs_word": "logi",
+	"admin_worker_operation_id_word": "ID operacji",
 	"admin_worker_copy_operation_id": "Kopiuj ID operacji",
 	"admin_worker_core_jobs": "Podstawowe zadania i usługi aplikacji.",
 	"admin_worker_created_at": "Utworzono: {date}",
