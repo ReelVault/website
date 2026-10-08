@@ -1,6 +1,6 @@
 {
 	"name": "reelvault.website",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"private": true,
 	"type": "module",
 	"packageManager": "bun@1.4.2",
@@ -9,7 +9,7 @@
 		"**/*.scss"
 	],
 	"reelvault": {
-		"minServerVersion": "1.2.0"
+		"minServerVersion": "1.2.1"
 	},
 	"scripts": {
 		"----RUN": "",
