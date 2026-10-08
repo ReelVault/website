@@ -39,7 +39,6 @@ const COMPRESSIBLE_ASSETS = /\.(js|mjs|css|html|svg|json|txt|vtt)$/;
 const INDEX_HTML_ASSET = /index\.html$/;
 
 // Service-worker routing patterns (top-level so Biome's useTopLevelRegex is happy).
-const PWA_NAVIGATE_FALLBACK_DENYLIST = [/^\/api/, /^\/v1/, /^\/realtime/];
 const PWA_ASSET_URL_PATTERN = /\/assets\//;
 
 // Rolldown-native chunking (Vite 8): stable vendor groups, everything else
@@ -133,10 +132,30 @@ export default defineConfig(({ mode }) => {
 				manifest: false,
 				workbox: {
 					globPatterns: ["**/*.{html,ico,png,svg,webmanifest}"],
-					navigateFallback: "/",
-					navigateFallbackDenylist: PWA_NAVIGATE_FALLBACK_DENYLIST,
+					// VitePWA defaults this to "index.html", which registers a
+					// precache-first NavigationRoute that would shadow the
+					// network-first route below. The precache entry stays for the
+					// offline fallback.
+					navigateFallback: null,
 					cleanupOutdatedCaches: true,
 					runtimeCaching: [
+						{
+							// Navigations prefer the network: the server injects the
+							// same-origin API marker into index.html, so a precached
+							// shell would pin the wrong API origin. Offline falls back
+							// to the precached app shell.
+							urlPattern: ({ request, url }) =>
+								request.mode === "navigate" &&
+								!url.pathname.startsWith("/api") &&
+								!url.pathname.startsWith("/v1") &&
+								!url.pathname.startsWith("/realtime"),
+							handler: "NetworkFirst",
+							options: {
+								cacheName: "reelvault-pages",
+								precacheFallback: { fallbackURL: "/index.html" },
+								expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
+							},
+						},
 						{
 							urlPattern: PWA_ASSET_URL_PATTERN,
 							handler: "CacheFirst",
