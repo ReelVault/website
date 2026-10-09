@@ -140,7 +140,6 @@ export function PinVerificationModal({
 								setError("");
 							}}
 						/>
-						{/* TODO: add error */}
 						{error && <AppErrorState title={error} className="mt-2" />}
 					</Field>
 
