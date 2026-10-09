@@ -15,6 +15,9 @@ type CatalogMessage = (inputs?: MessageParams) => string;
 const dynamicMessages = {
 	admin_live_active_streams: (inputs) => m.admin_live_active_streams({ viewers: String(inputs?.viewers ?? "") }),
 	admin_live_no_streams: () => m.admin_live_no_streams(),
+	admin_settings_invalid_value: (inputs) =>
+		m.admin_settings_invalid_value({ key: String(inputs?.key ?? ""), min: String(inputs?.min ?? ""), max: String(inputs?.max ?? "") }),
+	admin_settings_unknown_key: (inputs) => m.admin_settings_unknown_key({ key: String(inputs?.key ?? "") }),
 	auth_email_registered: () => m.auth_email_registered(),
 	auth_invalid_credentials: () => m.auth_invalid_credentials(),
 	auth_invalid_current_password: () => m.auth_invalid_current_password(),

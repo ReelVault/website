@@ -30,18 +30,24 @@ function NumberSettingInput({
 	initial,
 	onCommit,
 	disabled,
+	min,
+	max,
 }: {
 	id: string;
 	initial: string;
 	onCommit: (val: unknown) => void;
 	disabled?: boolean | undefined;
+	min?: number | undefined;
+	max?: number | undefined;
 }) {
 	const [draft, setDraft] = useState(initial);
 	const [isInvalid, setIsInvalid] = useState(false);
+	const hasRange = min !== undefined && max !== undefined;
 
 	const commit = () => {
 		const trimmed = draft.trim();
-		if (trimmed === "" || !Number.isFinite(Number(trimmed))) {
+		const outOfRange = hasRange && (Number(trimmed) < min || Number(trimmed) > max);
+		if (trimmed === "" || !Number.isFinite(Number(trimmed)) || outOfRange) {
 			setDraft(initial);
 			setIsInvalid(true);
 
@@ -57,6 +63,8 @@ function NumberSettingInput({
 			<Input
 				id={id}
 				type="number"
+				min={min}
+				max={max}
 				value={draft}
 				onChange={(event) => {
 					setDraft(event.target.value);
@@ -75,7 +83,7 @@ function NumberSettingInput({
 			/>
 			{isInvalid && (
 				<p role="alert" className="text-[11px] text-destructive">
-					{m.admin_settings_number_invalid()}
+					{hasRange ? m.admin_settings_number_range({ min, max }) : m.admin_settings_number_invalid()}
 				</p>
 			)}
 		</div>
@@ -143,6 +151,8 @@ export function SettingField({
 				initial={currentValue !== undefined && currentValue !== null ? settingValueToText(currentValue) : ""}
 				onCommit={onChange}
 				disabled={disabled}
+				min={item.min}
+				max={item.max}
 			/>
 		);
 	} else if (item.type === "string_array") {
