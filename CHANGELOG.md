@@ -213,6 +213,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Jump to any page** — admin pagination shows an editable page number: type a page and press Enter.
 - **Restart notice for the session lifetime** — the session lifetime setting says that it applies to new sessions after a server restart.
 - **Next episode on small screens** — the next-episode button in the player is shown on phones too, not only from 640 px wide.
+- **Warning before leaving unsaved settings** — closing or reloading the tab while a settings section has unsaved changes asks the browser to confirm.
 
 ### Fixes
 

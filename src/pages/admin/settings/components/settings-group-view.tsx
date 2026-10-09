@@ -1,7 +1,7 @@
 import type { SystemSettingItemView } from "@reelvault/sdk";
 import { useForm } from "@tanstack/react-form";
 import { Check, RotateCcw, Save } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -15,6 +15,14 @@ function isItemModified(item: SystemSettingItemView, value: unknown) {
 	}
 
 	return value !== original;
+}
+
+function hasModifiedItems(values: Record<string, unknown>, items: SystemSettingItemView[]): boolean {
+	return items.some((item) => {
+		const current = readItemValue(values, item.key);
+
+		return current !== undefined && isItemModified(item, current);
+	});
 }
 
 function resolveFieldValue(fieldValue: unknown, fallback: unknown): unknown {
@@ -104,6 +112,25 @@ export function SettingsGroupView({
 		form.reset(buildInitial(items));
 	}, [items, form]);
 
+	const [hasChanges, setHasChanges] = useState(false);
+	useEffect(() => {
+		const syncHasChanges = () => setHasChanges(hasModifiedItems(form.state.values, items));
+		syncHasChanges();
+		const subscription = form.store.subscribe(syncHasChanges);
+
+		return () => subscription.unsubscribe();
+	}, [form, items]);
+
+	// Closing or reloading the tab with unsaved edits asks the browser to confirm.
+	useEffect(() => {
+		const warnBeforeUnload = (event: BeforeUnloadEvent) => {
+			if (hasChanges) event.preventDefault();
+		};
+		window.addEventListener("beforeunload", warnBeforeUnload);
+
+		return () => window.removeEventListener("beforeunload", warnBeforeUnload);
+	}, [hasChanges]);
+
 	const handleResetSingle = (item: SystemSettingItemView) => {
 		if (item.isCustom) {
 			detach(onResetKeys([item.key]));
@@ -158,31 +185,11 @@ export function SettingsGroupView({
 				/>
 
 				<div className="flex items-center gap-2">
-					<form.Subscribe
-						selector={(state) =>
-							items.some((item) => {
-								const current = readItemValue(state.values, item.key);
-
-								return current !== undefined && isItemModified(item, current);
-							})
-						}
-					>
-						{(hasChanges) => (
-							<>
-								{hasChanges && <span className="text-muted-foreground text-xs">{m.admin_settings_unsaved_changes()}</span>}
-								<Button
-									type="button"
-									size="sm"
-									onClick={() => detach(form.handleSubmit())}
-									disabled={!hasChanges || disabled}
-									className="gap-2"
-								>
-									{isSaving ? <Save className="size-3.5 animate-spin" /> : <Check className="size-3.5" />}
-									{m.common_save_changes()}
-								</Button>
-							</>
-						)}
-					</form.Subscribe>
+					{hasChanges && <span className="text-muted-foreground text-xs">{m.admin_settings_unsaved_changes()}</span>}
+					<Button type="button" size="sm" onClick={() => detach(form.handleSubmit())} disabled={!hasChanges || disabled} className="gap-2">
+						{isSaving ? <Save className="size-3.5 animate-spin" /> : <Check className="size-3.5" />}
+						{m.common_save_changes()}
+					</Button>
 				</div>
 			</div>
 		</div>
