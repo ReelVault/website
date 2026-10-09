@@ -45,6 +45,7 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 			preferHearingImpaired: preferences.preferHearingImpaired,
 			continueWatchingMinutes: preferences.continueWatchingMinutes,
 			resumeRewindSeconds: preferences.resumeRewindSeconds,
+			watchlistAutoRemoveWatched: preferences.watchlistAutoRemoveWatched,
 			subtitleSize: preferences.subtitleSize,
 			subtitlePosition: preferences.subtitlePosition,
 			subtitleColor: preferences.subtitleColor,
@@ -196,6 +197,11 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 					label={m.admin_users_auto_skip_recap()}
 					checked={state.autoSkipRecap}
 					onChange={(autoSkipRecap) => setState((current) => ({ ...current, autoSkipRecap }))}
+				/>
+				<PreferenceToggle
+					label={m.settings_watchlist_auto_remove()}
+					checked={state.watchlistAutoRemoveWatched}
+					onChange={(watchlistAutoRemoveWatched) => setState((current) => ({ ...current, watchlistAutoRemoveWatched }))}
 				/>
 			</div>
 			<div className="flex gap-2">

@@ -218,6 +218,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_users_audio_language(),
 		description: m.admin_settings_default_audio_language_desc(),
 	},
+	"profiles.defaultPreferences.watchlistAutoRemoveWatched": {
+		label: m.admin_settings_label_watchlist_auto_remove(),
+		description: m.admin_settings_watchlist_auto_remove_desc(),
+	},
 	"profiles.defaultPreferences.resumeRewindSeconds": {
 		label: m.settings_resume_rewind(),
 		description: m.settings_resume_rewind_desc(),

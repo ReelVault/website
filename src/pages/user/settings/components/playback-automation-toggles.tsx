@@ -9,7 +9,7 @@ interface PlaybackAutomationTogglesProps {
 	onChange: (patch: Partial<ProfilePreferencesState>) => void;
 }
 
-/** Toggles for actions the player takes on its own: next-episode autoplay and marker-based skipping. */
+/** Toggles for actions the app takes on its own: next-episode autoplay, marker-based skipping and watchlist clean-up. */
 export function PlaybackAutomationToggles({ preferences, onChange }: PlaybackAutomationTogglesProps) {
 	return (
 		<div className="grid gap-3 sm:grid-cols-2">
@@ -36,6 +36,12 @@ export function PlaybackAutomationToggles({ preferences, onChange }: PlaybackAut
 				description={m.settings_skip_recap_desc()}
 				checked={preferences.autoSkipRecap}
 				onChange={(autoSkipRecap) => onChange({ autoSkipRecap })}
+			/>
+			<PreferenceToggle
+				label={m.settings_watchlist_auto_remove()}
+				description={m.settings_watchlist_auto_remove_desc()}
+				checked={preferences.watchlistAutoRemoveWatched}
+				onChange={(watchlistAutoRemoveWatched) => onChange({ watchlistAutoRemoveWatched })}
 			/>
 			<PreferenceSelect
 				label={m.settings_resume_rewind()}

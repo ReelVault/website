@@ -17,6 +17,7 @@ export interface ProfilePreferencesState {
 	preferHearingImpaired: boolean;
 	continueWatchingMinutes: number;
 	resumeRewindSeconds: number;
+	watchlistAutoRemoveWatched: boolean;
 	subtitleSize: "small" | "normal" | "large" | "extra-large";
 	subtitlePosition: "bottom" | "top" | "middle";
 	subtitleColor: "white" | "yellow" | "cyan" | "green";
@@ -39,6 +40,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	preferHearingImpaired: false,
 	continueWatchingMinutes: 2,
 	resumeRewindSeconds: 0,
+	watchlistAutoRemoveWatched: false,
 	subtitleSize: "normal",
 	subtitlePosition: "bottom",
 	subtitleColor: "white",
@@ -61,6 +63,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"preferHearingImpaired",
 	"continueWatchingMinutes",
 	"resumeRewindSeconds",
+	"watchlistAutoRemoveWatched",
 	"subtitleSize",
 	"subtitlePosition",
 	"subtitleColor",
