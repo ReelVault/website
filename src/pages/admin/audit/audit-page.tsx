@@ -16,6 +16,7 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import type { AdminAuditSearch } from "@/routes/admin/audit";
+import { AuditActorSummary } from "./components/audit-actor-summary";
 import { AuditEntryRow } from "./components/audit-entry-row";
 
 const SKELETON_KEYS = ["one", "two", "three", "four", "five", "six"] as const;
@@ -234,6 +235,19 @@ function AdminAuditContent() {
 					/>
 				</div>
 			</div>
+
+			<AuditActorSummary
+				filters={{
+					action,
+					resourceType: debouncedResourceType,
+					actorUserId: debouncedActorUserId,
+					ipAddress: debouncedIpAddress,
+					requestId: debouncedRequestId,
+					q: debouncedQuery,
+					from: toIsoDateTime(from),
+					to: toIsoDateTime(to),
+				}}
+			/>
 
 			<AdminSection
 				title={m.admin_audit_entries_section()}
