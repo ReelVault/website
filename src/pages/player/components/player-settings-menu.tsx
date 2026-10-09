@@ -2,7 +2,9 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Check, Keyboard, Layers, Settings, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
+import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useMediaFilesByEpisode, useMediaFilesByMetadata } from "@/client/hooks/use-media";
+import { useProfilePreferences } from "@/client/hooks/use-profiles";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -19,6 +21,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { useIsMobile } from "@/hooks/use-mobile";
 import { m } from "@/paraglide/messages";
 import { usePlayerActions, usePlayerInfo, usePlayerSettings, usePlayerVolume } from "../player-context";
+import { PLAYBACK_SPEED_STEPS } from "../utils/player-speed";
 import { detach, getVersionLabel } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 import { PlayerShortcutsDialog } from "./player-shortcuts-dialog";
@@ -58,8 +61,31 @@ const QUALITY_OPTIONS: ReadonlyArray<{
 	},
 ];
 
-/** Available playback speed steps (mirrors what Vidstack SpeedSlider offered). */
-const SPEED_STEPS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
+/** A switch row for the mobile settings sheet; the check mark shows the stored state. */
+function PreferenceRow({
+	label,
+	checked,
+	disabled,
+	onToggle,
+}: {
+	label: string;
+	checked: boolean;
+	disabled: boolean;
+	onToggle: () => void;
+}) {
+	return (
+		<button
+			type="button"
+			aria-pressed={checked}
+			disabled={disabled}
+			onClick={onToggle}
+			className="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left text-sm transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
+		>
+			{label}
+			{checked && <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />}
+		</button>
+	);
+}
 
 function SpeedSlider({
 	playbackRate,
@@ -71,7 +97,7 @@ function SpeedSlider({
 	className?: string;
 }) {
 	// Percentage fill for the speed slider (0.25 → 2)
-	const speedMin = SPEED_STEPS[0];
+	const speedMin = PLAYBACK_SPEED_STEPS[0];
 	const speedMax = 2;
 	const fillPercent = ((playbackRate - speedMin) / (speedMax - speedMin)) * 100;
 
@@ -80,7 +106,7 @@ function SpeedSlider({
 			<div className="relative z-0 h-1.25 w-full rounded-sm bg-foreground/30">
 				<div className="absolute inset-y-0 left-0 rounded-sm bg-primary transition-[width]" style={{ width: `${fillPercent}%` }} />
 				<div className="absolute inset-0 flex items-center justify-between px-0">
-					{SPEED_STEPS.map((step) => (
+					{PLAYBACK_SPEED_STEPS.map((step) => (
 						<div key={step} className="h-1.5 w-0.5 bg-muted-foreground opacity-60" />
 					))}
 				</div>
@@ -121,6 +147,16 @@ export function PlayerSettingsMenu({
 	const { maxBitrate, onQualityChange } = usePlayerSettings();
 	const { playbackRate } = usePlayerVolume();
 	const actions = usePlayerActions();
+	const { profile } = useCurrentUser();
+	const { preferences, updatePreferences, isSaving } = useProfilePreferences(profile?.id);
+	// Autoplay and skip-intro are profile preferences; the player reads them live, so a flip applies right away.
+	const canEditPreferences = Boolean(preferences) && !isSaving;
+	const toggleAutoplay = () => {
+		if (preferences) detach(updatePreferences({ autoplay: !preferences.autoplay }));
+	};
+	const toggleAutoSkipIntro = () => {
+		if (preferences) detach(updatePreferences({ autoSkipIntro: !preferences.autoSkipIntro }));
+	};
 
 	const { data: episodeFiles = [] } = useMediaFilesByEpisode(info.episodeId, { enabled: isMenuOpen });
 	const { data: metadataFiles = [] } = useMediaFilesByMetadata(!info.episodeId ? info.metadataId : null, { enabled: isMenuOpen });
@@ -222,6 +258,21 @@ export function PlayerSettingsMenu({
 							{m.player_speed_playback_playbackrate({ playbackRate })}
 						</p>
 						<SpeedSlider playbackRate={playbackRate} onRateChange={(rate) => actions.setPlaybackRate(rate)} className="mx-1" />
+					</section>
+
+					<section className="flex flex-col gap-1">
+						<PreferenceRow
+							label={m.admin_users_autoplay_next()}
+							checked={preferences?.autoplay ?? false}
+							disabled={!canEditPreferences}
+							onToggle={toggleAutoplay}
+						/>
+						<PreferenceRow
+							label={m.user_auto_skip_intro_label()}
+							checked={preferences?.autoSkipIntro ?? false}
+							disabled={!canEditPreferences}
+							onToggle={toggleAutoSkipIntro}
+						/>
 					</section>
 
 					{onOpenEqualizer && (
@@ -330,6 +381,25 @@ export function PlayerSettingsMenu({
 							</div>
 						</DropdownMenuGroup>
 
+						<DropdownMenuSeparator />
+						<DropdownMenuGroup>
+							<DropdownMenuCheckboxItem
+								checked={preferences?.autoplay ?? false}
+								disabled={!canEditPreferences}
+								onCheckedChange={toggleAutoplay}
+								className="cursor-pointer gap-2.5"
+							>
+								<span>{m.admin_users_autoplay_next()}</span>
+							</DropdownMenuCheckboxItem>
+							<DropdownMenuCheckboxItem
+								checked={preferences?.autoSkipIntro ?? false}
+								disabled={!canEditPreferences}
+								onCheckedChange={toggleAutoSkipIntro}
+								className="cursor-pointer gap-2.5"
+							>
+								<span>{m.user_auto_skip_intro_label()}</span>
+							</DropdownMenuCheckboxItem>
+						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							{onOpenEqualizer && (
