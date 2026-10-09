@@ -135,6 +135,14 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_queue_check_ms(),
 		description: m.admin_settings_scheduler_interval_ms(),
 	},
+	"workers.definitions.libraryScan.timeoutMs": {
+		label: m.admin_settings_library_scan_timeout(),
+		description: m.admin_settings_library_scan_timeout_desc(),
+	},
+	"workers.definitions.downloadsProcess.timeoutMs": {
+		label: m.admin_settings_downloads_timeout(),
+		description: m.admin_settings_downloads_timeout_desc(),
+	},
 	"workers.definitions.imageProcessing.concurrency": {
 		label: m.admin_settings_concurrency_image_processing(),
 		description: m.admin_settings_parallel_image_jobs(),
