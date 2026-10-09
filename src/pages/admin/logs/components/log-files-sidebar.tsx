@@ -2,7 +2,18 @@ import type { AdminLogFileInfo } from "@reelvault/sdk";
 import { cn } from "cn";
 import { HardDrive, RefreshCw } from "lucide-react";
 import type { MouseEvent, ReactNode } from "react";
+import { useState } from "react";
 import { getReelVaultApiUrl } from "@/client/client";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -51,9 +62,15 @@ export function LogFilesSidebar({
 		const fileId = event.currentTarget.dataset.fileId;
 		if (fileId) onSelectFile(fileId);
 	};
+	// Deleting a log file removes it from disk for good, so the menu item only asks; the dialog deletes.
+	const [pendingDelete, setPendingDelete] = useState<AdminLogFileInfo | null>(null);
 	const handleDeleteFile = (event: MouseEvent<HTMLElement>) => {
 		const fileId = event.currentTarget.dataset.fileId;
-		if (fileId) onDeleteFile(fileId);
+		setPendingDelete(filteredFiles.find((file) => file.id === fileId) ?? null);
+	};
+	const confirmDelete = () => {
+		if (pendingDelete) onDeleteFile(pendingDelete.id);
+		setPendingDelete(null);
 	};
 
 	let filesContent: ReactNode;
@@ -114,6 +131,20 @@ export function LogFilesSidebar({
 				</CardHeader>
 				<CardContent className="flex-1 overflow-hidden p-2">{filesContent}</CardContent>
 			</Card>
+			<AlertDialog open={pendingDelete !== null} onOpenChange={(open) => !open && setPendingDelete(null)}>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>{m.admin_logs_delete_file_confirm({ name: pendingDelete?.name ?? "" })}</AlertDialogTitle>
+						<AlertDialogDescription>{m.admin_logs_delete_file_warning()}</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel>{m.common_cancel()}</AlertDialogCancel>
+						<AlertDialogAction variant="destructive" onClick={confirmDelete}>
+							{m.admin_logs_delete_file()}
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
 		</div>
 	);
 }
