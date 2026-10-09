@@ -30,9 +30,26 @@ interface PluginCardProps {
 	onReload: (id: string) => void;
 	/** Present for installed plugins: allows or refuses the CSP sources the manifest declares. */
 	onSetCsp?: ((id: string, enabled: boolean) => void) | undefined;
+	/** Present for installed plugins: keeps the installed version, so the catalog offers no update. */
+	onSetPinned?: ((id: string, pinned: boolean) => void) | undefined;
+	/** Present when the card can be selected for a bulk action. */
+	selected?: boolean;
+	onToggleSelect?: (() => void) | undefined;
 }
 
-export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnable, onDisable, onReload, onSetCsp }: PluginCardProps) {
+export function PluginCard({
+	plugin,
+	isBusy,
+	onOpenDetails,
+	onUninstall,
+	onEnable,
+	onDisable,
+	onReload,
+	onSetCsp,
+	onSetPinned,
+	selected = false,
+	onToggleSelect,
+}: PluginCardProps) {
 	const isEnabled = plugin.state === "enabled";
 	const isFailed = plugin.state === "failed" || Boolean(plugin.error);
 
@@ -142,6 +159,26 @@ export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnabl
 						<Sliders className="size-3.5" />
 						{m.player_settings_word()}
 					</Button>
+
+					{onToggleSelect && (
+						<label className="flex cursor-pointer items-center gap-1.5 text-xs">
+							<input type="checkbox" checked={selected} onChange={onToggleSelect} className="size-4 accent-primary" />
+							{m.admin_plugins_select()}
+						</label>
+					)}
+
+					{onSetPinned && plugin.pinned !== undefined && (
+						<Button
+							variant="outline"
+							size="sm"
+							disabled={isBusy}
+							onClick={() => onSetPinned(plugin.id, plugin.pinned !== true)}
+							title={m.admin_plugins_pin_hint()}
+							className="gap-1.5 text-xs"
+						>
+							{plugin.pinned ? m.admin_plugins_unpin() : m.admin_plugins_pin()}
+						</Button>
+					)}
 
 					{onSetCsp && plugin.cspDisabled !== undefined && (
 						<Button

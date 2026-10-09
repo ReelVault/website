@@ -76,6 +76,34 @@ export function useAdminPlugins() {
 		},
 	});
 
+	const setPluginsEnabledMutation = useMutation({
+		mutationFn: async ({ pluginIds, enabled }: { pluginIds: string[]; enabled: boolean }) => {
+			return await reelvault.admin.setPluginsEnabled({ enabled, pluginIds });
+		},
+		onSuccess: async (result) => {
+			await invalidatePluginQueries();
+			const failed = result.results.filter((entry) => !entry.ok).length;
+			if (failed === 0) toast.success(m.admin_plugins_bulk_done({ count: result.results.length }));
+			else toast.error(m.admin_plugins_bulk_partial({ failed, total: result.results.length }));
+		},
+		onError: (error) => {
+			toastError(m.admin_plugins_bulk_failed(), error, m.toast_plugins_unexpected_error());
+		},
+	});
+
+	const setPluginPinnedMutation = useMutation({
+		mutationFn: async ({ pluginId, pinned }: { pluginId: string; pinned: boolean }) => {
+			return await reelvault.admin.setPluginPinned(pluginId, pinned);
+		},
+		onSuccess: async () => {
+			await invalidatePluginQueries();
+			toast.success(m.admin_plugins_pin_saved());
+		},
+		onError: (error) => {
+			toastError(m.admin_plugins_pin_failed(), error, m.toast_plugins_unexpected_error());
+		},
+	});
+
 	const setPluginCspMutation = useMutation({
 		mutationFn: async ({ pluginId, enabled }: { pluginId: string; enabled: boolean }) => {
 			return await reelvault.admin.setPluginCsp(pluginId, enabled);
@@ -97,6 +125,9 @@ export function useAdminPlugins() {
 		disablePlugin: disablePluginMutation.mutateAsync,
 		reloadPlugin: reloadPluginMutation.mutateAsync,
 		setPluginCsp: setPluginCspMutation.mutateAsync,
+		setPluginsEnabled: setPluginsEnabledMutation.mutateAsync,
+		isBulkUpdating: setPluginsEnabledMutation.isPending,
+		setPluginPinned: setPluginPinnedMutation.mutateAsync,
 		isSettingCsp: setPluginCspMutation.isPending,
 		isReloadingAll: reloadAllMutation.isPending,
 		isEnabling: enablePluginMutation.isPending,

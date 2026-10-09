@@ -51,11 +51,29 @@ export default function AdminPluginsPage() {
 		disablePlugin,
 		reloadPlugin,
 		setPluginCsp,
+		setPluginsEnabled,
+		isBulkUpdating,
+		setPluginPinned,
 		isReloadingAll,
 		isEnabling,
 		isDisabling,
 		isReloading,
 	} = useAdminPlugins();
+	// Installed plugins picked for one bulk enable or disable.
+	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+	const toggleSelected = (pluginId: string) => {
+		setSelectedIds((previous) => {
+			const next = new Set(previous);
+			if (next.has(pluginId)) next.delete(pluginId);
+			else next.add(pluginId);
+			return next;
+		});
+	};
+	const applyToSelected = (enabled: boolean) => {
+		const pluginIds = [...selectedIds];
+		setSelectedIds(new Set());
+		detach(setPluginsEnabled({ pluginIds, enabled }));
+	};
 
 	const {
 		catalog,
@@ -254,25 +272,44 @@ export default function AdminPluginsPage() {
 					)}
 
 					{!(pluginsQuery.isLoading || pluginsQuery.isError) && installedPlugins.length > 0 && (
-						<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-							{installedPlugins.map((plugin) => {
-								const catalogEntry = catalog.find((entry) => entry.id === plugin.id);
+						<>
+							{selectedIds.size > 0 && (
+								<div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/80 bg-card p-3 text-xs">
+									<span className="font-medium">{m.admin_plugins_bulk_selected({ count: selectedIds.size })}</span>
+									<Button size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(true)} className="text-xs">
+										{m.admin_plugins_bulk_enable()}
+									</Button>
+									<Button variant="outline" size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(false)} className="text-xs">
+										{m.admin_plugins_bulk_disable()}
+									</Button>
+									<Button variant="ghost" size="sm" onClick={() => setSelectedIds(new Set())} className="text-xs">
+										{m.admin_plugins_bulk_clear()}
+									</Button>
+								</div>
+							)}
+							<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+								{installedPlugins.map((plugin) => {
+									const catalogEntry = catalog.find((entry) => entry.id === plugin.id);
 
-								return (
-									<PluginCard
-										key={plugin.id}
-										plugin={plugin}
-										isBusy={isBusy}
-										onOpenDetails={catalogEntry ? () => setSelectedEntry(catalogEntry) : undefined}
-										onUninstall={catalogEntry ? undefined : () => detach(uninstallPlugin(plugin.id))}
-										onEnable={(id) => detach(enablePlugin(id))}
-										onDisable={(id) => detach(disablePlugin(id))}
-										onReload={(id) => detach(reloadPlugin(id))}
-										onSetCsp={(id, enabled) => detach(setPluginCsp({ pluginId: id, enabled }))}
-									/>
-								);
-							})}
-						</div>
+									return (
+										<PluginCard
+											key={plugin.id}
+											plugin={plugin}
+											isBusy={isBusy}
+											onOpenDetails={catalogEntry ? () => setSelectedEntry(catalogEntry) : undefined}
+											onUninstall={catalogEntry ? undefined : () => detach(uninstallPlugin(plugin.id))}
+											onEnable={(id) => detach(enablePlugin(id))}
+											onDisable={(id) => detach(disablePlugin(id))}
+											onReload={(id) => detach(reloadPlugin(id))}
+											onSetCsp={(id, enabled) => detach(setPluginCsp({ pluginId: id, enabled }))}
+											onSetPinned={(id, pinned) => detach(setPluginPinned({ pluginId: id, pinned }))}
+											selected={selectedIds.has(plugin.id)}
+											onToggleSelect={() => toggleSelected(plugin.id)}
+										/>
+									);
+								})}
+							</div>
+						</>
 					)}
 				</AdminSection>
 			) : (
