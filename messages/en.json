@@ -291,6 +291,7 @@
 	"admin_database_restore": "Restore",
 	"admin_database_restore_description": "The current database is backed up first. The server then shuts down, swaps the database and restarts. Changes made after this backup stay only in the pre-restore copy.",
 	"database_restore_blocked_active_streams": "Restore is blocked while streams are active ({activeStreams}). Stop them and try again.",
+	"update_blocked_active_streams": "The server update is waiting while {activeStreams} stream(s) are active. The restart would stop them, so try again once they finish.",
 	"admin_database_restore_queued": "Restore queued — the server is restarting.",
 	"admin_database_restore_title": "Restore database from \"{name}\"?",
 	"admin_database_retention_notice": "Automatic rotation and retention: the server keeps the 7 most recent backups.",

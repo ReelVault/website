@@ -293,6 +293,7 @@
 	"admin_database_restore": "Przywróć",
 	"admin_database_restore_description": "Najpierw zostanie zrobiona kopia obecnej bazy. Serwer się zatrzyma, podmieni bazę i uruchomi ponownie. Zmiany po tej kopii zostaną tylko w kopii sprzed przywracania.",
 	"database_restore_blocked_active_streams": "Przywracanie jest wstrzymane, gdy trwają strumienie ({activeStreams}). Zatrzymaj je i spróbuj ponownie.",
+	"update_blocked_active_streams": "Aktualizacja serwera czeka, gdy trwa {activeStreams} strumień(i). Restart by je zatrzymał, więc spróbuj ponownie po ich zakończeniu.",
 	"admin_database_restore_queued": "Przywracanie zaplanowane — serwer się restartuje.",
 	"admin_database_restore_title": "Przywrócić bazę z kopii „{name}”?",
 	"admin_database_retention_notice": "Automatyczna rotacja i retencja: serwer przechowuje do 7 najnowszych kopii zapasowych.",
