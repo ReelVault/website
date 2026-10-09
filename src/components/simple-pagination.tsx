@@ -1,17 +1,57 @@
-import type { MouseEvent } from "react";
-import {
-	Pagination,
-	PaginationContent,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from "@/components/ui/pagination";
+import { type MouseEvent, useState } from "react";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { m } from "@/paraglide/messages";
 
-const handleCurrentClick = (event: MouseEvent<HTMLAnchorElement>) => {
-	event.preventDefault();
-};
+/**
+ * Current page as an editable number, so any page can be reached directly.
+ * Keyed by the current page, so the draft restarts from the real page after each change.
+ */
+function PageJump({
+	currentPage,
+	totalPages,
+	disabled,
+	onPageChange,
+}: {
+	currentPage: number;
+	totalPages: number;
+	disabled: boolean;
+	onPageChange: (page: number) => void;
+}) {
+	const [draft, setDraft] = useState(String(currentPage));
+
+	const commit = () => {
+		const page = Number(draft);
+		if (Number.isInteger(page) && page >= 1 && page <= totalPages && page !== currentPage) {
+			onPageChange(page);
+		} else {
+			setDraft(String(currentPage));
+		}
+	};
+
+	return (
+		<div className="flex items-center gap-1.5 px-2 text-sm">
+			<input
+				type="number"
+				inputMode="numeric"
+				min={1}
+				max={totalPages}
+				value={draft}
+				disabled={disabled}
+				aria-label={m.common_page_of({ current: currentPage, total: totalPages })}
+				onChange={(event) => setDraft(event.target.value)}
+				onBlur={commit}
+				onKeyDown={(event) => {
+					if (event.key === "Enter") {
+						event.preventDefault();
+						commit();
+					}
+				}}
+				className="h-8 w-14 rounded-md border border-input bg-transparent px-2 text-center tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+			/>
+			<span className="text-muted-foreground tabular-nums">{`/ ${totalPages}`}</span>
+		</div>
+	);
+}
 
 /**
  * `variant="default"` — centered web pagination (bg-card).
@@ -64,14 +104,13 @@ export function SimplePagination({
 					/>
 				</PaginationItem>
 				<PaginationItem>
-					<PaginationLink
-						href="#"
-						isActive
-						aria-label={m.common_page_of({ current: currentPage, total: totalPages })}
-						onClick={handleCurrentClick}
-					>
-						{m.common_page_indicator({ current: currentPage, total: totalPages })}
-					</PaginationLink>
+					<PageJump
+						key={currentPage}
+						currentPage={currentPage}
+						totalPages={totalPages}
+						disabled={Boolean(isLoading)}
+						onPageChange={onPageChange}
+					/>
 				</PaginationItem>
 				<PaginationItem>
 					<PaginationNext

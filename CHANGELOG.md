@@ -210,6 +210,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Skip buttons wait for playback** — the skip intro, credits and recap button stays hidden while the stream is buffering, stalled or failed, so it cannot jump into the same stall.
 - **Confirm before deleting a log file** — deleting a log file from the logs page asks first and names the file; the file is removed from the server only after confirmation.
 - **Watchlist button shows its state** — on a title's page the watchlist button reads *Remove from list* when the title is already on the list, reports its pressed state, and is disabled while the change is being saved.
+- **Jump to any page** — admin pagination shows an editable page number: type a page and press Enter.
 
 ### Fixes
 
