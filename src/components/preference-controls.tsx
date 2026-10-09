@@ -88,7 +88,8 @@ export function PreferenceLanguageList({
 		.filter((code) => code !== "");
 	const labelFor = (code: string) => options.find(([optionValue]) => optionValue === code)?.[1] ?? code;
 	const commit = (codes: string[]) => onChange(codes.join(","));
-	const remaining = options.flatMap(([code, name]) => (code && name && !selected.includes(code) ? [{ code, name }] : []));
+	const selectedCodes = new Set(selected);
+	const remaining = options.flatMap(([code, name]) => (code && name && !selectedCodes.has(code) ? [{ code, name }] : []));
 
 	return (
 		<Field className="gap-2">
