@@ -23,7 +23,7 @@ const SUBTITLE_SORT_QUERY: Record<
 export function useAdminSubtitles(
 	page: number,
 	limit: number,
-	filters: { mediaFileId?: string; language?: string; type?: "embedded" | "external" },
+	filters: { mediaFileId?: string; language?: string; type?: "embedded" | "external"; q?: string },
 	sort: AdminSubtitleSort = "added",
 ) {
 	const sorting = SUBTITLE_SORT_QUERY[sort];
@@ -37,6 +37,7 @@ export function useAdminSubtitles(
 				limit,
 				mediaFileId: emptyToUndefined(filters.mediaFileId),
 				language: emptyToUndefined(filters.language),
+				q: emptyToUndefined(filters.q),
 				type: filters.type,
 				...sorting,
 			}),

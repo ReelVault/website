@@ -12,6 +12,7 @@ import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-
 import { LazyRender } from "@/components/lazy-render";
 import { SimplePagination } from "@/components/simple-pagination";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSearch, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
@@ -47,12 +48,14 @@ export default function AdminSubtitlesPage() {
 	const navigate = useNavigate({ from: "/admin/subtitles" });
 	const page = urlPage;
 	const searchQuery = q ?? "";
+	// The filter runs on the server, so the text query waits until typing pauses.
+	const debouncedSearch = useDebounce({ value: searchQuery, delay: 300 });
 	const sort = sortParam ?? "added";
 	// Dialog targets are transient UI state — they stay local on purpose.
 	const [viewingId, setViewingId] = useState<string | null>(null);
 	const [editingSubtitle, setEditingSubtitle] = useState<{ id: string } | null>(null);
 
-	const filters = { type, language };
+	const filters = { type, language, q: debouncedSearch.trim() || undefined };
 	const { data, isLoading, error, refetch } = useAdminSubtitles(page, 50, filters, sort);
 	const { data: embeddedData } = useAdminSubtitles(1, 1, { type: "embedded" });
 	const { data: externalData } = useAdminSubtitles(1, 1, { type: "external" });
@@ -97,17 +100,6 @@ export default function AdminSubtitlesPage() {
 		patchSearch({ q: value || undefined, page: undefined });
 	};
 
-	const normalizedSearch = searchQuery.trim().toLowerCase();
-	const filteredSubtitles = normalizedSearch
-		? subtitles.filter((s) => {
-				const labelMatch = s.label?.toLowerCase().includes(normalizedSearch) ?? false;
-				const langMatch = s.language.toLowerCase().includes(normalizedSearch);
-				const fileMatch = s.mediaFileId.toLowerCase().includes(normalizedSearch);
-
-				return labelMatch || langMatch || fileMatch;
-			})
-		: subtitles;
-
 	const handleDelete = (id: string) => {
 		if (deleteMutation.isPending) return;
 
@@ -119,7 +111,7 @@ export default function AdminSubtitlesPage() {
 		listContent = <AppErrorState error={error} onRetry={() => detach(refetch)} />;
 	} else if (isLoading) {
 		listContent = <AppLoadingState />;
-	} else if (filteredSubtitles.length === 0) {
+	} else if (subtitles.length === 0) {
 		listContent = (
 			<AppEmptyState
 				icon={FileText}
@@ -130,7 +122,7 @@ export default function AdminSubtitlesPage() {
 	} else {
 		listContent = (
 			<div className="flex flex-col gap-2">
-				{filteredSubtitles.map((subtitle) => (
+				{subtitles.map((subtitle) => (
 					<LazyRender key={subtitle.id} minHeight={60}>
 						{() => (
 							<SubtitleItemRow
