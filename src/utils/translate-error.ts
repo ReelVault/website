@@ -88,6 +88,8 @@ const dynamicMessages = {
 	too_many_requests: () => m.too_many_requests(),
 	unauthorized: () => m.unauthorized(),
 	update_blocked_active_streams: (inputs) => m.update_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
+	update_not_cancellable: () => m.update_not_cancellable(),
+	update_not_running: () => m.update_not_running(),
 	validation: () => m.validation(),
 	year_mismatch: (inputs) =>
 		m.year_mismatch({

@@ -18,6 +18,9 @@ export const UPDATE_JOB_STATE_LABELS: Record<string, () => string> = {
 	restarting: m.admin_updates_job_restarting,
 };
 
+/** Install states that still allow a cancel: the files are not replaced yet. */
+export const CANCELLABLE_UPDATE_JOB_STATES: ReadonlySet<string> = new Set(["downloading", "verifying", "extracting"]);
+
 const UPDATE_HISTORY_PAGE_SIZE = 10;
 
 /**
@@ -85,6 +88,19 @@ export function useAdminUpdate() {
 		},
 	});
 
+	const cancelMutation = useMutation({
+		mutationFn: async (target: AdminUpdateTarget) => {
+			return await reelvault.admin.cancelUpdate(target);
+		},
+		onSuccess: async () => {
+			await invalidate();
+			toast.success(m.toast_update_cancel_requested());
+		},
+		onError: (error) => {
+			toastError(m.toast_update_cancel_failed(), error, m.toast_update_unexpected_error());
+		},
+	});
+
 	const rollbackMutation = useMutation({
 		mutationFn: async (target: AdminUpdateTarget) => {
 			return await reelvault.admin.rollbackUpdate(target);
@@ -107,5 +123,7 @@ export function useAdminUpdate() {
 		isInstalling: installMutation.isPending,
 		rollback: rollbackMutation.mutateAsync,
 		isRollingBack: rollbackMutation.isPending,
+		cancel: cancelMutation.mutateAsync,
+		isCancelling: cancelMutation.isPending,
 	};
 }

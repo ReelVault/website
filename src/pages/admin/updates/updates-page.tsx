@@ -1,8 +1,13 @@
 import type { AdminUpdateEnvironment, AdminUpdateHistoryEntry, AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpCircle, ChevronDown, ExternalLink, History, Info, Monitor, RefreshCw, Server } from "lucide-react";
+import { ArrowUpCircle, ChevronDown, ExternalLink, History, Info, Monitor, RefreshCw, Server, X } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { UPDATE_JOB_STATE_LABELS, useAdminUpdate, useAdminUpdateHistory } from "@/client/hooks/use-admin-update";
+import {
+	CANCELLABLE_UPDATE_JOB_STATES,
+	UPDATE_JOB_STATE_LABELS,
+	useAdminUpdate,
+	useAdminUpdateHistory,
+} from "@/client/hooks/use-admin-update";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { MarkdownText } from "@/components/markdown-text";
@@ -61,7 +66,7 @@ function VersionCard({ icon, label, version, badge }: { icon: ReactNode; label: 
 }
 
 function ComponentSection({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
-	const { install, isInstalling, rollback } = useAdminUpdate();
+	const { cancel, install, isCancelling, isInstalling, rollback } = useAdminUpdate();
 	const isServer = target === "server";
 	const latest = isServer ? status.serverLatest : status.webLatest;
 	const updateAvailable = isServer ? status.serverUpdateAvailable : status.webUpdateAvailable;
@@ -100,6 +105,21 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 						<ArrowUpCircle className="size-4" />
 						{updateAvailable ? m.admin_updates_install({ version: latest?.version ?? "" }) : m.admin_updates_up_to_date()}
 					</AsyncButton>
+
+					{status.job?.target === target && CANCELLABLE_UPDATE_JOB_STATES.has(status.job.state) && (
+						<Button
+							type="button"
+							variant="outline"
+							className="gap-1.5"
+							disabled={isCancelling}
+							onClick={() => {
+								detach(cancel(target));
+							}}
+						>
+							<X className="size-4" />
+							{m.admin_updates_cancel()}
+						</Button>
+					)}
 
 					{rollbackAvailable && !jobRunning && (
 						<ConfirmAction
@@ -229,6 +249,13 @@ function HistoryStatusBadge({ status }: { status: AdminUpdateHistoryEntry["statu
 			<Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
 				<RefreshCw className="size-3 animate-spin" />
 				{m.admin_updates_history_status_running()}
+			</Badge>
+		);
+	}
+	if (status === "cancelled") {
+		return (
+			<Badge variant="outline" className="border-border text-muted-foreground">
+				{m.admin_updates_history_status_cancelled()}
 			</Badge>
 		);
 	}
