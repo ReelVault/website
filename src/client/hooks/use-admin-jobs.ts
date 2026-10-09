@@ -99,7 +99,20 @@ export function useWorkerOperationActions() {
 		},
 	});
 
+	const retryMutation = useMutation({
+		mutationFn: (jobId: string) => reelvault.admin.retryWorkerJob(jobId),
+		onSuccess: async () => {
+			toast.success(m.admin_workers_retry_queued_toast());
+			await invalidateWorkerQueries(queryClient);
+		},
+		onError: (error) => {
+			toastError(m.admin_workers_retry_failed_toast(), error);
+		},
+	});
+
 	return {
+		retryJob: retryMutation.mutateAsync,
+		retryingJobId: retryMutation.isPending ? retryMutation.variables : undefined,
 		cancelOperation: cancelMutation.mutateAsync,
 		cancellingOperationId: cancelMutation.isPending ? cancelMutation.variables : undefined,
 		resumeOperation: resumeMutation.mutateAsync,

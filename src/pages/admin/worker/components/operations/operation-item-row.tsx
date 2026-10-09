@@ -1,6 +1,6 @@
 import type { WorkerJob } from "@reelvault/sdk";
 import { cn } from "cn";
-import { AlertCircle, ChevronDown, ChevronRight, Code2 } from "lucide-react";
+import { AlertCircle, ChevronDown, ChevronRight, Code2, RotateCw } from "lucide-react";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -54,9 +54,11 @@ interface OperationItemRowProps {
 	timeoutMs?: number;
 	isExpanded: boolean;
 	onToggleExpand: () => void;
+	onRetry?: (jobId: string) => void;
+	isRetrying?: boolean;
 }
 
-export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand }: OperationItemRowProps) {
+export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, onRetry, isRetrying }: OperationItemRowProps) {
 	const { stage, countdownLabel, duration } = useItemTiming(item, timeoutMs);
 	const meta = getWorkerMeta(item.workerId);
 	const hasDetails = [item.error, item.result, item.referenceType, item.referenceId, item.dedupeKey].some((value) => hasValue(value));
@@ -102,6 +104,19 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand }
 				</TableCell>
 
 				<TableCell className="text-right">
+					{item.status === "failed" && onRetry && (
+						<Button
+							type="button"
+							variant="ghost"
+							size="sm"
+							disabled={isRetrying}
+							onClick={() => onRetry(item.id)}
+							className="h-7 gap-1 text-[11px] text-primary hover:text-primary"
+						>
+							<RotateCw className="size-3" />
+							<span>{m.admin_workers_retry_word()}</span>
+						</Button>
+					)}
 					{hasDetails && (
 						<Button
 							type="button"

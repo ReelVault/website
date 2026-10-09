@@ -1,4 +1,4 @@
-import { Braces, Play, Settings2, Square } from "lucide-react";
+import { Braces, PauseCircle, Play, PlayCircle, Settings2, Square } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -16,6 +16,8 @@ interface ScheduledTaskActionsProps {
 	onConfigureTriggers: (taskId: string) => void;
 	onRunTask: (params: WorkerRunParams) => void;
 	onCancelTask: (taskId: string) => void;
+	scheduleEnabled: boolean;
+	onToggleSchedule: (taskId: string, enabled: boolean) => void;
 }
 
 export function ScheduledTaskActions({
@@ -27,6 +29,8 @@ export function ScheduledTaskActions({
 	onConfigureTriggers,
 	onRunTask,
 	onCancelTask,
+	scheduleEnabled,
+	onToggleSchedule,
 }: ScheduledTaskActionsProps) {
 	const [isPayloadOpen, setIsPayloadOpen] = useState(false);
 	const [payloadDraft, setPayloadDraft] = useState("");
@@ -54,6 +58,18 @@ export function ScheduledTaskActions({
 
 	return (
 		<div className="flex shrink-0 items-center justify-end gap-2 pt-2 sm:pt-0">
+			{/* Pausing stops automatic runs only; manual runs and the queue stay available. */}
+			<Button
+				type="button"
+				variant="outline"
+				size="sm"
+				disabled={isBusy}
+				onClick={() => onToggleSchedule(taskId, !scheduleEnabled)}
+				className="h-8.5 gap-1.5 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
+			>
+				{scheduleEnabled ? <PauseCircle className="size-3.5" /> : <PlayCircle className="size-3.5" />}
+				<span>{scheduleEnabled ? m.admin_workers_pause_word() : m.admin_workers_resume_word()}</span>
+			</Button>
 			<Button
 				type="button"
 				variant="outline"

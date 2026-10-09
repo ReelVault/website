@@ -84,6 +84,17 @@ export function useScheduledTasks(autoRefresh = true) {
 		},
 	});
 
+	const setScheduleEnabledMutation = useMutation({
+		mutationFn: ({ taskId, enabled }: { taskId: string; enabled: boolean }) => reelvault.admin.setWorkerScheduleEnabled(taskId, enabled),
+		onError: (error) => {
+			toastError(m.toast_schedule_update_failed(), error, m.toast_plugins_unexpected_error());
+		},
+		onSuccess: async (_, { enabled }) => {
+			toast.success(enabled ? m.admin_workers_schedule_resumed_toast() : m.admin_workers_schedule_paused_toast());
+			await queryClient.invalidateQueries({ queryKey: adminKeys.workers() });
+		},
+	});
+
 	const runningVariables = runTaskMutation.variables;
 	let runningTaskId: string | undefined;
 	if (runTaskMutation.isPending) {
@@ -106,6 +117,7 @@ export function useScheduledTasks(autoRefresh = true) {
 		cancelAllWorkers: cancelAllMutation.mutateAsync,
 		isCancellingAll: cancelAllMutation.isPending,
 		updateTriggers: updateTriggersMutation.mutateAsync,
+		setScheduleEnabled: setScheduleEnabledMutation.mutateAsync,
 		isUpdatingTriggers: updateTriggersMutation.isPending,
 	};
 }

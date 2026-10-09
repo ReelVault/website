@@ -184,6 +184,7 @@ export const adminKeys = {
 		params ? ([...adminKeys.all, "worker-operations", params] as const) : ([...adminKeys.all, "worker-operations"] as const),
 	workerOperation: (operationId: string) => [...adminKeys.all, "worker-operation", operationId] as const,
 	workers: () => [...adminKeys.all, "workers"] as const,
+	workerWatchdog: () => [...adminKeys.all, "worker-watchdog"] as const,
 	processes: () => [...adminKeys.all, "processes"] as const,
 	workerOperationJobs: (operationId: string, params?: { page?: number; limit?: number; status?: string; search?: string }) =>
 		params

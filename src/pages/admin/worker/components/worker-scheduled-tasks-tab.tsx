@@ -23,8 +23,17 @@ export function WorkerScheduledTasksTab({
 	isError: boolean;
 	activeOperations: WorkerOperation[];
 }) {
-	const { runTask, runningTaskId, cancelTask, cancellingTaskId, runCategory, runningCategoryId, updateTriggers, isUpdatingTriggers } =
-		useScheduledTasks(autoRefresh);
+	const {
+		runTask,
+		runningTaskId,
+		cancelTask,
+		cancellingTaskId,
+		runCategory,
+		runningCategoryId,
+		updateTriggers,
+		isUpdatingTriggers,
+		setScheduleEnabled,
+	} = useScheduledTasks(autoRefresh);
 
 	if (isLoading) {
 		return (
@@ -50,6 +59,9 @@ export function WorkerScheduledTasksTab({
 			activeOperations={activeOperations}
 			onRunTask={runTask}
 			onCancelTask={cancelTask}
+			onToggleSchedule={async (taskId, enabled) => {
+				await setScheduleEnabled({ taskId, enabled });
+			}}
 			onRunCategory={runCategory}
 			onUpdateTriggers={async (taskId, triggers) => {
 				await updateTriggers({ taskId, triggers });

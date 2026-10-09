@@ -17,7 +17,7 @@ import { createElement, type ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { m } from "@/paraglide/messages";
-import { formatTimeAgo } from "@/utils/format-utils";
+import { formatDateTime, formatTimeAgo } from "@/utils/format-utils";
 import { ScheduledTaskActions, type WorkerRunParams } from "./scheduled-task-actions";
 import { ScheduledTaskTriggersLine } from "./scheduled-task-triggers-line";
 import { formatMsDuration, getScheduledTaskMeta } from "./worker-utils";
@@ -55,6 +55,7 @@ interface ScheduledTaskCardProps {
 	cancellingTaskId?: string;
 	onRunTask: (params: WorkerRunParams) => void;
 	onCancelTask: (taskId: string) => void;
+	onToggleSchedule: (taskId: string, enabled: boolean) => void;
 	onConfigureTriggers: (taskId: string) => void;
 }
 
@@ -65,6 +66,7 @@ export function ScheduledTaskCard({
 	cancellingTaskId,
 	onRunTask,
 	onCancelTask,
+	onToggleSchedule,
 	onConfigureTriggers,
 }: ScheduledTaskCardProps) {
 	const metaInfo = getScheduledTaskMeta(task.id);
@@ -108,6 +110,11 @@ export function ScheduledTaskCard({
 									<span className="size-1.5 animate-ping rounded-full bg-white" /> {m.admin_worker_running_badge()}
 								</Badge>
 							)}
+							{!task.scheduleEnabled && (
+								<Badge variant="secondary" className="h-5 px-2 text-[10px]">
+									{m.admin_workers_schedule_paused()}
+								</Badge>
+							)}
 							{isQueued && (
 								<Badge variant="secondary" className="h-5 px-2 text-[10px]">
 									{m.admin_workers_queued()}
@@ -145,6 +152,9 @@ export function ScheduledTaskCard({
 
 								{/* Triggers Pills */}
 								<ScheduledTaskTriggersLine taskId={task.id} triggers={task.triggers} onConfigureTriggers={onConfigureTriggers} />
+								{task.nextRunAt && (
+									<span className="text-[11px] text-primary">{m.admin_workers_next_run({ time: formatDateTime(task.nextRunAt) })}</span>
+								)}
 							</div>
 						)}
 					</div>
@@ -160,6 +170,8 @@ export function ScheduledTaskCard({
 					onConfigureTriggers={onConfigureTriggers}
 					onRunTask={onRunTask}
 					onCancelTask={onCancelTask}
+					scheduleEnabled={task.scheduleEnabled}
+					onToggleSchedule={onToggleSchedule}
 				/>
 			</div>
 

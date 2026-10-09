@@ -2,7 +2,7 @@ import type { WorkerOperation } from "@reelvault/sdk";
 import { cn } from "cn";
 import { ListTree, RotateCcw } from "lucide-react";
 import { useState } from "react";
-import { useAdminOperationJobs } from "@/client/hooks/use-admin-jobs";
+import { useAdminOperationJobs, useWorkerOperationActions } from "@/client/hooks/use-admin-jobs";
 import { AppErrorState } from "@/components/app-states";
 import {
 	FullscreenDialog,
@@ -37,6 +37,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 300 });
 	const [statusFilter, setStatusFilter] = useState<"all" | "pending" | "running" | "completed" | "failed" | "cancelled">("all");
 	const [expandedItemIds, setExpandedItemIds] = useState<Set<string>>(new Set());
+	const { retryJob, retryingJobId } = useWorkerOperationActions();
 
 	const { items, summary, totalPages, total, isLoading, isError, refetch, query } = useAdminOperationJobs(
 		operation?.id,
@@ -177,6 +178,8 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 												timeoutMs={workerTimeouts.get(item.workerId)}
 												isExpanded={expandedItemIds.has(item.id)}
 												onToggleExpand={() => toggleExpand(item.id)}
+												onRetry={(jobId) => detach(retryJob(jobId))}
+												isRetrying={retryingJobId === item.id}
 											/>
 										))}
 									</TableBody>

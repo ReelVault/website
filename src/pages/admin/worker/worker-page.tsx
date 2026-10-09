@@ -10,6 +10,7 @@ import { WorkerPageHeader } from "./components/worker-page-header";
 import { WorkerStatsSummaryKpis } from "./components/worker-stats-summary-kpis";
 import { WorkerTabsSection } from "./components/worker-tabs-section";
 import type { WorkerTotals } from "./components/worker-utils";
+import { WorkerWatchdogNote } from "./components/worker-watchdog-note";
 
 export default function AdminWorkerPage() {
 	const { tab = "scheduled" } = useSearch({ from: "/admin/worker" });
@@ -41,6 +42,7 @@ export default function AdminWorkerPage() {
 				queryClient.invalidateQueries({ queryKey: adminKeys.workers() }),
 				queryClient.invalidateQueries({ queryKey: adminKeys.workerOperations() }),
 				queryClient.invalidateQueries({ queryKey: adminKeys.processes() }),
+				queryClient.invalidateQueries({ queryKey: adminKeys.workerWatchdog() }),
 			]),
 		);
 	};
@@ -58,6 +60,8 @@ export default function AdminWorkerPage() {
 			/>
 
 			<WorkerStatsSummaryKpis totals={totals} isLoading={statsQuery.isLoading} isError={statsQuery.isError} />
+
+			<WorkerWatchdogNote />
 
 			<WorkerTabsSection tab={tab} onTabChange={setTab} autoRefresh={autoRefresh} />
 		</div>

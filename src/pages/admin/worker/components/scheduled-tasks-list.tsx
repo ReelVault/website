@@ -30,6 +30,7 @@ interface ScheduledTasksListProps {
 	activeOperations?: WorkerOperation[];
 	onRunTask: (params: WorkerRunParams) => Promise<unknown>;
 	onCancelTask: (taskId: string) => Promise<unknown>;
+	onToggleSchedule: (taskId: string, enabled: boolean) => Promise<unknown>;
 	onRunCategory: (category: WorkerCategory) => Promise<unknown>;
 	onUpdateTriggers: (taskId: string, triggers: TaskTrigger[]) => Promise<unknown>;
 	runningTaskId?: string;
@@ -43,6 +44,7 @@ export function ScheduledTasksList({
 	activeOperations,
 	onRunTask,
 	onCancelTask,
+	onToggleSchedule,
 	onRunCategory,
 	onUpdateTriggers,
 	runningTaskId,
@@ -133,6 +135,7 @@ export function ScheduledTasksList({
 									runningCategoryId={runningCategoryId}
 									onRunTask={onRunTask}
 									onCancelTask={onCancelTask}
+									onToggleSchedule={onToggleSchedule}
 									onRunCategory={onRunCategory}
 									onConfigureTriggers={setSelectedTaskId}
 								/>

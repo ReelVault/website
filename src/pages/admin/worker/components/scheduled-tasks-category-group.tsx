@@ -63,6 +63,7 @@ interface ScheduledTasksCategoryGroupProps {
 	runningCategoryId?: string;
 	onRunTask: (params: WorkerRunParams) => Promise<unknown>;
 	onCancelTask: (taskId: string) => Promise<unknown>;
+	onToggleSchedule: (taskId: string, enabled: boolean) => Promise<unknown>;
 	onRunCategory: (category: WorkerCategory) => Promise<unknown>;
 	onConfigureTriggers: (taskId: string) => void;
 }
@@ -76,6 +77,7 @@ export function ScheduledTasksCategoryGroup({
 	runningCategoryId,
 	onRunTask,
 	onCancelTask,
+	onToggleSchedule,
 	onRunCategory,
 	onConfigureTriggers,
 }: ScheduledTasksCategoryGroupProps) {
@@ -130,6 +132,7 @@ export function ScheduledTasksCategoryGroup({
 								cancellingTaskId={cancellingTaskId}
 								onRunTask={(params) => detach(onRunTask(params))}
 								onCancelTask={(taskId) => detach(onCancelTask(taskId))}
+								onToggleSchedule={(taskId, enabled) => detach(onToggleSchedule(taskId, enabled))}
 								onConfigureTriggers={onConfigureTriggers}
 							/>
 						))}

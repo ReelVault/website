@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Worker pause, retry and watchdog notice** — the worker admin page pauses and resumes a task's automatic runs. A paused task shows a badge and no next run, while manual runs keep working. Each scheduled task shows its next run. A failed job in an operation can be retried; the retry is a new job and the failed one stays in the history. A notice appears when the watchdog has requeued orphaned jobs since the server started.
 - **Change password** — Settings now has a Password section: change your password by confirming the current one. Other devices are signed out and API errors (wrong current password, invalid length) are translated. Requires SDK 1.3.0.
 - **Subtitle language priority list** — Settings → Playback has a new "Fallback subtitle languages" picker: add languages as chips, reorder them and remove them. When the preferred language has no subtitles, the next language in the list is used. Admins can set a default in Settings → Profiles. Requires SDK 1.3.0.
 - **Remove from Continue Watching** — each Continue Watching card has a new hide button (and a context-menu entry). Unlike resetting progress it keeps your resume position; the title returns as soon as you play it again. Requires SDK 1.3.0.
