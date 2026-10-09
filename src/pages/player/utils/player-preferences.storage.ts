@@ -67,7 +67,7 @@ export const getStoredPlaybackRate = (): number => {
 		const parsed = Number.parseFloat(localStorage.getItem(PLAYBACK_RATE_STORAGE_KEY) ?? "");
 		if (Number.isNaN(parsed)) return 1;
 
-		return Math.min(2, Math.max(0.25, parsed));
+		return Math.min(3, Math.max(0.25, parsed));
 	} catch {
 		return 1;
 	}

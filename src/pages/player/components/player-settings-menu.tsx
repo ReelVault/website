@@ -96,9 +96,9 @@ function SpeedSlider({
 	onRateChange: (rate: number) => void;
 	className?: string;
 }) {
-	// Percentage fill for the speed slider (0.25 → 2)
+	// Percentage fill for the speed slider (0.25 → 3)
 	const speedMin = PLAYBACK_SPEED_STEPS[0];
-	const speedMax = 2;
+	const speedMax = Math.max(...PLAYBACK_SPEED_STEPS);
 	const fillPercent = ((playbackRate - speedMin) / (speedMax - speedMin)) * 100;
 
 	return (
