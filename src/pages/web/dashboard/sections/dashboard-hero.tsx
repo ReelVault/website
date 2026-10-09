@@ -12,6 +12,7 @@ import { m } from "@/paraglide/messages";
 import { getMetadataBackdrop } from "@/utils/metadata-utils";
 import { useHeroRotator } from "../hooks/use-hero-rotator";
 import { DashboardHeroBackdrop } from "./dashboard-hero-backdrop";
+import { DashboardHeroEmpty } from "./dashboard-hero-empty";
 import { DashboardHeroInfo } from "./dashboard-hero-info";
 import { DashboardHeroSkeleton } from "./dashboard-hero-skeleton";
 
@@ -71,7 +72,7 @@ export default function DashboardHero() {
 		);
 	}
 
-	if (items.length === 0) return null;
+	if (items.length === 0) return <DashboardHeroEmpty onRetry={() => discoverQuery.refetch()} />;
 
 	const activeItem = items[current];
 	if (!activeItem) return null;

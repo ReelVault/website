@@ -221,6 +221,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Admin collections can be sorted and paged** — the collections page sorts by name, newest or recently updated, shows 25 per page with the page control, and a new search or sort starts at the first page.
 - **Seek debounce setting** — the admin settings page labels `stream.seekDebounceMs`. Requires server with the new setting.
 - **Subtitle search suggests your languages** — the in-player subtitle search shows your preferred languages as quick picks and searches once automatically when it opens.
+- **Dashboard empty state has a next step** — when there is nothing to feature, the dashboard explains why and offers the next step: administrators get *Add the first library*, everyone else gets *Try again*. Previously the top of the page was blank.
 
 ### Fixes
 
