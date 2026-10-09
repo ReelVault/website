@@ -1,6 +1,6 @@
 import type { LibraryWithRelations } from "@reelvault/sdk";
 import { cn } from "cn";
-import { FolderOpen, RefreshCw, Trash2 } from "lucide-react";
+import { AlertTriangle, FolderOpen, RefreshCw, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
@@ -45,6 +45,8 @@ export function LibraryCard({
 	onCheckErrors,
 	onShowIgnoredAssets,
 	onShowScanFindings,
+	invalidPathCount,
+	onShowHealth,
 }: {
 	lib: LibraryWithRelations;
 	isScanning: boolean;
@@ -58,6 +60,8 @@ export function LibraryCard({
 	onCheckErrors: (libraryPaths: string[]) => void;
 	onShowIgnoredAssets: (libraryId: string) => void;
 	onShowScanFindings: (libraryId: string) => void;
+	invalidPathCount: number;
+	onShowHealth: (libraryId: string) => void;
 }) {
 	const paths = lib.paths;
 	const [pathsExpanded, setPathsExpanded] = useState(true);
@@ -90,6 +94,13 @@ export function LibraryCard({
 					/>
 
 					<CardContent className="flex flex-col gap-5 p-5 pt-0">
+						{invalidPathCount > 0 && (
+							<Button variant="outline" size="sm" className="w-fit gap-1.5 text-warning" onClick={() => onShowHealth(lib.id)}>
+								<AlertTriangle className="size-3.5" aria-hidden="true" />
+								{m.admin_libraries_health_invalid_count({ count: invalidPathCount })}
+							</Button>
+						)}
+
 						{/* Micro-metrics bar */}
 						<LibraryCardMetrics mediaCount={mediaCount} totalSize={totalSize} pathsCount={paths.length} />
 

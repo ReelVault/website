@@ -1,15 +1,17 @@
-import type { LibraryWithRelations } from "@reelvault/sdk";
+import type { LibraryHealth, LibraryWithRelations } from "@reelvault/sdk";
 import { useState } from "react";
-import { useAdminLibraries, useCheckLibraryErrors } from "@/client/hooks/use-libraries";
+import { useAdminLibraries, useCheckLibraryErrors, useLibraryHealth } from "@/client/hooks/use-libraries";
 import { AppErrorState } from "@/components/app-states";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { CreateLibraryDialog } from "./components/create-library-dialog";
 import { EditLibraryDialog } from "./components/edit-library-dialog";
 import { IgnoredAssetsDialog } from "./components/ignored-assets-dialog";
+import { LibraryErrorsCheckDialog } from "./components/library-errors-check-dialog";
 import { LibraryFilterBar, type LibrarySortOption, type LibraryTypeFilter } from "./components/library-filter-bar";
 import { LibraryGrid } from "./components/library-grid";
 import { LibraryHeader } from "./components/library-header";
+import { LibraryHealthDialog } from "./components/library-health-dialog";
 import { LibraryKpiGrid } from "./components/library-kpi-grid";
 import { ScanFindingsDialog } from "./components/scan-findings-dialog";
 
@@ -52,6 +54,16 @@ export default function AdminLibrariesPage() {
 	const [ignoredAssetsLibraryId, setIgnoredAssetsLibraryId] = useState<string | null>(null);
 	const [scanFindingsLibraryId, setScanFindingsLibraryId] = useState<string | null>(null);
 	const checkErrorsMutation = useCheckLibraryErrors();
+	const health = useLibraryHealth();
+	const [healthLibraryId, setHealthLibraryId] = useState<string | null>(null);
+	const [errorsCheckOperationId, setErrorsCheckOperationId] = useState<string | null>(null);
+	const healthByLibraryId = new Map((health.data?.data ?? []).map((item): [string, LibraryHealth] => [item.libraryId, item]));
+	const invalidPathCounts = new Map(
+		(health.data?.data ?? []).map((item): [string, number] => [
+			item.libraryId,
+			item.paths.filter((path) => !path.exists || path.watchStatus === "unwatchable").length,
+		]),
+	);
 
 	const handleDelete = (id: string, _name: string) => deleteLibrary(id);
 
@@ -65,12 +77,22 @@ export default function AdminLibrariesPage() {
 		setIsEditModalOpen(true);
 	};
 
+	/** Queues the check and opens its result dialog, which follows the check until it has completed. */
+	const queueErrorsCheck = async (libraryPaths: string[]) => {
+		try {
+			const queued = await checkErrorsMutation.mutateAsync(libraryPaths);
+			setErrorsCheckOperationId(queued.operationId);
+		} catch {
+			// Toast is handled by hook
+		}
+	};
+
 	const handleCheckErrors = (libraryPaths: string[]) => {
 		if (libraryPaths.length === 0) {
 			return;
 		}
 
-		checkErrorsMutation.mutate(libraryPaths);
+		detach(queueErrorsCheck(libraryPaths));
 	};
 
 	const scanningIds = isScanning && mutationVariables.scan ? new Set([mutationVariables.scan]) : EMPTY_SET;
@@ -145,9 +167,24 @@ export default function AdminLibrariesPage() {
 				onShowScanFindings={setScanFindingsLibraryId}
 				onAddClick={() => setIsCreateModalOpen(true)}
 				hasSearchQuery={Boolean(search.trim()) || typeFilter !== "all"}
+				invalidPathCounts={invalidPathCounts}
+				onShowHealth={setHealthLibraryId}
 			/>
 
 			{/* Dialogs */}
+			<LibraryHealthDialog
+				libraryName={libraries.find((lib) => lib.id === healthLibraryId)?.name ?? null}
+				health={healthLibraryId ? healthByLibraryId.get(healthLibraryId) : undefined}
+				isOpen={healthLibraryId !== null}
+				isValidating={health.isFetching}
+				onOpenChange={(open) => !open && setHealthLibraryId(null)}
+				onValidate={() => detach(health.refetch())}
+			/>
+			<LibraryErrorsCheckDialog
+				operationId={errorsCheckOperationId}
+				isOpen={errorsCheckOperationId !== null}
+				onOpenChange={(open) => !open && setErrorsCheckOperationId(null)}
+			/>
 			<CreateLibraryDialog isOpen={isCreateModalOpen} onOpenChange={setIsCreateModalOpen} />
 			<EditLibraryDialog library={editingLibrary} isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
 			<IgnoredAssetsDialog

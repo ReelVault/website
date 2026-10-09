@@ -23,6 +23,8 @@ export function LibraryGrid({
 	onShowScanFindings,
 	onAddClick,
 	hasSearchQuery,
+	invalidPathCounts,
+	onShowHealth,
 }: {
 	libraries: LibraryWithRelations[];
 	isLoading: boolean;
@@ -39,6 +41,8 @@ export function LibraryGrid({
 	onShowScanFindings: (libraryId: string) => void;
 	onAddClick?: () => void;
 	hasSearchQuery?: boolean;
+	invalidPathCounts: ReadonlyMap<string, number>;
+	onShowHealth: (libraryId: string) => void;
 }) {
 	if (isLoading) {
 		return (
@@ -107,6 +111,8 @@ export function LibraryGrid({
 					onCheckErrors={onCheckErrors}
 					onShowIgnoredAssets={onShowIgnoredAssets}
 					onShowScanFindings={onShowScanFindings}
+					invalidPathCount={invalidPathCounts.get(lib.id) ?? 0}
+					onShowHealth={onShowHealth}
 				/>
 			))}
 		</div>

@@ -208,6 +208,32 @@ export function useCheckLibraryErrors() {
 	});
 }
 
+/** Each library's paths as they are now; refetched on demand by the *Validate paths* action. */
+export function useLibraryHealth() {
+	return useQuery({
+		queryKey: libraryKeys.health(),
+		queryFn: () => reelvault.libraries.getHealth(),
+	});
+}
+
+/** Status of a queued error check. Polls while the check runs and keeps its result once it has completed. */
+export function useLibraryErrorsCheckStatus(operationId: string | null) {
+	return useQuery({
+		queryKey: libraryKeys.errorsCheck(operationId ?? ""),
+		queryFn: async () => {
+			if (!operationId) return null;
+
+			return await reelvault.libraries.getErrorsCheckStatus(operationId);
+		},
+		enabled: Boolean(operationId),
+		refetchInterval: (query) => {
+			const status = query.state.data?.status;
+
+			return status === "completed" || status === "failed" || status === "cancelled" ? false : 2000;
+		},
+	});
+}
+
 export function useLibraryIgnoredAssets(libraryId: string, enabled: boolean) {
 	return useQuery({
 		queryKey: libraryKeys.ignoreAssets(libraryId),

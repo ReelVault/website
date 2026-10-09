@@ -53,6 +53,8 @@ export const libraryKeys = {
 	ignoreAssets: (id: string) => [...libraryKeys.all, "ignored-assets", id] as const,
 	scanFindings: (id: string) => [...libraryKeys.all, "scan-findings", id] as const,
 	admin: () => [...libraryKeys.all, "admin"] as const,
+	health: () => [...libraryKeys.all, "health"] as const,
+	errorsCheck: (operationId: string) => [...libraryKeys.all, "errors-check", operationId] as const,
 };
 
 export const watchlistKeys = {
