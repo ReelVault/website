@@ -1,8 +1,10 @@
 import { useState, ViewTransition } from "react";
 import { useNotifications, useNotificationsPage, useUnreadNotificationCount } from "@/client/hooks/use-notifications";
 import { AppErrorState } from "@/components/app-states";
+import { ConfirmAction } from "@/components/confirm-action";
 import { LazyRender } from "@/components/lazy-render";
 import { SimplePagination } from "@/components/simple-pagination";
+import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { UserPageHeader } from "../components/user-ui";
@@ -15,8 +17,9 @@ export default function NotificationsPage() {
 	const [activeTab, setActiveTab] = useState<NotificationTabType>("all");
 	const [showUnreadOnly, setShowUnreadOnly] = useState(false);
 	const [page, setPage] = useState(1);
-	// The list is paged and filtered on the server; the hook keeps the mutations (mark read) without a second list request.
-	const { markRead, markAllRead, isMarkingRead, isMarkingAllRead } = useNotifications(false, { enabled: false });
+	// The list is paged and filtered on the server; the hook keeps the mutations (mark read, dismiss) without a second list request.
+	const { markRead, markAllRead, isMarkingRead, isMarkingAllRead, deleteNotification, deleteNotifications, isDismissing } =
+		useNotifications(false, { enabled: false });
 	const pageQuery = useNotificationsPage({
 		page,
 		unreadOnly: showUnreadOnly,
@@ -60,11 +63,35 @@ export default function NotificationsPage() {
 						{!(isLoading || error) && notifications.length === 0 && <NotificationsEmpty unreadOnly={showUnreadOnly} />}
 						{notifications.map((notification) => (
 							<LazyRender key={notification.id} minHeight={120}>
-								{() => <NotificationCard notification={notification} isMarkingRead={isMarkingRead} onMarkRead={markRead} />}
+								{() => (
+									<NotificationCard
+										notification={notification}
+										isMarkingRead={isMarkingRead}
+										onMarkRead={markRead}
+										isDismissing={isDismissing}
+										onDismiss={deleteNotification}
+									/>
+								)}
 							</LazyRender>
 						))}
 					</div>
 				</ViewTransition>
+
+				{notifications.length > 1 && (
+					<div className="flex justify-end">
+						<ConfirmAction
+							trigger={
+								<Button variant="outline" size="sm" disabled={isDismissing}>
+									{m.user_notifications_dismiss_shown()}
+								</Button>
+							}
+							title={m.user_notifications_dismiss_shown_title({ count: notifications.length })}
+							description={m.user_notifications_dismiss_shown_description()}
+							confirmLabel={m.user_notifications_dismiss_shown()}
+							onConfirm={() => deleteNotifications(notifications.map((notification) => notification.id))}
+						/>
+					</div>
+				)}
 
 				<SimplePagination currentPage={page} totalPages={data?.totalPages ?? 1} isLoading={pageQuery.isFetching} onPageChange={setPage} />
 			</div>

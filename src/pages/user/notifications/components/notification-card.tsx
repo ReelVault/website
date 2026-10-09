@@ -28,9 +28,11 @@ interface NotificationCardProps {
 	notification: Notification;
 	isMarkingRead: boolean;
 	onMarkRead: (id: string) => Promise<unknown>;
+	isDismissing: boolean;
+	onDismiss: (id: string) => Promise<unknown>;
 }
 
-export function NotificationCard({ notification, isMarkingRead, onMarkRead }: NotificationCardProps) {
+export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDismissing, onDismiss }: NotificationCardProps) {
 	const isRead = Boolean(notification.readAt);
 	const icon = createElement(getNotificationIcon(notification.type), { "aria-hidden": "true" });
 	const { title, body } = getNotificationText(notification);
@@ -64,6 +66,18 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead }: No
 							</div>
 							{body && <p className="wrap-break-word mt-2 max-w-2xl text-muted-foreground text-sm leading-relaxed">{body}</p>}
 							<div className="mt-2 flex flex-wrap items-center gap-3">
+								<Button
+									type="button"
+									variant="link"
+									size="sm"
+									className="h-auto px-0 text-muted-foreground text-xs"
+									disabled={isDismissing}
+									onClick={() => {
+										detach(onDismiss(notification.id));
+									}}
+								>
+									{m.user_notification_dismiss()}
+								</Button>
 								{internalLink && (
 									<Button
 										variant="outline"

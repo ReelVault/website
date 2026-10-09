@@ -43,6 +43,17 @@ export function useNotifications(unreadOnly = false, options?: { enabled?: boole
 		onError: (error) => toastError(m.toast_notifications_mark_failed(), error),
 	});
 
+	const deleteMutation = useMutation({
+		mutationFn: (notificationId: string) => reelvault.notifications.delete(notificationId),
+		onSuccess: invalidateNotifications,
+		onError: (error) => toastError(m.toast_notification_dismiss_failed(), error),
+	});
+	const deleteManyMutation = useMutation({
+		mutationFn: (ids: string[]) => reelvault.notifications.deleteMany(ids),
+		onSuccess: invalidateNotifications,
+		onError: (error) => toastError(m.toast_notification_dismiss_failed(), error),
+	});
+
 	return {
 		notifications: query.data ?? [],
 		isLoading: query.isLoading,
@@ -52,6 +63,9 @@ export function useNotifications(unreadOnly = false, options?: { enabled?: boole
 		markAllRead: markAllReadMutation.mutateAsync,
 		isMarkingRead: markReadMutation.isPending,
 		isMarkingAllRead: markAllReadMutation.isPending,
+		deleteNotification: deleteMutation.mutateAsync,
+		deleteNotifications: deleteManyMutation.mutateAsync,
+		isDismissing: deleteMutation.isPending || deleteManyMutation.isPending,
 	};
 }
 
