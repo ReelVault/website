@@ -207,6 +207,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Audio track switch says what it does** — switching the audio track shows *Switching audio track…* instead of *Changing quality…*.
 - **Expired quick connect codes stop** — once a pairing code expires the page says so, offers a new code, and stops polling for an authorization that can no longer arrive.
 - **Subtitles for preferred languages only** — the subtitle list has a *Preferred languages only* switch that uses the profile's subtitle language and fallback languages (`en-US` matches `en`). Requires SDK 1.3.0.
+- **Skip buttons wait for playback** — the skip intro, credits and recap button stays hidden while the stream is buffering, stalled or failed, so it cannot jump into the same stall.
 
 ### Fixes
 

@@ -8,19 +8,16 @@ export function PlayerMarkerButton() {
 	const { activeMarker, skipActiveMarker } = usePlayerMarkers();
 	const { nextEpisode, isNextEpisodeDismissed } = usePlayerNextEpisode();
 	const { currentTime } = usePlayerTime();
-	const { canPlay, playerError } = usePlayerStatus();
+	const { canPlay, isBuffering, playerError } = usePlayerStatus();
 	const info = usePlayerInfo();
 
 	if (!activeMarker || activeMarker.type === "highlight" || activeMarker.startSeconds === activeMarker.endSeconds) return null;
+	// A skip while the stream is stalled or failed would jump into the same stall, so the button waits for playback.
+	if (!canPlay || isBuffering || playerError) return null;
 
 	const remainingTime = info.duration ? info.duration - currentTime : Number.POSITIVE_INFINITY;
 	const isNextEpisodeOverlayShowing =
-		Boolean(nextEpisode) &&
-		canPlay &&
-		!playerError &&
-		!isNextEpisodeDismissed &&
-		(remainingTime <= 30 || currentTime >= info.duration) &&
-		currentTime > 10;
+		Boolean(nextEpisode) && !isNextEpisodeDismissed && (remainingTime <= 30 || currentTime >= info.duration) && currentTime > 10;
 
 	let label: string;
 	if (activeMarker.type === "intro") label = m.player_skip_intro();
