@@ -3,7 +3,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Bookmark } from "lucide-react";
 import { lazy, Suspense } from "react";
-import { useAdminMediaMarkers } from "@/client/hooks/use-admin-markers";
+import { getReelVaultApiUrl } from "@/client/client";
+import { useAdminMediaMarkers, useImportAdminMarkers } from "@/client/hooks/use-admin-markers";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { adminKeys } from "@/client/utils/query-keys";
@@ -56,6 +57,28 @@ export default function AdminMediaMarkersPage() {
 		q: debouncedSearch.trim() || undefined,
 	});
 
+	const importMutation = useImportAdminMarkers();
+
+	const handleExport = () => {
+		const params = new URLSearchParams();
+		if (typeFilter !== "all") params.set("type", typeFilter);
+		if (sourceFilter !== "all") params.set("source", sourceFilter);
+		if (search.trim()) params.set("q", search.trim());
+		const query = params.toString();
+		window.open(`${getReelVaultApiUrl()}/v1/media-files/markers/export${query ? `?${query}` : ""}`, "_blank", "noopener,noreferrer");
+	};
+
+	const handleImportFile = (file: File) => {
+		detach(async () => {
+			const text = await file.text();
+			try {
+				await importMutation.mutateAsync(text);
+			} catch {
+				// Toast is handled by hook
+			}
+		});
+	};
+
 	const statsQuery = useAdminStats();
 	// The list is the filtered result, so the header count is the number of markers shown.
 	const markers = markersQuery.data ?? [];
@@ -87,6 +110,8 @@ export default function AdminMediaMarkersPage() {
 						sourceFilter={sourceFilter}
 						onSourceFilterChange={setSourceFilter}
 						onOpenCreateDialog={openCreateDialog}
+						onExport={handleExport}
+						onImportFile={handleImportFile}
 					/>
 				}
 			/>

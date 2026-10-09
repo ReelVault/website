@@ -1,4 +1,5 @@
-import { Plus } from "lucide-react";
+import { Download, Plus, Upload } from "lucide-react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AdminSearch } from "@/pages/admin/admin-ui";
@@ -12,6 +13,8 @@ interface MarkerFilterBarProps {
 	sourceFilter: string;
 	onSourceFilterChange: (value: string) => void;
 	onOpenCreateDialog: () => void;
+	onExport: () => void;
+	onImportFile: (file: File) => void;
 }
 
 export function MarkerFilterBar({
@@ -22,7 +25,11 @@ export function MarkerFilterBar({
 	sourceFilter,
 	onSourceFilterChange,
 	onOpenCreateDialog,
+	onExport,
+	onImportFile,
 }: MarkerFilterBarProps) {
+	const importInputRef = useRef<HTMLInputElement>(null);
+
 	return (
 		<div className="flex flex-wrap items-center gap-3">
 			<AdminSearch value={search} onChange={onSearchChange} placeholder={m.admin_markers_search_placeholder()} />
@@ -50,6 +57,25 @@ export function MarkerFilterBar({
 					<SelectItem value="automatic">{m.admin_markers_automatic()}</SelectItem>
 				</SelectContent>
 			</Select>
+			<Button size="sm" variant="outline" onClick={onExport} className="gap-1.5 text-xs">
+				<Download className="size-3.5" />
+				{m.admin_markers_export()}
+			</Button>
+			<Button size="sm" variant="outline" onClick={() => importInputRef.current?.click()} className="gap-1.5 text-xs">
+				<Upload className="size-3.5" />
+				{m.admin_markers_import()}
+			</Button>
+			<input
+				ref={importInputRef}
+				type="file"
+				accept=".ndjson,.jsonl,application/x-ndjson,text/plain"
+				className="hidden"
+				onChange={(event) => {
+					const file = event.target.files?.[0];
+					event.target.value = "";
+					if (file) onImportFile(file);
+				}}
+			/>
 			<Button size="sm" onClick={onOpenCreateDialog} className="gap-1.5 text-xs">
 				<Plus className="size-3.5" />
 				{m.admin_markers_add()}
