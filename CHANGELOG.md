@@ -238,6 +238,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Active operation count stopped at 50** — the worker activity badges counted only the first page of active operations; they now show the total, so a busy queue is no longer under-reported.
 - **Watchlist showed only the first 20 titles** — the page requested a single page of the paginated endpoint, so larger watchlists were silently truncated and the total/movie/series statistics were wrong. The page now loads every page before rendering.
 - **Worker "Scheduled" and "Active now" filters always showed nothing** — the quick filters compared the filter id with the task category instead of checking triggers and active jobs, so both returned an empty list while their counters were correct.
 - **"Files" on a library card ignored the library** — the admin media list now honors the `libraryId` the card passes, and a button clears the filter.

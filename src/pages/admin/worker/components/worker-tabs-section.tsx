@@ -48,6 +48,8 @@ export function WorkerTabsSection({
 	const tasks = statsQuery.data ?? [];
 	const activeOperationsQuery = useAdminActiveOperations(autoRefresh);
 	const activeOperations = activeOperationsQuery.data?.data ?? [];
+	// The list holds one page, so the badges count every active operation.
+	const activeOperationsTotal = activeOperationsQuery.data?.total ?? 0;
 
 	const [inspectingOperation, setInspectingOperation] = useState<WorkerOperation | null>(null);
 	const workerTimeouts = new Map<string, number>();
@@ -77,9 +79,9 @@ export function WorkerTabsSection({
 				<TabsTrigger value="activity" className="flex items-center gap-2 rounded-lg font-semibold text-sm">
 					<ListTree className="size-4" />
 					<span>{m.admin_workers_activity_tab()}</span>
-					{activeOperations.length > 0 ? (
+					{activeOperationsTotal > 0 ? (
 						<Badge variant="default" className="bg-primary px-1.5 py-0 font-mono text-[10px] text-primary-foreground">
-							{activeOperations.length}
+							{activeOperationsTotal}
 						</Badge>
 					) : (
 						<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
@@ -109,6 +111,7 @@ export function WorkerTabsSection({
 						autoRefresh={autoRefresh}
 						activeOperations={activeOperations}
 						activeStatus={{ isLoading: activeOperationsQuery.isLoading, isError: activeOperationsQuery.isError }}
+						activeTotal={activeOperationsTotal}
 						onInspect={setInspectingOperation}
 					/>
 				</TabsContent>

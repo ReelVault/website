@@ -20,11 +20,13 @@ import { WorkerStatsGrid } from "./worker-stats-grid";
 export function WorkerActivityTab({
 	autoRefresh,
 	activeOperations,
+	activeTotal,
 	activeStatus,
 	onInspect,
 }: {
 	autoRefresh: boolean;
 	activeOperations: WorkerOperation[];
+	activeTotal: number;
 	activeStatus: { isLoading: boolean; isError: boolean };
 	onInspect: (operation: WorkerOperation | null) => void;
 }) {
@@ -44,7 +46,7 @@ export function WorkerActivityTab({
 				description={m.admin_workers_queue_desc()}
 				badge={
 					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
-						{activeOperations.length}
+						{activeTotal}
 					</Badge>
 				}
 				actions={
