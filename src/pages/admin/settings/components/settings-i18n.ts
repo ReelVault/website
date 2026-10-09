@@ -99,6 +99,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_scan_delay_seconds(),
 		description: m.admin_settings_quiet_period_description(),
 	},
+	"scanning.pathScanTimeoutMs": {
+		label: m.admin_settings_path_scan_timeout(),
+		description: m.admin_settings_path_scan_timeout_desc(),
+	},
 	"scanning.concurrency": {
 		label: m.admin_settings_concurrency_scan_library(),
 		description: m.admin_settings_parallel_scan_ops(),

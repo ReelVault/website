@@ -1538,6 +1538,8 @@
 	"admin_settings_library_scan_timeout_desc": "Skan biblioteki trwający dłużej niż to ustawienie jest przerywany. Dotyczy skanów rozpoczętych po zmianie.",
 	"admin_settings_downloads_timeout": "Limit czasu przetwarzania pobierania",
 	"admin_settings_downloads_timeout_desc": "Pobieranie trwające dłużej niż to ustawienie jest przerywane. Dotyczy pobrań rozpoczętych po zmianie.",
+	"admin_settings_path_scan_timeout": "Limit czasu skanowania ścieżki biblioteki",
+	"admin_settings_path_scan_timeout_desc": "Folder biblioteki, którego przeglądanie trwa dłużej niż to ustawienie, jest pomijany w tym skanie, dzięki czemu zawieszony zdalny dysk nie blokuje całego skanu. Dotyczy kolejnych skanów.",
 	"watchlist_statuses_too_many": "Naraz sprawdzono zbyt wiele tytułów. Spróbuj ponownie z krótszą listą.",
 	"admin_settings_restore_section_confirm": "Przywrócić ustawienia domyślne sekcji?",
 	"admin_settings_scan_delay_seconds": "Czas stabilizacji zmian / opóźnienie skanowania (sekundy)",
