@@ -43,6 +43,18 @@ export function getNotificationText(notification: Notification): { title: string
 		};
 	}
 
+	if (notification.type === "worker_failed") {
+		const workerId = fieldToText(notification.data.workerId);
+
+		return { title: m.notifications_title_worker_failed(), body: m.notification_worker_failed({ workerId }) };
+	}
+
+	if (notification.type === "update_failed") {
+		const component = fieldToText(notification.data.component);
+
+		return { title: m.notifications_title_update_failed(), body: m.notification_update_failed({ component }) };
+	}
+
 	return { title: notification.title, body: notification.message ?? null };
 }
 
@@ -50,6 +62,8 @@ export function getNotificationIcon(type: string): LucideIcon {
 	if (type === "security") return CircleAlert;
 
 	if (type === "update" || type === "update_available") return CheckCircle2;
+
+	if (type === "worker_failed" || type === "update_failed" || type === "resource_alert") return CircleAlert;
 
 	if (type === "system") return Settings;
 
@@ -70,6 +84,8 @@ export function getNotificationColor(type: string): NotificationColorClass {
 	if (type === "update" || type === "update_available") return "bg-success/10 text-success";
 
 	if (type === "new_episode") return "bg-warning/10 text-warning";
+
+	if (type === "worker_failed" || type === "update_failed" || type === "resource_alert") return "bg-destructive/10 text-destructive";
 
 	return "bg-primary/10 text-primary";
 }

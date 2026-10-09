@@ -3926,5 +3926,9 @@
 	"wrapped_title_year": "Wrapped {year}",
 	"wrapped_titles_and_sessions": "{titles} titles • {sessions} sessions",
 	"year_mismatch": "Year mismatch: file says {recognizedYear}, metadata says {assignedYear} ({diff} years apart).",
-	"admin_dashboard_server_too_old": "This screen needs ReelVault Server 1.2.0 or newer. Update the server, then retry."
+	"admin_dashboard_server_too_old": "This screen needs ReelVault Server 1.2.0 or newer. Update the server, then retry.",
+	"notifications_title_worker_failed": "Job failed",
+	"notifications_title_update_failed": "Update failed",
+	"notification_worker_failed": "A background job failed: {workerId}",
+	"notification_update_failed": "An update failed to install: {component}"
 }

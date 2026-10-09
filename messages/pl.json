@@ -3965,5 +3965,9 @@
 	"wrapped_title_year": "Wrapped {year}",
 	"wrapped_titles_and_sessions": "{titles} różnych produkcji • {sessions} seansów",
 	"year_mismatch": "Rozbieżność roku: w pliku {recognizedYear}, w metadanych {assignedYear} (różnica {diff} lat).",
-	"admin_dashboard_server_too_old": "Ten ekran wymaga ReelVault Server 1.2.0 lub nowszego. Zaktualizuj serwer i spróbuj ponownie."
+	"admin_dashboard_server_too_old": "Ten ekran wymaga ReelVault Server 1.2.0 lub nowszego. Zaktualizuj serwer i spróbuj ponownie.",
+	"notifications_title_worker_failed": "Zadanie nie powiodło się",
+	"notifications_title_update_failed": "Aktualizacja nie powiodła się",
+	"notification_worker_failed": "Zadanie w tle nie powiodło się: {workerId}",
+	"notification_update_failed": "Instalacja aktualizacji nie powiodła się: {component}"
 }
