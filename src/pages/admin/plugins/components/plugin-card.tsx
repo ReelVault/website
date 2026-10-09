@@ -1,6 +1,6 @@
 import type { PluginAdminStatus } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { AlertTriangle, Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, Sliders, Trash2, XCircle } from "lucide-react";
+import { AlertTriangle, Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, ShieldCheck, Sliders, Trash2, XCircle } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
@@ -28,9 +28,11 @@ interface PluginCardProps {
 	onEnable: (id: string) => void;
 	onDisable: (id: string) => void;
 	onReload: (id: string) => void;
+	/** Present for installed plugins: allows or refuses the CSP sources the manifest declares. */
+	onSetCsp?: ((id: string, enabled: boolean) => void) | undefined;
 }
 
-export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnable, onDisable, onReload }: PluginCardProps) {
+export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnable, onDisable, onReload, onSetCsp }: PluginCardProps) {
 	const isEnabled = plugin.state === "enabled";
 	const isFailed = plugin.state === "failed" || Boolean(plugin.error);
 
@@ -140,6 +142,20 @@ export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnabl
 						<Sliders className="size-3.5" />
 						{m.player_settings_word()}
 					</Button>
+
+					{onSetCsp && plugin.cspDisabled !== undefined && (
+						<Button
+							variant="outline"
+							size="sm"
+							disabled={isBusy}
+							onClick={() => onSetCsp(plugin.id, plugin.cspDisabled === true)}
+							title={m.admin_plugins_csp_hint()}
+							className="gap-1.5 text-xs"
+						>
+							<ShieldCheck className="size-3.5" />
+							{plugin.cspDisabled ? m.admin_plugins_csp_allow() : m.admin_plugins_csp_refuse()}
+						</Button>
+					)}
 
 					{onOpenDetails && (
 						<Button variant="outline" size="sm" disabled={isBusy} onClick={onOpenDetails} className="gap-1.5 text-xs hover:text-primary">

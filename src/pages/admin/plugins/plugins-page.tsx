@@ -50,6 +50,7 @@ export default function AdminPluginsPage() {
 		enablePlugin,
 		disablePlugin,
 		reloadPlugin,
+		setPluginCsp,
 		isReloadingAll,
 		isEnabling,
 		isDisabling,
@@ -267,6 +268,7 @@ export default function AdminPluginsPage() {
 										onEnable={(id) => detach(enablePlugin(id))}
 										onDisable={(id) => detach(disablePlugin(id))}
 										onReload={(id) => detach(reloadPlugin(id))}
+										onSetCsp={(id, enabled) => detach(setPluginCsp({ pluginId: id, enabled }))}
 									/>
 								);
 							})}

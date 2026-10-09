@@ -76,6 +76,19 @@ export function useAdminPlugins() {
 		},
 	});
 
+	const setPluginCspMutation = useMutation({
+		mutationFn: async ({ pluginId, enabled }: { pluginId: string; enabled: boolean }) => {
+			return await reelvault.admin.setPluginCsp(pluginId, enabled);
+		},
+		onSuccess: async () => {
+			await invalidatePluginQueries();
+			toast.success(m.admin_plugins_csp_saved());
+		},
+		onError: (error) => {
+			toastError(m.admin_plugins_csp_failed(), error, m.toast_plugins_unexpected_error());
+		},
+	});
+
 	return {
 		pluginsQuery,
 		plugins: pluginsQuery.data ?? [],
@@ -83,6 +96,8 @@ export function useAdminPlugins() {
 		enablePlugin: enablePluginMutation.mutateAsync,
 		disablePlugin: disablePluginMutation.mutateAsync,
 		reloadPlugin: reloadPluginMutation.mutateAsync,
+		setPluginCsp: setPluginCspMutation.mutateAsync,
+		isSettingCsp: setPluginCspMutation.isPending,
 		isReloadingAll: reloadAllMutation.isPending,
 		isEnabling: enablePluginMutation.isPending,
 		isDisabling: disablePluginMutation.isPending,
