@@ -1,6 +1,6 @@
 import { AlertTriangle, CheckCircle2, Clapperboard, Film, HardDrive, RefreshCw, Wand2 } from "lucide-react";
 import type { ReactNode } from "react";
-import { useGenerateAllTrickplay, useTrickplayStats } from "@/client/hooks/use-admin-trickplay";
+import { useArtifactStats, useGenerateAllTrickplay, useTrickplayStats } from "@/client/hooks/use-admin-trickplay";
 import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { formatFileSize } from "@/utils/file-utils";
 export default function AdminTrickplayPage() {
 	const { stats, isLoading, isFetching, error, refetch } = useTrickplayStats();
 	const generateAll = useGenerateAllTrickplay();
+	const artifactStats = useArtifactStats();
 
 	const cards = stats
 		? [
@@ -49,6 +50,36 @@ export default function AdminTrickplayPage() {
 		);
 	}
 
+	let artifactContent: ReactNode;
+	if (artifactStats.error) {
+		artifactContent = <AppErrorState error={artifactStats.error} />;
+	} else if (artifactStats.artifacts.length === 0) {
+		artifactContent = <p className="text-muted-foreground text-sm">{m.admin_trickplay_artifacts_none()}</p>;
+	} else {
+		artifactContent = (
+			<div className="overflow-x-auto">
+				<table className="w-full text-left text-sm">
+					<thead className="text-muted-foreground text-xs">
+						<tr>
+							<th className="py-2 pr-4 font-medium">{m.admin_trickplay_owner()}</th>
+							<th className="py-2 pr-4 font-medium">{m.admin_trickplay_kind()}</th>
+							<th className="py-2 text-right font-medium">{m.admin_trickplay_count()}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{artifactStats.artifacts.map((row) => (
+							<tr key={`${row.pluginId}:${row.kind}`} className="border-border/60 border-t">
+								<td className="py-2 pr-4 font-mono text-xs">{row.pluginId}</td>
+								<td className="py-2 pr-4">{row.kind}</td>
+								<td className="py-2 text-right font-mono">{row.count}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		);
+	}
+
 	return (
 		<div className="flex flex-col gap-6">
 			<AdminPageHeader
@@ -82,6 +113,10 @@ export default function AdminTrickplayPage() {
 
 			<AdminSection title={m.admin_trickplay_heading()} description={m.admin_trickplay_section_description()}>
 				<p className="text-muted-foreground text-sm">{m.admin_trickplay_hint()}</p>
+			</AdminSection>
+
+			<AdminSection title={m.admin_trickplay_artifacts_section()} description={m.admin_trickplay_artifacts_description()}>
+				{artifactContent}
 			</AdminSection>
 		</div>
 	);

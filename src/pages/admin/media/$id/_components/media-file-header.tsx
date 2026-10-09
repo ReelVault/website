@@ -1,8 +1,10 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { Clapperboard, Clock, FileVideo, HardDrive, Layers, RefreshCw, Save, ShieldCheck, Tv } from "lucide-react";
+import { Clapperboard, Clock, FileVideo, HardDrive, Layers, RefreshCw, Save, ShieldCheck, Trash2, Tv } from "lucide-react";
 import { Suspense, useState } from "react";
+import { useDeleteTrickplay } from "@/client/hooks/use-admin-trickplay";
 import { AsyncButton } from "@/components/async-button";
+import { ConfirmAction } from "@/components/confirm-action";
 import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +29,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 	const isMovie = file.library.type === "movies";
 	const [isScanDialogOpen, setIsScanDialogOpen] = useState(false);
 	const [isReassignDialogOpen, setIsReassignDialogOpen] = useState(false);
+	const deleteTrickplay = useDeleteTrickplay();
 
 	return (
 		<>
@@ -80,6 +83,21 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 								<ShieldCheck className="size-4 text-success" />
 								<span>{m.admin_media_scan_file()}</span>
 							</Button>
+
+							<ConfirmAction
+								trigger={
+									<Button variant="outline" size="sm" disabled={deleteTrickplay.isPending} className="gap-2 shadow-xs">
+										<Trash2 className="size-4 text-destructive" />
+										<span>{m.admin_media_remove_trickplay()}</span>
+									</Button>
+								}
+								title={m.admin_media_remove_trickplay_title()}
+								description={m.admin_media_remove_trickplay_description()}
+								confirmLabel={m.admin_media_remove_trickplay()}
+								onConfirm={async () => {
+									await deleteTrickplay.mutateAsync(mediaFileId);
+								}}
+							/>
 
 							<AsyncButton
 								variant="outline"
