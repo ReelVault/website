@@ -1,6 +1,8 @@
-import { Activity, RefreshCw, Video, Wifi } from "lucide-react";
+import { Activity, PauseCircle, RefreshCw, Video, Wifi } from "lucide-react";
 import { useState } from "react";
-import { useAdminLiveActivity, useTerminateLiveStream } from "@/client/hooks/use-admin-live-activity";
+import { useAdminLiveActivity, useTerminateLiveStream, useTerminateLiveStreams } from "@/client/hooks/use-admin-live-activity";
+import { ConfirmAction } from "@/components/confirm-action";
+import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -14,6 +16,8 @@ export function AdminLiveActivitySection() {
 	const liveQuery = useAdminLiveActivity();
 	const terminateMutation = useTerminateLiveStream();
 	const [terminatingSessionId, setTerminatingSessionId] = useState<string | null>(null);
+	const terminateManyMutation = useTerminateLiveStreams();
+	const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(() => new Set());
 
 	const data = liveQuery.data;
 
@@ -35,6 +39,25 @@ export function AdminLiveActivitySection() {
 		setTerminatingSessionId(null);
 	};
 
+	const toggleSelected = (sessionId: string) => {
+		setSelectedIds((current) => {
+			const next = new Set(current);
+			if (next.has(sessionId)) next.delete(sessionId);
+			else next.add(sessionId);
+
+			return next;
+		});
+	};
+
+	const handleTerminateSelected = async (sessionIds: string[]) => {
+		try {
+			await terminateManyMutation.mutateAsync({ sessionIds });
+			setSelectedIds(new Set());
+		} catch {
+			// Toast is handled by hook
+		}
+	};
+
 	if (liveQuery.isLoading && !data) {
 		return (
 			<div className="flex h-40 items-center justify-center rounded-2xl border border-border/60 bg-card/40">
@@ -50,6 +73,9 @@ export function AdminLiveActivitySection() {
 	const activeDevices = data?.activeDevices ?? [];
 	const canSafelyUpdate = data?.canSafelyUpdate ?? true;
 	const warningText = data?.warning ? translateByKey(data.warning.code, data.warning.params) : null;
+	const activeStreamIds = activeStreams.map((stream) => stream.sessionId);
+	// Only streams still on screen count: a stream that ended drops out of the selection.
+	const selectedOnScreen = activeStreamIds.filter((sessionId) => selectedIds.has(sessionId));
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -81,18 +107,67 @@ export function AdminLiveActivitySection() {
 						<p className="text-[11px]">{m.admin_nobody_watching()}</p>
 					</div>
 				) : (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-						{activeStreams.map((stream) => (
-							<LiveStreamCard
-								key={stream.sessionId}
-								stream={stream}
-								onTerminate={(sessionId, title, viewer) => {
-									detach(handleTerminateStream(sessionId, title, viewer));
-								}}
-								isTerminating={terminatingSessionId === stream.sessionId}
-							/>
-						))}
-					</div>
+					<>
+						<div className="flex flex-wrap items-center justify-between gap-2">
+							<label className="flex cursor-pointer items-center gap-2 text-xs">
+								<input
+									type="checkbox"
+									className="size-4 accent-primary"
+									checked={selectedOnScreen.length === activeStreams.length}
+									onChange={() => {
+										setSelectedIds(selectedOnScreen.length === activeStreams.length ? new Set() : new Set(activeStreamIds));
+									}}
+								/>
+								{m.admin_live_select_all()}
+							</label>
+							{selectedOnScreen.length > 0 && (
+								<div className="flex items-center gap-2">
+									<Button variant="ghost" size="sm" className="text-xs" onClick={() => setSelectedIds(new Set())}>
+										{m.admin_live_clear_selection()}
+									</Button>
+									<ConfirmAction
+										trigger={
+											<Button
+												variant="outline"
+												size="sm"
+												disabled={terminateManyMutation.isPending}
+												className="gap-1.5 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
+											>
+												<PauseCircle className="size-3.5" />
+												{m.admin_live_stop_selected({ count: selectedOnScreen.length })}
+											</Button>
+										}
+										title={m.admin_live_stop_selected_title({ count: selectedOnScreen.length })}
+										description={m.admin_live_stop_selected_description()}
+										confirmLabel={m.admin_live_stop_selected({ count: selectedOnScreen.length })}
+										onConfirm={() => detach(handleTerminateSelected(selectedOnScreen))}
+									/>
+								</div>
+							)}
+						</div>
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+							{activeStreams.map((stream) => (
+								<div key={stream.sessionId} className="relative">
+									<label className="absolute top-3 left-3 z-10 flex size-6 cursor-pointer items-center justify-center rounded-md bg-background/80 shadow-sm">
+										<input
+											type="checkbox"
+											className="size-4 accent-primary"
+											checked={selectedIds.has(stream.sessionId)}
+											onChange={() => toggleSelected(stream.sessionId)}
+											aria-label={m.admin_live_select_session()}
+										/>
+									</label>
+									<LiveStreamCard
+										stream={stream}
+										onTerminate={(sessionId, title, viewer) => {
+											detach(handleTerminateStream(sessionId, title, viewer));
+										}}
+										isTerminating={terminatingSessionId === stream.sessionId}
+									/>
+								</div>
+							))}
+						</div>
+					</>
 				)}
 			</div>
 

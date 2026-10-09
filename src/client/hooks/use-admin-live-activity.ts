@@ -1,4 +1,4 @@
-import type { AdminLiveActivityResponse } from "@reelvault/sdk";
+import type { AdminLiveActivityResponse, BulkTerminateSessions } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -19,6 +19,24 @@ export function useAdminLiveActivity() {
 			return hasActivity ? 3000 : 15_000;
 		},
 		staleTime: 1500,
+	});
+}
+
+/** Stops several streams at once; the outcome says how many stopped and how many could not be stopped. */
+export function useTerminateLiveStreams() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (body: BulkTerminateSessions) => reelvault.admin.terminateLiveStreams(body),
+		onSuccess: async (result) => {
+			const message = m.admin_live_stop_selected_done({ terminated: result.terminated, failed: result.failed });
+			if (result.failed > 0) toast.error(message);
+			else toast.success(message);
+			await queryClient.invalidateQueries({ queryKey: adminKeys.liveActivity() });
+		},
+		onError: (error) => {
+			toastError(m.admin_session_stop_error(), error);
+		},
 	});
 }
 
