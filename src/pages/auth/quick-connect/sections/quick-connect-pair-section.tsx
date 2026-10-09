@@ -9,6 +9,7 @@ import { QuickConnectCountdown } from "../components/quick-connect-countdown";
 interface QuickConnectPairSectionProps {
 	pairCode: string;
 	pairExpiresAt: number;
+	isExpired: boolean;
 	qrUrl: string;
 	isPending: boolean;
 	error: Error | null;
@@ -19,6 +20,7 @@ interface QuickConnectPairSectionProps {
 export function QuickConnectPairSection({
 	pairCode,
 	pairExpiresAt,
+	isExpired,
 	qrUrl,
 	isPending,
 	error,
@@ -58,12 +60,18 @@ export function QuickConnectPairSection({
 						)}
 					</div>
 
-					{pairExpiresAt > 0 && <QuickConnectCountdown expiresAt={pairExpiresAt} />}
+					{isExpired ? (
+						<div className="rounded-full bg-warning/10 px-3 py-1 font-medium text-warning text-xs">{m.auth_code_expired()}</div>
+					) : (
+						<>
+							{pairExpiresAt > 0 && <QuickConnectCountdown expiresAt={pairExpiresAt} />}
 
-					<div className="flex animate-pulse items-center gap-2 rounded-full bg-success/10 px-3 py-1 font-medium text-success text-xs">
-						<span className="size-2 rounded-full bg-success" />
-						{m.auth_waiting_for_authorization()}
-					</div>
+							<div className="flex animate-pulse items-center gap-2 rounded-full bg-success/10 px-3 py-1 font-medium text-success text-xs">
+								<span className="size-2 rounded-full bg-success" />
+								{m.auth_waiting_for_authorization()}
+							</div>
+						</>
+					)}
 				</div>
 
 				{/* Step-by-step guidance */}

@@ -70,7 +70,7 @@ interface PlayerStatusValue {
 	canPlay: boolean;
 	isBuffering: boolean;
 	playerError: boolean;
-	isChangingQuality: boolean;
+	pendingChange: PendingChange | null;
 	isPaused: boolean;
 }
 
@@ -303,6 +303,8 @@ export { usePlayerEpisodesRaw as usePlayerEpisodes };
 // Provider
 // ---------------------------------------------------------------------------
 
+export type PendingChange = "quality" | "audio";
+
 export function PlayerProvider({
 	mediaFileId,
 	mediaFile,
@@ -310,7 +312,7 @@ export function PlayerProvider({
 	onSessionExpired,
 	settings,
 	settingsActions,
-	isChangingQuality,
+	pendingChange,
 	title,
 	profileId,
 	profilePreferences,
@@ -322,7 +324,7 @@ export function PlayerProvider({
 	onSessionExpired: () => Promise<void>;
 	settings: PlaybackSettings;
 	settingsActions: PlaybackSettingsActions;
-	isChangingQuality: boolean;
+	pendingChange: PendingChange | null;
 	title: string;
 	profileId: string | undefined;
 	profilePreferences:
@@ -368,10 +370,7 @@ export function PlayerProvider({
 
 	const { volume, isMuted, playbackRate } = volumeState;
 	const volumeValue: PlayerVolumeValue = useMemo(() => ({ volume, isMuted, playbackRate }), [volume, isMuted, playbackRate]);
-	const statusValue: PlayerStatusValue = useMemo(
-		() => ({ ...controller.status, isChangingQuality }),
-		[controller.status, isChangingQuality],
-	);
+	const statusValue: PlayerStatusValue = useMemo(() => ({ ...controller.status, pendingChange }), [controller.status, pendingChange]);
 
 	const progressRangesValue: PlayerProgressRangesValue = useMemo(
 		() => ({

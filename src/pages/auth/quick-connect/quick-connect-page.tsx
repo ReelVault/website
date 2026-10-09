@@ -38,6 +38,7 @@ export default function QuickConnectPage() {
 	const {
 		pairCode,
 		pairExpiresAt,
+		isExpired: isPairingExpired,
 		isPending: isPairingPending,
 		error: pairingError,
 		startPairing,
@@ -116,6 +117,7 @@ export default function QuickConnectPage() {
 				<QuickConnectPairSection
 					pairCode={pairCode}
 					pairExpiresAt={pairExpiresAt}
+					isExpired={isPairingExpired}
 					qrUrl={qrUrl}
 					isPending={isPairingPending}
 					error={pairingError}

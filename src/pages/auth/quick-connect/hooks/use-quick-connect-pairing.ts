@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { useQuickConnectInitiate } from "@/client/hooks/use-auth";
 import { detach } from "@/lib/detach";
@@ -26,17 +26,30 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 	const [pairCode, setPairCode] = useState("");
 	const [pairSecret, setPairSecret] = useState("");
 	const [pairExpiresAt, setPairExpiresAt] = useState(0);
+	const [isExpired, setIsExpired] = useState(false);
+
+	const applyPairing = useCallback((res: { code: string; secret: string; expiresIn: number }) => {
+		setPairCode(res.code);
+		setPairSecret(res.secret);
+		setPairExpiresAt(Date.now() + res.expiresIn * 1000);
+		setIsExpired(false);
+	}, []);
 
 	const startPairing = () => {
 		initiatePairing(undefined, {
-			onSuccess: (res) => {
-				setPairCode(res.code);
-				setPairSecret(res.secret);
-				setPairExpiresAt(Date.now() + res.expiresIn * 1000);
-			},
+			onSuccess: applyPairing,
 			// Errors surface through the mutation error state.
 		});
 	};
+
+	// The code stops working at pairExpiresAt; from then on the page says so and stops polling.
+	useEffect(() => {
+		const timer = pairExpiresAt > 0 ? setTimeout(() => setIsExpired(true), Math.max(0, pairExpiresAt - Date.now())) : undefined;
+
+		return () => {
+			if (timer !== undefined) clearTimeout(timer);
+		};
+	}, [pairExpiresAt]);
 
 	// Auto-initiate pairing on first load if not logged in
 	useEffect(() => {
@@ -46,9 +59,7 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 				onSuccess: (res) => {
 					if (isCancelled) return;
 
-					setPairCode(res.code);
-					setPairSecret(res.secret);
-					setPairExpiresAt(Date.now() + res.expiresIn * 1000);
+					applyPairing(res);
 				},
 				// Errors surface through the mutation error state.
 			});
@@ -57,7 +68,7 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 		return () => {
 			isCancelled = true;
 		};
-	}, [isUserLoading, hasUser, urlRedeem, pairCode, initiatePairing]);
+	}, [isUserLoading, hasUser, urlRedeem, pairCode, initiatePairing, applyPairing]);
 
 	// Background polling for authorization on this device
 	useEffect(() => {
@@ -78,7 +89,7 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 				// Polling errors are ignored; the next tick retries.
 			}
 		};
-		if (pairSecret && !hasUser && enabled) {
+		if (pairSecret && !hasUser && enabled && !isExpired) {
 			interval = setInterval(() => {
 				detach(pollAuthorization());
 			}, 2500);
@@ -88,11 +99,12 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 			cancelled = true;
 			if (interval !== undefined) clearInterval(interval);
 		};
-	}, [pairSecret, hasUser, enabled]);
+	}, [pairSecret, hasUser, enabled, isExpired]);
 
 	return {
 		pairCode,
 		pairExpiresAt,
+		isExpired,
 		isPending,
 		error,
 		startPairing,

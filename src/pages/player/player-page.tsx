@@ -14,6 +14,7 @@ import { m } from "@/paraglide/messages";
 import { AppPlayer } from "./app-player";
 import { CinemaPreRollOverlay } from "./components/cinema-pre-roll-overlay";
 import { useClientCapabilities } from "./hooks/use-client-capabilities";
+import type { PendingChange } from "./player-context";
 import { detach } from "./utils/player-utils";
 
 const getStoredBitrate = (): number | undefined => {
@@ -57,6 +58,8 @@ export default function PlayerByIdPage() {
 	// Only a manual in-session audio switch sets this — the initial session is
 	// always decided server-side (preferences, per-title resume state).
 	const [audioStreamIndex, setAudioStreamIndex] = useState<number | undefined>();
+	// What the next session fetch is for, so the overlay can say so instead of "changing quality".
+	const [changeKind, setChangeKind] = useState<PendingChange>("quality");
 
 	// The playback view carries the FULL media-file row — no separate getById.
 
@@ -132,10 +135,16 @@ export default function PlayerByIdPage() {
 			onSessionExpired={sessionQuery.reconnect}
 			settings={{ maxBitrate, audioStreamIndex }}
 			settingsActions={{
-				onQualityChange: setMaxBitrate,
-				onAudioStreamChange: setAudioStreamIndex,
+				onQualityChange: (bitrate) => {
+					setChangeKind("quality");
+					setMaxBitrate(bitrate);
+				},
+				onAudioStreamChange: (index) => {
+					setChangeKind("audio");
+					setAudioStreamIndex(index);
+				},
 			}}
-			isChangingQuality={sessionQuery.isFetching}
+			pendingChange={sessionQuery.isFetching ? changeKind : null}
 			title={viewQuery.data.metadata.title ?? ""}
 			profileId={profile.id}
 			profilePreferences={profilePreferencesQuery.preferences}

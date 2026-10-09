@@ -10,6 +10,7 @@ import { toast } from "@/utils/toast-facade";
 import { PlayerChrome } from "./components/player-chrome";
 import { usePlayerShortcuts } from "./hooks/use-player-shortcuts";
 import { usePlayerTouchGestures } from "./hooks/use-player-touch-gestures";
+import type { PendingChange } from "./player-context";
 import {
 	PlayerProvider,
 	usePlayerActions,
@@ -33,7 +34,7 @@ export function AppPlayer({
 	onSessionExpired,
 	settings,
 	settingsActions,
-	isChangingQuality,
+	pendingChange,
 	title,
 	profileId,
 	profilePreferences,
@@ -44,7 +45,7 @@ export function AppPlayer({
 	onSessionExpired: () => Promise<void>;
 	settings: PlaybackSettings;
 	settingsActions: PlaybackSettingsActions;
-	isChangingQuality: boolean;
+	pendingChange: PendingChange | null;
 	title: string;
 	profileId: string | undefined;
 	profilePreferences:
@@ -70,7 +71,7 @@ export function AppPlayer({
 			onSessionExpired={onSessionExpired}
 			settings={settings}
 			settingsActions={settingsActions}
-			isChangingQuality={isChangingQuality}
+			pendingChange={pendingChange}
 			title={title}
 			profileId={profileId}
 			profilePreferences={profilePreferences}

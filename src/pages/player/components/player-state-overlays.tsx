@@ -8,17 +8,18 @@ import { usePlayerActions, usePlayerInfo, usePlayerStatus } from "../player-cont
 import { detach } from "../utils/player-utils";
 
 export function PlayerLoadingOverlay() {
-	const { canPlay, isBuffering, isChangingQuality, playerError } = usePlayerStatus();
+	const { canPlay, isBuffering, pendingChange, playerError } = usePlayerStatus();
 
 	if (playerError) return null;
 
 	// Show while the stream isn't ready yet, while it's actively buffering, or while switching quality —
 	// but NOT just because canPlay is true (that flag stays true for the rest of playback).
-	const shouldShow = !canPlay || isBuffering || isChangingQuality;
+	const shouldShow = !canPlay || isBuffering || pendingChange !== null;
 	if (!shouldShow) return null;
 
 	let label: string | null = null;
-	if (isChangingQuality) label = m.player_changing_quality();
+	if (pendingChange === "audio") label = m.player_switching_audio();
+	else if (pendingChange === "quality") label = m.player_changing_quality();
 
 	return (
 		<div role="status" className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center bg-background/45">
