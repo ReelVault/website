@@ -6,7 +6,7 @@ import { formatDateTime, formatTimestamp } from "@/utils/format-utils";
 /** Playback sessions that ended recently, newest first; the server keeps a bounded history. */
 export function EndedSessionsList() {
 	const query = useAdminEndedLiveSessions();
-	const sessions = query.data?.sessions ?? [];
+	const sessions = query.data?.data ?? [];
 
 	return (
 		<section className="flex flex-col gap-3 pt-2">

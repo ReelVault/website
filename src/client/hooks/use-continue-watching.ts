@@ -18,7 +18,7 @@ export function useContinueWatching() {
 			// Optimistic write from the mutation response — invalidating the same key
 			// right after setQueryData would drop the fresh result (server response = truth).
 			queryClient.setQueryData<typeof query.data>(mePlaybackKeys.continueWatching(), (current) =>
-				current ? { ...current, items: current.items.filter((item) => item.mediaFileId !== mediaFileId) } : current,
+				current ? { ...current, data: current.data.filter((item) => item.mediaFileId !== mediaFileId) } : current,
 			);
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.progressAll() }),
@@ -35,7 +35,7 @@ export function useContinueWatching() {
 		// The server hides the title and keeps its resume positions, so only the row changes.
 		onSuccess: (_, metadataId) => {
 			queryClient.setQueryData<typeof query.data>(mePlaybackKeys.continueWatching(), (current) =>
-				current ? { ...current, items: current.items.filter((item) => item.metadata.id !== metadataId) } : current,
+				current ? { ...current, data: current.data.filter((item) => item.metadata.id !== metadataId) } : current,
 			);
 			toast.success(m.toast_me_playback_dismissed());
 		},
@@ -61,7 +61,7 @@ export function useContinueWatching() {
 
 	return {
 		query,
-		items: query.data?.items ?? [],
+		items: query.data?.data ?? [],
 		resetProgress: resetMutation.mutateAsync,
 		isResetting: resetMutation.isPending,
 		resettingMediaFileId: resetMutation.variables,

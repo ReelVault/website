@@ -17,9 +17,9 @@ export const userDownloadsQueryOptions = () => ({
 export function useUserDownloads() {
 	return useQuery({
 		...userDownloadsQueryOptions(),
-		select: (response) => response.jobs,
+		select: (response) => response.data,
 		refetchInterval: pollWhile({
-			isActive: (data) => data?.jobs.some((item) => item.status === "pending" || item.status === "processing") ?? false,
+			isActive: (data) => data?.data.some((item) => item.status === "pending" || item.status === "processing") ?? false,
 			activeMs: 1500,
 		}),
 	});

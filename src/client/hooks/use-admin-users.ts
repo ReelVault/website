@@ -18,7 +18,7 @@ export interface AdminUsersFilters {
 export const adminUsersQueryOptions = ({ search, role, status }: AdminUsersFilters, page = 1, limit = ADMIN_USERS_PAGE_SIZE) => ({
 	queryKey: adminKeys.users(search, { page, limit, role, status }),
 	placeholderData: keepPreviousData,
-	queryFn: () => reelvault.admin.getUsers({ search: search || undefined, role, status, page, limit }),
+	queryFn: () => reelvault.admin.getUsers({ q: search || undefined, role, status, page, limit }),
 	staleTime: 120_000,
 });
 

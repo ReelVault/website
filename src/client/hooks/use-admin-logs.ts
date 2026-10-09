@@ -82,7 +82,7 @@ export function useAdminLogs(params: UseAdminLogsParams = {}, autoRefresh = true
 			reelvault.admin.getLogs({
 				fileId: emptyToUndefined(fileId),
 				level: effectiveLevel,
-				search: emptyToUndefined(search),
+				q: emptyToUndefined(search),
 				module: emptyToUndefined(module),
 				exclude: emptyToUndefined(exclude),
 				from: emptyToUndefined(from),

@@ -19,7 +19,7 @@ export function ScanFindingsDialog({
 }) {
 	const { data, isLoading, isError, error, refetch } = useLibraryScanFindings(libraryId ?? "", isOpen && libraryId !== null);
 	const { scanLibrary, isScanning, mutationVariables } = useAdminLibraries();
-	const items = data?.items ?? [];
+	const items = data?.data ?? [];
 
 	let findingsBody: ReactNode;
 	if (isLoading) {

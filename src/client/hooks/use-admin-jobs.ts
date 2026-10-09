@@ -26,7 +26,7 @@ export function useAdminOperationJobs(
 		page?: number;
 		limit?: number;
 		status?: "pending" | "running" | "completed" | "failed" | "cancelled";
-		search?: string;
+		q?: string;
 	} = {},
 	autoRefresh = true,
 ) {
@@ -38,13 +38,13 @@ export function useAdminOperationJobs(
 		staleTime: 15_000,
 		refetchInterval: pollWhile({
 			enabled: autoRefresh,
-			isActive: (data) => data?.items.some((i: WorkerJob) => i.status === "pending" || i.status === "running") ?? false,
+			isActive: (data) => data?.data.some((i: WorkerJob) => i.status === "pending" || i.status === "running") ?? false,
 			activeMs: 5_000,
 		}),
 	});
 
 	return {
-		items: query.data?.items ?? [],
+		items: query.data?.data ?? [],
 		summary: query.data?.summary ?? { total: 0, pending: 0, running: 0, completed: 0, failed: 0, cancelled: 0 },
 		total: query.data?.total ?? 0,
 		totalPages: query.data?.totalPages ?? 0,
@@ -179,8 +179,8 @@ export function useAdminJobs(
 		limit: operationsQuery.data?.limit ?? limit,
 		operationsQuery,
 		operation: operationQuery.data,
-		operationItems: operationItemsQuery.data?.items ?? [],
-		operationJobs: operationItemsQuery.data?.items ?? [],
+		operationItems: operationItemsQuery.data?.data ?? [],
+		operationJobs: operationItemsQuery.data?.data ?? [],
 		operationItemsSummary: operationItemsQuery.data?.summary,
 		operationJobsSummary: operationItemsQuery.data?.summary,
 		operationQuery,

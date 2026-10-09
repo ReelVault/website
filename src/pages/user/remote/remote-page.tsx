@@ -20,7 +20,7 @@ export default function RemotePage() {
 	const sessionsQuery = useMyPlaybackSessions();
 	const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
 
-	const sessions: PlaybackSessionSummary[] = sessionsQuery.data?.sessions ?? [];
+	const sessions: PlaybackSessionSummary[] = sessionsQuery.data?.data ?? [];
 	const effectiveSessionId =
 		selectedSessionId && sessions.some((s) => s.sessionId === selectedSessionId) ? selectedSessionId : (sessions[0]?.sessionId ?? null);
 	const selectedSession = sessions.find((session) => session.sessionId === effectiveSessionId) ?? null;

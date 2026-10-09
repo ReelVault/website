@@ -196,7 +196,7 @@ export function useMyPlaybackSessions(options?: { refetchInterval?: number }) {
 		// poll only needs to be fast while a session is actually running; back off
 		// when the list is empty.
 		refetchInterval: pollWhile<MyPlaybackSessionsResponse>({
-			isActive: (data) => (data?.sessions.length ?? 0) > 0,
+			isActive: (data) => (data?.data.length ?? 0) > 0,
 			activeMs: options?.refetchInterval ?? 15_000,
 			idleMs: 60_000,
 		}),

@@ -45,7 +45,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 			page: currentPage,
 			limit: WORKER_ITEMS_PAGE_SIZE,
 			status: statusFilter === "all" ? undefined : statusFilter,
-			search: debouncedSearch || undefined,
+			q: debouncedSearch || undefined,
 		},
 		isOpen,
 	);
