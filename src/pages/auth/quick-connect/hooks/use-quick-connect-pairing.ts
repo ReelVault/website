@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { useQuickConnectInitiate } from "@/client/hooks/use-auth";
-import { detach } from "@/lib/detach";
+import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 
@@ -44,11 +44,11 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 
 	// The code stops working at pairExpiresAt; from then on the page says so and stops polling.
 	useEffect(() => {
-		const timer = pairExpiresAt > 0 ? setTimeout(() => setIsExpired(true), Math.max(0, pairExpiresAt - Date.now())) : undefined;
+		if (pairExpiresAt === 0) return noopCleanup;
 
-		return () => {
-			if (timer !== undefined) clearTimeout(timer);
-		};
+		const timer = setTimeout(() => setIsExpired(true), Math.max(0, pairExpiresAt - Date.now()));
+
+		return () => clearTimeout(timer);
 	}, [pairExpiresAt]);
 
 	// Auto-initiate pairing on first load if not logged in
