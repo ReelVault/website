@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
+import { translateCode } from "@/utils/translate-error";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys, pluginKeys } from "../utils/query-keys";
@@ -101,7 +102,7 @@ export function usePluginCatalog() {
 			const status = installed.find((plugin) => plugin.id === result.pluginId);
 			if (status?.state === "failed") {
 				toast.warning(m.admin_plugins_install_failed_to_start({ name: status.name }), {
-					description: status.error,
+					description: translateCode(status.errorCode, m.plugin_load_failed()),
 				});
 			}
 		},

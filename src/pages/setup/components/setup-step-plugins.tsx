@@ -13,6 +13,7 @@ import { pluginCatalogCategoryLabel } from "@/pages/admin/plugins/components/plu
 import { PluginUploadDialog } from "@/pages/admin/plugins/components/plugin-upload-dialog";
 import { PluginUploadProgress } from "@/pages/admin/plugins/components/plugin-upload-progress";
 import { m } from "@/paraglide/messages";
+import { translateCode } from "@/utils/translate-error";
 import { SetupPluginConfig } from "./setup-plugin-config";
 
 function entryKey(entry: PluginCatalogEntry): string {
@@ -20,7 +21,7 @@ function entryKey(entry: PluginCatalogEntry): string {
 }
 
 function pluginStateBadge(plugin: PluginRuntimeStatus): { status: "success" | "error" | "idle" | "pending"; label: string } {
-	if (plugin.state === "failed" || plugin.error) return { status: "error", label: m.setup_plugin_state_failed() };
+	if (plugin.state === "failed" || plugin.errorCode) return { status: "error", label: m.setup_plugin_state_failed() };
 
 	if (plugin.state === "enabled") return { status: "success", label: m.setup_plugin_state_enabled() };
 
@@ -125,9 +126,9 @@ export function SetupStepPlugins() {
 											</Button>
 										</div>
 									</div>
-									{plugin.error && (
+									{plugin.errorCode && (
 										<p className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 font-mono text-[11px] text-destructive">
-											{plugin.error}
+											{translateCode(plugin.errorCode, m.plugin_load_failed())}
 										</p>
 									)}
 									{configPluginId === plugin.id && <SetupPluginConfig pluginId={plugin.id} />}

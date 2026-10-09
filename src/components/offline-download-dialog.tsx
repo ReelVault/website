@@ -18,6 +18,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { toast } from "@/utils/toast-facade";
+import { translateCode } from "@/utils/translate-error";
 
 interface OfflineDownloadDialogProps {
 	open: boolean;
@@ -272,7 +273,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 									<div className="flex flex-col gap-1">
 										<span className="font-bold text-base text-destructive">{m.components_offline_transcode_error()}</span>
 										<span className="text-muted-foreground text-xs">
-											{jobStatus.errorText ?? m.components_offline_unexpected_ffmpeg_error()}
+											{translateCode(jobStatus.errorCode, m.components_offline_unexpected_ffmpeg_error())}
 										</span>
 									</div>
 								</>

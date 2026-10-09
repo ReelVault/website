@@ -30,6 +30,12 @@ const dynamicMessages = {
 	conflict: () => m.conflict(),
 	database_restore_blocked_active_streams: (inputs) =>
 		m.database_restore_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
+	download_empty_output: () => m.download_empty_output(),
+	download_failed: () => m.download_failed(),
+	download_ffmpeg_failed: () => m.download_ffmpeg_failed(),
+	download_media_missing: () => m.download_media_missing(),
+	download_source_not_mp4: () => m.download_source_not_mp4(),
+	download_storage_limit: () => m.download_storage_limit(),
 	downloads_disabled: () => m.downloads_disabled(),
 	downloads_duration_unknown: () => m.downloads_duration_unknown(),
 	downloads_in_progress: () => m.downloads_in_progress(),
@@ -47,9 +53,16 @@ const dynamicMessages = {
 	library_path_conflict: () => m.library_path_conflict(),
 	library_path_not_found: () => m.library_path_not_found(),
 	low_confidence: (inputs) => m.low_confidence({ percent: String(inputs?.percent ?? "") }),
+	media_decode_failed: () => m.media_decode_failed(),
+	media_file_missing: () => m.media_file_missing(),
+	media_probe_failed: () => m.media_probe_failed(),
+	media_probe_no_data: () => m.media_probe_no_data(),
 	not_found: () => m.not_found(),
 	network_rate_limit_override_invalid: (inputs) =>
 		m.network_rate_limit_override_invalid({ malformed: String(inputs?.malformed ?? ""), untunable: String(inputs?.untunable ?? "") }),
+	plugin_load_failed: () => m.plugin_load_failed(),
+	plugin_manifest_invalid: () => m.plugin_manifest_invalid(),
+	plugin_repository_unavailable: () => m.plugin_repository_unavailable(),
 	plugin_server_too_old: () => m.plugin_server_too_old(),
 	profile_name_conflict: () => m.profile_name_conflict(),
 	profile_pin_invalid: (inputs) =>
@@ -95,6 +108,11 @@ const dynamicMessages = {
 		}),
 	too_many_requests: () => m.too_many_requests(),
 	unauthorized: () => m.unauthorized(),
+	update_check_failed: () => m.update_check_failed(),
+	update_checksum_mismatch: () => m.update_checksum_mismatch(),
+	update_database_integrity_failed: () => m.update_database_integrity_failed(),
+	update_install_failed: () => m.update_install_failed(),
+	update_rollback_failed: () => m.update_rollback_failed(),
 	update_blocked_active_streams: (inputs) => m.update_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
 	update_not_cancellable: () => m.update_not_cancellable(),
 	update_not_running: () => m.update_not_running(),
@@ -140,6 +158,15 @@ function normalizeParams(params: unknown): MessageParams | undefined {
 	}
 
 	return undefined;
+}
+
+/** The text for a stored or reported error code; the fallback when the website has no message for it. */
+export function translateCode(code: string | null | undefined, fallback: string): string {
+	if (!code) return fallback;
+
+	const translated = translateByKey(code);
+
+	return translated === code ? fallback : translated;
 }
 
 /** Best-effort human message for any thrown value; always returns something. */

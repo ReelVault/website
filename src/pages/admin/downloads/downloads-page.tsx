@@ -15,6 +15,7 @@ import { formatFileSize } from "@/utils/file-utils";
 import { formatDateTime } from "@/utils/format-utils";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
+import { translateCode } from "@/utils/translate-error";
 
 type StatusFilter = "all" | "pending" | "processing" | "completed" | "failed" | "cancelled";
 
@@ -171,7 +172,7 @@ export default function AdminDownloadsPage() {
 												{m.common_created_label()} {formatDateTime(job.createdAt)}
 											</span>
 										</div>
-										{job.errorText && <p className="text-destructive text-xs">{job.errorText}</p>}
+										{job.errorCode && <p className="text-destructive text-xs">{translateCode(job.errorCode, m.download_failed())}</p>}
 									</div>
 									<ConfirmAction
 										trigger={

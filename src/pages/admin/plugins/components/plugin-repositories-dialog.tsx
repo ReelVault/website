@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { formatDateTime } from "@/utils/format-utils";
+import { translateCode } from "@/utils/translate-error";
 
 interface PluginRepositoriesDialogProps {
 	open: boolean;
@@ -133,9 +134,11 @@ export function PluginRepositoriesDialog({
 									/>
 								</div>
 							</div>
-							{repository.lastError && (
+							{repository.lastErrorCode && (
 								<p className="wrap-break-word text-[11px] text-destructive">
-									{m.admin_plugins_repositories_last_error_value({ error: repository.lastError })}
+									{m.admin_plugins_repositories_last_error_value({
+										error: translateCode(repository.lastErrorCode, m.plugin_repository_unavailable()),
+									})}
 								</p>
 							)}
 						</div>

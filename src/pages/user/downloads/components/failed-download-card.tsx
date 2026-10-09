@@ -4,6 +4,7 @@ import { RotateCcw, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
+import { translateCode } from "@/utils/translate-error";
 
 /** Card for a failed / cancelled download; retry queues the same file and quality again. */
 export function FailedDownloadCard({
@@ -30,7 +31,7 @@ export function FailedDownloadCard({
 							{job.status === "cancelled" ? m.common_cancelled() : m.common_error()}
 						</Badge>
 					</div>
-					{job.errorText && <p className="truncate text-destructive text-xs">{job.errorText}</p>}
+					{job.errorCode && <p className="truncate text-destructive text-xs">{translateCode(job.errorCode, m.download_failed())}</p>}
 				</div>
 			</div>
 

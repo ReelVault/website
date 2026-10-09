@@ -7,15 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 import { formatDate } from "@/utils/format-utils";
-import { translateByKey } from "@/utils/translate-error";
+import { translateCode } from "@/utils/translate-error";
 
-/** Translates the stable server code when the website has a message for it; otherwise shows the server's own text. */
+/** The translated text for the failure's code; the generic load failure when the website has no message for it. */
 function pluginErrorText(plugin: PluginAdminStatus): string | undefined {
-	if (!plugin.errorCode) return plugin.error;
-
-	const translated = translateByKey(plugin.errorCode);
-
-	return translated === plugin.errorCode ? plugin.error : translated;
+	return plugin.errorCode ? translateCode(plugin.errorCode, m.plugin_load_failed()) : undefined;
 }
 
 interface PluginCardProps {
@@ -51,7 +47,7 @@ export function PluginCard({
 	onToggleSelect,
 }: PluginCardProps) {
 	const isEnabled = plugin.state === "enabled";
-	const isFailed = plugin.state === "failed" || Boolean(plugin.error);
+	const isFailed = plugin.state === "failed" || Boolean(plugin.errorCode);
 
 	let statusVariant: "error" | "success" | "idle";
 	if (isFailed) {
@@ -134,7 +130,7 @@ export function PluginCard({
 				)}
 
 				{/* Error Banner */}
-				{plugin.error && (
+				{plugin.errorCode && (
 					<div className="mt-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-destructive text-xs">
 						<div className="flex items-center gap-1.5 font-bold">
 							<XCircle className="size-3.5 shrink-0" />

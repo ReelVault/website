@@ -2,6 +2,7 @@ import { CheckCircle2, XCircle } from "lucide-react";
 import type { useAdminScanMediaFile } from "@/client/hooks/use-admin-media";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
+import { translateCode } from "@/utils/translate-error";
 
 type ScanResult = NonNullable<ReturnType<typeof useAdminScanMediaFile>["scanResult"]>;
 
@@ -41,9 +42,9 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 						<p className="text-[11px] text-muted-foreground">
 							{scanResult.probeSuccess ? m.admin_media_streams_read_notice() : m.admin_media_failed_to_read_streams()}
 						</p>
-						{scanResult.probeError !== null && (
+						{scanResult.probeErrorCode !== null && (
 							<pre className="mt-2 max-h-24 overflow-x-auto whitespace-pre-wrap rounded-lg border border-destructive/20 bg-destructive/10 p-2 font-mono text-[10px] text-destructive">
-								{scanResult.probeError}
+								{translateCode(scanResult.probeErrorCode, m.media_probe_failed())}
 							</pre>
 						)}
 					</div>
@@ -61,9 +62,9 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 						<p className="text-[11px] text-muted-foreground">
 							{scanResult.decodeSuccess ? m.admin_media_decode_success_notice() : m.admin_media_decode_errors()}
 						</p>
-						{scanResult.decodeError && (
+						{scanResult.decodeErrorCode && (
 							<pre className="mt-2 max-h-28 overflow-x-auto whitespace-pre-wrap rounded-lg border border-destructive/20 bg-destructive/10 p-2 font-mono text-[10px] text-destructive">
-								{scanResult.decodeError}
+								{translateCode(scanResult.decodeErrorCode, m.media_decode_failed())}
 							</pre>
 						)}
 					</div>

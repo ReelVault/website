@@ -20,6 +20,7 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatDateTime } from "@/utils/format-utils";
+import { translateCode } from "@/utils/translate-error";
 import { UpdateStreamBlockDialog } from "./components/update-stream-block-dialog";
 
 function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
@@ -73,7 +74,7 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 	const latest = isServer ? status.serverLatest : status.webLatest;
 	const updateAvailable = isServer ? status.serverUpdateAvailable : status.webUpdateAvailable;
 	const rollbackAvailable = isServer ? status.serverRollbackAvailable : status.webRollbackAvailable;
-	const lastError = isServer ? status.serverLastError : status.webLastError;
+	const lastErrorCode = isServer ? status.serverLastErrorCode : status.webLastErrorCode;
 	const jobRunning = Boolean(status.job);
 
 	// The web release may declare the oldest compatible server version — warn
@@ -147,12 +148,12 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 					)}
 				</div>
 
-				{lastError && (
+				{lastErrorCode && (
 					<div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-destructive text-sm">
 						<Info className="mt-0.5 size-4 shrink-0" />
 						<div>
 							<p className="font-medium">{m.admin_updates_check_failed()}</p>
-							<p className="text-xs">{lastError}</p>
+							<p className="text-xs">{translateCode(lastErrorCode, m.update_install_failed())}</p>
 						</div>
 					</div>
 				)}
