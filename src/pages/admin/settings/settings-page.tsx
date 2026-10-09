@@ -1,3 +1,4 @@
+import type { ImportSystemSettings } from "@reelvault/sdk";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import {
@@ -14,9 +15,10 @@ import {
 	Settings,
 	Sliders,
 	Tv,
+	Upload,
 	UserCheck,
 } from "lucide-react";
-import { lazy, Suspense, useState, ViewTransition } from "react";
+import { type ChangeEvent, lazy, Suspense, useRef, useState, ViewTransition } from "react";
 import { useAdminSettings } from "@/client/hooks/use-admin-settings";
 import { AppErrorState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
@@ -25,6 +27,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { toast } from "@/utils/toast-facade";
+import { toastError } from "@/utils/toast-utils";
 import { runTransition } from "@/utils/view-transitions";
 import { RemoteAccessCard } from "./components/remote-access-card";
 import { SettingsGroupView } from "./components/settings-group-view";
@@ -58,8 +62,33 @@ const SETTINGS_TABS = [
 ] as const;
 const DEFAULT_SETTINGS_TAB = "resources";
 
+/** A file this page may import: the settings export, version 1, with its settings object. */
+function isSettingsExport(value: unknown): value is ImportSystemSettings {
+	if (typeof value !== "object" || value === null) return false;
+
+	return (
+		Reflect.get(value, "format") === "reelvault.settings" &&
+		Reflect.get(value, "formatVersion") === 1 &&
+		typeof Reflect.get(value, "settings") === "object"
+	);
+}
+
 export default function AdminSettingsPage() {
-	const { settings, isLoading, isFetching, error, refetch, updateSettings, isUpdating, resetSettings, isResetting } = useAdminSettings();
+	const {
+		settings,
+		isLoading,
+		isFetching,
+		error,
+		refetch,
+		updateSettings,
+		isUpdating,
+		resetSettings,
+		isResetting,
+		exportSettings,
+		importSettings,
+		isImporting,
+	} = useAdminSettings();
+	const importInputRef = useRef<HTMLInputElement>(null);
 	const { tab } = useSearch({ from: "/admin/settings" });
 	const navigate = useNavigate({ from: "/admin/settings" });
 	// The query is transient UI state: it filters whichever section is open and survives tab switches.
@@ -72,6 +101,46 @@ export default function AdminSettingsPage() {
 	const handleSave = (updates: Record<string, unknown>) => updateSettings(updates);
 	const handleResetKeys = (keys: string[]) => resetSettings(keys);
 	const handleResetAll = () => resetSettings();
+
+	const handleExport = async () => {
+		try {
+			const exported = await exportSettings();
+			const url = URL.createObjectURL(new Blob([`${JSON.stringify(exported, null, 2)}\n`], { type: "application/json" }));
+			const link = document.createElement("a");
+			link.href = url;
+			link.download = "reelvault-settings.json";
+			link.click();
+			URL.revokeObjectURL(url);
+		} catch (exportError) {
+			toastError(m.toast_settings_export_error(), exportError);
+		}
+	};
+
+	const handleImportFile = async (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		event.target.value = "";
+		if (!file) return;
+
+		let parsed: unknown;
+		try {
+			parsed = JSON.parse(await file.text());
+		} catch {
+			toast.error(m.admin_settings_import_invalid());
+
+			return;
+		}
+		if (!isSettingsExport(parsed)) {
+			toast.error(m.admin_settings_import_invalid());
+
+			return;
+		}
+
+		try {
+			await importSettings(parsed);
+		} catch {
+			// Toast is handled by hook
+		}
+	};
 
 	if (error) {
 		return <AppErrorState error={error} onRetry={() => detach(refetch())} />;
@@ -91,6 +160,21 @@ export default function AdminSettingsPage() {
 							onChange={setSearchQuery}
 							placeholder={m.admin_settings_search_placeholder()}
 							className="w-full sm:max-w-xs"
+						/>
+						<Button variant="outline" size="sm" disabled={isImporting} onClick={() => importInputRef.current?.click()}>
+							<Upload className="size-4" />
+							{m.admin_settings_import()}
+						</Button>
+						<Button variant="outline" size="sm" onClick={() => detach(handleExport)}>
+							<Download className="size-4" />
+							{m.admin_settings_export()}
+						</Button>
+						<input
+							ref={importInputRef}
+							type="file"
+							accept="application/json,.json"
+							className="hidden"
+							onChange={(event) => detach(() => handleImportFile(event))}
 						/>
 						<ConfirmAction
 							trigger={

@@ -1,4 +1,4 @@
-import type { UpdateSystemSettings } from "@reelvault/sdk";
+import type { ImportSystemSettings, UpdateSystemSettings } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -31,6 +31,19 @@ export function useAdminSettings() {
 		},
 	});
 
+	const importSettingsMutation = useMutation({
+		mutationFn: async (body: ImportSystemSettings) => await reelvault.admin.importSystemSettings(body),
+		onSuccess: async (data) => {
+			toast.success(m.toast_settings_imported());
+			queryClient.setQueryData(adminSettingsKeys.list(), data);
+			await queryClient.invalidateQueries({ queryKey: adminKeys.ffmpegCapabilities() });
+		},
+		onError: (error) => {
+			console.error("Failed to import settings", error);
+			toastError(m.toast_settings_import_error(), error);
+		},
+	});
+
 	const resetSettingsMutation = useMutation({
 		mutationFn: async (keys?: string[]) => {
 			return await reelvault.admin.resetSystemSettings(keys ? { keys } : {});
@@ -56,5 +69,8 @@ export function useAdminSettings() {
 		isUpdating: updateSettingsMutation.isPending,
 		resetSettings: resetSettingsMutation.mutateAsync,
 		isResetting: resetSettingsMutation.isPending,
+		exportSettings: () => reelvault.admin.exportSystemSettings(),
+		importSettings: importSettingsMutation.mutateAsync,
+		isImporting: importSettingsMutation.isPending,
 	};
 }
