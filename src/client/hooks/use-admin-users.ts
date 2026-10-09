@@ -8,16 +8,23 @@ import { useAdminDeleteUser } from "./use-admin-user";
 
 const ADMIN_USERS_PAGE_SIZE = 25;
 
-export const adminUsersQueryOptions = (search: string, page = 1, limit = ADMIN_USERS_PAGE_SIZE) => ({
-	queryKey: adminKeys.users(search, { page, limit }),
+/** What the user list is narrowed by; the search and the role and status choices all sit in the same query. */
+export interface AdminUsersFilters {
+	search: string;
+	role?: "admin" | "user" | undefined;
+	status?: "active" | "blocked" | undefined;
+}
+
+export const adminUsersQueryOptions = ({ search, role, status }: AdminUsersFilters, page = 1, limit = ADMIN_USERS_PAGE_SIZE) => ({
+	queryKey: adminKeys.users(search, { page, limit, role, status }),
 	placeholderData: keepPreviousData,
-	queryFn: () => reelvault.admin.getUsers({ search: search || undefined, page, limit }),
+	queryFn: () => reelvault.admin.getUsers({ search: search || undefined, role, status, page, limit }),
 	staleTime: 120_000,
 });
 
-export function useAdminUsers(search: string, page = 1, limit = ADMIN_USERS_PAGE_SIZE) {
+export function useAdminUsers(filters: AdminUsersFilters, page = 1, limit = ADMIN_USERS_PAGE_SIZE) {
 	const queryClient = useQueryClient();
-	const usersQuery = useQuery(adminUsersQueryOptions(search, page, limit));
+	const usersQuery = useQuery(adminUsersQueryOptions(filters, page, limit));
 	const invalidateUsers = () => queryClient.invalidateQueries({ queryKey: adminKeys.usersAll() });
 
 	const createMutation = useMutation({

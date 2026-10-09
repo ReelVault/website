@@ -170,7 +170,7 @@ export const adminKeys = {
 	all: ["admin"] as const,
 	apiKeys: () => [...adminKeys.all, "api-keys"] as const,
 	usersAll: () => [...adminKeys.all, "users"] as const,
-	users: (search: string, params?: { page?: number; limit?: number }) => {
+	users: (search: string, params?: { page?: number; limit?: number; role?: string | undefined; status?: string | undefined }) => {
 		const base = [...adminKeys.all, "users", search] as const;
 
 		return params ? ([...base, params] as const) : base;

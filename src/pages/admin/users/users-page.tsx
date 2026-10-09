@@ -20,7 +20,7 @@ import type { AdminUser } from "./components/user-item-parts";
 import { UserTable } from "./components/user-table";
 
 export default function AdminUsersPage() {
-	const { q, page: urlPage = 1 } = useSearch({ from: "/admin/users/" });
+	const { q, role, status, page: urlPage = 1 } = useSearch({ from: "/admin/users/" });
 	const navigate = useNavigate({ from: "/admin/users/" });
 	const [createOpen, setCreateOpen] = useState(false);
 	const [banTarget, setBanTarget] = useState<AdminUser | null>(null);
@@ -31,10 +31,16 @@ export default function AdminUsersPage() {
 	const setSearch = (value: string) => {
 		detach(navigate({ search: (prev) => ({ ...prev, q: value || undefined, page: undefined }), replace: true }));
 	};
+	const setRole = (value: "admin" | "user" | undefined) => {
+		detach(navigate({ search: (prev) => ({ ...prev, role: value, page: undefined }), replace: true }));
+	};
+	const setStatus = (value: "active" | "blocked" | undefined) => {
+		detach(navigate({ search: (prev) => ({ ...prev, status: value, page: undefined }), replace: true }));
+	};
 	const debouncedSearch = useDebounce({ value: search, delay: 500 });
 	const page = urlPage;
 	const { users, total, totalPages, isLoading, error, refetch, updateUser, deleteUser, createUser, isCreating, updatingId } = useAdminUsers(
-		debouncedSearch,
+		{ search: debouncedSearch, role, status },
 		page,
 	);
 
@@ -164,6 +170,10 @@ export default function AdminUsersPage() {
 							setSearch(value);
 							setPage(1);
 						}}
+						role={role}
+						onRoleChange={setRole}
+						status={status}
+						onStatusChange={setStatus}
 						onOpenCreate={() => setCreateOpen(true)}
 					/>
 				}
