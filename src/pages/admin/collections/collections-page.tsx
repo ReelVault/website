@@ -1,21 +1,43 @@
 import { Link } from "@tanstack/react-router";
 import { Layers, Pencil, Server } from "lucide-react";
 import { useState } from "react";
-import { useAdminCollections } from "@/client/hooks/use-admin-collections";
+import { type AdminCollectionSort, useAdminCollections } from "@/client/hooks/use-admin-collections";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
+import { SimplePagination } from "@/components/simple-pagination";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { COLLECTION_SORT_LABELS } from "./components/collection-sort-options";
 
+const SORT_OPTIONS: AdminCollectionSort[] = ["name", "newest", "updated"];
+
+const SORT_LABELS: Record<AdminCollectionSort, () => string> = {
+	name: () => m.admin_collections_sort_name(),
+	newest: () => m.admin_collections_sort_newest(),
+	updated: () => m.admin_collections_sort_updated(),
+};
+
 export default function AdminCollectionsPage() {
 	const [searchQuery, setSearchQuery] = useState("");
+	const [sort, setSort] = useState<AdminCollectionSort>("name");
+	const [page, setPage] = useState(1);
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 400 });
-	const { collections, total, error, refetch } = useAdminCollections(debouncedSearch);
+	const { collections, total, totalPages, isLoading, error, refetch } = useAdminCollections(debouncedSearch, page, sort);
+	const handleSearchChange = (value: string) => {
+		setSearchQuery(value);
+		setPage(1);
+	};
+	const handleSortChange = (value: AdminCollectionSort | null) => {
+		if (!value) return;
+
+		setSort(value);
+		setPage(1);
+	};
 	const handleRetry = () => {
 		detach(refetch());
 	};
@@ -30,12 +52,26 @@ export default function AdminCollectionsPage() {
 				count={total}
 				description={m.admin_collections_sagas_franchises_description()}
 				actions={
-					<AdminSearch
-						value={searchQuery}
-						onChange={setSearchQuery}
-						placeholder={m.admin_collections_search_placeholder()}
-						className="w-full sm:max-w-xs"
-					/>
+					<div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+						<AdminSearch
+							value={searchQuery}
+							onChange={handleSearchChange}
+							placeholder={m.admin_collections_search_placeholder()}
+							className="w-full sm:max-w-xs"
+						/>
+						<Select value={sort} onValueChange={handleSortChange}>
+							<SelectTrigger className="h-9 w-full sm:w-44" aria-label={m.admin_collections_sort_label()}>
+								<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
+							</SelectTrigger>
+							<SelectContent>
+								{SORT_OPTIONS.map((option) => (
+									<SelectItem key={option} value={option}>
+										{SORT_LABELS[option]()}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
 				}
 			/>
 
@@ -95,6 +131,11 @@ export default function AdminCollectionsPage() {
 								/>
 							</div>
 						)}
+					</div>
+				)}
+				{!error && (
+					<div className="mt-4">
+						<SimplePagination variant="admin" currentPage={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
 					</div>
 				)}
 			</AdminSection>

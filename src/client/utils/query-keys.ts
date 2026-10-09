@@ -207,7 +207,11 @@ export const adminKeys = {
 
 		return params ? ([...base, params] as const) : base;
 	},
-	collections: (search?: string) => (search ? (["admin-collections", search] as const) : (["admin-collections"] as const)),
+	collections: (search?: string, params?: { page?: number; limit?: number; sortBy?: string; sortOrder?: string }) => {
+		const base = search ? (["admin-collections", search] as const) : (["admin-collections"] as const);
+
+		return params ? ([...base, params] as const) : base;
+	},
 	collectionDetail: (id: string) => [...adminKeys.collections(), id] as const,
 	companies: (search?: string, params?: { page?: number; limit?: number }) => {
 		const base = search ? (["admin-companies", search] as const) : (["admin-companies"] as const);

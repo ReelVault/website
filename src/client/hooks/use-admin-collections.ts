@@ -7,13 +7,36 @@ import { reelvault } from "../client";
 import { collectionAdminFields } from "../utils/fields";
 import { adminKeys, collectionKeys } from "../utils/query-keys";
 
-export function useAdminCollections(search?: string) {
+export const COLLECTIONS_PAGE_SIZE = 25;
+
+export type AdminCollectionSort = "name" | "newest" | "updated";
+
+const COLLECTION_SORT_QUERY: Record<AdminCollectionSort, { sortBy: "name" | "createdAt" | "updatedAt"; sortOrder: "asc" | "desc" }> = {
+	name: { sortBy: "name", sortOrder: "asc" },
+	newest: { sortBy: "createdAt", sortOrder: "desc" },
+	updated: { sortBy: "updatedAt", sortOrder: "desc" },
+};
+
+export function useAdminCollections(search?: string, page = 1, sort: AdminCollectionSort = "name") {
 	const queryClient = useQueryClient();
+	const sortQuery = COLLECTION_SORT_QUERY[sort];
 
 	const query = useQuery({
-		queryKey: adminKeys.collections(search),
+		queryKey: adminKeys.collections(search, {
+			page,
+			limit: COLLECTIONS_PAGE_SIZE,
+			sortBy: sortQuery.sortBy,
+			sortOrder: sortQuery.sortOrder,
+		}),
 		placeholderData: keepPreviousData,
-		queryFn: () => reelvault.collections.getAll({ name: search === "" ? undefined : search, fields: collectionAdminFields }),
+		queryFn: () =>
+			reelvault.collections.getAll({
+				name: search === "" ? undefined : search,
+				page,
+				limit: COLLECTIONS_PAGE_SIZE,
+				...sortQuery,
+				fields: collectionAdminFields,
+			}),
 		staleTime: 120_000,
 	});
 
@@ -49,6 +72,7 @@ export function useAdminCollections(search?: string) {
 	return {
 		collections: query.data?.data ?? [],
 		total: query.data?.total ?? 0,
+		totalPages: query.data?.totalPages ?? 0,
 		isLoading: query.isLoading,
 		error: query.error,
 		refetch: query.refetch,

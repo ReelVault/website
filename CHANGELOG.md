@@ -218,6 +218,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Admin genre list is paginated** — the genres page loads 50 genres per page with the page control, instead of silently stopping at the first 100. A new search starts at page one.
 - **Collection context survives the player** — auto-next keeps the collection you were watching, and switching the version of a file inside a collection stays in that collection.
 - **Search log files** — the logs page has a search box that filters the log files by name within the selected category.
+- **Admin collections can be sorted and paged** — the collections page sorts by name, newest or recently updated, shows 25 per page with the page control, and a new search or sort starts at the first page.
 
 ### Fixes
 
