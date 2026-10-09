@@ -2994,6 +2994,7 @@
 	"player_speed_activeevent_value": "Speed: {speed}×",
 	"player_speed_playback_playbackrate": "Playback speed · {playbackRate}×",
 	"player_speed_playback_playbackrate_2": "Playback speed: {playbackRate}×",
+	"player_speed_step_hint": "Decrease / increase playback speed",
 	"player_start_end": "Start / end of the item",
 	"player_statistics_word": "Statistics",
 	"player_stopped_by_admin": "Playback was stopped by the administrator",

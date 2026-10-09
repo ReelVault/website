@@ -60,6 +60,12 @@ const SHORTCUTS = [
 		},
 	},
 	{
+		key: "< / >",
+		get description() {
+			return m.player_speed_step_hint();
+		},
+	},
+	{
 		key: "0 – 9",
 		get description() {
 			return m.player_jump_to_percent();

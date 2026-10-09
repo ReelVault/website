@@ -3021,6 +3021,7 @@
 	"player_speed_activeevent_value": "Prędkość: {speed}×",
 	"player_speed_playback_playbackrate": "Prędkość odtwarzania · {playbackRate}×",
 	"player_speed_playback_playbackrate_2": "Prędkość odtwarzania: {playbackRate}×",
+	"player_speed_step_hint": "Zmniejsz / zwiększ prędkość odtwarzania",
 	"player_start_end": "Początek / Koniec materiału",
 	"player_statistics_word": "Statystyki",
 	"player_stopped_by_admin": "Odtwarzanie zostało zatrzymane przez administratora",

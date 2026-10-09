@@ -4,6 +4,7 @@ import { showPlayerFeedback } from "../components/player-feedback-hud";
 import type { PlayerActionsValue } from "../player-context";
 import { isBitmapSubtitle } from "../utils/player.types";
 import { MAX_PLAYER_VOLUME } from "../utils/player-audio-boost";
+import { nextPlaybackRate } from "../utils/player-speed";
 import { detach, toggleFullscreen, togglePiP, togglePlayPause } from "../utils/player-utils";
 
 interface UsePlayerShortcutsProps {
@@ -231,6 +232,16 @@ export function usePlayerShortcuts({
 						showPlayerFeedback({ type: "volume", value: newVol });
 					}
 
+					break;
+				}
+
+				// Playback speed down / up through the settings speed steps
+				case "<":
+				case ">": {
+					e.preventDefault();
+					const nextRate = nextPlaybackRate(video.playbackRate, e.key === ">" ? 1 : -1);
+					controller.setPlaybackRate(nextRate);
+					showPlayerFeedback({ type: "speed", value: nextRate });
 					break;
 				}
 
