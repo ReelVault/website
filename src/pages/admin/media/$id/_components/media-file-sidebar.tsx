@@ -23,7 +23,7 @@ export function MediaFileSidebar({ file }: MediaFileSidebarProps) {
 			<MediaFileRelationsSection file={file} onOpenReassign={() => setIsReassignDialogOpen(true)} />
 
 			{/* Subtitles Section */}
-			<MediaFileSubtitlesSection subtitles={file.subtitles} />
+			<MediaFileSubtitlesSection mediaFileId={file.id} subtitles={file.subtitles} />
 
 			{/* Video & Audio Streams */}
 			<MediaFileStreamsSection videoStreams={file.videoStreams} audioStreams={file.audioStreams} />

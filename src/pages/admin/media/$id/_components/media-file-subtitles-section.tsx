@@ -1,22 +1,38 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
-import { FileText, Subtitles } from "lucide-react";
+import { FileText, Subtitles, Upload } from "lucide-react";
+import { useState } from "react";
 import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
+import { isBitmapSubtitle } from "@/pages/player/utils/player.types";
 import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
+import { MediaFileSubtitleUploadForm } from "./media-file-subtitle-upload-form";
 
 const EMPTY_SUBTITLES: MediaFileWithRelation["subtitles"] = [];
 
-export function MediaFileSubtitlesSection({ subtitles }: { subtitles?: MediaFileWithRelation["subtitles"] }) {
+export function MediaFileSubtitlesSection({
+	mediaFileId,
+	subtitles,
+}: {
+	mediaFileId: string;
+	subtitles?: MediaFileWithRelation["subtitles"];
+}) {
 	const subtitleList = subtitles ?? EMPTY_SUBTITLES;
+	const [uploadOpen, setUploadOpen] = useState(false);
 
 	return (
 		<AdminSection
 			title={m.admin_media_subtitles_section({ count: subtitleList.length })}
 			description={m.admin_media_subtitle_tracks_description()}
+			actions={
+				<Button variant="outline" size="sm" onClick={() => setUploadOpen((open) => !open)} className="gap-1.5 text-xs">
+					<Upload className="size-3.5" />
+					{m.admin_media_upload_subtitle()}
+				</Button>
+			}
 		>
 			{subtitleList.length > 0 ? (
 				<div className="flex flex-col gap-2.5">
@@ -30,6 +46,7 @@ export function MediaFileSubtitlesSection({ subtitles }: { subtitles?: MediaFile
 					<span>{m.admin_media_no_subtitle_tracks()}</span>
 				</div>
 			)}
+			{uploadOpen && <MediaFileSubtitleUploadForm mediaFileId={mediaFileId} onUploaded={() => setUploadOpen(false)} />}
 		</AdminSection>
 	);
 }
@@ -65,6 +82,12 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 					) : (
 						<Badge variant="default" size="sm" className="text-[10px]">
 							{m.admin_media_external_file()}
+						</Badge>
+					)}
+
+					{isBitmapSubtitle(subtitle.format) && (
+						<Badge variant="outline" size="sm" className="border-warning/30 text-[10px] text-warning">
+							{m.admin_media_subtitle_image_based()}
 						</Badge>
 					)}
 

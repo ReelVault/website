@@ -3,7 +3,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
-import { subtitleKeys } from "../utils/query-keys";
+import { mediaKeys, subtitleKeys } from "../utils/query-keys";
 
 const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
@@ -119,5 +119,25 @@ export function useAdminDeleteSubtitle() {
 			toast.success(m.toast_subtitle_deleted());
 		},
 		onError: (error) => toastError(m.toast_subtitle_delete_failed(), error),
+	});
+}
+
+/** Stores an SRT, WebVTT or ASS file as a track of the media file, then refreshes its subtitles. */
+export function useUploadSubtitle(mediaFileId: string) {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (body: { language: string; label?: string | undefined; file: File }) =>
+			reelvault.subtitles.upload({ mediaFileId, language: body.language, label: body.label, file: body.file, fileName: body.file.name }),
+		onSuccess: async () => {
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: subtitleKeys.all }),
+				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFile(mediaFileId) }),
+			]);
+			toast.success(m.admin_media_subtitle_uploaded());
+		},
+		onError: (error) => {
+			toastError(m.admin_media_subtitle_upload_failed(), error);
+		},
 	});
 }
