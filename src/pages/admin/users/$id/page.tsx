@@ -17,6 +17,7 @@ import { CreateProfileDialog } from "./components/create-profile-dialog";
 import { ProfileCard } from "./components/profile-card";
 import { UserAccountHeader } from "./sections/user-account-header";
 import { UserManagementCard } from "./sections/user-management-card";
+import { UserSessionsSection } from "./sections/user-sessions-section";
 
 const SKELETON_KEYS = ["1", "2", "3"] as const;
 
@@ -117,6 +118,8 @@ export default function AdminUserProfilesPage() {
 				onOpenPassword={() => setPasswordOpen(true)}
 				onRemoveUser={() => detach(removeUser)}
 			/>
+
+			{user && <UserSessionsSection userId={user.id} />}
 
 			{error && <AppErrorState title={m.admin_users_failed_to_fetch_profiles()} error={error} onRetry={() => detach(refetch)} />}
 

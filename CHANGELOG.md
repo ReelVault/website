@@ -282,6 +282,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Dashboard empty state has a next step** — when there is nothing to feature, the dashboard explains why and offers the next step: administrators get *Add the first library*, everyone else gets *Try again*. Previously the top of the page was blank.
 - **Equalizer opens as a top drawer** — the equalizer moved out of the subtitles and audio dialog into its own drawer from the top edge, opened from the player settings menu. It does not block the picture: you can seek the video while tuning the sound.
 - **Autoplay and skip-intro in the player menu** — the player settings menu has switches for *Autoplay the next episode* and *Automatically skip the intro*, saved to your profile and applied straight away. The `<` and `>` keys step the playback speed down and up through the menu's speed steps, with the same on-screen feedback.
+- **Admin user sessions** — the user page lists the account's signed-in sessions, with *End session* for each one and *Sign out everywhere* for all of them. The user list shows each account's last activity and session count, and checkboxes sign out several selected users at once. Requires SDK and server with the user session endpoints.
 
 ### Fixes
 

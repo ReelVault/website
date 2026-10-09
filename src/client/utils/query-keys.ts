@@ -178,6 +178,7 @@ export const adminKeys = {
 		return params ? ([...base, params] as const) : base;
 	},
 	user: (userId: string) => [...adminKeys.all, "user", userId] as const,
+	userSessions: (userId: string) => [...adminKeys.all, "user-sessions", userId] as const,
 	userFull: (userId?: string) => [...adminKeys.all, "users", userId, "full"] as const,
 	plugins: () => [...adminKeys.all, "plugins"] as const,
 	pluginUi: (pluginId: string) => [...adminKeys.all, "plugins", pluginId, "ui"] as const,

@@ -13,7 +13,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { formatDate } from "@/utils/format-utils";
+import { formatDate, formatTimeAgo } from "@/utils/format-utils";
 import { type AdminUser, UserActions, UserStatus, UserSummary } from "./user-item-parts";
 
 interface UserTableProps {
@@ -23,9 +23,22 @@ interface UserTableProps {
 	onToggleRole: (user: AdminUser) => Promise<void>;
 	onDelete: (id: string, name: string) => Promise<void>;
 	onCopy: (text: string, label: string) => Promise<void>;
+	selectedIds: ReadonlySet<string>;
+	onToggleSelect: (id: string) => void;
+	onToggleSelectAll: (ids: string[]) => void;
 }
 
-export function UserTable({ users, updatingId, onToggleBan, onToggleRole, onDelete, onCopy }: UserTableProps) {
+export function UserTable({
+	users,
+	updatingId,
+	onToggleBan,
+	onToggleRole,
+	onDelete,
+	onCopy,
+	selectedIds,
+	onToggleSelect,
+	onToggleSelectAll,
+}: UserTableProps) {
 	return (
 		<ResponsiveDataList
 			items={users}
@@ -34,10 +47,21 @@ export function UserTable({ users, updatingId, onToggleBan, onToggleRole, onDele
 				<Table>
 					<TableHeader>
 						<TableRow>
+							<TableHead className="w-8">
+								<input
+									type="checkbox"
+									className="size-4 accent-primary"
+									aria-label={m.admin_users_select_all()}
+									checked={items.length > 0 && items.every((user) => selectedIds.has(user.id))}
+									onChange={() => onToggleSelectAll(items.map((user) => user.id))}
+								/>
+							</TableHead>
 							<TableHead>{m.admin_users_user_word()}</TableHead>
 							<TableHead>{m.admin_users_role_security()}</TableHead>
 							<TableHead>{m.common_status()}</TableHead>
 							<TableHead>{m.common_created()}</TableHead>
+							<TableHead>{m.admin_users_last_active()}</TableHead>
+							<TableHead>{m.admin_users_sessions()}</TableHead>
 							<TableHead className="text-right">{m.common_actions()}</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -45,6 +69,15 @@ export function UserTable({ users, updatingId, onToggleBan, onToggleRole, onDele
 						{items.map((user) => (
 							<ContextMenu key={user.id}>
 								<ContextMenuTrigger render={<TableRow />}>
+									<TableCell>
+										<input
+											type="checkbox"
+											className="size-4 accent-primary"
+											aria-label={m.admin_users_select_user()}
+											checked={selectedIds.has(user.id)}
+											onChange={() => onToggleSelect(user.id)}
+										/>
+									</TableCell>
 									<TableCell>
 										<UserSummary user={user} />
 									</TableCell>
@@ -66,6 +99,10 @@ export function UserTable({ users, updatingId, onToggleBan, onToggleRole, onDele
 										<UserStatus user={user} />
 									</TableCell>
 									<TableCell className="whitespace-nowrap text-muted-foreground text-xs">{formatDate(user.createdAt)}</TableCell>
+									<TableCell className="whitespace-nowrap text-muted-foreground text-xs">
+										{user.lastActiveAt ? formatTimeAgo(user.lastActiveAt) : m.admin_users_never_active()}
+									</TableCell>
+									<TableCell className="text-xs tabular-nums">{user.activeSessionCount}</TableCell>
 									<TableCell className="text-right">
 										<UserActions
 											user={user}
@@ -125,6 +162,15 @@ export function UserTable({ users, updatingId, onToggleBan, onToggleRole, onDele
 				<ContextMenu key={user.id}>
 					<ContextMenuTrigger render={<Card />}>
 						<CardContent className="flex flex-col gap-4 p-4">
+							<label className="flex items-center gap-2 text-xs">
+								<input
+									type="checkbox"
+									className="size-4 accent-primary"
+									checked={selectedIds.has(user.id)}
+									onChange={() => onToggleSelect(user.id)}
+								/>
+								{m.admin_users_select_user()}
+							</label>
 							<div className="flex items-start justify-between gap-3">
 								<UserSummary user={user} />
 								<UserStatus user={user} />
@@ -140,6 +186,11 @@ export function UserTable({ users, updatingId, onToggleBan, onToggleRole, onDele
 									</span>
 								)}
 								<span>{m.common_created_with_date({ date: formatDate(user.createdAt) })}</span>
+								<span>
+									{m.admin_users_last_active_line({
+										time: user.lastActiveAt ? formatTimeAgo(user.lastActiveAt) : m.admin_users_never_active(),
+									})}
+								</span>
 							</div>
 							<UserActions
 								user={user}

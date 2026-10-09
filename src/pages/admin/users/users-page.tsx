@@ -1,9 +1,12 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 import { type ReactNode, useState } from "react";
+import { useRevokeUsersSessions } from "@/client/hooks/use-admin-user-sessions";
 import { useAdminUsers } from "@/client/hooks/use-admin-users";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
+import { ConfirmAction } from "@/components/confirm-action";
 import { SimplePagination } from "@/components/simple-pagination";
+import { Button } from "@/components/ui/button";
 import { SkeletonList } from "@/components/ui/skeleton";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
@@ -25,6 +28,8 @@ export default function AdminUsersPage() {
 	const [createOpen, setCreateOpen] = useState(false);
 	const [banTarget, setBanTarget] = useState<AdminUser | null>(null);
 	const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+	const revokeSessions = useRevokeUsersSessions();
 	// The search input is the URL value itself — typing rewrites ?q= (replace),
 	// the query fires on the debounced copy, so Back/refresh restore everything.
 	const search = q ?? "";
@@ -43,6 +48,34 @@ export default function AdminUsersPage() {
 		{ search: debouncedSearch, role, status },
 		page,
 	);
+
+	const toggleSelect = (id: string) => {
+		setSelectedIds((current) => {
+			const next = new Set(current);
+			if (next.has(id)) next.delete(id);
+			else next.add(id);
+
+			return next;
+		});
+	};
+
+	const toggleSelectAll = (ids: string[]) => {
+		setSelectedIds((current) => {
+			const allSelected = ids.every((id) => current.has(id));
+			const next = new Set(current);
+			for (const id of ids) {
+				if (allSelected) next.delete(id);
+				else next.add(id);
+			}
+
+			return next;
+		});
+	};
+
+	const signOutSelected = async () => {
+		await revokeSessions.mutateAsync([...selectedIds]);
+		setSelectedIds(new Set());
+	};
 
 	const setPage = (next: number) => {
 		detach(navigate({ search: (prev) => ({ ...prev, page: next > 1 ? next : undefined }), replace: true }));
@@ -151,6 +184,9 @@ export default function AdminUsersPage() {
 				onToggleRole={toggleRole}
 				onDelete={(id, name) => Promise.resolve(setDeleteTarget({ id, name }))}
 				onCopy={copyToClipboard}
+				selectedIds={selectedIds}
+				onToggleSelect={toggleSelect}
+				onToggleSelectAll={toggleSelectAll}
 			/>
 		);
 	}
@@ -188,6 +224,22 @@ export default function AdminUsersPage() {
 				/>
 			)}
 			<AdminSection title={m.admin_users_list()}>
+				{selectedIds.size > 0 && (
+					<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-card p-3 text-sm">
+						<span>{m.admin_users_selected({ count: selectedIds.size })}</span>
+						<ConfirmAction
+							trigger={
+								<Button variant="destructive" size="sm" disabled={revokeSessions.isPending}>
+									{m.admin_users_sign_out_selected()}
+								</Button>
+							}
+							title={m.admin_users_sign_out_selected_title()}
+							description={m.admin_users_sign_out_selected_description()}
+							confirmLabel={m.admin_users_sign_out_selected()}
+							onConfirm={() => detach(signOutSelected())}
+						/>
+					</div>
+				)}
 				{listContent}
 				<SimplePagination variant="admin" currentPage={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
 			</AdminSection>
