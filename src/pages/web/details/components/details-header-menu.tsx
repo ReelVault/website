@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Copy, Download, ImageDown, MoreVertical, Pencil, RefreshCw, Search, Share2, Shield } from "lucide-react";
+import { Copy, Download, ImageDown, MoreVertical, Pencil, RefreshCw, RotateCcw, Search, Share2, Shield } from "lucide-react";
+import { usePlaybackMutations } from "@/client/hooks/use-me-playback";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -10,6 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 
@@ -39,6 +41,8 @@ export function DetailsHeaderMenu({
 	onIdentifyOpen,
 	onCopyId,
 }: DetailsHeaderMenuProps) {
+	const { resetProgress } = usePlaybackMutations(metadataId);
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger aria-label={m.plugins_bugs_more_options()} render={<Button variant="outline" size="icon-lg" />}>
@@ -50,6 +54,12 @@ export function DetailsHeaderMenu({
 						<Share2 className="size-4 text-muted-foreground" />
 						<span>{m.web_share()}</span>
 					</DropdownMenuItem>
+					{playableMediaFileId && (
+						<DropdownMenuItem onClick={() => detach(resetProgress(playableMediaFileId, "title"))} className="cursor-pointer gap-2.5">
+							<RotateCcw className="size-4 text-muted-foreground" />
+							<span>{m.web_reset_title_progress()}</span>
+						</DropdownMenuItem>
+					)}
 					{playableMediaFileId && (
 						<DropdownMenuItem onClick={onDownloadOpen} className="cursor-pointer gap-2.5">
 							<Download className="size-4 text-primary" />

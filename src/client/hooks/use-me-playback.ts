@@ -1,3 +1,4 @@
+import type { WatchStateBulk, WatchStateScope } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -64,7 +65,8 @@ export function usePlaybackMutations(metadataId?: string) {
 	};
 
 	const resetMutation = useMutation({
-		mutationFn: (mediaFileId: string) => reelvault.me.resetPlaybackProgress(mediaFileId),
+		mutationFn: ({ mediaFileId, scope }: { mediaFileId: string; scope?: WatchStateScope }) =>
+			reelvault.me.resetPlaybackProgress(mediaFileId, { scope }),
 		onSuccess: async () => {
 			await invalidatePlayback();
 			toast.success(m.toast_me_playback_progress_reset());
@@ -84,8 +86,9 @@ export function usePlaybackMutations(metadataId?: string) {
 		onError: (error) => toastError(m.toast_me_playback_mark_watched_failed(), error),
 	});
 
+	// An episode is unmarked on its own: the title-wide reset would clear the whole series.
 	const unmarkWatchedMutation = useMutation({
-		mutationFn: (mediaFileId: string) => reelvault.me.resetPlaybackProgress(mediaFileId),
+		mutationFn: (mediaFileId: string) => reelvault.me.resetPlaybackProgress(mediaFileId, { scope: "file" }),
 		onSuccess: async () => {
 			await invalidatePlayback();
 			toast.success(m.toast_me_playback_unmarked_watched());
@@ -93,10 +96,23 @@ export function usePlaybackMutations(metadataId?: string) {
 		onError: (error) => toastError(m.toast_me_playback_unmark_watched_failed(), error),
 	});
 
+	const setWatchStateMutation = useMutation({
+		mutationFn: (input: WatchStateBulk) => reelvault.me.setWatchStateBulk(input),
+		onSuccess: async (_result, input) => {
+			await invalidatePlayback();
+			toast.success(input.watched ? m.toast_me_playback_marked_watched() : m.toast_me_playback_unmarked_watched());
+		},
+		onError: (error, input) =>
+			toastError(input.watched ? m.toast_me_playback_mark_watched_failed() : m.toast_me_playback_unmark_watched_failed(), error),
+	});
+
 	return {
-		resetProgress: resetMutation.mutateAsync,
+		resetProgress: (mediaFileId: string, scope?: WatchStateScope) => resetMutation.mutateAsync({ mediaFileId, scope }),
 		isResetting: resetMutation.isPending,
-		resettingMediaFileId: resetMutation.variables,
+		resettingMediaFileId: resetMutation.variables?.mediaFileId,
+
+		setWatchState: setWatchStateMutation.mutateAsync,
+		isSettingWatchState: setWatchStateMutation.isPending,
 
 		markAsWatched: markAsWatchedMutation.mutateAsync,
 		isMarkingWatched: markAsWatchedMutation.isPending,

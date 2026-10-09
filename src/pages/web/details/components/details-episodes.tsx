@@ -5,6 +5,7 @@ import { useRefreshEpisode, useRefreshEpisodeImage } from "@/client/hooks/use-ep
 import { usePlaybackMutations } from "@/client/hooks/use-me-playback";
 import { AppEmptyState } from "@/components/app-states";
 import { MediaFilesDetailsDialog } from "@/components/media-files-details-dialog";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -54,6 +55,8 @@ export function DetailsEpisodes({
 		unmarkWatched,
 		isUnmarkingWatched,
 		unmarkingMediaFileId,
+		setWatchState,
+		isSettingWatchState,
 	} = usePlaybackMutations(metadataId);
 
 	// Drop stale episode refs whenever the season changes.
@@ -84,6 +87,18 @@ export function DetailsEpisodes({
 		return <AppEmptyState title={m.web_no_episodes_in_season()} />;
 	}
 
+	// One file per episode, the one the episode card plays: the bulk actions act on what the list shows.
+	const seasonFileIds = episodes.flatMap((episode) => {
+		const defaultFile = episode.mediaFiles.find((file) => file.isDefault) ?? episode.mediaFiles[0];
+
+		return defaultFile ? [defaultFile.id] : [];
+	});
+	const markSeason = (watched: boolean) => {
+		if (seasonFileIds.length === 0) return;
+
+		detach(setWatchState({ mediaFileIds: seasonFileIds, watched }));
+	};
+
 	const handleToggleWatched = (mediaFileId: string, isWatched: boolean, duration?: number) => {
 		if (isWatched) {
 			detach(unmarkWatched(mediaFileId));
@@ -94,6 +109,26 @@ export function DetailsEpisodes({
 
 	return (
 		<div className="relative">
+			<div className="mb-3 flex flex-wrap gap-2">
+				<Button
+					type="button"
+					variant="outline"
+					size="sm"
+					disabled={isSettingWatchState || seasonFileIds.length === 0}
+					onClick={() => markSeason(true)}
+				>
+					{m.web_mark_season_watched()}
+				</Button>
+				<Button
+					type="button"
+					variant="outline"
+					size="sm"
+					disabled={isSettingWatchState || seasonFileIds.length === 0}
+					onClick={() => markSeason(false)}
+				>
+					{m.web_mark_season_unwatched()}
+				</Button>
+			</div>
 			<ScrollArea className="h-[80svh] w-full rounded-xl lg:h-[65vh]">
 				<div className="grid gap-4 pr-4">
 					{episodes.map((episode) => {
@@ -116,7 +151,7 @@ export function DetailsEpisodes({
 								onNavigateToPlayer={navigateToPlayer}
 								onToggleWatched={handleToggleWatched}
 								onResetProgress={(fileId) => {
-									detach(resetProgress(fileId));
+									detach(resetProgress(fileId, "file"));
 								}}
 								onSelectForFiles={setSelectedEpisodeForFiles}
 								onRefreshEpisode={(id) => refreshEpisodeMutation.mutate(id)}
