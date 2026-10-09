@@ -3453,6 +3453,8 @@
 	"user_different_genres": "Różnych gatunków filmowych",
 	"user_different_items": "różnych pozycji",
 	"user_disable_2fa": "Wyłącz weryfikację dwuetapową",
+	"user_regenerate_backup_codes": "Wygeneruj kody zapasowe",
+	"user_regenerate_backup_codes_warning": "Obecne kody zapasowe przestaną działać, gdy tylko zostaną wygenerowane nowe.",
 	"user_disabling": "Wyłączanie…",
 	"user_display_name": "Nazwa wyświetlana",
 	"user_download_list_fetch_failed": "Nie udało się pobrać listy zadań pobierania.",

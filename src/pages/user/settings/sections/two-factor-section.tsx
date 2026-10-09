@@ -4,12 +4,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { UserSectionTitle, UserSurface } from "@/pages/user/components/user-ui";
 import { m } from "@/paraglide/messages";
+import { TwoFactorBackupCodesDialog } from "../components/two-factor-backup-codes-dialog";
 import { TwoFactorDisableDialog } from "../components/two-factor-disable-dialog";
 import { TwoFactorSetupDialog } from "../components/two-factor-setup-dialog";
 
 export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boolean }) {
 	const [isSetupOpen, setIsSetupOpen] = useState(false);
 	const [isDisableOpen, setIsDisableOpen] = useState(false);
+	const [isBackupCodesOpen, setIsBackupCodesOpen] = useState(false);
 
 	return (
 		<section>
@@ -42,15 +44,20 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 					</div>
 				</div>
 
-				<div>
+				<div className="flex flex-wrap gap-2">
 					{twoFactorEnabled ? (
-						<Button
-							variant="outline"
-							onClick={() => setIsDisableOpen(true)}
-							className="min-h-10 text-destructive hover:bg-destructive/10 hover:text-destructive"
-						>
-							{m.user_disable_2fa()}
-						</Button>
+						<>
+							<Button variant="outline" onClick={() => setIsBackupCodesOpen(true)} className="min-h-10">
+								{m.user_regenerate_backup_codes()}
+							</Button>
+							<Button
+								variant="outline"
+								onClick={() => setIsDisableOpen(true)}
+								className="min-h-10 text-destructive hover:bg-destructive/10 hover:text-destructive"
+							>
+								{m.user_disable_2fa()}
+							</Button>
+						</>
 					) : (
 						<Button onClick={() => setIsSetupOpen(true)} className="min-h-10 gap-2">
 							<KeyRound className="size-4" />
@@ -62,6 +69,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 
 			<TwoFactorSetupDialog open={isSetupOpen} onOpenChange={setIsSetupOpen} />
 			<TwoFactorDisableDialog open={isDisableOpen} onOpenChange={setIsDisableOpen} />
+			<TwoFactorBackupCodesDialog open={isBackupCodesOpen} onOpenChange={setIsBackupCodesOpen} />
 		</section>
 	);
 }

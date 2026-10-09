@@ -3426,6 +3426,8 @@
 	"user_different_genres": "different movie genres",
 	"user_different_items": "different items",
 	"user_disable_2fa": "Disable two-step verification",
+	"user_regenerate_backup_codes": "Regenerate backup codes",
+	"user_regenerate_backup_codes_warning": "The backup codes you have now stop working as soon as new ones are issued.",
 	"user_disabling": "Disabling…",
 	"user_display_name": "Display name",
 	"user_download_list_fetch_failed": "Failed to fetch the download task list.",
