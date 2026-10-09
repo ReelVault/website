@@ -3336,6 +3336,8 @@
 	"settings_skip_credits_desc": "Skip the end credits once they start.",
 	"settings_skip_intro_desc": "Skip the intro sequence at the start of an episode.",
 	"settings_skip_recap_desc": "Skip the recap of previous events.",
+	"settings_hide_rating_overlay": "Hide rating badges",
+	"settings_hide_rating_overlay_desc": "Hide the rating badge on poster cards for a lighter grid.",
 	"settings_watchlist_auto_remove": "Remove watched titles from the watchlist",
 	"settings_watchlist_auto_remove_desc": "A title leaves the watchlist once you have watched it: a movie when it is finished, a series when every episode is.",
 	"settings_smart_subtitles_desc": "When off, the player never turns subtitles on by itself — you pick them manually.",

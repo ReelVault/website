@@ -18,6 +18,7 @@ export interface ProfilePreferencesState {
 	continueWatchingMinutes: number;
 	resumeRewindSeconds: number;
 	watchlistAutoRemoveWatched: boolean;
+	hideRatingOverlay: boolean;
 	subtitleSize: "small" | "normal" | "large" | "extra-large";
 	subtitlePosition: "bottom" | "top" | "middle";
 	subtitleColor: "white" | "yellow" | "cyan" | "green";
@@ -41,6 +42,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	continueWatchingMinutes: 2,
 	resumeRewindSeconds: 0,
 	watchlistAutoRemoveWatched: false,
+	hideRatingOverlay: false,
 	subtitleSize: "normal",
 	subtitlePosition: "bottom",
 	subtitleColor: "white",
@@ -64,6 +66,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"continueWatchingMinutes",
 	"resumeRewindSeconds",
 	"watchlistAutoRemoveWatched",
+	"hideRatingOverlay",
 	"subtitleSize",
 	"subtitlePosition",
 	"subtitleColor",

@@ -46,6 +46,7 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 			continueWatchingMinutes: preferences.continueWatchingMinutes,
 			resumeRewindSeconds: preferences.resumeRewindSeconds,
 			watchlistAutoRemoveWatched: preferences.watchlistAutoRemoveWatched,
+			hideRatingOverlay: preferences.hideRatingOverlay,
 			subtitleSize: preferences.subtitleSize,
 			subtitlePosition: preferences.subtitlePosition,
 			subtitleColor: preferences.subtitleColor,
@@ -202,6 +203,11 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 					label={m.settings_watchlist_auto_remove()}
 					checked={state.watchlistAutoRemoveWatched}
 					onChange={(watchlistAutoRemoveWatched) => setState((current) => ({ ...current, watchlistAutoRemoveWatched }))}
+				/>
+				<PreferenceToggle
+					label={m.settings_hide_rating_overlay()}
+					checked={state.hideRatingOverlay}
+					onChange={(hideRatingOverlay) => setState((current) => ({ ...current, hideRatingOverlay }))}
 				/>
 			</div>
 			<div className="flex gap-2">

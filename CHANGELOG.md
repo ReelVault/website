@@ -187,6 +187,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 ### Features
 
 - **Plugin configuration errors name the field** — a rejected save that names a field (a required value left blank) marks that field with an inline message, not only a toast.
+- **Hide rating badges** — a general setting hides the rating badge on poster cards, for a lighter grid. It is a profile preference, so each profile chooses for itself.
 - **Confirm before a restart ends playing streams** — updating or rolling back the server, and restoring a database backup, while streams play now shows a warning with the active stream count and asks for confirmation. Confirming runs the action anyway, and the restart stops the streams.
 - **Status filter in the admin catalog** — the metadata browse bar filters by the catalog's own status values (for example Ended), taken from the server, instead of a free-text field.
 - **Playback speed up to 3×** — the player speed slider and the `<` / `>` shortcuts offer 2.5× and 3×, and a stored speed above 2× is kept instead of being capped.

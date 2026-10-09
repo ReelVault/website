@@ -1,10 +1,12 @@
-import { PreferenceSelect } from "@/components/preference-controls";
+import { PreferenceSelect, PreferenceToggle } from "@/components/preference-controls";
 import { m } from "@/paraglide/messages";
 import { uiLocaleOptions } from "@/utils/locales";
 
 interface GeneralPreferencesGridProps {
-	preferences: { language: string; theme: "system" | "light" | "dark"; continueWatchingMinutes: number };
-	onChange: (patch: Partial<{ language: string; theme: "system" | "light" | "dark"; continueWatchingMinutes: number }>) => void;
+	preferences: { language: string; theme: "system" | "light" | "dark"; continueWatchingMinutes: number; hideRatingOverlay: boolean };
+	onChange: (
+		patch: Partial<{ language: string; theme: "system" | "light" | "dark"; continueWatchingMinutes: number; hideRatingOverlay: boolean }>,
+	) => void;
 }
 
 const THEMES = ["system", "light", "dark"] as const;
@@ -47,6 +49,12 @@ export function GeneralPreferencesGrid({ preferences, onChange }: GeneralPrefere
 					}
 				}}
 				options={CONTINUE_WATCHING_MINUTES.map((minutes) => [minutes, minutes === "0" ? m.settings_continue_immediately() : minutes])}
+			/>
+			<PreferenceToggle
+				label={m.settings_hide_rating_overlay()}
+				description={m.settings_hide_rating_overlay_desc()}
+				checked={preferences.hideRatingOverlay}
+				onChange={(hideRatingOverlay) => onChange({ hideRatingOverlay })}
 			/>
 		</div>
 	);

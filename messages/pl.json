@@ -3363,6 +3363,8 @@
 	"settings_skip_credits_desc": "Pomijaj napisy końcowe, gdy się rozpoczną.",
 	"settings_skip_intro_desc": "Pomijaj intro na początku odcinka.",
 	"settings_skip_recap_desc": "Pomijaj streszczenie poprzednich wydarzeń.",
+	"settings_hide_rating_overlay": "Ukryj odznaki ocen",
+	"settings_hide_rating_overlay_desc": "Ukryj odznakę oceny na plakatach, dla lżejszej siatki.",
 	"settings_watchlist_auto_remove": "Usuwaj obejrzane tytuły z listy do obejrzenia",
 	"settings_watchlist_auto_remove_desc": "Tytuł znika z listy po obejrzeniu: film po zakończeniu, serial po obejrzeniu wszystkich odcinków.",
 	"settings_smart_subtitles_desc": "Gdy wyłączone, player nigdy nie włącza napisów sam — wybierasz je ręcznie.",

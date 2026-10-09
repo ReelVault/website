@@ -16,6 +16,7 @@ import {
 	watchedHistoryKeys,
 	watchlistKeys,
 } from "../utils/query-keys";
+import { useCurrentUser } from "./use-current-profile";
 import { resetWatchlistBatch } from "./use-watchlist";
 
 /**
@@ -183,4 +184,11 @@ export function useResetProfilePreferences(profileId: string | undefined) {
 		},
 		onError: (error) => toastError(m.toast_profile_restore_failed(), error),
 	});
+}
+
+/** Whether the active profile hides the rating badge on poster cards (shown until its preferences load). */
+export function useHideRatingOverlay(): boolean {
+	const { profile } = useCurrentUser();
+
+	return useProfilePreferences(profile?.id).preferences?.hideRatingOverlay ?? false;
 }

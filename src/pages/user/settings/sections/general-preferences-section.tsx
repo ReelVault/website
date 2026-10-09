@@ -14,6 +14,7 @@ interface GeneralPreferences {
 	language: string;
 	theme: ProfilePreferencesTheme;
 	continueWatchingMinutes: number;
+	hideRatingOverlay: boolean;
 }
 
 type ProfilePreferencesTheme = "system" | "light" | "dark";
@@ -32,6 +33,7 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 					language: getAppLocale(),
 					theme: serverPreferences.theme,
 					continueWatchingMinutes: serverPreferences.continueWatchingMinutes,
+					hideRatingOverlay: serverPreferences.hideRatingOverlay,
 				}
 			: undefined,
 	);
@@ -45,6 +47,7 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 			language: getAppLocale(),
 			theme: serverPreferences.theme,
 			continueWatchingMinutes: serverPreferences.continueWatchingMinutes,
+			hideRatingOverlay: serverPreferences.hideRatingOverlay,
 		});
 	}
 
@@ -70,10 +73,18 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 
 		if (preferences.theme !== synced.theme) patch.theme = preferences.theme;
 
+		if (preferences.hideRatingOverlay !== synced.hideRatingOverlay) patch.hideRatingOverlay = preferences.hideRatingOverlay;
+
 		if (preferences.continueWatchingMinutes !== synced.continueWatchingMinutes)
 			patch.continueWatchingMinutes = preferences.continueWatchingMinutes;
 
-		if (patch.language === undefined && patch.theme === undefined && patch.continueWatchingMinutes === undefined) return;
+		if (
+			patch.language === undefined &&
+			patch.theme === undefined &&
+			patch.continueWatchingMinutes === undefined &&
+			patch.hideRatingOverlay === undefined
+		)
+			return;
 
 		await preferencesQuery.updatePreferences(patch);
 		setTheme(preferences.theme);
