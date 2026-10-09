@@ -191,6 +191,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Preview before clearing logs or previews** — the log cleanup and the bulk preview removal confirmations show what would be removed (log files with their size, or previews and media files) before anything is deleted.
 - **Route budget overrides in settings** — the admin network settings accept per-route budget overrides, and a refused value says which entries are malformed or not tunable.
 - **PIN attempts left** — a wrong profile PIN shows how many attempts remain, and a locked profile shows how long to wait.
+- **Minimum match score setting explained** — the metadata settings describe the setting as the acceptance floor for matches and name the review level.
 - **Hide rating badges** — a general setting hides the rating badge on poster cards, for a lighter grid. It is a profile preference, so each profile chooses for itself.
 - **Confirm before a restart ends playing streams** — updating or rolling back the server, and restoring a database backup, while streams play now shows a warning with the active stream count and asks for confirmation. Confirming runs the action anyway, and the restart stops the streams.
 - **Status filter in the admin catalog** — the metadata browse bar filters by the catalog's own status values (for example Ended), taken from the server, instead of a free-text field.
