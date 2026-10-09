@@ -2,7 +2,8 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { reelvault } from "../client";
 import { personDetailsFields } from "../utils/fields";
-import { metadataKeys, personKeys } from "../utils/query-keys";
+import { adminKeys, metadataKeys, personKeys } from "../utils/query-keys";
+import { useBulkRefresh } from "./use-bulk-refresh";
 import { useEntityRefreshMutation } from "./use-entity-refresh";
 import { metadataPersonQueryOptions, useMetadataPerson } from "./use-metadata-queries";
 
@@ -37,6 +38,15 @@ export function useRefreshPerson() {
 		invalidationKeys: [personKeys.all, metadataKeys.all],
 		successMessage: m.toast_person_refreshed(),
 		errorMessage: m.toast_person_refresh_failed(),
+	});
+}
+
+/** Refreshes the selected people, in requests of up to 50 ids. */
+export function useBulkRefreshPeople() {
+	return useBulkRefresh({
+		send: (personIds) => reelvault.people.bulkRefresh(personIds),
+		invalidationKeys: [personKeys.all, metadataKeys.all, adminKeys.people()],
+		successMessage: (count) => m.admin_bulk_people_refreshed({ count }),
 	});
 }
 

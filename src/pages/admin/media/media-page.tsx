@@ -6,9 +6,11 @@ import {
 	useAdminMediaFileAudit,
 	useAdminMediaFiles,
 	useAdminRefreshAllMediaFiles,
+	useBulkRefreshMediaFiles,
 } from "@/client/hooks/use-admin-media";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { useDeleteTrickplayMany } from "@/client/hooks/use-admin-trickplay";
+import { useBulkRefreshEpisodes } from "@/client/hooks/use-episodes";
 import { AppErrorState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
 import { SimplePagination } from "@/components/simple-pagination";
@@ -39,44 +41,15 @@ export default function AdminMediaFilesPage() {
 	const sortOption: SortOptionValue = typeof search.sort === "string" && isSortOptionValue(search.sort) ? search.sort : "updatedAt:desc";
 	const currentPage = search.page ?? 1;
 
-	// Bulk selection spans the pages shown while it lasts; the toolbar says how many files it holds.
-	const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(() => new Set());
+	// Bulk selection spans the pages shown while it lasts; the toolbar says how many files it holds. Each selected
+	// file keeps its episode id, so the episodes of the selection can be refreshed even from another page.
+	const [selection, setSelection] = useState<ReadonlyMap<string, string | null>>(() => new Map());
+	const selectedIds: ReadonlySet<string> = new Set(selection.keys());
 	const deleteTrickplayMany = useDeleteTrickplayMany();
+	const bulkRefreshFiles = useBulkRefreshMediaFiles();
+	const bulkRefreshEpisodes = useBulkRefreshEpisodes();
 
-	const toggleSelect = (id: string) => {
-		setSelectedIds((current) => {
-			const next = new Set(current);
-			if (next.has(id)) next.delete(id);
-			else next.add(id);
-
-			return next;
-		});
-	};
-
-	const clearSelection = () => setSelectedIds(new Set());
-
-	/** Selects every id on the page, or clears them when they are all selected already. */
-	const toggleAllOnPage = (ids: string[]) => {
-		setSelectedIds((current) => {
-			const allSelected = ids.every((id) => current.has(id));
-			const next = new Set(current);
-			for (const id of ids) {
-				if (allSelected) next.delete(id);
-				else next.add(id);
-			}
-
-			return next;
-		});
-	};
-
-	const removeSelectedPreviews = async () => {
-		try {
-			await deleteTrickplayMany.mutateAsync([...selectedIds]);
-			clearSelection();
-		} catch {
-			// Toast is handled by hook
-		}
-	};
+	const clearSelection = () => setSelection(new Map());
 
 	// Typing flows debounce → URL; browser Back/refresh restores both.
 	useEffect(() => {
@@ -112,6 +85,60 @@ export default function AdminMediaFilesPage() {
 		sortBy,
 		sortOrder,
 	});
+
+	const toggleSelect = (id: string) => {
+		const episodeId = mediaFiles.find((file) => file.id === id)?.episodeId ?? null;
+		setSelection((current) => {
+			const next = new Map(current);
+			if (next.has(id)) next.delete(id);
+			else next.set(id, episodeId);
+
+			return next;
+		});
+	};
+
+	/** Selects every file on the page, or clears them when they are all selected already. */
+	const toggleAllOnPage = () => {
+		const allSelected = mediaFiles.every((file) => selection.has(file.id));
+		setSelection((current) => {
+			const next = new Map(current);
+			for (const file of mediaFiles) {
+				if (allSelected) next.delete(file.id);
+				else next.set(file.id, file.episodeId ?? null);
+			}
+
+			return next;
+		});
+	};
+
+	const selectedEpisodeIds = [...new Set([...selection.values()].filter((episodeId): episodeId is string => episodeId !== null))];
+
+	const removeSelectedPreviews = async () => {
+		try {
+			await deleteTrickplayMany.mutateAsync([...selection.keys()]);
+			clearSelection();
+		} catch {
+			// Toast is handled by hook
+		}
+	};
+
+	const refreshSelectedFiles = async () => {
+		try {
+			await bulkRefreshFiles.mutateAsync([...selection.keys()]);
+			clearSelection();
+		} catch {
+			// Toast is handled by hook
+		}
+	};
+
+	const refreshSelectedEpisodes = async () => {
+		try {
+			await bulkRefreshEpisodes.mutateAsync(selectedEpisodeIds);
+			clearSelection();
+		} catch {
+			// Toast is handled by hook
+		}
+	};
 
 	const handleDelete = (mediaFileId: string, _fileName: string) => deleteMediaFile(mediaFileId);
 
@@ -157,23 +184,34 @@ export default function AdminMediaFilesPage() {
 							<input
 								type="checkbox"
 								className="size-4 accent-primary"
-								checked={mediaFiles.every((file) => selectedIds.has(file.id))}
-								onChange={() => toggleAllOnPage(mediaFiles.map((file) => file.id))}
+								checked={mediaFiles.every((file) => selection.has(file.id))}
+								onChange={() => toggleAllOnPage()}
 							/>
 							{m.admin_media_select_page()}
 						</label>
 					)}
-					{selectedIds.size > 0 && (
+					{selection.size > 0 && (
 						<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card p-3">
-							<span className="text-sm">{m.admin_media_selected_count({ count: selectedIds.size })}</span>
+							<span className="text-sm">{m.admin_media_selected_count({ count: selection.size })}</span>
+							<Button size="sm" variant="outline" disabled={bulkRefreshFiles.isPending} onClick={() => detach(refreshSelectedFiles())}>
+								{m.admin_media_refresh_selected()}
+							</Button>
+							<Button
+								size="sm"
+								variant="outline"
+								disabled={selectedEpisodeIds.length === 0 || bulkRefreshEpisodes.isPending}
+								onClick={() => detach(refreshSelectedEpisodes())}
+							>
+								{m.admin_media_refresh_selected_episodes({ count: selectedEpisodeIds.length })}
+							</Button>
 							<ConfirmAction
 								trigger={
 									<Button size="sm" variant="outline" disabled={deleteTrickplayMany.isPending}>
 										{m.admin_media_remove_previews_selected()}
 									</Button>
 								}
-								title={m.admin_media_remove_previews_confirm_title({ count: selectedIds.size })}
-								description={<TrickplayDeleteDescription mediaFileIds={[...selectedIds]} />}
+								title={m.admin_media_remove_previews_confirm_title({ count: selection.size })}
+								description={<TrickplayDeleteDescription mediaFileIds={[...selection.keys()]} />}
 								confirmLabel={m.admin_media_remove_previews_selected()}
 								onConfirm={() => removeSelectedPreviews()}
 							/>

@@ -8,6 +8,7 @@ import { reelvault } from "../client";
 import { pollWhile } from "../utils/poll-while";
 import { adminKeys, mediaKeys, mePlaybackKeys, metadataKeys } from "../utils/query-keys";
 import { TERMINAL_OPERATION_STATUSES } from "../utils/worker-status";
+import { useBulkRefresh } from "./use-bulk-refresh";
 
 export type AdminMediaFileSortBy = NonNullable<MediaFileSorting["sortBy"]>;
 
@@ -42,7 +43,7 @@ export const adminMediaFilesQueryOptions = ({
 			sortOrder,
 			// The admin list card renders these only — dropping videoStreams and
 			// metadata skips the widest relation hydration server-side.
-			fields: "id,fileName,filePath,formatName,duration,size,isDefault,qualityTag,source,library,audioStreams,subtitles",
+			fields: "id,fileName,filePath,formatName,duration,size,isDefault,qualityTag,source,library,audioStreams,subtitles,episodeId",
 		}),
 	staleTime: 15_000,
 });
@@ -208,6 +209,15 @@ export function useAdminRefreshAllMediaFiles() {
 	});
 
 	return { refreshAllMediaFiles: mutation.mutateAsync, isRefreshingAll: mutation.isPending };
+}
+
+/** Queues a technical refresh for the selected media files, in requests of up to 50 ids. */
+export function useBulkRefreshMediaFiles() {
+	return useBulkRefresh({
+		send: (mediaFileIds) => reelvault.media.bulkRefresh(mediaFileIds),
+		invalidationKeys: [mediaKeys.adminFiles()],
+		successMessage: (count) => m.admin_bulk_files_queued({ count }),
+	});
 }
 
 export function useAdminScanMediaFile() {

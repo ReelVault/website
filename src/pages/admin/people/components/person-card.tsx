@@ -20,39 +20,53 @@ type PersonItem = ReturnType<typeof useAdminPeople>["people"][number];
 
 interface PersonCardProps {
 	person: PersonItem;
+	selected: boolean;
+	onToggleSelect: (id: string) => void;
 	onRefresh: (id: string) => void;
 	onRefreshImage: (id: string) => void;
 }
 
-export function PersonCard({ person, onRefresh, onRefreshImage }: PersonCardProps) {
+export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefreshImage }: PersonCardProps) {
 	return (
 		<ContextMenu>
 			<ContextMenuTrigger>
-				<Link to="/person/$id" params={{ id: person.id }} className="group block focus:outline-none">
-					<Card className="h-full overflow-hidden border-border/80 bg-card transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-muted/20 hover:shadow-xs">
-						<div className="relative aspect-2/3 w-full overflow-hidden border-border/60 border-b bg-muted/40">
-							{person.imageId ? (
-								<ApiImage
-									fileId={person.imageId}
-									alt={person.name}
-									width={220}
-									aspectRatio={2 / 3}
-									sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
-									className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-								/>
-							) : (
-								<div className="flex h-full w-full items-center justify-center text-muted-foreground/50">
-									<User className="size-12" />
-								</div>
-							)}
-						</div>
-						<CardContent className="p-3 text-center">
-							<h3 className="truncate font-semibold text-foreground text-sm tracking-tight group-hover:text-primary" title={person.name}>
-								{person.name}
-							</h3>
-						</CardContent>
-					</Card>
-				</Link>
+				{/* The checkbox sits outside the link, so selecting a person does not open the profile. */}
+				<div className="relative">
+					<label className="absolute top-2 left-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md bg-background/85 shadow-xs">
+						<input
+							type="checkbox"
+							className="size-4 accent-primary"
+							checked={selected}
+							onChange={() => onToggleSelect(person.id)}
+							aria-label={m.admin_people_select_person()}
+						/>
+					</label>
+					<Link to="/person/$id" params={{ id: person.id }} className="group block focus:outline-none">
+						<Card className="h-full overflow-hidden border-border/80 bg-card transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-muted/20 hover:shadow-xs">
+							<div className="relative aspect-2/3 w-full overflow-hidden border-border/60 border-b bg-muted/40">
+								{person.imageId ? (
+									<ApiImage
+										fileId={person.imageId}
+										alt={person.name}
+										width={220}
+										aspectRatio={2 / 3}
+										sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+										className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+									/>
+								) : (
+									<div className="flex h-full w-full items-center justify-center text-muted-foreground/50">
+										<User className="size-12" />
+									</div>
+								)}
+							</div>
+							<CardContent className="p-3 text-center">
+								<h3 className="truncate font-semibold text-foreground text-sm tracking-tight group-hover:text-primary" title={person.name}>
+									{person.name}
+								</h3>
+							</CardContent>
+						</Card>
+					</Link>
+				</div>
 			</ContextMenuTrigger>
 			<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 				<ContextMenuGroup>

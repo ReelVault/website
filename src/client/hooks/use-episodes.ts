@@ -3,6 +3,7 @@ import { m } from "@/paraglide/messages";
 import { reelvault } from "../client";
 import { episodeFields } from "../utils/fields";
 import { episodeKeys, metadataKeys } from "../utils/query-keys";
+import { useBulkRefresh } from "./use-bulk-refresh";
 import { useEntityRefreshMutation } from "./use-entity-refresh";
 import { useSeasons } from "./use-seasons";
 
@@ -195,6 +196,15 @@ export function useRefreshEpisode(metadataId?: string) {
 			: [episodeKeys.all],
 		successMessage: m.toast_episode_metadata_refreshed(),
 		errorMessage: m.toast_episode_metadata_refresh_failed(),
+	});
+}
+
+/** Refreshes episodes of any series, in requests of up to 50 ids. */
+export function useBulkRefreshEpisodes() {
+	return useBulkRefresh({
+		send: (episodeIds) => reelvault.episodes.bulkRefresh(episodeIds),
+		invalidationKeys: [episodeKeys.all],
+		successMessage: (count) => m.admin_bulk_episodes_refreshed({ count }),
 	});
 }
 

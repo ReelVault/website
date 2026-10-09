@@ -283,6 +283,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Equalizer opens as a top drawer** — the equalizer moved out of the subtitles and audio dialog into its own drawer from the top edge, opened from the player settings menu. It does not block the picture: you can seek the video while tuning the sound.
 - **Autoplay and skip-intro in the player menu** — the player settings menu has switches for *Autoplay the next episode* and *Automatically skip the intro*, saved to your profile and applied straight away. The `<` and `>` keys step the playback speed down and up through the menu's speed steps, with the same on-screen feedback.
 - **Admin user sessions** — the user page lists the account's signed-in sessions, with *End session* for each one and *Sign out everywhere* for all of them. The user list shows each account's last activity and session count, and checkboxes sign out several selected users at once. Requires SDK and server with the user session endpoints.
+- **Bulk refresh on the admin media and people pages** — select files to queue a refresh for them, refresh the episodes of the selected files, or select people and refresh them together. The selection spans the pages shown while it lasts, and each request carries at most 50 items. Requires SDK and server with the bulk refresh endpoints.
 
 ### Fixes
 
