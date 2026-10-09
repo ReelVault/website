@@ -48,6 +48,8 @@ const dynamicMessages = {
 	library_path_not_found: () => m.library_path_not_found(),
 	low_confidence: (inputs) => m.low_confidence({ percent: String(inputs?.percent ?? "") }),
 	not_found: () => m.not_found(),
+	network_rate_limit_override_invalid: (inputs) =>
+		m.network_rate_limit_override_invalid({ malformed: String(inputs?.malformed ?? ""), untunable: String(inputs?.untunable ?? "") }),
 	plugin_server_too_old: () => m.plugin_server_too_old(),
 	profile_name_conflict: () => m.profile_name_conflict(),
 	profile_pin_invalid: (inputs) =>

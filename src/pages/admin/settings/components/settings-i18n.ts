@@ -524,6 +524,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_rate_limit_global_max(),
 		description: m.admin_settings_rate_limit_global_max_description(),
 	},
+	"network.rateLimit.routeOverrides": {
+		label: m.admin_settings_rate_limit_route_overrides(),
+		description: m.admin_settings_rate_limit_route_overrides_description(),
+	},
 	"network.rateLimit.routeMultiplier": {
 		label: m.admin_settings_rate_limit_route_multiplier(),
 		description: m.admin_settings_rate_limit_route_multiplier_description(),

@@ -189,6 +189,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Plugin configuration errors name the field** — a rejected save that names a field (a required value left blank) marks that field with an inline message, not only a toast.
 - **Backup codes left in security settings** — the two-factor section shows how many backup codes remain. Turning on two-factor enforcement without an administrator who has two-factor enabled is refused, with the reason shown.
 - **Preview before clearing logs or previews** — the log cleanup and the bulk preview removal confirmations show what would be removed (log files with their size, or previews and media files) before anything is deleted.
+- **Route budget overrides in settings** — the admin network settings accept per-route budget overrides, and a refused value says which entries are malformed or not tunable.
 - **PIN attempts left** — a wrong profile PIN shows how many attempts remain, and a locked profile shows how long to wait.
 - **Hide rating badges** — a general setting hides the rating badge on poster cards, for a lighter grid. It is a profile preference, so each profile chooses for itself.
 - **Confirm before a restart ends playing streams** — updating or rolling back the server, and restoring a database backup, while streams play now shows a warning with the active stream count and asks for confirmation. Confirming runs the action anyway, and the restart stops the streams.
