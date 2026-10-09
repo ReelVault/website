@@ -713,6 +713,7 @@
 	"admin_media_no_files": "No media files",
 	"admin_media_no_files_match": "No media files match the criteria.",
 	"admin_media_select_file": "Select file",
+	"admin_media_select_page": "Select all on this page",
 	"admin_media_selected_count": "{count} selected",
 	"admin_media_remove_previews_selected": "Remove previews",
 	"admin_media_remove_previews_confirm_title": "Remove previews from {count} files?",

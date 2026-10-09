@@ -54,6 +54,20 @@ export default function AdminMediaFilesPage() {
 
 	const clearSelection = () => setSelectedIds(new Set());
 
+	/** Selects every id on the page, or clears them when they are all selected already. */
+	const toggleAllOnPage = (ids: string[]) => {
+		setSelectedIds((current) => {
+			const allSelected = ids.every((id) => current.has(id));
+			const next = new Set(current);
+			for (const id of ids) {
+				if (allSelected) next.delete(id);
+				else next.add(id);
+			}
+
+			return next;
+		});
+	};
+
 	const removeSelectedPreviews = async () => {
 		try {
 			await deleteTrickplayMany.mutateAsync([...selectedIds]);
@@ -136,6 +150,17 @@ export default function AdminMediaFilesPage() {
 							<X className="size-3.5" />
 							{m.admin_media_library_filter_clear()}
 						</Button>
+					)}
+					{mediaFiles.length > 0 && (
+						<label className="flex cursor-pointer items-center gap-2 text-sm">
+							<input
+								type="checkbox"
+								className="size-4 accent-primary"
+								checked={mediaFiles.every((file) => selectedIds.has(file.id))}
+								onChange={() => toggleAllOnPage(mediaFiles.map((file) => file.id))}
+							/>
+							{m.admin_media_select_page()}
+						</label>
 					)}
 					{selectedIds.size > 0 && (
 						<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card p-3">

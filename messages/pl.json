@@ -715,6 +715,7 @@
 	"admin_media_no_files": "Brak plików mediów",
 	"admin_media_no_files_match": "Nie znaleziono żadnych plików multimedialnych spełniających kryteria.",
 	"admin_media_select_file": "Zaznacz plik",
+	"admin_media_select_page": "Zaznacz wszystkie na stronie",
 	"admin_media_selected_count": "Zaznaczono: {count}",
 	"admin_media_remove_previews_selected": "Usuń podglądy",
 	"admin_media_remove_previews_confirm_title": "Usunąć podglądy z {count} plików?",
