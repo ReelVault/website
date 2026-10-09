@@ -1,6 +1,6 @@
 import type { PurgeWorkerHistoryOptions } from "@reelvault/sdk";
 import { AlertTriangle, RefreshCw, Trash2 } from "lucide-react";
-import { usePurgeWorkerHistory } from "@/client/hooks/use-admin-jobs";
+import { usePurgeWorkerHistory, useWorkerHistoryPurgePreview } from "@/client/hooks/use-admin-jobs";
 import { useDialogForm } from "@/client/hooks/use-dialog-form";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -27,6 +27,10 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 		olderThanDays: "0",
 	});
 	const purgeMutation = usePurgeWorkerHistory();
+	const preview = useWorkerHistoryPurgePreview(
+		{ status: formState.status, olderThanDays: Number.parseInt(formState.olderThanDays, 10) },
+		isOpen,
+	);
 
 	const handlePurge = () => {
 		const options: PurgeWorkerHistoryOptions = {
@@ -98,6 +102,16 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 							</SelectContent>
 						</Select>
 					</div>
+
+					{/* Preview Count */}
+					{preview.data && (
+						<p className="text-muted-foreground text-xs">
+							{m.admin_worker_purge_preview({
+								operations: preview.data.deletedOperationsCount,
+								jobs: preview.data.deletedJobsCount,
+							})}
+						</p>
+					)}
 
 					{/* Warning Note */}
 					<div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-muted-foreground text-xs">

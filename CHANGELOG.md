@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Preview before purging worker history** — the purge dialog shows how many operations and jobs the chosen filter would delete before anything is removed.
 - **Cancel a running update** — the updates page offers Cancel while an install is still downloading, verifying or extracting, and cancelled runs show a Cancelled badge in the history.
 - **Update reports why it waits** — a server update refused because streams are playing shows the active stream count (`update.blocked_active_streams`) instead of a generic failure.
 - **Clearer database restore** — the restore confirmation says the current database is backed up first. A restore blocked by active streams names how many are running instead of failing generically.

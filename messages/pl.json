@@ -2099,6 +2099,7 @@
 	"admin_worker_progress_sync": "Przetwarza i synchronizuje stan postępu pobranych multimediów oraz urządzeń mobilnych.",
 	"admin_worker_purge_history_dialog_desc": "Usuń zakończone, błędne lub anulowane rekordy zadań i operacji workerów z bazy danych, aby zmniejszyć jej rozmiar i poprawić czytelność.",
 	"admin_worker_purge_irreversible_warning": "Operacja jest trwała i nieodwracalna. Aktywne (w trakcie) oraz oczekujące zadania w kolejce {strong}nie zostaną{/strong} usunięte.",
+	"admin_worker_purge_preview": "Podgląd: zostanie usuniętych {operations} operacji i {jobs} zadań.",
 	"admin_worker_queue_label": "Kolejka ({count})",
 	"admin_worker_queues_pools": "Kolejki i pule workerów",
 	"admin_worker_record_age": "Wiek usuwanych rekordów",

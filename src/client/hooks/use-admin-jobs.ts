@@ -212,6 +212,16 @@ export function useCancelAllWorkerOperations() {
 	});
 }
 
+/** Counts what a history purge with these options would delete. Nothing is removed. */
+export function useWorkerHistoryPurgePreview(options: PurgeWorkerHistoryOptions, enabled: boolean) {
+	return useQuery({
+		queryKey: adminKeys.workerHistoryPurgePreview(options.status ?? "all_terminal", options.olderThanDays ?? 0),
+		queryFn: () => reelvault.admin.purgeWorkerHistory({ ...options, dryRun: true }),
+		enabled,
+		placeholderData: keepPreviousData,
+	});
+}
+
 export function usePurgeWorkerHistory() {
 	const queryClient = useQueryClient();
 
