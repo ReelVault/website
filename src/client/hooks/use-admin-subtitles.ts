@@ -7,13 +7,29 @@ import { subtitleKeys } from "../utils/query-keys";
 
 const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
+export type AdminSubtitleSort = "added" | "updated" | "language" | "title";
+
+// "added" is the server's default order, so an unset sort in the URL keeps the existing list.
+const SUBTITLE_SORT_QUERY: Record<
+	AdminSubtitleSort,
+	{ sortBy: "createdAt" | "updatedAt" | "language" | "label"; sortOrder: "asc" | "desc" }
+> = {
+	added: { sortBy: "createdAt", sortOrder: "asc" },
+	updated: { sortBy: "updatedAt", sortOrder: "desc" },
+	language: { sortBy: "language", sortOrder: "asc" },
+	title: { sortBy: "label", sortOrder: "asc" },
+};
+
 export function useAdminSubtitles(
 	page: number,
 	limit: number,
 	filters: { mediaFileId?: string; language?: string; type?: "embedded" | "external" },
+	sort: AdminSubtitleSort = "added",
 ) {
+	const sorting = SUBTITLE_SORT_QUERY[sort];
+
 	return useQuery({
-		queryKey: subtitleKeys.admin({ page, limit, ...filters }),
+		queryKey: subtitleKeys.admin({ page, limit, ...filters, ...sorting }),
 		placeholderData: keepPreviousData,
 		queryFn: () =>
 			reelvault.subtitles.getAll({
@@ -22,6 +38,7 @@ export function useAdminSubtitles(
 				mediaFileId: emptyToUndefined(filters.mediaFileId),
 				language: emptyToUndefined(filters.language),
 				type: filters.type,
+				...sorting,
 			}),
 		staleTime: 60_000,
 	});

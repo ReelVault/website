@@ -219,6 +219,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Collection context survives the player** — auto-next keeps the collection you were watching, and switching the version of a file inside a collection stays in that collection.
 - **Search log files** — the logs page has a search box that filters the log files by name within the selected category.
 - **Admin collections can be sorted and paged** — the collections page sorts by name, newest or recently updated, shows 25 per page with the page control, and a new search or sort starts at the first page.
+- **Admin subtitles can be sorted** — the subtitles list sorts on the server by date added (oldest first, the default), recently updated, language or title, and the choice stays in the URL. Search still filters only the current page.
 - **Seek debounce setting** — the admin settings page labels `stream.seekDebounceMs`. Requires server with the new setting.
 - **Subtitle search suggests your languages** — the in-player subtitle search shows your preferred languages as quick picks and searches once automatically when it opens.
 - **Dashboard empty state has a next step** — when there is nothing to feature, the dashboard explains why and offers the next step: administrators get *Add the first library*, everyone else gets *Try again*. Previously the top of the page was blank.

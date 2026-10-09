@@ -77,7 +77,7 @@ export const subtitleKeys = {
 	all: ["subtitles"] as const,
 	list: (mediaFileId: string) => [...subtitleKeys.all, mediaFileId] as const,
 	content: (subtitleId: string | undefined) => [...subtitleKeys.all, "content", subtitleId] as const,
-	admin: (params: { page: number; limit: number; mediaFileId?: string; language?: string }) =>
+	admin: (params: { page: number; limit: number; mediaFileId?: string; language?: string; sortBy?: string; sortOrder?: "asc" | "desc" }) =>
 		[...subtitleKeys.all, "admin", params] as const,
 	adminDetail: (id: string) => [...subtitleKeys.all, "admin", id] as const,
 	providers: () => [...subtitleKeys.all, "providers"] as const,

@@ -2,7 +2,12 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Captions, FileText, Globe, Languages } from "lucide-react";
 import { lazy, type ReactNode, Suspense, useState } from "react";
-import { useAdminDeleteSubtitle, useAdminSubtitleProviders, useAdminSubtitles } from "@/client/hooks/use-admin-subtitles";
+import {
+	type AdminSubtitleSort,
+	useAdminDeleteSubtitle,
+	useAdminSubtitleProviders,
+	useAdminSubtitles,
+} from "@/client/hooks/use-admin-subtitles";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { SimplePagination } from "@/components/simple-pagination";
@@ -27,18 +32,28 @@ const TYPE_FILTERS = [
 
 type SubtitleTypeFilter = (typeof TYPE_FILTERS)[number]["value"];
 
+const SORT_OPTIONS: AdminSubtitleSort[] = ["added", "updated", "language", "title"];
+
+const SORT_LABELS: Record<AdminSubtitleSort, () => string> = {
+	added: () => m.admin_subtitles_sort_added(),
+	updated: () => m.admin_subtitles_sort_updated(),
+	language: () => m.admin_subtitles_sort_language(),
+	title: () => m.admin_subtitles_sort_title(),
+};
+
 export default function AdminSubtitlesPage() {
 	const languageOptions = contentLanguageOptions(m.admin_subtitles_any_language());
-	const { page: urlPage = 1, type, language, q } = useSearch({ from: "/admin/subtitles" });
+	const { page: urlPage = 1, type, language, q, sort: sortParam } = useSearch({ from: "/admin/subtitles" });
 	const navigate = useNavigate({ from: "/admin/subtitles" });
 	const page = urlPage;
 	const searchQuery = q ?? "";
+	const sort = sortParam ?? "added";
 	// Dialog targets are transient UI state — they stay local on purpose.
 	const [viewingId, setViewingId] = useState<string | null>(null);
 	const [editingSubtitle, setEditingSubtitle] = useState<{ id: string } | null>(null);
 
 	const filters = { type, language };
-	const { data, isLoading, error, refetch } = useAdminSubtitles(page, 50, filters);
+	const { data, isLoading, error, refetch } = useAdminSubtitles(page, 50, filters, sort);
 	const { data: embeddedData } = useAdminSubtitles(1, 1, { type: "embedded" });
 	const { data: externalData } = useAdminSubtitles(1, 1, { type: "external" });
 	const { data: providers } = useAdminSubtitleProviders();
@@ -51,7 +66,13 @@ export default function AdminSubtitlesPage() {
 	const externalTotal = externalData?.total ?? 0;
 	const typeTotals: Record<string, number> = { all: total, embedded: embeddedTotal, external: externalTotal };
 
-	const patchSearch = (patch: { page?: number; type?: "embedded" | "external"; language?: string; q?: string }) => {
+	const patchSearch = (patch: {
+		page?: number;
+		type?: "embedded" | "external";
+		language?: string;
+		q?: string;
+		sort?: AdminSubtitleSort;
+	}) => {
 		detach(navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true }));
 	};
 
@@ -61,6 +82,11 @@ export default function AdminSubtitlesPage() {
 
 	const setLanguage = (value: string) => {
 		patchSearch({ language: value || undefined, page: undefined });
+	};
+
+	// The default sort stays out of the URL, like the default type filter.
+	const setSort = (value: AdminSubtitleSort) => {
+		patchSearch({ sort: value === "added" ? undefined : value, page: undefined });
 	};
 
 	const setPage = (next: number) => {
@@ -186,6 +212,20 @@ export default function AdminSubtitlesPage() {
 								{languageOptions.map(([value, label]) => (
 									<SelectItem key={value} value={value}>
 										{label}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+					<Select value={sort} onValueChange={(value) => setSort(value ?? "added")}>
+						<SelectTrigger className="h-8 w-44 text-xs" aria-label={m.admin_subtitles_sort_label()}>
+							<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								{SORT_OPTIONS.map((option) => (
+									<SelectItem key={option} value={option}>
+										{SORT_LABELS[option]()}
 									</SelectItem>
 								))}
 							</SelectGroup>
