@@ -22,3 +22,17 @@ export function formatStorageMode(mode?: MetadataStorageMode | null) {
 
 	return null;
 }
+
+export const PATH_SORT_OPTIONS = ["path-asc", "path-desc", "size-desc"] as const;
+
+export type PathSortOption = (typeof PATH_SORT_OPTIONS)[number];
+
+/** Source directories of one library in the chosen order. The input array is not modified. */
+export function sortLibraryPaths(lib: LibraryWithRelations, sort: PathSortOption): LibraryWithRelations["paths"] {
+	return lib.paths.toSorted((left, right) => {
+		if (sort === "size-desc") return getPathStats(lib, right).size - getPathStats(lib, left).size;
+
+		const order = left.path.localeCompare(right.path);
+		return sort === "path-desc" ? -order : order;
+	});
+}

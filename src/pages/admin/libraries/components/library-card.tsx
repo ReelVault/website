@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { copyToClipboard } from "@/utils/clipboard-utils";
@@ -15,7 +16,17 @@ import { formatDateTime, formatTimeAgo } from "@/utils/format-utils";
 import { LibraryCardContextMenu } from "./library-card-context-menu";
 import { LibraryCardHeader } from "./library-card-header";
 import { LibraryCardMetrics } from "./library-card-metrics";
+import { PATH_SORT_OPTIONS, type PathSortOption, sortLibraryPaths } from "./library-card-utils";
 import { LibraryPathRow } from "./library-path-row";
+
+const PATH_SORT_LABELS: Record<PathSortOption, () => string> = {
+	"path-asc": () => m.admin_libraries_paths_sort_path_asc(),
+	"path-desc": () => m.admin_libraries_paths_sort_path_desc(),
+	"size-desc": () => m.admin_libraries_paths_sort_size(),
+};
+
+const isPathSortOption = (value: unknown): value is PathSortOption =>
+	typeof value === "string" && (PATH_SORT_OPTIONS as readonly string[]).includes(value);
 
 const handleCopyId = (text: string, label: string) => {
 	detach(copyToClipboard(text, label));
@@ -48,6 +59,7 @@ export function LibraryCard({
 }) {
 	const paths = lib.paths;
 	const [pathsExpanded, setPathsExpanded] = useState(true);
+	const [pathSort, setPathSort] = useState<PathSortOption>("path-asc");
 	const totalSize = lib.totalSize ?? 0;
 	const mediaCount = lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
 
@@ -93,11 +105,25 @@ export function LibraryCard({
 									<FolderOpen className="size-3.5 text-primary" />
 									<span>{m.admin_libraries_source_directories_count({ pathsCount: paths.length })}</span>
 								</CollapsibleTrigger>
+								{paths.length > 1 && (
+									<Select value={pathSort} onValueChange={(value) => isPathSortOption(value) && setPathSort(value)}>
+										<SelectTrigger className="h-7 w-auto gap-1 px-2 text-xs" aria-label={m.admin_libraries_paths_sort_label()}>
+											<SelectValue>{PATH_SORT_LABELS[pathSort]()}</SelectValue>
+										</SelectTrigger>
+										<SelectContent>
+											{PATH_SORT_OPTIONS.map((option) => (
+												<SelectItem key={option} value={option}>
+													{PATH_SORT_LABELS[option]()}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								)}
 							</div>
 
 							<CollapsibleContent className="flex flex-col gap-2">
 								{paths.length > 0 ? (
-									paths.map((path) => (
+									sortLibraryPaths(lib, pathSort).map((path) => (
 										<LibraryPathRow
 											key={path.id}
 											libraryId={lib.id}

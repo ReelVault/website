@@ -201,6 +201,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Plugin package details** — each plugin in the admin list shows its capabilities, when and from where its package was installed, an *Update available* badge when an enabled catalog offers a newer version, a warning when the package on disk no longer matches its install record, and a warning when its configuration file cannot be read. Requires SDK 1.3.0.
 - **Stored secrets are visible** — a secret field shows a *Set* badge when a value is stored, and an empty field keeps that value. Requires SDK 1.3.0.
 - **Failed plugin upgrades say what happened** — an update whose new version did not start reports that the previous version was restored. Requires SDK 1.3.0.
+- **Source directories can be sorted** — a library card with more than one source directory has a sort control: path A–Z, path Z–A, or largest first.
 
 ### Fixes
 
