@@ -38,6 +38,7 @@ export function LibraryCard({
 	scanningPathIds,
 	isDeleting,
 	onScan,
+	onCancelScans,
 	onPathScan,
 	onDelete,
 	onEdit,
@@ -50,6 +51,7 @@ export function LibraryCard({
 	scanningPathIds: Set<string>;
 	isDeleting: boolean;
 	onScan: (id: string) => void;
+	onCancelScans: (id: string) => void;
 	onPathScan: (libraryId: string, pathId: string) => void;
 	onDelete: (id: string, name: string) => Promise<unknown>;
 	onEdit: (lib: LibraryWithRelations) => void;
@@ -189,6 +191,7 @@ export function LibraryCard({
 
 			{/* Context Menu */}
 			<LibraryCardContextMenu
+				onCancelScans={onCancelScans}
 				lib={lib}
 				onScan={onScan}
 				onEdit={onEdit}

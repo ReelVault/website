@@ -20,7 +20,7 @@ export default function AdminDashboardPage() {
 	const statsQuery = { data: dashboardViewQuery.data?.stats, isPending: dashboardViewQuery.isPending, isError: dashboardViewQuery.isError };
 	const stats = statsQuery.data;
 
-	const { libraries, scanLibrary } = useAdminLibraries();
+	const { libraries } = useAdminLibraries();
 
 	// Server <= 1.1 has no dashboard-view route (404) — the composite requires
 	// a matching 1.2 server; the rest of the admin panel keeps working.
@@ -69,7 +69,7 @@ export default function AdminDashboardPage() {
 	return (
 		<div className="flex flex-col gap-6">
 			{/* 1. HEADER WITH QUICK ACTIONS */}
-			<DashboardHeader isServerOffline={statsQuery.isError} libraries={libraries} onScanLibrary={scanLibrary} />
+			<DashboardHeader isServerOffline={statsQuery.isError} libraries={libraries} />
 
 			{/* 3. MAIN KPI METRICS */}
 			<DashboardKpiStats

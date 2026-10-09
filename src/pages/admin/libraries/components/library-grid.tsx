@@ -14,6 +14,7 @@ export function LibraryGrid({
 	scanningPathIds,
 	deletingIds,
 	onScan,
+	onCancelScans,
 	onPathScan,
 	onDelete,
 	onEdit,
@@ -29,6 +30,7 @@ export function LibraryGrid({
 	scanningPathIds: Set<string>;
 	deletingIds: Set<string>;
 	onScan: (id: string) => void;
+	onCancelScans: (id: string) => void;
 	onPathScan: (libraryId: string, pathId: string) => void;
 	onDelete: (id: string, name: string) => Promise<unknown>;
 	onEdit: (lib: LibraryWithRelations) => void;
@@ -98,6 +100,7 @@ export function LibraryGrid({
 					scanningPathIds={scanningPathIds}
 					isDeleting={deletingIds.has(lib.id)}
 					onScan={onScan}
+					onCancelScans={onCancelScans}
 					onPathScan={onPathScan}
 					onDelete={onDelete}
 					onEdit={onEdit}

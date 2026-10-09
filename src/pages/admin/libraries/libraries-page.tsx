@@ -31,6 +31,7 @@ export default function AdminLibrariesPage() {
 		scanLibrary,
 		isScanning,
 		scanAllLibraries,
+		cancelLibraryScans,
 		isScanningAll,
 		scanLibraryPath,
 		isScanningPath,
@@ -55,6 +56,7 @@ export default function AdminLibrariesPage() {
 	const handleDelete = (id: string, _name: string) => deleteLibrary(id);
 
 	const handleScan = (id: string) => detach(scanLibrary(id));
+	const handleCancelScans = (id: string) => detach(cancelLibraryScans(id));
 
 	const handlePathScan = (libraryId: string, pathId: string) => detach(scanLibraryPath({ libraryId, pathId }));
 
@@ -134,6 +136,7 @@ export default function AdminLibrariesPage() {
 				scanningPathIds={scanningPathIds}
 				deletingIds={deletingIds}
 				onScan={handleScan}
+				onCancelScans={handleCancelScans}
 				onPathScan={handlePathScan}
 				onDelete={handleDelete}
 				onEdit={openEditModal}

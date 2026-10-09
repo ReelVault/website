@@ -1,5 +1,5 @@
 import type { LibraryWithRelations } from "@reelvault/sdk";
-import { AlertTriangle, Copy, FileWarning, Pencil, RefreshCw, ScanSearch, Trash2 } from "lucide-react";
+import { AlertTriangle, Copy, FileWarning, Pencil, RefreshCw, ScanSearch, Trash2, XCircle } from "lucide-react";
 import {
 	ContextMenuContent,
 	ContextMenuGroup,
@@ -13,6 +13,7 @@ import { m } from "@/paraglide/messages";
 interface LibraryCardContextMenuProps {
 	lib: LibraryWithRelations;
 	onScan: (id: string) => void;
+	onCancelScans: (id: string) => void;
 	onEdit: (lib: LibraryWithRelations) => void;
 	onDelete: (id: string, name: string) => Promise<unknown>;
 	onCheckErrors: (libraryPaths: string[]) => void;
@@ -24,6 +25,7 @@ interface LibraryCardContextMenuProps {
 export function LibraryCardContextMenu({
 	lib,
 	onScan,
+	onCancelScans,
 	onEdit,
 	onDelete,
 	onCheckErrors,
@@ -57,6 +59,10 @@ export function LibraryCardContextMenu({
 				<ContextMenuItem onClick={() => onShowIgnoredAssets(lib.id)} className="cursor-pointer gap-2.5">
 					<AlertTriangle className="size-4 text-muted-foreground" />
 					<span>{m.admin_libraries_skipped_assets()}</span>
+				</ContextMenuItem>
+				<ContextMenuItem onClick={() => onCancelScans(lib.id)} className="cursor-pointer gap-2.5">
+					<XCircle className="size-4 text-muted-foreground" />
+					<span>{m.admin_libraries_cancel_scans()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onShowScanFindings(lib.id)} className="cursor-pointer gap-2.5">
 					<FileWarning className="size-4 text-muted-foreground" />

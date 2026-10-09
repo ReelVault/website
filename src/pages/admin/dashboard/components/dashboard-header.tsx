@@ -1,6 +1,7 @@
 import type { LibraryWithRelations } from "@reelvault/sdk";
 import { RefreshCw, Server } from "lucide-react";
 import { useState } from "react";
+import { reelvault } from "@/client/client";
 import { AsyncButton } from "@/components/async-button";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader } from "@/pages/admin/admin-ui";
@@ -8,15 +9,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 
-export function DashboardHeader({
-	isServerOffline,
-	libraries,
-	onScanLibrary,
-}: {
-	isServerOffline: boolean;
-	libraries: LibraryWithRelations[];
-	onScanLibrary: (libraryId: string) => Promise<unknown>;
-}) {
+export function DashboardHeader({ isServerOffline, libraries }: { isServerOffline: boolean; libraries: LibraryWithRelations[] }) {
 	const [isScanningAll, setIsScanningAll] = useState(false);
 
 	const scanAllLibraries = async () => {
@@ -24,9 +17,9 @@ export function DashboardHeader({
 
 		setIsScanningAll(true);
 		try {
-			// Jak w use-libraries: pojedyncze 429 nie może zgubić reszty serii.
-			const results = await Promise.allSettled(libraries.map((library) => onScanLibrary(library.id)));
-			const queued = results.filter((result) => result.status === "fulfilled").length;
+			// One request covers every library: the server queues them in order.
+			const { queued: queuedScans } = await reelvault.libraries.scanAll();
+			const queued = queuedScans.length;
 			if (queued === libraries.length) {
 				toast.success(m.admin_dashboard_scan_all_started());
 			} else {

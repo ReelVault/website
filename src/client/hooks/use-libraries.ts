@@ -98,16 +98,27 @@ export function useAdminLibraries() {
 			toastError(m.toast_scan_start_error(), error);
 		},
 	});
+	const cancelScansMutation = useMutation({
+		mutationFn: (libraryId: string) => reelvault.libraries.cancelScans(libraryId),
+		onSuccess: async ({ cancelled }) => {
+			await invalidateLibraries();
+			if (cancelled > 0) toast.success(m.admin_libraries_cancel_scans_done({ count: cancelled }));
+			else toast.info(m.admin_libraries_cancel_scans_none());
+		},
+		onError: (error) => {
+			toastError(m.admin_libraries_cancel_scans_failed(), error);
+		},
+	});
 	const scanAllMutation = useMutation({
 		mutationFn: async () => {
 			const libs = librariesQuery.data?.data ?? [];
 			if (libs.length === 0) return { queued: 0, total: 0 };
 
-			// Rate limit dzieli bucket między biblioteki — pojedyncze odrzucenie
-			// nie może uciszyć całego scan-all ani zgubić pozostałych kolejek.
-			const results = await Promise.allSettled(libs.map((lib) => reelvault.libraries.scan(lib.id)));
+			// One request covers every library: the server queues them in order.
+			// A rate limit therefore applies to the whole batch, not to each library.
+			const result = await reelvault.libraries.scanAll();
 
-			return { queued: results.filter((r) => r.status === "fulfilled").length, total: libs.length };
+			return { queued: result.queued.length, total: libs.length };
 		},
 		onSuccess: async ({ queued, total }) => {
 			await invalidateLibraries();
@@ -168,6 +179,7 @@ export function useAdminLibraries() {
 		scanLibrary: scanMutation.mutateAsync,
 		isScanning: scanMutation.isPending,
 		scanAllLibraries: scanAllMutation.mutateAsync,
+		cancelLibraryScans: cancelScansMutation.mutateAsync,
 		isScanningAll: scanAllMutation.isPending,
 		scanLibraryPath: scanPathMutation.mutateAsync,
 		isScanningPath: scanPathMutation.isPending,
