@@ -23,3 +23,8 @@ export const TYPE_CONFIG: Record<MediaMarkerType, { label: string; badgeClass: s
 		badgeClass: "bg-rose-500/15 text-rose-400 border-rose-500/30",
 	},
 };
+
+/** Narrows a URL value to a marker type; any other value means no type filter. */
+export function isMediaMarkerType(value: string): value is MediaMarkerType {
+	return Object.hasOwn(TYPE_CONFIG, value);
+}

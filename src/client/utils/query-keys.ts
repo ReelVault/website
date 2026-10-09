@@ -232,6 +232,8 @@ export const adminKeys = {
 	backups: () => [...adminKeys.all, "database", "backups"] as const,
 	metadataProviders: () => [...adminKeys.all, "metadata-providers"] as const,
 	mediaMarkers: () => [...adminKeys.all, "media-markers"] as const,
+	mediaMarkersList: (filters: { type?: string | undefined; source?: string | undefined; q?: string | undefined }) =>
+		[...adminKeys.mediaMarkers(), filters] as const,
 	remoteAccessDiagnostics: () => [...adminKeys.all, "network", "remote-access"] as const,
 };
 

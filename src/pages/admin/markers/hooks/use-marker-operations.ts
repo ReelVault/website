@@ -1,9 +1,26 @@
 import type { CreateMediaMarker, MediaMarker } from "@reelvault/sdk";
 import { useState } from "react";
+import { reelvault } from "@/client/client";
 import { useAdminSetMarkers } from "@/client/hooks/use-admin-markers";
+import { m } from "@/paraglide/messages";
+import { toastError } from "@/utils/toast-utils";
 import type { MarkerFormData } from "../components/marker-dialog";
 
-export function useMarkerOperations(markers: MediaMarker[]) {
+/**
+ * The file's whole marker list. The admin list is filtered on the server, so a save must
+ * rebuild the list from here: rebuilding from the filtered list would drop unmatched markers.
+ */
+async function loadFileMarkers(mediaFileId: string): Promise<MediaMarker[] | null> {
+	try {
+		return await reelvault.media.getMarkers(mediaFileId);
+	} catch (error) {
+		toastError(m.admin_markers_failed_to_save(), error);
+
+		return null;
+	}
+}
+
+export function useMarkerOperations() {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [editingMarker, setEditingMarker] = useState<MediaMarker | null>(null);
 
@@ -23,18 +40,19 @@ export function useMarkerOperations(markers: MediaMarker[]) {
 		if (saveMutation.isPending) return;
 
 		const { mediaFileId, type, startSeconds, endSeconds, label } = formData;
-		const fileMarkers = markers.filter((m) => m.mediaFileId === mediaFileId);
+		const fileMarkers = await loadFileMarkers(mediaFileId);
+		if (!fileMarkers) return;
 
 		let newMarkersList: CreateMediaMarker[];
 		if (!editingMarker) {
 			newMarkersList = [
-				...fileMarkers.map((m) => ({
-					type: m.type,
-					startSeconds: m.startSeconds,
-					endSeconds: m.endSeconds,
-					label: m.label ?? undefined,
-					source: m.source,
-					pluginId: m.pluginId ?? undefined,
+				...fileMarkers.map((item) => ({
+					type: item.type,
+					startSeconds: item.startSeconds,
+					endSeconds: item.endSeconds,
+					label: item.label ?? undefined,
+					source: item.source,
+					pluginId: item.pluginId ?? undefined,
 				})),
 				{
 					type,
@@ -45,25 +63,25 @@ export function useMarkerOperations(markers: MediaMarker[]) {
 				},
 			];
 		} else {
-			newMarkersList = fileMarkers.map((m) => {
-				if (m.id === editingMarker.id) {
+			newMarkersList = fileMarkers.map((item) => {
+				if (item.id === editingMarker.id) {
 					return {
 						type,
 						startSeconds,
 						endSeconds,
 						label,
-						source: m.source,
-						pluginId: m.pluginId ?? undefined,
+						source: item.source,
+						pluginId: item.pluginId ?? undefined,
 					};
 				}
 
 				return {
-					type: m.type,
-					startSeconds: m.startSeconds,
-					endSeconds: m.endSeconds,
-					label: m.label ?? undefined,
-					source: m.source,
-					pluginId: m.pluginId ?? undefined,
+					type: item.type,
+					startSeconds: item.startSeconds,
+					endSeconds: item.endSeconds,
+					label: item.label ?? undefined,
+					source: item.source,
+					pluginId: item.pluginId ?? undefined,
 				};
 			});
 		}
@@ -78,19 +96,19 @@ export function useMarkerOperations(markers: MediaMarker[]) {
 	const handleDeleteMarker = async (marker: MediaMarker) => {
 		if (saveMutation.isPending) return;
 
-		const remaining: CreateMediaMarker[] = [];
-		for (const m of markers) {
-			if (m.mediaFileId === marker.mediaFileId && m.id !== marker.id) {
-				remaining.push({
-					type: m.type,
-					startSeconds: m.startSeconds,
-					endSeconds: m.endSeconds,
-					label: m.label ?? undefined,
-					source: m.source,
-					pluginId: m.pluginId ?? undefined,
-				});
-			}
-		}
+		const fileMarkers = await loadFileMarkers(marker.mediaFileId);
+		if (!fileMarkers) return;
+
+		const remaining: CreateMediaMarker[] = fileMarkers
+			.filter((item) => item.id !== marker.id)
+			.map((item) => ({
+				type: item.type,
+				startSeconds: item.startSeconds,
+				endSeconds: item.endSeconds,
+				label: item.label ?? undefined,
+				source: item.source,
+				pluginId: item.pluginId ?? undefined,
+			}));
 
 		await saveMutation.mutateAsync({
 			mediaFileId: marker.mediaFileId,
