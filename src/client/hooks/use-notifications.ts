@@ -24,6 +24,16 @@ export function useNotificationsPage(params: { page: number; limit?: number; unr
 	});
 }
 
+/** Notification types the profile has received recently; the mute settings offer exactly these. */
+export function useReceivedNotificationTypes() {
+	const query = useNotificationsPage({ page: 1, limit: 100, unreadOnly: false });
+
+	return {
+		types: [...new Set((query.data?.data ?? []).map((notification) => notification.type))],
+		isLoading: query.isLoading,
+	};
+}
+
 export function useNotifications(unreadOnly = false, options?: { enabled?: boolean }) {
 	const queryClient = useQueryClient();
 	const query = useQuery({ ...notificationsQueryOptions(unreadOnly), enabled: options?.enabled ?? true });

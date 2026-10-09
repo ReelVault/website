@@ -47,6 +47,7 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 			resumeRewindSeconds: preferences.resumeRewindSeconds,
 			watchlistAutoRemoveWatched: preferences.watchlistAutoRemoveWatched,
 			hideRatingOverlay: preferences.hideRatingOverlay,
+			mutedNotificationTypes: preferences.mutedNotificationTypes,
 			subtitleSize: preferences.subtitleSize,
 			subtitlePosition: preferences.subtitlePosition,
 			subtitleColor: preferences.subtitleColor,

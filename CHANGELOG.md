@@ -288,6 +288,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Library paths and error checks on the libraries page** — each library card shows how many of its paths are invalid (missing on disk, or not covered by the file watcher); the badge opens the path list with each path's state and the last scan, and *Validate paths* checks them again. The result of *Check errors* opens in a dialog that follows the check and lists each problematic file with FFmpeg's messages. Requires SDK and server with the library health and error-check endpoints.
 - **Bulk delete of subtitles** — the admin subtitles list has checkboxes and a *Delete selected* action, after a confirmation. Requires SDK and server with the bulk delete endpoint.
 - **Copy settings from another profile** — the general settings have *Copy settings from another profile…*, which replaces this profile's settings with another profile's, and the create-profile form can start from an existing profile's settings. Requires SDK and server with profile preference copying.
+- **Mute notification types** — the general settings list the notification types the profile has received, with a checkbox per type; muted types stop alerting and leave the profile's list and badge. Requires SDK and server with muted notification types.
 
 ### Fixes
 

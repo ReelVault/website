@@ -19,6 +19,8 @@ export interface ProfilePreferencesState {
 	resumeRewindSeconds: number;
 	watchlistAutoRemoveWatched: boolean;
 	hideRatingOverlay: boolean;
+	/** Comma-separated notification types this profile has muted. */
+	mutedNotificationTypes: string;
 	subtitleSize: "small" | "normal" | "large" | "extra-large";
 	subtitlePosition: "bottom" | "top" | "middle";
 	subtitleColor: "white" | "yellow" | "cyan" | "green";
@@ -43,6 +45,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	resumeRewindSeconds: 0,
 	watchlistAutoRemoveWatched: false,
 	hideRatingOverlay: false,
+	mutedNotificationTypes: "",
 	subtitleSize: "normal",
 	subtitlePosition: "bottom",
 	subtitleColor: "white",
@@ -67,6 +70,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"resumeRewindSeconds",
 	"watchlistAutoRemoveWatched",
 	"hideRatingOverlay",
+	"mutedNotificationTypes",
 	"subtitleSize",
 	"subtitlePosition",
 	"subtitleColor",

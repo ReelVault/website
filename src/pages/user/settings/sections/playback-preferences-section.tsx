@@ -36,6 +36,7 @@ const toPreferencesState = (value: ServerPreferences): ProfilePreferencesState =
 	resumeRewindSeconds: value.resumeRewindSeconds,
 	watchlistAutoRemoveWatched: value.watchlistAutoRemoveWatched,
 	hideRatingOverlay: value.hideRatingOverlay,
+	mutedNotificationTypes: value.mutedNotificationTypes,
 	subtitleSize: value.subtitleSize,
 	subtitlePosition: value.subtitlePosition,
 	subtitleColor: value.subtitleColor,
