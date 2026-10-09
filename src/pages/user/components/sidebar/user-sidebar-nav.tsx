@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
+import { useHiddenPages } from "@/client/hooks/use-profiles";
 import { m } from "@/paraglide/messages";
+import { filterHiddenPages } from "@/utils/hidden-pages";
 import { USER_NAV_ITEMS } from "./user-sidebar-items";
 
 interface UserSidebarNavProps {
@@ -9,6 +11,9 @@ interface UserSidebarNavProps {
 }
 
 export function UserSidebarNav({ pathname, unreadCount }: UserSidebarNavProps) {
+	const hiddenPages = useHiddenPages();
+	const navItems = filterHiddenPages(USER_NAV_ITEMS, hiddenPages);
+
 	return (
 		<nav
 			className="flex flex-1 items-center justify-around gap-1 lg:flex-col lg:items-stretch lg:justify-start"
@@ -17,7 +22,7 @@ export function UserSidebarNav({ pathname, unreadCount }: UserSidebarNavProps) {
 			<p className="mb-2 hidden px-3 font-semibold text-[10px] text-muted-foreground uppercase tracking-[0.18em] lg:block">
 				{m.user_your_space()}
 			</p>
-			{USER_NAV_ITEMS.map(({ label, href, icon: Icon }) => {
+			{navItems.map(({ label, href, icon: Icon }) => {
 				const active = pathname === href;
 				const badge = href === "/notifications" ? unreadCount : 0;
 

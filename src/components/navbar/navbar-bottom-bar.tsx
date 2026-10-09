@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Ellipsis } from "lucide-react";
+import { useHiddenPages } from "@/client/hooks/use-profiles";
 import { m } from "@/paraglide/messages";
-import { PRIMARY_MOBILE_LINKS } from "./navbar-links";
+import { filterHiddenPages } from "@/utils/hidden-pages";
+import { NAVBAR_LINKS, PRIMARY_MOBILE_LINK_COUNT } from "./navbar-links";
 import { setNavbarMobileMenuOpen } from "./navbar-mobile-menu-store";
 
 interface NavbarBottomBarProps {
@@ -12,10 +14,13 @@ interface NavbarBottomBarProps {
 export function NavbarBottomBar({ pathname }: NavbarBottomBarProps) {
 	const isLinkActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
+	const hiddenPages = useHiddenPages();
+	const primaryLinks = filterHiddenPages(NAVBAR_LINKS, hiddenPages).slice(0, PRIMARY_MOBILE_LINK_COUNT);
+
 	return (
 		<div className="fixed inset-x-0 bottom-0 z-40 border-border border-t bg-background/90 backdrop-blur-md md:hidden">
 			<div className="mx-auto flex max-w-md items-stretch gap-1 px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))]">
-				{PRIMARY_MOBILE_LINKS.map(({ label, href, icon: Icon }) => {
+				{primaryLinks.map(({ label, href, icon: Icon }) => {
 					const isActive = isLinkActive(href);
 
 					return (

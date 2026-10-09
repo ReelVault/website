@@ -37,6 +37,7 @@ const toPreferencesState = (value: ServerPreferences): ProfilePreferencesState =
 	watchlistAutoRemoveWatched: value.watchlistAutoRemoveWatched,
 	hideRatingOverlay: value.hideRatingOverlay,
 	mutedNotificationTypes: value.mutedNotificationTypes,
+	hiddenPages: value.hiddenPages,
 	subtitleSize: value.subtitleSize,
 	subtitlePosition: value.subtitlePosition,
 	subtitleColor: value.subtitleColor,

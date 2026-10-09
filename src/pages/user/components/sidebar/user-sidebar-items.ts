@@ -1,11 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import { Bell, Clock3, Monitor, MonitorSmartphone, Settings2, Sparkles } from "lucide-react";
 import { m } from "@/paraglide/messages";
+import type { OptionalPageId } from "@/utils/hidden-pages";
 
 export interface UserNavItem {
 	label: string;
 	href: string;
 	icon: LucideIcon;
+	pageId?: OptionalPageId;
 }
 
 export const USER_NAV_ITEMS: UserNavItem[] = [
@@ -22,6 +24,7 @@ export const USER_NAV_ITEMS: UserNavItem[] = [
 		},
 		href: "/insights",
 		icon: Sparkles,
+		pageId: "insights",
 	},
 	{
 		get label() {
@@ -29,6 +32,7 @@ export const USER_NAV_ITEMS: UserNavItem[] = [
 		},
 		href: "/devices",
 		icon: Monitor,
+		pageId: "devices",
 	},
 	{
 		get label() {
@@ -43,6 +47,7 @@ export const USER_NAV_ITEMS: UserNavItem[] = [
 		},
 		href: "/remote",
 		icon: MonitorSmartphone,
+		pageId: "remote",
 	},
 	{
 		get label() {

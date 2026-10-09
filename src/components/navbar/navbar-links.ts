@@ -1,12 +1,15 @@
 import type { LucideIcon } from "lucide-react";
 import { Compass, Film, Layers3, LayoutDashboard, ListVideo, Tv } from "lucide-react";
 import { m } from "@/paraglide/messages";
+import type { OptionalPageId } from "@/utils/hidden-pages";
 
 export interface NavbarLinkItem {
 	label: string;
 	href: string;
 	icon: LucideIcon;
 	pluginId?: string;
+	/** Optional page a profile may hide from the menus; pages without one are always shown. */
+	pageId?: OptionalPageId;
 }
 
 export const NAVBAR_LINKS: NavbarLinkItem[] = [
@@ -37,6 +40,7 @@ export const NAVBAR_LINKS: NavbarLinkItem[] = [
 		},
 		href: "/collections",
 		icon: Layers3,
+		pageId: "collections",
 	},
 	{
 		get label() {
@@ -51,7 +55,8 @@ export const NAVBAR_LINKS: NavbarLinkItem[] = [
 		},
 		href: "/discovery",
 		icon: Compass,
+		pageId: "discovery",
 	},
 ];
 
-export const PRIMARY_MOBILE_LINKS = NAVBAR_LINKS.slice(0, 4);
+export const PRIMARY_MOBILE_LINK_COUNT = 4;

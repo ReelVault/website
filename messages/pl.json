@@ -802,6 +802,8 @@
 	"settings_muted_notifications": "Wyciszone typy powiadomień",
 	"settings_muted_notifications_hint": "Wyciszone typy nie przerywają i nie pojawiają się na liście ani w liczniku tego profilu.",
 	"settings_muted_notifications_empty": "Typy pojawią się tutaj, gdy ten profil dostanie pierwsze powiadomienia.",
+	"settings_hidden_pages": "Ukryte strony w menu",
+	"settings_hidden_pages_hint": "Zaznaczone strony znikają z menu tego profilu. Nadal można je otworzyć, wpisując adres.",
 	"admin_bulk_refresh_failed": "Nie udało się odświeżyć zaznaczonych elementów.",
 	"profile_copy_preferences": "Kopiuj ustawienia z innego profilu…",
 	"profile_copy_preferences_title": "Kopiuj ustawienia",

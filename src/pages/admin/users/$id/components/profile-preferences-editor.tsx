@@ -48,6 +48,7 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 			watchlistAutoRemoveWatched: preferences.watchlistAutoRemoveWatched,
 			hideRatingOverlay: preferences.hideRatingOverlay,
 			mutedNotificationTypes: preferences.mutedNotificationTypes,
+			hiddenPages: preferences.hiddenPages,
 			subtitleSize: preferences.subtitleSize,
 			subtitlePosition: preferences.subtitlePosition,
 			subtitleColor: preferences.subtitleColor,

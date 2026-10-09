@@ -1,6 +1,7 @@
 import type { UpdateProfilePreferences } from "@reelvault/sdk";
 import { type QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
+import { parseHiddenPages } from "@/utils/hidden-pages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
@@ -199,6 +200,14 @@ export function useResetProfilePreferences(profileId: string | undefined) {
 		},
 		onError: (error) => toastError(m.toast_profile_restore_failed(), error),
 	});
+}
+
+/** Optional menu pages the active profile hides (none until its preferences load). */
+export function useHiddenPages(): ReadonlySet<string> {
+	const { profile } = useCurrentUser();
+	const hidden = useProfilePreferences(profile?.id).preferences?.hiddenPages ?? "";
+
+	return parseHiddenPages(hidden);
 }
 
 /** Whether the active profile hides the rating badge on poster cards (shown until its preferences load). */

@@ -10,6 +10,7 @@ import { isLocale } from "@/paraglide/runtime";
 import { getAppLocale, setAppLocale } from "@/utils/locale";
 import { CopyPreferencesDialog } from "../components/copy-preferences-dialog";
 import { GeneralPreferencesGrid } from "../components/general-preferences-grid";
+import { HiddenPages } from "../components/hidden-pages";
 import { MutedNotificationTypes } from "../components/muted-notification-types";
 import { SettingsCategory } from "../components/settings-category";
 
@@ -113,6 +114,7 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 			</div>
 			<CopyPreferencesDialog profileId={profileId} open={copyOpen} onOpenChange={setCopyOpen} />
 			<MutedNotificationTypes profileId={profileId} />
+			<HiddenPages profileId={profileId} />
 			<SettingsCategory title={m.settings_general_title()} description={m.settings_general_hint()}>
 				<GeneralPreferencesGrid preferences={preferences} onChange={updatePreferencesPatch} />
 			</SettingsCategory>

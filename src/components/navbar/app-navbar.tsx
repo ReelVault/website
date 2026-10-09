@@ -1,13 +1,15 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { cn } from "cn";
 import { resolvePluginText, usePluginNavPages } from "@/client/hooks/use-plugin-ui";
+import { useHiddenPages } from "@/client/hooks/use-profiles";
 import { RealtimeStatusIndicator } from "@/components/realtime-status-indicator";
 import { m } from "@/paraglide/messages";
 import { getPluginIcon } from "@/plugin-host/icons";
+import { filterHiddenPages } from "@/utils/hidden-pages";
 import { Logo } from "../logo";
 import { NavbarBottomBar } from "./navbar-bottom-bar";
 import { NavbarDownloadsIndicator } from "./navbar-downloads-indicator";
-import { NAVBAR_LINKS, PRIMARY_MOBILE_LINKS } from "./navbar-links";
+import { NAVBAR_LINKS, PRIMARY_MOBILE_LINK_COUNT } from "./navbar-links";
 import { NavbarLocaleSwitcher } from "./navbar-locale-switcher";
 import { NavbarMobileSheet } from "./navbar-mobile-sheet";
 import { NavbarNotifications } from "./navbar-notifications";
@@ -17,6 +19,8 @@ import { NavbarSearchGroup } from "./navbar-search-group";
 export function AppNavbar() {
 	const { pathname } = useLocation();
 	const { pages: pluginNavPages } = usePluginNavPages("user");
+	const hiddenPages = useHiddenPages();
+	const navbarLinks = filterHiddenPages(NAVBAR_LINKS, hiddenPages);
 
 	const isLinkActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -32,7 +36,7 @@ export function AppNavbar() {
 				</Link>
 
 				<div className="ml-8 hidden w-full items-center justify-center gap-1 md:flex xl:hidden">
-					{PRIMARY_MOBILE_LINKS.map(({ label, href, icon: Icon }) => {
+					{navbarLinks.slice(0, PRIMARY_MOBILE_LINK_COUNT).map(({ label, href, icon: Icon }) => {
 						const isActive = isLinkActive(href);
 
 						return (
@@ -56,7 +60,7 @@ export function AppNavbar() {
 				</div>
 
 				<div className="ml-8 hidden items-center gap-1 xl:flex">
-					{NAVBAR_LINKS.map(({ label, href, icon: Icon }) => {
+					{navbarLinks.map(({ label, href, icon: Icon }) => {
 						const isActive = isLinkActive(href);
 
 						return (

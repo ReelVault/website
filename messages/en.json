@@ -800,6 +800,8 @@
 	"settings_muted_notifications": "Muted notification types",
 	"settings_muted_notifications_hint": "Muted types stop interrupting you and leave this profile's list and badge.",
 	"settings_muted_notifications_empty": "Notification types appear here once this profile has received some.",
+	"settings_hidden_pages": "Hidden menu pages",
+	"settings_hidden_pages_hint": "Checked pages leave this profile's menus. You can still open them by their address.",
 	"admin_bulk_refresh_failed": "The selected items could not be refreshed.",
 	"profile_copy_preferences": "Copy settings from another profile…",
 	"profile_copy_preferences_title": "Copy settings",

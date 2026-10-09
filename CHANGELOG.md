@@ -289,6 +289,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Bulk delete of subtitles** — the admin subtitles list has checkboxes and a *Delete selected* action, after a confirmation. Requires SDK and server with the bulk delete endpoint.
 - **Copy settings from another profile** — the general settings have *Copy settings from another profile…*, which replaces this profile's settings with another profile's, and the create-profile form can start from an existing profile's settings. Requires SDK and server with profile preference copying.
 - **Mute notification types** — the general settings list the notification types the profile has received, with a checkbox per type; muted types stop alerting and leave the profile's list and badge. Requires SDK and server with muted notification types.
+- **Hidden menu pages** — the general settings list the optional pages (collections, discovery, insights, devices and remote) with a checkbox each; a checked page leaves the navbar, the mobile bar and menu, and the user sidebar of this profile. The pages stay reachable by their address. Requires SDK and server with the hidden pages preference.
 
 ### Fixes
 

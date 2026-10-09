@@ -21,6 +21,8 @@ export interface ProfilePreferencesState {
 	hideRatingOverlay: boolean;
 	/** Comma-separated notification types this profile has muted. */
 	mutedNotificationTypes: string;
+	/** Comma-separated optional menu pages this profile hides. */
+	hiddenPages: string;
 	subtitleSize: "small" | "normal" | "large" | "extra-large";
 	subtitlePosition: "bottom" | "top" | "middle";
 	subtitleColor: "white" | "yellow" | "cyan" | "green";
@@ -46,6 +48,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	watchlistAutoRemoveWatched: false,
 	hideRatingOverlay: false,
 	mutedNotificationTypes: "",
+	hiddenPages: "",
 	subtitleSize: "normal",
 	subtitlePosition: "bottom",
 	subtitleColor: "white",
@@ -71,6 +74,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"watchlistAutoRemoveWatched",
 	"hideRatingOverlay",
 	"mutedNotificationTypes",
+	"hiddenPages",
 	"subtitleSize",
 	"subtitlePosition",
 	"subtitleColor",
