@@ -1528,6 +1528,7 @@
 	"admin_settings_session_idle_ms": "Czas bezczynności sesji (ms)",
 	"admin_settings_session_lifetime_days": "Dni ważności sesji",
 	"admin_settings_session_lifetime_days_description": "Dotyczy nowych sesji po restarcie serwera.",
+	"admin_settings_takes_effect_on_restart": "Działa dla nowych sesji po restarcie serwera.",
 	"admin_settings_session_release_idle_ms": "Czas bez żądań segmentów, po którym sesja streamingu zostaje automatycznie zwolniona.",
 	"admin_settings_simple_average": "Prosta średnia",
 	"admin_settings_smart_audio": "Inteligentny dobór kompatybilnej ścieżki audio",

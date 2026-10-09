@@ -1522,6 +1522,7 @@
 	"admin_settings_session_idle_ms": "Session idle time (ms)",
 	"admin_settings_session_lifetime_days": "Session lifetime (days)",
 	"admin_settings_session_lifetime_days_description": "Applies to newly issued sessions after a server restart.",
+	"admin_settings_takes_effect_on_restart": "Applies to new sessions after a server restart.",
 	"admin_settings_session_release_idle_ms": "The time without segment requests after which a streaming session is automatically released.",
 	"admin_settings_simple_average": "Simple average",
 	"admin_settings_smart_audio": "Smart selection of a compatible audio track",

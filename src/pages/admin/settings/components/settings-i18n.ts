@@ -494,7 +494,7 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 	},
 	"auth.sessionLifetimeDays": {
 		label: m.admin_settings_session_lifetime_days(),
-		description: m.admin_settings_session_lifetime_days_description(),
+		description: `${m.admin_settings_session_lifetime_days_description()} ${m.admin_settings_takes_effect_on_restart()}`,
 	},
 	"auth.rateLimit.loginAccountMaxAttempts": {
 		label: m.admin_settings_login_max_attempts(),
