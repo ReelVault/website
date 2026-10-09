@@ -1402,6 +1402,8 @@
 	"admin_settings_hls_segment_seconds": "HLS segment length (seconds)",
 	"admin_settings_hls_muxing_queue_size": "HLS muxing queue size (packets)",
 	"admin_settings_hls_muxing_queue_size_description": "How many packets FFmpeg may buffer before muxing. Raise it when streams fail with “max muxing queue size exceeded” on slow storage.",
+	"admin_settings_seek_debounce_ms": "Seek debounce (ms)",
+	"admin_settings_seek_debounce_ms_description": "How long the stream waits after the last seek before it jumps. Lower reacts faster; higher groups rapid seeks into one jump.",
 	"admin_settings_hwaccel_engine": "The hardware video transcoding acceleration engine (GPU/iGPU).",
 	"admin_settings_hwaccel_ffmpeg": "FFmpeg hardware acceleration",
 	"admin_settings_images_section": "Image & thumbnail processing",

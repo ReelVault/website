@@ -85,6 +85,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_hls_muxing_queue_size(),
 		description: m.admin_settings_hls_muxing_queue_size_description(),
 	},
+	"stream.seekDebounceMs": {
+		label: m.admin_settings_seek_debounce_ms(),
+		description: m.admin_settings_seek_debounce_ms_description(),
+	},
 
 	// ==================== SKANOWANIE & PLIKI ====================
 	"scanning.autoWatcherEnabled": {

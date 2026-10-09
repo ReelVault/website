@@ -1408,6 +1408,8 @@
 	"admin_settings_hls_segment_seconds": "Długość segmentu HLS (sekundy)",
 	"admin_settings_hls_muxing_queue_size": "Rozmiar kolejki muxowania HLS (pakiety)",
 	"admin_settings_hls_muxing_queue_size_description": "Ile pakietów FFmpeg może buforować przed muxowaniem. Zwiększ, gdy na wolnym dysku strumień pada z „max muxing queue size exceeded”.",
+	"admin_settings_seek_debounce_ms": "Opóźnienie przeskoku (ms)",
+	"admin_settings_seek_debounce_ms_description": "Jak długo strumień czeka po ostatnim przewinięciu, zanim przeskoczy. Mniej = szybsza reakcja; więcej = szybkie przewinięcia łączone w jeden skok.",
 	"admin_settings_hwaccel_engine": "Silnik sprzętowej akceleracji transkodowania wideo (GPU/iGPU).",
 	"admin_settings_hwaccel_ffmpeg": "Akceleracja sprzętowa FFmpeg",
 	"admin_settings_images_section": "Przetwarzanie grafik i miniatur",

@@ -219,6 +219,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Collection context survives the player** — auto-next keeps the collection you were watching, and switching the version of a file inside a collection stays in that collection.
 - **Search log files** — the logs page has a search box that filters the log files by name within the selected category.
 - **Admin collections can be sorted and paged** — the collections page sorts by name, newest or recently updated, shows 25 per page with the page control, and a new search or sort starts at the first page.
+- **Seek debounce setting** — the admin settings page labels `stream.seekDebounceMs`. Requires server with the new setting.
 
 ### Fixes
 
