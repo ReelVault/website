@@ -1,10 +1,12 @@
 import { cn } from "cn";
-import { Activity, RefreshCw } from "lucide-react";
-import type { ReactNode } from "react";
+import { Activity, Download, RefreshCw } from "lucide-react";
+import { type ReactNode, useState } from "react";
+import { getReelVaultApiUrl } from "@/client/client";
 import { useAdminResources } from "@/client/hooks/use-admin-resources";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
@@ -20,9 +22,21 @@ import { SystemCpuInfo } from "./components/system-cpu-info";
 import { WorkerAllocations } from "./components/worker-allocations";
 
 const SKELETON_KEYS = ["1", "2", "3", "4"] as const;
+/** History windows in hours; 168 h matches the metrics retention. */
+const RESOURCE_WINDOWS: readonly number[] = [1, 6, 24, 168];
+
+function windowLabel(hours: number): string {
+	return hours >= 24 ? m.admin_resources_window_days({ count: hours / 24 }) : m.admin_resources_window_hours({ count: hours });
+}
+
+function openResourceExport(format: "csv" | "json", hours: number) {
+	const url = `${getReelVaultApiUrl()}/v1/admin/resources/export?format=${format}&hours=${hours}`;
+	window.open(url, "_blank", "noopener,noreferrer");
+}
 
 export default function AdminResourcesPage() {
-	const resourcesQuery = useAdminResources();
+	const [hours, setHours] = useState<number>(24);
+	const resourcesQuery = useAdminResources(hours);
 	const data = resourcesQuery.data;
 
 	let content: ReactNode;
@@ -50,6 +64,36 @@ export default function AdminResourcesPage() {
 	} else {
 		content = (
 			<div className="flex flex-col gap-6">
+				{/* Window of the history charts and of the export */}
+				<div className="flex flex-wrap items-center justify-between gap-3">
+					<ToggleGroup
+						multiple={false}
+						value={[String(hours)]}
+						onValueChange={(value) => {
+							const next = Number(value[0]);
+							if (RESOURCE_WINDOWS.includes(next)) setHours(next);
+						}}
+						variant="outline"
+						size="sm"
+					>
+						{RESOURCE_WINDOWS.map((option) => (
+							<ToggleGroupItem key={option} value={String(option)} className="text-xs">
+								{windowLabel(option)}
+							</ToggleGroupItem>
+						))}
+					</ToggleGroup>
+					<div className="flex items-center gap-2">
+						<Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => openResourceExport("csv", hours)}>
+							<Download className="size-3.5" />
+							{m.admin_resources_export_csv()}
+						</Button>
+						<Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => openResourceExport("json", hours)}>
+							<Download className="size-3.5" />
+							{m.admin_resources_export_json()}
+						</Button>
+					</div>
+				</div>
+
 				{/* Stall-protection: prominent banner while rescuing, slim strip when healthy */}
 				<ServerRescueStatus rescue={data.rescue} />
 
@@ -61,7 +105,10 @@ export default function AdminResourcesPage() {
 
 				{/* 24h history chart + aggregates, the page's primary overview */}
 				{data.history.length > 0 && (
-					<AdminSection title={m.admin_resources_history_24h()} description={m.admin_resources_load_chart_description()}>
+					<AdminSection
+						title={m.admin_resources_history_window({ window: windowLabel(hours) })}
+						description={m.admin_resources_load_chart_description()}
+					>
 						<div className="flex flex-col gap-4">
 							<ResourceHistoryChart history={data.history} />
 							<ResourceAggregatesGrid aggregates={data.aggregates} />

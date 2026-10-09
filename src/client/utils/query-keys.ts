@@ -225,7 +225,7 @@ export const adminKeys = {
 
 		return params ? ([...base, params] as const) : base;
 	},
-	resources: () => [...adminKeys.all, "resources"] as const,
+	resources: (hours?: number) => [...adminKeys.all, "resources", ...(hours === undefined ? [] : [hours])] as const,
 	trickplayStats: () => [...adminKeys.all, "trickplay", "stats"] as const,
 	ffmpegCapabilities: () => [...adminKeys.all, "ffmpeg-capabilities"] as const,
 	analytics: (days?: number) => (days ? ([...adminKeys.all, "analytics", days] as const) : ([...adminKeys.all, "analytics"] as const)),
