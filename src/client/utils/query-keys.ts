@@ -302,5 +302,6 @@ export const downloadKeys = {
 	all: ["downloads"] as const,
 	list: () => [...downloadKeys.all, "list"] as const,
 	status: (jobId?: string | null) => [...downloadKeys.all, "status", jobId] as const,
-	adminJobs: () => [...downloadKeys.all, "admin", "jobs"] as const,
+	adminJobs: (params?: object) =>
+		params ? ([...downloadKeys.all, "admin", "jobs", params] as const) : ([...downloadKeys.all, "admin", "jobs"] as const),
 };

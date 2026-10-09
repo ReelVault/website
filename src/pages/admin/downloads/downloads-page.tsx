@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Download, HardDrive, RefreshCw, Settings, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { useAdminDeleteDownloadJob, useAdminDownloadJobs } from "@/client/hooks/use-downloads";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
+import { SimplePagination } from "@/components/simple-pagination";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
@@ -13,9 +16,27 @@ import { formatDateTime } from "@/utils/format-utils";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 
+type StatusFilter = "all" | "pending" | "processing" | "completed" | "failed" | "cancelled";
+
+const STATUS_FILTERS: readonly StatusFilter[] = ["all", "pending", "processing", "completed", "failed", "cancelled"];
+const NO_COUNTS = { pending: 0, processing: 0, completed: 0, failed: 0, cancelled: 0 };
+
 export default function AdminDownloadsPage() {
-	const { data: downloads = [], isLoading, isError, error, refetch } = useAdminDownloadJobs();
+	const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+	const [page, setPage] = useState(1);
+	const pageQuery = useAdminDownloadJobs({ page, status: statusFilter === "all" ? undefined : statusFilter });
+	const { data, isLoading, isFetching, isError, error, refetch } = pageQuery;
 	const deleteMutation = useAdminDeleteDownloadJob();
+	const downloads = data?.data ?? [];
+	// The counters come from the server, so they cover every job rather than the page on screen.
+	const counts = data?.counts ?? NO_COUNTS;
+	const activeCount = counts.pending + counts.processing;
+	const totalCount = counts.pending + counts.processing + counts.completed + counts.failed + counts.cancelled;
+
+	const handleStatusChange = (next: StatusFilter) => {
+		setStatusFilter(next);
+		setPage(1);
+	};
 
 	const handleDelete = async (jobId: string) => {
 		try {
@@ -41,16 +62,6 @@ export default function AdminDownloadsPage() {
 				}}
 			/>
 		);
-	}
-
-	const activeDownloads: typeof downloads = [];
-	const completedDownloads: typeof downloads = [];
-	for (const d of downloads) {
-		if (d.status === "completed") {
-			completedDownloads.push(d);
-		} else if (d.status === "pending" || d.status === "processing") {
-			activeDownloads.push(d);
-		}
 	}
 
 	return (
@@ -85,20 +96,20 @@ export default function AdminDownloadsPage() {
 			<div className="grid gap-3 sm:grid-cols-3">
 				<AdminStatCard
 					label={m.admin_downloads_active_jobs()}
-					value={activeDownloads.length}
+					value={activeCount}
 					icon={Download}
 					description={m.admin_downloads_processing_hint()}
 				/>
 				<AdminStatCard
 					label={m.admin_downloads_finished_files()}
-					value={completedDownloads.length}
+					value={counts.completed}
 					icon={HardDrive}
 					tone="success"
 					description={m.admin_downloads_processed_files()}
 				/>
 				<AdminStatCard
 					label={m.admin_downloads_total_jobs()}
-					value={downloads.length}
+					value={totalCount}
 					icon={Download}
 					tone="muted"
 					description={m.admin_downloads_all_user_jobs()}
@@ -107,6 +118,23 @@ export default function AdminDownloadsPage() {
 
 			{/* Job list */}
 			<AdminSection title={m.admin_downloads_job_queue()} description={m.admin_downloads_current_and_finished_files()}>
+				<ToggleGroup
+					multiple={false}
+					value={[statusFilter]}
+					onValueChange={(value) => {
+						const next = STATUS_FILTERS.find((candidate) => candidate === value[0]);
+						if (next) handleStatusChange(next);
+					}}
+					variant="outline"
+					size="sm"
+					className="mb-3 flex-wrap"
+				>
+					{STATUS_FILTERS.map((option) => (
+						<ToggleGroupItem key={option} value={option} className="text-xs">
+							{option === "all" ? m.common_all() : option}
+						</ToggleGroupItem>
+					))}
+				</ToggleGroup>
 				{downloads.length === 0 ? (
 					<AppEmptyState title={m.admin_downloads_no_jobs()} description={m.admin_downloads_empty()} />
 				) : (
@@ -168,6 +196,13 @@ export default function AdminDownloadsPage() {
 						})}
 					</div>
 				)}
+				<SimplePagination
+					variant="admin"
+					currentPage={page}
+					totalPages={data?.totalPages ?? 1}
+					isLoading={isFetching}
+					onPageChange={setPage}
+				/>
 			</AdminSection>
 		</div>
 	);

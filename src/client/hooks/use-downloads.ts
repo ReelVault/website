@@ -1,5 +1,5 @@
-import type { AdminDownloadJob, DownloadJob } from "@reelvault/sdk";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { DownloadJob } from "@reelvault/sdk";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
@@ -112,16 +112,14 @@ export function getDownloadFileUrl(jobId: string): string {
 	return reelvault.downloads.getFileUrl(jobId);
 }
 
-export function useAdminDownloadJobs() {
-	return useQuery<AdminDownloadJob[]>({
-		queryKey: downloadKeys.adminJobs(),
-		queryFn: async () => {
-			const response = await reelvault.admin.getDownloadJobs();
-
-			return response.jobs;
-		},
+/** One page of every user's download jobs, optionally narrowed to one status. */
+export function useAdminDownloadJobs(params: { page: number; status?: "pending" | "processing" | "completed" | "failed" | "cancelled" }) {
+	return useQuery({
+		queryKey: downloadKeys.adminJobs(params),
+		queryFn: () => reelvault.admin.getDownloadJobs(params),
+		placeholderData: keepPreviousData,
 		refetchInterval: pollWhile({
-			isActive: (data) => data?.some((item) => item.status === "pending" || item.status === "processing") ?? false,
+			isActive: (data) => data?.data.some((item) => item.status === "pending" || item.status === "processing") ?? false,
 			activeMs: 1500,
 		}),
 	});
