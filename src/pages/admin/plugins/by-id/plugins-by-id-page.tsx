@@ -46,6 +46,18 @@ function isPluginConfigExport(value: unknown): value is PluginConfigExport {
 }
 
 /** A field can be reset to its default when it has one and the form holds something else. */
+/** The field a rejected config save names (`plugin.config_invalid` with `params.field`), if any. */
+function invalidConfigField(error: unknown): string | null {
+	if (!error || typeof error !== "object") return null;
+
+	const { code, params } = error as { code?: unknown; params?: unknown };
+	if (code !== "plugin.config_invalid" || !params || typeof params !== "object") return null;
+
+	const { field } = params as { field?: unknown };
+
+	return typeof field === "string" ? field : null;
+}
+
 function canRestoreField(field: { type: string; default?: unknown }, value: unknown): boolean {
 	return field.type !== "secret" && field.default !== undefined && JSON.stringify(value) !== JSON.stringify(field.default);
 }
@@ -73,6 +85,7 @@ export default function AdminPluginSettingsPage() {
 
 	const [formValues, setFormValues] = useState<Record<string, unknown>>({});
 	const [showSecrets, setShowSecrets] = useState<Record<string, boolean>>({});
+	const [fieldErrors, setFieldErrors] = useState<Record<string, string | undefined>>({});
 
 	useEffect(() => {
 		if (configDetails?.config) {
@@ -88,6 +101,7 @@ export default function AdminPluginSettingsPage() {
 	}, [configDetails]);
 
 	const handleValueChange = (name: string, value: unknown) => {
+		setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
 		setFormValues((prev) => ({
 			...prev,
 			[name]: value,
@@ -151,9 +165,12 @@ export default function AdminPluginSettingsPage() {
 
 	const handleSubmit = async () => {
 		try {
+			setFieldErrors({});
 			await updateConfig(formValues);
-		} catch {
-			// Toast is handled by hook
+		} catch (saveError) {
+			// The hook shows the toast; the named field also gets an inline message.
+			const field = invalidConfigField(saveError);
+			if (field) setFieldErrors({ [field]: m.admin_plugins_config_field_error() });
 		}
 	};
 
@@ -244,6 +261,7 @@ export default function AdminPluginSettingsPage() {
 										onToggleSecret={() => toggleSecretVisibility(field.name)}
 										onChange={(val) => handleValueChange(field.name, val)}
 									/>
+									{fieldErrors[field.name] && <p className="text-destructive text-xs">{fieldErrors[field.name]}</p>}
 									{canRestoreField(field, formValues[field.name]) && (
 										<Button
 											type="button"

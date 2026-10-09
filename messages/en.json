@@ -1155,6 +1155,7 @@
 	"admin_plugins_config_import_failed": "Could not import the configuration",
 	"admin_plugins_config_import_invalid": "The file is not a plugin configuration export",
 	"admin_plugins_field_reset": "Restore default",
+	"admin_plugins_config_field_error": "This value is required or invalid.",
 	"admin_plugins_disable": "Disable plugin",
 	"admin_plugins_disable_confirm": "Disable plugin {name}?",
 	"admin_plugins_disable_notice": "The plugin will be stopped immediately and its routes and background jobs unregistered.",

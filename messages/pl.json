@@ -1161,6 +1161,7 @@
 	"admin_plugins_config_import_failed": "Nie udało się zaimportować konfiguracji",
 	"admin_plugins_config_import_invalid": "Plik nie jest eksportem konfiguracji pluginu",
 	"admin_plugins_field_reset": "Przywróć domyślną",
+	"admin_plugins_config_field_error": "Ta wartość jest wymagana albo nieprawidłowa.",
 	"admin_plugins_disable": "Wyłącz wtyczkę",
 	"admin_plugins_disable_confirm": "Wyłączyć wtyczkę {name}?",
 	"admin_plugins_disable_notice": "Wtyczka zostanie natychmiast zatrzymana, a jej trasy i zadania w tle wyrejestrowane.",
