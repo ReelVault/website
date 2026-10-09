@@ -127,7 +127,7 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 								episodeNumber: nextEpisode.episodeNumber,
 								titleSuffix: nextEpisode.title ? ` - ${nextEpisode.title}` : "",
 							})}
-							className="hidden sm:flex"
+							className="flex"
 							render={<button type="button" onClick={playNextEpisode} aria-label={m.player_next_episode()} />}
 						>
 							<SkipForward className="size-5" />

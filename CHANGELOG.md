@@ -212,6 +212,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Watchlist button shows its state** — on a title's page the watchlist button reads *Remove from list* when the title is already on the list, reports its pressed state, and is disabled while the change is being saved.
 - **Jump to any page** — admin pagination shows an editable page number: type a page and press Enter.
 - **Restart notice for the session lifetime** — the session lifetime setting says that it applies to new sessions after a server restart.
+- **Next episode on small screens** — the next-episode button in the player is shown on phones too, not only from 640 px wide.
 
 ### Fixes
 
