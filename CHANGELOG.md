@@ -247,3 +247,4 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **HLS segment length setting** — the description now says the change applies after a server restart.
 - **Admin media file actions on touch and TV** — the open, edit and delete buttons on a media file card appeared only on hover, which touch and TV input never triggers. They stay visible on coarse pointers, and keyboard focus reveals them too.
 - **Plugin errors show a readable reason** — a plugin card that failed to start shows the translated reason for the server's stable error code (for example too many registered routes) instead of the raw server text, which is kept when no translation exists.
+- **Requests from the global search keep the requester's name** — a media request made from the search bar was saved without the requester's name. It now carries the account name, as requests from the title pages do.

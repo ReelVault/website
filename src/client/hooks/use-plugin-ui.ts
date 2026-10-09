@@ -11,6 +11,7 @@ import type {
 } from "@reelvault/sdk/plugin";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "@tanstack/react-router";
+import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
@@ -252,6 +253,7 @@ export function usePluginSearchProvider(): PluginSearchProvider | null {
  */
 export function usePluginSearch(provider: PluginSearchProvider | null, term: string, enabled: boolean) {
 	const queryClient = useQueryClient();
+	const { user } = useCurrentUser();
 	// Match the native global search: one provider request per settled input, not
 	// one per keystroke.
 	const debouncedTerm = useDebounce({ value: term, delay: 500 });
@@ -286,6 +288,8 @@ export function usePluginSearch(provider: PluginSearchProvider | null, term: str
 					externalId: item.externalId,
 					posterPath: item.posterPath,
 					overview: item.overview,
+					// The requests plugin shows the requester's name; the detail and discover views send the same value.
+					requestedByName: user?.name,
 				},
 			});
 		},
