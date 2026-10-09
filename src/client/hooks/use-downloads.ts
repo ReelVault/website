@@ -1,6 +1,7 @@
 import type { AdminDownloadJob, DownloadJob } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
+import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { pollWhile } from "../utils/poll-while";
@@ -10,20 +11,25 @@ export type DownloadQuality = "original" | "1080p-high" | "720p-mobile" | "480p-
 
 export const userDownloadsQueryOptions = () => ({
 	queryKey: downloadKeys.list(),
-	queryFn: async () => {
-		const response = await reelvault.downloads.list();
-
-		return response.jobs;
-	},
+	queryFn: () => reelvault.downloads.list(),
 });
 
 export function useUserDownloads() {
-	return useQuery<DownloadJob[]>({
+	return useQuery({
 		...userDownloadsQueryOptions(),
+		select: (response) => response.jobs,
 		refetchInterval: pollWhile({
-			isActive: (data) => data?.some((item) => item.status === "pending" || item.status === "processing") ?? false,
+			isActive: (data) => data?.jobs.some((item) => item.status === "pending" || item.status === "processing") ?? false,
 			activeMs: 1500,
 		}),
+	});
+}
+
+/** Storage the finished downloads use against the profile's limit. */
+export function useUserDownloadQuota() {
+	return useQuery({
+		...userDownloadsQueryOptions(),
+		select: (response) => response.quota,
 	});
 }
 
@@ -63,6 +69,24 @@ export function useDownloadJobStatus(jobId: string | null | undefined) {
 			if (data.status === "completed" || data.status === "failed" || data.status === "cancelled") return false;
 
 			return 1500;
+		},
+	});
+}
+
+export function useRetryDownload() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (jobId: string) => {
+			return await reelvault.downloads.retry(jobId);
+		},
+		onSuccess: async (job) => {
+			queryClient.setQueryData(downloadKeys.status(job.id), job);
+			toast.success(m.toast_download_retry_started());
+			await queryClient.invalidateQueries({ queryKey: downloadKeys.list() });
+		},
+		onError: (error) => {
+			toastError(m.toast_download_retry_failed(), error, m.toast_plugins_unexpected_error());
 		},
 	});
 }

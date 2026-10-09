@@ -1,10 +1,11 @@
 import { RefreshCw } from "lucide-react";
-import { useDeleteDownload, useUserDownloads } from "@/client/hooks/use-downloads";
+import { useDeleteDownload, useRetryDownload, useUserDownloadQuota, useUserDownloads } from "@/client/hooks/use-downloads";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { formatFileSize } from "@/utils/file-utils";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { UserPageHeader, UserSectionTitle } from "../components/user-ui";
@@ -15,6 +16,8 @@ import { FailedDownloadCard } from "./components/failed-download-card";
 export default function DownloadsPage() {
 	const { data: downloads = [], isLoading, isError, error, refetch } = useUserDownloads();
 	const deleteMutation = useDeleteDownload();
+	const retryMutation = useRetryDownload();
+	const { data: quota } = useUserDownloadQuota();
 
 	const handleDelete = async (jobId: string) => {
 		try {
@@ -22,6 +25,14 @@ export default function DownloadsPage() {
 			toast.success(m.user_file_deleted_from_server());
 		} catch (err) {
 			toastError(m.user_failed_to_delete_file(), err);
+		}
+	};
+
+	const handleRetry = async (jobId: string) => {
+		try {
+			await retryMutation.mutateAsync(jobId);
+		} catch {
+			// Toast is handled by hook
 		}
 	};
 
@@ -89,7 +100,13 @@ export default function DownloadsPage() {
 						<UserSectionTitle title={m.user_history_error()} description={m.user_finished_errored_jobs()} />
 						<div className="flex flex-col gap-3">
 							{failedDownloads.map((job) => (
-								<FailedDownloadCard key={job.id} job={job} onDelete={(jobId) => detach(handleDelete(jobId))} />
+								<FailedDownloadCard
+									key={job.id}
+									job={job}
+									onDelete={(jobId) => detach(handleDelete(jobId))}
+									onRetry={(jobId) => detach(handleRetry(jobId))}
+									isRetrying={retryMutation.isPending}
+								/>
 							))}
 						</div>
 					</section>
@@ -118,6 +135,14 @@ export default function DownloadsPage() {
 					</Button>
 				}
 			/>
+
+			{quota && (
+				<p className="-mt-6 text-muted-foreground text-xs">
+					{quota.maxBytes > 0
+						? m.user_download_quota({ used: formatFileSize(quota.usedBytes), limit: formatFileSize(quota.maxBytes) })
+						: m.user_download_quota_unlimited({ used: formatFileSize(quota.usedBytes) })}
+				</p>
+			)}
 
 			{renderDownloadLists()}
 		</main>

@@ -1,11 +1,21 @@
 import type { DownloadJob } from "@reelvault/sdk";
-import { Trash2 } from "lucide-react";
+import { RotateCcw, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 
-/** Card for a failed / cancelled download. */
-export function FailedDownloadCard({ job, onDelete }: { job: DownloadJob; onDelete: (jobId: string) => void }) {
+/** Card for a failed / cancelled download; retry queues the same file and quality again. */
+export function FailedDownloadCard({
+	job,
+	onDelete,
+	onRetry,
+	isRetrying,
+}: {
+	job: DownloadJob;
+	onDelete: (jobId: string) => void;
+	onRetry: (jobId: string) => void;
+	isRetrying: boolean;
+}) {
 	return (
 		<div className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-muted/20 p-4 sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex min-w-0 items-center gap-3">
@@ -23,9 +33,15 @@ export function FailedDownloadCard({ job, onDelete }: { job: DownloadJob; onDele
 				</div>
 			</div>
 
-			<Button variant="ghost" size="sm" onClick={() => onDelete(job.id)} className="text-muted-foreground text-xs hover:text-foreground">
-				{m.user_delete_entry()}
-			</Button>
+			<div className="flex items-center gap-2">
+				<Button variant="outline" size="sm" disabled={isRetrying} onClick={() => onRetry(job.id)} className="gap-1.5 text-xs">
+					<RotateCcw className="size-3.5" />
+					{m.user_retry_download()}
+				</Button>
+				<Button variant="ghost" size="sm" onClick={() => onDelete(job.id)} className="text-muted-foreground text-xs hover:text-foreground">
+					{m.user_delete_entry()}
+				</Button>
+			</div>
 		</div>
 	);
 }
