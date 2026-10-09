@@ -230,6 +230,7 @@ export const adminKeys = {
 	},
 	resources: (hours?: number) => [...adminKeys.all, "resources", ...(hours === undefined ? [] : [hours])] as const,
 	trickplayStats: () => [...adminKeys.all, "trickplay", "stats"] as const,
+	trickplayRegenerationReport: (operationId: string) => [...adminKeys.all, "trickplay", "regeneration-report", operationId] as const,
 	artifactStats: () => [...adminKeys.all, "artifacts", "stats"] as const,
 	ffmpegCapabilities: () => [...adminKeys.all, "ffmpeg-capabilities"] as const,
 	analytics: (days?: number) => (days ? ([...adminKeys.all, "analytics", days] as const) : ([...adminKeys.all, "analytics"] as const)),

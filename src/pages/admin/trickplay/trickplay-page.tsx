@@ -8,6 +8,7 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection, AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
+import { TrickplayRegenerationSection } from "./trickplay-regeneration-section";
 
 export default function AdminTrickplayPage() {
 	const { stats, isLoading, isFetching, error, refetch } = useTrickplayStats();
@@ -110,6 +111,8 @@ export default function AdminTrickplayPage() {
 			/>
 
 			{content}
+
+			<TrickplayRegenerationSection />
 
 			<AdminSection title={m.admin_trickplay_heading()} description={m.admin_trickplay_section_description()}>
 				<p className="text-muted-foreground text-sm">{m.admin_trickplay_hint()}</p>

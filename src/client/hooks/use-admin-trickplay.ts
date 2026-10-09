@@ -3,6 +3,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
+import { pollWhile } from "../utils/poll-while";
 import { adminKeys } from "../utils/query-keys";
 
 export function useTrickplayStats() {
@@ -48,6 +49,33 @@ export function useDeleteTrickplay() {
 		onError: (error) => {
 			toastError(m.hooks_trickplay_remove_error(), error);
 		},
+	});
+}
+
+/** Queue previews for one library: the files without previews, or every file when `force` is set. */
+export function useRegenerateTrickplay() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (params: { libraryId: string; force: boolean }) =>
+			reelvault.admin.regenerateTrickplay({ scope: "library", id: params.libraryId, force: params.force }),
+		onSuccess: async (result) => {
+			toast.success(m.hooks_trickplay_regenerate_queued({ enqueued: result.enqueued }));
+			await queryClient.invalidateQueries({ queryKey: adminKeys.trickplayStats() });
+		},
+		onError: (error) => {
+			toastError(m.hooks_trickplay_regenerate_error(), error);
+		},
+	});
+}
+
+/** Outcome counts of one regeneration operation, polled while any of its jobs is still queued or running. */
+export function useTrickplayRegenerationReport(operationId: string | undefined) {
+	return useQuery({
+		queryKey: adminKeys.trickplayRegenerationReport(operationId ?? ""),
+		queryFn: () => reelvault.admin.getTrickplayRegenerationReport(operationId ?? ""),
+		enabled: operationId !== undefined,
+		refetchInterval: pollWhile({ isActive: (data) => (data?.unfinished ?? 0) > 0, activeMs: 3_000 }),
 	});
 }
 

@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Regenerate previews by library** — the trickplay page queues the missing previews of one library, or rebuilds all of them. Once queued, the page shows how many files were generated, how many the storage budget skipped, how many were skipped for other reasons, what failed and what is still running; the counts refresh while work remains.
 - **Worker pause, retry and watchdog notice** — the worker admin page pauses and resumes a task's automatic runs. A paused task shows a badge and no next run, while manual runs keep working. Each scheduled task shows its next run. A failed job in an operation can be retried; the retry is a new job and the failed one stays in the history. A notice appears when the watchdog has requeued orphaned jobs since the server started.
 - **Change password** — Settings now has a Password section: change your password by confirming the current one. Other devices are signed out and API errors (wrong current password, invalid length) are translated. Requires SDK 1.3.0.
 - **Subtitle language priority list** — Settings → Playback has a new "Fallback subtitle languages" picker: add languages as chips, reorder them and remove them. When the preferred language has no subtitles, the next language in the list is used. Admins can set a default in Settings → Profiles. Requires SDK 1.3.0.
