@@ -93,11 +93,20 @@ export function useCreateProfile() {
 	});
 }
 
+/** Whether the profile has a PIN. The PIN itself is never fetched; the status is refreshed after a PIN change. */
+export function useProfilePinStatus(profileId: string) {
+	return useQuery({
+		queryKey: profileKeys.pinStatus(profileId),
+		queryFn: () => reelvault.profiles.getPinStatus(profileId),
+		staleTime: 30_000,
+	});
+}
+
 export function useUpdateProfile() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: ({ id, data }: { id: string; data: { name?: string; avatarUrl?: string; pin?: string } }) =>
+		mutationFn: ({ id, data }: { id: string; data: { name?: string; avatarUrl?: string; pin?: string | null } }) =>
 			reelvault.profiles.update(id, data),
 		onSuccess: async () => {
 			await invalidateProfiles(queryClient);

@@ -1,8 +1,10 @@
 import { KeyRound, ShieldCheck, User } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { useUpdateProfile, useUploadProfileAvatar } from "@/client/hooks/use-profiles";
+import { useProfilePinStatus, useUpdateProfile, useUploadProfileAvatar } from "@/client/hooks/use-profiles";
 import { AsyncButton } from "@/components/async-button";
+import { ConfirmAction } from "@/components/confirm-action";
+import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { detach } from "@/lib/detach";
@@ -20,6 +22,7 @@ interface ProfileInfoSectionProps {
 export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 	const updateProfile = useUpdateProfile();
 	const uploadAvatar = useUploadProfileAvatar();
+	const pinStatus = useProfilePinStatus(profile.id);
 
 	const [name, setName] = useState(profile.name);
 	const [pin, setPin] = useState("");
@@ -50,6 +53,11 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 		if (!hasChanges || updateProfile.isPending) return;
 
 		detach(submitProfile());
+	};
+
+	const removePin = async () => {
+		await updateProfile.mutateAsync({ id: profile.id, data: { pin: null } });
+		await pinStatus.refetch();
 	};
 
 	const handleAvatarSave = async (avatarUrl: string) => {
@@ -116,6 +124,19 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 						/>
 					</InputGroup>
 					<FieldDescription>{m.user_pin_exact_digits()}</FieldDescription>
+					{pinStatus.data?.hasPin && (
+						<ConfirmAction
+							trigger={
+								<Button type="button" variant="outline" size="sm" className="self-start" disabled={updateProfile.isPending}>
+									{m.user_remove_pin()}
+								</Button>
+							}
+							title={m.user_remove_pin_confirm()}
+							description={m.user_remove_pin_description()}
+							confirmLabel={m.user_remove_pin()}
+							onConfirm={removePin}
+						/>
+					)}
 					{pin.length > 0 && pin.length !== 4 && (
 						<p role="alert" aria-live="polite" className="text-destructive text-xs">
 							{m.user_pin_4_digits()}

@@ -136,6 +136,7 @@ export const profileKeys = {
 	adminUserProfilePreferences: (userId: string, profileId: string) =>
 		[...profileKeys.adminUserProfiles(userId), profileId, "preferences"] as const,
 	preferences: (profileId: string) => [...profileKeys.all, profileId, "preferences"] as const,
+	pinStatus: (profileId: string) => [...profileKeys.all, profileId, "pin-status"] as const,
 };
 
 export const mediaKeys = {
