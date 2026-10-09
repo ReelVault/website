@@ -98,6 +98,7 @@ export const authKeys = {
 export const notificationKeys = {
 	all: ["notifications"] as const,
 	list: (unreadOnly: boolean) => [...notificationKeys.all, "list", unreadOnly] as const,
+	page: (params: object) => [...notificationKeys.all, "page", params] as const,
 	unreadCount: () => [...notificationKeys.all, "unread-count"] as const,
 };
 

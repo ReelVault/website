@@ -1,4 +1,4 @@
-import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
@@ -11,6 +11,18 @@ export const notificationsQueryOptions = (unreadOnly = false) =>
 		queryFn: () => reelvault.notifications.getAll({ unreadOnly }),
 		staleTime: 1000 * 60 * 5,
 	});
+
+/** One page of notifications, filtered on the server by read state and type. */
+export function useNotificationsPage(params: { page: number; limit?: number; unreadOnly: boolean; type?: string }) {
+	const { page, limit = 25, unreadOnly, type } = params;
+
+	return useQuery({
+		queryKey: notificationKeys.page({ page, limit, unreadOnly, type }),
+		queryFn: () => reelvault.notifications.getPage({ page, limit, unreadOnly, type }),
+		placeholderData: keepPreviousData,
+		staleTime: 1000 * 60 * 5,
+	});
+}
 
 export function useNotifications(unreadOnly = false, options?: { enabled?: boolean }) {
 	const queryClient = useQueryClient();

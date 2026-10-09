@@ -1,7 +1,8 @@
 import { useState, ViewTransition } from "react";
-import { useNotifications, useUnreadNotificationCount } from "@/client/hooks/use-notifications";
+import { useNotifications, useNotificationsPage, useUnreadNotificationCount } from "@/client/hooks/use-notifications";
 import { AppErrorState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
+import { SimplePagination } from "@/components/simple-pagination";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { UserPageHeader } from "../components/user-ui";
@@ -13,12 +14,18 @@ import { NotificationsFilterBar, type NotificationTabType } from "./sections/not
 export default function NotificationsPage() {
 	const [activeTab, setActiveTab] = useState<NotificationTabType>("all");
 	const [showUnreadOnly, setShowUnreadOnly] = useState(false);
-	const { notifications, isLoading, error, refetch, markRead, markAllRead, isMarkingRead, isMarkingAllRead } =
-		useNotifications(showUnreadOnly);
+	const [page, setPage] = useState(1);
+	// The list is paged and filtered on the server; the hook keeps the mutations (mark read) without a second list request.
+	const { markRead, markAllRead, isMarkingRead, isMarkingAllRead } = useNotifications(false, { enabled: false });
+	const pageQuery = useNotificationsPage({
+		page,
+		unreadOnly: showUnreadOnly,
+		type: activeTab === "all" ? undefined : activeTab,
+	});
+	const { data, isLoading, error, refetch } = pageQuery;
+	const notifications = data?.data ?? [];
 	const unreadNotifications = useUnreadNotificationCount();
 	const unreadCount = unreadNotifications.data?.count ?? 0;
-	const filteredNotifications =
-		activeTab === "all" ? notifications : notifications.filter((notification) => notification.type === activeTab);
 
 	return (
 		<div className="relative flex flex-col gap-8">
@@ -31,9 +38,15 @@ export default function NotificationsPage() {
 			<div className="flex flex-col gap-8">
 				<NotificationsFilterBar
 					activeTab={activeTab}
-					onTabChange={setActiveTab}
+					onTabChange={(tab) => {
+						setActiveTab(tab);
+						setPage(1);
+					}}
 					showUnreadOnly={showUnreadOnly}
-					onToggleUnreadOnly={() => setShowUnreadOnly((value) => !value)}
+					onToggleUnreadOnly={() => {
+						setShowUnreadOnly((value) => !value);
+						setPage(1);
+					}}
 					unreadCount={unreadCount}
 					isMarkingAllRead={isMarkingAllRead}
 					onMarkAllRead={markAllRead}
@@ -44,14 +57,16 @@ export default function NotificationsPage() {
 					<div className="grid gap-4" role="tabpanel" aria-live="polite">
 						{isLoading && <NotificationsLoading />}
 						{error && <AppErrorState title={m.user_notifications_fetch_failed()} error={error} onRetry={() => detach(refetch())} />}
-						{!(isLoading || error) && filteredNotifications.length === 0 && <NotificationsEmpty unreadOnly={showUnreadOnly} />}
-						{filteredNotifications.map((notification) => (
+						{!(isLoading || error) && notifications.length === 0 && <NotificationsEmpty unreadOnly={showUnreadOnly} />}
+						{notifications.map((notification) => (
 							<LazyRender key={notification.id} minHeight={120}>
 								{() => <NotificationCard notification={notification} isMarkingRead={isMarkingRead} onMarkRead={markRead} />}
 							</LazyRender>
 						))}
 					</div>
 				</ViewTransition>
+
+				<SimplePagination currentPage={page} totalPages={data?.totalPages ?? 1} isLoading={pageQuery.isFetching} onPageChange={setPage} />
 			</div>
 		</div>
 	);
