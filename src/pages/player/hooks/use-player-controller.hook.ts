@@ -1065,11 +1065,19 @@ export function usePlayerController({
 		// this the previous episode's pause intent would keep the next one paused.
 		userPlayIntentRef.current = true;
 		detach(() => syncPlaybackProgress(true));
-		const cleanId = targetEpisode.mediaFileId.replace(PLAYER_PATH_PREFIX_REGEX, "").split("?")[0] ?? "";
+		// The next target can carry collection context (`?collection=true&collectionId=…`); keep it.
+		const [cleanId = "", query = ""] = targetEpisode.mediaFileId.replace(PLAYER_PATH_PREFIX_REGEX, "").split("?");
+		const targetSearch = new URLSearchParams(query);
+		const targetCollectionId = targetSearch.get("collectionId");
+		const search =
+			targetSearch.get("collection") === "true"
+				? { collection: true, ...(targetCollectionId ? { collectionId: targetCollectionId } : {}) }
+				: {};
 		detach(() =>
 			navigate({
 				to: "/player/$id",
 				params: { id: cleanId },
+				search,
 				replace: true,
 			}),
 		);

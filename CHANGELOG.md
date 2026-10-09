@@ -216,6 +216,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Warning before leaving unsaved settings** — closing or reloading the tab while a settings section has unsaved changes asks the browser to confirm.
 - **Regenerate two-factor backup codes** — with two-factor enabled, settings has *Regenerate backup codes*: confirm the password and get a new set. The previous codes stop working.
 - **Admin genre list is paginated** — the genres page loads 50 genres per page with the page control, instead of silently stopping at the first 100. A new search starts at page one.
+- **Collection context survives the player** — auto-next keeps the collection you were watching, and switching the version of a file inside a collection stays in that collection.
 
 ### Fixes
 

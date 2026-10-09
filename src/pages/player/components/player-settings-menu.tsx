@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Check, Keyboard, Layers, Settings } from "lucide-react";
 import { useState } from "react";
@@ -126,9 +126,12 @@ export function PlayerSettingsMenu({
 
 	const activeQualityLabel = QUALITY_OPTIONS.find((option) => option.bitrate === maxBitrate)?.label ?? m.player_quality_auto();
 
+	// A version switch inside a collection stays in that collection's context.
+	const { collection, collectionId } = useSearch({ from: "/player/$id" });
 	const selectVersion = (newId: string) => {
 		if (newId && newId !== info.mediaFileId) {
-			detach(() => navigate({ to: "/player/$id", params: { id: newId } }));
+			const search = collection ? { collection: true, ...(collectionId ? { collectionId } : {}) } : {};
+			detach(() => navigate({ to: "/player/$id", params: { id: newId }, search }));
 		}
 	};
 
