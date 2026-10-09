@@ -31,6 +31,15 @@ export function useAdminBackups() {
 		onError: (error) => toastError(m.admin_database_failed_to_create(), error),
 	});
 
+	const uploadBackupMutation = useMutation({
+		mutationFn: (file: File) => reelvault.admin.uploadDatabaseBackup(file),
+		onSuccess: async (backup) => {
+			await queryClient.invalidateQueries({ queryKey: adminKeys.backups() });
+			toast.success(m.admin_database_backup_uploaded({ fileName: backup.fileName }));
+		},
+		onError: (error) => toastError(m.admin_database_failed_to_upload(), error),
+	});
+
 	const deleteBackupMutation = useMutation({
 		mutationFn: (fileName: string) => reelvault.admin.deleteDatabaseBackup(fileName),
 		onSuccess: async () => {
@@ -81,6 +90,7 @@ export function useAdminBackups() {
 		backups: backupsQuery.data ?? [],
 		createBackupMutation,
 		deleteBackupMutation,
+		uploadBackupMutation,
 		restoreMutation,
 		restoreBlock,
 		confirmRestoreBlock,

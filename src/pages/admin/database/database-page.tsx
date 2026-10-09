@@ -1,7 +1,8 @@
 import { cn } from "cn";
-import { Database, HeartPulse, Plus, RefreshCw, Wrench } from "lucide-react";
-import type { ReactNode } from "react";
+import { Database, HeartPulse, Plus, RefreshCw, Upload, Wrench } from "lucide-react";
+import { type ChangeEvent, type ReactNode, useRef } from "react";
 import { useAdminBackups } from "@/client/hooks/use-admin-backups";
+import { useAdminSettings } from "@/client/hooks/use-admin-settings";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { StreamBlockDialog } from "@/components/stream-block-dialog";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ export default function AdminDatabasePage() {
 		backups,
 		createBackupMutation,
 		deleteBackupMutation,
+		uploadBackupMutation,
 		restoreMutation,
 		restoreBlock,
 		confirmRestoreBlock,
@@ -29,6 +31,11 @@ export default function AdminDatabasePage() {
 		integrityMutation,
 		optimizeMutation,
 	} = useAdminBackups();
+	const { settings } = useAdminSettings();
+	const uploadInputRef = useRef<HTMLInputElement>(null);
+	const uploadEnabled = (settings ? Object.values(settings).flat() : []).some(
+		(item) => item.key === "system.database.backupUploadEnabled" && item.value === true,
+	);
 
 	const handleRefetch = () => {
 		detach(backupsQuery.refetch());
@@ -39,6 +46,12 @@ export default function AdminDatabasePage() {
 
 		const backup = await createBackupMutation.mutateAsync();
 		toast.success(m.admin_database_backup_created({ fileName: backup.fileName }));
+	};
+
+	const handleUploadSelected = (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.currentTarget.files?.[0];
+		event.currentTarget.value = "";
+		if (file) uploadBackupMutation.mutate(file);
 	};
 
 	const handleDeleteBackup = async (fileName: string) => {
@@ -130,6 +143,27 @@ export default function AdminDatabasePage() {
 							<RefreshCw className={cn("size-3.5", { "animate-spin": backupsQuery.isFetching })} />
 							{m.common_refresh()}
 						</Button>
+						{uploadEnabled && (
+							<>
+								<input
+									ref={uploadInputRef}
+									type="file"
+									accept=".sqlite,application/vnd.sqlite3"
+									className="hidden"
+									onChange={handleUploadSelected}
+								/>
+								<Button
+									variant="outline"
+									size="sm"
+									disabled={uploadBackupMutation.isPending}
+									onClick={() => uploadInputRef.current?.click()}
+									className="gap-1.5 text-xs"
+								>
+									<Upload className="size-3.5" />
+									{m.admin_database_upload_backup()}
+								</Button>
+							</>
+						)}
 						<Button
 							size="sm"
 							onClick={() => {
@@ -144,6 +178,8 @@ export default function AdminDatabasePage() {
 					</div>
 				}
 			/>
+
+			{!uploadEnabled && <p className="text-muted-foreground text-xs">{m.admin_database_upload_disabled_hint()}</p>}
 
 			{/* Info Cards */}
 			<DatabaseStatsGrid backups={backups} />

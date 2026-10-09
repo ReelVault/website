@@ -536,6 +536,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_watched_history_retention(),
 		description: m.admin_settings_watched_history_retention_description(),
 	},
+	"system.database.backupUploadEnabled": {
+		label: m.admin_settings_backup_upload_enabled(),
+		description: m.admin_settings_backup_upload_enabled_description(),
+	},
 	"system.database.backupRetentionCount": {
 		label: m.admin_settings_backup_retention_count(),
 		description: m.admin_settings_backup_retention_count_description(),

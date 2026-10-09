@@ -291,6 +291,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Mute notification types** — the general settings list the notification types the profile has received, with a checkbox per type; muted types stop alerting and leave the profile's list and badge. Requires SDK and server with muted notification types.
 - **Hidden menu pages** — the general settings list the optional pages (collections, discovery, insights, devices and remote) with a checkbox each; a checked page leaves the navbar, the mobile bar and menu, and the user sidebar of this profile. The pages stay reachable by their address. Requires SDK and server with the hidden pages preference.
 - **Bulk artwork refresh and image cache purge** — the admin metadata list has checkboxes (the selection spans the pages shown, like the people list), and *Refresh artwork of selected* refreshes the posters and backdrops of the selected titles in requests of up to 50. The resources page has *Clear image cache*, which deletes the optimized image copies; originals stay, and the copies are rebuilt when they are next requested. Requires SDK and server with the bulk artwork refresh and image cache purge endpoints.
+- **Database backup upload** — the database page has *Upload backup* once *Allow backup upload* is turned on in system settings (off by default); until then, a line above the list says how to turn it on. The uploaded copy appears in the backup list and can be restored like any other. Requires SDK and server with the backup upload endpoint.
 
 ### Fixes
 
