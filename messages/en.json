@@ -2765,6 +2765,7 @@
 	"components_navbar_my_devices": "My devices",
 	"components_navbar_no_notifications": "No notifications",
 	"components_navbar_notifications": "Notifications",
+	"components_navbar_downloads_in_progress": "{count} downloads in progress, {percent}% on average",
 	"components_navbar_notifications_aria": "Notifications: {unreadCount} unread",
 	"components_navbar_open_mobile_menu": "Open mobile menu",
 	"components_navbar_quick_connect": "Quick connect",

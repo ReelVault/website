@@ -6,6 +6,7 @@ import { m } from "@/paraglide/messages";
 import { getPluginIcon } from "@/plugin-host/icons";
 import { Logo } from "../logo";
 import { NavbarBottomBar } from "./navbar-bottom-bar";
+import { NavbarDownloadsIndicator } from "./navbar-downloads-indicator";
 import { NAVBAR_LINKS, PRIMARY_MOBILE_LINKS } from "./navbar-links";
 import { NavbarLocaleSwitcher } from "./navbar-locale-switcher";
 import { NavbarMobileSheet } from "./navbar-mobile-sheet";
@@ -106,6 +107,8 @@ export function AppNavbar() {
 					<RealtimeStatusIndicator />
 
 					<NavbarSearchGroup />
+
+					<NavbarDownloadsIndicator />
 
 					<NavbarNotifications />
 

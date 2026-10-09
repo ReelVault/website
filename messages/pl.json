@@ -2789,6 +2789,7 @@
 	"components_navbar_my_devices": "Moje urządzenia",
 	"components_navbar_no_notifications": "Brak powiadomień",
 	"components_navbar_notifications": "Powiadomienia",
+	"components_navbar_downloads_in_progress": "Pobierania w toku: {count}, średnio {percent}%",
 	"components_navbar_notifications_aria": "Powiadomienia: {unreadCount} nieprzeczytanych",
 	"components_navbar_open_mobile_menu": "Otwórz menu mobilne",
 	"components_navbar_quick_connect": "Szybkie łączenie",
