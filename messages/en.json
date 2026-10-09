@@ -479,6 +479,7 @@
 	"admin_logs_copied": "Copied",
 	"admin_logs_delete_active_confirm": "Delete the active log file?",
 	"admin_logs_delete_file": "Delete file",
+	"admin_logs_search_files": "Search log files",
 	"admin_logs_delete_file_confirm": "Delete log file “{name}”?",
 	"admin_logs_delete_file_warning": "The file is removed from the server. This cannot be undone.",
 	"admin_logs_delete_named_confirm": "Delete the log file \"{fileName}\"?",

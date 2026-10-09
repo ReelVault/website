@@ -481,6 +481,7 @@
 	"admin_logs_copied": "Skopiowano",
 	"admin_logs_delete_active_confirm": "Usunąć aktywny plik logu?",
 	"admin_logs_delete_file": "Usuń plik",
+	"admin_logs_search_files": "Szukaj plików logów",
 	"admin_logs_delete_file_confirm": "Usunąć plik logu „{name}”?",
 	"admin_logs_delete_file_warning": "Plik zostanie usunięty z serwera. Tej operacji nie można cofnąć.",
 	"admin_logs_delete_named_confirm": "Czy na pewno chcesz usunąć plik \"{fileName}\"?",

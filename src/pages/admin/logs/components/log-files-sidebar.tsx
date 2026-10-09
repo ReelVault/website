@@ -19,6 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SkeletonList } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { AdminSearch } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { LogFileItem } from "./log-file-item";
 
@@ -62,6 +63,11 @@ export function LogFilesSidebar({
 		const fileId = event.currentTarget.dataset.fileId;
 		if (fileId) onSelectFile(fileId);
 	};
+	const [fileQuery, setFileQuery] = useState("");
+	const searchedFiles = fileQuery.trim()
+		? filteredFiles.filter((file) => file.name.toLowerCase().includes(fileQuery.trim().toLowerCase()))
+		: filteredFiles;
+
 	// Deleting a log file removes it from disk for good, so the menu item only asks; the dialog deletes.
 	const [pendingDelete, setPendingDelete] = useState<AdminLogFileInfo | null>(null);
 	const handleDeleteFile = (event: MouseEvent<HTMLElement>) => {
@@ -80,7 +86,7 @@ export function LogFilesSidebar({
 				<SkeletonList count={7} itemClassName="h-14" />
 			</div>
 		);
-	} else if (filteredFiles.length === 0) {
+	} else if (searchedFiles.length === 0) {
 		filesContent = (
 			<div className="flex h-48 flex-col items-center justify-center text-center text-muted-foreground text-xs">
 				<HardDrive className="mb-2 size-8 opacity-40" />
@@ -90,7 +96,7 @@ export function LogFilesSidebar({
 	} else {
 		filesContent = (
 			<LogFileList
-				filteredFiles={filteredFiles}
+				filteredFiles={searchedFiles}
 				effectiveFileId={effectiveFileId}
 				onSelect={handleSelectFile}
 				onDelete={handleDeleteFile}
@@ -110,6 +116,7 @@ export function LogFilesSidebar({
 							<RefreshCw className="size-3.5" aria-hidden="true" />
 						</Button>
 					</div>
+					<AdminSearch value={fileQuery} onChange={setFileQuery} placeholder={m.admin_logs_search_files()} className="w-full" />
 					<ToggleGroup
 						multiple={false}
 						value={[fileTypeFilter]}
