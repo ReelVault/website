@@ -27,6 +27,8 @@ const dynamicMessages = {
 	auth_user_banned: () => m.auth_user_banned(),
 	auth_weak_password: () => m.auth_weak_password(),
 	conflict: () => m.conflict(),
+	database_restore_blocked_active_streams: (inputs) =>
+		m.database_restore_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
 	downloads_disabled: () => m.downloads_disabled(),
 	downloads_duration_unknown: () => m.downloads_duration_unknown(),
 	downloads_in_progress: () => m.downloads_in_progress(),
