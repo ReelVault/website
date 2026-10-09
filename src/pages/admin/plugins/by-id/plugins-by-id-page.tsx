@@ -1,17 +1,20 @@
+import type { PluginConfigExport } from "@reelvault/sdk";
 import { Link, useParams } from "@tanstack/react-router";
 import { cn } from "cn";
-import { ArrowLeft, RefreshCw, RotateCcw, Save, Sliders } from "lucide-react";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { ArrowLeft, Download, RefreshCw, RotateCcw, Save, Sliders, Upload } from "lucide-react";
+import { type ChangeEvent, lazy, Suspense, useEffect, useRef, useState } from "react";
 import { getSdkErrorMessage } from "@/client/client";
 import { useAdminPluginConfig } from "@/client/hooks/use-admin-plugin-config";
 import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
 import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
+import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
+import { toastError } from "@/utils/toast-utils";
 import { PluginEmptyConfig } from "./components/plugin-empty-config";
 import { PluginFieldRenderer } from "./components/plugin-field-renderer";
 import { PluginUiSwitches } from "./components/plugin-ui-switches";
@@ -30,11 +33,42 @@ function safeDecode(value: string): string {
 	}
 }
 
+/** A file this page may import: the export format, version 1, with its values object. */
+function isPluginConfigExport(value: unknown): value is PluginConfigExport {
+	if (typeof value !== "object" || value === null) return false;
+
+	return (
+		Reflect.get(value, "format") === "reelvault.plugin-config" &&
+		Reflect.get(value, "formatVersion") === 1 &&
+		typeof Reflect.get(value, "pluginId") === "string" &&
+		typeof Reflect.get(value, "values") === "object"
+	);
+}
+
+/** A field can be reset to its default when it has one and the form holds something else. */
+function canRestoreField(field: { type: string; default?: unknown }, value: unknown): boolean {
+	return field.type !== "secret" && field.default !== undefined && JSON.stringify(value) !== JSON.stringify(field.default);
+}
+
 export default function AdminPluginSettingsPage() {
 	const params = useParams({ from: "/admin/plugins/$id" });
 	const pluginId = safeDecode(params.id);
 
-	const { configDetails, isLoading, isError, error, refetch, updateConfig, isUpdating } = useAdminPluginConfig(pluginId);
+	const {
+		configDetails,
+		isLoading,
+		isError,
+		error,
+		refetch,
+		updateConfig,
+		isUpdating,
+		resetConfig,
+		importConfig,
+		exportConfig,
+		isResetting,
+		isImporting,
+	} = useAdminPluginConfig(pluginId);
+	const importInput = useRef<HTMLInputElement>(null);
 	const { reloadPlugin, isReloading } = useAdminPlugins();
 
 	const [formValues, setFormValues] = useState<Record<string, unknown>>({});
@@ -67,18 +101,52 @@ export default function AdminPluginSettingsPage() {
 		}));
 	};
 
-	const handleResetDefaults = () => {
-		if (!configDetails) return;
+	const handleResetDefaults = async () => {
+		try {
+			await resetConfig();
+		} catch {
+			// Toast is handled by hook
+		}
+	};
 
-		const defaults: Record<string, unknown> = {};
-		for (const field of configDetails.fields) {
-			if (field.default !== undefined) {
-				defaults[field.name] = field.default;
-			}
+	const handleExport = async () => {
+		try {
+			const exported = await exportConfig();
+			const url = URL.createObjectURL(new Blob([`${JSON.stringify(exported, null, 2)}\n`], { type: "application/json" }));
+			const link = document.createElement("a");
+			link.href = url;
+			link.download = `${pluginId}-config.json`;
+			link.click();
+			URL.revokeObjectURL(url);
+		} catch (exportError) {
+			toastError(m.admin_plugins_config_export_failed(), exportError);
+		}
+	};
+
+	const handleImportFile = async (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		event.target.value = "";
+		if (!file) return;
+
+		let parsed: unknown;
+		try {
+			parsed = JSON.parse(await file.text());
+		} catch {
+			toast.error(m.admin_plugins_config_import_invalid());
+
+			return;
+		}
+		if (!isPluginConfigExport(parsed)) {
+			toast.error(m.admin_plugins_config_import_invalid());
+
+			return;
 		}
 
-		setFormValues(defaults);
-		toast.info(m.admin_plugins_defaults_restored());
+		try {
+			await importConfig(parsed);
+		} catch {
+			// Toast is handled by hook
+		}
 	};
 
 	const handleSubmit = async () => {
@@ -119,6 +187,28 @@ export default function AdminPluginSettingsPage() {
 							<ArrowLeft className="size-3.5" />
 							{m.admin_plugins_back_to_list()}
 						</Button>
+						<Button type="button" variant="outline" size="sm" onClick={() => detach(handleExport())} className="gap-2 text-xs">
+							<Download className="size-3.5" />
+							{m.admin_plugins_config_export()}
+						</Button>
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							disabled={isImporting}
+							onClick={() => importInput.current?.click()}
+							className="gap-2 text-xs"
+						>
+							<Upload className="size-3.5" />
+							{m.admin_plugins_config_import()}
+						</Button>
+						<input
+							ref={importInput}
+							type="file"
+							accept="application/json,.json"
+							className="hidden"
+							onChange={(event) => detach(handleImportFile(event))}
+						/>
 						<Button
 							variant="ghost"
 							size="sm"
@@ -146,29 +236,50 @@ export default function AdminPluginSettingsPage() {
 					<AdminSection title={m.admin_plugins_config_parameters()} description={m.admin_plugins_realtime_sync_notice()}>
 						<div className="grid grid-cols-1 gap-4">
 							{fields.map((field) => (
-								<PluginFieldRenderer
-									key={field.name}
-									field={field}
-									value={formValues[field.name]}
-									showSecret={Boolean(showSecrets[field.name])}
-									onToggleSecret={() => toggleSecretVisibility(field.name)}
-									onChange={(val) => handleValueChange(field.name, val)}
-								/>
+								<div key={field.name} className="flex flex-col gap-2">
+									<PluginFieldRenderer
+										field={field}
+										value={formValues[field.name]}
+										showSecret={Boolean(showSecrets[field.name])}
+										onToggleSecret={() => toggleSecretVisibility(field.name)}
+										onChange={(val) => handleValueChange(field.name, val)}
+									/>
+									{canRestoreField(field, formValues[field.name]) && (
+										<Button
+											type="button"
+											variant="ghost"
+											size="sm"
+											onClick={() => handleValueChange(field.name, field.default)}
+											className="gap-1.5 self-start text-muted-foreground text-xs hover:text-foreground"
+										>
+											<RotateCcw className="size-3" />
+											{m.admin_plugins_field_reset()}
+										</Button>
+									)}
+								</div>
 							))}
 						</div>
 					</AdminSection>
 
 					<div className="flex items-center justify-between border-border/80 border-t pt-4">
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							onClick={handleResetDefaults}
-							className="gap-1.5 text-muted-foreground text-xs hover:text-foreground"
-						>
-							<RotateCcw className="size-3.5" />
-							{m.admin_settings_restore_default()}
-						</Button>
+						<ConfirmAction
+							trigger={
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									disabled={isResetting}
+									className="gap-1.5 text-muted-foreground text-xs hover:text-foreground"
+								>
+									<RotateCcw className="size-3.5" />
+									{m.admin_settings_restore_default()}
+								</Button>
+							}
+							title={m.admin_plugins_config_reset_confirm()}
+							description={m.admin_plugins_config_reset_description()}
+							confirmLabel={m.admin_settings_restore_default()}
+							onConfirm={handleResetDefaults}
+						/>
 
 						<div className="flex items-center gap-3">
 							<Button
