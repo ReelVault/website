@@ -238,3 +238,4 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Download error messages** — a disabled feature, a download already in progress and a full download quota now show their own translated message.
 - **Stream limit messages** — hitting the server or per-user stream limit, or starting sessions too fast, now shows a clear translated message with the limit or the wait time.
 - **HLS segment length setting** — the description now says the change applies after a server restart.
+- **Admin media file actions on touch and TV** — the open, edit and delete buttons on a media file card appeared only on hover, which touch and TV input never triggers. They stay visible on coarse pointers, and keyboard focus reveals them too.

@@ -53,7 +53,8 @@ export function MediaFileListCard({ file, isDeleting, onDelete }: MediaFileListC
 							</div>
 						</div>
 
-						<div className="flex shrink-0 items-center gap-1 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
+						{/* Touch and TV input has no hover: actions stay visible on coarse pointers, and keyboard focus reveals them. */}
+						<div className="flex shrink-0 items-center gap-1 pointer-coarse:opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
 							<Button
 								variant="ghost"
 								size="icon"
