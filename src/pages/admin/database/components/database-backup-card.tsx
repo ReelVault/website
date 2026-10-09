@@ -1,4 +1,5 @@
-import { ArchiveRestore, Clock, Database, Trash2 } from "lucide-react";
+import { ArchiveRestore, Clock, Database, Download, Trash2 } from "lucide-react";
+import { getReelVaultApiUrl } from "@/client/client";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
@@ -12,6 +13,11 @@ interface DatabaseBackupCardProps {
 	onDelete: (fileName: string) => void;
 	onRestore: (fileName: string) => void;
 	restorePending: boolean;
+}
+
+/** Opens the backup as a file download through the API, so the browser keeps the admin session. */
+function downloadUrl(fileName: string): string {
+	return `${getReelVaultApiUrl()}/v1/admin/database/backups/${encodeURIComponent(fileName)}/download`;
 }
 
 export function DatabaseBackupCard({ backup, isPending, onDelete, onRestore, restorePending }: DatabaseBackupCardProps) {
@@ -35,6 +41,15 @@ export function DatabaseBackupCard({ backup, isPending, onDelete, onRestore, res
 			</div>
 
 			<div className="flex shrink-0 items-center gap-2">
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => window.open(downloadUrl(backup.fileName), "_blank", "noopener,noreferrer")}
+					className="gap-1.5 text-xs"
+				>
+					<Download className="size-3.5" />
+					{m.admin_database_download()}
+				</Button>
 				<ConfirmAction
 					trigger={
 						<Button variant="ghost" size="sm" disabled={restorePending} className="gap-1.5 text-xs">

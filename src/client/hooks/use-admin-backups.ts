@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
+import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys } from "../utils/query-keys";
@@ -29,6 +30,20 @@ export function useAdminBackups() {
 		onError: (error) => toastError(m.admin_database_failed_to_delete(), error),
 	});
 
+	/** Runs SQLite's quick check on the live database; the result is shown, not cached. */
+	const integrityMutation = useMutation({
+		mutationFn: () => reelvault.admin.getDatabaseIntegrity(),
+		onError: (error) => toastError(m.admin_database_integrity_failed(), error),
+	});
+
+	const optimizeMutation = useMutation({
+		mutationFn: () => reelvault.admin.optimizeDatabase(),
+		onSuccess: () => {
+			toast.success(m.admin_database_optimized());
+		},
+		onError: (error) => toastError(m.admin_database_optimize_failed(), error),
+	});
+
 	const restoreMutation = useMutation({
 		mutationFn: (fileName: string) => reelvault.admin.restoreDatabase(fileName),
 		onError: (error) => toastError(m.admin_database_failed_to_restore(), error),
@@ -40,5 +55,7 @@ export function useAdminBackups() {
 		createBackupMutation,
 		deleteBackupMutation,
 		restoreMutation,
+		integrityMutation,
+		optimizeMutation,
 	};
 }

@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import { Database, Plus, RefreshCw } from "lucide-react";
+import { Database, HeartPulse, Plus, RefreshCw, Wrench } from "lucide-react";
 import type { ReactNode } from "react";
 import { useAdminBackups } from "@/client/hooks/use-admin-backups";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
@@ -15,7 +15,8 @@ import { DatabaseStatsGrid } from "./components/database-stats-grid";
 const SKELETON_KEYS = ["1", "2", "3"] as const;
 
 export default function AdminDatabasePage() {
-	const { backupsQuery, backups, createBackupMutation, deleteBackupMutation, restoreMutation } = useAdminBackups();
+	const { backupsQuery, backups, createBackupMutation, deleteBackupMutation, restoreMutation, integrityMutation, optimizeMutation } =
+		useAdminBackups();
 
 	const handleRefetch = () => {
 		detach(backupsQuery.refetch());
@@ -84,6 +85,26 @@ export default function AdminDatabasePage() {
 				description={m.admin_database_snapshots_description()}
 				actions={
 					<div className="flex flex-wrap items-center gap-2">
+						<Button
+							variant="outline"
+							size="sm"
+							disabled={integrityMutation.isPending}
+							onClick={() => detach(integrityMutation.mutateAsync())}
+							className="gap-1.5 text-xs"
+						>
+							<HeartPulse className="size-3.5" />
+							{m.admin_database_check_integrity()}
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							disabled={optimizeMutation.isPending}
+							onClick={() => detach(optimizeMutation.mutateAsync())}
+							className="gap-1.5 text-xs"
+						>
+							<Wrench className="size-3.5" />
+							{m.admin_database_optimize()}
+						</Button>
 						<Button variant="outline" size="sm" onClick={handleRefetch} disabled={backupsQuery.isFetching} className="gap-1.5 text-xs">
 							<RefreshCw className={cn("size-3.5", { "animate-spin": backupsQuery.isFetching })} />
 							{m.common_refresh()}
@@ -105,6 +126,21 @@ export default function AdminDatabasePage() {
 
 			{/* Info Cards */}
 			<DatabaseStatsGrid backups={backups} />
+
+			{integrityMutation.data ? (
+				<AdminSection title={m.admin_database_integrity_title()}>
+					<p className={integrityMutation.data.ok ? "text-sm text-success" : "text-destructive text-sm"}>
+						{integrityMutation.data.ok ? m.admin_database_integrity_ok() : m.admin_database_integrity_problems()}
+					</p>
+					{integrityMutation.data.ok ? null : (
+						<ul className="mt-2 list-disc pl-5 font-mono text-muted-foreground text-xs">
+							{integrityMutation.data.messages.map((message) => (
+								<li key={message}>{message}</li>
+							))}
+						</ul>
+					)}
+				</AdminSection>
+			) : null}
 
 			{/* Backups List */}
 			<AdminSection title={m.admin_database_available_snapshots()} description={m.admin_database_retention_notice()}>
