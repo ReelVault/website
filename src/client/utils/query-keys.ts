@@ -236,6 +236,7 @@ export const adminKeys = {
 	analytics: (days?: number) => (days ? ([...adminKeys.all, "analytics", days] as const) : ([...adminKeys.all, "analytics"] as const)),
 	liveActivity: () => [...adminKeys.all, "live-activity"] as const,
 	backups: () => [...adminKeys.all, "database", "backups"] as const,
+	databaseMigrations: () => [...adminKeys.all, "database", "migrations"] as const,
 	metadataProviders: () => [...adminKeys.all, "metadata-providers"] as const,
 	mediaMarkers: () => [...adminKeys.all, "media-markers"] as const,
 	mediaMarkersList: (filters: { type?: string | undefined; source?: string | undefined; q?: string | undefined }) =>

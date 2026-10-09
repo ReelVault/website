@@ -10,6 +10,7 @@ import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { DatabaseBackupCard } from "./components/database-backup-card";
+import { DatabaseMigrationsSection } from "./components/database-migrations-section";
 import { DatabaseStatsGrid } from "./components/database-stats-grid";
 
 const SKELETON_KEYS = ["1", "2", "3"] as const;
@@ -143,6 +144,8 @@ export default function AdminDatabasePage() {
 			) : null}
 
 			{/* Backups List */}
+			<DatabaseMigrationsSection />
+
 			<AdminSection title={m.admin_database_available_snapshots()} description={m.admin_database_retention_notice()}>
 				{backupsContent}
 			</AdminSection>
