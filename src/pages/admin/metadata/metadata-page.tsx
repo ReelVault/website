@@ -1,10 +1,16 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Film } from "lucide-react";
 import { useEffect, useState } from "react";
-import { type ADMIN_METADATA_SORTS, type AdminMetadataBrowseFilters, useAdminMetadata } from "@/client/hooks/use-admin-metadata";
+import {
+	type ADMIN_METADATA_SORTS,
+	type AdminMetadataBrowseFilters,
+	useAdminMetadata,
+	useBulkRefreshMetadataImages,
+} from "@/client/hooks/use-admin-metadata";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
+import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
@@ -149,6 +155,46 @@ export default function AdminMetadataPage() {
 		detach(() => navigate({ search: (prev) => ({ ...prev, type: value, page: undefined }), replace: true }));
 	};
 
+	// Selection spans the pages shown while it lasts, like the admin people list.
+	const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(() => new Set());
+	const bulkRefreshArtwork = useBulkRefreshMetadataImages();
+	const allOnPageSelected = data.data.length > 0 && data.data.every((item) => selectedIds.has(item.id));
+
+	const toggleSelect = (id: string) => {
+		setSelectedIds((current) => {
+			const next = new Set(current);
+			if (next.has(id)) next.delete(id);
+			else next.add(id);
+
+			return next;
+		});
+	};
+
+	/** Selects every title on the page, or clears them when they are all selected already. */
+	const toggleAllOnPage = () => {
+		const pageIds = data.data.map((item) => item.id);
+		setSelectedIds((current) => {
+			const next = new Set(current);
+			for (const id of pageIds) {
+				if (allOnPageSelected) next.delete(id);
+				else next.add(id);
+			}
+
+			return next;
+		});
+	};
+
+	const clearSelection = () => setSelectedIds(new Set());
+
+	const refreshSelectedArtwork = async () => {
+		try {
+			await bulkRefreshArtwork.mutateAsync([...selectedIds]);
+			clearSelection();
+		} catch {
+			// Toast is handled by the hook
+		}
+	};
+
 	const handleSortChange = (value: keyof typeof ADMIN_METADATA_SORTS) => {
 		detach(() =>
 			navigate({ search: (prev) => ({ ...prev, sort: value === "recent" ? undefined : value, page: undefined }), replace: true }),
@@ -207,6 +253,30 @@ export default function AdminMetadataPage() {
 			) : (
 				<AdminSection title={getSectionTitle(mediaFilter, data.total)} description={getSectionDescription(mediaFilter)}>
 					<div className="flex flex-col gap-4">
+						{data.data.length > 0 && (
+							<div className="flex flex-wrap items-center justify-between gap-3">
+								<label className="flex cursor-pointer items-center gap-2 text-sm">
+									<input type="checkbox" className="size-4 accent-primary" checked={allOnPageSelected} onChange={toggleAllOnPage} />
+									{m.admin_metadata_select_all()}
+								</label>
+								{selectedIds.size > 0 && (
+									<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card p-3">
+										<span className="text-sm">{m.admin_metadata_selected_count({ count: selectedIds.size })}</span>
+										<Button
+											size="sm"
+											variant="outline"
+											disabled={bulkRefreshArtwork.isPending}
+											onClick={() => detach(refreshSelectedArtwork())}
+										>
+											{m.admin_metadata_refresh_artwork_selected()}
+										</Button>
+										<Button size="sm" variant="ghost" onClick={clearSelection}>
+											{m.admin_metadata_clear_selection()}
+										</Button>
+									</div>
+								)}
+							</div>
+						)}
 						<MetadataList
 							metadata={data.data}
 							isLoading={isLoading || isFetching}
@@ -214,6 +284,8 @@ export default function AdminMetadataPage() {
 							isOrphanView={mediaFilter === "without_media"}
 							onDelete={handleDelete}
 							onResetSearch={() => handleSearchChange("")}
+							selectedIds={selectedIds}
+							onToggleSelect={toggleSelect}
 						/>
 
 						<SimplePagination

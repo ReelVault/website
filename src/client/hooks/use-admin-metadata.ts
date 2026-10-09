@@ -6,6 +6,7 @@ import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { purgeMetadataCaches } from "../utils/purge-metadata-caches";
 import { metadataKeys } from "../utils/query-keys";
+import { useBulkRefresh } from "./use-bulk-refresh";
 
 export type AdminMetadataTypeFilter = "movie" | "tv_show";
 
@@ -265,6 +266,15 @@ export function useRefreshMetadata() {
 		onError: (error) => {
 			toastError(m.toast_metadata_refresh_schedule_failed(), error);
 		},
+	});
+}
+
+/** Force-refreshes the artwork of the selected titles in requests of at most 50 (see `useBulkRefresh`). */
+export function useBulkRefreshMetadataImages() {
+	return useBulkRefresh({
+		send: (metadataIds) => reelvault.metadata.bulkRefreshImages(metadataIds),
+		invalidationKeys: [metadataKeys.adminAll()],
+		successMessage: (count) => m.admin_bulk_metadata_artwork_refreshed({ count }),
 	});
 }
 

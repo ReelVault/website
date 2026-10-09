@@ -2,7 +2,7 @@ import type { AdminCacheStats } from "@reelvault/sdk";
 import { cn } from "cn";
 import { HardDrive, MemoryStick, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
-import { useAdminCacheStats } from "@/client/hooks/use-admin-cache-stats";
+import { useAdminCacheStats, usePurgeImageCache } from "@/client/hooks/use-admin-cache-stats";
 import { AppErrorState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -33,6 +33,7 @@ function HitRateBadge({ hitRate }: { hitRate: number | null }) {
 
 export function ResourceCacheStats() {
 	const { data, isPending, isError, error, isFetching, refetch } = useAdminCacheStats();
+	const purgeImageCache = usePurgeImageCache();
 	const memoryCaches = [...(data?.memory ?? [])];
 
 	let statsBody: ReactNode;
@@ -70,6 +71,12 @@ export function ResourceCacheStats() {
 								</div>
 							);
 						})}
+					</div>
+					<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border/70 bg-muted/20 px-4 py-3">
+						<p className="max-w-md text-muted-foreground text-xs">{m.admin_resources_clear_image_cache_desc()}</p>
+						<Button size="sm" variant="outline" disabled={purgeImageCache.isPending} onClick={() => purgeImageCache.mutate()}>
+							{m.admin_resources_clear_image_cache()}
+						</Button>
 					</div>
 				</div>
 

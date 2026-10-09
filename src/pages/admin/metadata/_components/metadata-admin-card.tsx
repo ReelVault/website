@@ -27,9 +27,11 @@ interface MetadataAdminCardProps {
 	isOrphanView?: boolean;
 	isDeleting: boolean;
 	onDelete: (id: string, title: string) => Promise<unknown>;
+	selected: boolean;
+	onToggleSelect: (id: string) => void;
 }
 
-export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete }: MetadataAdminCardProps) {
+export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, selected, onToggleSelect }: MetadataAdminCardProps) {
 	const poster = getMetadataPoster(item);
 	const rating = formatRating(item.rating.avgScore);
 	const isMovie = item.type === "movie";
@@ -44,7 +46,16 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete }: 
 
 	return (
 		<ContextMenu>
-			<ContextMenuTrigger className="group flex cursor-pointer flex-col gap-2">
+			<ContextMenuTrigger className="group relative flex cursor-pointer flex-col gap-2">
+				<label className="absolute top-2 right-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md bg-background/85 backdrop-blur-sm">
+					<input
+						type="checkbox"
+						className="size-4 accent-primary"
+						checked={selected}
+						onChange={() => onToggleSelect(item.id)}
+						aria-label={m.admin_metadata_select_title({ title: item.title })}
+					/>
+				</label>
 				<Link
 					to="/admin/metadata/$id"
 					params={{ id: item.id }}

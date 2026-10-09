@@ -14,6 +14,8 @@ export function MetadataList({
 	isOrphanView,
 	onDelete,
 	onResetSearch,
+	selectedIds,
+	onToggleSelect,
 }: {
 	metadata: MetadataWithRelation[];
 	isLoading: boolean;
@@ -21,6 +23,8 @@ export function MetadataList({
 	isOrphanView?: boolean;
 	onDelete: (id: string, title: string) => Promise<unknown>;
 	onResetSearch?: () => void;
+	selectedIds: ReadonlySet<string>;
+	onToggleSelect: (id: string) => void;
 }) {
 	if (isLoading) {
 		return (
@@ -57,7 +61,16 @@ export function MetadataList({
 		<div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 			{metadata.map((item) => (
 				<LazyRender key={item.id} minHeight={260} rootMargin="400px 0px">
-					{() => <MetadataAdminCard item={item} isOrphanView={isOrphanView} isDeleting={deletingIds.has(item.id)} onDelete={onDelete} />}
+					{() => (
+						<MetadataAdminCard
+							item={item}
+							isOrphanView={isOrphanView}
+							isDeleting={deletingIds.has(item.id)}
+							onDelete={onDelete}
+							selected={selectedIds.has(item.id)}
+							onToggleSelect={onToggleSelect}
+						/>
+					)}
 				</LazyRender>
 			))}
 		</div>
