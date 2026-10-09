@@ -513,6 +513,8 @@
 	"admin_live_stop_confirm": "Czy na pewno chcesz natychmiast zatrzymać odtwarzanie \\\"{title}\\\" dla użytkownika {viewer}?",
 	"admin_live_stop_session": "Zatrzymaj seans",
 	"admin_live_stop_session_hint": "Natychmiast zatrzymaj ten seans",
+	"admin_live_download_log": "Log",
+	"admin_live_download_log_hint": "Pobierz logi FFmpeg tej sesji jako zip",
 	"admin_live_stopped_for": "Zatrzymano odtwarzanie dla {profile}",
 	"admin_live_stream_session_viewer": "ID: {sessionId} · Widz: {profileName} ({userName})",
 	"admin_live_video_encoder": "V: {encoder}",

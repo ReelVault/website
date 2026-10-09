@@ -1,5 +1,5 @@
 import type { AdminLiveStreamItem } from "@reelvault/sdk";
-import { Info, Pause, Play, Square } from "lucide-react";
+import { Download, Info, Pause, Play, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 
@@ -7,6 +7,7 @@ interface LiveStreamCardControlsProps {
 	stream: AdminLiveStreamItem;
 	onTerminate: (sessionId: string, title: string, viewer: string) => void;
 	onOpenDetails: () => void;
+	onDownloadLog: (sessionId: string) => void;
 	onSendCommand: (type: "play" | "pause" | "stop") => void;
 	isPending: boolean;
 	isTerminating: boolean;
@@ -16,6 +17,7 @@ export function LiveStreamCardControls({
 	stream,
 	onTerminate,
 	onOpenDetails,
+	onDownloadLog,
 	onSendCommand,
 	isPending,
 	isTerminating,
@@ -58,6 +60,18 @@ export function LiveStreamCardControls({
 			>
 				<Info className="size-3 text-primary" />
 				<span>{m.common_details()}</span>
+			</Button>
+
+			<Button
+				type="button"
+				variant="outline"
+				size="sm"
+				onClick={() => onDownloadLog(stream.sessionId)}
+				className="h-7 cursor-pointer gap-1 px-2 font-medium text-[11px]"
+				title={m.admin_live_download_log_hint()}
+			>
+				<Download className="size-3 text-primary" />
+				<span className="hidden sm:inline">{m.admin_live_download_log()}</span>
 			</Button>
 
 			<Button

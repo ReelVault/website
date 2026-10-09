@@ -1,5 +1,6 @@
 import { Activity, PauseCircle, RefreshCw, Video, Wifi } from "lucide-react";
 import { useState } from "react";
+import { getReelVaultApiUrl } from "@/client/client";
 import { useAdminLiveActivity, useTerminateLiveStream, useTerminateLiveStreams } from "@/client/hooks/use-admin-live-activity";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,11 @@ import { translateByKey } from "@/utils/translate-error";
 import { ActiveDeviceCard } from "./live-activity/active-device-card";
 import { LiveMaintenanceBanner } from "./live-activity/live-maintenance-banner";
 import { LiveStreamCard } from "./live-activity/live-stream-card";
+
+/** Opens the FFmpeg log zip of an active session; the browser sends the admin session cookie with it. */
+function openSessionLog(sessionId: string) {
+	window.open(`${getReelVaultApiUrl()}/v1/admin/live-activity/${encodeURIComponent(sessionId)}/log`, "_blank", "noopener,noreferrer");
+}
 
 export function AdminLiveActivitySection() {
 	const liveQuery = useAdminLiveActivity();
@@ -170,6 +176,7 @@ export function AdminLiveActivitySection() {
 											detach(handleTerminateStream(sessionId, title, viewer));
 										}}
 										isTerminating={terminatingSessionId === stream.sessionId}
+										onDownloadLog={openSessionLog}
 									/>
 								</div>
 							))}

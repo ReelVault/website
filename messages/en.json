@@ -511,6 +511,8 @@
 	"admin_live_stop_confirm": "Are you sure you want to immediately stop playback of \"{title}\" for user {viewer}?",
 	"admin_live_stop_session": "Stop the session",
 	"admin_live_stop_session_hint": "Immediately stop this session",
+	"admin_live_download_log": "Log",
+	"admin_live_download_log_hint": "Download the FFmpeg logs of this session as a zip",
 	"admin_live_stopped_for": "Playback stopped for {profile}",
 	"admin_live_stream_session_viewer": "ID: {sessionId} · Viewer: {profileName} ({userName})",
 	"admin_live_video_encoder": "V: {encoder}",
