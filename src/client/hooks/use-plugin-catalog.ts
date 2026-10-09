@@ -1,4 +1,4 @@
-import type { PluginCatalogEntry, PluginRepository } from "@reelvault/sdk";
+import type { PluginCatalogResult, PluginRepository } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
@@ -53,7 +53,7 @@ function entryProgressPercent(entry: PluginArchiveEntry): number {
 export function usePluginCatalog() {
 	const queryClient = useQueryClient();
 
-	const catalogQuery = useQuery<PluginCatalogEntry[]>({
+	const catalogQuery = useQuery<PluginCatalogResult>({
 		queryKey: pluginKeys.catalog(),
 		queryFn: async () => {
 			return await reelvault.admin.getPluginCatalog();
@@ -288,7 +288,9 @@ export function usePluginCatalog() {
 
 	return {
 		catalogQuery,
-		catalog: catalogQuery.data ?? [],
+		catalog: catalogQuery.data?.plugins ?? [],
+		/** Repositories the catalog could not read; their plugins are missing from the list. */
+		unavailableRepositories: catalogQuery.data?.unavailableRepositories ?? [],
 		repositoriesQuery,
 		repositories: repositoriesQuery.data ?? [],
 		installPlugin: installMutation.mutateAsync,

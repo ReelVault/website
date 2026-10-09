@@ -1065,6 +1065,7 @@
 	"admin_plugins_configure_hint": "Skonfiguruj opcje wtyczki",
 	"admin_plugins_default_value": "Domyślnie:",
 	"admin_plugins_defaults_restored": "Przywrócono wartości domyślne w formularzu (kliknij Zapisz, aby zatwierdzić).",
+	"admin_plugins_repositories_unavailable": "Nie udało się odczytać części repozytoriów pluginów, więc ich pluginy nie są widoczne: {names}",
 	"admin_plugins_select": "Zaznacz",
 	"admin_plugins_pin": "Przypnij wersję",
 	"admin_plugins_unpin": "Odepnij wersję",

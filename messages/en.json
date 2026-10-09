@@ -1059,6 +1059,7 @@
 	"admin_plugins_configure_hint": "Configure the plugin options",
 	"admin_plugins_default_value": "Default:",
 	"admin_plugins_defaults_restored": "Default values restored in the form (click Save to apply).",
+	"admin_plugins_repositories_unavailable": "Some plugin repositories could not be read, so their plugins are missing: {names}",
 	"admin_plugins_select": "Select",
 	"admin_plugins_pin": "Pin version",
 	"admin_plugins_unpin": "Unpin version",

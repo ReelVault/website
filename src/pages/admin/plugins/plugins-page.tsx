@@ -78,6 +78,7 @@ export default function AdminPluginsPage() {
 	const {
 		catalog,
 		catalogQuery,
+		unavailableRepositories,
 		repositories,
 		installPlugin,
 		installArchive,
@@ -315,6 +316,13 @@ export default function AdminPluginsPage() {
 			) : (
 				<AdminSection title={m.admin_plugins_catalog_section()} description={m.admin_plugins_catalog_section_description()}>
 					{catalogQuery.isLoading && <AppLoadingState label={m.admin_plugins_loading()} className="min-h-40" />}
+					{!catalogQuery.isLoading && unavailableRepositories.length > 0 && (
+						<div role="alert" className="rounded-lg border border-warning/30 bg-warning/10 p-3 text-warning text-xs">
+							{m.admin_plugins_repositories_unavailable({
+								names: unavailableRepositories.map((repository) => repository.repositoryName).join(", "),
+							})}
+						</div>
+					)}
 					{catalogQuery.isError && (
 						<AppErrorState
 							title={m.admin_plugins_catalog_failed_to_fetch()}
