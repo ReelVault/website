@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { AlertTriangle, RotateCw } from "lucide-react";
+import { AlertTriangle, Copy, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
+import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { usePlayerActions, usePlayerInfo, usePlayerStatus } from "../player-context";
 import { detach } from "../utils/player-utils";
 
@@ -33,8 +34,25 @@ export function PlayerErrorOverlay() {
 	const { playerError } = usePlayerStatus();
 	const actions = usePlayerActions();
 	const info = usePlayerInfo();
+	const { hasCopied, copy } = useCopyToClipboard();
 
 	if (!playerError) return null;
+
+	// Only what support needs to find the failure: no stream URLs, tokens or query strings.
+	const copyDiagnostics = () =>
+		copy(
+			JSON.stringify(
+				{
+					metadataId: info.metadataId,
+					page: window.location.pathname,
+					time: new Date().toISOString(),
+					userAgent: navigator.userAgent,
+				},
+				null,
+				2,
+			),
+			m.player_error_copy_diagnostics(),
+		);
 
 	return (
 		<div className="absolute inset-0 z-40 flex items-center justify-center bg-background/95 px-6 text-center">
@@ -65,6 +83,10 @@ export function PlayerErrorOverlay() {
 							{m.player_back_to_details()}
 						</Button>
 					)}
+					<Button type="button" variant="ghost" onClick={() => detach(copyDiagnostics)}>
+						<Copy className="size-4" aria-hidden="true" />
+						{hasCopied ? m.player_error_copied() : m.player_error_copy_diagnostics()}
+					</Button>
 				</div>
 			</div>
 		</div>

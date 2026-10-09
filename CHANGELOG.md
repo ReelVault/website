@@ -202,6 +202,8 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Stored secrets are visible** — a secret field shows a *Set* badge when a value is stored, and an empty field keeps that value. Requires SDK 1.3.0.
 - **Failed plugin upgrades say what happened** — an update whose new version did not start reports that the previous version was restored. Requires SDK 1.3.0.
 - **Source directories can be sorted** — a library card with more than one source directory has a sort control: path A–Z, path Z–A, or largest first.
+- **Show the password on sign-in** — the sign-in form has a show/hide control for the password field.
+- **Copy diagnostics from a playback error** — the playback error screen can copy the page, time, browser and title id for a bug report, without stream addresses or tokens.
 
 ### Fixes
 

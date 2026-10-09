@@ -5,7 +5,7 @@ import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup } from "@/components/ui/field";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { isNativeShell } from "@/lib/capacitor-native";
 import { detach } from "@/lib/detach";
@@ -34,6 +34,7 @@ export function LoginCredentialsForm({
 	// of the browser's own bubble. A typeMismatch means the email format (not a
 	// missing field) is the problem, so the hint names it.
 	const [hint, setHint] = useState<"none" | "required" | "email-format">("none");
+	const [showPassword, setShowPassword] = useState(false);
 
 	const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -120,11 +121,20 @@ export function LoginCredentialsForm({
 						<InputGroupInput
 							id="login-password"
 							name="password"
-							type="password"
+							type={showPassword ? "text" : "password"}
 							autoComplete="current-password"
 							required
 							placeholder={m.app_password()}
 						/>
+						<InputGroupButton
+							type="button"
+							size="icon-sm"
+							aria-label={showPassword ? m.auth_hide_password() : m.auth_show_password()}
+							aria-pressed={showPassword}
+							onClick={() => setShowPassword((visible) => !visible)}
+						>
+							{showPassword ? m.auth_hide() : m.auth_show()}
+						</InputGroupButton>
 					</InputGroup>
 				</Field>
 			</FieldGroup>

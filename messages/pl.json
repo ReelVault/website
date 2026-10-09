@@ -2841,6 +2841,8 @@
 	"player_compressor_night_desc": "Automatycznie tłumi głośne efekty i podbija ciche szepty. Pozwala oglądać filmy w nocy bez ciągłego sięgania po pilota.",
 	"player_compressor_night_mode": "Kompresor dynamiki (Tryb nocny / Wyrównanie głośności)",
 	"player_copy_json_short": "Kopiuj JSON",
+	"player_error_copy_diagnostics": "Kopiuj diagnostykę",
+	"player_error_copied": "Skopiowano diagnostykę",
 	"player_copy_raw_json_hint": "Skopiuj surowe dane JSON do schowka",
 	"player_custom": "Własny",
 	"player_default_track": "Domyślna ścieżka",

@@ -2814,6 +2814,8 @@
 	"player_compressor_night_desc": "Automatically suppresses loud effects and boosts quiet whispers. Allows watching movies at night without reaching for the remote.",
 	"player_compressor_night_mode": "Dynamic range compressor (Night mode / loudness leveling)",
 	"player_copy_json_short": "Copy JSON",
+	"player_error_copy_diagnostics": "Copy diagnostics",
+	"player_error_copied": "Diagnostics copied",
 	"player_copy_raw_json_hint": "Copy raw JSON data to the clipboard",
 	"player_custom": "Custom",
 	"player_default_track": "Default path",
