@@ -1,4 +1,5 @@
 import { Download } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
@@ -10,6 +11,7 @@ export function PlayerSubtitleSearchPanel() {
 	const {
 		subtitleLanguage,
 		setSubtitleLanguage,
+		preferredSubtitleLanguages,
 		subtitleCandidates,
 		downloadingCandidateId,
 		isSearchingSubtitles,
@@ -20,8 +22,33 @@ export function PlayerSubtitleSearchPanel() {
 		downloadSubtitle,
 	} = usePlayerSubtitles();
 
+	// Search once when the panel opens with a usable language; later searches stay manual.
+	const hasAutoSearchedRef = useRef(false);
+	useEffect(() => {
+		if (hasAutoSearchedRef.current || subtitleCandidates !== undefined || subtitleLanguage.trim().length < 2) return;
+
+		hasAutoSearchedRef.current = true;
+		searchSubtitles();
+	}, [subtitleCandidates, subtitleLanguage, searchSubtitles]);
+
 	return (
 		<div className="flex flex-col gap-3">
+			{preferredSubtitleLanguages.length > 0 && (
+				<div className="flex flex-wrap gap-1.5">
+					{preferredSubtitleLanguages.map((code) => (
+						<Button
+							key={code}
+							type="button"
+							size="sm"
+							variant={code === subtitleLanguage.trim().toLowerCase() ? "default" : "outline"}
+							onClick={() => setSubtitleLanguage(code)}
+							className="h-7 px-2.5 text-xs uppercase"
+						>
+							{code}
+						</Button>
+					))}
+				</div>
+			)}
 			<div className="flex gap-2">
 				<label className="sr-only" htmlFor="subtitle-language">
 					{m.admin_users_subtitle_language()}
