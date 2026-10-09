@@ -23,27 +23,24 @@ export function DetailsWatchlistButton({ metadataId }: { metadataId: string }) {
 		detach(handleWatchlist());
 	};
 
+	const label = isOnWatchlist ? m.components_remove_from_list() : m.components_add_to_list();
+
 	return (
-		<Button title={m.web_my_list_button()} onClick={handleWatchlistClick} variant="outline" size={isOnWatchlist ? "icon-lg" : "lg"}>
+		<Button
+			title={m.web_my_list_button()}
+			aria-label={label}
+			aria-pressed={isOnWatchlist}
+			disabled={watchlistToggle.isPending}
+			onClick={handleWatchlistClick}
+			variant="outline"
+			size={isOnWatchlist ? "icon-lg" : "lg"}
+		>
 			<Heart
 				className={cn("size-4", {
 					"fill-primary text-primary": isOnWatchlist,
 				})}
 			/>
-			{!isOnWatchlist && <>{m.components_add_to_list()}</>}
+			{!isOnWatchlist && <>{label}</>}
 		</Button>
-		// <AsyncButton
-		// 	variant="outline"
-		// 	onClick={handleWatchlist}
-		// 	isPending={watchlistToggle.isPending}
-		// 	pendingLabel="Zapisywanie…"
-		// 	size="lg"
-		// 	className={cn("hover:cursor-pointer", {
-		// 		"border-destructive bg-destructive/25 text-destructive": isOnWatchlist,
-		// 	})}
-		// >
-		// 	{isOnWatchlist ? <Minus className="size-4" /> : <Plus className="size-4" />}
-		// 	<span className="font-semibold text-sm uppercase tracking-wide">Moja Lista</span>
-		// </AsyncButton>
 	);
 }
