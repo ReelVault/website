@@ -1,4 +1,4 @@
-import type { CreateMediaMarker, MediaMarker, MediaMarkerFilters } from "@reelvault/sdk";
+import type { CreateMediaMarker, MediaMarker, MediaMarkerFilters, PaginatedResponse } from "@reelvault/sdk";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -6,9 +6,12 @@ import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys } from "../utils/query-keys";
 
-/** Markers in the library (admin list). Filters run on the server; without them every marker is returned. */
-export function useAdminMediaMarkers(filters: MediaMarkerFilters = {}) {
-	return useQuery<MediaMarker[]>({
+/** Markers per page in the admin list. */
+export const MARKERS_PAGE_SIZE = 50;
+
+/** One page of markers in the library (admin list). Filters run on the server; without them every marker is listed. */
+export function useAdminMediaMarkers(filters: MediaMarkerFilters & { page?: number; limit?: number } = {}) {
+	return useQuery<PaginatedResponse<MediaMarker>>({
 		queryKey: adminKeys.mediaMarkersList(filters),
 		placeholderData: keepPreviousData,
 		queryFn: () => reelvault.media.getAllMarkers(filters),

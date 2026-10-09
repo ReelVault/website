@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Paged markers list** — the admin markers page shows 50 markers per page with paging controls, and its header count is the number of markers that match the filters rather than the page on screen.
 - **Mark all read follows the filter** — the notifications page's Mark all read acts on the type shown in the active tab, not on every notification.
 - **Stream slots in the live view** — the admin live activity section shows how many stream slots are in use out of the server limit. The count turns into a warning when every slot is taken.
 - **Dismiss notifications** — every notification has a Dismiss action, and the notifications list offers Dismiss shown, which removes the notifications of the current page after confirmation. Only your own notifications are removed.

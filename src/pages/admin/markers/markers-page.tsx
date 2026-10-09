@@ -2,13 +2,14 @@ import type { MediaMarker } from "@reelvault/sdk";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Bookmark } from "lucide-react";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { getReelVaultApiUrl } from "@/client/client";
-import { useAdminMediaMarkers, useImportAdminMarkers } from "@/client/hooks/use-admin-markers";
+import { MARKERS_PAGE_SIZE, useAdminMediaMarkers, useImportAdminMarkers } from "@/client/hooks/use-admin-markers";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { adminKeys } from "@/client/utils/query-keys";
 import { AppErrorState } from "@/components/app-states";
+import { SimplePagination } from "@/components/simple-pagination";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader } from "@/pages/admin/admin-ui";
@@ -27,6 +28,7 @@ const isMarkerSource = (value: string): value is MediaMarker["source"] => MARKER
 
 export default function AdminMediaMarkersPage() {
 	const queryClient = useQueryClient();
+	const [page, setPage] = useState(1);
 
 	const searchParams = useSearch({ from: "/admin/markers" });
 	const navigate = useNavigate({ from: "/admin/markers" });
@@ -36,13 +38,17 @@ export default function AdminMediaMarkersPage() {
 	// The filters run on the server, so the text query waits until typing pauses.
 	const debouncedSearch = useDebounce({ value: search, delay: 300 });
 
+	// A new filter starts again at the first page of its results.
 	const setSearch = (value: string) => {
+		setPage(1);
 		detach(() => navigate({ search: (prev) => ({ ...prev, q: value || undefined }), replace: true }));
 	};
 	const setTypeFilter = (value: string) => {
+		setPage(1);
 		detach(() => navigate({ search: (prev) => ({ ...prev, type: value !== "all" ? value : undefined }), replace: true }));
 	};
 	const setSourceFilter = (value: string) => {
+		setPage(1);
 		detach(() => navigate({ search: (prev) => ({ ...prev, source: value !== "all" ? value : undefined }), replace: true }));
 	};
 
@@ -55,6 +61,8 @@ export default function AdminMediaMarkersPage() {
 		type: isMediaMarkerType(typeFilter) ? typeFilter : undefined,
 		source: isMarkerSource(sourceFilter) ? sourceFilter : undefined,
 		q: debouncedSearch.trim() || undefined,
+		page,
+		limit: MARKERS_PAGE_SIZE,
 	});
 
 	const importMutation = useImportAdminMarkers();
@@ -80,8 +88,10 @@ export default function AdminMediaMarkersPage() {
 	};
 
 	const statsQuery = useAdminStats();
-	// The list is the filtered result, so the header count is the number of markers shown.
-	const markers = markersQuery.data ?? [];
+	// The header count is the number of markers that match the filters, not only the page on screen.
+	const markers = markersQuery.data?.data ?? [];
+	const total = markersQuery.data?.total ?? 0;
+	const totalPages = markersQuery.data?.totalPages ?? 1;
 
 	const { dialogOpen, setDialogOpen, editingMarker, openCreateDialog, openEditDialog, isPending, handleFormSubmit, handleDeleteMarker } =
 		useMarkerOperations();
@@ -99,7 +109,7 @@ export default function AdminMediaMarkersPage() {
 				icon={Bookmark}
 				eyebrow={m.admin_markers_content_player()}
 				title={m.admin_markers_heading()}
-				count={markers.length}
+				count={total}
 				description={m.admin_markers_manage_description()}
 				actions={
 					<MarkerFilterBar
@@ -137,6 +147,8 @@ export default function AdminMediaMarkersPage() {
 				onDelete={(id) => detach(() => handleDeleteMarker(id))}
 				onCopy={(value) => detach(() => copyToClipboard(value))}
 			/>
+
+			<SimplePagination currentPage={page} totalPages={totalPages} isLoading={markersQuery.isFetching} onPageChange={setPage} />
 
 			{dialogOpen && (
 				<Suspense fallback={null}>
