@@ -19,11 +19,20 @@ interface SubtitleItemRowProps {
 	onView: (id: string) => void;
 	onEdit: (id: string) => void;
 	onDelete: (id: string) => void;
+	selected: boolean;
+	onToggleSelect: (id: string) => void;
 }
 
-export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete }: SubtitleItemRowProps) {
+export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, onToggleSelect }: SubtitleItemRowProps) {
 	return (
 		<div className="flex items-center gap-4 rounded-lg border border-border/60 bg-muted/20 p-3 transition-colors hover:bg-muted/40">
+			<input
+				type="checkbox"
+				className="size-4 shrink-0 accent-primary"
+				checked={selected}
+				onChange={() => onToggleSelect(subtitle.id)}
+				aria-label={m.admin_subtitles_select_one()}
+			/>
 			<div className="flex min-w-0 flex-1 items-center gap-3">
 				<div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted/40">
 					<FileText className="size-4 text-muted-foreground" />

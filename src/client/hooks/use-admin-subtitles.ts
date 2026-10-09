@@ -77,6 +77,37 @@ export function useAdminUpdateSubtitle() {
 	});
 }
 
+/** Subtitles deleted per request; a larger selection goes out as several requests, one after another. */
+const BULK_DELETE_CHUNK_SIZE = 200;
+
+/** Deletes the selected subtitles; each removed subtitle's detail leaves the cache with it. */
+export function useBulkDeleteSubtitles() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (subtitleIds: string[]) => {
+			const deletedIds: string[] = [];
+			let failed = 0;
+			for (let start = 0; start < subtitleIds.length; start += BULK_DELETE_CHUNK_SIZE) {
+				const { results } = await reelvault.subtitles.bulkDelete(subtitleIds.slice(start, start + BULK_DELETE_CHUNK_SIZE));
+				for (const result of results) {
+					if (result.ok) deletedIds.push(result.id);
+					else failed += 1;
+				}
+			}
+
+			return { deletedIds, failed };
+		},
+		onSuccess: async ({ deletedIds, failed }) => {
+			await queryClient.invalidateQueries({ queryKey: subtitleKeys.all });
+			for (const id of deletedIds) queryClient.removeQueries({ queryKey: subtitleKeys.adminDetail(id) });
+			toast.success(m.admin_subtitles_deleted_count({ count: deletedIds.length }));
+			if (failed > 0) toast.error(m.admin_subtitles_delete_partial({ failed }));
+		},
+		onError: (error) => toastError(m.admin_subtitles_delete_failed(), error),
+	});
+}
+
 export function useAdminDeleteSubtitle() {
 	const queryClient = useQueryClient();
 
