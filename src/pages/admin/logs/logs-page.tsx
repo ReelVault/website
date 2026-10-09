@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { LogCleanupDescription } from "./components/log-cleanup-description";
 import { LogFilesSidebar } from "./components/log-files-sidebar";
 import { LogMobileFileSelect } from "./components/log-mobile-file-select";
 import { LogViewerCard } from "./components/log-viewer-card";
@@ -59,7 +60,7 @@ export default function AdminLogsPage() {
 								</Button>
 							}
 							title={m.admin_logs_cleanup_confirm_title()}
-							description={m.admin_logs_cleanup_confirm_description()}
+							description={<LogCleanupDescription />}
 							confirmLabel={m.admin_logs_cleanup_confirm_action()}
 							onConfirm={() => c.cleanupLogs()}
 						/>

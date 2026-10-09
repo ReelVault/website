@@ -28,6 +28,7 @@ import {
 } from "./components/media-search-sort-bar";
 import { MediaStats } from "./components/media-stats";
 import { MediaViewModeToggle } from "./components/media-view-mode-toggle";
+import { TrickplayDeleteDescription } from "./components/trickplay-delete-description";
 
 export default function AdminMediaFilesPage() {
 	const search = useSearch({ from: "/admin/media/" });
@@ -172,7 +173,7 @@ export default function AdminMediaFilesPage() {
 									</Button>
 								}
 								title={m.admin_media_remove_previews_confirm_title({ count: selectedIds.size })}
-								description={m.admin_media_remove_previews_confirm_description()}
+								description={<TrickplayDeleteDescription mediaFileIds={[...selectedIds]} />}
 								confirmLabel={m.admin_media_remove_previews_selected()}
 								onConfirm={() => removeSelectedPreviews()}
 							/>

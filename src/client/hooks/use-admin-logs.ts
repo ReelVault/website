@@ -108,3 +108,12 @@ export function useAdminLogs(params: UseAdminLogsParams = {}, autoRefresh = true
 		refetch: query.refetch,
 	};
 }
+
+/** What a log cleanup with the configured retention would remove right now. Nothing is removed. Read on each open. */
+export function useLogCleanupPreview() {
+	return useQuery({
+		queryKey: adminKeys.logCleanupPreview(),
+		queryFn: () => reelvault.admin.cleanupLogs(undefined, { dryRun: true }),
+		staleTime: 0,
+	});
+}

@@ -113,3 +113,12 @@ export function useGenerateAllTrickplay() {
 		},
 	});
 }
+
+/** Previews a bulk removal would delete for these media files. Nothing is removed. Read on each open. */
+export function useTrickplayDeletePreview(mediaFileIds: string[]) {
+	return useQuery({
+		queryKey: adminKeys.trickplayDeletePreview(mediaFileIds),
+		queryFn: () => reelvault.admin.deleteTrickplayMany(mediaFileIds, { dryRun: true }),
+		staleTime: 0,
+	});
+}
