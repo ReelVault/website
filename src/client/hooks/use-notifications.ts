@@ -35,7 +35,7 @@ export function useNotifications(unreadOnly = false, options?: { enabled?: boole
 		onError: (error) => toastError(m.toast_notification_mark_failed(), error),
 	});
 	const markAllReadMutation = useMutation({
-		mutationFn: () => reelvault.notifications.markAllRead(),
+		mutationFn: (type?: string) => reelvault.notifications.markAllRead(type),
 		onSuccess: async () => {
 			await invalidateNotifications();
 			toast.success(m.hooks_all_notifications_marked());

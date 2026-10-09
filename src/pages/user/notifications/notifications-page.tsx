@@ -52,7 +52,7 @@ export default function NotificationsPage() {
 					}}
 					unreadCount={unreadCount}
 					isMarkingAllRead={isMarkingAllRead}
-					onMarkAllRead={markAllRead}
+					onMarkAllRead={() => markAllRead(activeTab === "all" ? undefined : activeTab)}
 				/>
 
 				{/* List — animated only on tab change (addTransitionType "tab"). */}
