@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { getSdkErrorMessage } from "@/client/client";
-import { useCreateProfile } from "@/client/hooks/use-profiles";
+import { useCreateProfile, useProfiles } from "@/client/hooks/use-profiles";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { AVATAR_SEEDS, AVATAR_STYLES, buildDicebearAvatarUrl } from "./avatar-picker-constants";
@@ -24,6 +25,8 @@ export function CreateProfileModal({ isOpen, onClose, onSuccess }: CreateProfile
 	const [error, setError] = useState<string | null>(null);
 
 	const createProfileMutation = useCreateProfile();
+	const { profiles } = useProfiles();
+	const [copyFromProfileId, setCopyFromProfileId] = useState<string | null>(null);
 
 	const [activeStyle, setActiveStyle] = useState(AVATAR_STYLES[0]?.id ?? "adventurer-neutral");
 	const [activeSeed, setActiveSeed] = useState(AVATAR_SEEDS[0] ?? "Jameson");
@@ -39,6 +42,7 @@ export function CreateProfileModal({ isOpen, onClose, onSuccess }: CreateProfile
 				name: name.trim(),
 				avatarUrl: selectedAvatar,
 				pin: pin || undefined,
+				copyPreferencesFromProfileId: copyFromProfileId ?? undefined,
 			});
 			onSuccess();
 			onClose();
@@ -103,6 +107,21 @@ export function CreateProfileModal({ isOpen, onClose, onSuccess }: CreateProfile
 							onSelectSeed={setActiveSeed}
 						/>
 					</div>
+
+					{profiles.length > 0 && (
+						<Select value={copyFromProfileId} onValueChange={(value) => setCopyFromProfileId(value)}>
+							<SelectTrigger aria-label={m.profile_copy_from_profile()}>
+								<SelectValue placeholder={m.profile_copy_none()} />
+							</SelectTrigger>
+							<SelectContent>
+								{profiles.map((profile) => (
+									<SelectItem key={profile.id} value={profile.id}>
+										{profile.name}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					)}
 
 					{/* TODO: sort this out */}
 					{error && <AppErrorState title={m.auth_failed_to_create_profile_short()} description={error} />}

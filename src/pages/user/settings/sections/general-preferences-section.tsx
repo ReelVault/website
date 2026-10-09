@@ -3,10 +3,12 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useProfilePreferences } from "@/client/hooks/use-profiles";
 import { AsyncButton } from "@/components/async-button";
+import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { isLocale } from "@/paraglide/runtime";
 import { getAppLocale, setAppLocale } from "@/utils/locale";
+import { CopyPreferencesDialog } from "../components/copy-preferences-dialog";
 import { GeneralPreferencesGrid } from "../components/general-preferences-grid";
 import { SettingsCategory } from "../components/settings-category";
 
@@ -23,6 +25,7 @@ type ProfilePreferencesTheme = "system" | "light" | "dark";
 export function GeneralPreferencesSection({ profileId }: { profileId: string }) {
 	const { setTheme } = useTheme();
 	const preferencesQuery = useProfilePreferences(profileId);
+	const [copyOpen, setCopyOpen] = useState(false);
 	const serverPreferences = preferencesQuery.preferences;
 	// The select mirrors the locale the UI is actually rendered in (paraglide's
 	// localStorage/browser strategies), not the server default — otherwise a
@@ -102,6 +105,12 @@ export function GeneralPreferencesSection({ profileId }: { profileId: string }) 
 
 	return (
 		<form onSubmit={handleSubmit} className="cinema-surface flex flex-col gap-6 p-5 sm:p-8">
+			<div className="flex justify-end">
+				<Button type="button" variant="outline" size="sm" onClick={() => setCopyOpen(true)}>
+					{m.profile_copy_preferences()}
+				</Button>
+			</div>
+			<CopyPreferencesDialog profileId={profileId} open={copyOpen} onOpenChange={setCopyOpen} />
 			<SettingsCategory title={m.settings_general_title()} description={m.settings_general_hint()}>
 				<GeneralPreferencesGrid preferences={preferences} onChange={updatePreferencesPatch} />
 			</SettingsCategory>

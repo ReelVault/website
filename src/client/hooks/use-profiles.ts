@@ -85,7 +85,8 @@ export function useCreateProfile() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (data: { name: string; avatarUrl: string; pin?: string }) => reelvault.profiles.create(data),
+		mutationFn: (data: { name: string; avatarUrl: string; pin?: string; copyPreferencesFromProfileId?: string | undefined }) =>
+			reelvault.profiles.create(data),
 		onSuccess: async () => {
 			await invalidateProfiles(queryClient);
 			toast.success(m.toast_profile_created());
@@ -171,6 +172,20 @@ export function useProfilePreferences(profileId: string | undefined) {
 		updatePreferences: updateMutation.mutateAsync,
 		isSaving: updateMutation.isPending,
 	};
+}
+
+/** Replaces this profile's settings with another profile's; the settings view adopts the copied values. */
+export function useCopyProfilePreferences(profileId: string | undefined) {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (sourceProfileId: string) => reelvault.profiles.copyPreferences(profileId ?? "", sourceProfileId),
+		onSuccess: (preferences) => {
+			queryClient.setQueryData(profileKeys.preferences(profileId ?? ""), preferences);
+			toast.success(m.toast_profile_preferences_copied());
+		},
+		onError: (error) => toastError(m.toast_profile_preferences_copy_failed(), error),
+	});
 }
 
 export function useResetProfilePreferences(profileId: string | undefined) {
