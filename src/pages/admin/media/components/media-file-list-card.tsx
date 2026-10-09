@@ -31,10 +31,12 @@ type MediaListRow = Pick<
 interface MediaFileListCardProps {
 	file: MediaListRow;
 	isDeleting: boolean;
+	selected: boolean;
+	onToggleSelect: (id: string) => void;
 	onDelete: (id: string, fileName: string) => Promise<unknown>;
 }
 
-export function MediaFileListCard({ file, isDeleting, onDelete }: MediaFileListCardProps) {
+export function MediaFileListCard({ file, isDeleting, onDelete, selected, onToggleSelect }: MediaFileListCardProps) {
 	const [isReassignDialogOpen, setIsReassignDialogOpen] = useState(false);
 	const isMovie = file.library.type === "movies";
 
@@ -44,6 +46,13 @@ export function MediaFileListCard({ file, isDeleting, onDelete }: MediaFileListC
 				<ContextMenuTrigger className="group flex flex-col gap-3 rounded-xl border border-border/80 bg-card p-4 shadow-2xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:border-primary/40 hover:shadow-sm">
 					<div className="flex items-start justify-between gap-3">
 						<div className="flex min-w-0 items-center gap-3">
+							<input
+								type="checkbox"
+								className="size-4 shrink-0 accent-primary"
+								checked={selected}
+								onChange={() => onToggleSelect(file.id)}
+								aria-label={m.admin_media_select_file()}
+							/>
 							<div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-muted/40 text-primary shadow-2xs">
 								<FileVideo className="size-5" />
 							</div>

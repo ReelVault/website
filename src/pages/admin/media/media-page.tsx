@@ -8,7 +8,9 @@ import {
 	useAdminRefreshAllMediaFiles,
 } from "@/client/hooks/use-admin-media";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
+import { useDeleteTrickplayMany } from "@/client/hooks/use-admin-trickplay";
 import { AppErrorState } from "@/components/app-states";
+import { ConfirmAction } from "@/components/confirm-action";
 import { SimplePagination } from "@/components/simple-pagination";
 import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -35,6 +37,31 @@ export default function AdminMediaFilesPage() {
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 500 });
 	const sortOption: SortOptionValue = typeof search.sort === "string" && isSortOptionValue(search.sort) ? search.sort : "updatedAt:desc";
 	const currentPage = search.page ?? 1;
+
+	// Bulk selection spans the pages shown while it lasts; the toolbar says how many files it holds.
+	const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(() => new Set());
+	const deleteTrickplayMany = useDeleteTrickplayMany();
+
+	const toggleSelect = (id: string) => {
+		setSelectedIds((current) => {
+			const next = new Set(current);
+			if (next.has(id)) next.delete(id);
+			else next.add(id);
+
+			return next;
+		});
+	};
+
+	const clearSelection = () => setSelectedIds(new Set());
+
+	const removeSelectedPreviews = async () => {
+		try {
+			await deleteTrickplayMany.mutateAsync([...selectedIds]);
+			clearSelection();
+		} catch {
+			// Toast is handled by hook
+		}
+	};
 
 	// Typing flows debounce → URL; browser Back/refresh restores both.
 	useEffect(() => {
@@ -110,10 +137,31 @@ export default function AdminMediaFilesPage() {
 							{m.admin_media_library_filter_clear()}
 						</Button>
 					)}
+					{selectedIds.size > 0 && (
+						<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card p-3">
+							<span className="text-sm">{m.admin_media_selected_count({ count: selectedIds.size })}</span>
+							<ConfirmAction
+								trigger={
+									<Button size="sm" variant="outline" disabled={deleteTrickplayMany.isPending}>
+										{m.admin_media_remove_previews_selected()}
+									</Button>
+								}
+								title={m.admin_media_remove_previews_confirm_title({ count: selectedIds.size })}
+								description={m.admin_media_remove_previews_confirm_description()}
+								confirmLabel={m.admin_media_remove_previews_selected()}
+								onConfirm={() => removeSelectedPreviews()}
+							/>
+							<Button size="sm" variant="ghost" onClick={clearSelection}>
+								{m.admin_media_clear_selection()}
+							</Button>
+						</div>
+					)}
 					<MediaList
 						mediaFiles={mediaFiles}
 						isLoading={isLoading || isFetching}
 						deletingIds={deletingIds}
+						selectedIds={selectedIds}
+						onToggleSelect={toggleSelect}
 						onDelete={handleDelete}
 						onResetSearch={() => setSearchQuery("")}
 					/>

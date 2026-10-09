@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Remove previews for selected files** — the admin media list has checkboxes. The trickplay previews of the selected files can be removed in one step after confirmation; the files themselves stay. The selection holds across pages until it is cleared.
 - **Generate missing previews from a title** — the admin title page's actions menu queues the trickplay previews of that title's files that have none yet. Its progress is visible in the worker operations list. Regenerating all previews stays on the trickplay page.
 - **Watchlist search and sort** — the watchlist page filters its titles by name and sorts them by recently added, title (A–Z) or newest release. The search and the sorts run on the whole watchlist, which the page already loads, so a match is never hidden behind a page boundary.
 - **Migration status** — the database page shows how many schema migrations the database has applied, and how many are pending until the next server start.

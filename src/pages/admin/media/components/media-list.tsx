@@ -31,12 +31,16 @@ export function MediaList({
 	mediaFiles,
 	isLoading,
 	deletingIds,
+	selectedIds,
+	onToggleSelect,
 	onDelete,
 	onResetSearch,
 }: {
 	mediaFiles: MediaListRow[];
 	isLoading: boolean;
 	deletingIds: Set<string>;
+	selectedIds: ReadonlySet<string>;
+	onToggleSelect: (id: string) => void;
 	onDelete: (id: string, fileName: string) => Promise<unknown>;
 	onResetSearch?: () => void;
 }) {
@@ -72,7 +76,15 @@ export function MediaList({
 		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
 			{mediaFiles.map((file) => (
 				<LazyRender key={file.id} minHeight={160}>
-					{() => <MediaFileListCard file={file} isDeleting={deletingIds.has(file.id)} onDelete={onDelete} />}
+					{() => (
+						<MediaFileListCard
+							file={file}
+							isDeleting={deletingIds.has(file.id)}
+							onDelete={onDelete}
+							selected={selectedIds.has(file.id)}
+							onToggleSelect={onToggleSelect}
+						/>
+					)}
 				</LazyRender>
 			))}
 		</div>

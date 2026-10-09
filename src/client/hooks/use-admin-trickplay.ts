@@ -34,6 +34,25 @@ export function useArtifactStats() {
 }
 
 /** Removes the trickplay previews of one media file (the player shows none until they are generated again). */
+/** Removes the core trickplay previews of several media files in one request (up to 500 files). */
+export function useDeleteTrickplayMany() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (mediaFileIds: string[]) => reelvault.admin.deleteTrickplayMany(mediaFileIds),
+		onSuccess: async (result) => {
+			toast.success(m.hooks_trickplay_removed({ count: result.artifacts }));
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: adminKeys.trickplayStats() }),
+				queryClient.invalidateQueries({ queryKey: adminKeys.artifactStats() }),
+			]);
+		},
+		onError: (error) => {
+			toastError(m.hooks_trickplay_remove_error(), error);
+		},
+	});
+}
+
 export function useDeleteTrickplay() {
 	const queryClient = useQueryClient();
 
