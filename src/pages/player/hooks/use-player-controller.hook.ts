@@ -170,6 +170,7 @@ export function usePlayerController({
 				subtitleColor?: SubtitlePreferences["subtitleColor"];
 				subtitleBackground?: SubtitlePreferences["subtitleBackground"];
 				subtitleLanguage?: string | null;
+				subtitleFallbackLanguages?: string | null;
 		  }
 		| undefined;
 }) {
@@ -242,6 +243,15 @@ export function usePlayerController({
 	// Default search language comes from the profile preferences (server data),
 	// not a hardcoded locale.
 	const [subtitleLanguage, setSubtitleLanguage] = useState(profilePreferences?.subtitleLanguage ?? "en");
+	// Preferred subtitle languages in priority order: the search language first, then the profile's fallbacks.
+	const fallbackSubtitleLanguages = profilePreferences?.subtitleFallbackLanguages;
+	const preferredSubtitleLanguages = useMemo(
+		() =>
+			[subtitleLanguage, ...(fallbackSubtitleLanguages ?? "").split(",")]
+				.map((language) => language.trim().toLowerCase())
+				.filter((language, index, all) => language !== "" && all.indexOf(language) === index),
+		[subtitleLanguage, fallbackSubtitleLanguages],
+	);
 	const [subtitleOffset, setSubtitleOffset] = useState<number>(0);
 	const [isDocumentVisible, setIsDocumentVisible] = useState(
 		() => typeof document === "undefined" || document.visibilityState === "visible",
@@ -1278,6 +1288,7 @@ export function usePlayerController({
 		subtitleFormat,
 		subtitleContent: subtitleContentQuery.data,
 		subtitleLanguage,
+		preferredSubtitleLanguages,
 		setSubtitleLanguage,
 		subtitleCandidates,
 		downloadingCandidateId,

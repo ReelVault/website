@@ -60,6 +60,7 @@ export function AppPlayer({
 				subtitleColor?: "white" | "yellow" | "cyan" | "green";
 				subtitleBackground?: "none" | "semi" | "solid";
 				subtitleLanguage?: string | null;
+				subtitleFallbackLanguages?: string | null;
 		  }
 		| undefined;
 }) {

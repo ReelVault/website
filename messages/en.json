@@ -3010,6 +3010,7 @@
 	"player_subtitles_search_online": "Search online",
 	"player_subtitles_size_normal": "Normal (100%)",
 	"player_subtitles_word": "Subtitles",
+	"player_subtitles_preferred_only": "Preferred languages only",
 	"player_sync_heading": "Sync",
 	"player_telemetry_copied": "Telemetry copied to clipboard",
 	"player_text_color": "Text color",

@@ -73,6 +73,16 @@ function formatSubtitleLabel(subtitle: {
 
 const isSubtitleCompatible = (subtitle: { format?: string }) => !isBitmapSubtitle(subtitle.format);
 
+/** Matches on the primary language subtag, so `en-US` and `en` count as the same language. */
+function isPreferredLanguage(language: string | null | undefined, preferred: readonly string[]): boolean {
+	if (!language) return false;
+
+	const normalized = language.toLowerCase();
+	const primary = normalized.split("-")[0] ?? "";
+
+	return preferred.some((code) => code === normalized || code.split("-")[0] === primary);
+}
+
 function formatAudioLabel(stream: { language?: string | null; title?: string | null }): string {
 	const lang = stream.language ? formatSubtitleLanguage(stream.language) : m.player_default_track();
 
@@ -234,6 +244,7 @@ export function PlayerAudioSubtitlesDialog() {
 	const capabilities = useClientCapabilities();
 	const {
 		subtitles,
+		preferredSubtitleLanguages,
 		selectedSubtitleId,
 		setSelectedSubtitleId,
 		subtitleSize,
@@ -250,6 +261,7 @@ export function PlayerAudioSubtitlesDialog() {
 	const [activeTab, setActiveTab] = useState<"media" | "equalizer" | "styling" | "sync" | "search">("media");
 	const [showIncompatibleAudio, setShowIncompatibleAudio] = useState(false);
 	const [showIncompatibleSubtitles, setShowIncompatibleSubtitles] = useState(false);
+	const [preferredOnlySubtitles, setPreferredOnlySubtitles] = useState(false);
 
 	const isAudioCompatible = (stream: { codecName?: string | null }) =>
 		Boolean(capabilities?.audioCodecs.some((c) => c.toLowerCase() === stream.codecName?.toLowerCase()));
@@ -259,7 +271,10 @@ export function PlayerAudioSubtitlesDialog() {
 	const hasHiddenAudio = audioSplit.hiddenCount > 0;
 
 	const subtitleSplit = splitByCompatibility(subtitles, isSubtitleCompatible);
-	const visibleSubtitles = showIncompatibleSubtitles ? subtitles : subtitleSplit.visible;
+	const compatibleSubtitles = showIncompatibleSubtitles ? subtitles : subtitleSplit.visible;
+	const visibleSubtitles = preferredOnlySubtitles
+		? compatibleSubtitles.filter((subtitle) => isPreferredLanguage(subtitle.language, preferredSubtitleLanguages))
+		: compatibleSubtitles;
 	const hasHiddenSubtitles = subtitleSplit.hiddenCount > 0;
 
 	let offsetStatus: string;
@@ -404,6 +419,19 @@ export function PlayerAudioSubtitlesDialog() {
 										/>
 									)}
 								</div>
+								{preferredSubtitleLanguages.length > 0 && (
+									<button
+										type="button"
+										aria-pressed={preferredOnlySubtitles}
+										onClick={() => setPreferredOnlySubtitles((value) => !value)}
+										className={cn(
+											"mt-2 self-start rounded-full px-3 py-1 text-xs transition-colors",
+											preferredOnlySubtitles ? "bg-primary/15 text-primary" : "text-muted-foreground hover:text-foreground",
+										)}
+									>
+										{m.player_subtitles_preferred_only()}
+									</button>
+								)}
 								<div className="custom-scrollbar mt-3 max-h-[48vh] divide-y divide-border/15 overflow-y-auto pr-1">
 									{/* Disabled */}
 									<button

@@ -156,6 +156,8 @@ interface PlayerSubtitlesValue {
 	subtitleFormat: CaptionFormat | undefined;
 	subtitleContent: string | undefined;
 	subtitleLanguage: string;
+	/** Lower-case language codes the profile prefers, best first. */
+	preferredSubtitleLanguages: string[];
 	setSubtitleLanguage: (language: string) => void;
 	subtitleCandidates: SubtitleCandidate[] | undefined;
 	downloadingCandidateId: string | null;
@@ -338,6 +340,7 @@ export function PlayerProvider({
 				subtitleColor?: SubtitleColor;
 				subtitleBackground?: SubtitleBackground;
 				subtitleLanguage?: string | null;
+				subtitleFallbackLanguages?: string | null;
 		  }
 		| undefined;
 	children: ReactNode;
