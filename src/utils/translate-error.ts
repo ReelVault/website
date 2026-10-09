@@ -24,6 +24,7 @@ const dynamicMessages = {
 	auth_invalid_email: () => m.auth_invalid_email(),
 	auth_request_rejected: () => m.auth_request_rejected(),
 	auth_two_factor_required: () => m.auth_two_factor_required(),
+	auth_two_factor_requires_admin: () => m.auth_two_factor_requires_admin(),
 	auth_user_banned: () => m.auth_user_banned(),
 	auth_weak_password: () => m.auth_weak_password(),
 	conflict: () => m.conflict(),

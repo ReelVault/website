@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { KeyRound, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useState } from "react";
+import { useBackupCodesStatus } from "@/client/hooks/use-two-factor";
 import { Button } from "@/components/ui/button";
 import { UserSectionTitle, UserSurface } from "@/pages/user/components/user-ui";
 import { m } from "@/paraglide/messages";
@@ -12,6 +13,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 	const [isSetupOpen, setIsSetupOpen] = useState(false);
 	const [isDisableOpen, setIsDisableOpen] = useState(false);
 	const [isBackupCodesOpen, setIsBackupCodesOpen] = useState(false);
+	const backupCodesStatus = useBackupCodesStatus(twoFactorEnabled);
 
 	return (
 		<section>
@@ -44,6 +46,13 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 					</div>
 				</div>
 
+				{twoFactorEnabled && backupCodesStatus.data && (
+					<p className="-mt-2 text-muted-foreground text-xs">
+						{backupCodesStatus.data.remaining === null
+							? m.user_backup_codes_unreadable()
+							: m.user_backup_codes_remaining({ count: backupCodesStatus.data.remaining })}
+					</p>
+				)}
 				<div className="flex flex-wrap gap-2">
 					{twoFactorEnabled ? (
 						<>

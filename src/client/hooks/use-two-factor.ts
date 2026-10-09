@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { reelvault } from "../client";
 import { authKeys } from "../utils/query-keys";
 import { useVerifyTotp } from "./use-auth";
@@ -30,10 +30,12 @@ export function useTwoFactor() {
 		},
 	});
 
-	// react-doctor-disable-next-line react-doctor/query-mutation-missing-invalidation -- returns generated backup codes to display
 	const generateBackupCodesMutation = useMutation({
 		mutationFn: async ({ password }: { password: string }): Promise<{ backupCodes: string[] }> => {
 			return await reelvault.auth.generateBackupCodes(password);
+		},
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: authKeys.backupCodesStatus() });
 		},
 	});
 
@@ -43,4 +45,14 @@ export function useTwoFactor() {
 		disableMutation,
 		generateBackupCodesMutation,
 	};
+}
+
+/** Backup codes the signed-in account can still use. Read only while two-factor is enabled. */
+export function useBackupCodesStatus(enabled: boolean) {
+	return useQuery({
+		queryKey: authKeys.backupCodesStatus(),
+		queryFn: () => reelvault.auth.getBackupCodesStatus(),
+		enabled,
+		staleTime: 30_000,
+	});
 }
