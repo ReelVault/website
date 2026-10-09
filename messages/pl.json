@@ -3649,6 +3649,7 @@
 	"user_danger_zone": "Strefa niebezpieczna",
 	"user_day_hour_range": "{day}, {hour}:00 - {hour}:59",
 	"user_retry_download": "Ponów",
+	"user_open_title": "Otwórz tytuł",
 	"toast_download_retry_started": "Pobieranie wróciło do kolejki",
 	"toast_download_retry_failed": "Nie udało się ponowić pobierania",
 	"user_download_quota": "Zajęte miejsce: {used} z {limit}",

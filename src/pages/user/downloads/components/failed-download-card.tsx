@@ -1,4 +1,5 @@
 import type { DownloadJob } from "@reelvault/sdk";
+import { Link } from "@tanstack/react-router";
 import { RotateCcw, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,6 +35,17 @@ export function FailedDownloadCard({
 			</div>
 
 			<div className="flex items-center gap-2">
+				{job.metadataId && (
+					<Button
+						variant="ghost"
+						size="sm"
+						nativeButton={false}
+						render={<Link to="/details/$id" params={{ id: job.metadataId }} />}
+						className="text-xs"
+					>
+						{m.user_open_title()}
+					</Button>
+				)}
 				<Button variant="outline" size="sm" disabled={isRetrying} onClick={() => onRetry(job.id)} className="gap-1.5 text-xs">
 					<RotateCcw className="size-3.5" />
 					{m.user_retry_download()}
