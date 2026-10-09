@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Stream slots in the live view** — the admin live activity section shows how many stream slots are in use out of the server limit. The count turns into a warning when every slot is taken.
 - **Dismiss notifications** — every notification has a Dismiss action, and the notifications list offers Dismiss shown, which removes the notifications of the current page after confirmation. Only your own notifications are removed.
 - **Regenerate previews by library** — the trickplay page queues the missing previews of one library, or rebuilds all of them. Once queued, the page shows how many files were generated, how many the storage budget skipped, how many were skipped for other reasons, what failed and what is still running; the counts refresh while work remains.
 - **Worker pause, retry and watchdog notice** — the worker admin page pauses and resumes a task's automatic runs. A paused task shows a badge and no next run, while manual runs keep working. Each scheduled task shows its next run. A failed job in an operation can be retried; the retry is a new job and the failed one stays in the history. A notice appears when the watchdog has requeued orphaned jobs since the server started.

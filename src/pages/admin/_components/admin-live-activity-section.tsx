@@ -97,6 +97,13 @@ export function AdminLiveActivitySection() {
 						</h4>
 					</div>
 
+					{data?.capacity && (
+						<span
+							className={data.capacity.active >= data.capacity.limit ? "text-[11px] text-warning" : "text-[11px] text-muted-foreground"}
+						>
+							{m.admin_live_capacity({ active: data.capacity.active, limit: data.capacity.limit })}
+						</span>
+					)}
 					<span className="text-[11px] text-muted-foreground">{m.admin_telemetry_refresh_3s()}</span>
 				</div>
 

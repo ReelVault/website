@@ -463,6 +463,7 @@
 	"admin_live_stop_selected_done": "{terminated} stopped, {failed} could not be stopped",
 	"admin_live_active_streams": "Active viewers: {viewers}",
 	"admin_live_active_streams_title": "Live playback ({count})",
+	"admin_live_capacity": "Stream slots in use: {active} of {limit}",
 	"admin_live_active_video_streams_count": "Video streams: {count}",
 	"admin_live_audio_encoder": "A: {encoder}",
 	"admin_live_audio_language": "({language})",

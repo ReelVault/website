@@ -465,6 +465,7 @@
 	"admin_live_stop_selected_done": "Zatrzymano: {terminated}, nie udało się zatrzymać: {failed}",
 	"admin_live_active_streams": "Aktywni widzowie: {viewers}",
 	"admin_live_active_streams_title": "Aktywne odtwarzanie na żywo ({count})",
+	"admin_live_capacity": "Wykorzystane miejsca na strumienie: {active} z {limit}",
 	"admin_live_active_video_streams_count": "Strumienie wideo: {count}",
 	"admin_live_audio_encoder": "A: {encoder}",
 	"admin_live_audio_language": "({language})",
