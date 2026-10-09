@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { Download, RefreshCw, Terminal, Trash2 } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { StatusBadge } from "@/components/status-badge";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader } from "@/pages/admin/admin-ui";
@@ -46,6 +47,10 @@ export default function AdminLogsPage() {
 							<Download className="size-4" />
 							{m.admin_logs_download()}
 						</Button>
+						<Button variant="outline" size="sm" onClick={c.handleDownloadAll}>
+							<Download className="size-4" />
+							{m.admin_logs_download_all()}
+						</Button>
 						<ConfirmAction
 							trigger={
 								<Button variant="outline" size="sm" disabled={c.isCleaningUp}>
@@ -63,6 +68,14 @@ export default function AdminLogsPage() {
 			/>
 
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+				{c.truncated && (
+					<div className="lg:col-span-12">
+						<Alert>
+							<AlertTitle>{m.admin_logs_tail_window_title()}</AlertTitle>
+							<AlertDescription>{m.admin_logs_tail_window_notice({ mb: (c.windowBytes / 1024 / 1024).toFixed(1) })}</AlertDescription>
+						</Alert>
+					</div>
+				)}
 				<LogMobileFileSelect
 					effectiveFileId={c.effectiveFileId}
 					filteredFiles={c.filteredFiles}

@@ -197,6 +197,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Metadata catalog filters** — the admin metadata list can be filtered by movie/series and sorted by recently added, title, release date or weakest match; both choices are kept in the URL.
 - **Settings number fields know their range** — admin settings inputs show the allowed range, reject out-of-range values with a clear message and translate the server's settings errors. Requires SDK 1.3.0.
 - **New server settings** — labels and descriptions for the HLS muxing queue size, concurrent downloads per profile, trickplay frames per file, plugin blob retention and the per-plugin daily notification limit.
+- **Log page: complete archive and a tail notice** — a "Download all" button fetches every log file (rotated and FFmpeg logs) as one zip, and when the viewed file is larger than the served window the page states that search and pagination only cover the last N MB. Requires SDK 1.3.0.
 
 ### Fixes
 

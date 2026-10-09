@@ -6,6 +6,11 @@ import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { isFfmpegLog, isServerLog } from "../components/log-file-utils";
 
+function openLogsBundle() {
+	const url = `${getReelVaultApiUrl()}/v1/admin/logs/bundle`;
+	window.open(url, "_blank", "noopener,noreferrer");
+}
+
 export function useLogsPageController() {
 	const [selectedFileId, setSelectedFileId] = useState<string>("");
 	const [selectedLevel, setSelectedLevel] = useState("all");
@@ -43,7 +48,7 @@ export function useLogsPageController() {
 	const activeFile = filteredFiles.find((f) => f.id === selectedFileId) ?? filteredFiles[0] ?? files[0];
 	const effectiveFileId = activeFile ? activeFile.id : "";
 
-	const { logs, total, totalPages, isLoading, isFetching, error, refetch } = useAdminLogs(
+	const { logs, total, totalPages, truncated, windowBytes, isLoading, isFetching, error, refetch } = useAdminLogs(
 		{
 			fileId: effectiveFileId,
 			level: selectedLevel,
@@ -61,6 +66,8 @@ export function useLogsPageController() {
 			: `${apiUrl}/v1/admin/logs/download`;
 		window.open(url, "_blank", "noopener,noreferrer");
 	};
+
+	const handleDownloadAll = openLogsBundle;
 
 	const handleDeleteFile = async (fileId: string) => {
 		try {
@@ -136,11 +143,14 @@ export function useLogsPageController() {
 		logs,
 		total,
 		totalPages,
+		truncated,
+		windowBytes,
 		isLoading,
 		isFetching,
 		error,
 		refetch,
 		handleDownload,
+		handleDownloadAll,
 		handleDeleteFile,
 		handleCopyRaw,
 	};
