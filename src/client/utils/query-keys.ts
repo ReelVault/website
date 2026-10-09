@@ -199,6 +199,7 @@ export const adminKeys = {
 	logs: (params: object) => ["admin-logs", params] as const,
 	audit: (params: object) => ["admin-audit", params] as const,
 	auditSummary: (params: object) => ["admin-audit-summary", params] as const,
+	auditOptions: () => ["admin-audit-options"] as const,
 	filesystemBrowse: (path?: string) => [...adminKeys.all, "filesystem", "browse", path] as const,
 	workerOperationPrefix: () => [...adminKeys.all, "worker-operation"] as const,
 	userPrefix: (userId: string) => [...adminKeys.all, "users", userId] as const,

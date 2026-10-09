@@ -46,6 +46,15 @@ export function useAdminAuditSummary(params: AdminAuditSummaryFilters = {}) {
 	});
 }
 
+/** The values the audit filter dropdowns offer: resource types in the log and the administrators who wrote entries. */
+export function useAdminAuditOptions() {
+	return useQuery({
+		queryKey: adminKeys.auditOptions(),
+		queryFn: () => reelvault.admin.getAuditOptions(),
+		staleTime: 600_000,
+	});
+}
+
 export function useAdminAudit(params: UseAdminAuditParams = {}) {
 	const { action, resourceType, actorUserId, page = 1, limit = 25, ipAddress, requestId, q, from, to } = params;
 	const effectiveAction = action && action !== "all" ? action : undefined;

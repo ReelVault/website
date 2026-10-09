@@ -3,17 +3,18 @@ import { Download, History, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import { getReelVaultApiUrl } from "@/client/client";
-import { type AdminAuditAction, useAdminAudit } from "@/client/hooks/use-admin-audit";
+import { type AdminAuditAction, useAdminAudit, useAdminAuditOptions } from "@/client/hooks/use-admin-audit";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
-import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
+import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import type { AdminAuditSearch } from "@/routes/admin/audit";
 import { AuditActorSummary } from "./components/audit-actor-summary";
@@ -57,15 +58,16 @@ function AdminAuditContent() {
 
 	// Text filters are debounced copies of the URL values — otherwise every
 	// keystroke fired an audit request.
-	const debouncedResourceType = useDebounce({ value: resourceType, delay: 400 });
-	const debouncedActorUserId = useDebounce({ value: actorUserId, delay: 400 });
 	const debouncedIpAddress = useDebounce({ value: ipAddress, delay: 400 });
 	const debouncedRequestId = useDebounce({ value: requestId, delay: 400 });
 	const debouncedQuery = useDebounce({ value: query, delay: 400 });
+	const { data: options } = useAdminAuditOptions();
+	const resourceTypes = options?.resourceTypes ?? [];
+	const actors = options?.actors ?? [];
 	const { entries, total, totalPages, isLoading, isFetching, error, refetch } = useAdminAudit({
 		action,
-		resourceType: debouncedResourceType,
-		actorUserId: debouncedActorUserId,
+		resourceType,
+		actorUserId,
 		ipAddress: debouncedIpAddress,
 		requestId: debouncedRequestId,
 		q: debouncedQuery,
@@ -77,6 +79,10 @@ function AdminAuditContent() {
 
 	const handleResourceTypeChange = (value: string) => {
 		patchSearch({ resourceType: value || undefined, page: undefined });
+	};
+
+	const handleActorChange = (value: string) => {
+		patchSearch({ actorUserId: value || undefined, page: undefined });
 	};
 
 	const handleActionChange = (value: string[]) => {
@@ -166,12 +172,21 @@ function AdminAuditContent() {
 
 			<div className="flex flex-col gap-3">
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-					<AdminSearch
-						value={resourceType}
-						onChange={handleResourceTypeChange}
-						placeholder={m.admin_audit_filter_resource_type()}
-						className="sm:max-w-sm"
-					/>
+					<Select value={resourceType} onValueChange={(value) => handleResourceTypeChange(value ?? "")}>
+						<SelectTrigger className="w-full sm:max-w-sm" aria-label={m.admin_audit_filter_resource_type()}>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								<SelectItem value="">{m.admin_audit_any_resource_type()}</SelectItem>
+								{resourceTypes.map((type) => (
+									<SelectItem key={type} value={type}>
+										{type}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
 					<ToggleGroup
 						multiple={false}
 						value={[action]}
@@ -196,13 +211,21 @@ function AdminAuditContent() {
 							patchSearch({ q: event.target.value || undefined, page: undefined });
 						}}
 					/>
-					<Input
-						value={actorUserId}
-						placeholder={m.admin_audit_filter_actor()}
-						onChange={(event) => {
-							patchSearch({ actorUserId: event.target.value || undefined, page: undefined });
-						}}
-					/>
+					<Select value={actorUserId} onValueChange={(value) => handleActorChange(value ?? "")}>
+						<SelectTrigger className="w-full" aria-label={m.admin_audit_filter_actor()}>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								<SelectItem value="">{m.admin_audit_any_actor()}</SelectItem>
+								{actors.map((actor) => (
+									<SelectItem key={actor.actorUserId} value={actor.actorUserId}>
+										{actor.name ?? actor.actorUserId}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
 					<Input
 						value={ipAddress}
 						placeholder={m.admin_audit_filter_ip()}
@@ -239,8 +262,8 @@ function AdminAuditContent() {
 			<AuditActorSummary
 				filters={{
 					action,
-					resourceType: debouncedResourceType,
-					actorUserId: debouncedActorUserId,
+					resourceType,
+					actorUserId,
 					ipAddress: debouncedIpAddress,
 					requestId: debouncedRequestId,
 					q: debouncedQuery,
