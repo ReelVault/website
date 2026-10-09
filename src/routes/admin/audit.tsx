@@ -12,6 +12,8 @@ export interface AdminAuditSearch {
 	actorUserId?: string;
 	ipAddress?: string;
 	requestId?: string;
+	/** One term matched against the resource id and the summary. */
+	q?: string;
 	/** `datetime-local` strings; converted to RFC 3339 by the page. */
 	from?: string;
 	to?: string;
@@ -31,6 +33,7 @@ function adminAuditSearchValidator(search: Record<string, unknown>): AdminAuditS
 		actorUserId: typeof search.actorUserId === "string" && search.actorUserId !== "" ? search.actorUserId : undefined,
 		ipAddress: typeof search.ipAddress === "string" && search.ipAddress !== "" ? search.ipAddress : undefined,
 		requestId: typeof search.requestId === "string" && search.requestId !== "" ? search.requestId : undefined,
+		q: typeof search.q === "string" && search.q !== "" ? search.q : undefined,
 		from: typeof search.from === "string" && search.from !== "" ? search.from : undefined,
 		to: typeof search.to === "string" && search.to !== "" ? search.to : undefined,
 		page: Number.isInteger(rawPage) && rawPage > 1 ? rawPage : undefined,

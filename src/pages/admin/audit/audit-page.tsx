@@ -1,7 +1,8 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { History, RefreshCw } from "lucide-react";
+import { Download, History, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
+import { getReelVaultApiUrl } from "@/client/client";
 import { type AdminAuditAction, useAdminAudit } from "@/client/hooks/use-admin-audit";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
@@ -44,6 +45,7 @@ function AdminAuditContent() {
 	const actorUserId = search.actorUserId ?? "";
 	const ipAddress = search.ipAddress ?? "";
 	const requestId = search.requestId ?? "";
+	const query = search.q ?? "";
 	const from = search.from ?? "";
 	const to = search.to ?? "";
 	const page = search.page ?? 1;
@@ -58,12 +60,14 @@ function AdminAuditContent() {
 	const debouncedActorUserId = useDebounce({ value: actorUserId, delay: 400 });
 	const debouncedIpAddress = useDebounce({ value: ipAddress, delay: 400 });
 	const debouncedRequestId = useDebounce({ value: requestId, delay: 400 });
+	const debouncedQuery = useDebounce({ value: query, delay: 400 });
 	const { entries, total, totalPages, isLoading, isFetching, error, refetch } = useAdminAudit({
 		action,
 		resourceType: debouncedResourceType,
 		actorUserId: debouncedActorUserId,
 		ipAddress: debouncedIpAddress,
 		requestId: debouncedRequestId,
+		q: debouncedQuery,
 		from: toIsoDateTime(from),
 		to: toIsoDateTime(to),
 		page,
@@ -82,6 +86,25 @@ function AdminAuditContent() {
 		if (!matched) return;
 
 		patchSearch({ action: matched.value === "all" ? undefined : matched.value, page: undefined });
+	};
+
+	/** Opens the export for the filters in the URL, so the file matches what the page shows. */
+	const handleExport = (format: "csv" | "jsonl") => {
+		const params = new URLSearchParams({ format });
+		const filters = {
+			action: action === "all" ? "" : action,
+			resourceType,
+			actorUserId,
+			ipAddress,
+			requestId,
+			q: query,
+			from: toIsoDateTime(from) ?? "",
+			to: toIsoDateTime(to) ?? "",
+		};
+		for (const [key, value] of Object.entries(filters)) {
+			if (value) params.set(key, value);
+		}
+		window.open(`${getReelVaultApiUrl()}/v1/admin/audit/export?${params.toString()}`, "_blank", "noopener,noreferrer");
 	};
 
 	const setPage = (next: number) => {
@@ -123,10 +146,20 @@ function AdminAuditContent() {
 				title={m.admin_audit_admin_audit()}
 				description={m.admin_audit_description()}
 				actions={
-					<Button variant="outline" size="sm" disabled={isFetching} onClick={handleRefetch}>
-						<RefreshCw className={isFetching ? "size-4 animate-spin" : "size-4"} />
-						{m.common_refresh()}
-					</Button>
+					<div className="flex flex-wrap items-center gap-2">
+						<Button variant="outline" size="sm" onClick={() => handleExport("csv")}>
+							<Download className="size-4" />
+							{m.admin_audit_export_csv()}
+						</Button>
+						<Button variant="outline" size="sm" onClick={() => handleExport("jsonl")}>
+							<Download className="size-4" />
+							{m.admin_audit_export_jsonl()}
+						</Button>
+						<Button variant="outline" size="sm" disabled={isFetching} onClick={handleRefetch}>
+							<RefreshCw className={isFetching ? "size-4 animate-spin" : "size-4"} />
+							{m.common_refresh()}
+						</Button>
+					</div>
 				}
 			/>
 
@@ -155,6 +188,13 @@ function AdminAuditContent() {
 				</div>
 
 				<div className="grid grid-cols-2 gap-2 lg:grid-cols-5">
+					<Input
+						value={query}
+						placeholder={m.admin_audit_filter_query()}
+						onChange={(event) => {
+							patchSearch({ q: event.target.value || undefined, page: undefined });
+						}}
+					/>
 					<Input
 						value={actorUserId}
 						placeholder={m.admin_audit_filter_actor()}

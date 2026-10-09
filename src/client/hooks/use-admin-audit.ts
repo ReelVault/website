@@ -13,6 +13,7 @@ interface UseAdminAuditParams {
 	limit?: number;
 	ipAddress?: string;
 	requestId?: string;
+	q?: string;
 	from?: string;
 	to?: string;
 }
@@ -20,11 +21,11 @@ interface UseAdminAuditParams {
 const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
 export function useAdminAudit(params: UseAdminAuditParams = {}) {
-	const { action, resourceType, actorUserId, page = 1, limit = 25, ipAddress, requestId, from, to } = params;
+	const { action, resourceType, actorUserId, page = 1, limit = 25, ipAddress, requestId, q, from, to } = params;
 	const effectiveAction = action && action !== "all" ? action : undefined;
 
 	const query = useQuery({
-		queryKey: adminKeys.audit({ action: effectiveAction, resourceType, actorUserId, page, limit, ipAddress, requestId, from, to }),
+		queryKey: adminKeys.audit({ action: effectiveAction, resourceType, actorUserId, page, limit, ipAddress, requestId, q, from, to }),
 		placeholderData: keepPreviousData,
 		queryFn: () =>
 			reelvault.admin.getAudit({
@@ -35,6 +36,7 @@ export function useAdminAudit(params: UseAdminAuditParams = {}) {
 				limit,
 				ipAddress: emptyToUndefined(ipAddress),
 				requestId: emptyToUndefined(requestId),
+				q: emptyToUndefined(q),
 				from: emptyToUndefined(from),
 				to: emptyToUndefined(to),
 			}),
