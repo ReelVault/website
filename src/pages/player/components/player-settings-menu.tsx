@@ -1,6 +1,6 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { cn } from "cn";
-import { Check, Keyboard, Layers, Settings } from "lucide-react";
+import { Check, Keyboard, Layers, Settings, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { useMediaFilesByEpisode, useMediaFilesByMetadata } from "@/client/hooks/use-media";
 import {
@@ -101,10 +101,12 @@ function SpeedSlider({
 
 export function PlayerSettingsMenu({
 	onOpenShortcuts,
+	onOpenEqualizer,
 	shortcutsDisabled = false,
 	onShortcutsDisabledChange,
 }: {
 	onOpenShortcuts?: () => void;
+	onOpenEqualizer?: () => void;
 	shortcutsDisabled?: boolean;
 	onShortcutsDisabledChange?: (disabled: boolean) => void;
 } = {}) {
@@ -222,6 +224,19 @@ export function PlayerSettingsMenu({
 						<SpeedSlider playbackRate={playbackRate} onRateChange={(rate) => actions.setPlaybackRate(rate)} className="mx-1" />
 					</section>
 
+					{onOpenEqualizer && (
+						<section className="flex flex-col gap-1">
+							<button
+								type="button"
+								onClick={onOpenEqualizer}
+								className="flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-left text-sm transition-colors hover:bg-accent"
+							>
+								<SlidersHorizontal className="size-4 text-muted-foreground" />
+								{m.player_audio_equalizer()}
+							</button>
+						</section>
+					)}
+
 					<section className="flex flex-col gap-1">
 						<button
 							type="button"
@@ -315,6 +330,15 @@ export function PlayerSettingsMenu({
 							</div>
 						</DropdownMenuGroup>
 
+						<DropdownMenuSeparator />
+						<DropdownMenuGroup>
+							{onOpenEqualizer && (
+								<DropdownMenuItem onClick={onOpenEqualizer} className="cursor-pointer gap-2.5">
+									<SlidersHorizontal className="size-4 text-muted-foreground" />
+									<span>{m.player_audio_equalizer()}</span>
+								</DropdownMenuItem>
+							)}
+						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							<DropdownMenuCheckboxItem

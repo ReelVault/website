@@ -11,7 +11,6 @@ import {
 } from "@/components/fullscreen-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { m } from "@/paraglide/messages";
@@ -27,7 +26,6 @@ import {
 } from "../utils/player.types";
 import { detach } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
-import { PlayerEqualizerPanel } from "./player-equalizer-panel";
 import { PlayerSubtitleSearchPanel } from "./player-subtitle-search-panel";
 
 let languageDisplayNames: Intl.DisplayNames | undefined;
@@ -258,7 +256,7 @@ export function PlayerAudioSubtitlesDialog() {
 	} = usePlayerSubtitles();
 
 	const [isOpen, setIsOpen] = useState(false);
-	const [activeTab, setActiveTab] = useState<"media" | "equalizer" | "styling" | "sync" | "search">("media");
+	const [activeTab, setActiveTab] = useState<"media" | "styling" | "sync" | "search">("media");
 	const [showIncompatibleAudio, setShowIncompatibleAudio] = useState(false);
 	const [showIncompatibleSubtitles, setShowIncompatibleSubtitles] = useState(false);
 	const [preferredOnlySubtitles, setPreferredOnlySubtitles] = useState(false);
@@ -312,7 +310,7 @@ export function PlayerAudioSubtitlesDialog() {
 					value={activeTab}
 					onValueChange={(val) => {
 						const tab = String(val);
-						if (tab === "media" || tab === "equalizer" || tab === "styling" || tab === "sync" || tab === "search") {
+						if (tab === "media" || tab === "styling" || tab === "sync" || tab === "search") {
 							setActiveTab(tab);
 						}
 					}}
@@ -320,7 +318,6 @@ export function PlayerAudioSubtitlesDialog() {
 				>
 					<TabsList className="mb-4 w-fit bg-muted/60">
 						<TabsTrigger value="media">{m.player_tracks_subtitles()}</TabsTrigger>
-						<TabsTrigger value="equalizer">{m.player_audio_equalizer()}</TabsTrigger>
 						<TabsTrigger value="sync">
 							{m.player_sync_heading()}
 							{subtitleOffset !== 0 && (
@@ -502,13 +499,6 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 							</div>
 						</div>
-					</TabsContent>
-
-					{/* Audio equalizer and compressor tab */}
-					<TabsContent value="equalizer" className="mt-0 outline-none">
-						<ScrollArea className="max-h-102">
-							<PlayerEqualizerPanel />
-						</ScrollArea>
 					</TabsContent>
 
 					{/* Subtitle styling and position tab */}

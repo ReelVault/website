@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import { lazy, type PointerEvent as ReactPointerEvent, Suspense, useEffect } from "react";
+import { lazy, type PointerEvent as ReactPointerEvent, Suspense, useEffect, useState } from "react";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { setPlayerBridgeState } from "@/plugin-host/player-bridge-state";
@@ -28,6 +28,7 @@ const PlayerEpisodesDrawer = lazy(async () => ({ default: (await import("./playe
 const PlayerSettingsMenu = lazy(async () => ({ default: (await import("./player-settings-menu")).PlayerSettingsMenu }));
 const PlayerSleepTimerMenu = lazy(async () => ({ default: (await import("./player-sleep-timer-menu")).PlayerSleepTimerMenu }));
 const PlayerShortcutsDialog = lazy(async () => ({ default: (await import("./player-shortcuts-dialog")).PlayerShortcutsDialog }));
+const PlayerEqualizerDrawer = lazy(async () => ({ default: (await import("./player-equalizer-drawer")).PlayerEqualizerDrawer }));
 
 export interface PlayerChromeProps {
 	diagnosticsOpen: boolean;
@@ -61,6 +62,8 @@ export function PlayerChrome({
 	shortcutsDisabled,
 	onShortcutsDisabledChange,
 }: PlayerChromeProps) {
+	const [equalizerOpen, setEqualizerOpen] = useState(false);
+
 	return (
 		<>
 			{/* Headless subscribers — media session sync; renders null */}
@@ -122,6 +125,7 @@ export function PlayerChrome({
 							<PlayerSleepTimerMenu />
 							<PlayerSettingsMenu
 								onOpenShortcuts={() => onShortcutsOpenChange(true)}
+								onOpenEqualizer={() => setEqualizerOpen(true)}
 								shortcutsDisabled={shortcutsDisabled}
 								onShortcutsDisabledChange={onShortcutsDisabledChange}
 							/>
@@ -129,6 +133,10 @@ export function PlayerChrome({
 					</PlayerFooter>
 				</div>
 			</div>
+
+			<Suspense fallback={null}>
+				<PlayerEqualizerDrawer open={equalizerOpen} onOpenChange={setEqualizerOpen} />
+			</Suspense>
 
 			{shortcutsOpen && (
 				<Suspense fallback={null}>

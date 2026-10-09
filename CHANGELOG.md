@@ -222,6 +222,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Seek debounce setting** — the admin settings page labels `stream.seekDebounceMs`. Requires server with the new setting.
 - **Subtitle search suggests your languages** — the in-player subtitle search shows your preferred languages as quick picks and searches once automatically when it opens.
 - **Dashboard empty state has a next step** — when there is nothing to feature, the dashboard explains why and offers the next step: administrators get *Add the first library*, everyone else gets *Try again*. Previously the top of the page was blank.
+- **Equalizer opens as a top drawer** — the equalizer moved out of the subtitles and audio dialog into its own drawer from the top edge, opened from the player settings menu. It does not block the picture: you can seek the video while tuning the sound.
 
 ### Fixes
 
