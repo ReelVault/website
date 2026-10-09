@@ -50,7 +50,12 @@ const dynamicMessages = {
 	not_found: () => m.not_found(),
 	plugin_server_too_old: () => m.plugin_server_too_old(),
 	profile_name_conflict: () => m.profile_name_conflict(),
-	profile_pin_invalid: () => m.profile_pin_invalid(),
+	profile_pin_invalid: (inputs) =>
+		inputs?.attemptsRemaining === undefined
+			? m.profile_pin_invalid()
+			: m.profile_pin_invalid_attempts({ attempts: String(inputs.attemptsRemaining) }),
+	profile_pin_locked: (inputs) =>
+		m.profile_pin_locked({ minutes: String(Math.max(1, Math.ceil(Number(inputs?.retryAfterSeconds ?? 0) / 60))) }),
 	rate_limit_exceeded: (inputs) => m.rate_limit_exceeded({ retryAfterSeconds: String(inputs?.retryAfterSeconds ?? "") }),
 	remote_access_bind_external: (inputs) => m.remote_access_bind_external({ bindHost: String(inputs?.bindHost ?? "") }),
 	remote_access_bind_loopback: () => m.remote_access_bind_loopback(),

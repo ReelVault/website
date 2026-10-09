@@ -3317,6 +3317,8 @@
 	"plugins_webhooks_clear_failed": "Nie udało się wyczyścić historii",
 	"plugins_webhooks_disabled": "Wyłączony",
 	"profile_name_conflict": "Profil o tej nazwie już istnieje",
+	"profile_pin_invalid_attempts": "Nieprawidłowy kod PIN. Pozostało prób: {attempts}.",
+	"profile_pin_locked": "Zbyt wiele błędnych prób kodu PIN. Spróbuj ponownie za {minutes} min.",
 	"profile_pin_invalid": "Nieprawidłowy kod PIN.",
 	"rate_limit_exceeded": "Zbyt wiele żądań. Spróbuj ponownie za {retryAfterSeconds} s.",
 	"realtime_reconnected": "Połączenie przywrócone",

@@ -3290,6 +3290,8 @@
 	"plugins_webhooks_clear_failed": "Failed to clear the history",
 	"plugins_webhooks_disabled": "Disabled",
 	"profile_name_conflict": "A profile with this name already exists",
+	"profile_pin_invalid_attempts": "Invalid PIN code. Attempts left: {attempts}.",
+	"profile_pin_locked": "Too many wrong PIN attempts. Try again in {minutes} min.",
 	"profile_pin_invalid": "Invalid PIN code.",
 	"rate_limit_exceeded": "Too many requests. Try again in {retryAfterSeconds} s.",
 	"realtime_reconnected": "Connection restored",
