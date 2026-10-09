@@ -1,11 +1,12 @@
-import type { AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
+import type { AdminUpdateEnvironment, AdminUpdateHistoryEntry, AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpCircle, ChevronDown, ExternalLink, History, Info, Monitor, RefreshCw, Server } from "lucide-react";
-import type { ReactNode } from "react";
-import { UPDATE_JOB_STATE_LABELS, useAdminUpdate } from "@/client/hooks/use-admin-update";
+import { type ReactNode, useState } from "react";
+import { UPDATE_JOB_STATE_LABELS, useAdminUpdate, useAdminUpdateHistory } from "@/client/hooks/use-admin-update";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { MarkdownText } from "@/components/markdown-text";
+import { SimplePagination } from "@/components/simple-pagination";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -13,6 +14,7 @@ import { Progress } from "@/components/ui/progress";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { formatDateTime } from "@/utils/format-utils";
 
 function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
 	const isServer = target === "server";
@@ -186,6 +188,116 @@ function JobCard({ status }: { status: AdminUpdateStatus }) {
 	);
 }
 
+function environmentContainerLabel(container: AdminUpdateEnvironment["container"]): string {
+	if (container === "podman") return m.admin_updates_environment_container_podman();
+	if (container === "docker") return m.admin_updates_environment_container_docker();
+
+	return m.admin_updates_environment_container_none();
+}
+
+function environmentSystemdLabel(systemd: AdminUpdateEnvironment["systemd"]): string {
+	if (systemd === "user") return m.admin_updates_environment_systemd_user();
+	if (systemd === "system") return m.admin_updates_environment_systemd_system();
+
+	return m.admin_updates_environment_systemd_none();
+}
+
+function EnvironmentSection({ environment }: { environment: AdminUpdateEnvironment }) {
+	return (
+		<AdminSection title={m.admin_updates_environment_title()}>
+			<dl className="grid gap-4 p-4 sm:grid-cols-3">
+				<div>
+					<dt className="text-muted-foreground text-xs uppercase tracking-wide">{m.admin_updates_environment_container()}</dt>
+					<dd className="font-medium text-foreground text-sm">{environmentContainerLabel(environment.container)}</dd>
+				</div>
+				<div>
+					<dt className="text-muted-foreground text-xs uppercase tracking-wide">{m.admin_updates_environment_rootless()}</dt>
+					<dd className="font-medium text-foreground text-sm">{environment.rootless ? m.common_yes() : m.common_no()}</dd>
+				</div>
+				<div>
+					<dt className="text-muted-foreground text-xs uppercase tracking-wide">{m.admin_updates_environment_systemd()}</dt>
+					<dd className="font-medium text-foreground text-sm">{environmentSystemdLabel(environment.systemd)}</dd>
+				</div>
+			</dl>
+		</AdminSection>
+	);
+}
+
+function HistoryStatusBadge({ status }: { status: AdminUpdateHistoryEntry["status"] }) {
+	if (status === "running") {
+		return (
+			<Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
+				<RefreshCw className="size-3 animate-spin" />
+				{m.admin_updates_history_status_running()}
+			</Badge>
+		);
+	}
+	if (status === "failed") {
+		return (
+			<Badge variant="outline" className="border-destructive/30 bg-destructive/10 text-destructive">
+				{m.admin_updates_history_status_failed()}
+			</Badge>
+		);
+	}
+
+	return (
+		<Badge variant="outline" className="border-success/30 bg-success/10 text-success">
+			{m.admin_updates_history_status_succeeded()}
+		</Badge>
+	);
+}
+
+function HistoryRow({ entry }: { entry: AdminUpdateHistoryEntry }) {
+	const actionLabel = entry.action === "install" ? m.admin_updates_history_action_install() : m.admin_updates_history_action_rollback();
+	const targetLabel = entry.target === "server" ? m.admin_updates_server_component() : m.admin_updates_web_component();
+
+	return (
+		<li className="flex flex-col gap-1.5 p-4">
+			<div className="flex flex-wrap items-center justify-between gap-2">
+				<span className="font-medium text-foreground text-sm">
+					{m.admin_updates_history_run({ action: actionLabel, component: targetLabel })}
+				</span>
+				<HistoryStatusBadge status={entry.status} />
+			</div>
+			<p className="text-muted-foreground text-xs tabular-nums">
+				{m.admin_updates_history_versions({ from: entry.fromVersion ?? m.admin_updates_version_unknown(), to: entry.toVersion })}
+				{" · "}
+				{m.admin_updates_history_started({ date: formatDateTime(entry.startedAt) })}
+			</p>
+			{entry.errorMessage ? <p className="text-destructive text-xs">{entry.errorMessage}</p> : null}
+		</li>
+	);
+}
+
+function UpdateHistorySection() {
+	const [page, setPage] = useState(1);
+	const { data, isLoading, isFetching } = useAdminUpdateHistory(page);
+	const entries = data?.data ?? [];
+
+	return (
+		<AdminSection title={m.admin_updates_history_title()} description={m.admin_updates_history_description()} contentClassName="p-0">
+			{!isLoading && entries.length === 0 ? (
+				<p className="p-4 text-muted-foreground text-sm">{m.admin_updates_history_empty()}</p>
+			) : (
+				<ul className="divide-y divide-border">
+					{entries.map((entry) => (
+						<HistoryRow key={entry.id} entry={entry} />
+					))}
+				</ul>
+			)}
+			<div className="border-border border-t p-3">
+				<SimplePagination
+					variant="admin"
+					currentPage={page}
+					totalPages={data?.totalPages ?? 0}
+					isLoading={isLoading || isFetching}
+					onPageChange={setPage}
+				/>
+			</div>
+		</AdminSection>
+	);
+}
+
 export default function AdminUpdatesPage() {
 	const { status, statusQuery, checkNow, isChecking } = useAdminUpdate();
 
@@ -230,6 +342,9 @@ export default function AdminUpdatesPage() {
 
 				<ComponentSection status={status} target="server" />
 				<ComponentSection status={status} target="web" />
+
+				<EnvironmentSection environment={status.environment} />
+				<UpdateHistorySection />
 
 				{status.installType === "docker" && (
 					<div className="flex items-start gap-2 rounded-lg border border-border/60 bg-card/60 p-3 text-sm">

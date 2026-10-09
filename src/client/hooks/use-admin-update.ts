@@ -1,5 +1,5 @@
 import type { AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
@@ -17,6 +17,23 @@ export const UPDATE_JOB_STATE_LABELS: Record<string, () => string> = {
 	swapping: m.admin_updates_job_swapping,
 	restarting: m.admin_updates_job_restarting,
 };
+
+const UPDATE_HISTORY_PAGE_SIZE = 10;
+
+/**
+ * Installs and rollbacks, newest first. Polls only while a run is still marked
+ * as running: a server run closes once the restarted server reports it.
+ */
+export function useAdminUpdateHistory(page: number) {
+	return useQuery({
+		queryKey: adminKeys.updateHistory(page, UPDATE_HISTORY_PAGE_SIZE),
+		queryFn: () => reelvault.admin.getUpdateHistory({ page, limit: UPDATE_HISTORY_PAGE_SIZE }),
+		placeholderData: keepPreviousData,
+		refetchInterval: (query) => (query.state.data?.data.some((entry) => entry.status === "running") ? 2_000 : false),
+		refetchIntervalInBackground: false,
+		staleTime: 30_000,
+	});
+}
 
 /**
  * Version + update status of the server and web UI. While an install job is
@@ -36,7 +53,10 @@ export function useAdminUpdate() {
 	});
 
 	const invalidate = async () => {
-		await queryClient.invalidateQueries({ queryKey: adminKeys.updateStatus() });
+		await Promise.all([
+			queryClient.invalidateQueries({ queryKey: adminKeys.updateStatus() }),
+			queryClient.invalidateQueries({ queryKey: adminKeys.updateHistoryAll() }),
+		]);
 	};
 
 	const checkNowMutation = useMutation({
