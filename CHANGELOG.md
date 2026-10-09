@@ -243,3 +243,4 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Stream limit messages** — hitting the server or per-user stream limit, or starting sessions too fast, now shows a clear translated message with the limit or the wait time.
 - **HLS segment length setting** — the description now says the change applies after a server restart.
 - **Admin media file actions on touch and TV** — the open, edit and delete buttons on a media file card appeared only on hover, which touch and TV input never triggers. They stay visible on coarse pointers, and keyboard focus reveals them too.
+- **Plugin errors show a readable reason** — a plugin card that failed to start shows the translated reason for the server's stable error code (for example too many registered routes) instead of the raw server text, which is kept when no translation exists.

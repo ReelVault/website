@@ -7,6 +7,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 import { formatDate } from "@/utils/format-utils";
+import { translateByKey } from "@/utils/translate-error";
+
+/** Translates the stable server code when the website has a message for it; otherwise shows the server's own text. */
+function pluginErrorText(plugin: PluginAdminStatus): string | undefined {
+	if (!plugin.errorCode) return plugin.error;
+
+	const translated = translateByKey(plugin.errorCode);
+
+	return translated === plugin.errorCode ? plugin.error : translated;
+}
 
 interface PluginCardProps {
 	plugin: PluginAdminStatus;
@@ -111,7 +121,7 @@ export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnabl
 							<XCircle className="size-3.5 shrink-0" />
 							<span>{m.admin_plugins_loading_error({ failurePhase: plugin.failurePhase ?? "runtime" })}</span>
 						</div>
-						<p className="wrap-break-word mt-1 font-mono text-[11px]">{plugin.error}</p>
+						<p className="wrap-break-word mt-1 font-mono text-[11px]">{pluginErrorText(plugin)}</p>
 					</div>
 				)}
 			</div>
