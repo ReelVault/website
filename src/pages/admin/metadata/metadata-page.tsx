@@ -86,6 +86,7 @@ export default function AdminMetadataPage() {
 		yearTo: search.yearTo,
 		minMatchScore: search.minMatchScore,
 		startsWith: search.startsWith,
+		status: search.status,
 	};
 
 	// Typing flows debounce → URL; browser Back/refresh restores both.

@@ -4,6 +4,7 @@ import {
 	parseMetadataMinMatchScore,
 	parseMetadataStartsWith,
 	parseMetadataYear,
+	useMetadataStatuses,
 } from "@/client/hooks/use-admin-metadata";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -51,6 +52,8 @@ interface MetadataBrowseFiltersProps {
 }
 
 export function MetadataBrowseFilters({ filters, onChange }: MetadataBrowseFiltersProps) {
+	const statuses = useMetadataStatuses();
+
 	return (
 		<div className="flex flex-wrap items-center gap-2">
 			<YearInput label={m.admin_metadata_year_from()} value={filters.yearFrom} onCommit={(yearFrom) => onChange({ yearFrom })} />
@@ -70,6 +73,21 @@ export function MetadataBrowseFilters({ filters, onChange }: MetadataBrowseFilte
 						{ADMIN_METADATA_MIN_MATCH_SCORES.map((score) => (
 							<SelectItem key={score} value={String(score)}>
 								{percentLabel(score)}
+							</SelectItem>
+						))}
+					</SelectGroup>
+				</SelectContent>
+			</Select>
+			<Select value={filters.status ?? ANY} onValueChange={(value) => onChange({ status: value === ANY || !value ? undefined : value })}>
+				<SelectTrigger className="h-9 w-full sm:w-44" aria-label={m.admin_metadata_status_label()}>
+					<SelectValue>{filters.status ?? m.admin_metadata_status_any()}</SelectValue>
+				</SelectTrigger>
+				<SelectContent>
+					<SelectGroup>
+						<SelectItem value={ANY}>{m.admin_metadata_status_any()}</SelectItem>
+						{(statuses.data?.statuses ?? []).map((status) => (
+							<SelectItem key={status} value={status}>
+								{status}
 							</SelectItem>
 						))}
 					</SelectGroup>

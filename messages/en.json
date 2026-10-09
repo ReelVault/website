@@ -1030,6 +1030,8 @@
 	"admin_metadata_min_match_option": "{percent}% or better",
 	"admin_metadata_letter_label": "First letter",
 	"admin_metadata_letter_any": "Any letter",
+	"admin_metadata_status_label": "Status",
+	"admin_metadata_status_any": "Any status",
 	"admin_metadata_letter_other": "Other characters",
 	"admin_metadata_unlock_all_fields": "Unlock all fields",
 	"admin_metadata_unlock_field": "Unlock {field} field",

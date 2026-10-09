@@ -25,6 +25,7 @@ export interface AdminMetadataBrowseFilters {
 	yearTo?: number | undefined;
 	minMatchScore?: number | undefined;
 	startsWith?: string | undefined;
+	status?: string | undefined;
 }
 
 export const ADMIN_METADATA_MIN_MATCH_SCORES = [0.5, 0.7, 0.9] as const;
@@ -62,6 +63,7 @@ export const adminMetadataQueryOptions = ({
 	yearTo,
 	minMatchScore,
 	startsWith,
+	status,
 }: {
 	page: number;
 	pageSize: number;
@@ -77,6 +79,7 @@ export const adminMetadataQueryOptions = ({
 		yearTo,
 		minMatchScore,
 		startsWith,
+		status,
 	}),
 	placeholderData: keepPreviousData,
 	queryFn: () =>
@@ -92,10 +95,20 @@ export const adminMetadataQueryOptions = ({
 			yearTo,
 			minMatchScore,
 			startsWith,
+			status,
 			...(sort ? ADMIN_METADATA_SORTS[sort] : {}),
 		}),
 	staleTime: 120_000,
 });
+
+/** Distinct catalog statuses, for the status filter. */
+export function useMetadataStatuses() {
+	return useQuery({
+		queryKey: metadataKeys.statuses(),
+		queryFn: () => reelvault.metadata.getStatuses(),
+		staleTime: 300_000,
+	});
+}
 
 export function useAdminMetadata(
 	currentPage: number,

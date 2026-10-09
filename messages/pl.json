@@ -1035,6 +1035,8 @@
 	"admin_metadata_min_match_any": "Dowolne dopasowanie",
 	"admin_metadata_min_match_option": "{percent}% lub lepiej",
 	"admin_metadata_letter_label": "Pierwsza litera",
+	"admin_metadata_status_label": "Status",
+	"admin_metadata_status_any": "Dowolny status",
 	"admin_metadata_letter_any": "Dowolna litera",
 	"admin_metadata_letter_other": "Inne znaki",
 	"admin_metadata_unlock_all_fields": "Odblokuj wszystkie pola",

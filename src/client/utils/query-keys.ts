@@ -5,6 +5,7 @@ export const metadataKeys = {
 	byId: (id: string) => [...metadataKeys.all, id] as const,
 	details: (id: string) => [...metadataKeys.all, "details", id] as const,
 	detailsView: (id: string) => [...metadataKeys.all, "details-view", id] as const,
+	statuses: () => [...metadataKeys.all, "statuses"] as const,
 	related: (id: string) => [...metadataKeys.all, "related", id] as const,
 	similarByActor: (id?: string) => [...metadataKeys.all, "similar_by_actor", id] as const,
 	collection: (id?: string, sortBy?: string, sortOrder?: string) => [...metadataKeys.all, "collection", id, sortBy, sortOrder] as const,
@@ -27,7 +28,7 @@ export const metadataKeys = {
 		missingTranslation?: boolean,
 		type?: string,
 		sort?: string,
-		browse?: { yearFrom?: number; yearTo?: number; minMatchScore?: number; startsWith?: string },
+		browse?: { yearFrom?: number; yearTo?: number; minMatchScore?: number; startsWith?: string; status?: string },
 	) =>
 		[
 			...metadataKeys.all,

@@ -20,6 +20,7 @@ interface AdminMetadataSearch {
 	yearTo?: number;
 	minMatchScore?: number;
 	startsWith?: string;
+	status?: string;
 }
 
 function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMetadataSearch {
@@ -33,6 +34,7 @@ function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMet
 		yearTo: parseMetadataYear(search.yearTo),
 		minMatchScore: parseMetadataMinMatchScore(search.minMatchScore),
 		startsWith: parseMetadataStartsWith(search.startsWith),
+		status: typeof search.status === "string" && search.status !== "" ? search.status : undefined,
 	};
 }
 
