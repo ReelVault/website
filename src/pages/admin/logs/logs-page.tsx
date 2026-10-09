@@ -123,6 +123,26 @@ export default function AdminLogsPage() {
 							c.setSelectedLevel(lvl);
 							c.setPage(1);
 						}}
+						moduleFilter={c.moduleFilter}
+						onModuleChange={(value) => {
+							c.setModuleFilter(value);
+							c.setPage(1);
+						}}
+						excludeQuery={c.excludeQuery}
+						onExcludeChange={(value) => {
+							c.setExcludeQuery(value);
+							c.setPage(1);
+						}}
+						fromDate={c.fromDate}
+						onFromChange={(value) => {
+							c.setFromDate(value);
+							c.setPage(1);
+						}}
+						toDate={c.toDate}
+						onToChange={(value) => {
+							c.setToDate(value);
+							c.setPage(1);
+						}}
 					/>
 
 					<LogViewerCard

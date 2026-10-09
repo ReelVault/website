@@ -11,10 +11,23 @@ function openLogsBundle() {
 	window.open(url, "_blank", "noopener,noreferrer");
 }
 
+/** `datetime-local` values are local time without seconds; the API expects RFC 3339. */
+function toIsoDateTime(value: string): string | undefined {
+	if (!value) return undefined;
+
+	const date = new Date(value);
+
+	return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}
+
 export function useLogsPageController() {
 	const [selectedFileId, setSelectedFileId] = useState<string>("");
 	const [selectedLevel, setSelectedLevel] = useState("all");
 	const [searchQuery, setSearchQuery] = useState("");
+	const [moduleFilter, setModuleFilter] = useState("");
+	const [excludeQuery, setExcludeQuery] = useState("");
+	const [fromDate, setFromDate] = useState("");
+	const [toDate, setToDate] = useState("");
 	const [fileTypeFilter, setFileTypeFilter] = useState("all");
 	const [viewMode, setViewMode] = useState<"formatted" | "raw">("formatted");
 	const [isFullscreen, setIsFullscreen] = useState(false);
@@ -23,6 +36,8 @@ export function useLogsPageController() {
 	const [page, setPage] = useState(1);
 
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 350 });
+	const debouncedModule = useDebounce({ value: moduleFilter, delay: 350 });
+	const debouncedExclude = useDebounce({ value: excludeQuery, delay: 350 });
 
 	const {
 		files,
@@ -53,6 +68,10 @@ export function useLogsPageController() {
 			fileId: effectiveFileId,
 			level: selectedLevel,
 			search: debouncedSearch,
+			module: debouncedModule.trim() || undefined,
+			exclude: debouncedExclude.trim() || undefined,
+			from: toIsoDateTime(fromDate),
+			to: toIsoDateTime(toDate),
 			page,
 			limit: viewMode === "raw" ? 100 : 50,
 		},
@@ -120,6 +139,14 @@ export function useLogsPageController() {
 		setSelectedLevel,
 		searchQuery,
 		setSearchQuery,
+		moduleFilter,
+		setModuleFilter,
+		excludeQuery,
+		setExcludeQuery,
+		fromDate,
+		setFromDate,
+		toDate,
+		setToDate,
 		fileTypeFilter,
 		handleFilterChange,
 		viewMode,

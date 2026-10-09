@@ -63,22 +63,30 @@ interface UseAdminLogsParams {
 	fileId?: string;
 	level?: string;
 	search?: string;
+	module?: string;
+	exclude?: string;
+	from?: string;
+	to?: string;
 	page?: number;
 	limit?: number;
 }
 
 export function useAdminLogs(params: UseAdminLogsParams = {}, autoRefresh = true) {
-	const { fileId, level, search, page = 1, limit = 25 } = params;
+	const { fileId, level, search, module, exclude, from, to, page = 1, limit = 25 } = params;
 	const effectiveLevel = level && level !== "all" ? level : undefined;
 
 	const query = useQuery({
-		queryKey: adminKeys.logs({ fileId, level: effectiveLevel, search, page, limit }),
+		queryKey: adminKeys.logs({ fileId, level: effectiveLevel, search, module, exclude, from, to, page, limit }),
 		placeholderData: keepPreviousData,
 		queryFn: () =>
 			reelvault.admin.getLogs({
 				fileId: emptyToUndefined(fileId),
 				level: effectiveLevel,
 				search: emptyToUndefined(search),
+				module: emptyToUndefined(module),
+				exclude: emptyToUndefined(exclude),
+				from: emptyToUndefined(from),
+				to: emptyToUndefined(to),
 				limit,
 				page,
 			}),
