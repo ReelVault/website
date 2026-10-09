@@ -2,6 +2,7 @@ import { Tag } from "lucide-react";
 import { useState } from "react";
 import { useAdminGenres } from "@/client/hooks/use-admin-genres";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
+import { SimplePagination } from "@/components/simple-pagination";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
@@ -9,8 +10,13 @@ import { m } from "@/paraglide/messages";
 
 export default function AdminGenresPage() {
 	const [searchQuery, setSearchQuery] = useState("");
+	const [page, setPage] = useState(1);
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 400 });
-	const { genres, total, error, refetch } = useAdminGenres(debouncedSearch);
+	const { genres, total, totalPages, isLoading, error, refetch } = useAdminGenres(debouncedSearch, page);
+	const handleSearchChange = (value: string) => {
+		setSearchQuery(value);
+		setPage(1);
+	};
 	const handleRetry = () => {
 		detach(refetch());
 	};
@@ -24,7 +30,12 @@ export default function AdminGenresPage() {
 				count={total}
 				description={m.admin_genres_linked_description()}
 				actions={
-					<AdminSearch value={searchQuery} onChange={setSearchQuery} placeholder={m.admin_genres_search()} className="w-full sm:max-w-xs" />
+					<AdminSearch
+						value={searchQuery}
+						onChange={handleSearchChange}
+						placeholder={m.admin_genres_search()}
+						className="w-full sm:max-w-xs"
+					/>
 				}
 			/>
 
@@ -52,6 +63,9 @@ export default function AdminGenresPage() {
 								/>
 							</div>
 						)}
+						<div className="w-full">
+							<SimplePagination variant="admin" currentPage={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
+						</div>
 					</div>
 				)}
 			</AdminSection>

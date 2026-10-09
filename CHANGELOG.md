@@ -215,6 +215,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Next episode on small screens** — the next-episode button in the player is shown on phones too, not only from 640 px wide.
 - **Warning before leaving unsaved settings** — closing or reloading the tab while a settings section has unsaved changes asks the browser to confirm.
 - **Regenerate two-factor backup codes** — with two-factor enabled, settings has *Regenerate backup codes*: confirm the password and get a new set. The previous codes stop working.
+- **Admin genre list is paginated** — the genres page loads 50 genres per page with the page control, instead of silently stopping at the first 100. A new search starts at page one.
 
 ### Fixes
 
