@@ -1520,6 +1520,8 @@
 	"admin_settings_restore_default_for": "Restore the default value for {label}",
 	"admin_settings_restore_factory_value": "Restore the factory default value",
 	"admin_settings_restore_section": "Restore this section's defaults",
+	"admin_settings_search_placeholder": "Search settings…",
+	"admin_settings_search_no_matches": "No settings in this section match. Change the search or open another section.",
 	"admin_settings_restore_section_confirm": "Restore the section's default settings?",
 	"admin_settings_scan_delay_seconds": "Change stabilization time / scan delay (seconds)",
 	"admin_settings_scanning_formats": "Library scanning and format support",

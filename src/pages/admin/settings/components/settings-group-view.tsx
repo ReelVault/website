@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { SettingField } from "./setting-field";
+import { getSettingDescription, getSettingLabel } from "./settings-i18n";
 
 function isItemModified(item: SystemSettingItemView, value: unknown) {
 	const original: unknown = item.value;
@@ -76,6 +77,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/** Matches a lowercase query against the setting's key, translated name and description. */
+function matchesSettingSearch(item: SystemSettingItemView, normalizedQuery: string): boolean {
+	return [item.key, getSettingLabel(item.key), getSettingDescription(item.key)].some((text) =>
+		text.toLowerCase().includes(normalizedQuery),
+	);
+}
+
 /** TanStack Form pilot (T5): dynamic-key form — one field per setting, dirty diff at submit. */
 export function SettingsGroupView({
 	items,
@@ -83,12 +91,14 @@ export function SettingsGroupView({
 	onResetKeys,
 	isSaving,
 	isResetting,
+	searchQuery = "",
 }: {
 	items: SystemSettingItemView[];
 	onSave: (updates: Record<string, unknown>) => Promise<unknown>;
 	onResetKeys: (keys: string[]) => Promise<unknown>;
 	isSaving: boolean;
 	isResetting: boolean;
+	searchQuery?: string;
 }) {
 	const form = useForm({
 		defaultValues: buildInitial(items),
@@ -146,22 +156,32 @@ export function SettingsGroupView({
 
 	const disabled = isSaving || isResetting;
 
+	// Search only hides rows: every field stays mounted, so edits in hidden rows are still saved.
+	const normalizedQuery = searchQuery.trim().toLowerCase();
+	const isVisible = (item: SystemSettingItemView) => normalizedQuery === "" || matchesSettingSearch(item, normalizedQuery);
+	const hasVisibleItems = items.some((item) => isVisible(item));
+
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-col gap-3">
 				{items.map((item) => (
-					<form.Field key={item.key} name={item.key}>
-						{(field) => (
-							<SettingField
-								item={item}
-								currentValue={resolveFieldValue(field.state.value, item.value)}
-								onChange={(val) => field.handleChange(val)}
-								onResetSingle={() => handleResetSingle(item)}
-								disabled={disabled}
-							/>
-						)}
-					</form.Field>
+					<div key={item.key} hidden={!isVisible(item)}>
+						<form.Field name={item.key}>
+							{(field) => (
+								<SettingField
+									item={item}
+									currentValue={resolveFieldValue(field.state.value, item.value)}
+									onChange={(val) => field.handleChange(val)}
+									onResetSingle={() => handleResetSingle(item)}
+									disabled={disabled}
+								/>
+							)}
+						</form.Field>
+					</div>
 				))}
+				{normalizedQuery !== "" && !hasVisibleItems && (
+					<p className="text-muted-foreground text-sm">{m.admin_settings_search_no_matches()}</p>
+				)}
 			</div>
 
 			<div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-border/80 border-t pt-4">

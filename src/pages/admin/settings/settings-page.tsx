@@ -16,14 +16,14 @@ import {
 	Tv,
 	UserCheck,
 } from "lucide-react";
-import { lazy, Suspense, ViewTransition } from "react";
+import { lazy, Suspense, useState, ViewTransition } from "react";
 import { useAdminSettings } from "@/client/hooks/use-admin-settings";
 import { AppErrorState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { detach } from "@/lib/detach";
-import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
+import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { runTransition } from "@/utils/view-transitions";
 import { RemoteAccessCard } from "./components/remote-access-card";
@@ -62,6 +62,8 @@ export default function AdminSettingsPage() {
 	const { settings, isLoading, isFetching, error, refetch, updateSettings, isUpdating, resetSettings, isResetting } = useAdminSettings();
 	const { tab } = useSearch({ from: "/admin/settings" });
 	const navigate = useNavigate({ from: "/admin/settings" });
+	// The query is transient UI state: it filters whichever section is open and survives tab switches.
+	const [searchQuery, setSearchQuery] = useState("");
 	const activeTab = SETTINGS_TABS.find((candidate) => candidate === tab) ?? DEFAULT_SETTINGS_TAB;
 	const setActiveTab = (next: string) => {
 		detach(navigate({ search: (prev) => ({ ...prev, tab: next === DEFAULT_SETTINGS_TAB ? undefined : next }), replace: true }));
@@ -84,6 +86,12 @@ export default function AdminSettingsPage() {
 				description={m.admin_settings_transcoding_description()}
 				actions={
 					<div className="flex flex-wrap items-center gap-2">
+						<AdminSearch
+							value={searchQuery}
+							onChange={setSearchQuery}
+							placeholder={m.admin_settings_search_placeholder()}
+							className="w-full sm:max-w-xs"
+						/>
 						<ConfirmAction
 							trigger={
 								<Button
@@ -177,6 +185,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="resources">
 							<AdminSection title={m.admin_settings_smart_resources()} description={m.admin_settings_cpu_profile_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.resources}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -189,6 +198,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="workers">
 							<AdminSection title={m.admin_settings_background_queues()} description={m.admin_settings_scheduler_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.workers}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -201,6 +211,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="streaming">
 							<AdminSection title={m.admin_settings_streaming_hwaccel()} description={m.admin_settings_transcoding_engine_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.streaming}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -213,6 +224,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="scanning">
 							<AdminSection title={m.admin_settings_scanning_formats()} description={m.admin_settings_indexing_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.scanning}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -225,6 +237,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="images">
 							<AdminSection title={m.admin_settings_images_section()} description={m.admin_settings_webp_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.images}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -237,6 +250,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="markers">
 							<AdminSection title={m.admin_settings_markers_section()} description={m.admin_settings_markers_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.markers}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -249,6 +263,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="trickplay">
 							<AdminSection title={m.admin_settings_trickplay_section()} description={m.admin_settings_trickplay_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.trickplay}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -261,6 +276,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="playback_defaults">
 							<AdminSection title={m.admin_settings_default_player_prefs()} description={m.admin_settings_new_profile_defaults()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.playback_defaults}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -273,6 +289,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="downloads">
 							<AdminSection title={m.admin_settings_downloads_section()} description={m.admin_settings_downloads_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.downloads}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -285,6 +302,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="network">
 							<AdminSection title={m.admin_settings_network_section()} description={m.admin_settings_domains_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.network}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}
@@ -300,6 +318,7 @@ export default function AdminSettingsPage() {
 						<TabsContent value="system">
 							<AdminSection title={m.admin_settings_advanced_section()} description={m.admin_settings_cache_description()}>
 								<SettingsGroupView
+									searchQuery={searchQuery}
 									items={settings.system}
 									onSave={handleSave}
 									onResetKeys={handleResetKeys}

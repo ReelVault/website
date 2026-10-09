@@ -1526,6 +1526,8 @@
 	"admin_settings_restore_default_for": "Przywróć domyślną wartość dla {label}",
 	"admin_settings_restore_factory_value": "Przywróć domyślną wartość fabryczną",
 	"admin_settings_restore_section": "Przywróć domyślne dla tej sekcji",
+	"admin_settings_search_placeholder": "Szukaj w ustawieniach…",
+	"admin_settings_search_no_matches": "Żadne ustawienie w tej sekcji nie pasuje. Zmień wyszukiwanie albo otwórz inną sekcję.",
 	"admin_settings_restore_section_confirm": "Przywrócić ustawienia domyślne sekcji?",
 	"admin_settings_scan_delay_seconds": "Czas stabilizacji zmian / opóźnienie skanowania (sekundy)",
 	"admin_settings_scanning_formats": "Skanowanie bibliotek i obsługa formatów",
