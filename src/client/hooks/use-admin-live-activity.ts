@@ -1,4 +1,4 @@
-import type { AdminLiveActivityResponse, BulkTerminateSessions } from "@reelvault/sdk";
+import type { AdminEndedLiveSessionsResponse, AdminLiveActivityResponse, BulkTerminateSessions } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -19,6 +19,16 @@ export function useAdminLiveActivity() {
 			return hasActivity ? 3000 : 15_000;
 		},
 		staleTime: 1500,
+	});
+}
+
+/** Playback sessions that ended recently, newest first; refreshed on its own, since nothing invalidates it. */
+export function useAdminEndedLiveSessions() {
+	return useQuery<AdminEndedLiveSessionsResponse>({
+		queryKey: adminKeys.endedLiveSessions(),
+		queryFn: () => reelvault.admin.getEndedLiveSessions({ limit: 50 }),
+		refetchInterval: 15_000,
+		staleTime: 5000,
 	});
 }
 

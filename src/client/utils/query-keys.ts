@@ -244,6 +244,7 @@ export const adminKeys = {
 	ffmpegCapabilities: () => [...adminKeys.all, "ffmpeg-capabilities"] as const,
 	analytics: (days?: number) => (days ? ([...adminKeys.all, "analytics", days] as const) : ([...adminKeys.all, "analytics"] as const)),
 	liveActivity: () => [...adminKeys.all, "live-activity"] as const,
+	endedLiveSessions: () => [...adminKeys.all, "live-activity", "ended"] as const,
 	backups: () => [...adminKeys.all, "database", "backups"] as const,
 	databaseMigrations: () => [...adminKeys.all, "database", "migrations"] as const,
 	metadataProviders: () => [...adminKeys.all, "metadata-providers"] as const,

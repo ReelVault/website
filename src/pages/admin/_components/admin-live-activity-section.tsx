@@ -10,6 +10,7 @@ import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { translateByKey } from "@/utils/translate-error";
 import { ActiveDeviceCard } from "./live-activity/active-device-card";
+import { EndedSessionsList } from "./live-activity/ended-sessions-list";
 import { LiveMaintenanceBanner } from "./live-activity/live-maintenance-banner";
 import { LiveStreamCard } from "./live-activity/live-stream-card";
 
@@ -202,6 +203,8 @@ export function AdminLiveActivitySection() {
 					</div>
 				</div>
 			)}
+
+			<EndedSessionsList />
 		</div>
 	);
 }
