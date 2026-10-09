@@ -1,5 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { adminMetadataQueryOptions } from "@/client/hooks/use-admin-metadata";
+import {
+	adminMetadataQueryOptions,
+	parseMetadataMinMatchScore,
+	parseMetadataStartsWith,
+	parseMetadataYear,
+} from "@/client/hooks/use-admin-metadata";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -11,6 +16,10 @@ interface AdminMetadataSearch {
 	filter?: string;
 	type?: string;
 	sort?: string;
+	yearFrom?: number;
+	yearTo?: number;
+	minMatchScore?: number;
+	startsWith?: string;
 }
 
 function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMetadataSearch {
@@ -20,6 +29,10 @@ function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMet
 		filter: typeof search.filter === "string" ? search.filter : undefined,
 		type: typeof search.type === "string" ? search.type : undefined,
 		sort: typeof search.sort === "string" ? search.sort : undefined,
+		yearFrom: parseMetadataYear(search.yearFrom),
+		yearTo: parseMetadataYear(search.yearTo),
+		minMatchScore: parseMetadataMinMatchScore(search.minMatchScore),
+		startsWith: parseMetadataStartsWith(search.startsWith),
 	};
 }
 

@@ -27,7 +27,13 @@ export const metadataKeys = {
 		missingTranslation?: boolean,
 		type?: string,
 		sort?: string,
-	) => [...metadataKeys.all, "admin", { page, limit, title, hasMediaFiles, lowConfidence, missingTranslation, type, sort }] as const,
+		browse?: { yearFrom?: number; yearTo?: number; minMatchScore?: number; startsWith?: string },
+	) =>
+		[
+			...metadataKeys.all,
+			"admin",
+			{ page, limit, title, hasMediaFiles, lowConfidence, missingTranslation, type, sort, ...browse },
+		] as const,
 	adminAll: () => [...metadataKeys.all, "admin"] as const,
 	mergeCandidates: (type: string, search?: string) => [...metadataKeys.all, "merge-candidates", type, search] as const,
 	adminEditor: (id: string) => [...metadataKeys.all, "admin-edit", id] as const,

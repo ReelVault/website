@@ -19,6 +19,36 @@ export const ADMIN_METADATA_SORTS = {
 
 export type AdminMetadataSort = keyof typeof ADMIN_METADATA_SORTS;
 
+/** Browse filters of the admin catalog — each one is sent only when set. */
+export interface AdminMetadataBrowseFilters {
+	yearFrom?: number | undefined;
+	yearTo?: number | undefined;
+	minMatchScore?: number | undefined;
+	startsWith?: string | undefined;
+}
+
+export const ADMIN_METADATA_MIN_MATCH_SCORES = [0.5, 0.7, 0.9] as const;
+
+/** Whole years from 1 to 9999; anything else (empty input, text, fractions) is no filter. */
+export function parseMetadataYear(value: unknown): number | undefined {
+	if (typeof value !== "number" && typeof value !== "string") return undefined;
+
+	const year = Number(value);
+
+	return Number.isInteger(year) && year >= 1 && year <= 9999 ? year : undefined;
+}
+
+export function parseMetadataMinMatchScore(value: unknown): (typeof ADMIN_METADATA_MIN_MATCH_SCORES)[number] | undefined {
+	return ADMIN_METADATA_MIN_MATCH_SCORES.find((score) => String(score) === String(value));
+}
+
+const STARTS_WITH_PATTERN = /^[A-Z#]$/;
+
+/** First-letter browse: `A`–`Z`, or `#` for titles that start with anything else. */
+export function parseMetadataStartsWith(value: unknown): string | undefined {
+	return typeof value === "string" && STARTS_WITH_PATTERN.test(value) ? value : undefined;
+}
+
 export const adminMetadataQueryOptions = ({
 	page,
 	pageSize,
@@ -28,6 +58,10 @@ export const adminMetadataQueryOptions = ({
 	missingTranslation,
 	type,
 	sort,
+	yearFrom,
+	yearTo,
+	minMatchScore,
+	startsWith,
 }: {
 	page: number;
 	pageSize: number;
@@ -37,8 +71,13 @@ export const adminMetadataQueryOptions = ({
 	missingTranslation?: boolean;
 	type?: AdminMetadataTypeFilter | undefined;
 	sort?: AdminMetadataSort | undefined;
-}) => ({
-	queryKey: metadataKeys.admin(page, pageSize, search, hasMediaFiles, lowConfidence, missingTranslation, type, sort),
+} & AdminMetadataBrowseFilters) => ({
+	queryKey: metadataKeys.admin(page, pageSize, search, hasMediaFiles, lowConfidence, missingTranslation, type, sort, {
+		yearFrom,
+		yearTo,
+		minMatchScore,
+		startsWith,
+	}),
 	placeholderData: keepPreviousData,
 	queryFn: () =>
 		reelvault.metadata.getAll({
@@ -49,6 +88,10 @@ export const adminMetadataQueryOptions = ({
 			lowConfidence: lowConfidence ? true : undefined,
 			missingTranslation: missingTranslation ? true : undefined,
 			type,
+			yearFrom,
+			yearTo,
+			minMatchScore,
+			startsWith,
 			...(sort ? ADMIN_METADATA_SORTS[sort] : {}),
 		}),
 	staleTime: 120_000,
@@ -61,7 +104,7 @@ export function useAdminMetadata(
 	hasMediaFiles?: boolean,
 	lowConfidence?: boolean,
 	missingTranslation?: boolean,
-	view: { type?: AdminMetadataTypeFilter | undefined; sort?: AdminMetadataSort | undefined } = {},
+	view: { type?: AdminMetadataTypeFilter | undefined; sort?: AdminMetadataSort | undefined } & AdminMetadataBrowseFilters = {},
 ) {
 	const queryClient = useQueryClient();
 	const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());

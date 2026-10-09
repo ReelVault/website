@@ -1,7 +1,7 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Film } from "lucide-react";
 import { useEffect, useState } from "react";
-import { type ADMIN_METADATA_SORTS, useAdminMetadata } from "@/client/hooks/use-admin-metadata";
+import { type ADMIN_METADATA_SORTS, type AdminMetadataBrowseFilters, useAdminMetadata } from "@/client/hooks/use-admin-metadata";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { AppErrorState } from "@/components/app-states";
 import { SimplePagination } from "@/components/simple-pagination";
@@ -9,6 +9,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { MetadataBrowseFilters } from "./_components/metadata-browse-filters";
 import { isAdminMetadataSort, isAdminMetadataType, type MediaFilter, MetadataFilterBar } from "./_components/metadata-filter-bar";
 import { MetadataHeaderActions } from "./_components/metadata-header-actions";
 import { MetadataList } from "./_components/metadata-list";
@@ -80,6 +81,12 @@ export default function AdminMetadataPage() {
 
 	const typeFilter = isAdminMetadataType(search.type) ? search.type : undefined;
 	const sort = isAdminMetadataSort(search.sort) ? search.sort : "recent";
+	const browse: AdminMetadataBrowseFilters = {
+		yearFrom: search.yearFrom,
+		yearTo: search.yearTo,
+		minMatchScore: search.minMatchScore,
+		startsWith: search.startsWith,
+	};
 
 	// Typing flows debounce → URL; browser Back/refresh restores both.
 	useEffect(() => {
@@ -122,7 +129,7 @@ export default function AdminMetadataPage() {
 		hasMediaFiles,
 		isLowConfidence ? true : undefined,
 		isMissingTranslation ? true : undefined,
-		{ type: typeFilter, sort },
+		{ type: typeFilter, sort, ...browse },
 	);
 
 	const handleDelete = (id: string, title: string) => deleteMetadata({ id, title });
@@ -145,6 +152,11 @@ export default function AdminMetadataPage() {
 		detach(() =>
 			navigate({ search: (prev) => ({ ...prev, sort: value === "recent" ? undefined : value, page: undefined }), replace: true }),
 		);
+	};
+
+	// The browse patch names are the URL params, so it merges straight into the search.
+	const handleBrowseChange = (patch: AdminMetadataBrowseFilters) => {
+		detach(() => navigate({ search: (prev) => ({ ...prev, ...patch, page: undefined }), replace: true }));
 	};
 
 	const handlePageChange = (page: number) => {
@@ -173,16 +185,19 @@ export default function AdminMetadataPage() {
 				}
 			/>
 
-			<MetadataFilterBar
-				searchQuery={searchQuery}
-				onSearchChange={handleSearchChange}
-				mediaFilter={mediaFilter}
-				onFilterChange={handleFilterChange}
-				typeFilter={typeFilter}
-				onTypeChange={handleTypeChange}
-				sort={sort}
-				onSortChange={handleSortChange}
-			/>
+			<div className="flex flex-col gap-3">
+				<MetadataFilterBar
+					searchQuery={searchQuery}
+					onSearchChange={handleSearchChange}
+					mediaFilter={mediaFilter}
+					onFilterChange={handleFilterChange}
+					typeFilter={typeFilter}
+					onTypeChange={handleTypeChange}
+					sort={sort}
+					onSortChange={handleSortChange}
+				/>
+				<MetadataBrowseFilters filters={browse} onChange={handleBrowseChange} />
+			</div>
 
 			<MetadataStats stats={statsQuery.data?.metadata} total={data.total} />
 
