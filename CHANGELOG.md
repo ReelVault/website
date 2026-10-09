@@ -196,6 +196,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Subtitle language filter** — the admin subtitles list can be filtered by language (the filter was supported in the URL but had no control).
 - **Metadata catalog filters** — the admin metadata list can be filtered by movie/series and sorted by recently added, title, release date or weakest match; both choices are kept in the URL.
 - **Settings number fields know their range** — admin settings inputs show the allowed range, reject out-of-range values with a clear message and translate the server's settings errors. Requires SDK 1.3.0.
+- **New server settings** — labels and descriptions for the HLS muxing queue size, concurrent downloads per profile, trickplay frames per file, plugin blob retention and the per-plugin daily notification limit.
 
 ### Fixes
 

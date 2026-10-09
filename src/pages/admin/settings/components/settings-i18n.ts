@@ -81,6 +81,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_smart_audio(),
 		description: m.admin_settings_smart_audio_description(),
 	},
+	"stream.hlsMaxMuxingQueueSize": {
+		label: m.admin_settings_hls_muxing_queue_size(),
+		description: m.admin_settings_hls_muxing_queue_size_description(),
+	},
 
 	// ==================== SKANOWANIE & PLIKI ====================
 	"scanning.autoWatcherEnabled": {
@@ -274,6 +278,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_download_retention(),
 		description: m.admin_settings_download_retention_days(),
 	},
+	"downloads.maxConcurrentPerProfile": {
+		label: m.admin_settings_max_downloads_per_profile(),
+		description: m.admin_settings_max_downloads_per_profile_description(),
+	},
 	"paths.backups": {
 		label: m.admin_settings_label_backups_path(),
 		description: m.admin_settings_backups_dir_description(),
@@ -285,6 +293,14 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 	"plugins.providers.detailsCacheTtlMs": {
 		label: m.admin_settings_query_cache_ms(),
 		description: m.admin_settings_external_api_buffer(),
+	},
+	"plugins.blobs.retentionDays": {
+		label: m.admin_settings_plugin_blob_retention_days(),
+		description: m.admin_settings_plugin_blob_retention_days_description(),
+	},
+	"plugins.notifications.maxPerDayPerPlugin": {
+		label: m.admin_settings_plugin_notifications_per_day(),
+		description: m.admin_settings_plugin_notifications_per_day_description(),
 	},
 	"metadata.minMatchScore": {
 		label: m.admin_settings_min_match_score(),
@@ -421,6 +437,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 	"trickplay.columns": {
 		label: m.admin_settings_trickplay_columns(),
 		description: m.admin_settings_trickplay_columns_description(),
+	},
+	"trickplay.maxFramesPerFile": {
+		label: m.admin_settings_trickplay_max_frames(),
+		description: m.admin_settings_trickplay_max_frames_description(),
 	},
 
 	// ==================== CORE ARTIFACTS ====================
