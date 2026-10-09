@@ -24,7 +24,7 @@ export function TrickplayRegenerationSection() {
 	const report = useTrickplayRegenerationReport(queued?.result.operationId);
 
 	const queue = async (library: { id: string; name: string }, force: boolean) => {
-		const result = await regenerate.mutateAsync({ libraryId: library.id, force });
+		const result = await regenerate.mutateAsync({ scope: "library", id: library.id, force });
 		setQueued({ library: library.name, result });
 	};
 

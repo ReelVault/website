@@ -846,6 +846,7 @@
 	"admin_metadata_filter_placeholder": "Szukaj po tytule, tytule oryginalnym lub ID…",
 	"admin_metadata_find_duplicate_hint": "Wpisz tytuł lub ID, aby znaleźć zdublowany wpis.",
 	"admin_metadata_force_artwork_fetch": "Wymuś pobranie grafik",
+	"admin_metadata_generate_previews": "Wygeneruj brakujące podglądy",
 	"admin_metadata_go_to_media_files": "Przejdź do plików mediów",
 	"admin_metadata_hidden_keywords": "+{hiddenCount} więcej",
 	"admin_metadata_identifiers_sync_description": "Identyfikatory wewnętrzne, stan synchronizacji oraz parametry silnika.",

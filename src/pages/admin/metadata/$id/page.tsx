@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { lazy, Suspense, useState } from "react";
 import { useAdminMetadataEditor } from "@/client/hooks/use-admin-metadata-editor";
+import { useRegenerateTrickplay } from "@/client/hooks/use-admin-trickplay";
 import { LazyIdentifyDialog } from "@/components/lazy-dialogs";
 import { LazyRender } from "@/components/lazy-render";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -76,6 +77,7 @@ function MetadataEditorContent({
 	const [mergeOpen, setMergeOpen] = useState(false);
 
 	const { updateMutation, deleteMutation, refreshMutation, refreshImagesMutation, deleteImageMutation, mergeMutation } = editor;
+	const generatePreviews = useRegenerateTrickplay();
 
 	const { basic, overview, lockedFields, setField, toggleFieldLock, handleLockAll, handleUnlockAll, handleSave } = useMetadataForm(
 		metadata,
@@ -105,6 +107,7 @@ function MetadataEditorContent({
 				onOpenMergeDialog={() => setMergeOpen(true)}
 				onRefresh={() => refreshMutation.mutate()}
 				onRefreshImages={() => refreshImagesMutation.mutate()}
+				onGeneratePreviews={() => detach(generatePreviews.mutateAsync({ scope: "title", id: metadataId, force: false }))}
 				onSave={() => detach(handleSave)}
 				onDelete={() => deleteMutation.mutateAsync()}
 				isRefreshing={refreshMutation.isPending}

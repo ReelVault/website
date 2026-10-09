@@ -844,6 +844,7 @@
 	"admin_metadata_filter_placeholder": "Search by title, original title, or ID…",
 	"admin_metadata_find_duplicate_hint": "Enter a title or ID to find the duplicated entry.",
 	"admin_metadata_force_artwork_fetch": "Force artwork download",
+	"admin_metadata_generate_previews": "Generate missing previews",
 	"admin_metadata_go_to_media_files": "Go to media files",
 	"admin_metadata_hidden_keywords": "+{hiddenCount} more",
 	"admin_metadata_identifiers_sync_description": "Internal identifiers, sync state, and engine parameters.",

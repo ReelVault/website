@@ -57,8 +57,8 @@ export function useRegenerateTrickplay() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (params: { libraryId: string; force: boolean }) =>
-			reelvault.admin.regenerateTrickplay({ scope: "library", id: params.libraryId, force: params.force }),
+		mutationFn: (params: { scope: "library" | "title" | "season"; id: string; force: boolean }) =>
+			reelvault.admin.regenerateTrickplay({ scope: params.scope, id: params.id, force: params.force }),
 		onSuccess: async (result) => {
 			toast.success(m.hooks_trickplay_regenerate_queued({ enqueued: result.enqueued }));
 			await queryClient.invalidateQueries({ queryKey: adminKeys.trickplayStats() });

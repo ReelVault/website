@@ -1,4 +1,4 @@
-import { Combine, ImageDown, Lock, MoreHorizontal, RefreshCw, Save, Search, Trash2, Unlock } from "lucide-react";
+import { Combine, ImageDown, Lock, MoreHorizontal, RefreshCw, Save, Search, Trash2, Unlock, Wand2 } from "lucide-react";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ interface MetadataHeroActionsProps {
 	onDelete: () => Promise<unknown>;
 	onLockAll?: () => void;
 	onUnlockAll?: () => void;
+	onGeneratePreviews?: () => void;
 }
 
 export function MetadataHeroActions({
@@ -41,6 +42,7 @@ export function MetadataHeroActions({
 	onDelete,
 	onLockAll,
 	onUnlockAll,
+	onGeneratePreviews,
 }: MetadataHeroActionsProps) {
 	return (
 		<div className="flex flex-wrap items-center gap-2 border-border/60 border-t pt-4">
@@ -92,6 +94,12 @@ export function MetadataHeroActions({
 						<RefreshCw className="size-4" />
 						<span>{isRefreshing ? m.common_refreshing() : m.admin_metadata_refresh_metadata()}</span>
 					</DropdownMenuItem>
+					{onGeneratePreviews !== undefined && (
+						<DropdownMenuItem onClick={onGeneratePreviews}>
+							<Wand2 className="size-4 text-primary" />
+							<span>{m.admin_metadata_generate_previews()}</span>
+						</DropdownMenuItem>
+					)}
 					<DropdownMenuItem onClick={onRefreshImages} disabled={isRefreshingImages}>
 						<ImageDown className="size-4" />
 						<span>{isRefreshingImages ? m.common_downloading() : m.admin_metadata_force_artwork_fetch()}</span>

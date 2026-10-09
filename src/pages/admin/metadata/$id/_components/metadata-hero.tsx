@@ -16,6 +16,7 @@ export function MetadataHero({
 	lockedFields = NO_LOCKED_FIELDS,
 	onLockAll,
 	onUnlockAll,
+	onGeneratePreviews,
 	onOpenPosterDialog,
 	onOpenIdentifyDialog,
 	onOpenMergeDialog,
@@ -32,6 +33,7 @@ export function MetadataHero({
 	lockedFields?: string[];
 	onLockAll?: () => void;
 	onUnlockAll?: () => void;
+	onGeneratePreviews?: () => void;
 	onOpenPosterDialog: () => void;
 	onOpenIdentifyDialog: () => void;
 	onOpenMergeDialog: () => void;
@@ -116,6 +118,7 @@ export function MetadataHero({
 					onDelete={onDelete}
 					onLockAll={onLockAll}
 					onUnlockAll={onUnlockAll}
+					onGeneratePreviews={onGeneratePreviews}
 				/>
 			</div>
 		</Card>
