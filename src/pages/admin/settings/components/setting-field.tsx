@@ -210,6 +210,7 @@ export function SettingField({
 					)}
 				</div>
 				{description && <p className="text-muted-foreground text-xs leading-relaxed">{description}</p>}
+				{item.restartRequired && <p className="font-medium text-warning text-xs">{m.admin_settings_takes_effect_on_restart()}</p>}
 				<p className="font-mono text-[11px] text-muted-foreground/80">
 					{m.admin_settings_default_word()}{" "}
 					<span className="font-medium text-foreground/80">
