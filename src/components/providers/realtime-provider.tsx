@@ -5,6 +5,7 @@ import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { realtimeConnection, setRealtimeConnectionAllowed, useRealtimeEvent } from "@/client/hooks/use-realtime";
 import {
 	adminKeys,
+	adminSettingsKeys,
 	discoveryKeys,
 	episodeKeys,
 	libraryKeys,
@@ -108,6 +109,11 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 	// list fresh between the poll fallbacks — lighter than shortening the poll.
 	useRealtimeEvent("worker:progress", () => {
 		invalidateCoalesced([adminKeys.workerOperations()]);
+	});
+
+	// Another administrator saved or reset settings: reload them so this page does not show stale values.
+	useRealtimeEvent("settings:changed", () => {
+		invalidateCoalesced([adminSettingsKeys.all]);
 	});
 
 	// Listen for new notifications
