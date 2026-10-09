@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { SkeletonList } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
+import { UpdateStreamBlockDialog } from "@/pages/admin/updates/components/update-stream-block-dialog";
 import { m } from "@/paraglide/messages";
 
 /**
@@ -16,7 +17,8 @@ import { m } from "@/paraglide/messages";
  * web UI has a new release, its install is one click away too.
  */
 export function DashboardUpdateStatus() {
-	const { status, statusQuery, install, isInstalling } = useAdminUpdate();
+	const { confirmStreamBlock, dismissStreamBlock, install, isInstalling, isRollingBack, status, statusQuery, streamBlock } =
+		useAdminUpdate();
 
 	const serverUpdate = status?.serverUpdateAvailable && status.installType === "archive" ? status.serverLatest : undefined;
 	const webUpdate =
@@ -93,6 +95,12 @@ export function DashboardUpdateStatus() {
 			}
 		>
 			<div className="p-4">
+				<UpdateStreamBlockDialog
+					block={streamBlock}
+					isPending={isInstalling || isRollingBack}
+					onConfirm={confirmStreamBlock}
+					onCancel={dismissStreamBlock}
+				/>
 				<div className="flex flex-col gap-2">
 					{content}
 					<div className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">

@@ -20,6 +20,7 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatDateTime } from "@/utils/format-utils";
+import { UpdateStreamBlockDialog } from "./components/update-stream-block-dialog";
 
 function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
 	const isServer = target === "server";
@@ -66,7 +67,8 @@ function VersionCard({ icon, label, version, badge }: { icon: ReactNode; label: 
 }
 
 function ComponentSection({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
-	const { cancel, install, isCancelling, isInstalling, rollback } = useAdminUpdate();
+	const { cancel, confirmStreamBlock, dismissStreamBlock, install, isCancelling, isInstalling, isRollingBack, rollback, streamBlock } =
+		useAdminUpdate();
 	const isServer = target === "server";
 	const latest = isServer ? status.serverLatest : status.webLatest;
 	const updateAvailable = isServer ? status.serverUpdateAvailable : status.webUpdateAvailable;
@@ -85,6 +87,12 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 			description={isServer ? m.admin_updates_server_section_description() : m.admin_updates_web_section_description()}
 		>
 			<div className="flex flex-col gap-4 p-4">
+				<UpdateStreamBlockDialog
+					block={streamBlock}
+					isPending={isInstalling || isRollingBack}
+					onConfirm={confirmStreamBlock}
+					onCancel={dismissStreamBlock}
+				/>
 				{incompatible && (
 					<div className="flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/10 p-3 text-sm text-warning">
 						<Info className="mt-0.5 size-4 shrink-0" />

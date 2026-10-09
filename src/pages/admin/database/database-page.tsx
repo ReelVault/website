@@ -3,6 +3,7 @@ import { Database, HeartPulse, Plus, RefreshCw, Wrench } from "lucide-react";
 import type { ReactNode } from "react";
 import { useAdminBackups } from "@/client/hooks/use-admin-backups";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
+import { StreamBlockDialog } from "@/components/stream-block-dialog";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
@@ -16,8 +17,18 @@ import { DatabaseStatsGrid } from "./components/database-stats-grid";
 const SKELETON_KEYS = ["1", "2", "3"] as const;
 
 export default function AdminDatabasePage() {
-	const { backupsQuery, backups, createBackupMutation, deleteBackupMutation, restoreMutation, integrityMutation, optimizeMutation } =
-		useAdminBackups();
+	const {
+		backupsQuery,
+		backups,
+		createBackupMutation,
+		deleteBackupMutation,
+		restoreMutation,
+		restoreBlock,
+		confirmRestoreBlock,
+		dismissRestoreBlock,
+		integrityMutation,
+		optimizeMutation,
+	} = useAdminBackups();
 
 	const handleRefetch = () => {
 		detach(backupsQuery.refetch());
@@ -64,7 +75,7 @@ export default function AdminDatabasePage() {
 						onRestore={(fileName) => {
 							detach(
 								(async () => {
-									await restoreMutation.mutateAsync(fileName);
+									await restoreMutation.mutateAsync({ fileName });
 									toast.success(m.admin_database_restore_queued());
 								})(),
 							);
@@ -78,6 +89,15 @@ export default function AdminDatabasePage() {
 
 	return (
 		<div className="flex flex-col gap-6">
+			<StreamBlockDialog
+				isOpen={restoreBlock !== null}
+				title={m.admin_database_stream_block_title()}
+				description={m.admin_database_stream_block_description({ activeStreams: restoreBlock?.activeStreams ?? 0 })}
+				confirmLabel={m.admin_database_stream_block_confirm()}
+				isPending={restoreMutation.isPending}
+				onConfirm={confirmRestoreBlock}
+				onCancel={dismissRestoreBlock}
+			/>
 			<AdminPageHeader
 				icon={Database}
 				eyebrow={m.admin_database_engine_security()}

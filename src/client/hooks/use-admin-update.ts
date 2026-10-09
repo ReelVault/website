@@ -1,6 +1,8 @@
 import type { AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { m } from "@/paraglide/messages";
+import { activeStreamsBlocking } from "@/utils/stream-block";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
@@ -22,6 +24,13 @@ export const UPDATE_JOB_STATE_LABELS: Record<string, () => string> = {
 export const CANCELLABLE_UPDATE_JOB_STATES: ReadonlySet<string> = new Set(["downloading", "verifying", "extracting"]);
 
 const UPDATE_HISTORY_PAGE_SIZE = 10;
+
+/** A server install or rollback that the server held back because streams are playing, waiting for the admin to confirm. */
+export interface UpdateStreamBlock {
+	action: "install" | "rollback";
+	target: AdminUpdateTarget;
+	activeStreams: number;
+}
 
 /**
  * Installs and rollbacks, newest first. Polls only while a run is still marked
@@ -46,6 +55,7 @@ export function useAdminUpdateHistory(page: number) {
  */
 export function useAdminUpdate() {
 	const queryClient = useQueryClient();
+	const [streamBlock, setStreamBlock] = useState<UpdateStreamBlock | null>(null);
 
 	const statusQuery = useQuery<AdminUpdateStatus>({
 		queryKey: adminKeys.updateStatus(),
@@ -75,15 +85,24 @@ export function useAdminUpdate() {
 		},
 	});
 
+	// A server restart ends the streams playing, so the server holds an install back while any play.
+	// The warning offers to run it anyway (`force`); any other error is reported as before.
 	const installMutation = useMutation({
-		mutationFn: async (target: AdminUpdateTarget) => {
-			return await reelvault.admin.installUpdate(target);
+		mutationFn: async ({ target, force }: { target: AdminUpdateTarget; force?: boolean }) => {
+			return await reelvault.admin.installUpdate(target, { force });
 		},
 		onSuccess: async () => {
 			await invalidate();
 			toast.success(m.toast_update_install_started());
 		},
-		onError: (error) => {
+		onError: (error, { target, force }) => {
+			const activeStreams = activeStreamsBlocking(error);
+			if (activeStreams !== null && force !== true) {
+				setStreamBlock({ action: "install", target, activeStreams });
+
+				return;
+			}
+
 			toastError(m.toast_update_install_failed(), error, m.toast_update_unexpected_error());
 		},
 	});
@@ -102,28 +121,51 @@ export function useAdminUpdate() {
 	});
 
 	const rollbackMutation = useMutation({
-		mutationFn: async (target: AdminUpdateTarget) => {
-			return await reelvault.admin.rollbackUpdate(target);
+		mutationFn: async ({ target, force }: { target: AdminUpdateTarget; force?: boolean }) => {
+			return await reelvault.admin.rollbackUpdate(target, { force });
 		},
 		onSuccess: async () => {
 			await invalidate();
 			toast.success(m.toast_update_rollback_started());
 		},
-		onError: (error) => {
+		onError: (error, { target, force }) => {
+			const activeStreams = activeStreamsBlocking(error);
+			if (activeStreams !== null && force !== true) {
+				setStreamBlock({ action: "rollback", target, activeStreams });
+
+				return;
+			}
+
 			toastError(m.toast_update_rollback_failed(), error, m.toast_update_unexpected_error());
 		},
 	});
+
+	/** Runs the held-back install or rollback again with `force`, once the admin has confirmed the warning. */
+	const confirmStreamBlock = () => {
+		const block = streamBlock;
+		setStreamBlock(null);
+		if (!block) return;
+
+		if (block.action === "install") {
+			installMutation.mutate({ target: block.target, force: true });
+		} else {
+			rollbackMutation.mutate({ target: block.target, force: true });
+		}
+	};
 
 	return {
 		status: statusQuery.data,
 		statusQuery,
 		checkNow: checkNowMutation.mutateAsync,
 		isChecking: checkNowMutation.isPending,
-		install: installMutation.mutateAsync,
+		install: (target: AdminUpdateTarget) => installMutation.mutateAsync({ target }),
 		isInstalling: installMutation.isPending,
-		rollback: rollbackMutation.mutateAsync,
+		rollback: (target: AdminUpdateTarget) => rollbackMutation.mutateAsync({ target }),
 		isRollingBack: rollbackMutation.isPending,
 		cancel: cancelMutation.mutateAsync,
 		isCancelling: cancelMutation.isPending,
+		streamBlock,
+		confirmStreamBlock,
+		dismissStreamBlock: () => setStreamBlock(null),
 	};
 }

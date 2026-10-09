@@ -1,12 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { m } from "@/paraglide/messages";
+import { activeStreamsBlocking } from "@/utils/stream-block";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys } from "../utils/query-keys";
 
+/** A restore that the server held back because streams are playing, waiting for the admin to confirm. */
+export interface RestoreStreamBlock {
+	fileName: string;
+	activeStreams: number;
+}
+
 export function useAdminBackups() {
 	const queryClient = useQueryClient();
+	const [restoreBlock, setRestoreBlock] = useState<RestoreStreamBlock | null>(null);
 
 	const backupsQuery = useQuery({
 		queryKey: adminKeys.backups(),
@@ -44,10 +53,28 @@ export function useAdminBackups() {
 		onError: (error) => toastError(m.admin_database_optimize_failed(), error),
 	});
 
+	// A restore restarts the server, which ends the streams playing, so the server holds it back while any play.
+	// The warning offers to restore anyway (`force`); any other error is reported as before.
 	const restoreMutation = useMutation({
-		mutationFn: (fileName: string) => reelvault.admin.restoreDatabase(fileName),
-		onError: (error) => toastError(m.admin_database_failed_to_restore(), error),
+		mutationFn: ({ fileName, force }: { fileName: string; force?: boolean }) => reelvault.admin.restoreDatabase(fileName, { force }),
+		onError: (error, { fileName, force }) => {
+			const activeStreams = activeStreamsBlocking(error);
+			if (activeStreams !== null && force !== true) {
+				setRestoreBlock({ fileName, activeStreams });
+
+				return;
+			}
+
+			toastError(m.admin_database_failed_to_restore(), error);
+		},
 	});
+
+	/** Runs the held-back restore again with `force`, once the admin has confirmed the warning. */
+	const confirmRestoreBlock = () => {
+		const block = restoreBlock;
+		setRestoreBlock(null);
+		if (block) restoreMutation.mutate({ fileName: block.fileName, force: true });
+	};
 
 	return {
 		backupsQuery,
@@ -55,6 +82,9 @@ export function useAdminBackups() {
 		createBackupMutation,
 		deleteBackupMutation,
 		restoreMutation,
+		restoreBlock,
+		confirmRestoreBlock,
+		dismissRestoreBlock: () => setRestoreBlock(null),
 		integrityMutation,
 		optimizeMutation,
 	};
