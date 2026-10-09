@@ -1,4 +1,5 @@
 import type { DownloadJob } from "@reelvault/sdk";
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -104,6 +105,29 @@ export function useDeleteDownload() {
 		onSuccess: async (_, jobId) => {
 			queryClient.removeQueries({ queryKey: downloadKeys.status(jobId) });
 			await queryClient.invalidateQueries({ queryKey: downloadKeys.list() });
+		},
+	});
+}
+
+/**
+ * Queues every episode of a season. A season larger than the free storage is refused with its numbers, and the
+ * dialog asks before it is queued anyway (`force`), so that refusal is not reported as an error here.
+ */
+export function useQueueSeasonDownload() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (payload: { seasonId: string; quality: DownloadQuality; force?: boolean }) => {
+			return await reelvault.downloads.queueSeason(payload);
+		},
+		onSuccess: async ({ results }) => {
+			toast.success(m.toast_download_season_queued({ count: results.filter((result) => result.ok).length }));
+			await queryClient.invalidateQueries({ queryKey: downloadKeys.list() });
+		},
+		onError: (error) => {
+			if (error instanceof ReelVaultError && error.code === "downloads.season_exceeds_quota") return;
+
+			toastError(m.toast_download_season_failed(), error, m.toast_plugins_unexpected_error());
 		},
 	});
 }

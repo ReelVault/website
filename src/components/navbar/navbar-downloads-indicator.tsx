@@ -4,13 +4,17 @@ import { useUserDownloads } from "@/client/hooks/use-downloads";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 
-/** Shown while downloads are running: their count and average progress, linking to the downloads page. */
+/** Shown while downloads run or wait: the running and waiting counts, the average progress of the running ones, linking to the downloads page. */
 export function NavbarDownloadsIndicator() {
 	const { data: jobs = [] } = useUserDownloads();
-	const active = jobs.filter((job) => job.status === "pending" || job.status === "processing");
-	if (active.length === 0) return null;
+	const running = jobs.filter((job) => job.status === "processing");
+	const waiting = jobs.filter((job) => job.status === "pending");
+	const activeCount = running.length + waiting.length;
+	if (activeCount === 0) return null;
 
-	const averagePercent = Math.round(active.reduce((sum, job) => sum + job.progressPercent, 0) / active.length);
+	const averagePercent = running.length > 0 ? Math.round(running.reduce((sum, job) => sum + job.progressPercent, 0) / running.length) : 0;
+	const inProgress = m.components_navbar_downloads_in_progress({ count: activeCount, percent: averagePercent });
+	const summary = waiting.length > 0 ? `${inProgress} · ${m.components_navbar_downloads_waiting({ count: waiting.length })}` : inProgress;
 
 	return (
 		<Button
@@ -18,8 +22,8 @@ export function NavbarDownloadsIndicator() {
 			size="icon-lg"
 			nativeButton={false}
 			render={<Link to="/downloads" />}
-			aria-label={m.components_navbar_downloads_in_progress({ count: active.length, percent: averagePercent })}
-			title={m.components_navbar_downloads_in_progress({ count: active.length, percent: averagePercent })}
+			aria-label={summary}
+			title={summary}
 			className="relative"
 		>
 			<Download data-icon="inline-start" aria-hidden="true" />

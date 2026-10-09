@@ -12,6 +12,12 @@ export const LazyIdentifyDialog = lazy(async () => {
 	return { default: mod.IdentifyDialog };
 });
 
+export const LazySeasonDownloadDialog = lazy(async () => {
+	const mod = await import("@/components/season-download-dialog");
+
+	return { default: mod.SeasonDownloadDialog };
+});
+
 export const LazyOfflineDownloadDialog = lazy(async () => {
 	const mod = await import("@/components/offline-download-dialog");
 

@@ -28,7 +28,7 @@ interface OfflineDownloadDialogProps {
 	fileName?: string;
 }
 
-const PROFILES: Array<{
+export const PROFILES: Array<{
 	id: DownloadQuality;
 	label: string;
 	resolution: string;

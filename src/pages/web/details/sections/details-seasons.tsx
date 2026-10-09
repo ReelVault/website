@@ -1,8 +1,9 @@
-import { Tv } from "lucide-react";
-import { useState } from "react";
+import { Download, Tv } from "lucide-react";
+import { Suspense, useState } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useDetailsView } from "@/client/hooks/use-metadata-queries";
 import { AppErrorState } from "@/components/app-states";
+import { LazySeasonDownloadDialog } from "@/components/lazy-dialogs";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -29,6 +30,7 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 	// user choice → localStorage → season 1. A dead choice falls back to the default.
 	const [storedSeasonId] = useState(() => localStorage.getItem(storageKey));
 	const [pickedSeasonId, setPickedSeasonId] = useState<string | null>(null);
+	const [seasonDownloadOpen, setSeasonDownloadOpen] = useState(false);
 
 	const resolveSelectedSeasonId = (): string | null => {
 		if (isKnownSeason(seasons, pickedSeasonId)) return pickedSeasonId;
@@ -116,6 +118,19 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 					</div>
 					<ScrollBar orientation="horizontal" />
 				</ScrollArea>
+
+				<div className="flex justify-end">
+					<Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => setSeasonDownloadOpen(true)}>
+						<Download className="size-3.5" aria-hidden="true" />
+						{m.components_season_download()}
+					</Button>
+				</div>
+
+				{seasonDownloadOpen && selectedSeasonId && (
+					<Suspense fallback={null}>
+						<LazySeasonDownloadDialog open={seasonDownloadOpen} onOpenChange={setSeasonDownloadOpen} seasonId={selectedSeasonId} />
+					</Suspense>
+				)}
 
 				<div aria-live="polite">
 					<DetailsEpisodes
