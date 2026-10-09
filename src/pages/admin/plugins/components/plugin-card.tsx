@@ -1,14 +1,15 @@
-import type { PluginRuntimeStatus } from "@reelvault/sdk";
+import type { PluginAdminStatus } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, Sliders, Trash2, XCircle } from "lucide-react";
+import { AlertTriangle, Info, PauseCircle, PlayCircle, Puzzle, RefreshCw, Sliders, Trash2, XCircle } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
+import { formatDate } from "@/utils/format-utils";
 
 interface PluginCardProps {
-	plugin: PluginRuntimeStatus;
+	plugin: PluginAdminStatus;
 	isBusy: boolean;
 	/** Present when the plugin exists in a catalog repository — opens the details dialog with its version history. */
 	onOpenDetails?: () => void;
@@ -50,6 +51,13 @@ export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnabl
 						<Badge variant="outline" className="font-mono text-[10px]">
 							{m.common_version_badge({ version: plugin.version })}
 						</Badge>
+						{plugin.updateAvailable && <Badge className="text-[10px]">{m.admin_plugins_update_available()}</Badge>}
+						{plugin.integrityOk === false && (
+							<Badge variant="destructive" className="gap-1 text-[10px]">
+								<AlertTriangle className="size-3" />
+								{m.admin_plugins_integrity_mismatch()}
+							</Badge>
+						)}
 					</div>
 					<p className="font-mono text-[11px] text-muted-foreground">{m.common_id_label({ id: plugin.id })}</p>
 				</div>
@@ -72,6 +80,29 @@ export function PluginCard({ plugin, isBusy, onOpenDetails, onUninstall, onEnabl
 						<strong className="font-semibold">{plugin.jobs}</strong>
 					</Badge>
 				</div>
+
+				{/* Package details */}
+				{(plugin.capabilities.length > 0 || (plugin.installedAt && plugin.source)) && (
+					<div className="mt-3 flex flex-col gap-1 text-[11px] text-muted-foreground">
+						{plugin.capabilities.length > 0 && (
+							<p>
+								<span className="font-medium text-foreground">{`${m.admin_plugins_capabilities_label()}: `}</span>
+								<span className="font-mono">{plugin.capabilities.join(", ")}</span>
+							</p>
+						)}
+						{plugin.installedAt && plugin.source && (
+							<p>{m.admin_plugins_installed_on({ date: formatDate(plugin.installedAt), source: plugin.source })}</p>
+						)}
+					</div>
+				)}
+
+				{/* Configuration read error */}
+				{plugin.configReadError && (
+					<div className="mt-4 flex items-start gap-1.5 rounded-lg border border-warning/30 bg-warning/10 p-3 text-warning text-xs">
+						<AlertTriangle className="mt-px size-3.5 shrink-0" />
+						<span>{m.admin_plugins_config_unreadable()}</span>
+					</div>
+				)}
 
 				{/* Error Banner */}
 				{plugin.error && (

@@ -86,6 +86,13 @@ export function usePluginCatalog() {
 		},
 		onSuccess: async (result) => {
 			await invalidateCatalogViews();
+			if (result.state === "rolled_back") {
+				toast.warning(m.admin_plugins_install_rolled_back({ name: result.pluginId, version: result.version }), {
+					description: result.error,
+				});
+
+				return;
+			}
 			toast.success(m.admin_plugins_catalog_toast_installed(result));
 
 			// Catalog installs enable the plugin immediately; a load failure (e.g. a

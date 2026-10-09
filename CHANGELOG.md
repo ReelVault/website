@@ -198,6 +198,9 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Settings number fields know their range** — admin settings inputs show the allowed range, reject out-of-range values with a clear message and translate the server's settings errors. Requires SDK 1.3.0.
 - **New server settings** — labels and descriptions for the HLS muxing queue size, concurrent downloads per profile, trickplay frames per file, plugin blob retention and the per-plugin daily notification limit.
 - **Log page: complete archive and a tail notice** — a "Download all" button fetches every log file (rotated and FFmpeg logs) as one zip, and when the viewed file is larger than the served window the page states that search and pagination only cover the last N MB. Requires SDK 1.3.0.
+- **Plugin package details** — each plugin in the admin list shows its capabilities, when and from where its package was installed, an *Update available* badge when an enabled catalog offers a newer version, a warning when the package on disk no longer matches its install record, and a warning when its configuration file cannot be read. Requires SDK 1.3.0.
+- **Stored secrets are visible** — a secret field shows a *Set* badge when a value is stored, and an empty field keeps that value. Requires SDK 1.3.0.
+- **Failed plugin upgrades say what happened** — an update whose new version did not start reports that the previous version was restored. Requires SDK 1.3.0.
 
 ### Fixes
 

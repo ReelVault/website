@@ -1,4 +1,4 @@
-import type { PluginRuntimeStatus } from "@reelvault/sdk";
+import type { PluginAdminStatus } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -9,7 +9,7 @@ import { adminKeys, pluginKeys } from "../utils/query-keys";
 export function useAdminPlugins() {
 	const queryClient = useQueryClient();
 
-	const pluginsQuery = useQuery<PluginRuntimeStatus[]>({
+	const pluginsQuery = useQuery<PluginAdminStatus[]>({
 		queryKey: adminKeys.plugins(),
 		queryFn: async () => {
 			return await reelvault.admin.getPlugins();

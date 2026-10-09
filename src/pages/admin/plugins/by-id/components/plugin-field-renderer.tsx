@@ -147,6 +147,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 	const stringDefault = typeof field.default === "string" ? field.default : "";
 	const strValue = typeof value === "string" ? value : stringDefault;
 	const isSecret = field.type === "secret";
+	const secretPlaceholder = field.hasValue ? m.admin_plugins_secret_stored() : m.admin_plugins_enter_secret();
 
 	return (
 		<Card className="border-border/80 bg-card/60 transition-colors hover:border-border">
@@ -166,6 +167,11 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 									{m.admin_plugins_secret_badge()}
 								</Badge>
 							)}
+							{isSecret && field.hasValue && (
+								<Badge variant="outline" className="border-success/30 text-[10px] text-success">
+									{m.admin_plugins_secret_set()}
+								</Badge>
+							)}
 						</div>
 						{field.description && <p className="text-muted-foreground text-xs">{field.description}</p>}
 					</div>
@@ -181,7 +187,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						type={isSecret && !showSecret ? "password" : "text"}
 						value={strValue}
 						onChange={(e) => onChange(e.target.value)}
-						placeholder={isSecret ? m.admin_plugins_enter_secret() : ""}
+						placeholder={isSecret ? secretPlaceholder : ""}
 						className={isSecret ? "pr-10 font-mono text-sm" : "text-sm"}
 					/>
 					{isSecret && (
