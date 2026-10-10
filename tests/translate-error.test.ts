@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { overwriteGetLocale } from "@/paraglide/runtime";
-import { translateByKey, translateError } from "../src/utils/translate-error";
+import { translateByKey, translateCode, translateError } from "../src/utils/translate-error";
 
 // Deterministic locale: without this, the first message call walks the strategy
 // chain, which under a DOM-shimmed test run touches window.localStorage.
@@ -61,5 +61,19 @@ describe("translateError", () => {
 	test("returns fallback for non-error values", () => {
 		expect(translateError(null, "fallback")).toBe("fallback");
 		expect(translateError("string error", "fallback")).toBe("fallback");
+	});
+});
+
+describe("parameterized server codes", () => {
+	test("interpolates the parameters a code carries", () => {
+		const translated = translateByKey("plugin.catalog_entry_invalid", { index: 2, field: "homepage" });
+		expect(translated).toContain("2");
+		expect(translated).toContain("homepage");
+	});
+
+	test("falls back to the caller's text when a parameter is missing", () => {
+		// A code can arrive without its parameters (a stored plugin error); a sentence with blanks is worse than the fallback.
+		expect(translateCode("plugin.catalog_entry_invalid", "fallback")).toBe("fallback");
+		expect(translateCode("plugin.catalog_entry_invalid", "fallback", { index: 2 })).toBe("fallback");
 	});
 });

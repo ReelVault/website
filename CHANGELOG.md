@@ -310,6 +310,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Clear messages for list query errors** — the codes of list query errors are translated: an invalid or unsupported page cursor, fields that are too long, too many or nested too deeply, and filters with too many values.
 - **Subtitle provider switch** — the admin subtitles page has a switch per subtitle provider. An off provider is not searched for subtitles and cannot be downloaded from. Requires SDK and server with the subtitle provider switch.
 - **Remote control: close all and positions** — the remote page has *Close all* (after a confirmation) that stops every playback session of the profile. Each session shows its position and whether it is paused.
+- **Translated server errors for plugins, streaming and background tasks** — admin screens show the specific reason of each server error in English or Polish, for example the invalid field of a plugin manifest or the missing media tools. An error that arrives without the values its text needs shows the generic text instead of a sentence with blanks.
 
 ### Fixes
 

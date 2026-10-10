@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
-import { translateCode } from "@/utils/translate-error";
+import { translateCode, translateError } from "@/utils/translate-error";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys, pluginKeys } from "../utils/query-keys";
@@ -53,7 +53,9 @@ function entryProgressPercent(entry: PluginArchiveEntry): number {
 
 /** Why an archive that failed the check is not installed: its error issues in translated words, or a fallback. */
 function describeInvalidArchive(issues: PluginValidationIssue[]): string {
-	const reasons = issues.filter((issue) => issue.severity === "error").map((issue) => translateCode(issue.code, issue.message));
+	const reasons = issues
+		.filter((issue) => issue.severity === "error")
+		.map((issue) => translateCode(issue.code, issue.message, issue.params));
 
 	return reasons.length > 0
 		? m.admin_plugins_upload_validation_failed({ reason: reasons.join("; ") })
@@ -162,7 +164,7 @@ export function usePluginCatalog() {
 					}
 				} catch (error) {
 					batchClockRef.current.uploadedBytes += entry.file.size;
-					patchArchiveEntry(entry.id, { status: "failed", error: error instanceof Error ? error.message : String(error) });
+					patchArchiveEntry(entry.id, { status: "failed", error: translateError(error, m.admin_plugins_upload_failed()) });
 					failed += 1;
 					continue;
 				}
@@ -191,7 +193,7 @@ export function usePluginCatalog() {
 					installed += 1;
 				} catch (error) {
 					batchClockRef.current.uploadedBytes += entry.file.size;
-					patchArchiveEntry(entry.id, { status: "failed", error: error instanceof Error ? error.message : String(error) });
+					patchArchiveEntry(entry.id, { status: "failed", error: translateError(error, m.admin_plugins_upload_failed()) });
 					failed += 1;
 				}
 			}
