@@ -1,7 +1,9 @@
 import type { TaskTrigger, WorkerCategory, WorkerOperation, WorkerSummary } from "@reelvault/sdk";
 import { lazy, Suspense, useState } from "react";
+import { AppEmptyState } from "@/components/app-states";
 import { LazyRender } from "@/components/lazy-render";
 import { useDebounce } from "@/hooks/use-debounce";
+import { m } from "@/paraglide/messages";
 import type { WorkerRunParams } from "./scheduled-task-actions";
 import { ScheduledTasksCategoryGroup } from "./scheduled-tasks-category-group";
 import { ScheduledTasksFilters } from "./scheduled-tasks-filters";
@@ -119,6 +121,9 @@ export function ScheduledTasksList({
 
 			{/* Task List by Categories */}
 			<div className="flex flex-col gap-8">
+				{tasks.length > 0 && filteredTasks.length === 0 && (
+					<AppEmptyState title={m.admin_workers_no_matches()} description={m.admin_workers_no_matches_description()} />
+				)}
 				{allCategories.map((category) => {
 					const categoryTasks = tasksByCategory.get(category);
 					if (!categoryTasks || categoryTasks.length === 0) return null;

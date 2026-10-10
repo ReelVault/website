@@ -2466,6 +2466,8 @@
 	"admin_workers_other_jobs": "Inne zadania",
 	"admin_workers_plugins_jobs_desc": "Zadania w tle zarejestrowane przez zainstalowane wtyczki.",
 	"admin_workers_processing_now": "Przetwarzane teraz",
+	"admin_workers_no_matches": "Żadne zadanie nie pasuje do tego filtra.",
+	"admin_workers_no_matches_description": "Wyczyść wyszukiwanie albo wybierz inny filtr, aby zobaczyć pozostałe zadania.",
 	"admin_workers_queue_desc": "Bieżące oraz historyczne grupy zadań przetwarzane asynchronicznie przez workery.",
 	"admin_workers_queued": "W kolejce",
 	"admin_workers_queues_idle_desc": "Wszystkie kolejki workerów są obecnie bezczynne. Nowe operacje pojawią się automatycznie po wyzwoleniu zadania.",

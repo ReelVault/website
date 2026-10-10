@@ -40,10 +40,10 @@ const SCHEDULED_CHIP = /^Scheduled/;
 const ACTIVE_CHIP = /^Active now/;
 const ALL_CHIP = /^All/;
 
-function renderList() {
+function renderList(list: WorkerSummary[] = tasks) {
 	return render(
 		<ScheduledTasksList
-			tasks={tasks}
+			tasks={list}
 			onRunTask={noop}
 			onCancelTask={noop}
 			onToggleSchedule={noop}
@@ -99,5 +99,13 @@ describe("worker page quick filters", () => {
 		expect(chip(view, SCHEDULED_CHIP).textContent).toContain("1");
 		expect(chip(view, ACTIVE_CHIP).textContent).toContain("1");
 		expect(chip(view, ALL_CHIP).textContent).toContain("3");
+	});
+
+	test("a filter that matches no job says so", () => {
+		const view = renderList([task("nightly", { scheduled: true }), task("idle", {})]);
+
+		fireEvent.click(chip(view, ACTIVE_CHIP));
+
+		expect(view.getByText("No jobs match this filter.")).toBeTruthy();
 	});
 });

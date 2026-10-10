@@ -2454,6 +2454,8 @@
 	"admin_workers_other_jobs": "Other jobs",
 	"admin_workers_plugins_jobs_desc": "Background jobs registered by installed plugins.",
 	"admin_workers_processing_now": "Processing now",
+	"admin_workers_no_matches": "No jobs match this filter.",
+	"admin_workers_no_matches_description": "Clear the search or pick another filter to see the other jobs.",
 	"admin_workers_queue_desc": "Current and historical job groups processed asynchronously by workers.",
 	"admin_workers_queued": "Queued",
 	"admin_workers_queues_idle_desc": "All worker queues are currently idle. New operations will appear automatically once a job triggers.",
