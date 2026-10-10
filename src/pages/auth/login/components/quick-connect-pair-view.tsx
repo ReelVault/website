@@ -37,6 +37,8 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 	const [pairSecret, setPairSecret] = useState("");
 	const [pairExpiresAt, setPairExpiresAt] = useState(0);
 	const [pairRemainingSeconds, setPairRemainingSeconds] = useState(0);
+	// The server refuses an expired code, so the page says so and stops asking for it.
+	const isExpired = pairExpiresAt > 0 && pairRemainingSeconds <= 0;
 
 	const applyPairingResponse = (res: { code: string; secret: string; expiresIn: number }) => {
 		setPairCode(res.code);
@@ -107,7 +109,7 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 				// Polling check errors are ignored; the next tick retries.
 			}
 		};
-		if (pairSecret) {
+		if (pairSecret && !isExpired) {
 			interval = setInterval(() => {
 				detach(pollPairing());
 			}, 2500);
@@ -117,7 +119,7 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 			cancelled = true;
 			if (interval !== undefined) clearInterval(interval);
 		};
-	}, [pairSecret]);
+	}, [pairSecret, isExpired]);
 
 	return (
 		<div className="flex flex-col gap-6 text-center">
@@ -140,15 +142,21 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 					)}
 				</div>
 
-				<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs">
-					<Clock className="size-3.5" aria-hidden="true" /> {m.auth_valid_for_label()}
-					<span className="font-bold text-foreground">{formatCountdown(pairRemainingSeconds)}</span>
-				</div>
+				{isExpired ? (
+					<div className="rounded-full bg-warning/10 px-3 py-1 font-medium text-warning text-xs">{m.auth_code_expired()}</div>
+				) : (
+					<>
+						<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs">
+							<Clock className="size-3.5" aria-hidden="true" /> {m.auth_valid_for_label()}
+							<span className="font-bold text-foreground">{formatCountdown(pairRemainingSeconds)}</span>
+						</div>
 
-				<div className="mt-2 flex animate-pulse items-center gap-2 rounded-full bg-success/10 px-3 py-1 font-medium text-success text-xs">
-					<span className="size-2 rounded-full bg-success" />
-					{m.auth_waiting_for_authorization()}
-				</div>
+						<div className="mt-2 flex animate-pulse items-center gap-2 rounded-full bg-success/10 px-3 py-1 font-medium text-success text-xs">
+							<span className="size-2 rounded-full bg-success" />
+							{m.auth_waiting_for_authorization()}
+						</div>
+					</>
+				)}
 			</div>
 
 			<div className="space-y-1.5 rounded-xl border border-border/70 bg-card/40 p-4 text-left text-muted-foreground text-xs">
