@@ -17,7 +17,7 @@ export function AdminBackLink({ to, label }: { to: (typeof ADMIN_BACK_LINK_ROUTE
 		<Button
 			variant="ghost"
 			size="sm"
-			className="h-8 w-fit gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground"
+			className="h-10 w-fit gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground sm:h-8"
 			nativeButton={false}
 			render={<Link to={to} />}
 		>

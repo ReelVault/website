@@ -53,12 +53,12 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 					<div className="flex flex-col gap-1">
 						<div className="flex flex-wrap items-center gap-2">
 							<h2 className="font-bold text-xl">{profile.name}</h2>
-							<Badge variant="outline" className="gap-1 font-mono text-muted-foreground text-xs">
+							<Badge variant="outline" className="min-h-10 gap-1 font-mono text-muted-foreground text-xs sm:min-h-0">
 								<span>{m.common_short_id({ id: profile.id.slice(0, 8) })}</span>
 								<button
 									type="button"
 									onClick={() => detach(() => copy(profile.id, m.admin_users_copy_profile_id()))}
-									className="text-muted-foreground hover:text-foreground"
+									className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
 									aria-label={m.admin_users_copy_profile_id()}
 								>
 									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />

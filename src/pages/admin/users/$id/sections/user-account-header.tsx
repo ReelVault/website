@@ -36,12 +36,12 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 				title={m.admin_users_account_title({ name: user?.name ?? m.admin_users_account_label() })}
 				badge={
 					user && (
-						<Badge variant="outline" className="gap-1 font-mono text-muted-foreground text-xs">
+						<Badge variant="outline" className="min-h-10 gap-1 font-mono text-muted-foreground text-xs sm:min-h-0">
 							<span>{m.admin_users_short_id({ id: user.id.slice(0, 8) })}</span>
 							<button
 								type="button"
 								onClick={() => detach(copy(user.id, m.admin_users_copy_account_id()))}
-								className="text-muted-foreground hover:text-foreground"
+								className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
 								aria-label={m.admin_users_copy_account_id()}
 							>
 								<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
