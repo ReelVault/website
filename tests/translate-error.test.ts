@@ -10,6 +10,7 @@ overwriteGetLocale(() => "en");
 const V13_CODES = [
 	"auth.email_registered",
 	"auth.invalid_email",
+	"auth.request_rejected",
 	"auth.user_banned",
 	"database.backup_failed",
 	"downloads.disabled",
@@ -37,6 +38,10 @@ describe("codes named in the v1.3.0 changelog", () => {
 
 	test("a throttled session start names the wait", () => {
 		expect(translateByKey("stream.creation_throttled", { retryAfterSeconds: 7 })).toContain("7");
+	});
+
+	test("a rejected account request says the server rejected it", () => {
+		expect(translateByKey("auth.request_rejected")).toBe("The server rejected this request.");
 	});
 });
 
