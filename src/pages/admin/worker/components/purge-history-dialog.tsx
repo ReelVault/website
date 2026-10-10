@@ -1,5 +1,7 @@
+import { ParaglideMessage } from "@inlang/paraglide-js-react";
 import type { PurgeWorkerHistoryOptions } from "@reelvault/sdk";
 import { AlertTriangle, RefreshCw, Trash2 } from "lucide-react";
+import type { ReactNode } from "react";
 import { usePurgeWorkerHistory, useWorkerHistoryPurgePreview } from "@/client/hooks/use-admin-jobs";
 import { useDialogForm } from "@/client/hooks/use-dialog-form";
 import { Button } from "@/components/ui/button";
@@ -9,9 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 
-function renderStrong(chunks: string) {
-	return <strong>{chunks}</strong>;
-}
+const irreversibleWarningMarkup = {
+	strong: ({ children }: { children?: ReactNode }) => <strong>{children}</strong>,
+};
 
 interface PurgeHistoryDialogProps {
 	isOpen: boolean;
@@ -117,9 +119,7 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 					<div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-muted-foreground text-xs">
 						<AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
 						<p>
-							{m.admin_worker_purge_irreversible_warning({
-								strong: renderStrong,
-							})}
+							<ParaglideMessage message={m.admin_worker_purge_irreversible_warning} markup={irreversibleWarningMarkup} />
 						</p>
 					</div>
 				</div>

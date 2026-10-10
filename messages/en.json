@@ -2313,7 +2313,7 @@
 	"admin_worker_progress_line": "Progress: {completed} of {total} jobs",
 	"admin_worker_progress_sync": "Processes and syncs the progress state of downloaded media and mobile devices.",
 	"admin_worker_purge_history_dialog_desc": "Delete completed, failed, or cancelled task and worker operation records from the database to reduce size and improve readability.",
-	"admin_worker_purge_irreversible_warning": "This action is permanent and irreversible. Active (in progress) and pending queue tasks {strong}will not be{/strong} deleted.",
+	"admin_worker_purge_irreversible_warning": "This action is permanent and irreversible. Active (in progress) and pending queue tasks {#strong}will not be{/strong} deleted.",
 	"admin_worker_purge_preview": "Preview: {operations} operations and {jobs} jobs would be deleted.",
 	"admin_worker_queue_label": "Queue ({count})",
 	"admin_worker_queues_pools": "Queues & worker pools",
