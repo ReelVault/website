@@ -213,6 +213,8 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 					checked={state.hideRatingOverlay}
 					onChange={(hideRatingOverlay) => setState((current) => ({ ...current, hideRatingOverlay }))}
 				/>
+			</div>
+			<div className="grid gap-4 sm:grid-cols-2">
 				<PreferenceSelect
 					label={m.user_hdr_playback_label()}
 					description={m.user_hdr_playback_desc()}
