@@ -243,6 +243,21 @@ export function useLibraryIgnoredAssets(libraryId: string, enabled: boolean) {
 	});
 }
 
+/** How often the scan progress refreshes while a scan is queued or running. */
+const SCAN_PROGRESS_POLL_MS = 2_000;
+
+/**
+ * Queued and running library scans with their progress. Polls only while a scan is active, so an
+ * idle library page makes no request after the first one.
+ */
+export function useLibraryScanProgress() {
+	return useQuery({
+		queryKey: libraryKeys.scanProgress(),
+		queryFn: () => reelvault.libraries.getScanProgress(),
+		refetchInterval: (query) => (query.state.data?.data.length ? SCAN_PROGRESS_POLL_MS : false),
+	});
+}
+
 export function useLibraryScanFindings(libraryId: string, status: ScanFindingStatus, enabled: boolean) {
 	return useQuery({
 		queryKey: libraryKeys.scanFindingsByStatus(libraryId, status),

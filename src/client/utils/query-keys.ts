@@ -54,6 +54,7 @@ export const libraryKeys = {
 	scanFindings: (id: string) => [...libraryKeys.all, "scan-findings", id] as const,
 	scanFindingsByStatus: (id: string, status: ScanFindingStatus) => [...libraryKeys.scanFindings(id), status] as const,
 	scanFindingCandidates: (id: string, filePath: string) => [...libraryKeys.all, "scan-candidates", id, filePath] as const,
+	scanProgress: () => [...libraryKeys.all, "scan-progress"] as const,
 	admin: () => [...libraryKeys.all, "admin"] as const,
 	health: () => [...libraryKeys.all, "health"] as const,
 	errorsCheck: (operationId: string) => [...libraryKeys.all, "errors-check", operationId] as const,

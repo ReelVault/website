@@ -503,6 +503,8 @@
 	"admin_libraries_resource_management": "Zarządzanie zasobami",
 	"admin_libraries_scan_libraries": "Skanuj biblioteki",
 	"admin_libraries_scan_library": "Skanuj bibliotekę",
+	"admin_libraries_scan_progress": "Skanowanie… {percent}%",
+	"admin_libraries_scan_queued": "Skanowanie w kolejce",
 	"admin_libraries_scanning": "Skanowanie biblioteki…",
 	"admin_libraries_search_by_name_or_path": "Szukaj po nazwie lub ścieżce…",
 	"admin_libraries_selected": "Wybrano",

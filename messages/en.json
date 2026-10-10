@@ -501,6 +501,8 @@
 	"admin_libraries_resource_management": "Resource management",
 	"admin_libraries_scan_libraries": "Scan libraries",
 	"admin_libraries_scan_library": "Scan library",
+	"admin_libraries_scan_progress": "Scanning… {percent}%",
+	"admin_libraries_scan_queued": "Scan queued",
 	"admin_libraries_scanning": "Scanning library…",
 	"admin_libraries_search_by_name_or_path": "Search by name or path…",
 	"admin_libraries_selected": "Selected",

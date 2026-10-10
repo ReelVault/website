@@ -1,7 +1,8 @@
-import type { LibraryWithRelations } from "@reelvault/sdk";
+import type { LibraryScanProgress, LibraryWithRelations } from "@reelvault/sdk";
 import { cn } from "cn";
 import { AlertTriangle, FolderOpen, RefreshCw, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { useLibraryScanProgress } from "@/client/hooks/use-libraries";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,15 @@ const PATH_SORT_LABELS: Record<PathSortOption, () => string> = {
 	"path-desc": () => m.admin_libraries_paths_sort_path_desc(),
 	"size-desc": () => m.admin_libraries_paths_sort_size(),
 };
+
+/** Scan button text while a scan is active: queued, percent once the scan is enqueueing, otherwise plain scanning. */
+function scanProgressLabel(scan: LibraryScanProgress | undefined): string {
+	if (scan === undefined) return m.admin_libraries_scanning();
+	if (scan.status === "pending") return m.admin_libraries_scan_queued();
+	if (scan.progressPercent === null) return m.admin_libraries_scanning();
+
+	return m.admin_libraries_scan_progress({ percent: scan.progressPercent });
+}
 
 const isPathSortOption = (value: unknown): value is PathSortOption =>
 	typeof value === "string" && (PATH_SORT_OPTIONS as readonly string[]).includes(value);
@@ -64,6 +74,7 @@ export function LibraryCard({
 	onShowHealth: (libraryId: string) => void;
 }) {
 	const paths = lib.paths;
+	const scanProgress = useLibraryScanProgress().data?.data.find((scan) => scan.libraryId === lib.id);
 	const [pathsExpanded, setPathsExpanded] = useState(true);
 	const [pathSort, setPathSort] = useState<PathSortOption>("path-asc");
 	const totalSize = lib.totalSize ?? 0;
@@ -172,8 +183,8 @@ export function LibraryCard({
 						size="default"
 						className="h-9 flex-1 gap-2 font-medium text-sm shadow-xs"
 						onClick={() => onScan(lib.id)}
-						isPending={isScanning}
-						pendingLabel={m.admin_libraries_scanning()}
+						isPending={isScanning || scanProgress !== undefined}
+						pendingLabel={scanProgressLabel(scanProgress)}
 					>
 						<RefreshCw className="size-3.5" />
 						<span>{m.admin_libraries_scan_library()}</span>
