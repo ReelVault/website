@@ -1,3 +1,4 @@
+import type { TrickplayRegenerateRequest } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -76,8 +77,7 @@ export function useRegenerateTrickplay() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (params: { scope: "library" | "title" | "season"; id: string; force: boolean }) =>
-			reelvault.admin.regenerateTrickplay({ scope: params.scope, id: params.id, force: params.force }),
+		mutationFn: (params: TrickplayRegenerateRequest) => reelvault.admin.regenerateTrickplay(params),
 		onSuccess: async (result) => {
 			toast.success(m.hooks_trickplay_regenerate_queued({ enqueued: result.enqueued }));
 			await queryClient.invalidateQueries({ queryKey: adminKeys.trickplayStats() });

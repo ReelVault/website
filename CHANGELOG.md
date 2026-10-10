@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Previews for several titles at once** — on the trickplay page, search titles and select several. Their missing previews are queued together, or all of them after a confirmation. A single selected title still shows its seasons.
 - **Download a session's log** — each ended playback session in the admin live view links to its log archive (ZIP).
 - **Scan progress on library cards** — the Scan library button of a library with an active scan says it is queued, or shows the percent of the enqueued work once the scan starts handing files to its queues. The progress refreshes every two seconds only while a scan is active.
 - **Ignore scan findings** — the library's "needs attention" dialog has an Ignored tab. Ignoring a file takes it off the list and it stays off through later scans; restore it from the Ignored tab. A file that failed to match gets a Find candidates button that searches the providers for the title in its name, only when you press it.

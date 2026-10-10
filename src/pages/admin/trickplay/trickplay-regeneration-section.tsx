@@ -19,6 +19,11 @@ interface RegenerationScope {
 
 type QueueRegeneration = (label: string, scope: RegenerationScope, force: boolean) => Promise<void>;
 
+type QueueTitles = (label: string, ids: string[], force: boolean) => Promise<void>;
+
+/** Most titles one bulk request takes; the server caps a request at the same number. */
+const MAX_BULK_TITLES = 50;
+
 interface QueuedRegeneration {
 	label: string;
 	result: TrickplayRegenerationQueued;
@@ -33,6 +38,11 @@ export function TrickplayRegenerationSection() {
 	const regenerate = useRegenerateTrickplay();
 	const [queued, setQueued] = useState<QueuedRegeneration | null>(null);
 	const report = useTrickplayRegenerationReport(queued?.result.operationId);
+
+	const queueTitles: QueueTitles = async (label, ids, force) => {
+		const result = await regenerate.mutateAsync({ scope: "titles", ids, force });
+		setQueued({ label, result });
+	};
 
 	const queue: QueueRegeneration = async (label, scope, force) => {
 		const result = await regenerate.mutateAsync({ ...scope, force });
@@ -73,7 +83,7 @@ export function TrickplayRegenerationSection() {
 				))}
 			</div>
 
-			<TitleRegenerationBlock onQueue={queue} disabled={regenerate.isPending} />
+			<TitleRegenerationBlock onQueue={queue} onQueueTitles={queueTitles} disabled={regenerate.isPending} />
 
 			{queued && (
 				<div className="mt-4 flex flex-col gap-3 border-border/60 border-t pt-4">
@@ -150,11 +160,36 @@ function RegenerationButtons({
 	);
 }
 
-/** Title and season scopes: find a title, then queue its previews or those of one of its seasons. */
-function TitleRegenerationBlock({ onQueue, disabled }: { onQueue: QueueRegeneration; disabled: boolean }) {
+interface SelectedTitle {
+	id: string;
+	title: string;
+	isSeries: boolean;
+}
+
+/** Title and season scopes: pick titles from a search, then queue their previews together or one title at a time. */
+function TitleRegenerationBlock({
+	onQueue,
+	onQueueTitles,
+	disabled,
+}: {
+	onQueue: QueueRegeneration;
+	onQueueTitles: QueueTitles;
+	disabled: boolean;
+}) {
 	const search = useGlobalMetadataSearch({ debounceDelay: 300 });
-	const [selected, setSelected] = useState<{ id: string; title: string; isSeries: boolean } | null>(null);
-	const seasons = useSeasons(selected?.isSeries ? selected.id : "");
+	const [selectedTitles, setSelectedTitles] = useState<SelectedTitle[]>([]);
+	// One selected title keeps the detailed view: its own buttons and its seasons.
+	const single = selectedTitles.length === 1 ? selectedTitles[0] : undefined;
+	const seasons = useSeasons(single?.isSeries ? single.id : "");
+	const selectedIds = selectedTitles.map((title) => title.id);
+
+	const toggleTitle = (title: SelectedTitle) => {
+		setSelectedTitles((current) => {
+			if (current.some((item) => item.id === title.id)) return current.filter((item) => item.id !== title.id);
+
+			return current.length < MAX_BULK_TITLES ? [...current, title] : current;
+		});
+	};
 
 	return (
 		<div className="mt-4 flex flex-col gap-3 border-border/60 border-t pt-4">
@@ -166,26 +201,59 @@ function TitleRegenerationBlock({ onQueue, disabled }: { onQueue: QueueRegenerat
 			/>
 			{search.results.titles.length > 0 && (
 				<div className="flex flex-wrap gap-2">
-					{search.results.titles.map((title) => (
-						<Button
-							key={title.id}
-							variant={selected?.id === title.id ? "default" : "outline"}
-							size="sm"
-							onClick={() => setSelected({ id: title.id, title: title.title, isSeries: title.type === "tv_show" })}
-						>
-							{title.title}
-						</Button>
-					))}
+					{search.results.titles.map((title) => {
+						const checked = selectedTitles.some((item) => item.id === title.id);
+
+						return (
+							<Button
+								key={title.id}
+								variant={checked ? "default" : "outline"}
+								size="sm"
+								aria-pressed={checked}
+								disabled={!checked && selectedTitles.length >= MAX_BULK_TITLES}
+								onClick={() => toggleTitle({ id: title.id, title: title.title, isSeries: title.type === "tv_show" })}
+							>
+								{title.title}
+							</Button>
+						);
+					})}
 				</div>
 			)}
-			{selected && (
+			{selectedTitles.length > 0 && (
+				<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/60 p-3">
+					<span className="text-sm">{m.admin_trickplay_bulk_selected({ count: selectedTitles.length })}</span>
+					<Button
+						variant="outline"
+						size="sm"
+						disabled={disabled}
+						onClick={() => detach(onQueueTitles(m.admin_trickplay_bulk_label(), selectedIds, false))}
+					>
+						{m.admin_trickplay_bulk_fill_missing()}
+					</Button>
+					<ConfirmAction
+						trigger={
+							<Button variant="outline" size="sm" disabled={disabled}>
+								{m.admin_trickplay_bulk_regenerate_all()}
+							</Button>
+						}
+						title={m.admin_trickplay_bulk_confirm_title()}
+						description={m.admin_trickplay_regenerate_confirm_description()}
+						confirmLabel={m.admin_trickplay_regenerate_confirm_action()}
+						onConfirm={() => onQueueTitles(m.admin_trickplay_bulk_label(), selectedIds, true)}
+					/>
+					<Button variant="ghost" size="sm" onClick={() => setSelectedTitles([])}>
+						{m.admin_trickplay_bulk_clear()}
+					</Button>
+				</div>
+			)}
+			{single && (
 				<div className="flex flex-col gap-3">
-					<RegenerationButtons label={selected.title} scope={{ scope: "title", id: selected.id }} onQueue={onQueue} disabled={disabled} />
+					<RegenerationButtons label={single.title} scope={{ scope: "title", id: single.id }} onQueue={onQueue} disabled={disabled} />
 					{(seasons.data?.data ?? []).map((season) => (
 						<div key={season.id} className="flex flex-wrap items-center gap-3">
 							<span className="text-sm">{m.admin_trickplay_regenerate_season({ number: season.seasonNumber })}</span>
 							<RegenerationButtons
-								label={`${selected.title} · ${m.admin_trickplay_regenerate_season({ number: season.seasonNumber })}`}
+								label={`${single.title} · ${m.admin_trickplay_regenerate_season({ number: season.seasonNumber })}`}
 								scope={{ scope: "season", id: season.id }}
 								onQueue={onQueue}
 								disabled={disabled}
