@@ -35,6 +35,13 @@ describe("translateByKey", () => {
 		expect(translateByKey("database.backup_failed")).toContain("backup");
 	});
 
+	test("translates the reasons a playback session can end with, and keeps a free-text reason", () => {
+		expect(translateByKey("inactivity-timeout")).toContain("inactivity");
+		expect(translateByKey("admin.terminated")).toContain("administrator");
+		expect(translateByKey("client-release-all")).toContain("remote control");
+		expect(translateByKey("maintenance window tonight")).toBe("maintenance window tonight");
+	});
+
 	test("returns raw code for codes outside the dynamic subset", () => {
 		expect(translateByKey("totally_unknown_code")).toBe("totally_unknown_code");
 	});

@@ -24,6 +24,14 @@ function hasParams(inputs: MessageParams | undefined, names: readonly string[]):
 const dynamicMessages = {
 	admin_live_active_streams: (inputs) => m.admin_live_active_streams({ viewers: String(inputs?.viewers ?? "") }),
 	admin_live_no_streams: () => m.admin_live_no_streams(),
+	// Reasons a playback session can end with (the server's stream reason codes, hyphens normalized).
+	inactivity_timeout: () => m.admin_live_end_reason_inactivity_timeout(),
+	reservation_deadline: () => m.admin_live_end_reason_reservation_deadline(),
+	shutdown: () => m.admin_live_end_reason_shutdown(),
+	client_release: () => m.admin_live_end_reason_client_release(),
+	client_release_all: () => m.admin_live_end_reason_client_release_all(),
+	superseded_by_same_title: () => m.admin_live_end_reason_superseded(),
+	admin_terminated: () => m.admin_live_end_reason_admin_terminated(),
 	admin_settings_invalid_value: (inputs) =>
 		m.admin_settings_invalid_value({ key: String(inputs?.key ?? ""), min: String(inputs?.min ?? ""), max: String(inputs?.max ?? "") }),
 	admin_settings_unknown_key: (inputs) => m.admin_settings_unknown_key({ key: String(inputs?.key ?? "") }),
@@ -472,7 +480,7 @@ function getCatalog(): Map<string, CatalogMessage> {
  * contract the old `t()` had.
  */
 export function translateByKey(code: string, params?: MessageParams): string {
-	const normalizedCode = code.replace(/\./g, "_").toLowerCase();
+	const normalizedCode = code.replace(/[.-]/g, "_").toLowerCase();
 	return getCatalog().get(normalizedCode)?.(params) ?? code;
 }
 

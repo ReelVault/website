@@ -3,6 +3,7 @@ import { reelvault } from "@/client/client";
 import { useAdminEndedLiveSessions } from "@/client/hooks/use-admin-live-activity";
 import { m } from "@/paraglide/messages";
 import { formatDateTime, formatTimestamp } from "@/utils/format-utils";
+import { translateByKey } from "@/utils/translate-error";
 
 /** Playback sessions that ended recently, newest first; the server keeps a bounded history. */
 export function EndedSessionsList() {
@@ -36,7 +37,7 @@ export function EndedSessionsList() {
 								<tr key={session.sessionId} className="border-border border-t">
 									<td className="px-2 py-1.5">{session.title ?? m.admin_live_ended_untitled()}</td>
 									<td className="px-2 py-1.5">{session.profileName ?? "—"}</td>
-									<td className="px-2 py-1.5">{session.reason}</td>
+									<td className="px-2 py-1.5">{translateByKey(session.reason)}</td>
 									<td className="px-2 py-1.5 tabular-nums">{formatTimestamp(session.durationSeconds)}</td>
 									<td className="px-2 py-1.5">{formatDateTime(session.endedAt)}</td>
 									<td className="px-2 py-1.5">
