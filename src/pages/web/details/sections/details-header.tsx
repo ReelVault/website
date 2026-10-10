@@ -113,7 +113,7 @@ export default function DetailsHeader({
 							<DetailsWatchlistButton metadataId={metadata.id} />
 							<PluginSlotHost
 								name="details-action-bar"
-								buttonClassName="h-9"
+								buttonClassName="h-10"
 								params={{
 									metadataId: metadata.id,
 									title: metadata.title,

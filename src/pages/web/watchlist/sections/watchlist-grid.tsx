@@ -67,7 +67,7 @@ export function WatchlistGrid({ metadata }: { metadata: WatchlistItem[] }) {
 						onChange={(event) => setSearch(event.target.value)}
 						placeholder={m.web_watchlist_search_placeholder()}
 						aria-label={m.web_watchlist_search_placeholder()}
-						className="h-9 sm:w-56"
+						className="h-10 sm:w-56"
 					/>
 					<Select
 						value={sort}

@@ -26,7 +26,7 @@ export function HiddenPages({ profileId }: { profileId: string }) {
 			<legend className="font-medium text-sm">{m.settings_hidden_pages()}</legend>
 			<p className="text-muted-foreground text-xs">{m.settings_hidden_pages_hint()}</p>
 			{OPTIONAL_PAGE_IDS.map((pageId) => (
-				<label key={pageId} className="flex cursor-pointer items-center gap-2 text-sm">
+				<label key={pageId} className="flex min-h-10 cursor-pointer items-center gap-2 text-sm sm:min-h-0">
 					<input
 						type="checkbox"
 						className="size-4 accent-primary"

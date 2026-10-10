@@ -91,7 +91,7 @@ export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 					onClick={() => {
 						detach(removeRating());
 					}}
-					className="text-muted-foreground text-xs hover:text-destructive max-sm:min-h-9 max-sm:px-3"
+					className="text-muted-foreground text-xs hover:text-destructive max-sm:min-h-10 max-sm:px-3"
 				>
 					{m.common_delete()}
 				</AsyncButton>

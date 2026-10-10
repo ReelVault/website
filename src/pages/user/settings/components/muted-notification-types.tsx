@@ -26,7 +26,7 @@ export function MutedNotificationTypes({ profileId }: { profileId: string }) {
 			<legend className="font-medium text-sm">{m.settings_muted_notifications()}</legend>
 			<p className="text-muted-foreground text-xs">{m.settings_muted_notifications_hint()}</p>
 			{types.map((type) => (
-				<label key={type} className="flex cursor-pointer items-center gap-2 text-sm">
+				<label key={type} className="flex min-h-10 cursor-pointer items-center gap-2 text-sm sm:min-h-0">
 					<input
 						type="checkbox"
 						className="size-4 accent-primary"

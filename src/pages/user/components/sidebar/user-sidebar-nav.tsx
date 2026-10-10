@@ -30,7 +30,7 @@ export function UserSidebarNav({ pathname, unreadCount }: UserSidebarNavProps) {
 						to={href}
 						aria-current={active ? "page" : undefined}
 						className={cn(
-							"group relative flex items-center justify-center gap-3 rounded-xl px-3 py-2.5 text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground lg:justify-start",
+							"group relative flex min-h-10 items-center justify-center gap-3 rounded-xl px-3 py-2.5 text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground lg:justify-start",
 							active && "bg-primary/10 text-primary hover:bg-primary/10 hover:text-primary",
 						)}
 					>

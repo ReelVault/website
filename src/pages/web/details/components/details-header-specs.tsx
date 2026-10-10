@@ -32,7 +32,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									key={director.id}
 									to="/person/$id"
 									params={{ id: director.id }}
-									className="rounded-md border border-border/70 bg-card/60 px-2.5 py-1 font-medium text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary"
+									className="inline-flex min-h-10 items-center rounded-md border border-border/70 bg-card/60 px-2.5 py-1 font-medium text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
 								>
 									{director.name}
 								</Link>
@@ -53,7 +53,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									key={studio.id}
 									to="/companies/$id"
 									params={{ id: studio.id }}
-									className="rounded-md border border-border/70 bg-card/60 px-2.5 py-1 font-medium text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary"
+									className="inline-flex min-h-10 items-center rounded-md border border-border/70 bg-card/60 px-2.5 py-1 font-medium text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
 								>
 									{studio.name}
 								</Link>
@@ -75,7 +75,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									key={keyword.id}
 									to="/keywords/$id"
 									params={{ id: keyword.id }}
-									className="rounded-md border border-border/50 bg-card/50 px-2.5 py-0.5 font-medium text-muted-foreground text-xs transition-colors hover:border-primary/40 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary"
+									className="inline-flex min-h-10 items-center rounded-md border border-border/50 bg-card/50 px-2.5 py-0.5 font-medium text-muted-foreground text-xs transition-colors hover:border-primary/40 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
 								>
 									{m.web_keyword_hashtag({ name: keyword.name })}
 								</Link>
@@ -100,7 +100,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									to={url}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-flex items-center gap-1.5 rounded-md border border-border/80 bg-card/80 px-2.5 py-1 font-medium text-muted-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary"
+									className="inline-flex min-h-10 items-center gap-1.5 rounded-md border border-border/80 bg-card/80 px-2.5 py-1 font-medium text-muted-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
 								>
 									<ExternalLink className="size-3 text-primary" />
 									<span>{formatProviderShortName(p.name)}</span>

@@ -59,7 +59,7 @@ export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpda
 								size="lg"
 								variant="outline"
 								render={<Link to="/genres/$id" params={{ id: genre.id }} />}
-								className="gap-2 text-foreground"
+								className="min-h-10 gap-2 text-foreground sm:min-h-0"
 							>
 								<GenreIcon className="size-3.5 text-primary" />
 								{genre.name}

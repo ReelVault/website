@@ -11,7 +11,7 @@ export function NavbarLocaleSwitcher() {
 		<DropdownMenu>
 			<DropdownMenuTrigger
 				aria-label={m.navbar_language()}
-				className="flex size-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+				className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground sm:size-9"
 			>
 				<Languages className="size-5" aria-hidden="true" />
 			</DropdownMenuTrigger>
