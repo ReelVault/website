@@ -298,6 +298,7 @@
 	"admin_database_restore_description": "Najpierw zostanie zrobiona kopia obecnej bazy. Serwer się zatrzyma, podmieni bazę i uruchomi ponownie. Zmiany po tej kopii zostaną tylko w kopii sprzed przywracania.",
 	"database_restore_blocked_active_streams": "Przywracanie jest wstrzymane, gdy trwają strumienie ({activeStreams}). Zatrzymaj je i spróbuj ponownie.",
 	"database_backup_invalid": "Plik nie jest prawidłową kopią bazy ReelVault.",
+	"database_backup_failed": "Nie udało się zapisać kopii bazy danych. Sprawdź wolne miejsce na dysku i folder kopii, a potem spróbuj ponownie.",
 	"database_backup_upload_disabled": "Wysyłanie kopii jest wyłączone w ustawieniach systemu.",
 	"update_blocked_active_streams": "Aktualizacja serwera czeka, gdy trwa {activeStreams} strumień(i). Restart by je zatrzymał, więc spróbuj ponownie po ich zakończeniu.",
 	"update_not_running": "Ten komponent nie ma trwającej aktualizacji.",

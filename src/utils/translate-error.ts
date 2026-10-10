@@ -40,6 +40,7 @@ const dynamicMessages = {
 	database_restore_blocked_active_streams: (inputs) =>
 		m.database_restore_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
 	database_backup_invalid: () => m.database_backup_invalid(),
+	database_backup_failed: () => m.database_backup_failed(),
 	database_backup_upload_disabled: () => m.database_backup_upload_disabled(),
 	subtitle_invalid_upload: () => m.subtitle_invalid_upload(),
 	plugin_subtitle_provider_disabled: () => m.plugin_subtitle_provider_disabled(),

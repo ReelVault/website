@@ -296,6 +296,7 @@
 	"admin_database_restore_description": "The current database is backed up first. The server then shuts down, swaps the database and restarts. Changes made after this backup stay only in the pre-restore copy.",
 	"database_restore_blocked_active_streams": "Restore is blocked while streams are active ({activeStreams}). Stop them and try again.",
 	"database_backup_invalid": "The file is not a valid ReelVault database backup.",
+	"database_backup_failed": "The database backup could not be written. Check the free disk space and the backups folder, then try again.",
 	"database_backup_upload_disabled": "Backup upload is turned off in system settings.",
 	"update_blocked_active_streams": "The server update is waiting while {activeStreams} stream(s) are active. The restart would stop them, so try again once they finish.",
 	"update_not_running": "No update of this component is running.",

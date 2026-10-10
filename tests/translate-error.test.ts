@@ -31,6 +31,10 @@ describe("translateByKey", () => {
 		expect(translateByKey("admin.live_no_streams")).not.toBe("admin.live_no_streams");
 	});
 
+	test("translates the database backup failure code", () => {
+		expect(translateByKey("database.backup_failed")).toContain("backup");
+	});
+
 	test("returns raw code for codes outside the dynamic subset", () => {
 		expect(translateByKey("totally_unknown_code")).toBe("totally_unknown_code");
 	});
