@@ -1,4 +1,4 @@
-import type { PluginLocalizedText, PluginSchemaCondition, PluginUiContext } from "@reelvault/sdk/plugin";
+import type { PluginLocalizedText, PluginSchemaAction, PluginSchemaCondition, PluginUiContext } from "@reelvault/sdk/plugin";
 import { resolvePluginText } from "@/client/hooks/use-plugin-ui";
 
 /**
@@ -81,6 +81,14 @@ export function resolveLabel(text: PluginLocalizedText | undefined, scope: Schem
 	if (text === undefined) return "";
 
 	return interpolate(resolvePluginText(text, scope.context.defaultLocale), scope);
+}
+
+/**
+ * The confirmation text of an action that changes data (`call` and `delete`). Such an action runs only after the
+ * administrator confirms it in the app's dialog, and never when a page mounts.
+ */
+export function actionConfirmation(action: PluginSchemaAction): PluginLocalizedText | undefined {
+	return action.type === "call" || action.type === "delete" ? action.confirm : undefined;
 }
 
 export function evaluateCondition(condition: PluginSchemaCondition, scope: SchemaScope): boolean {

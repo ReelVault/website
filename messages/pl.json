@@ -360,6 +360,7 @@
 	"media_file_missing": "Plik nie istnieje na dysku.",
 	"media_probe_failed": "Nie udało się przeanalizować pliku.",
 	"media_probe_no_data": "Analiza pliku nie zwróciła danych o multimediach.",
+	"plugin_action_confirm_description": "Wtyczka wykona tę akcję na serwerze.",
 	"plugin_load_failed": "Nie udało się załadować wtyczki.",
 	"plugin_manifest_invalid": "Manifest wtyczki jest nieprawidłowy.",
 	"plugin_repository_unavailable": "Nie udało się połączyć z repozytorium wtyczek.",

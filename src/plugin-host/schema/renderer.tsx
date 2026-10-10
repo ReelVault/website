@@ -2,6 +2,7 @@
 
 import type { PluginSchemaNode, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { createElement } from "react";
+import { ConfirmAction } from "@/components/confirm-action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { m } from "@/paraglide/messages";
 import { EMBED_ALLOW, embedReferrerPolicy, embedSandbox } from "../embed-policy";
 import { getPluginIcon } from "../icons";
-import { evaluateCondition, interpolate, isRecord, readPath, resolveLabel, type SchemaContext, type SchemaScope } from "./binding";
+import {
+	actionConfirmation,
+	evaluateCondition,
+	interpolate,
+	isRecord,
+	readPath,
+	resolveLabel,
+	type SchemaContext,
+	type SchemaScope,
+} from "./binding";
 import { SchemaField } from "./fields";
 import { type SchemaRuntime, useSchemaRuntime } from "./use-schema-runtime";
 
@@ -200,18 +210,30 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 			if (node.hiddenIf && evaluateCondition(node.hiddenIf, scope)) return null;
 
 			const disabled = node.disabledIf ? evaluateCondition(node.disabledIf, scope) : false;
-
-			return (
+			const confirmation = actionConfirmation(node.action);
+			const button = (
 				<Button
 					type="button"
 					variant={node.variant ?? "default"}
 					disabled={disabled}
-					onClick={() => runtime.runAction(node.action, scope)}
+					onClick={confirmation === undefined ? () => runtime.runAction(node.action, scope) : undefined}
 					className="w-fit gap-1.5"
 				>
 					{node.icon ? <PluginIcon name={node.icon} className="size-4" /> : null}
 					{resolveLabel(node.label, scope)}
 				</Button>
+			);
+
+			// The app's dialog asks first; a plugin action never opens the browser's confirmation box.
+			if (confirmation === undefined) return button;
+
+			return (
+				<ConfirmAction
+					trigger={button}
+					title={resolveLabel(confirmation, scope)}
+					description={m.plugin_action_confirm_description()}
+					onConfirm={() => runtime.runAction(node.action, scope)}
+				/>
 			);
 		}
 		case "stats":

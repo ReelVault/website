@@ -63,10 +63,8 @@ describe("source guards", () => {
 		expect(offenders).toEqual([]);
 	});
 
-	test("the admin pages confirm in the app's dialog, never in the browser's confirmation box", () => {
-		const offenders = FILES.map(rel)
-			.filter((file) => file.startsWith("pages/admin/"))
-			.filter((file) => BROWSER_DIALOG_CALL.test(read(join(SRC, file))));
+	test("no source opens the browser's confirmation box; every confirmation is the app's dialog", () => {
+		const offenders = FILES.filter((file) => BROWSER_DIALOG_CALL.test(read(file))).map(rel);
 
 		expect(offenders).toEqual([]);
 	});

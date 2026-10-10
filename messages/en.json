@@ -358,6 +358,7 @@
 	"media_file_missing": "The file does not exist on disk.",
 	"media_probe_failed": "The file could not be analysed.",
 	"media_probe_no_data": "The file was analysed but returned no media data.",
+	"plugin_action_confirm_description": "The plugin runs this action on the server.",
 	"plugin_load_failed": "The plugin failed to load.",
 	"plugin_manifest_invalid": "The plugin manifest is invalid.",
 	"plugin_repository_unavailable": "The plugin repository could not be reached.",

@@ -7,7 +7,7 @@ import { reelvault } from "@/client/client";
 import { detach } from "@/lib/detach";
 import { toast } from "@/utils/toast-facade";
 import { usePluginDialogController } from "../plugin-dialog-context";
-import { evaluateCondition, resolveLabel, resolveTemplate, type SchemaScope } from "./binding";
+import { actionConfirmation, evaluateCondition, resolveLabel, resolveTemplate, type SchemaScope } from "./binding";
 import { bumpSchemaRefresh, subscribeSchemaRefresh } from "./refresh-bus";
 import { collectSchemaDefaults, mergeSchemaDefaults } from "./schema-defaults";
 
@@ -148,7 +148,6 @@ export function useSchemaRuntime(
 			case "call":
 			case "delete": {
 				const method = action.type === "delete" ? "DELETE" : (action.method ?? "POST");
-				if (action.confirm && !window.confirm(toastText(action.confirm, scope))) return;
 
 				const path = String(resolveTemplate(action.path, scope));
 				const query = action.type === "call" ? toStringRecord(resolveTemplate(action.query ?? {}, scope)) : undefined;
@@ -222,7 +221,10 @@ export function useSchemaRuntime(
 	useEffect(() => {
 		const scope: SchemaScope = { form: formValues, data: {}, context };
 		detach(loadSources(allSourceNames, scope));
-		for (const action of schema.onMount ?? []) runActionRef.current(action, scope);
+		// An action that asks for confirmation waits for the button; nothing runs it on mount.
+		for (const action of schema.onMount ?? []) {
+			if (actionConfirmation(action) === undefined) runActionRef.current(action, scope);
+		}
 
 		return subscribeSchemaRefresh(() => {
 			detach(loadSources(allSourceNames, scopeRef.current));
