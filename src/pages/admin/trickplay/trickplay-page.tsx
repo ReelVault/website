@@ -70,7 +70,7 @@ export default function AdminTrickplayPage() {
 					<tbody>
 						{artifactStats.artifacts.map((row) => (
 							<tr key={`${row.pluginId}:${row.kind}`} className="border-border/60 border-t">
-								<td className="py-2 pr-4 font-mono text-xs">{row.pluginId}</td>
+								<td className="break-all py-2 pr-4 font-mono text-xs">{row.pluginId}</td>
 								<td className="py-2 pr-4">{row.kind}</td>
 								<td className="py-2 text-right font-mono">{row.count}</td>
 							</tr>

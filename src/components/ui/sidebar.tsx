@@ -311,7 +311,12 @@ function SidebarInset({ className, ...props }: ComponentProps<"main">) {
 
 function SidebarInput({ className, ...props }: ComponentProps<typeof Input>) {
 	return (
-		<Input data-slot="sidebar-input" data-sidebar="input" className={cn("h-8 w-full bg-background shadow-none", className)} {...props} />
+		<Input
+			data-slot="sidebar-input"
+			data-sidebar="input"
+			className={cn("h-10 w-full bg-background shadow-none lg:h-8", className)}
+			{...props}
+		/>
 	);
 }
 
@@ -416,7 +421,7 @@ const sidebarMenuButtonVariants = cva(
 					"bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
 			},
 			size: {
-				default: "h-8 text-sm",
+				default: "h-10 text-sm lg:h-8",
 				sm: "h-7 text-xs",
 				lg: "h-12 text-sm group-data-[collapsible=icon]:p-0!",
 			},
@@ -585,7 +590,7 @@ function SidebarMenuSubButton({
 		props: mergeProps<"a">(
 			{
 				className: cn(
-					"flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-hidden ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-active:bg-sidebar-accent data-[size=md]:text-sm data-[size=sm]:text-xs data-active:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
+					"flex h-10 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-hidden ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-active:bg-sidebar-accent data-[size=md]:text-sm data-[size=sm]:text-xs data-active:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden lg:h-7 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
 					className,
 				),
 			},

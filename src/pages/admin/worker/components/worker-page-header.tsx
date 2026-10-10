@@ -37,7 +37,7 @@ export function WorkerPageHeader({
 						size="sm"
 						onClick={onToggleAutoRefresh}
 						className={cn(
-							"h-8 gap-2 text-xs transition-[border-color,background-color,color,box-shadow]",
+							"h-10 gap-2 text-xs transition-[border-color,background-color,color,box-shadow] sm:h-8",
 							autoRefresh && "border-primary/30 bg-primary/10 text-primary",
 						)}
 					>

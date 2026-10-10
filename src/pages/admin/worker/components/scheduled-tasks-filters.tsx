@@ -37,7 +37,7 @@ export function ScheduledTasksFilters({
 					placeholder={m.admin_workers_jobs_search_placeholder()}
 					value={searchQuery}
 					onChange={(e) => onSearchChange(e.target.value)}
-					className="h-8.5 bg-background/60 pr-3 pl-8 text-xs"
+					className="h-10 bg-background/60 pr-3 pl-8 text-xs sm:h-8.5"
 				/>
 			</div>
 
@@ -49,7 +49,7 @@ export function ScheduledTasksFilters({
 						type="button"
 						onClick={() => onCategoryFilterChange(f.id)}
 						className={cn(
-							"inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
+							"inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow] sm:min-h-0",
 							categoryFilter === f.id
 								? "border-border bg-secondary text-foreground shadow-xs"
 								: "border-border/40 bg-muted/20 text-muted-foreground hover:bg-muted/40 hover:text-foreground",

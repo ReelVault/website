@@ -66,7 +66,7 @@ export default function AdminAnalyticsPage() {
 				description={m.admin_analytics_overview_description()}
 				actions={
 					<div className="flex min-w-0 flex-wrap items-center gap-2">
-						<div className="flex w-full min-w-0 gap-1 overflow-x-auto rounded-xl border border-border/70 bg-card/70 p-1 sm:w-auto">
+						<div className="flex w-full min-w-0 flex-wrap gap-1 rounded-xl border border-border/70 bg-card/70 p-1 sm:w-auto sm:flex-nowrap">
 							{TIME_FILTER_OPTIONS.map((opt) => (
 								<Button
 									key={opt.label}
@@ -75,7 +75,7 @@ export default function AdminAnalyticsPage() {
 									size="sm"
 									variant={selectedDays === opt.days ? "default" : "ghost"}
 									onClick={handleTimeFilterChange}
-									className="h-9 shrink-0 text-xs sm:h-7"
+									className="h-10 flex-auto whitespace-nowrap text-xs sm:h-7 sm:flex-none"
 								>
 									{opt.label}
 								</Button>

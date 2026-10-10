@@ -89,7 +89,10 @@ export function DashboardUpdateStatus() {
 			title={m.admin_updates_dashboard_title()}
 			description={m.admin_updates_dashboard_description()}
 			actions={
-				<Link to="/admin/updates" className="text-muted-foreground text-xs hover:text-foreground hover:underline">
+				<Link
+					to="/admin/updates"
+					className="inline-flex min-h-10 items-center text-muted-foreground text-xs hover:text-foreground hover:underline sm:min-h-0"
+				>
 					{m.admin_updates_details()}
 				</Link>
 			}

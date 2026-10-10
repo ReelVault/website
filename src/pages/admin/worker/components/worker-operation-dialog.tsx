@@ -84,7 +84,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 
 	return (
 		<FullscreenDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-			<FullscreenDialogContent className="flex max-h-[90vh] w-[95vw] max-w-5xl flex-col overflow-hidden border-border/60 bg-card p-6 shadow-2xl">
+			<FullscreenDialogContent className="flex max-h-[90vh] w-[95vw] max-w-5xl flex-col overflow-hidden border-border/60 bg-card p-4 shadow-2xl sm:p-6">
 				{/* Dialog Header */}
 				<FullscreenDialogHeader className="border-border/50 border-b pb-4">
 					<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
