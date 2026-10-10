@@ -1,0 +1,86 @@
+import { describe, expect, test } from "bun:test";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
+
+/**
+ * Source-level guards for the website. They read the sources and fail on patterns that
+ * have caused security or correctness problems: raw HTML sinks outside the reviewed list,
+ * dynamic code evaluation, blank-target links without `noopener`, and credentials pasted
+ * into the code. Generated paraglide output is excluded.
+ */
+
+const SRC = join(import.meta.dir, "..", "src");
+
+/** Files allowed to set raw HTML, each reviewed: the subtitle cue renderer sanitizes its input first. */
+const RAW_HTML_ALLOWLIST = new Set(["pages/player/components/player-subtitle-overlay.tsx"]);
+
+const RAW_HTML_SINK = /dangerouslySetInnerHTML|\.innerHTML\s*=|insertAdjacentHTML\(/;
+const DYNAMIC_CODE = /(^|[^\w.])eval\s*\(|new Function\s*\(|setTimeout\(\s*["'`]/;
+const SAFE_REL = /noopener|noreferrer/;
+const SOURCE_FILE = /\.(ts|tsx)$/;
+const TEST_FILE = /\.test\.tsx?$/;
+const BLANK_TARGET = 'target="_blank"';
+const CREDENTIAL_PATTERNS = [
+	/ghp_[A-Za-z0-9]{20,}/,
+	/sk_live_[A-Za-z0-9]{10,}/,
+	/AKIA[0-9A-Z]{16}/,
+	/-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----/,
+];
+
+function sourceFiles(dir = SRC): string[] {
+	const files: string[] = [];
+	for (const entry of readdirSync(dir)) {
+		const path = join(dir, entry);
+		if (statSync(path).isDirectory()) {
+			if (entry !== "paraglide") files.push(...sourceFiles(path));
+		} else if (SOURCE_FILE.test(entry) && !TEST_FILE.test(entry)) {
+			files.push(path);
+		}
+	}
+
+	return files;
+}
+
+const FILES = sourceFiles();
+const read = (file: string) => readFileSync(file, "utf8");
+const rel = (path: string) => relative(SRC, path);
+
+describe("source guards", () => {
+	test("the source tree is actually scanned", () => {
+		expect(FILES.length).toBeGreaterThan(300);
+	});
+
+	test("raw HTML sinks appear only in the reviewed allowlist", () => {
+		const offenders = FILES.filter((file) => RAW_HTML_SINK.test(read(file)))
+			.map(rel)
+			.filter((file) => !RAW_HTML_ALLOWLIST.has(file));
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("no dynamic code evaluation", () => {
+		const offenders = FILES.filter((file) => DYNAMIC_CODE.test(read(file))).map(rel);
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("every blank-target link declares noopener or noreferrer on the same element", () => {
+		const offenders: string[] = [];
+		for (const file of FILES.filter((path) => path.endsWith(".tsx"))) {
+			const lines = read(file).split("\n");
+			lines.forEach((line, index) => {
+				if (!line.includes(BLANK_TARGET)) return;
+				const element = lines.slice(index, index + 6).join(" ");
+				if (!SAFE_REL.test(element)) offenders.push(`${rel(file)}:${index + 1}`);
+			});
+		}
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("no credential-shaped strings are committed to the sources", () => {
+		const offenders = FILES.filter((file) => CREDENTIAL_PATTERNS.some((pattern) => pattern.test(read(file)))).map(rel);
+
+		expect(offenders).toEqual([]);
+	});
+});
