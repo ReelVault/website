@@ -1,4 +1,5 @@
 import { History } from "lucide-react";
+import { reelvault } from "@/client/client";
 import { useAdminEndedLiveSessions } from "@/client/hooks/use-admin-live-activity";
 import { m } from "@/paraglide/messages";
 import { formatDateTime, formatTimestamp } from "@/utils/format-utils";
@@ -27,6 +28,7 @@ export function EndedSessionsList() {
 								<th className="px-2 py-1 font-medium">{m.admin_live_ended_col_reason()}</th>
 								<th className="px-2 py-1 font-medium">{m.admin_live_ended_col_duration()}</th>
 								<th className="px-2 py-1 font-medium">{m.admin_live_ended_col_ended()}</th>
+								<th className="px-2 py-1 font-medium">{m.admin_live_ended_col_log()}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,6 +39,15 @@ export function EndedSessionsList() {
 									<td className="px-2 py-1.5">{session.reason}</td>
 									<td className="px-2 py-1.5 tabular-nums">{formatTimestamp(session.durationSeconds)}</td>
 									<td className="px-2 py-1.5">{formatDateTime(session.endedAt)}</td>
+									<td className="px-2 py-1.5">
+										<a
+											href={reelvault.admin.getLiveSessionLogUrl(session.sessionId)}
+											download
+											className="text-primary underline-offset-4 hover:underline"
+										>
+											{m.admin_live_ended_download_log()}
+										</a>
+									</td>
 								</tr>
 							))}
 						</tbody>

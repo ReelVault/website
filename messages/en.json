@@ -336,6 +336,8 @@
 	"admin_live_ended_col_reason": "Reason",
 	"admin_live_ended_col_duration": "Duration",
 	"admin_live_ended_col_ended": "Ended",
+	"admin_live_ended_col_log": "Log",
+	"admin_live_ended_download_log": "Download log",
 	"download_empty_output": "The converted file came out empty.",
 	"download_failed": "The download failed. Try again.",
 	"download_ffmpeg_failed": "Converting the file for download failed.",
