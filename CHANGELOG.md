@@ -326,6 +326,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Admin logs and analytics wider than the phone screen** — the log header's action buttons did not wrap and the analytics range selector kept its full width, so the whole page scrolled sideways. The buttons now wrap on the logs page, and the range selector scrolls inside its own row on the analytics page.
 - **Backup codes lost when the dialog closed** — the backup-code step lived in a dialog, so closing it (Escape, the close button or a click outside) cleared the codes from view. The codes now stay on the page until Finish, and the success line shows only when 2FA was just turned on, not when codes are regenerated.
 - **Show button outside the password field** — the Show/Hide toggle on the sign-in form used the icon-button size, so its text spilled past the field's frame. It is now sized for its text and sits inside the field.
 - **Empty library message for regular accounts** — the message said to add a library in the app settings, which only administrators can open. It now asks the account to ask the server administrator.

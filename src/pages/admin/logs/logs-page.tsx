@@ -27,7 +27,7 @@ export default function AdminLogsPage() {
 				title={m.admin_logs_heading()}
 				description={m.admin_logs_description()}
 				actions={
-					<div className="flex items-center gap-2">
+					<div className="flex min-w-0 flex-wrap items-center gap-2">
 						<StatusBadge status={c.autoRefresh ? "success" : "idle"} label={c.autoRefresh ? m.admin_logs_live() : m.admin_logs_paused()} />
 						<Button variant={c.autoRefresh ? "default" : "outline"} size="sm" onClick={() => c.setAutoRefresh((prev) => !prev)}>
 							{c.autoRefresh ? m.admin_logs_pause() : m.admin_logs_enable_live()}
