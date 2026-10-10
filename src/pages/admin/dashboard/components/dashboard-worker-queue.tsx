@@ -50,13 +50,13 @@ export function DashboardWorkerQueue() {
 					return (
 						<div key={op.id} className="flex flex-col gap-2 rounded-xl border border-border/60 bg-card/60 p-3 text-xs">
 							<div className="flex items-center justify-between">
-								<div className="flex items-center gap-2">
+								<div className="flex min-w-0 items-center gap-2">
 									{statusIcon}
-									<span className="font-semibold text-foreground capitalize">{op.type.replace(/_/g, " ")}</span>
+									<span className="truncate font-semibold text-foreground capitalize">{op.type.replace(/_/g, " ")}</span>
 								</div>
 								<Badge
 									variant="outline"
-									className={cn("text-xs capitalize", {
+									className={cn("shrink-0 text-xs capitalize", {
 										"border-primary/30 bg-primary/10 text-primary": isProcessing,
 										"border-success/30 bg-success/10 text-success": isCompleted,
 										"border-destructive/30 bg-destructive/10 text-destructive": isFailed,

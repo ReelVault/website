@@ -68,7 +68,7 @@ export function WorkerTabsSection({
 			}}
 			className="flex flex-col gap-6"
 		>
-			<TabsList className="grid h-12 w-full max-w-xl grid-cols-3 rounded-xl border border-border/60 bg-muted/40 p-1.5 max-sm:h-14 max-sm:max-w-full">
+			<TabsList className="grid w-full max-w-xl grid-cols-3 rounded-xl border border-border/60 bg-muted/40 p-1.5 group-data-horizontal/tabs:h-14 max-sm:max-w-full sm:group-data-horizontal/tabs:h-12">
 				<TabsTrigger value="scheduled" className="flex items-center gap-2 rounded-lg font-semibold text-sm">
 					<CalendarClock className="size-4" />
 					<span>{m.admin_workers_scheduled_tab()}</span>

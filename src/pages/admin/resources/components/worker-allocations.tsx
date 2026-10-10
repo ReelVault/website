@@ -25,7 +25,7 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 
 	return (
 		<AdminSection title={m.admin_resources_worker_allocations()} description={m.admin_resources_current_concurrency()}>
-			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+			<div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
 				{allocations.map((alloc) => (
 					<div
 						key={alloc.workerId}

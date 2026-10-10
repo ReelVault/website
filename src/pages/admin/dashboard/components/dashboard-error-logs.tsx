@@ -57,11 +57,11 @@ export function DashboardErrorLogs() {
 								isError ? "border-destructive/30 bg-destructive/5" : "border-warning/30 bg-warning/5",
 							)}
 						>
-							<div className="flex items-center justify-between text-xs">
-								<span className={isError ? "font-bold text-destructive" : "font-bold text-warning"}>
+							<div className="flex items-center justify-between gap-2 text-xs">
+								<span className={isError ? "min-w-0 truncate font-bold text-destructive" : "min-w-0 truncate font-bold text-warning"}>
 									{m.admin_dashboard_log_source_line({ level: log.levelName.toUpperCase(), module: log.module ?? "system" })}
 								</span>
-								<span className="text-muted-foreground">{logTimeFormatter.format(new Date(log.timestamp))}</span>
+								<span className="shrink-0 text-muted-foreground">{logTimeFormatter.format(new Date(log.timestamp))}</span>
 							</div>
 							<p className="truncate text-foreground text-xs">{log.msg ?? m.admin_dashboard_no_error_message()}</p>
 						</div>
