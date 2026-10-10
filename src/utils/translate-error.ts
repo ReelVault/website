@@ -100,6 +100,7 @@ const dynamicMessages = {
 	remote_access_trusted_proxy_set: (inputs) => m.remote_access_trusted_proxy_set({ count: String(inputs?.count ?? "") }),
 	request_timeout: () => m.request_timeout(),
 	scan_reason_no_metadata_match: () => m.scan_reason_no_metadata_match(),
+	scan_reason_probe_failed: () => m.scan_reason_probe_failed(),
 	scan_reason_recognition_failed: () => m.scan_reason_recognition_failed(),
 	scan_reason_type_mismatch: () => m.scan_reason_type_mismatch(),
 	season_mismatch: (inputs) =>

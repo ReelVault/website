@@ -308,6 +308,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Probe-failed scan reason shows its text** — a file whose video could not be analysed showed the raw key `scan_reason_probe_failed` in the needs-attention dialog. The reason now has its translated label.
 - **HDR transcode reason** — the player's reason text claimed tone-mapping to SDR when the server had no tone-mapping filter. It now says tone-mapping is unavailable.
 - **Active operation count stopped at 50** — the worker activity badges counted only the first page of active operations; they now show the total, so a busy queue is no longer under-reported.
 - **Watchlist showed only the first 20 titles** — the page requested a single page of the paginated endpoint, so larger watchlists were silently truncated and the total/movie/series statistics were wrong. The page now loads every page before rendering.
