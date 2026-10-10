@@ -42,7 +42,7 @@ export function AppErrorState({
 				</div>
 			</div>
 			{onRetry !== undefined && (
-				<Button type="button" variant="outline" size="sm" onClick={onRetry} className="mt-1 h-7 text-xs">
+				<Button type="button" variant="outline" size="sm" onClick={onRetry} className="mt-1 h-10 text-xs sm:h-7">
 					<RefreshCw className="mr-1 size-3" />
 					{m.common_try_again()}
 				</Button>

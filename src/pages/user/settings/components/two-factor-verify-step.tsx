@@ -47,7 +47,7 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 
 				{setupSecret && (
 					<div className="flex w-full items-center gap-2">
-						<Input readOnly value={setupSecret} className="h-9 font-mono text-xs" />
+						<Input readOnly value={setupSecret} className="h-10 font-mono text-xs sm:h-9" />
 						<Button
 							type="button"
 							size="icon-sm"

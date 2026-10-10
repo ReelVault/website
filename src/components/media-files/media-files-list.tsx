@@ -50,7 +50,7 @@ export function MediaFilesList({
 							placeholder={m.components_media_files_search_placeholder()}
 							value={searchQuery}
 							onChange={handleSearchChange}
-							className="h-9 bg-background pl-9 text-xs"
+							className="h-10 bg-background pl-9 text-xs sm:h-9"
 						/>
 					</div>
 				</div>

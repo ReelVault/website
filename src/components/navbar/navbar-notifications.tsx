@@ -67,7 +67,7 @@ export function NavbarNotifications() {
 									await markAllRead();
 								});
 							}}
-							className="h-7 gap-1 text-muted-foreground text-xs hover:text-foreground"
+							className="h-10 gap-1 text-muted-foreground text-xs hover:text-foreground sm:h-7"
 							title={m.components_navbar_clear_notifications()}
 						>
 							<CheckCheck className="size-3.5" aria-hidden="true" />

@@ -46,7 +46,7 @@ function PageJump({
 						commit();
 					}
 				}}
-				className="h-8 w-14 rounded-md border border-input bg-transparent px-2 text-center tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+				className="h-10 w-14 rounded-md border border-input bg-transparent px-2 text-center tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 sm:h-8"
 			/>
 			<span className="text-muted-foreground tabular-nums">{`/ ${totalPages}`}</span>
 		</div>
