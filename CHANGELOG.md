@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Readable text on every screen except the player** — the 354 text classes at 7, 8, 9, 10 and 11 px outside the player are 12 px, and the tracked all-caps small labels in the admin headers, tables and cards are sentence case. Measured on a 390 px viewport: no screen overflows sideways and no text is below 12 px on the user and admin pages. The player keeps its controls as they are.
 - **Plugin details on their own page** — Details on a catalog plugin opens `/admin/plugins/catalog/<id>` with the full entry: description, changelog, every version, capabilities and the trust warning, with install, update or uninstall at the end. Install and uninstall return to the plugin list. The details dialog is gone.
 - **Scan findings on their own page** — Needs attention on a library card opens `/admin/libraries/<id>/findings`, with the Needs attention and Ignored tabs (the tab stays in the address), ignore and restore, the candidate search and the rescan button. The findings dialog is gone.
 - **Edit a library on its own page** — Edit on a library card opens `/admin/libraries/<id>`, with the same fields as before (type, name, source directories, sidecar format, metadata language, provider order). Cancel and Save return to the libraries list. The edit dialog is gone.

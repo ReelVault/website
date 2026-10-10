@@ -41,7 +41,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					</button>
 
 					{!path.isActive && (
-						<Badge variant="outline" size="sm" className="h-4 border-warning/30 px-1.5 text-[10px] text-warning">
+						<Badge variant="outline" size="sm" className="h-4 border-warning/30 px-1.5 text-warning text-xs">
 							{m.common_inactive()}
 						</Badge>
 					)}
@@ -54,7 +54,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					{pathMode && (
 						<>
 							<span>{m.common_dot_separator()}</span>
-							<Badge variant="outline" size="sm" className="h-4 px-1.5 text-[10px]">
+							<Badge variant="outline" size="sm" className="h-4 px-1.5 text-xs">
 								{pathMode}
 							</Badge>
 						</>
@@ -62,7 +62,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					{path.stableKey && (
 						<>
 							<span>{m.common_dot_separator()}</span>
-							<span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground/80">
+							<span className="flex items-center gap-1 font-mono text-muted-foreground/80 text-xs">
 								<span>{m.admin_libraries_stable_key_preview({ key: path.stableKey.slice(0, 12) })}</span>
 								<button
 									type="button"

@@ -39,11 +39,11 @@ export function ResourceAlertsSection({ alerts }: { alerts: ResourceAlert[] }) {
 						</div>
 						<div className="flex shrink-0 flex-col items-end gap-1.5">
 							{alert.metric !== undefined && alert.threshold !== undefined && (
-								<span className="font-mono text-[11px] text-foreground tabular-nums">
+								<span className="font-mono text-foreground text-xs tabular-nums">
 									{m.admin_resources_alert_value_threshold({ metric: alert.metric.toFixed(1), threshold: alert.threshold })}
 								</span>
 							)}
-							<Badge variant="outline" className={cn("text-[10px]", getPressureColor(alert.severity === "critical" ? "critical" : "high"))}>
+							<Badge variant="outline" className={cn("text-xs", getPressureColor(alert.severity === "critical" ? "critical" : "high"))}>
 								{alert.severity === "critical" ? m.admin_resources_critical_word() : m.components_status_warning()}
 							</Badge>
 						</div>

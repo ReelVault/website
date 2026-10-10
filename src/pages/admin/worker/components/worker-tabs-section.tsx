@@ -72,7 +72,7 @@ export function WorkerTabsSection({
 				<TabsTrigger value="scheduled" className="flex items-center gap-2 rounded-lg font-semibold text-sm">
 					<CalendarClock className="size-4" />
 					<span>{m.admin_workers_scheduled_tab()}</span>
-					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 						{tasks.length}
 					</Badge>
 				</TabsTrigger>
@@ -80,11 +80,11 @@ export function WorkerTabsSection({
 					<ListTree className="size-4" />
 					<span>{m.admin_workers_activity_tab()}</span>
 					{activeOperationsTotal > 0 ? (
-						<Badge variant="default" className="bg-primary px-1.5 py-0 font-mono text-[10px] text-primary-foreground">
+						<Badge variant="default" className="bg-primary px-1.5 py-0 font-mono text-primary-foreground text-xs">
 							{activeOperationsTotal}
 						</Badge>
 					) : (
-						<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+						<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 							{0}
 						</Badge>
 					)}

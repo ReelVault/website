@@ -43,7 +43,7 @@ export function ServerRescueStatus({ rescue }: { rescue?: AdminRescueState | nul
 				<div className="flex-1">
 					<p className="flex items-center gap-2 font-semibold text-destructive text-sm">
 						{m.admin_server_rescue_mode()}
-						<Badge variant="outline" className="border-destructive/30 bg-destructive/10 text-[10px] text-destructive">
+						<Badge variant="outline" className="border-destructive/30 bg-destructive/10 text-destructive text-xs">
 							{m.admin_resources_rescue_badge()}
 						</Badge>
 					</p>
@@ -58,24 +58,24 @@ export function ServerRescueStatus({ rescue }: { rescue?: AdminRescueState | nul
 
 			<div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				<div className="rounded-xl border border-destructive/20 bg-background/50 p-3.5">
-					<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_resources_state_label()}</p>
+					<p className="font-medium text-muted-foreground text-xs">{m.admin_resources_state_label()}</p>
 					<p className="mt-1.5 flex items-center gap-2 font-semibold text-destructive text-sm">
 						<AlertTriangle className="size-4" />
 						{m.admin_resources_state_rescuing()}
 					</p>
 				</div>
 				<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-					<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_resources_event_loop_lag()}</p>
+					<p className="font-medium text-muted-foreground text-xs">{m.admin_resources_event_loop_lag()}</p>
 					<p className="mt-1 font-bold font-mono text-foreground text-lg tabular-nums">
 						{m.admin_resources_lag_ms({ value: rescue.lastLagMs })}
 					</p>
 				</div>
 				<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-					<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_resources_system_pressure()}</p>
+					<p className="font-medium text-muted-foreground text-xs">{m.admin_resources_system_pressure()}</p>
 					<p className="mt-1 font-bold font-mono text-foreground text-lg tabular-nums">{getPressureLabel(rescue.lastPressure)}</p>
 				</div>
 				<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-					<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_resources_escalations()}</p>
+					<p className="font-medium text-muted-foreground text-xs">{m.admin_resources_escalations()}</p>
 					<div className="mt-1.5 flex items-center gap-2">
 						<Shield className="size-4 text-primary" />
 						<span className="font-bold font-mono text-foreground text-lg tabular-nums">{rescue.escalations}</span>

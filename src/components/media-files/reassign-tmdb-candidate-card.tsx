@@ -45,7 +45,7 @@ export function ReassignTmdbCandidateCard({ candidate, isReassigning, onApply }:
 						)}
 					</div>
 					<h4 className="line-clamp-2 font-semibold text-foreground text-sm leading-snug">{candidate.title}</h4>
-					<p className="font-mono text-[11px] text-muted-foreground/80">{m.common_id_label({ id: candidate.externalId })}</p>
+					<p className="font-mono text-muted-foreground/80 text-xs">{m.common_id_label({ id: candidate.externalId })}</p>
 				</div>
 
 				<div className="pt-2">

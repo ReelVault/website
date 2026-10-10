@@ -66,7 +66,7 @@ export function LogViewerHeader({
 					confirmLabel={m.admin_logs_delete_file()}
 					onConfirm={handleConfirmDelete}
 				/>
-				<Badge variant="outline" className="text-[11px] tabular-nums">
+				<Badge variant="outline" className="text-xs tabular-nums">
 					{m.admin_logs_entries_count({ count: totalEntries })}
 				</Badge>
 				<Button

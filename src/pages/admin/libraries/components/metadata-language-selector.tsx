@@ -35,7 +35,7 @@ export function MetadataLanguageSelector({ value, onChange }: MetadataLanguageSe
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-			<p className="text-[11px] text-muted-foreground">{m.admin_libraries_metadata_language_desc()}</p>
+			<p className="text-muted-foreground text-xs">{m.admin_libraries_metadata_language_desc()}</p>
 		</div>
 	);
 }

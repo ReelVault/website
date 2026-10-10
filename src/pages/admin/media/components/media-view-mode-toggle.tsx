@@ -29,7 +29,7 @@ export function MediaViewModeToggle({ viewMode, onViewModeChange, total, suspect
 				>
 					<ListFilter className="size-3.5" />
 					<span>{m.admin_media_all_files()}</span>
-					<Badge variant="secondary" className="ml-1 h-5 px-1.5 text-[10px]">
+					<Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
 						{total}
 					</Badge>
 				</ToggleGroupItem>
@@ -41,11 +41,11 @@ export function MediaViewModeToggle({ viewMode, onViewModeChange, total, suspect
 					<AlertTriangle className="size-3.5" />
 					<span>{m.admin_media_match_audit()}</span>
 					{suspectCount > 0 ? (
-						<Badge variant="destructive" className="ml-1 h-5 px-1.5 text-[10px]">
+						<Badge variant="destructive" className="ml-1 h-5 px-1.5 text-xs">
 							{suspectCount}
 						</Badge>
 					) : (
-						<Badge variant="outline" className="ml-1 h-5 border-success/40 text-[10px] text-success">
+						<Badge variant="outline" className="ml-1 h-5 border-success/40 text-success text-xs">
 							{m.admin_media_audit_zero()}
 						</Badge>
 					)}

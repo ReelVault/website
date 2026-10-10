@@ -70,7 +70,7 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 							<p className="truncate font-bold text-foreground text-sm tracking-tight transition-colors duration-200 group-hover:text-primary">
 								{personName}
 							</p>
-							<p className="truncate font-medium text-[11px] text-muted-foreground">
+							<p className="truncate font-medium text-muted-foreground text-xs">
 								{person.character ?? m.components_person_role_undefined()}
 							</p>
 						</div>

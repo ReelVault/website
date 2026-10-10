@@ -86,7 +86,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 				<TableCell className="font-medium text-xs">
 					<div>
 						<span className="font-semibold text-foreground">{meta.title}</span>
-						<span className="block font-mono text-[10px] text-muted-foreground">{item.workerId}</span>
+						<span className="block font-mono text-muted-foreground text-xs">{item.workerId}</span>
 					</div>
 				</TableCell>
 
@@ -96,7 +96,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 
 				<TableCell className="text-xs">
 					<span className="text-muted-foreground">{stage}</span>
-					{countdownLabel && <span className="block font-mono text-[10px] text-primary">{countdownLabel}</span>}
+					{countdownLabel && <span className="block font-mono text-primary text-xs">{countdownLabel}</span>}
 				</TableCell>
 
 				<TableCell className="font-mono text-muted-foreground text-xs tabular-nums">
@@ -111,7 +111,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 							size="sm"
 							disabled={isRetrying}
 							onClick={() => onRetry(item.id)}
-							className="h-7 gap-1 text-[11px] text-primary hover:text-primary"
+							className="h-7 gap-1 text-primary text-xs hover:text-primary"
 						>
 							<RotateCw className="size-3" />
 							<span>{m.admin_workers_retry_word()}</span>
@@ -123,7 +123,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 							variant="ghost"
 							size="sm"
 							onClick={onToggleExpand}
-							className="h-7 gap-1 text-[11px] text-muted-foreground hover:text-foreground"
+							className="h-7 gap-1 text-muted-foreground text-xs hover:text-foreground"
 						>
 							<Code2 className="size-3" />
 							<span>{isExpanded ? m.admin_worker_hide_details() : m.admin_worker_show_details()}</span>
@@ -142,16 +142,14 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 										<AlertCircle className="size-3.5" />
 										{m.admin_workers_error_exec()}
 									</p>
-									<pre className="whitespace-pre-wrap break-all font-mono text-[11px] leading-relaxed">{item.error}</pre>
+									<pre className="whitespace-pre-wrap break-all font-mono text-xs leading-relaxed">{item.error}</pre>
 								</div>
 							)}
 
 							{(hasValue(item.referenceType) || hasValue(item.referenceId) || hasValue(item.dedupeKey)) && (
 								<div className="rounded-lg border border-border/60 bg-card/60 p-2.5 text-xs">
-									<span className="mb-1 block font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-										{m.admin_workers_job_refs()}
-									</span>
-									<div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-muted-foreground">
+									<span className="mb-1 block font-semibold text-muted-foreground text-xs">{m.admin_workers_job_refs()}</span>
+									<div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-muted-foreground text-xs">
 										{item.referenceType && (
 											<span>
 												{m.admin_workers_ref_type()} <strong className="text-foreground">{item.referenceType}</strong>
@@ -172,10 +170,8 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 							)}
 
 							<div className="rounded-lg border border-border/60 bg-card/60 p-2.5 text-xs">
-								<span className="mb-1 block font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-									{m.admin_workers_job_meta()}
-								</span>
-								<div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-muted-foreground">
+								<span className="mb-1 block font-semibold text-muted-foreground text-xs">{m.admin_workers_job_meta()}</span>
+								<div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-muted-foreground text-xs">
 									<span>
 										{m.admin_workers_job_priority_label()}
 										<strong className="text-foreground">{item.priority}</strong>
@@ -211,10 +207,8 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 
 							{item.result !== undefined && item.result !== null && (
 								<div className="rounded-lg border border-success/20 bg-success/3 p-2.5">
-									<span className="mb-1 block font-semibold text-[10px] text-success uppercase tracking-wider">
-										{m.admin_workers_result_out()}
-									</span>
-									<pre className="max-h-48 overflow-auto font-mono text-[10px] text-foreground leading-relaxed">
+									<span className="mb-1 block font-semibold text-success text-xs">{m.admin_workers_result_out()}</span>
+									<pre className="max-h-48 overflow-auto font-mono text-foreground text-xs leading-relaxed">
 										{typeof item.result === "string" ? item.result : JSON.stringify(item.result, null, 2)}
 									</pre>
 								</div>

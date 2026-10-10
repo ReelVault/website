@@ -48,7 +48,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 			title={m.admin_worker_queues_pools()}
 			description={m.admin_worker_concurrency_config()}
 			badge={
-				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 					{workerStats.length}
 				</Badge>
 			}
@@ -73,7 +73,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 								type="button"
 								onClick={() => setCategoryFilter("all")}
 								className={cn(
-									"rounded-md px-2 py-1 font-medium text-[11px] transition-[border-color,background-color,color,box-shadow]",
+									"rounded-md px-2 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
 									categoryFilter === "all" ? "bg-secondary text-foreground shadow-xs" : "text-muted-foreground hover:text-foreground",
 								)}
 							>
@@ -85,7 +85,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 									type="button"
 									onClick={() => setCategoryFilter(cat)}
 									className={cn(
-										"rounded-md px-2 py-1 font-medium text-[11px] transition-[border-color,background-color,color,box-shadow]",
+										"rounded-md px-2 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
 										categoryFilter === cat ? "bg-secondary text-foreground shadow-xs" : "text-muted-foreground hover:text-foreground",
 									)}
 								>
@@ -102,7 +102,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 					<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-8 text-center">
 						<Cog className="mb-2 size-8 text-muted-foreground" />
 						<p className="font-medium text-foreground text-xs">{m.admin_worker_no_workers()}</p>
-						<p className="mt-0.5 text-[11px] text-muted-foreground">{m.admin_worker_change_search_hint()}</p>
+						<p className="mt-0.5 text-muted-foreground text-xs">{m.admin_worker_change_search_hint()}</p>
 					</div>
 				)}
 

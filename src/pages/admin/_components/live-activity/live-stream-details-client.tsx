@@ -24,7 +24,7 @@ export function LiveStreamDetailsClient({ stream }: LiveStreamDetailsClientProps
 					<Monitor className="size-3.5 text-primary" />
 					<span>{m.admin_client_and_device()}</span>
 				</div>
-				<div className="grid gap-1 text-[11px]">
+				<div className="grid gap-1 text-xs">
 					<div className="flex justify-between gap-2">
 						<span>{m.admin_user_profile()}</span>
 						<span className="font-medium text-foreground">
@@ -78,7 +78,7 @@ export function LiveStreamDetailsClient({ stream }: LiveStreamDetailsClientProps
 						<Layers className="size-3.5 text-primary" />
 						<span>{m.admin_server_buffer_heading()}</span>
 					</div>
-					<div className="grid gap-1 text-[11px]">
+					<div className="grid gap-1 text-xs">
 						<div className="flex justify-between gap-2">
 							<span>{m.admin_live_buffer_state()}</span>
 							<span className="font-medium text-foreground">{bufferStateLabel}</span>

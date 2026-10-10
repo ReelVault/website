@@ -26,7 +26,7 @@ function HitRateBadge({ hitRate }: { hitRate: number | null }) {
 	return (
 		<div className="flex min-w-20 flex-1 items-center gap-2">
 			<Progress value={percent} className="h-1.5 min-w-0 flex-1" />
-			<span className="font-mono text-[11px] text-foreground tabular-nums">{m.common_percent_value({ value: percent })}</span>
+			<span className="font-mono text-foreground text-xs tabular-nums">{m.common_percent_value({ value: percent })}</span>
 		</div>
 	);
 }
@@ -47,7 +47,7 @@ export function ResourceCacheStats() {
 				<div className="flex flex-col gap-3">
 					<div className="flex items-center gap-2 text-muted-foreground">
 						<HardDrive className="size-4 text-primary" aria-hidden="true" />
-						<p className="font-medium text-[11px] uppercase tracking-wider">{m.admin_resources_on_disk()}</p>
+						<p className="font-medium text-xs">{m.admin_resources_on_disk()}</p>
 					</div>
 					<div className="grid gap-3 sm:grid-cols-2">
 						{DISK_ROWS.map((row) => {
@@ -61,7 +61,7 @@ export function ResourceCacheStats() {
 									<div className="flex items-start justify-between gap-3">
 										<div className="min-w-0">
 											<p className="font-medium text-foreground text-sm">{row.label}</p>
-											<p className="mt-1 text-[11px] text-muted-foreground leading-relaxed">{row.description}</p>
+											<p className="mt-1 text-muted-foreground text-xs leading-relaxed">{row.description}</p>
 										</div>
 										<span className="shrink-0 font-bold font-mono text-primary text-sm tabular-nums">{formatMemory(stats.bytes)}</span>
 									</div>
@@ -83,7 +83,7 @@ export function ResourceCacheStats() {
 				<div className="flex flex-col gap-3">
 					<div className="flex items-center gap-2 text-muted-foreground">
 						<MemoryStick className="size-4 text-primary" aria-hidden="true" />
-						<p className="font-medium text-[11px] uppercase tracking-wider">{m.admin_resources_in_memory()}</p>
+						<p className="font-medium text-xs">{m.admin_resources_in_memory()}</p>
 					</div>
 					{memoryCaches.length === 0 ? (
 						<p className="rounded-lg border border-border/70 bg-muted/20 px-4 py-3 text-muted-foreground text-sm">
@@ -98,11 +98,11 @@ export function ResourceCacheStats() {
 								>
 									<div className="min-w-0">
 										<p className="truncate font-medium font-mono text-foreground text-xs">{cache.name}</p>
-										<p className="mt-1 text-[11px] text-muted-foreground tabular-nums">
+										<p className="mt-1 text-muted-foreground text-xs tabular-nums">
 											{cache.entries}
 											{cache.maxSize !== null ? ` / ${cache.maxSize}` : ""} {m.admin_resources_cache_entries_word()}
 										</p>
-										<p className="mt-0.5 text-[11px] text-muted-foreground tabular-nums">
+										<p className="mt-0.5 text-muted-foreground text-xs tabular-nums">
 											{m.admin_resources_cache_hits_misses({ hits: cache.hits, misses: cache.misses })}
 										</p>
 									</div>

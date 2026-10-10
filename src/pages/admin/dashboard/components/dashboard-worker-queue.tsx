@@ -56,7 +56,7 @@ export function DashboardWorkerQueue() {
 								</div>
 								<Badge
 									variant="outline"
-									className={cn("text-[10px] capitalize", {
+									className={cn("text-xs capitalize", {
 										"border-primary/30 bg-primary/10 text-primary": isProcessing,
 										"border-success/30 bg-success/10 text-success": isCompleted,
 										"border-destructive/30 bg-destructive/10 text-destructive": isFailed,
@@ -68,7 +68,7 @@ export function DashboardWorkerQueue() {
 							{op.totalItems > 0 && (
 								<div className="flex flex-col gap-1">
 									<Progress value={Math.min(100, Math.max(0, progress))} className="h-1" />
-									<div className="flex justify-between text-[10px] text-muted-foreground">
+									<div className="flex justify-between text-muted-foreground text-xs">
 										<span>{m.admin_dashboard_job_progress_ratio({ completed: op.completedItems, total: op.totalItems })}</span>
 										<span>{m.common_percent_value({ value: Math.round(progress) })}</span>
 									</div>

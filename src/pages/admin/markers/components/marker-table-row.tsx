@@ -35,7 +35,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 			<ContextMenuTrigger render={<TableRow />}>
 				<TableCell>
 					<div className="flex items-center gap-2">
-						<Badge variant="outline" className={cn("font-semibold text-[10px]", config.badgeClass)}>
+						<Badge variant="outline" className={cn("font-semibold text-xs", config.badgeClass)}>
 							{config.label}
 						</Badge>
 						{marker.label && (
@@ -84,14 +84,14 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 				</TableCell>
 				<TableCell>
 					<div className="flex flex-col gap-0.5">
-						<Badge variant="secondary" className="w-fit font-mono text-[10px]">
+						<Badge variant="secondary" className="w-fit font-mono text-xs">
 							{marker.source}
 						</Badge>
 						{marker.pluginId && (
 							<Link
 								to="/admin/plugins/$id"
 								params={{ id: marker.pluginId }}
-								className="truncate font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
+								className="truncate font-mono text-muted-foreground text-xs hover:text-primary hover:underline"
 								title={m.admin_markers_view_plugin_config()}
 							>
 								{marker.pluginId}
@@ -144,9 +144,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 
 			<ContextMenuContent className="w-56 border-border bg-popover shadow-xl">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-						{config.label}
-					</ContextMenuLabel>
+					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{config.label}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>

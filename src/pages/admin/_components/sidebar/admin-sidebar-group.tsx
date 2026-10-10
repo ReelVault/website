@@ -22,7 +22,7 @@ interface AdminSidebarGroupProps {
 export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupProps) {
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{group.group}</SidebarGroupLabel>
+			<SidebarGroupLabel className="font-semibold text-muted-foreground text-xs">{group.group}</SidebarGroupLabel>
 			<SidebarGroupContent>
 				<SidebarMenu className="gap-1">
 					{group.items.map((item) => {
@@ -31,13 +31,13 @@ export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupP
 						let badge: ReactNode = null;
 						if (item.href === "/admin/worker" && (stats?.workers?.active ?? 0) > 0) {
 							badge = (
-								<SidebarMenuBadge className="ml-auto bg-sidebar-primary/15 font-mono text-[10px] text-sidebar-primary group-data-[collapsible=icon]:hidden">
+								<SidebarMenuBadge className="ml-auto bg-sidebar-primary/15 font-mono text-sidebar-primary text-xs group-data-[collapsible=icon]:hidden">
 									{stats?.workers?.active}
 								</SidebarMenuBadge>
 							);
 						} else if (item.href === "/admin/analytics" && (stats?.streaming.activeSessions ?? 0) > 0) {
 							badge = (
-								<SidebarMenuBadge className="ml-auto bg-success/15 font-mono text-[10px] text-success group-data-[collapsible=icon]:hidden">
+								<SidebarMenuBadge className="ml-auto bg-success/15 font-mono text-success text-xs group-data-[collapsible=icon]:hidden">
 									{stats?.streaming.activeSessions}
 								</SidebarMenuBadge>
 							);

@@ -33,7 +33,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 				<InfoRow label={m.admin_media_library()}>
 					<div className="flex items-center gap-2">
 						<Badge variant="secondary">{file.library.name}</Badge>
-						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="text-[10px]">
+						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="text-xs">
 							{isMovie ? m.admin_libraries_type_movies() : m.admin_libraries_type_series()}
 						</Badge>
 					</div>
@@ -74,7 +74,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 							title={m.admin_media_change_file_metadata_assignment()}
 						>
 							<Layers className="size-3.5" />
-							<span className="text-[11px]">{m.admin_media_change()}</span>
+							<span className="text-xs">{m.admin_media_change()}</span>
 						</Button>
 					</div>
 				</InfoRow>

@@ -153,7 +153,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 				</div>
 
 				{maxSlot > 0 && (
-					<div className="flex items-center gap-1.5 rounded-lg border border-warning/30 bg-warning/10 px-2.5 py-1 text-[11px] text-warning">
+					<div className="flex items-center gap-1.5 rounded-lg border border-warning/30 bg-warning/10 px-2.5 py-1 text-warning text-xs">
 						<Flame className="size-3.5 fill-current" />
 						<span>{m.user_activity_peak({ day: peakDayName, hour: peakHour })}</span>
 					</div>
@@ -177,7 +177,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 							<div className="space-y-1">
 								{DAYS_ORDER.map((day) => (
 									<div key={day.index} className="grid grid-cols-[36px_repeat(24,1fr)] items-center gap-1">
-										<span className="font-bold text-[11px] text-muted-foreground">{day.label}</span>
+										<span className="font-bold text-muted-foreground text-xs">{day.label}</span>
 										{HOURS.map((hour) => {
 											const key = `${day.index}-${hour}`;
 											const minutes = dataMap.get(key) ?? 0;
@@ -211,7 +211,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 							</div>
 
 							{/* Legend */}
-							<div className="mt-3 flex items-center justify-between border-border/40 border-t pt-3 text-[11px] text-muted-foreground">
+							<div className="mt-3 flex items-center justify-between border-border/40 border-t pt-3 text-muted-foreground text-xs">
 								<div className="flex items-center gap-1.5">
 									<Info className="size-3" />
 									<span>{m.user_hover_for_time()}</span>

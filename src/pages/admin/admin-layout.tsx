@@ -167,7 +167,7 @@ function AdminHeader() {
 						>
 							<Zap className="size-3 animate-pulse" />
 							<span className="font-semibold tabular-nums">{activeWorkers}</span>
-							<span className="text-[11px]">{m.admin_common_in_background()}</span>
+							<span className="text-xs">{m.admin_common_in_background()}</span>
 						</Link>
 					)}
 

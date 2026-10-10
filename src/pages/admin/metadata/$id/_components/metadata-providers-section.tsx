@@ -42,9 +42,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 						</div>
 						<div className="flex flex-col gap-0.5">
 							<div className="flex flex-wrap items-center gap-2">
-								<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-									{m.admin_metadata_primary_data_provider()}
-								</span>
+								<span className="font-semibold text-muted-foreground text-xs">{m.admin_metadata_primary_data_provider()}</span>
 								{primaryId ? (
 									<Badge variant="default" size="sm" className="font-semibold">
 										{formatProviderName(primaryId)}
@@ -121,13 +119,13 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 					</div>
 					<div>
 						<h4 className="font-semibold text-foreground text-sm">{formatProviderName(provider.name)}</h4>
-						<span className="text-[11px] text-muted-foreground">
+						<span className="text-muted-foreground text-xs">
 							{m.admin_metadata_type_label({ type: getEntityTypeLabel(provider.entityType) })}
 						</span>
 					</div>
 				</div>
 				{isPrimary && (
-					<Badge variant="secondary" size="sm" className="shrink-0 border-primary/30 bg-primary/10 text-[10px] text-primary">
+					<Badge variant="secondary" size="sm" className="shrink-0 border-primary/30 bg-primary/10 text-primary text-xs">
 						{m.admin_metadata_primary()}
 					</Badge>
 				)}
@@ -153,7 +151,7 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 			</div>
 
 			<div className="flex items-center justify-between gap-2 border-border/40 border-t pt-1">
-				<span className="text-[11px] text-muted-foreground">{m.metadata_provider_added_at({ date: formatDate(provider.createdAt) })}</span>
+				<span className="text-muted-foreground text-xs">{m.metadata_provider_added_at({ date: formatDate(provider.createdAt) })}</span>
 
 				{externalUrl && (
 					<Button

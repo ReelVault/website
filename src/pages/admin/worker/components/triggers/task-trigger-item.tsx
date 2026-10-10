@@ -25,12 +25,12 @@ export function TaskTriggerItem({ trigger, onDelete }: TaskTriggerItemProps) {
 				<div className="min-w-0">
 					<div className="flex items-center gap-2">
 						<span className="font-medium text-foreground text-xs">{formatTriggerDescription(trigger)}</span>
-						<Badge variant="outline" className="border-border/60 px-1.5 py-0 font-mono text-[10px] text-muted-foreground uppercase">
+						<Badge variant="outline" className="border-border/60 px-1.5 py-0 font-mono text-muted-foreground text-xs">
 							{trigger.type}
 						</Badge>
 					</div>
 					{trigger.maxRuntimeMinutes && (
-						<p className="text-[11px] text-muted-foreground">{m.admin_worker_runtime_limit({ minutes: trigger.maxRuntimeMinutes })}</p>
+						<p className="text-muted-foreground text-xs">{m.admin_worker_runtime_limit({ minutes: trigger.maxRuntimeMinutes })}</p>
 					)}
 				</div>
 			</div>

@@ -96,26 +96,22 @@ export function AdminLiveActivitySection() {
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
 						<Activity className="size-4.5 animate-pulse text-primary" />
-						<h4 className="font-bold text-foreground text-sm uppercase tracking-wider">
-							{m.admin_live_active_streams_title({ count: activeStreams.length })}
-						</h4>
+						<h4 className="font-bold text-foreground text-sm">{m.admin_live_active_streams_title({ count: activeStreams.length })}</h4>
 					</div>
 
 					{data?.capacity && (
-						<span
-							className={data.capacity.active >= data.capacity.limit ? "text-[11px] text-warning" : "text-[11px] text-muted-foreground"}
-						>
+						<span className={data.capacity.active >= data.capacity.limit ? "text-warning text-xs" : "text-muted-foreground text-xs"}>
 							{m.admin_live_capacity({ active: data.capacity.active, limit: data.capacity.limit })}
 						</span>
 					)}
-					<span className="text-[11px] text-muted-foreground">{m.admin_telemetry_refresh_3s()}</span>
+					<span className="text-muted-foreground text-xs">{m.admin_telemetry_refresh_3s()}</span>
 				</div>
 
 				{activeStreams.length === 0 ? (
 					<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 border-dashed bg-card/30 py-10 text-center text-muted-foreground">
 						<Video className="mb-2 size-8 opacity-30" />
 						<p className="font-semibold text-foreground text-xs">{m.admin_no_active_playbacks()}</p>
-						<p className="text-[11px]">{m.admin_nobody_watching()}</p>
+						<p className="text-xs">{m.admin_nobody_watching()}</p>
 					</div>
 				) : (
 					<>
@@ -186,9 +182,7 @@ export function AdminLiveActivitySection() {
 				<div className="flex flex-col gap-3 pt-2">
 					<div className="flex items-center gap-2">
 						<Wifi className="size-4 text-muted-foreground" />
-						<h4 className="font-bold text-foreground text-xs uppercase tracking-wider">
-							{m.admin_live_connected_devices_title({ count: activeDevices.length })}
-						</h4>
+						<h4 className="font-bold text-foreground text-xs">{m.admin_live_connected_devices_title({ count: activeDevices.length })}</h4>
 					</div>
 
 					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">

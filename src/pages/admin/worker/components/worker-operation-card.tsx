@@ -51,31 +51,31 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 	let statusBadge: ReactNode;
 	if (isRunning) {
 		statusBadge = (
-			<Badge variant="default" className="h-5 gap-1.5 bg-primary px-2 font-medium text-[10px] text-primary-foreground shadow-xs">
+			<Badge variant="default" className="h-5 gap-1.5 bg-primary px-2 font-medium text-primary-foreground text-xs shadow-xs">
 				<span className="size-1.5 animate-ping rounded-full bg-white" /> {m.admin_worker_running_badge()}
 			</Badge>
 		);
 	} else if (operation.status === "pending") {
 		statusBadge = (
-			<Badge variant="secondary" className="h-5 border border-warning/30 bg-warning/10 px-2 text-[10px] text-warning">
+			<Badge variant="secondary" className="h-5 border border-warning/30 bg-warning/10 px-2 text-warning text-xs">
 				{m.admin_workers_queued()}
 			</Badge>
 		);
 	} else if (isCompleted) {
 		statusBadge = (
-			<Badge variant="outline" className="h-5 gap-1 border-success/30 bg-success/5 px-2 text-[10px] text-success">
+			<Badge variant="outline" className="h-5 gap-1 border-success/30 bg-success/5 px-2 text-success text-xs">
 				<CheckCircle2 className="size-3" /> {m.admin_worker_finished_word()}
 			</Badge>
 		);
 	} else if (isFailed) {
 		statusBadge = (
-			<Badge variant="destructive" className="h-5 gap-1 px-2 text-[10px]">
+			<Badge variant="destructive" className="h-5 gap-1 px-2 text-xs">
 				<AlertCircle className="size-3" /> {m.common_error()}
 			</Badge>
 		);
 	} else {
 		statusBadge = (
-			<Badge variant="secondary" className="h-5 px-2 text-[10px]">
+			<Badge variant="secondary" className="h-5 px-2 text-xs">
 				{labels[operation.status]}
 			</Badge>
 		);
@@ -105,10 +105,10 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 					<div className="flex min-w-0 flex-1 flex-col gap-1.5">
 						<div className="flex flex-wrap items-center gap-2">
 							<h4 className="font-semibold text-foreground text-sm tracking-tight">{meta.title}</h4>
-							<span className="rounded border border-border/40 bg-muted/40 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+							<span className="rounded border border-border/40 bg-muted/40 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
 								{operation.type}
 							</span>
-							<Badge variant="outline" className="h-5 gap-1 font-mono text-[10px] text-muted-foreground">
+							<Badge variant="outline" className="h-5 gap-1 font-mono text-muted-foreground text-xs">
 								<span>{m.common_truncated_id({ id: operation.id.slice(0, 8) })}</span>
 								<button
 									type="button"
@@ -123,7 +123,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 							{statusBadge}
 
 							{operation.cancelRequested && (
-								<Badge variant="outline" className="h-5 border-warning/30 text-[10px] text-warning">
+								<Badge variant="outline" className="h-5 border-warning/30 text-warning text-xs">
 									{m.admin_worker_cancel_requested()}
 								</Badge>
 							)}
@@ -132,7 +132,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 						{/* Progress Bar when Active */}
 						{isActive && (
 							<div className="flex flex-col gap-1.5 pt-1">
-								<div className="flex items-center justify-between font-mono text-[11px]">
+								<div className="flex items-center justify-between font-mono text-xs">
 									<span className="flex items-center gap-1.5 font-medium text-primary">
 										<span className="size-1.5 animate-ping rounded-full bg-primary" />
 										{m.admin_worker_progress_line({ completed: operation.completedItems, total: operation.totalItems })}
@@ -144,7 +144,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 						)}
 
 						{/* Meta details bar */}
-						<div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-0.5 font-mono text-[11px] text-muted-foreground">
+						<div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-0.5 font-mono text-muted-foreground text-xs">
 							<span>{m.admin_worker_total_jobs({ totalItems: operation.totalItems })}</span>
 							<span>{m.admin_worker_completed_count({ completedItems: operation.completedItems })}</span>
 							{operation.pendingItems > 0 && <span>{m.admin_worker_pending_count({ count: operation.pendingItems })}</span>}

@@ -48,7 +48,7 @@ export function AuditActorSummary({ filters }: { filters: AdminAuditSummaryFilte
 								<span>{m.admin_audit_deletions()}</span>
 								<strong className="font-semibold">{actor.deletes}</strong>
 							</Badge>
-							<Badge variant="outline" className="font-mono text-[10px]">
+							<Badge variant="outline" className="font-mono text-xs">
 								{actor.total}
 							</Badge>
 						</div>
@@ -63,7 +63,7 @@ export function AuditActorSummary({ filters }: { filters: AdminAuditSummaryFilte
 			title={m.admin_audit_by_admin_section()}
 			description={m.admin_audit_by_admin_description()}
 			badge={
-				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 					{data?.total ?? 0}
 				</Badge>
 			}

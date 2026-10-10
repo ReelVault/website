@@ -32,12 +32,12 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 					<DeviceIcon name={stream.clientName ?? stream.browser ?? ""} />
 					<div className="min-w-0">
 						<p className="truncate font-bold text-xs">{browserLabel(stream.browser)}</p>
-						<p className="truncate text-[10px] text-white/90">{clientLabel(stream.clientName)}</p>
+						<p className="truncate text-white/90 text-xs">{clientLabel(stream.clientName)}</p>
 					</div>
 				</div>
 
 				<Badge
-					className={cn("font-bold text-[10px] uppercase tracking-wider", {
+					className={cn("font-bold text-xs", {
 						"border-success/40 bg-success/30 text-success": isDirect,
 						"border-warning/40 bg-warning/30 text-warning": !isDirect,
 					})}
@@ -52,7 +52,7 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 					{stream.title}
 				</h4>
 
-				<div className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
+				<div className="flex items-center gap-2 font-mono text-muted-foreground text-xs">
 					{stream.releaseYear && <span>{stream.releaseYear}</span>}
 					{stream.type === "tv_show" && stream.seasonNumber !== null && (
 						<span>

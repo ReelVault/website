@@ -40,10 +40,7 @@ export function LogFileItem({ file, isSelected, onSelect, onDelete, onDownload }
 					<span className="truncate font-medium font-mono text-xs leading-tight">{file.name}</span>
 				</div>
 				<div
-					className={cn(
-						"flex items-center justify-between text-[11px] tabular-nums",
-						isSelected ? "text-primary/70" : "text-muted-foreground",
-					)}
+					className={cn("flex items-center justify-between text-xs tabular-nums", isSelected ? "text-primary/70" : "text-muted-foreground")}
 				>
 					<span>{formatLogDate(file.modifiedAt)}</span>
 					<span>{formatFileSize(file.size)}</span>

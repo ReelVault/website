@@ -40,19 +40,19 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, 
 				<div className="min-w-0 flex-1">
 					<div className="flex flex-wrap items-center gap-2">
 						<p className="font-medium text-foreground text-sm">{subtitle.label ?? subtitle.language}</p>
-						<Badge variant="outline" size="sm" className="text-[10px]">
+						<Badge variant="outline" size="sm" className="text-xs">
 							{subtitle.format}
 						</Badge>
-						<Badge variant={subtitle.type === "embedded" ? "secondary" : "default"} size="sm" className="text-[10px]">
+						<Badge variant={subtitle.type === "embedded" ? "secondary" : "default"} size="sm" className="text-xs">
 							{subtitle.type === "embedded" ? m.admin_subtitles_embedded() : m.admin_subtitles_external()}
 						</Badge>
 						{subtitle.isDefault && (
-							<Badge variant="outline" size="sm" className="border-primary/40 text-[10px] text-primary">
+							<Badge variant="outline" size="sm" className="border-primary/40 text-primary text-xs">
 								{m.admin_subtitles_default()}
 							</Badge>
 						)}
 						{subtitle.isForced && (
-							<Badge variant="outline" size="sm" className="border-warning/40 text-[10px] text-warning">
+							<Badge variant="outline" size="sm" className="border-warning/40 text-warning text-xs">
 								{m.player_forced_word()}
 							</Badge>
 						)}

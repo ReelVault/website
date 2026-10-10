@@ -45,9 +45,7 @@ export function AdminSidebarPluginsGroup({
 
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-				{m.admin_sidebar_extensions()}
-			</SidebarGroupLabel>
+			<SidebarGroupLabel className="font-semibold text-muted-foreground text-xs">{m.admin_sidebar_extensions()}</SidebarGroupLabel>
 			<SidebarGroupContent>
 				<SidebarMenu className="gap-1">
 					{/* Plugin main panel pinned on top */}
@@ -98,7 +96,7 @@ export function AdminSidebarPluginsGroup({
 										)}
 									/>
 									<span className="truncate">{m.admin_live_plugin_pages_tooltip()}</span>
-									<SidebarMenuBadge className="ml-auto bg-sidebar-accent font-mono text-[10px] text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden">
+									<SidebarMenuBadge className="ml-auto bg-sidebar-accent font-mono text-sidebar-accent-foreground text-xs group-data-[collapsible=icon]:hidden">
 										{activePluginsWithViewsCount}
 									</SidebarMenuBadge>
 									<ChevronRight className="ml-1 size-4 shrink-0 transition-transform duration-200 data-panel-open:rotate-90 group-data-[collapsible=icon]:hidden group-data-open/collapsible:rotate-90" />

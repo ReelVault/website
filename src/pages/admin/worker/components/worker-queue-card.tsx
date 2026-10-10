@@ -36,20 +36,20 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 	let statusBadge: ReactNode;
 	if (worker.stats.active > 0) {
 		statusBadge = (
-			<Badge variant="default" className="h-5 shrink-0 gap-1 bg-primary px-1.5 font-mono text-[10px] text-primary-foreground">
+			<Badge variant="default" className="h-5 shrink-0 gap-1 bg-primary px-1.5 font-mono text-primary-foreground text-xs">
 				<span className="size-1.5 animate-ping rounded-full bg-white" />
 				{m.admin_worker_active_of_concurrency({ active: worker.stats.active, concurrency: worker.concurrency })}
 			</Badge>
 		);
 	} else if (worker.stats.waiting > 0) {
 		statusBadge = (
-			<Badge variant="secondary" className="h-5 shrink-0 border border-warning/30 bg-warning/10 px-1.5 font-mono text-[10px] text-warning">
+			<Badge variant="secondary" className="h-5 shrink-0 border border-warning/30 bg-warning/10 px-1.5 font-mono text-warning text-xs">
 				{m.admin_worker_queue_label({ count: worker.stats.waiting })}
 			</Badge>
 		);
 	} else {
 		statusBadge = (
-			<Badge variant="outline" className="h-5 shrink-0 border-border/50 font-normal text-[10px] text-muted-foreground/80">
+			<Badge variant="outline" className="h-5 shrink-0 border-border/50 font-normal text-muted-foreground/80 text-xs">
 				{m.components_status_idle()}
 			</Badge>
 		);
@@ -81,7 +81,7 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 						<h4 className="truncate font-semibold text-foreground text-xs tracking-tight" title={displayName}>
 							{displayName}
 						</h4>
-						<span className="block truncate font-mono text-[10px] text-muted-foreground" title={worker.id}>
+						<span className="block truncate font-mono text-muted-foreground text-xs" title={worker.id}>
 							{worker.id}
 						</span>
 					</div>
@@ -92,17 +92,17 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 			</div>
 
 			{/* Metrics Bar */}
-			<div className="mt-3 grid grid-cols-2 gap-1.5 border-border/40 border-t pt-2.5 font-mono text-[11px]">
+			<div className="mt-3 grid grid-cols-2 gap-1.5 border-border/40 border-t pt-2.5 font-mono text-xs">
 				<div className="flex items-center justify-between rounded-md bg-muted/30 px-2 py-1 text-muted-foreground">
-					<span className="text-[10px] text-muted-foreground/80">{m.admin_worker_threads_label()}</span>
+					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_threads_label()}</span>
 					<span className="font-semibold text-foreground">{worker.concurrency}</span>
 				</div>
 				<div className="flex items-center justify-between rounded-md bg-muted/30 px-2 py-1 text-muted-foreground">
-					<span className="text-[10px] text-muted-foreground/80">{m.admin_worker_limit_label()}</span>
+					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_limit_label()}</span>
 					<span className="font-medium text-foreground">{formatMsDuration(worker.timeoutMs)}</span>
 				</div>
 				<div className="flex items-center justify-between rounded-md bg-muted/30 px-2 py-1 text-muted-foreground">
-					<span className="text-[10px] text-muted-foreground/80">{m.admin_worker_finished_colon()}</span>
+					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_finished_colon()}</span>
 					<span className="font-semibold text-success tabular-nums">{worker.stats.completed}</span>
 				</div>
 				<div
@@ -111,7 +111,7 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 						hasFailed ? "bg-destructive/10 font-semibold text-destructive" : "bg-muted/30",
 					)}
 				>
-					<span className="text-[10px]">{m.admin_worker_errors_label()}</span>
+					<span className="text-xs">{m.admin_worker_errors_label()}</span>
 					<span className="tabular-nums">{worker.stats.failed}</span>
 				</div>
 			</div>

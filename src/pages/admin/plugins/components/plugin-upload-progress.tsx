@@ -126,20 +126,20 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 								<span className="min-w-0 flex-1 truncate font-medium text-foreground text-xs" title={entry.file.name}>
 									{entry.file.name}
 								</span>
-								<span className="shrink-0 font-mono text-[11px] text-muted-foreground">{formatBytes(entry.file.size)}</span>
+								<span className="shrink-0 font-mono text-muted-foreground text-xs">{formatBytes(entry.file.size)}</span>
 							</div>
 							<div className="flex items-center justify-between gap-2 pl-6">
-								<span className={entry.status === "failed" ? "text-[11px] text-destructive" : "text-[11px] text-muted-foreground"}>
+								<span className={entry.status === "failed" ? "text-destructive text-xs" : "text-muted-foreground text-xs"}>
 									{statusLabel(entry)}
 								</span>
 								{isCurrent && entry.totalBytes > 0 && entry.status === "uploading" && (
-									<span className="font-mono text-[11px] text-muted-foreground">
+									<span className="font-mono text-muted-foreground text-xs">
 										{m.common_percent_value({ value: Math.round((entry.uploadedBytes / entry.totalBytes) * 100) })}
 									</span>
 								)}
 							</div>
 							{entry.error && (
-								<span className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 text-[11px] text-destructive">{entry.error}</span>
+								<span className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 text-destructive text-xs">{entry.error}</span>
 							)}
 						</div>
 					);

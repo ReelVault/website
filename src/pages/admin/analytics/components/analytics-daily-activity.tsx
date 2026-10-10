@@ -12,11 +12,11 @@ export function AnalyticsDailyActivity({ dailyActivity }: { dailyActivity: Admin
 		<div className="flex flex-col gap-2">
 			{dailyActivity.map((day) => (
 				<div key={day.date} className="flex items-center gap-3">
-					<span className="w-24 shrink-0 font-mono text-[11px] text-muted-foreground">{day.date}</span>
+					<span className="w-24 shrink-0 font-mono text-muted-foreground text-xs">{day.date}</span>
 					<div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
 						<div className="h-full rounded-full bg-primary" style={{ width: `${Math.round((day.minutes / maxMinutes) * 100)}%` }} />
 					</div>
-					<span className="w-32 shrink-0 text-right font-mono text-[11px] text-muted-foreground">
+					<span className="w-32 shrink-0 text-right font-mono text-muted-foreground text-xs">
 						{m.admin_analytics_daily_activity_value({ minutes: day.minutes, plays: day.playCount })}
 					</span>
 				</div>

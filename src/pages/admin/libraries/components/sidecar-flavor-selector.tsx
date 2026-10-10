@@ -31,13 +31,13 @@ export function SidecarFlavorSelector({ value, onChange }: SidecarFlavorSelector
 						<SelectItem value="reelvault" label={m.admin_libraries_flavor_reelvault()}>
 							<div className="flex flex-col py-0.5">
 								<span className="font-medium text-foreground text-xs">{m.admin_libraries_flavor_reelvault()}</span>
-								<span className="text-[11px] text-muted-foreground">{m.admin_libraries_flavor_reelvault_note()}</span>
+								<span className="text-muted-foreground text-xs">{m.admin_libraries_flavor_reelvault_note()}</span>
 							</div>
 						</SelectItem>
 						<SelectItem value="kodi" label={m.admin_libraries_flavor_kodi()}>
 							<div className="flex flex-col py-0.5">
 								<span className="font-medium text-foreground text-xs">{m.admin_libraries_flavor_kodi()}</span>
-								<span className="text-[11px] text-muted-foreground">{m.admin_libraries_flavor_kodi_note()}</span>
+								<span className="text-muted-foreground text-xs">{m.admin_libraries_flavor_kodi_note()}</span>
 							</div>
 						</SelectItem>
 					</SelectGroup>

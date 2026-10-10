@@ -73,25 +73,25 @@ export function PluginCard({
 				<div className="flex flex-col gap-1">
 					<div className="flex flex-wrap items-center gap-2">
 						<h3 className="font-bold text-base text-foreground tracking-tight">{plugin.name}</h3>
-						<Badge variant="outline" className="font-mono text-[10px]">
+						<Badge variant="outline" className="font-mono text-xs">
 							{m.common_version_badge({ version: plugin.version })}
 						</Badge>
-						{plugin.updateAvailable && <Badge className="text-[10px]">{m.admin_plugins_update_available()}</Badge>}
+						{plugin.updateAvailable && <Badge className="text-xs">{m.admin_plugins_update_available()}</Badge>}
 						{plugin.integrityOk === false && (
-							<Badge variant="destructive" className="gap-1 text-[10px]">
+							<Badge variant="destructive" className="gap-1 text-xs">
 								<AlertTriangle className="size-3" />
 								{m.admin_plugins_integrity_mismatch()}
 							</Badge>
 						)}
 					</div>
-					<p className="font-mono text-[11px] text-muted-foreground">{m.common_id_label({ id: plugin.id })}</p>
+					<p className="font-mono text-muted-foreground text-xs">{m.common_id_label({ id: plugin.id })}</p>
 				</div>
 
 				{/* Description */}
 				{plugin.description && <p className="mt-3 line-clamp-2 text-muted-foreground text-xs">{plugin.description}</p>}
 
 				{/* Stats / Capabilities */}
-				<div className="mt-4 flex flex-wrap gap-2 text-[11px]">
+				<div className="mt-4 flex flex-wrap gap-2 text-xs">
 					<Badge variant="secondary" className="gap-1 font-normal">
 						<span>{m.common_providers_label()}</span>
 						<strong className="font-semibold">{plugin.providers}</strong>
@@ -108,7 +108,7 @@ export function PluginCard({
 
 				{/* Package details */}
 				{(plugin.capabilities.length > 0 || (plugin.installedAt && plugin.source)) && (
-					<div className="mt-3 flex flex-col gap-1 text-[11px] text-muted-foreground">
+					<div className="mt-3 flex flex-col gap-1 text-muted-foreground text-xs">
 						{plugin.capabilities.length > 0 && (
 							<p>
 								<span className="font-medium text-foreground">{`${m.admin_plugins_capabilities_label()}: `}</span>
@@ -136,7 +136,7 @@ export function PluginCard({
 							<XCircle className="size-3.5 shrink-0" />
 							<span>{m.admin_plugins_loading_error({ failurePhase: plugin.failurePhase ?? "runtime" })}</span>
 						</div>
-						<p className="wrap-break-word mt-1 font-mono text-[11px]">{pluginErrorText(plugin)}</p>
+						<p className="wrap-break-word mt-1 font-mono text-xs">{pluginErrorText(plugin)}</p>
 					</div>
 				)}
 			</div>

@@ -28,7 +28,7 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 					<div className="overflow-x-auto">
 						<Table>
 							<TableHeader>
-								<TableRow className="border-border/60 text-[11px]">
+								<TableRow className="border-border/60 text-xs">
 									<TableHead className="w-10 text-center">{m.common_hash_symbol()}</TableHead>
 									<TableHead>{m.admin_analytics_viewer_column()}</TableHead>
 									<TableHead className="text-center">{m.components_search_titles_heading()}</TableHead>
@@ -59,17 +59,17 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 												<div className="flex items-center gap-2.5">
 													<Avatar className="size-7 border border-border/50">
 														{user.profileAvatar !== null && <AvatarImage src={user.profileAvatar} alt={user.profileName} />}
-														<AvatarFallback className="font-bold text-[10px] uppercase">{user.profileName.slice(0, 2)}</AvatarFallback>
+														<AvatarFallback className="font-bold text-xs">{user.profileName.slice(0, 2)}</AvatarFallback>
 													</Avatar>
 													<div className="min-w-0">
 														<p className="truncate font-semibold text-foreground">{user.profileName}</p>
-														<p className="truncate text-[10px] text-muted-foreground">{user.userEmail}</p>
+														<p className="truncate text-muted-foreground text-xs">{user.userEmail}</p>
 													</div>
 												</div>
 											</TableCell>
 											<TableCell className="text-center font-mono">{user.titlesCount}</TableCell>
 											<TableCell className="text-right font-bold font-mono text-primary">{formattedUserTime}</TableCell>
-											<TableCell className="text-right text-[11px] text-muted-foreground">
+											<TableCell className="text-right text-muted-foreground text-xs">
 												{user.lastWatchedAt ? formatDate(user.lastWatchedAt) : m.common_no_value()}
 											</TableCell>
 										</TableRow>

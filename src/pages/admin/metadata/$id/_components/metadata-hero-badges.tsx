@@ -26,7 +26,7 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 				{releaseYear}
 			</Badge>
 			{metadata.status !== null && (
-				<Badge variant="secondary" size="sm" className="text-[11px]">
+				<Badge variant="secondary" size="sm" className="text-xs">
 					{metadata.status}
 				</Badge>
 			)}

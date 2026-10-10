@@ -14,7 +14,7 @@ export function EndedSessionsList() {
 		<section className="flex flex-col gap-3 pt-2">
 			<div className="flex items-center gap-2">
 				<History className="size-4 text-muted-foreground" />
-				<h4 className="font-bold text-foreground text-xs uppercase tracking-wider">{m.admin_live_ended_title()}</h4>
+				<h4 className="font-bold text-foreground text-xs">{m.admin_live_ended_title()}</h4>
 			</div>
 
 			{sessions.length === 0 ? (

@@ -52,9 +52,7 @@ export function ResourceConfigSection({ config }: { config: ResourceConfig }) {
 
 	return (
 		<div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-border/50 bg-muted/20 px-4 py-2.5">
-			<span className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">
-				{m.admin_resources_monitoring_config()}
-			</span>
+			<span className="font-medium text-muted-foreground text-xs">{m.admin_resources_monitoring_config()}</span>
 			{rows.map((row) => (
 				<span key={row.label} className="flex items-center gap-2 text-muted-foreground text-xs">
 					{row.label}

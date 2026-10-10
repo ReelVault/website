@@ -48,12 +48,12 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 
 					<div className="flex min-w-0 flex-1 flex-col gap-1">
 						<div className="flex flex-wrap items-center gap-1.5">
-							<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 text-[11px] capitalize">
+							<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 text-xs capitalize">
 								{isMovie ? <Clapperboard className="size-3" /> : <Tv className="size-3" />}
 								<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 							</Badge>
 							{releaseYear && (
-								<Badge variant="outline" size="sm" className="font-mono text-[10px]">
+								<Badge variant="outline" size="sm" className="font-mono text-xs">
 									{releaseYear}
 								</Badge>
 							)}
@@ -74,7 +74,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 				</div>
 
 				<div className="flex items-center justify-between border-border/40 border-t pt-2 text-xs">
-					<span className="font-mono text-[11px] text-muted-foreground">{m.common_short_id({ id: metadata.id.slice(0, 16) })}</span>
+					<span className="font-mono text-muted-foreground text-xs">{m.common_short_id({ id: metadata.id.slice(0, 16) })}</span>
 					<Button
 						variant="ghost"
 						size="sm"

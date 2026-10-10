@@ -104,7 +104,7 @@ function NativePosterGroup({
 							{item.label ?? m.common_unnamed()}
 						</span>
 						{!isPeople && item.type !== undefined && (
-							<span className="block text-[11px] text-muted-foreground">
+							<span className="block text-muted-foreground text-xs">
 								{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}
 							</span>
 						)}
@@ -228,7 +228,7 @@ function ExternalCatalogGroup({
 								<span className="block truncate font-semibold text-foreground text-xs" title={item.title}>
 									{item.title}
 								</span>
-								<span className="block text-[11px] text-muted-foreground">
+								<span className="block text-muted-foreground text-xs">
 									{item.mediaType === "movie" ? m.common_movie_word() : m.common_series_word()}
 									{item.year !== undefined ? ` · ${item.year}` : ""}
 								</span>
@@ -527,7 +527,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 					</span>
 					<div className="flex items-center gap-2">
 						<span>{m.components_search_global_shortcut()}</span>
-						<kbd className="rounded border border-border bg-card px-2 py-0.5 font-mono text-[11px] text-foreground shadow-xs">
+						<kbd className="rounded border border-border bg-card px-2 py-0.5 font-mono text-foreground text-xs shadow-xs">
 							{m.common_shortcut_ctrl_k()}
 						</kbd>
 					</div>

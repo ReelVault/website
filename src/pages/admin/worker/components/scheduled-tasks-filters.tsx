@@ -56,7 +56,7 @@ export function ScheduledTasksFilters({
 						)}
 					>
 						<span>{f.label}</span>
-						<span className="font-mono text-[10px] opacity-80">{m.admin_worker_filter_count({ count: f.count })}</span>
+						<span className="font-mono text-xs opacity-80">{m.admin_worker_filter_count({ count: f.count })}</span>
 					</button>
 				))}
 			</div>

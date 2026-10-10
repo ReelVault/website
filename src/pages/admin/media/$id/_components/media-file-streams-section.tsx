@@ -27,26 +27,26 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 											<span className="text-muted-foreground">{m.admin_media_codec_profile({ profile: stream.profile })}</span>
 										)}
 										{stream.isDefault && (
-											<Badge variant="secondary" size="sm" className="text-[10px]">
+											<Badge variant="secondary" size="sm" className="text-xs">
 												{m.admin_users_default()}
 											</Badge>
 										)}
 										{stream.isForced && (
-											<Badge variant="outline" size="sm" className="border-warning/30 text-[10px] text-warning">
+											<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
 												{m.admin_media_forced_badge()}
 											</Badge>
 										)}
 									</div>
-									<Badge variant="secondary" size="sm" className="font-mono text-[10px]">
+									<Badge variant="secondary" size="sm" className="font-mono text-xs">
 										{m.common_rank_number({ index: stream.index })}
 									</Badge>
 								</div>
 
 								{stream.codecLongName && stream.codecLongName !== stream.codecName && (
-									<p className="line-clamp-1 text-[11px] text-muted-foreground">{stream.codecLongName}</p>
+									<p className="line-clamp-1 text-muted-foreground text-xs">{stream.codecLongName}</p>
 								)}
 
-								<div className="flex flex-wrap items-center gap-2 font-mono text-[11px] text-muted-foreground">
+								<div className="flex flex-wrap items-center gap-2 font-mono text-muted-foreground text-xs">
 									<span className="font-medium text-foreground">
 										{m.admin_media_resolution({ width: stream.width, height: stream.height })}
 									</span>
@@ -57,21 +57,19 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 									{stream.colorPrimaries && <span>{m.common_dot_value({ value: stream.colorPrimaries })}</span>}
 									{stream.colorSpace && <span>{m.admin_media_color_space({ value: stream.colorSpace })}</span>}
 									{stream.doviProfile != null && (
-										<Badge variant="outline" size="sm" className="text-[10px]">
+										<Badge variant="outline" size="sm" className="text-xs">
 											{m.admin_media_dolby_vision_profile({ profile: stream.doviProfile })}
 										</Badge>
 									)}
 									{stream.language && (
-										<Badge variant="outline" size="sm" className="text-[10px] uppercase">
+										<Badge variant="outline" size="sm" className="text-xs">
 											{stream.language}
 										</Badge>
 									)}
 								</div>
 
 								{stream.title && (
-									<p className="font-medium text-[11px] text-foreground italic">
-										{m.admin_media_stream_title_quoted({ title: stream.title })}
-									</p>
+									<p className="font-medium text-foreground text-xs italic">{m.admin_media_stream_title_quoted({ title: stream.title })}</p>
 								)}
 							</div>
 						))}
@@ -92,31 +90,31 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 										<AudioLines className="size-3.5 text-primary" />
 										<span className="font-semibold text-foreground">{stream.codecName.toUpperCase()}</span>
 										{stream.language && (
-											<Badge variant="outline" size="sm" className="font-bold text-[10px] uppercase">
+											<Badge variant="outline" size="sm" className="font-bold text-xs">
 												{stream.language}
 											</Badge>
 										)}
 										{stream.isDefault && (
-											<Badge variant="secondary" size="sm" className="text-[10px]">
+											<Badge variant="secondary" size="sm" className="text-xs">
 												{m.admin_users_default()}
 											</Badge>
 										)}
 										{stream.isForced && (
-											<Badge variant="outline" size="sm" className="border-warning/30 text-[10px] text-warning">
+											<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
 												{m.admin_media_forced_badge()}
 											</Badge>
 										)}
 									</div>
-									<Badge variant="secondary" size="sm" className="font-mono text-[10px]">
+									<Badge variant="secondary" size="sm" className="font-mono text-xs">
 										{m.common_rank_number({ index: stream.index })}
 									</Badge>
 								</div>
 
 								{stream.codecLongName && stream.codecLongName !== stream.codecName && (
-									<p className="line-clamp-1 text-[11px] text-muted-foreground">{stream.codecLongName}</p>
+									<p className="line-clamp-1 text-muted-foreground text-xs">{stream.codecLongName}</p>
 								)}
 
-								<div className="flex flex-wrap items-center gap-2 font-mono text-[11px] text-muted-foreground">
+								<div className="flex flex-wrap items-center gap-2 font-mono text-muted-foreground text-xs">
 									<span className="font-medium text-foreground">
 										{m.admin_media_channels_layout({
 											channels: stream.channels,
@@ -128,9 +126,7 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 								</div>
 
 								{stream.title && (
-									<p className="font-medium text-[11px] text-foreground italic">
-										{m.admin_media_stream_title_quoted({ title: stream.title })}
-									</p>
+									<p className="font-medium text-foreground text-xs italic">{m.admin_media_stream_title_quoted({ title: stream.title })}</p>
 								)}
 							</div>
 						))}

@@ -170,7 +170,7 @@ export function LibraryCard({
 					</CardContent>
 
 					{/* Timestamps Row */}
-					<div className="flex flex-wrap items-center justify-between gap-2 border-border/50 border-t bg-muted/5 px-5 py-2 font-mono text-[11px] text-muted-foreground">
+					<div className="flex flex-wrap items-center justify-between gap-2 border-border/50 border-t bg-muted/5 px-5 py-2 font-mono text-muted-foreground text-xs">
 						<span>{m.common_created_at_value({ date: formatDateTime(lib.createdAt) })}</span>
 						<span>{m.admin_libraries_updated_at({ date: formatTimeAgo(lib.updatedAt) })}</span>
 					</div>

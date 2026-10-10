@@ -46,7 +46,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						<div className="flex items-center gap-2">
 							<Label className="cursor-pointer font-semibold text-foreground text-sm">{field.label}</Label>
 							{field.required && (
-								<Badge variant="outline" className="text-[10px] text-destructive">
+								<Badge variant="outline" className="text-destructive text-xs">
 									{m.common_required()}
 								</Badge>
 							)}
@@ -72,7 +72,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 							<div className="flex items-center gap-2">
 								<Label className="font-semibold text-foreground text-sm">{field.label}</Label>
 								{field.required && (
-									<Badge variant="outline" className="text-[10px] text-destructive">
+									<Badge variant="outline" className="text-destructive text-xs">
 										{m.common_required()}
 									</Badge>
 								)}
@@ -113,7 +113,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 							<div className="flex items-center gap-2">
 								<Label className="font-semibold text-foreground text-sm">{field.label}</Label>
 								{field.required && (
-									<Badge variant="outline" className="text-[10px] text-destructive">
+									<Badge variant="outline" className="text-destructive text-xs">
 										{m.common_required()}
 									</Badge>
 								)}
@@ -158,17 +158,17 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 							{isSecret && <KeyRound className="size-3.5 text-warning" />}
 							<Label className="font-semibold text-foreground text-sm">{field.label}</Label>
 							{field.required && (
-								<Badge variant="outline" className="text-[10px] text-destructive">
+								<Badge variant="outline" className="text-destructive text-xs">
 									{m.common_required()}
 								</Badge>
 							)}
 							{isSecret && (
-								<Badge variant="secondary" className="border-warning/20 bg-warning/10 text-[10px] text-warning">
+								<Badge variant="secondary" className="border-warning/20 bg-warning/10 text-warning text-xs">
 									{m.admin_plugins_secret_badge()}
 								</Badge>
 							)}
 							{isSecret && field.hasValue && (
-								<Badge variant="outline" className="border-success/30 text-[10px] text-success">
+								<Badge variant="outline" className="border-success/30 text-success text-xs">
 									{m.admin_plugins_secret_set()}
 								</Badge>
 							)}

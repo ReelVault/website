@@ -14,28 +14,28 @@ const PRESSURE_STATE: Record<"low" | "medium" | "high" | "critical", { readonly 
 		get label() {
 			return m.admin_dashboard_healthy();
 		},
-		badgeClass: "border-success/30 bg-success/10 text-[10px] text-success",
+		badgeClass: "border-success/30 bg-success/10 text-xs text-success",
 		active: true,
 	},
 	medium: {
 		get label() {
 			return m.admin_dashboard_healthy();
 		},
-		badgeClass: "border-success/30 bg-success/10 text-[10px] text-success",
+		badgeClass: "border-success/30 bg-success/10 text-xs text-success",
 		active: true,
 	},
 	high: {
 		get label() {
 			return m.admin_dashboard_loaded();
 		},
-		badgeClass: "border-warning/30 bg-warning/10 text-[10px] text-warning",
+		badgeClass: "border-warning/30 bg-warning/10 text-xs text-warning",
 		active: false,
 	},
 	critical: {
 		get label() {
 			return m.admin_dashboard_critical();
 		},
-		badgeClass: "border-destructive/30 bg-destructive/10 text-[10px] text-destructive",
+		badgeClass: "border-destructive/30 bg-destructive/10 text-xs text-destructive",
 		active: false,
 	},
 };
@@ -74,7 +74,7 @@ export function DashboardServerResources({
 						<span className="font-bold font-mono text-primary tabular-nums">{m.common_percent_value({ value: heapPercent })}</span>
 					</div>
 					<Progress value={heapPercent} className="h-2" />
-					<div className="flex items-center justify-between text-[11px] text-muted-foreground">
+					<div className="flex items-center justify-between text-muted-foreground text-xs">
 						<span>
 							{m.admin_dashboard_used_label()} {formatMemory(heapUsed)}
 						</span>
@@ -92,7 +92,7 @@ export function DashboardServerResources({
 							</span>
 						</div>
 						<Progress value={systemMemory.percent} className="h-2" />
-						<div className="flex items-center justify-between text-[11px] text-muted-foreground">
+						<div className="flex items-center justify-between text-muted-foreground text-xs">
 							<span>
 								{m.admin_dashboard_used_label_system()} {formatMemory(systemMemory.usedMb * 1024 * 1024)}
 							</span>
@@ -106,11 +106,11 @@ export function DashboardServerResources({
 				{/* Detailed measurements */}
 				<div className="grid grid-cols-2 gap-3">
 					<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-						<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_dashboard_rss_memory()}</p>
+						<p className="font-medium text-muted-foreground text-xs">{m.admin_dashboard_rss_memory()}</p>
 						<p className="mt-1 font-bold text-foreground text-lg tabular-nums">{formatMemory(stats.memory.rss)}</p>
 					</div>
 					<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-						<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_resources_array_buffers()}</p>
+						<p className="font-medium text-muted-foreground text-xs">{m.admin_resources_array_buffers()}</p>
 						<p className="mt-1 font-bold text-foreground text-lg tabular-nums">{formatMemory(stats.memory.arrayBuffers)}</p>
 					</div>
 				</div>

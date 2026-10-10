@@ -25,14 +25,14 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 			<div className="flex flex-col gap-3">
 				<div className="flex items-start justify-between gap-2">
 					<div className="flex flex-col gap-1">
-						<Badge variant="outline" className={cn("font-semibold text-[10px]", config.badgeClass)}>
+						<Badge variant="outline" className={cn("font-semibold text-xs", config.badgeClass)}>
 							{config.label}
 						</Badge>
 						{marker.label && (
 							<p className="font-medium text-foreground text-sm">{m.components_media_quoted_label({ label: marker.label })}</p>
 						)}
 					</div>
-					<Badge variant="secondary" className="font-mono text-[10px]">
+					<Badge variant="secondary" className="font-mono text-xs">
 						{marker.source}
 					</Badge>
 				</div>

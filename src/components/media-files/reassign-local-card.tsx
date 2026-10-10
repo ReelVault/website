@@ -29,7 +29,7 @@ export function ReassignLocalCard({ item, isSelected, onSelect }: ReassignLocalC
 			</div>
 			<div className="flex-1 overflow-hidden">
 				<h4 className="truncate font-semibold text-foreground text-sm">{item.title}</h4>
-				<div className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
+				<div className="flex items-center gap-2 font-mono text-muted-foreground text-xs">
 					{releaseYear !== null && <span>{releaseYear}</span>}
 					<span>{m.common_dot_separator()}</span>
 					<span>{m.components_reassign_short_id({ id: item.id.slice(0, 8) })}</span>

@@ -101,7 +101,7 @@ export function ScheduledTasksCategoryGroup({
 								className={cn("size-4 shrink-0 text-muted-foreground transition-transform duration-200", !expanded && "-rotate-90")}
 							/>
 							<h3 className="font-bold text-foreground text-sm tracking-tight">{meta.title}</h3>
-							<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+							<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 								{tasks.length}
 							</Badge>
 						</div>

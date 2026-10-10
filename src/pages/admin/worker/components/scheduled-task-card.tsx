@@ -102,21 +102,21 @@ export function ScheduledTaskCard({
 					<div className="flex min-w-0 flex-1 flex-col gap-1.5">
 						<div className="flex flex-wrap items-center gap-2">
 							<h4 className="font-semibold text-foreground text-sm tracking-tight">{taskTitle}</h4>
-							<Badge variant="outline" className="px-1.5 py-0 font-mono text-[10px] text-muted-foreground">
+							<Badge variant="outline" className="px-1.5 py-0 font-mono text-muted-foreground text-xs">
 								{task.id}
 							</Badge>
 							{isRunning && (
-								<Badge variant="default" className="h-5 gap-1.5 bg-primary px-2 font-medium text-[10px] text-primary-foreground shadow-xs">
+								<Badge variant="default" className="h-5 gap-1.5 bg-primary px-2 font-medium text-primary-foreground text-xs shadow-xs">
 									<span className="size-1.5 animate-ping rounded-full bg-white" /> {m.admin_worker_running_badge()}
 								</Badge>
 							)}
 							{!task.scheduleEnabled && (
-								<Badge variant="secondary" className="h-5 px-2 text-[10px]">
+								<Badge variant="secondary" className="h-5 px-2 text-xs">
 									{m.admin_workers_schedule_paused()}
 								</Badge>
 							)}
 							{isQueued && (
-								<Badge variant="secondary" className="h-5 px-2 text-[10px]">
+								<Badge variant="secondary" className="h-5 px-2 text-xs">
 									{m.admin_workers_queued()}
 								</Badge>
 							)}
@@ -141,19 +141,19 @@ export function ScheduledTaskCard({
 											</span>
 										</div>
 										{task.lastExecution.error && (
-											<span className="max-w-md truncate font-mono text-[10px] text-destructive" title={task.lastExecution.error}>
+											<span className="max-w-md truncate font-mono text-destructive text-xs" title={task.lastExecution.error}>
 												{task.lastExecution.error}
 											</span>
 										)}
 									</div>
 								) : (
-									<span className="text-[11px] text-muted-foreground/80 italic">{m.admin_workers_never_run()}</span>
+									<span className="text-muted-foreground/80 text-xs italic">{m.admin_workers_never_run()}</span>
 								)}
 
 								{/* Triggers Pills */}
 								<ScheduledTaskTriggersLine taskId={task.id} triggers={task.triggers} onConfigureTriggers={onConfigureTriggers} />
 								{task.nextRunAt && (
-									<span className="text-[11px] text-primary">{m.admin_workers_next_run({ time: formatDateTime(task.nextRunAt) })}</span>
+									<span className="text-primary text-xs">{m.admin_workers_next_run({ time: formatDateTime(task.nextRunAt) })}</span>
 								)}
 							</div>
 						)}
@@ -178,7 +178,7 @@ export function ScheduledTaskCard({
 			{/* Progress bar when running */}
 			{isRunning && (
 				<div className="mt-3 flex flex-col gap-1.5 border-border/40 border-t pt-2.5">
-					<div className="flex items-center justify-between font-mono text-[11px]">
+					<div className="flex items-center justify-between font-mono text-xs">
 						<span className="flex items-center gap-1.5 font-medium text-primary">
 							<span className="size-1.5 animate-ping rounded-full bg-primary" />
 							{m.admin_workers_running_ellipsis()}

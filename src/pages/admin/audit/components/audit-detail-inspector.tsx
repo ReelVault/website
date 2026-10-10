@@ -64,15 +64,15 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 		<div className="flex flex-col gap-4 border-border border-t bg-muted/15 p-4 text-xs">
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_audit_resource()}</span>
+					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_resource()}</span>
 					<div className="flex flex-wrap items-center gap-1.5">
-						<Badge variant="outline" className="font-mono text-[11px]">
+						<Badge variant="outline" className="font-mono text-xs">
 							{entry.resourceType}
 						</Badge>
 						{renderResourceLink()}
 					</div>
 					{entry.resourceId && (
-						<div className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
+						<div className="flex items-center gap-1 font-mono text-muted-foreground text-xs">
 							<span className="block truncate">{m.common_id_label({ id: entry.resourceId })}</span>
 							<button
 								type="button"
@@ -90,13 +90,13 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				</div>
 
 				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_audit_actor_word()}</span>
+					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_actor_word()}</span>
 					{entry.actorUserId ? (
 						<div className="flex flex-col gap-0.5">
 							<Link to="/admin/users/$id" params={{ id: entry.actorUserId }} className="block font-semibold text-primary hover:underline">
 								{m.admin_audit_actor_user_named({ id: entry.actorUserId.slice(0, 8) })}
 							</Link>
-							<div className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
+							<div className="flex items-center gap-1 font-mono text-muted-foreground text-xs">
 								<span className="block truncate">{entry.actorUserId}</span>
 								<button
 									type="button"
@@ -117,9 +117,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				</div>
 
 				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">
-						{m.admin_audit_client_and_network()}
-					</span>
+					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_client_and_network()}</span>
 					<div className="flex flex-col gap-0.5">
 						{entry.ipAddress ? (
 							<div className="flex items-center gap-1 font-mono text-foreground">
@@ -140,7 +138,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 							<span className="text-muted-foreground">{m.admin_audit_local_no_ip()}</span>
 						)}
 						{entry.requestId && (
-							<span className="block truncate font-mono text-[10px] text-muted-foreground" title={entry.requestId}>
+							<span className="block truncate font-mono text-muted-foreground text-xs" title={entry.requestId}>
 								{m.admin_audit_request_id_display({ id: entry.requestId.slice(0, 12) })}
 							</span>
 						)}
@@ -148,14 +146,14 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				</div>
 
 				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">{m.admin_audit_operation_time()}</span>
+					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_operation_time()}</span>
 					<p className="font-medium text-foreground">{formatFullDateTime(entry.createdAt)}</p>
-					<p className="text-[10px] text-muted-foreground">{formatTimeAgo(entry.createdAt)}</p>
+					<p className="text-muted-foreground text-xs">{formatTimeAgo(entry.createdAt)}</p>
 				</div>
 			</div>
 
 			{entry.userAgent && (
-				<div className="rounded-lg border border-border/60 bg-background/40 px-3 py-2 text-[11px] text-muted-foreground">
+				<div className="rounded-lg border border-border/60 bg-background/40 px-3 py-2 text-muted-foreground text-xs">
 					<span className="font-semibold text-foreground">{m.admin_audit_user_agent_label()}</span> {entry.userAgent}
 				</div>
 			)}
@@ -164,20 +162,16 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				<div className="grid gap-3 sm:grid-cols-2">
 					{beforeSnapshot && (
 						<div className="flex flex-col gap-1.5">
-							<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-								{m.admin_audit_state_before_change()}
-							</span>
-							<pre className="max-h-60 overflow-auto rounded-lg border border-border/80 bg-background/80 p-3 font-mono text-[11px] text-muted-foreground leading-relaxed">
+							<span className="font-semibold text-muted-foreground text-xs">{m.admin_audit_state_before_change()}</span>
+							<pre className="max-h-60 overflow-auto rounded-lg border border-border/80 bg-background/80 p-3 font-mono text-muted-foreground text-xs leading-relaxed">
 								{beforeSnapshot}
 							</pre>
 						</div>
 					)}
 					{afterSnapshot && (
 						<div className="flex flex-col gap-1.5">
-							<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-								{m.admin_audit_state_after_change()}
-							</span>
-							<pre className="max-h-60 overflow-auto rounded-lg border border-border/80 bg-background/80 p-3 font-mono text-[11px] text-success/90 leading-relaxed">
+							<span className="font-semibold text-muted-foreground text-xs">{m.admin_audit_state_after_change()}</span>
+							<pre className="max-h-60 overflow-auto rounded-lg border border-border/80 bg-background/80 p-3 font-mono text-success/90 text-xs leading-relaxed">
 								{afterSnapshot}
 							</pre>
 						</div>

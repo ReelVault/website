@@ -71,7 +71,7 @@ export function LogViewerControls({
 						className="flex-wrap"
 					>
 						{["all", "error", "warn", "info", "debug"].map((level) => (
-							<ToggleGroupItem key={level} value={level} className="text-xs uppercase">
+							<ToggleGroupItem key={level} value={level} className="text-xs">
 								{level}
 							</ToggleGroupItem>
 						))}

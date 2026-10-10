@@ -65,7 +65,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 							/>
 						</div>
 
-						<div className="flex items-center justify-between font-mono text-[10px] text-muted-foreground">
+						<div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
 							<span className="font-bold text-foreground">
 								{m.admin_live_playback_position({ current: formattedCurrent, duration: formattedDuration })}
 							</span>
@@ -74,8 +74,8 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 					</div>
 
 					{/* Quick Pipeline Badges */}
-					<div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
-						<Badge variant="outline" className="h-5 px-1.5 text-[10px]">
+					<div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
+						<Badge variant="outline" className="h-5 px-1.5 text-xs">
 							{stream.videoTranscode ? (
 								<span className="text-warning dark:text-warning">{m.admin_live_video_encoder({ encoder: stream.videoEncoder })}</span>
 							) : (
@@ -83,7 +83,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 							)}
 						</Badge>
 
-						<Badge variant="outline" className="h-5 px-1.5 text-[10px]">
+						<Badge variant="outline" className="h-5 px-1.5 text-xs">
 							{stream.audioTranscode ? (
 								<span className="text-warning dark:text-warning">{m.admin_live_audio_encoder({ encoder: stream.audioEncoder })}</span>
 							) : (
@@ -92,13 +92,13 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						</Badge>
 
 						{stream.hwaccel && stream.hwaccel !== "none" && (
-							<Badge variant="outline" className="h-5 border-primary/40 px-1.5 text-[10px] text-primary">
+							<Badge variant="outline" className="h-5 border-primary/40 px-1.5 text-primary text-xs">
 								{stream.hwaccel.toUpperCase()}
 							</Badge>
 						)}
 
 						{stream.width && stream.height && (
-							<span className="ml-auto text-[10px] text-muted-foreground">
+							<span className="ml-auto text-muted-foreground text-xs">
 								{m.components_media_file_resolution({ width: stream.width, height: stream.height })}
 								{stream.bitrateKbps ? ` · ${Math.round(stream.bitrateKbps / 1000)} Mbps` : ""}
 							</span>
@@ -114,7 +114,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 									style={{ width: `${stream.encodePercent}%` }}
 								/>
 							</div>
-							<span className="font-mono text-[10px] text-muted-foreground">
+							<span className="font-mono text-muted-foreground text-xs">
 								{m.admin_live_encode_progress({ percent: stream.encodePercent, speed: stream.encodeSpeed ?? "—" })}
 							</span>
 						</div>
@@ -125,11 +125,11 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						<div className="flex min-w-0 items-center gap-2">
 							<Avatar className="size-6 border border-border/60">
 								{stream.profileAvatar && <AvatarImage src={stream.profileAvatar} alt={stream.profileName} />}
-								<AvatarFallback className="font-bold text-[9px] uppercase">{stream.profileName.slice(0, 2)}</AvatarFallback>
+								<AvatarFallback className="font-bold text-xs">{stream.profileName.slice(0, 2)}</AvatarFallback>
 							</Avatar>
 							<div className="min-w-0">
 								<p className="truncate font-bold text-foreground text-xs">{stream.profileName}</p>
-								<p className="truncate text-[9px] text-muted-foreground">{m.admin_live_viewer_name({ name: stream.userName })}</p>
+								<p className="truncate text-muted-foreground text-xs">{m.admin_live_viewer_name({ name: stream.userName })}</p>
 							</div>
 						</div>
 

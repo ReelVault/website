@@ -21,7 +21,7 @@ export function LiveStreamDetailsSource({ stream, formattedDuration }: LiveStrea
 				<Film className="size-3.5 text-primary" />
 				<span>{m.admin_source_file_library_data()}</span>
 			</div>
-			<div className="grid gap-1 text-[11px]">
+			<div className="grid gap-1 text-xs">
 				<div className="flex justify-between gap-2">
 					<span>{m.admin_source_video()}</span>
 					<span className="font-medium text-foreground">

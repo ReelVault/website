@@ -50,7 +50,7 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 					</div>
 					<Badge
 						variant={hasUpdate ? "default" : "outline"}
-						className={hasUpdate ? "gap-1 bg-primary/15 text-primary" : "text-[11px] text-muted-foreground"}
+						className={hasUpdate ? "gap-1 bg-primary/15 text-primary" : "text-muted-foreground text-xs"}
 					>
 						{statusLabel}
 					</Badge>
@@ -59,16 +59,16 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 				<div className="flex flex-col gap-1">
 					<div className="flex flex-wrap items-center gap-2">
 						<h3 className="font-bold text-base text-foreground tracking-tight">{entry.name}</h3>
-						<Badge variant="outline" className="font-mono text-[10px]">
+						<Badge variant="outline" className="font-mono text-xs">
 							{m.common_version_badge({ version: entry.version })}
 						</Badge>
 					</div>
-					<p className="font-mono text-[11px] text-muted-foreground">{entry.repositoryName}</p>
+					<p className="font-mono text-muted-foreground text-xs">{entry.repositoryName}</p>
 				</div>
 
 				{entry.description && <p className="mt-3 line-clamp-2 min-h-8 text-muted-foreground text-xs">{entry.description}</p>}
 
-				<div className="mt-4 flex flex-wrap gap-2 text-[11px]">
+				<div className="mt-4 flex flex-wrap gap-2 text-xs">
 					<Badge variant="secondary" className="gap-1 font-normal">
 						{pluginCatalogCategoryLabel(entry.category)}
 					</Badge>

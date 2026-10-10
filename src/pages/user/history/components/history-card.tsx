@@ -31,14 +31,14 @@ export function HistoryCard({ item }: { item: HistoryItem }) {
 			<div className="absolute inset-x-0 bottom-0 p-5">
 				<h3 className="truncate font-bold text-foreground text-lg tracking-tight">{title}</h3>
 				<div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-					<span className="font-medium text-[11px] text-primary">{formatDate(item.watchedAt)}</span>
+					<span className="font-medium text-primary text-xs">{formatDate(item.watchedAt)}</span>
 					{item.episode && (
-						<span className="font-medium text-[11px] text-foreground/70">
+						<span className="font-medium text-foreground/70 text-xs">
 							{m.user_history_season_episode({ season: item.season?.seasonNumber ?? "?", episode: item.episode.episodeNumber })}
 						</span>
 					)}
 					{item.durationWatched && (
-						<span className="font-medium text-[11px] text-muted-foreground">
+						<span className="font-medium text-muted-foreground text-xs">
 							{m.user_history_watched_minutes({ minutes: Math.floor(item.durationWatched / 60) })}
 						</span>
 					)}

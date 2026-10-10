@@ -109,7 +109,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 
 					<div className="flex flex-wrap items-center gap-1.5">
 						{file.library.name && (
-							<Badge variant="outline" size="sm" className="font-normal text-[10px]">
+							<Badge variant="outline" size="sm" className="font-normal text-xs">
 								{file.library.name}
 							</Badge>
 						)}
@@ -119,17 +119,17 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							</Badge>
 						)}
 						{file.source && (
-							<Badge variant="outline" size="sm" className="font-mono text-[11px] uppercase">
+							<Badge variant="outline" size="sm" className="font-mono text-xs">
 								{file.source}
 							</Badge>
 						)}
 						{file.formatName && (
-							<span className="rounded-md border border-border/70 bg-muted/20 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+							<span className="rounded-md border border-border/70 bg-muted/20 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
 								{file.formatName}
 							</span>
 						)}
 						{file.isDefault && (
-							<Badge variant="default" size="sm" className="text-[10px]">
+							<Badge variant="default" size="sm" className="text-xs">
 								{m.common_default_badge()}
 							</Badge>
 						)}
@@ -152,7 +152,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 						<div className="flex items-center gap-2">
 							{file.audioStreams.length > 0 && (
 								<span
-									className="flex items-center gap-1 text-[11px]"
+									className="flex items-center gap-1 text-xs"
 									title={m.admin_media_audio_tracks_count_title({ count: file.audioStreams.length })}
 								>
 									<AudioLines className="size-3 text-primary" />
@@ -161,7 +161,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							)}
 							{file.subtitles.length > 0 && (
 								<span
-									className="flex items-center gap-1 text-[11px]"
+									className="flex items-center gap-1 text-xs"
 									title={m.admin_media_subtitle_tracks_count_title({ count: file.subtitles.length })}
 								>
 									<Subtitles className="size-3 text-primary" />

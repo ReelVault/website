@@ -48,7 +48,7 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 				<div className="flex items-center gap-3.5">
 					<Avatar className="size-11 border border-border">
 						{profile.avatarUrl && <AvatarImage src={profile.avatarUrl} alt={profile.name} />}
-						<AvatarFallback className="font-semibold text-xs uppercase">{profile.name.slice(0, 2)}</AvatarFallback>
+						<AvatarFallback className="font-semibold text-xs">{profile.name.slice(0, 2)}</AvatarFallback>
 					</Avatar>
 					<div className="flex flex-col gap-1">
 						<div className="flex flex-wrap items-center gap-2">

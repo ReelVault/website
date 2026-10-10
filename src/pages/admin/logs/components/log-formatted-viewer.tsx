@@ -55,14 +55,14 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 								<span className="mr-1.5 shrink-0 text-muted-foreground">
 									{isExpanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
 								</span>
-								<Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-[9px] uppercase", LEVEL_CLASSES[level])}>
+								<Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-xs", LEVEL_CLASSES[level])}>
 									{level}
 								</Badge>
 								{log.module !== undefined && (
-									<span className="shrink-0 text-[11px] text-muted-foreground">{m.admin_logs_module_label({ module: log.module })}</span>
+									<span className="shrink-0 text-muted-foreground text-xs">{m.admin_logs_module_label({ module: log.module })}</span>
 								)}
 								<span className="min-w-0 flex-1 truncate text-foreground text-xs leading-relaxed">{message}</span>
-								<span className="shrink-0 pl-2 text-[11px] text-muted-foreground tabular-nums">
+								<span className="shrink-0 pl-2 text-muted-foreground text-xs tabular-nums">
 									{shortTimeFormatter.format(new Date(log.timestamp))}
 								</span>
 							</Button>
@@ -71,14 +71,14 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 								<div className="border-border border-t bg-muted/20 p-4 text-xs">
 									{errorStack !== undefined && (
 										<div className="mb-3">
-											<p className="mb-1.5 font-medium text-destructive text-xs uppercase">{m.admin_logs_stack_trace()}</p>
+											<p className="mb-1.5 font-medium text-destructive text-xs">{m.admin_logs_stack_trace()}</p>
 											<pre className="overflow-x-auto rounded-md border border-destructive/20 bg-destructive/5 p-3 font-mono text-destructive/80 text-xs leading-relaxed">
 												{errorStack}
 											</pre>
 										</div>
 									)}
 									<div>
-										<p className="mb-1.5 font-medium text-muted-foreground text-xs uppercase">{m.admin_logs_entry_details()}</p>
+										<p className="mb-1.5 font-medium text-muted-foreground text-xs">{m.admin_logs_entry_details()}</p>
 										<pre className="overflow-x-auto rounded-md border border-border bg-muted/30 p-3 font-mono text-foreground/80 text-xs leading-relaxed">
 											{JSON.stringify(log, null, 2)}
 										</pre>

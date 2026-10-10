@@ -81,9 +81,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 				<div className="grid grid-cols-1 gap-2 rounded-xl border border-border/60 bg-muted/20 p-3 sm:grid-cols-2">
 					{/* Left: Recognized from file */}
 					<div className="flex flex-col gap-1 rounded-lg border border-border/40 bg-background/60 p-2.5">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.admin_media_recognized_from_file()}
-						</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.admin_media_recognized_from_file()}</span>
 						<p className="font-bold text-foreground text-sm">{item.recognized.title}</p>
 						<div className="flex flex-wrap gap-2 text-muted-foreground text-xs">
 							{item.recognized.year && <span>{m.admin_media_year_label({ year: item.recognized.year })}</span>}
@@ -97,7 +95,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 
 					{/* Right: Currently assigned */}
 					<div className="flex flex-col gap-1 rounded-lg border border-border/40 bg-background/60 p-2.5">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.admin_media_current_metadata()}</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.admin_media_current_metadata()}</span>
 						<p className="font-bold text-foreground text-sm">{item.currentMetadata.title}</p>
 						{item.currentMetadata.originalTitle &&
 							item.currentMetadata.originalTitle.trim().toLowerCase() !== item.currentMetadata.title.trim().toLowerCase() && (

@@ -113,7 +113,7 @@ export function ResourceMetricsGrid({ current }: { current: ResourceCurrent }) {
 								{m.admin_resources_active_streams()}
 								<span className="font-medium font-mono text-foreground">{current.activeStreams}</span>
 							</span>
-							<span className="text-[11px]">{shortTimeFormatter.format(new Date(current.timestamp))}</span>
+							<span className="text-xs">{shortTimeFormatter.format(new Date(current.timestamp))}</span>
 						</div>
 					}
 					tone={getPressureTone(current.pressure)}
@@ -123,13 +123,11 @@ export function ResourceMetricsGrid({ current }: { current: ResourceCurrent }) {
 			{activeWorkers.length > 0 && (
 				<Card className="border-border/80 bg-card/60 shadow-none">
 					<CardHeader className="pb-2">
-						<CardTitle className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.admin_resources_active_workers()}
-						</CardTitle>
+						<CardTitle className="font-semibold text-muted-foreground text-xs">{m.admin_resources_active_workers()}</CardTitle>
 					</CardHeader>
 					<CardContent className="flex flex-wrap gap-2">
 						{activeWorkers.map(([workerId, count]) => (
-							<Badge key={workerId} variant="outline" className="font-mono text-[11px]">
+							<Badge key={workerId} variant="outline" className="font-mono text-xs">
 								{m.admin_resources_worker_label({ workerId })} <span className="ml-1 font-semibold text-foreground">{count}</span>
 							</Badge>
 						))}

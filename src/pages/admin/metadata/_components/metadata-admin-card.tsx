@@ -75,19 +75,19 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 						{(Boolean(isOrphanView) || lowConfidence || item.hasMissingTranslation) && (
 							<div className="absolute top-2 left-2 flex flex-col items-start gap-1.5">
 								{isOrphanView && (
-									<Badge variant="outline" className="gap-1 border-warning/30 bg-background/80 text-[10px] text-warning">
+									<Badge variant="outline" className="gap-1 border-warning/30 bg-background/80 text-warning text-xs">
 										<AlertTriangle className="size-2.5" />
 										{m.admin_metadata_no_file_chip()}
 									</Badge>
 								)}
 								{lowConfidence && (
-									<Badge variant="outline" className="gap-1 border-warning/30 bg-background/80 text-[10px] text-warning">
+									<Badge variant="outline" className="gap-1 border-warning/30 bg-background/80 text-warning text-xs">
 										<AlertTriangle className="size-2.5" />
 										{m.common_percent_value({ value: Math.round((item.matchScore ?? 0) * 100) })}
 									</Badge>
 								)}
 								{item.hasMissingTranslation && (
-									<Badge variant="outline" className="gap-1 border-warning/40 bg-background/80 text-[10px] text-warning">
+									<Badge variant="outline" className="gap-1 border-warning/40 bg-background/80 text-warning text-xs">
 										<AlertTriangle className="size-2.5" />
 										{m.admin_metadata_no_pl_fallback()}
 									</Badge>
@@ -102,13 +102,13 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 						{item.title}
 					</p>
 					<div className="flex flex-wrap items-center gap-1.5">
-						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 font-medium text-[10px] capitalize">
+						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 font-medium text-xs capitalize">
 							{isMovie ? <Clapperboard className="size-2.5" /> : <Tv className="size-2.5" />}
 							<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 						</Badge>
-						<span className="font-bold text-[10px] text-muted-foreground tabular-nums">{year}</span>
+						<span className="font-bold text-muted-foreground text-xs tabular-nums">{year}</span>
 						{rating !== "—" && (
-							<span className="flex items-center gap-0.5 font-medium text-[10px]">
+							<span className="flex items-center gap-0.5 font-medium text-xs">
 								<Star className="size-3 fill-warning text-warning" />
 								<span className="tabular-nums">{rating}</span>
 							</span>

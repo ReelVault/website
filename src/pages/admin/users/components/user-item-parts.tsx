@@ -21,7 +21,7 @@ export function UserSummary({ user }: { user: AdminUser }) {
 				>
 					{user.name}
 				</Link>
-				<span className="font-mono text-[10px] text-muted-foreground" title={m.admin_users_account_code({ id: user.id.slice(0, 8) })}>
+				<span className="font-mono text-muted-foreground text-xs" title={m.admin_users_account_code({ id: user.id.slice(0, 8) })}>
 					{m.admin_users_id_short({ id: user.id.slice(0, 8) })}
 				</span>
 			</div>

@@ -75,10 +75,10 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 				<div className="flex flex-col gap-4 py-2">
 					<div className="flex items-center justify-between border-border/40 border-b pb-2.5">
 						<div>
-							<h4 className="font-semibold text-foreground text-xs uppercase tracking-tight">
+							<h4 className="font-semibold text-foreground text-xs">
 								{m.admin_worker_configured_rules({ triggersCount: triggers.length })}
 							</h4>
-							<p className="text-[11px] text-muted-foreground">{m.admin_worker_triggers_description()}</p>
+							<p className="text-muted-foreground text-xs">{m.admin_worker_triggers_description()}</p>
 						</div>
 						{!isAdding && (
 							<Button
@@ -105,7 +105,7 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 									<Clock className="size-4.5" />
 								</div>
 								<p className="font-medium text-foreground text-xs">{m.admin_workers_no_triggers()}</p>
-								<p className="mt-0.5 max-w-xs text-[11px] text-muted-foreground">{m.admin_workers_no_triggers_desc()}</p>
+								<p className="mt-0.5 max-w-xs text-muted-foreground text-xs">{m.admin_workers_no_triggers_desc()}</p>
 								{!isAdding && (
 									<Button type="button" size="sm" variant="outline" onClick={() => setIsAdding(true)} className="mt-3 h-7 gap-1.5 text-xs">
 										<Plus className="size-3" />

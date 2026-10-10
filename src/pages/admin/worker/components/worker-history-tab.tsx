@@ -68,7 +68,7 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 			title={m.admin_worker_full_history()}
 			description={m.admin_workers_queue_desc()}
 			badge={
-				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 					{total}
 				</Badge>
 			}
@@ -91,7 +91,7 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 						>
 							<span>{filter.label}</span>
 							{filter.count > 0 && (
-								<span className="font-mono text-[10px] opacity-80">{m.admin_worker_filter_count({ count: filter.count })}</span>
+								<span className="font-mono text-xs opacity-80">{m.admin_worker_filter_count({ count: filter.count })}</span>
 							)}
 						</button>
 					))}
@@ -109,7 +109,7 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 				{!(historyStatus.isLoading || historyStatus.isError) && operations.length === 0 && (
 					<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-8 text-center">
 						<p className="font-medium text-foreground text-xs">{m.admin_workers_no_history()}</p>
-						<p className="mt-0.5 text-[11px] text-muted-foreground">{m.admin_worker_no_matching_ops()}</p>
+						<p className="mt-0.5 text-muted-foreground text-xs">{m.admin_worker_no_matching_ops()}</p>
 					</div>
 				)}
 

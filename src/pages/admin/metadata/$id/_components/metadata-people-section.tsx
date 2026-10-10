@@ -163,7 +163,7 @@ function PersonCard({
 			<div className="min-w-0 flex-1">
 				<div className="flex items-center gap-1.5">
 					<p className="truncate font-medium text-foreground text-sm">{name}</p>
-					{badge && <span className="shrink-0 font-mono text-[10px] text-muted-foreground">{badge}</span>}
+					{badge && <span className="shrink-0 font-mono text-muted-foreground text-xs">{badge}</span>}
 				</div>
 				<p className="truncate text-muted-foreground text-xs">{detail}</p>
 			</div>

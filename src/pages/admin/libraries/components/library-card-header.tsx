@@ -78,12 +78,12 @@ export function LibraryCardHeader({
 							{isMovie ? m.admin_libraries_type_movies() : m.admin_libraries_type_series()}
 						</Badge>
 						{globalStorageMode && (
-							<Badge variant="outline" size="sm" className="text-[11px] text-muted-foreground">
+							<Badge variant="outline" size="sm" className="text-muted-foreground text-xs">
 								{globalStorageMode}
 							</Badge>
 						)}
 					</div>
-					<div className="mt-0.5 flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground/80">
+					<div className="mt-0.5 flex items-center gap-1.5 font-mono text-muted-foreground/80 text-xs">
 						<span>{m.common_short_id({ id: lib.id.slice(0, 16) })}</span>
 						<button
 							type="button"

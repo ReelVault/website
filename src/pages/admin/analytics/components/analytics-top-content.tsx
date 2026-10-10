@@ -53,8 +53,8 @@ export function AnalyticsTopContent({ topContent }: AnalyticsTopContentProps) {
 									<p className="truncate font-semibold text-foreground text-xs" title={item.title}>
 										{item.title}
 									</p>
-									<div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-										<Badge variant="outline" className="px-1 py-0 text-[9px] uppercase">
+									<div className="flex items-center gap-2 text-muted-foreground text-xs">
+										<Badge variant="outline" className="px-1 py-0 text-xs">
 											{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}
 										</Badge>
 										<span>{m.admin_analytics_item_play_count({ watchCount: item.watchCount })}</span>

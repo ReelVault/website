@@ -47,14 +47,14 @@ export function LiveStreamDetailsDialog({
 						</div>
 						<Badge
 							variant={isDirect ? "default" : "secondary"}
-							className={cn("font-mono text-[10px] uppercase", {
+							className={cn("font-mono text-xs", {
 								"bg-success/90 text-white": isDirect,
 							})}
 						>
 							{isDirect ? m.common_direct_stream() : m.common_transcoding()}
 						</Badge>
 					</div>
-					<DialogDescription className="font-mono text-[11px] text-muted-foreground">
+					<DialogDescription className="font-mono text-muted-foreground text-xs">
 						{m.admin_live_stream_session_viewer({
 							sessionId: stream.sessionId,
 							profileName: stream.profileName,

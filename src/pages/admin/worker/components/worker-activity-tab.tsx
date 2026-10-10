@@ -45,7 +45,7 @@ export function WorkerActivityTab({
 				title={m.admin_worker_worker_operations()}
 				description={m.admin_workers_queue_desc()}
 				badge={
-					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 						{activeTotal}
 					</Badge>
 				}
@@ -83,7 +83,7 @@ export function WorkerActivityTab({
 								<CheckCircle2 className="size-5 text-success" />
 							</div>
 							<p className="font-medium text-foreground text-xs">{m.admin_workers_no_active_ops_in_queue()}</p>
-							<p className="mt-0.5 max-w-sm text-[11px] text-muted-foreground">{m.admin_workers_queues_idle_desc()}</p>
+							<p className="mt-0.5 max-w-sm text-muted-foreground text-xs">{m.admin_workers_queues_idle_desc()}</p>
 						</div>
 					)}
 

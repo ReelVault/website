@@ -17,7 +17,7 @@ export function MediaFileLocationSection({ fileName, filePath }: MediaFileLocati
 						<Label htmlFor="media-file-name" className="font-medium text-sm">
 							{m.admin_media_disk_file_name()}
 						</Label>
-						<span className="text-[11px] text-muted-foreground">{m.admin_media_auto_read()}</span>
+						<span className="text-muted-foreground text-xs">{m.admin_media_auto_read()}</span>
 					</div>
 					<Input
 						id="media-file-name"
@@ -35,7 +35,7 @@ export function MediaFileLocationSection({ fileName, filePath }: MediaFileLocati
 						<Label htmlFor="media-file-path" className="font-medium text-sm">
 							{m.admin_libraries_system_path()}
 						</Label>
-						<span className="text-[11px] text-muted-foreground">{m.admin_media_auto_read()}</span>
+						<span className="text-muted-foreground text-xs">{m.admin_media_auto_read()}</span>
 					</div>
 					<Input
 						id="media-file-path"

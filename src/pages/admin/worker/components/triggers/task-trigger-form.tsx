@@ -55,7 +55,7 @@ export function TaskTriggerForm({ onAdd, onCancel }: TaskTriggerFormProps) {
 				<h5 className="flex items-center gap-1.5 font-semibold text-primary text-xs">
 					<Zap className="size-3.5" /> {m.admin_workers_new_trigger()}
 				</h5>
-				<Badge variant="outline" className="border-primary/30 font-normal text-[10px] text-primary">
+				<Badge variant="outline" className="border-primary/30 font-normal text-primary text-xs">
 					{m.admin_workers_trigger_config()}
 				</Badge>
 			</div>

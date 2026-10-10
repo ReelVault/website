@@ -39,7 +39,7 @@ export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 				<span className="shrink-0 text-muted-foreground">
 					{expanded ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
 				</span>
-				<Badge variant={variant} className="shrink-0 px-1.5 py-0 text-[10px] uppercase">
+				<Badge variant={variant} className="shrink-0 px-1.5 py-0 text-xs">
 					{entry.action}
 				</Badge>
 				<span className="min-w-0 flex-1 truncate">{auditEntryLabel(entry)}</span>

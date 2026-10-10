@@ -95,7 +95,7 @@ export function MetadataHero({
 							</p>
 						)}
 
-						<div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-muted-foreground">
+						<div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-muted-foreground text-xs">
 							<span>{m.common_id_label({ id: metadata.id })}</span>
 							{metadata.stableKey && <span>{m.admin_metadata_stable_key_value({ key: metadata.stableKey })}</span>}
 							{metadata.originCountry && <span>{m.admin_metadata_country_label({ country: metadata.originCountry })}</span>}

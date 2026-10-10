@@ -234,9 +234,7 @@ export default function AdminSubtitlesPage() {
 						>
 							<filter.icon className="size-3.5" />
 							<span>{filter.label}</span>
-							<span className="font-mono text-[10px] opacity-80">
-								{m.admin_worker_filter_count({ count: typeTotals[filter.value] ?? 0 })}
-							</span>
+							<span className="font-mono text-xs opacity-80">{m.admin_worker_filter_count({ count: typeTotals[filter.value] ?? 0 })}</span>
 						</button>
 					))}
 					<Select value={language ?? ""} onValueChange={(value) => setLanguage(value ?? "")}>

@@ -58,7 +58,7 @@ function VersionCard({ icon, label, version, badge }: { icon: ReactNode; label: 
 			<div className="flex min-w-0 items-center gap-3">
 				<div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">{icon}</div>
 				<div className="min-w-0">
-					<p className="font-medium text-muted-foreground text-xs uppercase tracking-wide">{label}</p>
+					<p className="font-medium text-muted-foreground text-xs">{label}</p>
 					<p className="truncate font-semibold text-foreground text-xl tabular-nums">{version ?? m.admin_updates_version_unknown()}</p>
 				</div>
 			</div>
@@ -236,15 +236,15 @@ function EnvironmentSection({ environment }: { environment: AdminUpdateEnvironme
 		<AdminSection title={m.admin_updates_environment_title()}>
 			<dl className="grid gap-4 p-4 sm:grid-cols-3">
 				<div>
-					<dt className="text-muted-foreground text-xs uppercase tracking-wide">{m.admin_updates_environment_container()}</dt>
+					<dt className="text-muted-foreground text-xs">{m.admin_updates_environment_container()}</dt>
 					<dd className="font-medium text-foreground text-sm">{environmentContainerLabel(environment.container)}</dd>
 				</div>
 				<div>
-					<dt className="text-muted-foreground text-xs uppercase tracking-wide">{m.admin_updates_environment_rootless()}</dt>
+					<dt className="text-muted-foreground text-xs">{m.admin_updates_environment_rootless()}</dt>
 					<dd className="font-medium text-foreground text-sm">{environment.rootless ? m.common_yes() : m.common_no()}</dd>
 				</div>
 				<div>
-					<dt className="text-muted-foreground text-xs uppercase tracking-wide">{m.admin_updates_environment_systemd()}</dt>
+					<dt className="text-muted-foreground text-xs">{m.admin_updates_environment_systemd()}</dt>
 					<dd className="font-medium text-foreground text-sm">{environmentSystemdLabel(environment.systemd)}</dd>
 				</div>
 			</dl>

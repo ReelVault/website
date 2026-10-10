@@ -99,7 +99,7 @@ export function PreferenceLanguageList({
 					{selected.map((code, index) => (
 						<li key={code}>
 							<Badge variant="secondary" className="h-7 gap-1.5 pr-1.5">
-								<span className="font-mono text-[10px] text-muted-foreground">{index + 1}</span>
+								<span className="font-mono text-muted-foreground text-xs">{index + 1}</span>
 								{labelFor(code)}
 								{index > 0 && (
 									<button

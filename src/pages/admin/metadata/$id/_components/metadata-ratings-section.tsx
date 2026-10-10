@@ -78,7 +78,7 @@ function RatingCard({
 				<div className="flex items-start justify-between gap-2">
 					<div>
 						<h4 className="font-semibold text-foreground text-sm">{displayName}</h4>
-						<span className="text-[11px] text-muted-foreground">{m.admin_metadata_source_site_label({ source: shortSource })}</span>
+						<span className="text-muted-foreground text-xs">{m.admin_metadata_source_site_label({ source: shortSource })}</span>
 					</div>
 
 					<span className="flex items-center gap-1 rounded-md border border-warning/20 bg-warning/10 px-2 py-0.5 font-bold text-warning text-xs">
@@ -100,7 +100,7 @@ function RatingCard({
 			</div>
 
 			<div className="flex items-center justify-between gap-2 border-border/40 border-t pt-2.5">
-				<span className="text-[11px] text-muted-foreground">
+				<span className="text-muted-foreground text-xs">
 					{score.votes > 0 ? m.admin_metadata_votes_count({ votes: formatNumber(score.votes) }) : m.admin_metadata_no_vote_count()}
 				</span>
 

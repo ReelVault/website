@@ -20,7 +20,7 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 				<div className="flex items-start justify-between gap-3 rounded-xl border border-border bg-muted/40 p-3.5">
 					<div className="flex flex-col gap-1">
 						<p className="font-semibold text-foreground text-xs">{m.admin_media_disk_availability()}</p>
-						<p className="text-[11px] text-muted-foreground">
+						<p className="text-muted-foreground text-xs">
 							{scanResult.exists
 								? m.admin_media_file_exists_notice({
 										size: scanResult.sizeBytes ? formatFileSize(scanResult.sizeBytes) : m.admin_media_unknown_size(),
@@ -39,11 +39,11 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 				<div className="flex items-start justify-between gap-3 rounded-xl border border-border bg-muted/40 p-3.5">
 					<div className="flex w-full flex-col gap-1 overflow-hidden">
 						<p className="font-semibold text-foreground text-xs">{m.admin_media_container_analysis()}</p>
-						<p className="text-[11px] text-muted-foreground">
+						<p className="text-muted-foreground text-xs">
 							{scanResult.probeSuccess ? m.admin_media_streams_read_notice() : m.admin_media_failed_to_read_streams()}
 						</p>
 						{scanResult.probeErrorCode !== null && (
-							<pre className="mt-2 max-h-24 overflow-x-auto whitespace-pre-wrap rounded-lg border border-destructive/20 bg-destructive/10 p-2 font-mono text-[10px] text-destructive">
+							<pre className="mt-2 max-h-24 overflow-x-auto whitespace-pre-wrap rounded-lg border border-destructive/20 bg-destructive/10 p-2 font-mono text-destructive text-xs">
 								{translateCode(scanResult.probeErrorCode, m.media_probe_failed())}
 							</pre>
 						)}
@@ -59,11 +59,11 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 				<div className="flex items-start justify-between gap-3 rounded-xl border border-border bg-muted/40 p-3.5">
 					<div className="flex w-full flex-col gap-1 overflow-hidden">
 						<p className="font-semibold text-foreground text-xs">{m.admin_media_decode_streams_test()}</p>
-						<p className="text-[11px] text-muted-foreground">
+						<p className="text-muted-foreground text-xs">
 							{scanResult.decodeSuccess ? m.admin_media_decode_success_notice() : m.admin_media_decode_errors()}
 						</p>
 						{scanResult.decodeErrorCode && (
-							<pre className="mt-2 max-h-28 overflow-x-auto whitespace-pre-wrap rounded-lg border border-destructive/20 bg-destructive/10 p-2 font-mono text-[10px] text-destructive">
+							<pre className="mt-2 max-h-28 overflow-x-auto whitespace-pre-wrap rounded-lg border border-destructive/20 bg-destructive/10 p-2 font-mono text-destructive text-xs">
 								{translateCode(scanResult.decodeErrorCode, m.media_decode_failed())}
 							</pre>
 						)}

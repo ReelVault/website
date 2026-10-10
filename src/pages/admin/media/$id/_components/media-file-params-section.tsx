@@ -86,7 +86,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 						<Label htmlFor="media-format" className="font-medium text-sm">
 							{m.media_container_format()}
 						</Label>
-						<span className="text-[11px] text-muted-foreground">{m.admin_media_format_auto_label()}</span>
+						<span className="text-muted-foreground text-xs">{m.admin_media_format_auto_label()}</span>
 					</div>
 					<Input
 						id="media-format"

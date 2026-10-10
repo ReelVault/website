@@ -30,7 +30,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						<span>{m.components_duration_label()}</span>
 					</div>
 					<p className="font-bold text-base text-foreground tabular-nums">{numericDuration ? formatDuration(numericDuration) : "—"}</p>
-					<p className="font-mono text-[11px] text-muted-foreground">
+					<p className="font-mono text-muted-foreground text-xs">
 						{m.admin_media_duration_seconds({ value: formatNumber(numericDuration) })}
 					</p>
 				</div>
@@ -41,7 +41,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						<span>{m.admin_media_disk_size()}</span>
 					</div>
 					<p className="font-bold text-base text-foreground tabular-nums">{numericSize ? formatFileSize(numericSize) : "—"}</p>
-					<p className="font-mono text-[11px] text-muted-foreground">{m.admin_media_size_bytes({ value: formatNumber(numericSize) })}</p>
+					<p className="font-mono text-muted-foreground text-xs">{m.admin_media_size_bytes({ value: formatNumber(numericSize) })}</p>
 				</div>
 
 				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background p-3.5 shadow-2xs">
@@ -50,9 +50,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						<span>{m.admin_media_average_bitrate()}</span>
 					</div>
 					<p className="font-bold text-base text-foreground tabular-nums">{numericBitrate ? formatBitrate(numericBitrate) : "—"}</p>
-					<p className="font-mono text-[11px] text-muted-foreground">
-						{m.admin_media_bitrate_bps({ value: formatNumber(numericBitrate) })}
-					</p>
+					<p className="font-mono text-muted-foreground text-xs">{m.admin_media_bitrate_bps({ value: formatNumber(numericBitrate) })}</p>
 				</div>
 			</div>
 
@@ -110,12 +108,12 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 			{/* Filesystem & Database Timestamps */}
 			{file && (
 				<div className="mt-4 flex flex-col gap-2 rounded-xl border border-border/60 bg-muted/20 p-3.5 text-xs">
-					<div className="flex items-center gap-1.5 font-semibold text-[11px] text-muted-foreground uppercase tracking-wider">
+					<div className="flex items-center gap-1.5 font-semibold text-muted-foreground text-xs">
 						<Calendar className="size-3.5 text-primary" />
 						<span>{m.admin_media_timestamps()}</span>
 					</div>
 
-					<div className="grid gap-2 pt-1 font-mono text-[11px] sm:grid-cols-3">
+					<div className="grid gap-2 pt-1 font-mono text-xs sm:grid-cols-3">
 						<div>
 							<span className="block text-muted-foreground">{m.admin_media_disk_modified()}</span>
 							<span className="text-foreground">

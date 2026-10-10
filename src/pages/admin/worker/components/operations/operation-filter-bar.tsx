@@ -48,14 +48,14 @@ export function OperationFilterBar({ searchQuery, onSearchChange, statusFilter, 
 						type="button"
 						onClick={() => onStatusFilterChange(f.value)}
 						className={cn(
-							"inline-flex items-center gap-1 rounded-md px-2 py-1 font-medium text-[11px] transition-[border-color,background-color,color,box-shadow]",
+							"inline-flex items-center gap-1 rounded-md px-2 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
 							statusFilter === f.value
 								? "bg-secondary text-foreground shadow-xs"
 								: "text-muted-foreground hover:bg-muted/40 hover:text-foreground",
 						)}
 					>
 						<span>{f.label}</span>
-						<span className="font-mono text-[10px] opacity-80">{m.admin_worker_filter_count({ count: f.count })}</span>
+						<span className="font-mono text-xs opacity-80">{m.admin_worker_filter_count({ count: f.count })}</span>
 					</button>
 				))}
 			</div>

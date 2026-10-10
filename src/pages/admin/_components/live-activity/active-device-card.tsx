@@ -13,13 +13,13 @@ export function ActiveDeviceCard({ device }: { device: AdminActiveDeviceItem }) 
 
 				<div className="min-w-0">
 					<p className="truncate font-semibold text-foreground text-xs">{clientLabel(device.clientName)}</p>
-					<p className="truncate text-[10px] text-muted-foreground">
+					<p className="truncate text-muted-foreground text-xs">
 						{device.userName} {device.ipAddress ? `• ${device.ipAddress}` : ""}
 					</p>
 				</div>
 			</div>
 
-			<span className="shrink-0 text-right font-mono text-[10px] text-muted-foreground">{formatTimeAgo(device.lastSeenAt)}</span>
+			<span className="shrink-0 text-right font-mono text-muted-foreground text-xs">{formatTimeAgo(device.lastSeenAt)}</span>
 		</div>
 	);
 }

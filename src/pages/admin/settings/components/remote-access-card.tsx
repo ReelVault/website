@@ -17,7 +17,7 @@ function CopyBlock({ label, text }: { label: string; text: string }) {
 					<Copy className="size-3.5" aria-hidden="true" /> {m.common_copy()}
 				</Button>
 			</div>
-			<pre className="max-h-48 overflow-auto rounded-lg border border-border bg-background p-3 font-mono text-[11px] leading-relaxed">
+			<pre className="max-h-48 overflow-auto rounded-lg border border-border bg-background p-3 font-mono text-xs leading-relaxed">
 				{text}
 			</pre>
 		</div>

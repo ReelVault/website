@@ -36,7 +36,7 @@ export function LibraryCardContextMenu({
 	return (
 		<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 			<ContextMenuGroup>
-				<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">{lib.name}</ContextMenuLabel>
+				<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{lib.name}</ContextMenuLabel>
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>

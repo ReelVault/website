@@ -49,7 +49,7 @@ export function NavbarNotifications() {
 					<div className="flex items-center gap-2">
 						<span className="font-semibold text-foreground text-sm">{m.user_notifications_heading()}</span>
 						{unreadCount > 0 && (
-							<Badge variant="secondary" size="sm" className="h-5 px-1.5 font-semibold text-[11px]">
+							<Badge variant="secondary" size="sm" className="h-5 px-1.5 font-semibold text-xs">
 								{unreadCount}
 							</Badge>
 						)}

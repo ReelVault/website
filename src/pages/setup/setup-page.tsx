@@ -326,7 +326,7 @@ export default function SetupPage() {
 				</div>
 				<section className="flex flex-col gap-8 rounded-lg border border-border bg-card p-6 sm:p-8">
 					<header className="flex flex-col gap-2">
-						<p className="font-medium text-primary text-xs uppercase tracking-widest">{m.setup_first_run()}</p>
+						<p className="font-medium text-primary text-xs">{m.setup_first_run()}</p>
 						<h1 className="font-semibold text-3xl tracking-tight">{m.setup_configure_reelvault()}</h1>
 						<p className="text-muted-foreground text-sm">{m.setup_steps_desc()}</p>
 					</header>

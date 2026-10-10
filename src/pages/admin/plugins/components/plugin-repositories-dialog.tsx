@@ -89,8 +89,8 @@ export function PluginRepositoriesDialog({
 											<LockOpen className="size-3.5 shrink-0 text-muted-foreground" aria-label={m.admin_plugins_repositories_no_token()} />
 										)}
 									</div>
-									<p className="truncate font-mono text-[11px] text-muted-foreground">{repository.url}</p>
-									<p className="mt-0.5 text-[11px] text-muted-foreground">
+									<p className="truncate font-mono text-muted-foreground text-xs">{repository.url}</p>
+									<p className="mt-0.5 text-muted-foreground text-xs">
 										{repository.lastRefreshedAt
 											? m.admin_plugins_repositories_last_refreshed({ date: formatDateTime(repository.lastRefreshedAt) })
 											: m.admin_plugins_repositories_never_refreshed()}
@@ -135,7 +135,7 @@ export function PluginRepositoriesDialog({
 								</div>
 							</div>
 							{repository.lastErrorCode && (
-								<p className="wrap-break-word text-[11px] text-destructive">
+								<p className="wrap-break-word text-destructive text-xs">
 									{m.admin_plugins_repositories_last_error_value({
 										error: translateCode(repository.lastErrorCode, m.plugin_repository_unavailable()),
 									})}
@@ -176,7 +176,7 @@ export function PluginRepositoriesDialog({
 							placeholder={m.admin_plugins_repositories_token_placeholder()}
 							className="font-mono text-xs"
 						/>
-						<p className="text-[11px] text-muted-foreground">{m.admin_plugins_repositories_token_hint()}</p>
+						<p className="text-muted-foreground text-xs">{m.admin_plugins_repositories_token_hint()}</p>
 					</div>
 					<Button variant="outline" size="sm" disabled={!canSubmit} onClick={submit} className="gap-1.5 self-start text-xs">
 						{isSubmitting ? <Spinner className="size-3.5" /> : <Plus className="size-3.5" />}

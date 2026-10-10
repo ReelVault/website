@@ -73,7 +73,7 @@ export function MediaFileScanConfig({
 					)}
 				</div>
 				{durationPreset === "all" && (
-					<p className="flex items-center gap-1.5 rounded-lg border border-warning/20 bg-warning/10 p-2 font-medium text-[11px] text-warning">
+					<p className="flex items-center gap-1.5 rounded-lg border border-warning/20 bg-warning/10 p-2 font-medium text-warning text-xs">
 						<AlertCircle className="size-3.5 shrink-0" />
 						{m.admin_media_full_decode_warning()}
 					</p>

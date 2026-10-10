@@ -17,7 +17,7 @@ export function LiveStreamDetailsPipeline({ stream, isDirect, formattedCurrent }
 				<Cpu className="size-3.5 text-primary" />
 				<span>{m.player_stream_pipeline_heading()}</span>
 			</div>
-			<div className="grid gap-1 text-[11px]">
+			<div className="grid gap-1 text-xs">
 				<div className="flex justify-between gap-2">
 					<span>{m.admin_live_server_decision()}</span>
 					<span className="font-medium text-foreground">{isDirect ? m.admin_direct_stream() : m.player_transcoding_on_the_fly()}</span>

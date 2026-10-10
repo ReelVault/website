@@ -47,7 +47,7 @@ export function AdminPageHeader({
 	return (
 		<header className="flex flex-col gap-4 border-border border-b pb-6 lg:flex-row lg:items-end lg:justify-between">
 			<div className="flex min-w-0 flex-col gap-1.5">
-				<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">
+				<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs">
 					{Icon !== undefined && <Icon className="size-4 text-primary" />}
 					<span>{eyebrow}</span>
 				</div>
@@ -181,7 +181,7 @@ export function AdminStatCard({
 		<Card className={cn("border-border/80 bg-card/60 shadow-none transition-colors hover:border-border", className)}>
 			<CardContent className="flex flex-col gap-3 p-4 sm:p-5">
 				<div className="flex items-center justify-between gap-2">
-					<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{label}</span>
+					<span className="font-semibold text-muted-foreground text-xs">{label}</span>
 					{Icon !== undefined && (
 						<div className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg border", toneClasses.iconWrapper)}>
 							<Icon className="size-4" />
@@ -195,7 +195,7 @@ export function AdminStatCard({
 						<span className={cn("flex items-center gap-0.5 font-medium text-xs", trend.isPositive ? "text-success" : "text-destructive")}>
 							{trend.isPositive ? <ArrowUpRight className="size-3.5" /> : <ArrowDownRight className="size-3.5" />}
 							{trend.value}
-							{trend.label && <span className="text-[10px] text-muted-foreground">{trend.label}</span>}
+							{trend.label && <span className="text-muted-foreground text-xs">{trend.label}</span>}
 						</span>
 					)}
 				</div>

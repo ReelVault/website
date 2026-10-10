@@ -70,7 +70,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 			</ContextMenuTrigger>
 			<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">{person.name}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{person.name}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
@@ -90,7 +90,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+					<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 						<Shield className="size-3" />
 						{m.common_admin_tools()}
 					</ContextMenuLabel>

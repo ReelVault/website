@@ -22,7 +22,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 						<div className="overflow-x-auto">
 							<Table>
 								<TableHeader>
-									<TableRow className="border-border/60 text-[11px]">
+									<TableRow className="border-border/60 text-xs">
 										<TableHead>{m.admin_analytics_title_column()}</TableHead>
 										<TableHead>{m.common_type_word()}</TableHead>
 										<TableHead>{m.user_profile_page_title()}</TableHead>
@@ -36,13 +36,13 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 										<TableRow key={play.id} className="border-border/40 text-xs">
 											<TableCell className="font-semibold text-foreground">{play.title}</TableCell>
 											<TableCell>
-												<Badge variant="outline" className="text-[10px]">
+												<Badge variant="outline" className="text-xs">
 													{play.mediaType === "movie" ? m.common_movie_word() : m.common_series_word()}
 												</Badge>
 											</TableCell>
 											<TableCell>
 												<span className="font-medium text-foreground">{play.profileName}</span>
-												<span className="ml-1.5 text-[10px] text-muted-foreground">
+												<span className="ml-1.5 text-muted-foreground text-xs">
 													{m.admin_analytics_profile_user({ user: play.userName })}
 												</span>
 											</TableCell>
@@ -51,7 +51,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 											</TableCell>
 											<TableCell className="text-center">
 												{play.isFullWatch ? (
-													<Badge className="border-success/30 bg-success/10 text-[10px] text-success">
+													<Badge className="border-success/30 bg-success/10 text-success text-xs">
 														<CheckCircle2 className="mr-1 size-3" />
 														{m.admin_worker_finished_word()}
 													</Badge>
@@ -59,7 +59,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 													<span className="text-muted-foreground text-xs">{m.admin_analytics_status_interrupted()}</span>
 												)}
 											</TableCell>
-											<TableCell className="text-right text-[11px] text-muted-foreground">{formatDateTime(play.watchedAt)}</TableCell>
+											<TableCell className="text-right text-muted-foreground text-xs">{formatDateTime(play.watchedAt)}</TableCell>
 										</TableRow>
 									))}
 								</TableBody>

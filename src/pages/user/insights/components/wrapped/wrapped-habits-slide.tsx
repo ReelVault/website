@@ -22,7 +22,7 @@ export function WrappedHabitsSlide({ data }: WrappedHabitsSlideProps) {
 			<div className="grid grid-cols-1 gap-6 pt-4 sm:grid-cols-3">
 				<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
 					<Calendar className="mb-3 size-7 text-primary" />
-					<p className="font-bold text-[11px] text-muted-foreground">{m.user_best_month()}</p>
+					<p className="font-bold text-muted-foreground text-xs">{m.user_best_month()}</p>
 					<p className="mt-2 font-black text-2xl text-primary">
 						{data.peakMonth ? formatMonthName(data.peakMonth.month) : m.common_no_value()}
 					</p>
@@ -33,7 +33,7 @@ export function WrappedHabitsSlide({ data }: WrappedHabitsSlideProps) {
 
 				<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
 					<Flame className="mb-3 size-7 fill-current text-amber-400" />
-					<p className="font-bold text-[11px] text-muted-foreground">{m.user_favorite_day()}</p>
+					<p className="font-bold text-muted-foreground text-xs">{m.user_favorite_day()}</p>
 					<p className="mt-2 font-black text-2xl text-amber-400">
 						{data.peakDayOfWeek ? formatWeekdayName(data.peakDayOfWeek.dayOfWeek) : m.common_no_value()}
 					</p>
@@ -42,7 +42,7 @@ export function WrappedHabitsSlide({ data }: WrappedHabitsSlideProps) {
 
 				<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
 					<Zap className="mb-3 size-7 text-purple-400" />
-					<p className="font-bold text-[11px] text-muted-foreground">{m.user_longest_marathon()}</p>
+					<p className="font-bold text-muted-foreground text-xs">{m.user_longest_marathon()}</p>
 					<p className="mt-2 font-black text-2xl text-purple-400">
 						{m.user_marathon_duration({
 							hours: Math.floor(data.longestMarathonMinutes / 60),

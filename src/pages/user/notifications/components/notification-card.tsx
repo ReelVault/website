@@ -60,7 +60,7 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 						<div className="min-w-0 flex-1">
 							<div className="flex flex-wrap items-center justify-between gap-2">
 								<h2 className={cn("font-semibold", isRead ? "text-muted-foreground" : "text-foreground")}>{title}</h2>
-								<time dateTime={new Date(notification.createdAt).toISOString()} className="font-medium text-[11px] text-muted-foreground">
+								<time dateTime={new Date(notification.createdAt).toISOString()} className="font-medium text-muted-foreground text-xs">
 									{formatDateTime(notification.createdAt)}
 								</time>
 							</div>

@@ -29,12 +29,12 @@ export function CollectionProviderItem({ provider }: { provider: CollectionProvi
 				<div className="flex min-w-0 flex-col">
 					<div className="flex items-center gap-2">
 						<span className="font-semibold text-foreground text-sm">{provider.name.toUpperCase()}</span>
-						<Badge variant="outline" size="sm" className="font-mono text-[11px] text-muted-foreground">
+						<Badge variant="outline" size="sm" className="font-mono text-muted-foreground text-xs">
 							{provider.externalId}
 						</Badge>
 					</div>
 					{provider.id && (
-						<span className="truncate font-mono text-[10px] text-muted-foreground">
+						<span className="truncate font-mono text-muted-foreground text-xs">
 							{m.admin_collections_link_id({ providerId: provider.id })}
 						</span>
 					)}

@@ -88,7 +88,7 @@ export function UserTable({
 												<span>{user.role === "admin" ? m.admin_users_role_admin() : m.admin_users_role_user()}</span>
 											</div>
 											{user.twoFactorEnabled && (
-												<span className="flex items-center gap-1 font-medium text-[10px] text-success">
+												<span className="flex items-center gap-1 font-medium text-success text-xs">
 													<ShieldCheck className="size-3" />
 													{m.admin_users_2fa_active()}
 												</span>
@@ -116,9 +116,7 @@ export function UserTable({
 
 								<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 									<ContextMenuGroup>
-										<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-											{user.name}
-										</ContextMenuLabel>
+										<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{user.name}</ContextMenuLabel>
 									</ContextMenuGroup>
 									<ContextMenuSeparator />
 									<ContextMenuGroup>
@@ -204,9 +202,7 @@ export function UserTable({
 
 					<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 						<ContextMenuGroup>
-							<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-								{user.name}
-							</ContextMenuLabel>
+							<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{user.name}</ContextMenuLabel>
 						</ContextMenuGroup>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>

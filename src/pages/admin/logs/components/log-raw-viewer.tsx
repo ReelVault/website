@@ -33,7 +33,7 @@ export function LogRawViewer({ logs, page }: LogRawViewerProps) {
 
 					return (
 						<div key={`${baseKey}-${occurrence}`} className="flex items-start gap-3 rounded px-1.5 py-0.5 hover:bg-muted/40">
-							<span className="w-8 shrink-0 select-none text-right text-[11px] text-muted-foreground/60 tabular-nums">{lineIndex}</span>
+							<span className="w-8 shrink-0 select-none text-right text-muted-foreground/60 text-xs tabular-nums">{lineIndex}</span>
 							<pre
 								className={cn(
 									"flex-1 overflow-x-auto whitespace-pre-wrap break-all font-mono text-xs leading-relaxed",

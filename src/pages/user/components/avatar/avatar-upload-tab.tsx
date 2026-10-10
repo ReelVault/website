@@ -32,7 +32,7 @@ export function AvatarUploadTab({ fileInputRef, previewImage, onFileChange }: Av
 						<div className="mb-3 flex size-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground transition-colors group-hover/upload:bg-primary group-hover/upload:text-primary-foreground">
 							<UploadCloud className="size-6" aria-hidden="true" />
 						</div>
-						<p className="font-black text-[11px] text-foreground">{m.user_upload_own_photo()}</p>
+						<p className="font-black text-foreground text-xs">{m.user_upload_own_photo()}</p>
 						<p className="mt-1 font-bold text-muted-foreground text-xs">{m.user_avatar_formats_limits()}</p>
 					</>
 				)}

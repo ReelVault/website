@@ -78,7 +78,7 @@ export function MetadataTaxonomySection({
 						{collections.map((col) => (
 							<Badge key={col.id} variant="secondary" size="sm" className="gap-1.5 font-medium">
 								<span>{col.name}</span>
-								<span className="font-normal text-[10px] opacity-70">{m.admin_metadata_collection_sort_mode({ mode: col.sortMode })}</span>
+								<span className="font-normal text-xs opacity-70">{m.admin_metadata_collection_sort_mode({ mode: col.sortMode })}</span>
 							</Badge>
 						))}
 					</TaxonomyGroup>
@@ -96,13 +96,13 @@ export function MetadataTaxonomySection({
 						{keywords.slice(0, MAX_VISIBLE_KEYWORDS).map((k) => (
 							<span
 								key={k.id}
-								className="rounded-md border border-border/70 bg-muted/20 px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
+								className="rounded-md border border-border/70 bg-muted/20 px-2 py-0.5 font-mono text-muted-foreground text-xs"
 							>
 								{m.common_hashtag_label({ name: k.name })}
 							</span>
 						))}
 						{keywords.length > MAX_VISIBLE_KEYWORDS && (
-							<span className="self-center text-[11px] text-muted-foreground">
+							<span className="self-center text-muted-foreground text-xs">
 								{m.admin_metadata_hidden_keywords({ hiddenCount: keywords.length - MAX_VISIBLE_KEYWORDS })}
 							</span>
 						)}

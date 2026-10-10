@@ -33,11 +33,11 @@ export function MergeMetadataCandidateItem({ candidate, isSelected, onSelect }: 
 				<div className="min-w-0 flex-1">
 					<div className="flex items-center gap-2">
 						<span className="truncate font-semibold text-foreground text-sm">{candidate.title}</span>
-						<Badge variant="outline" className="text-[10px]">
+						<Badge variant="outline" className="text-xs">
 							{year}
 						</Badge>
 					</div>
-					<p className="truncate font-mono text-[11px] text-muted-foreground">{m.common_id_label({ id: candidate.id })}</p>
+					<p className="truncate font-mono text-muted-foreground text-xs">{m.common_id_label({ id: candidate.id })}</p>
 					{candidate.originalTitle && candidate.originalTitle !== candidate.title && (
 						<p className="truncate text-muted-foreground text-xs italic">{candidate.originalTitle}</p>
 					)}

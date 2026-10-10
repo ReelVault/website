@@ -124,11 +124,11 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<div className="flex items-center gap-2">
 					<p className="truncate font-medium text-foreground text-sm">{file.fileName}</p>
 					{file.isDefault && (
-						<Badge variant="secondary" size="sm" className="shrink-0 text-[10px]">
+						<Badge variant="secondary" size="sm" className="shrink-0 text-xs">
 							{m.common_default_badge()}
 						</Badge>
 					)}
-					{file.source && <span className="shrink-0 text-[11px] text-muted-foreground">{file.source}</span>}
+					{file.source && <span className="shrink-0 text-muted-foreground text-xs">{file.source}</span>}
 				</div>
 				<p className="truncate text-muted-foreground text-xs">{meta.length > 0 ? meta.join(" · ") : file.filePath}</p>
 			</div>

@@ -81,7 +81,7 @@ export default function AdminApiKeysPage() {
 									className="gap-1.5 text-xs"
 								>
 									{m.admin_api_keys_expiring_filter()}
-									<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+									<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 										{expiringCount}
 									</Badge>
 								</Button>
@@ -91,11 +91,11 @@ export default function AdminApiKeysPage() {
 									<div className="flex min-w-0 flex-col gap-1">
 										<div className="flex items-center gap-2">
 											<span className="font-semibold text-sm">{apiKey.name}</span>
-											<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} className="font-mono text-[11px]">
+											<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} className="font-mono text-xs">
 												{apiKey.scope === "full" ? m.admin_api_keys_scope_full() : m.admin_api_keys_scope_read_only()}
 											</Badge>
 											{apiKey.expiresAt && isExpired(apiKey.expiresAt) && (
-												<Badge variant="destructive" className="text-[11px]">
+												<Badge variant="destructive" className="text-xs">
 													{m.admin_api_keys_expired()}
 												</Badge>
 											)}

@@ -108,9 +108,7 @@ export function SetupStepPlugins() {
 									<div className="flex items-center justify-between gap-3">
 										<div className="flex min-w-0 flex-col">
 											<span className="truncate font-medium text-sm">{plugin.name}</span>
-											<span className="font-mono text-[11px] text-muted-foreground">
-												{m.common_version_badge({ version: plugin.version })}
-											</span>
+											<span className="font-mono text-muted-foreground text-xs">{m.common_version_badge({ version: plugin.version })}</span>
 										</div>
 										<div className="flex items-center gap-2">
 											<StatusBadge status={badge.status} label={badge.label} />
@@ -127,7 +125,7 @@ export function SetupStepPlugins() {
 										</div>
 									</div>
 									{plugin.errorCode && (
-										<p className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 font-mono text-[11px] text-destructive">
+										<p className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 font-mono text-destructive text-xs">
 											{translateCode(plugin.errorCode, m.plugin_load_failed())}
 										</p>
 									)}
@@ -179,10 +177,10 @@ export function SetupStepPlugins() {
 										<span className="flex min-w-0 flex-1 flex-col gap-1">
 											<span className="flex flex-wrap items-center gap-2">
 												<span className="font-semibold text-sm">{entry.name}</span>
-												<Badge variant="outline" className="font-mono text-[10px]">
+												<Badge variant="outline" className="font-mono text-xs">
 													{m.common_version_badge({ version: entry.version })}
 												</Badge>
-												<Badge variant="secondary" className="font-normal text-[10px]">
+												<Badge variant="secondary" className="font-normal text-xs">
 													{pluginCatalogCategoryLabel(entry.category)}
 												</Badge>
 											</span>

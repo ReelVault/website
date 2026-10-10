@@ -275,7 +275,7 @@ function AdminAuditContent() {
 			<AdminSection
 				title={m.admin_audit_entries_section()}
 				badge={
-					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-[10px]">
+					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
 						{total}
 					</Badge>
 				}

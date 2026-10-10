@@ -82,7 +82,7 @@ function NumberSettingInput({
 				className="min-w-0 flex-1 text-right text-xs sm:w-32 sm:flex-none"
 			/>
 			{isInvalid && (
-				<p role="alert" className="text-[11px] text-destructive">
+				<p role="alert" className="text-destructive text-xs">
 					{hasRange ? m.admin_settings_number_range({ min, max }) : m.admin_settings_number_invalid()}
 				</p>
 			)}
@@ -195,23 +195,23 @@ export function SettingField({
 					<Label htmlFor={fieldId} className="font-semibold text-foreground text-sm">
 						{label}
 					</Label>
-					<Badge variant="outline" className="font-mono text-[10px] text-muted-foreground">
+					<Badge variant="outline" className="font-mono text-muted-foreground text-xs">
 						{item.key}
 					</Badge>
 					{item.isCustom && (
-						<Badge variant="secondary" className="text-[10px] text-primary">
+						<Badge variant="secondary" className="text-primary text-xs">
 							{m.admin_settings_custom_value()}
 						</Badge>
 					)}
 					{isUnsaved && (
-						<Badge variant="outline" className="border-warning/40 text-[10px] text-warning">
+						<Badge variant="outline" className="border-warning/40 text-warning text-xs">
 							{m.admin_settings_unsaved_change()}
 						</Badge>
 					)}
 				</div>
 				{description && <p className="text-muted-foreground text-xs leading-relaxed">{description}</p>}
 				{item.restartRequired && <p className="font-medium text-warning text-xs">{m.admin_settings_takes_effect_on_restart()}</p>}
-				<p className="font-mono text-[11px] text-muted-foreground/80">
+				<p className="font-mono text-muted-foreground/80 text-xs">
 					{m.admin_settings_default_word()}{" "}
 					<span className="font-medium text-foreground/80">
 						{item.default === null ? m.common_none_lowercase() : settingValueToText(item.default)}

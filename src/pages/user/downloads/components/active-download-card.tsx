@@ -37,7 +37,7 @@ export function ActiveDownloadCard({ job, onDelete }: { job: DownloadJob; onDele
 				<div className="h-2 w-full overflow-hidden rounded-full bg-muted">
 					<div className="h-full bg-primary transition-[width] duration-500" style={{ width: `${Math.max(job.progressPercent, 2)}%` }} />
 				</div>
-				<div className="flex justify-between font-mono text-[11px] text-muted-foreground">
+				<div className="flex justify-between font-mono text-muted-foreground text-xs">
 					<span>{m.user_progress_ffmpeg()}</span>
 					<span>{m.common_percent_value({ value: Math.round(job.progressPercent) })}</span>
 				</div>

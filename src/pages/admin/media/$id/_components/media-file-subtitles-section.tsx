@@ -59,7 +59,7 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 		<div className="flex flex-col gap-2 rounded-xl border border-border/80 bg-muted/20 p-3 text-xs">
 			<div className="flex flex-wrap items-center justify-between gap-2">
 				<div className="flex flex-wrap items-center gap-2">
-					<Badge variant="outline" size="sm" className="font-bold font-mono text-[11px] text-foreground uppercase">
+					<Badge variant="outline" size="sm" className="font-bold font-mono text-foreground text-xs">
 						{subtitle.language || "UND"}
 					</Badge>
 
@@ -68,7 +68,7 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 					</span>
 
 					{subtitle.format && (
-						<span className="rounded-md border border-border/60 bg-background/60 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground uppercase">
+						<span className="rounded-md border border-border/60 bg-background/60 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
 							{subtitle.format}
 						</span>
 					)}
@@ -76,29 +76,29 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 
 				<div className="flex flex-wrap items-center gap-1.5">
 					{isEmbedded ? (
-						<Badge variant="secondary" size="sm" className="font-mono text-[10px]">
+						<Badge variant="secondary" size="sm" className="font-mono text-xs">
 							{m.admin_media_subtitle_embedded_index({ index: subtitle.streamIndex ?? 0 })}
 						</Badge>
 					) : (
-						<Badge variant="default" size="sm" className="text-[10px]">
+						<Badge variant="default" size="sm" className="text-xs">
 							{m.admin_media_external_file()}
 						</Badge>
 					)}
 
 					{isBitmapSubtitle(subtitle.format) && (
-						<Badge variant="outline" size="sm" className="border-warning/30 text-[10px] text-warning">
+						<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
 							{m.admin_media_subtitle_image_based()}
 						</Badge>
 					)}
 
 					{subtitle.isDefault && (
-						<Badge variant="secondary" size="sm" className="border-primary/20 bg-primary/10 text-[10px] text-primary">
+						<Badge variant="secondary" size="sm" className="border-primary/20 bg-primary/10 text-primary text-xs">
 							{m.admin_subtitles_default()}
 						</Badge>
 					)}
 
 					{subtitle.isForced && (
-						<Badge variant="outline" size="sm" className="border-warning/30 text-[10px] text-warning">
+						<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
 							{m.player_forced_word()}
 						</Badge>
 					)}
@@ -107,7 +107,7 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 
 			{subtitle.filePath && (
 				<div className="mt-0.5 flex items-center justify-between gap-2 rounded-lg border border-border/50 bg-background/50 px-2.5 py-1.5">
-					<div className="flex min-w-0 items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
+					<div className="flex min-w-0 items-center gap-1.5 font-mono text-muted-foreground text-xs">
 						<FileText className="size-3 shrink-0 text-primary" />
 						<span className="truncate" title={subtitle.filePath}>
 							{subtitle.filePath}

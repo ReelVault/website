@@ -172,7 +172,7 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 						className="pointer-events-none absolute -top-1 z-10 min-w-44 -translate-x-1/2 rounded-lg border border-border/70 bg-popover p-2.5 text-popover-foreground shadow-md"
 						style={{ left: `${Math.min(88, Math.max(12, hoverX))}%` }}
 					>
-						<p className="font-medium font-mono text-[10px] text-muted-foreground">{formatTime(hovered)}</p>
+						<p className="font-medium font-mono text-muted-foreground text-xs">{formatTime(hovered)}</p>
 						<div className="mt-1.5 flex flex-col gap-1 text-xs">
 							{SERIES.map((series) => (
 								<span key={series.key} className="flex items-center justify-between gap-3">
@@ -198,7 +198,7 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 
 			{/* X labels: first / middle / last */}
 			{samples.length > 0 && (
-				<div className="flex justify-between text-[10px] text-muted-foreground">
+				<div className="flex justify-between text-muted-foreground text-xs">
 					{(samples.length >= 3 ? [0, Math.floor((samples.length - 1) / 2), samples.length - 1] : [0]).map((index) => {
 						const entry = samples[index];
 						if (!entry) return null;

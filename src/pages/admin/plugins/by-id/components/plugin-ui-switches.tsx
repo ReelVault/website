@@ -65,7 +65,7 @@ export function PluginUiSwitches({ pluginId }: { pluginId: string }) {
 
 					return (
 						<section key={surface} className="flex flex-col gap-1">
-							<h3 className="px-1 font-bold text-muted-foreground text-xs uppercase tracking-wider">{surfaceLabel(surface)}</h3>
+							<h3 className="px-1 font-bold text-muted-foreground text-xs">{surfaceLabel(surface)}</h3>
 							{items.map((item) => (
 								<div key={item.key} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2 hover:bg-accent/40">
 									<div className="flex min-w-0 items-center gap-2">

@@ -16,7 +16,7 @@ export function NotFoundScreen() {
 					<CompassIcon className="size-10" />
 				</div>
 
-				<span className="mt-6 font-bold font-mono text-primary text-sm uppercase tracking-widest">{m.components_not_found_404()}</span>
+				<span className="mt-6 font-bold font-mono text-primary text-sm">{m.components_not_found_404()}</span>
 				<h1 className="mt-2 font-black text-3xl tracking-tight sm:text-4xl">{m.components_not_found_heading()}</h1>
 				<p className="mt-3 text-muted-foreground text-sm leading-relaxed">{m.components_not_found_description()}</p>
 

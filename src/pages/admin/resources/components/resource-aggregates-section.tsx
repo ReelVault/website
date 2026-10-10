@@ -18,7 +18,7 @@ export function ResourceAggregatesGrid({ aggregates }: { aggregates: ResourceAgg
 		<div className="grid gap-4 border-border/60 border-t pt-4 sm:grid-cols-3">
 			{rows.map((row) => (
 				<div key={row.label} className="flex flex-col gap-2">
-					<p className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{row.label}</p>
+					<p className="font-semibold text-muted-foreground text-xs">{row.label}</p>
 					<div className="flex items-center justify-between text-sm">
 						<span className="text-muted-foreground">{m.admin_resources_average_label()}</span>
 						<span className="font-mono font-semibold">{m.common_percent_value({ value: row.avg.toFixed(1) })}</span>

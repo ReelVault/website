@@ -38,18 +38,18 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 				<div className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 px-3 py-2 text-xs">
 					<span className="text-muted-foreground">{m.admin_metadata_translation_state()}</span>
 					{metadata.hasMissingTranslation ? (
-						<Badge variant="outline" size="sm" className="border-warning/30 bg-warning/10 text-[11px] text-warning">
+						<Badge variant="outline" size="sm" className="border-warning/30 bg-warning/10 text-warning text-xs">
 							{m.admin_metadata_no_translation()}
 						</Badge>
 					) : (
-						<Badge variant="outline" size="sm" className="border-success/30 bg-success/10 text-[11px] text-success">
+						<Badge variant="outline" size="sm" className="border-success/30 bg-success/10 text-success text-xs">
 							{m.admin_metadata_translation_complete()}
 						</Badge>
 					)}
 				</div>
 
 				{/* Timestamps */}
-				<div className="flex flex-col gap-1 border-border/50 border-t pt-2 text-[11px] text-muted-foreground">
+				<div className="flex flex-col gap-1 border-border/50 border-t pt-2 text-muted-foreground text-xs">
 					<div className="flex justify-between">
 						<span>{m.admin_metadata_created_in_db()}</span>
 						<span className="font-mono text-foreground">{formatDateTime(metadata.createdAt)}</span>
@@ -72,7 +72,7 @@ function IdRow({ label, value }: { label: string; value: string }) {
 	return (
 		<div className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 px-3 py-1.5">
 			<div className="flex min-w-0 flex-col">
-				<span className="font-semibold text-[10px] text-muted-foreground uppercase">{label}</span>
+				<span className="font-semibold text-muted-foreground text-xs">{label}</span>
 				<code className="truncate font-medium font-mono text-foreground text-xs">{value}</code>
 			</div>
 			<Button
@@ -93,7 +93,7 @@ function IdRow({ label, value }: { label: string; value: string }) {
 function DetailItem({ icon: Icon, label, value }: { icon: typeof Globe; label: string; value: string }) {
 	return (
 		<div className="flex flex-col gap-0.5 rounded-lg border border-border/50 bg-background/50 p-2.5">
-			<div className="flex items-center gap-1 font-semibold text-[10px] text-muted-foreground uppercase">
+			<div className="flex items-center gap-1 font-semibold text-muted-foreground text-xs">
 				<Icon className="size-3 text-primary" />
 				<span>{label}</span>
 			</div>

@@ -86,9 +86,7 @@ export function MetadataArtworkDialog({
 						<div className="absolute inset-x-0 bottom-0 p-2.5 opacity-0 transition-opacity group-hover:opacity-100">
 							<span className="block truncate font-semibold text-white text-xs">{option.providerName}</span>
 							{option.language && (
-								<span className="font-mono text-[10px] text-white/80 uppercase">
-									{m.admin_metadata_language_label({ language: option.language })}
-								</span>
+								<span className="font-mono text-white/80 text-xs">{m.admin_metadata_language_label({ language: option.language })}</span>
 							)}
 						</div>
 					</div>

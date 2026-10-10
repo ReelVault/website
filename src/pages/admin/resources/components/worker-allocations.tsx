@@ -36,12 +36,12 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 						<div className="flex items-start justify-between gap-2">
 							<div className="min-w-0">
 								<p className="truncate font-medium text-foreground text-sm">{WORKER_LABELS[alloc.workerId] ?? alloc.workerId}</p>
-								<p className="mt-1 text-[11px] text-muted-foreground">
+								<p className="mt-1 text-muted-foreground text-xs">
 									{alloc.requested > 0 ? m.admin_resources_manual_allocation({ count: alloc.requested }) : m.common_auto_word()}
 								</p>
 							</div>
 							{alloc.throttled && (
-								<Badge variant="outline" className="shrink-0 border-warning/30 bg-warning/10 text-[10px] text-warning">
+								<Badge variant="outline" className="shrink-0 border-warning/30 bg-warning/10 text-warning text-xs">
 									{m.admin_resources_throttled()}
 								</Badge>
 							)}
@@ -51,7 +51,7 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 								{m.admin_resources_allocation_label()} <span className="font-bold font-mono text-foreground">{alloc.allocated}</span>
 							</span>
 							{alloc.reason && (
-								<span className="truncate text-[10px] text-warning" title={alloc.reason}>
+								<span className="truncate text-warning text-xs" title={alloc.reason}>
 									{REASON_LABELS[alloc.reason] ?? alloc.reason}
 								</span>
 							)}
