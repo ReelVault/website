@@ -213,6 +213,28 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 					checked={state.hideRatingOverlay}
 					onChange={(hideRatingOverlay) => setState((current) => ({ ...current, hideRatingOverlay }))}
 				/>
+				<PreferenceSelect
+					label={m.user_hdr_playback_label()}
+					description={m.user_hdr_playback_desc()}
+					value={state.hdrMode}
+					onChange={(hdrMode) => setState((current) => ({ ...current, hdrMode: pickOption(["auto", "toneMapToSdr"], hdrMode, "auto") }))}
+					options={[
+						["auto", m.user_hdr_mode_auto()],
+						["toneMapToSdr", m.user_hdr_mode_tone_map()],
+					]}
+				/>
+				<PreferenceSelect
+					label={m.user_stream_limit_label()}
+					description={m.user_stream_limit_desc()}
+					value={String(state.maxStreamingBitrateKbps)}
+					onChange={(value) => setState((current) => ({ ...current, maxStreamingBitrateKbps: Number(value) }))}
+					options={[
+						["0", m.user_stream_limit_unlimited()],
+						["1500", m.user_stream_limit_mbps({ mbps: "1.5" })],
+						["4000", m.user_stream_limit_mbps({ mbps: "4" })],
+						["8000", m.user_stream_limit_mbps({ mbps: "8" })],
+					]}
+				/>
 			</div>
 			<div className="flex gap-2">
 				<AsyncButton type="submit" isPending={isSaving} pendingLabel={m.user_saving_prefs()} className="min-h-10 w-fit gap-2">

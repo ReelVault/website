@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Profile HDR and bitrate limits in admin** — the admin profile editor sets the HDR mode and the maximum stream bitrate, the same choices a user has in playback settings.
 - **Re-identify a media file** — the file page has a Re-identify button that matches the title the file belongs to again. The identify dialog's switch overwrites locked fields only when it is turned on.
 - **Code blocks in plugin dialogs** — plugin dialogs can show read-only preformatted text with its line breaks kept and a scrollable area.
 - **Unsaved settings ask before leaving** — leaving the settings page with unsaved changes asks Stay or Leave inside the app, not only when the tab is closed or reloaded.
