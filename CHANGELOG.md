@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Plugin details on their own page** — Details on a catalog plugin opens `/admin/plugins/catalog/<id>` with the full entry: description, changelog, every version, capabilities and the trust warning, with install, update or uninstall at the end. Install and uninstall return to the plugin list. The details dialog is gone.
 - **Scan findings on their own page** — Needs attention on a library card opens `/admin/libraries/<id>/findings`, with the Needs attention and Ignored tabs (the tab stays in the address), ignore and restore, the candidate search and the rescan button. The findings dialog is gone.
 - **Edit a library on its own page** — Edit on a library card opens `/admin/libraries/<id>`, with the same fields as before (type, name, source directories, sidecar format, metadata language, provider order). Cancel and Save return to the libraries list. The edit dialog is gone.
 - **Episode files on their own page** — the files action on an episode opens the same files page as a title, showing that episode's files under its number and title, with the episode refresh buttons for admins. The files dialog is gone.

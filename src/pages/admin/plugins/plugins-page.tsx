@@ -13,7 +13,6 @@ import { AdminPageHeader, AdminSearch, AdminSection } from "@/pages/admin/admin-
 import { m } from "@/paraglide/messages";
 import { PluginCard } from "./components/plugin-card";
 import { PluginCatalogCard, pluginCatalogCategoryLabel } from "./components/plugin-catalog-card";
-import { PluginCatalogDetailDialog } from "./components/plugin-catalog-detail-dialog";
 import { PluginRepositoriesDialog } from "./components/plugin-repositories-dialog";
 import { PluginUploadDialog } from "./components/plugin-upload-dialog";
 import { PluginUploadProgress } from "./components/plugin-upload-progress";
@@ -80,7 +79,6 @@ export default function AdminPluginsPage() {
 		catalogQuery,
 		unavailableRepositories,
 		repositories,
-		installPlugin,
 		installArchive,
 		archiveEntries,
 		archiveSummary,
@@ -102,7 +100,6 @@ export default function AdminPluginsPage() {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [repositoriesOpen, setRepositoriesOpen] = useState(false);
 	const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-	const [selectedEntry, setSelectedEntry] = useState<PluginCatalogEntry | null>(null);
 
 	const isCatalogBusy =
 		isInstalling ||
@@ -153,22 +150,9 @@ export default function AdminPluginsPage() {
 		detach(navigate({ search: (previous: Record<string, unknown>) => ({ ...previous, category: next === "all" ? undefined : next }) }));
 	};
 
-	const handleInstall = (entry: PluginCatalogEntry, version?: string) => {
-		detach(
-			(async () => {
-				await installPlugin({ repositoryId: entry.repositoryId, pluginId: entry.id, ...(version ? { version } : {}) });
-				setSelectedEntry(null);
-			})(),
-		);
-	};
-
-	const handleUninstall = (pluginId: string) => {
-		detach(
-			(async () => {
-				await uninstallPlugin(pluginId);
-				setSelectedEntry(null);
-			})(),
-		);
+	// A plugin's details are a page of their own; the list keeps its filters in the address.
+	const openCatalogDetails = (entry: PluginCatalogEntry) => {
+		detach(navigate({ to: "/admin/plugins/catalog/$id", params: { id: entry.id } }));
 	};
 
 	return (
@@ -217,11 +201,11 @@ export default function AdminPluginsPage() {
 				>
 					<ToggleGroupItem value="available" className="gap-1.5 px-3">
 						<span>{m.admin_plugins_view_available()}</span>
-						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-[11px] text-muted-foreground">{availableCount}</span>
+						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{availableCount}</span>
 					</ToggleGroupItem>
 					<ToggleGroupItem value="installed" className="gap-1.5 px-3">
 						<span>{m.admin_plugins_view_installed()}</span>
-						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-[11px] text-muted-foreground">{plugins.length}</span>
+						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{plugins.length}</span>
 					</ToggleGroupItem>
 				</ToggleGroup>
 
@@ -250,7 +234,7 @@ export default function AdminPluginsPage() {
 				{categoriesWithCounts.map((entry) => (
 					<ToggleGroupItem key={entry.value} value={entry.value} className="gap-1.5 px-3">
 						<span>{entry.label}</span>
-						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-[11px] text-muted-foreground">{entry.count}</span>
+						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{entry.count}</span>
 					</ToggleGroupItem>
 				))}
 			</ToggleGroup>
@@ -299,7 +283,7 @@ export default function AdminPluginsPage() {
 											key={plugin.id}
 											plugin={plugin}
 											isBusy={isBusy}
-											onOpenDetails={catalogEntry ? () => setSelectedEntry(catalogEntry) : undefined}
+											onOpenDetails={catalogEntry ? () => openCatalogDetails(catalogEntry) : undefined}
 											onUninstall={catalogEntry ? undefined : () => detach(uninstallPlugin(plugin.id))}
 											onEnable={(id) => detach(enablePlugin(id))}
 											onDisable={(id) => detach(disablePlugin(id))}
@@ -349,21 +333,13 @@ export default function AdminPluginsPage() {
 									key={`${entry.repositoryId}:${entry.id}`}
 									entry={entry}
 									isBusy={isBusy}
-									onOpenDetails={setSelectedEntry}
+									onOpenDetails={openCatalogDetails}
 								/>
 							))}
 						</div>
 					)}
 				</AdminSection>
 			)}
-
-			<PluginCatalogDetailDialog
-				entry={selectedEntry}
-				isBusy={isCatalogBusy}
-				onClose={() => setSelectedEntry(null)}
-				onInstall={handleInstall}
-				onUninstall={handleUninstall}
-			/>
 
 			<PluginRepositoriesDialog
 				open={repositoriesOpen}

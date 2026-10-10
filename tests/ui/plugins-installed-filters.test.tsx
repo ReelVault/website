@@ -121,10 +121,6 @@ await mock.module("@/pages/admin/plugins/components/plugin-catalog-card", () => 
 	pluginCatalogCategoryLabel: (category: string) => category,
 }));
 
-await mock.module("@/pages/admin/plugins/components/plugin-catalog-detail-dialog", () => ({
-	PluginCatalogDetailDialog: () => null,
-}));
-
 await mock.module("@/pages/admin/plugins/components/plugin-repositories-dialog", () => ({
 	PluginRepositoriesDialog: () => null,
 }));
