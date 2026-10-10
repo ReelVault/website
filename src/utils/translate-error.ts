@@ -14,6 +14,22 @@ function hasParams(inputs: MessageParams | undefined, names: readonly string[]):
 }
 
 /**
+ * A refused route budget lists the malformed entries and the entries of routes that cannot be tuned. The server
+ * sends both lists; an empty one names nothing, so only the list that has entries is shown.
+ */
+function routeOverrideMessage(inputs: MessageParams | undefined): string | null {
+	if (!hasParams(inputs, ["malformed", "untunable"])) return null;
+
+	const malformed = String(inputs.malformed);
+	const untunable = String(inputs.untunable);
+	if (untunable === "") return m.network_rate_limit_override_malformed({ malformed });
+
+	if (malformed === "") return m.network_rate_limit_override_untunable({ untunable });
+
+	return m.network_rate_limit_override_invalid({ malformed, untunable });
+}
+
+/**
  * Explicit index over catalog messages reachable as runtime string codes:
  * `DomainError.code` values and category fallbacks from the server, plus the
  * media-file audit reasons. Anything else falls back to the raw code — same
@@ -94,8 +110,7 @@ const dynamicMessages = {
 	media_probe_failed: () => m.media_probe_failed(),
 	media_probe_no_data: () => m.media_probe_no_data(),
 	not_found: () => m.not_found(),
-	network_rate_limit_override_invalid: (inputs) =>
-		m.network_rate_limit_override_invalid({ malformed: String(inputs?.malformed ?? ""), untunable: String(inputs?.untunable ?? "") }),
+	network_rate_limit_override_invalid: (inputs) => routeOverrideMessage(inputs),
 	plugin_load_failed: () => m.plugin_load_failed(),
 	plugin_manifest_invalid: () => m.plugin_manifest_invalid(),
 	plugin_repository_unavailable: () => m.plugin_repository_unavailable(),

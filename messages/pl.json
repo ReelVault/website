@@ -1813,6 +1813,8 @@
 	"admin_settings_rate_limit_route_overrides": "Limity tras",
 	"admin_settings_rate_limit_route_overrides_description": "Limity poszczególnych tras w postaci nazwa=max, oddzielone przecinkami, tylko dla tras administracyjnych do odczytu (np. admin-analytics=120). Limitów logowania, 2FA i kluczy nie da się zmienić.",
 	"network_rate_limit_override_invalid": "Limity tras wymagają par nazwa=max dla tras, które można zmieniać. Błędne: {malformed}. Niedozwolone: {untunable}.",
+	"network_rate_limit_override_malformed": "Limity tras wymagają par nazwa=max. Błędne: {malformed}.",
+	"network_rate_limit_override_untunable": "Limity tras można ustawić tylko dla administracyjnych tras tylko do odczytu. Niedozwolone: {untunable}.",
 	"admin_settings_rate_limit_route_multiplier": "Mnożnik limitów tras",
 	"admin_settings_rate_limit_route_multiplier_description": "Skaluje wszystkie limity poszczególnych tras.",
 	"admin_settings_rating_calc_description": "Sposób wyliczania oceny pokazywanej na plakacie: „Ważona liczbą głosów” premiuje źródła z dużą liczbą ocen (np. IMDb), „Prosta średnia” traktuje wszystkie źródła równo.",

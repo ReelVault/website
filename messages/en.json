@@ -1807,6 +1807,8 @@
 	"admin_settings_rate_limit_route_overrides": "Route budgets",
 	"admin_settings_rate_limit_route_overrides_description": "Per-route budgets as name=max pairs separated by commas, for read-only admin routes only (for example admin-analytics=120). Login, two-factor and key routes cannot be changed.",
 	"network_rate_limit_override_invalid": "Route budget overrides need name=max pairs for tunable routes. Malformed: {malformed}. Not tunable: {untunable}.",
+	"network_rate_limit_override_malformed": "Route budget overrides need name=max pairs. Malformed: {malformed}.",
+	"network_rate_limit_override_untunable": "Only read-only admin routes accept a budget override. Not tunable: {untunable}.",
 	"admin_settings_rate_limit_route_multiplier": "Route limit multiplier",
 	"admin_settings_rate_limit_route_multiplier_description": "Scales every per-route limit.",
 	"admin_settings_rating_calc_description": "How the rating shown on the poster is calculated: \"Weighted by votes\" favors sources with many ratings (e.g. IMDb), \"Simple average\" treats all sources equally.",

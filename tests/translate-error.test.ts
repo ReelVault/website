@@ -133,3 +133,27 @@ describe("parameterized server codes", () => {
 		expect(translateCode("plugin.catalog_entry_invalid", "fallback", { index: 2 })).toBe("fallback");
 	});
 });
+
+describe("route budget overrides", () => {
+	test("a refusal with only malformed entries names only those", () => {
+		const text = translateByKey("network.rate_limit_override_invalid", { malformed: "admin-analytics=abc", untunable: "" });
+
+		expect(text).toBe("Route budget overrides need name=max pairs. Malformed: admin-analytics=abc.");
+	});
+
+	test("a refusal with only routes that cannot be tuned names only those", () => {
+		const text = translateByKey("network.rate_limit_override_invalid", { malformed: "", untunable: "login" });
+
+		expect(text).toBe("Only read-only admin routes accept a budget override. Not tunable: login.");
+	});
+
+	test("a refusal with both lists names both", () => {
+		const text = translateByKey("network.rate_limit_override_invalid", { malformed: "bogus", untunable: "login" });
+
+		expect(text).toBe("Route budget overrides need name=max pairs for tunable routes. Malformed: bogus. Not tunable: login.");
+	});
+
+	test("a refusal without its lists never shows a sentence with blanks", () => {
+		expect(translateByKey("network.rate_limit_override_invalid")).not.toContain("Malformed:");
+	});
+});
