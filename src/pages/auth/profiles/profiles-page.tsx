@@ -88,7 +88,7 @@ export default function ProfilesSelectionPage() {
 				<div className="absolute bottom-[-10%] left-[-10%] size-120 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--secondary)_12%,transparent)_0%,transparent_70%)]" />
 				<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--background)_90%)]" />
 			</div>
-			<SimpleAnimation className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-16 px-6">
+			<SimpleAnimation className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-16 px-2 sm:px-6">
 				<header className="flex flex-col gap-3 text-center">
 					<span className="font-bold text-primary text-xs">{m.auth_welcome_back()}</span>
 					<h1 className="font-bold text-4xl tracking-tight sm:text-6xl lg:text-7xl">
@@ -106,7 +106,7 @@ export default function ProfilesSelectionPage() {
 							<AsyncButton
 								type="button"
 								variant="ghost"
-								className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:w-48"
+								className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:h-auto sm:w-48"
 								isPending={switchingProfileId === profile.id && switchProfileMutation.isPending}
 								pendingLabel={m.auth_profile_opening()}
 								onClick={() => detach(handleProfileSelect(profile))}
@@ -127,7 +127,7 @@ export default function ProfilesSelectionPage() {
 										</Badge>
 									)}
 								</div>
-								<span className="max-w-full truncate font-black text-lg text-muted-foreground uppercase tracking-widest transition-colors group-hover:text-foreground">
+								<span className="max-w-full truncate font-semibold text-lg text-muted-foreground transition-colors group-hover:text-foreground">
 									{profile.name}
 								</span>
 							</AsyncButton>
@@ -137,13 +137,13 @@ export default function ProfilesSelectionPage() {
 					<Button
 						type="button"
 						variant="ghost"
-						className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:w-48"
+						className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:h-auto sm:w-48"
 						render={<Link to="/auth/create-profile" search={redirect ? { redirect } : {}} />}
 					>
 						<div className="flex size-32 items-center justify-center rounded-3xl border-2 border-border border-dashed text-muted-foreground/40 transition-[background-color,border-color,transform,color] duration-500 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/5 group-hover:text-primary sm:size-44">
 							<Plus className="size-8" />
 						</div>
-						<span className="font-black text-lg text-muted-foreground/50 uppercase tracking-wider transition-colors group-hover:text-primary">
+						<span className="font-semibold text-lg text-muted-foreground transition-colors group-hover:text-primary">
 							{m.auth_add_profile()}
 						</span>
 					</Button>
