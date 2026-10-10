@@ -197,4 +197,11 @@ describe("installed plugin list filters", () => {
 
 		expect(installedNames(view)).toEqual([]);
 	});
+
+	test("the category choices are offered in the installed view too", () => {
+		const view = renderPage({ view: "installed" });
+
+		expect(view.getByText("metadata")).toBeTruthy();
+		expect(view.getByText("subtitles")).toBeTruthy();
+	});
 });

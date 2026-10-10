@@ -115,11 +115,15 @@ export default function AdminPluginsPage() {
 	const isBusy = isCatalogBusy || isReloadingAll || isEnabling || isDisabling || isReloading;
 
 	const availableCount = catalog.filter((entry) => entry.status !== "installed").length;
+	// The choices count what the current view lists: installed plugins in that view, catalog entries otherwise.
 	const categoriesWithCounts = CATEGORY_FILTERS.map((value) => ({
 		value,
 		label: pluginCatalogCategoryLabel(value),
-		count: catalog.filter((entry) => entry.category === value).length,
-	})).filter((entry) => entry.count > 0);
+		count:
+			view === "installed"
+				? plugins.filter((plugin) => catalog.find((entry) => entry.id === plugin.id)?.category === value).length
+				: catalog.filter((entry) => entry.category === value).length,
+	})).filter((entry) => entry.count > 0 || entry.value === category);
 
 	let entries = catalog;
 	if (view === "available") entries = entries.filter((entry) => entry.status !== "installed");
@@ -229,29 +233,27 @@ export default function AdminPluginsPage() {
 				/>
 			</div>
 
-			{view === "available" && (
-				<ToggleGroup
-					multiple={false}
-					value={[category]}
-					onValueChange={(value) => {
-						const selected = value[0];
-						if (selected === "all" || isConcreteCategory(selected)) setCategory(selected);
-					}}
-					variant="outline"
-					size="sm"
-					className="flex-wrap justify-start"
-				>
-					<ToggleGroupItem value="all" className="gap-1.5 px-3">
-						{m.common_all()}
+			<ToggleGroup
+				multiple={false}
+				value={[category]}
+				onValueChange={(value) => {
+					const selected = value[0];
+					if (selected === "all" || isConcreteCategory(selected)) setCategory(selected);
+				}}
+				variant="outline"
+				size="sm"
+				className="flex-wrap justify-start"
+			>
+				<ToggleGroupItem value="all" className="gap-1.5 px-3">
+					{m.common_all()}
+				</ToggleGroupItem>
+				{categoriesWithCounts.map((entry) => (
+					<ToggleGroupItem key={entry.value} value={entry.value} className="gap-1.5 px-3">
+						<span>{entry.label}</span>
+						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-[11px] text-muted-foreground">{entry.count}</span>
 					</ToggleGroupItem>
-					{categoriesWithCounts.map((entry) => (
-						<ToggleGroupItem key={entry.value} value={entry.value} className="gap-1.5 px-3">
-							<span>{entry.label}</span>
-							<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-[11px] text-muted-foreground">{entry.count}</span>
-						</ToggleGroupItem>
-					))}
-				</ToggleGroup>
-			)}
+				))}
+			</ToggleGroup>
 
 			{view === "installed" ? (
 				<AdminSection title={m.admin_plugins_installed_section()} description={m.admin_plugins_isolation_notice()}>
