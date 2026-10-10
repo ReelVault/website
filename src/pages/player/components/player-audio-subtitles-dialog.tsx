@@ -226,7 +226,7 @@ function CompatibilityToggleButton({
 			type="button"
 			variant="ghost"
 			size="icon-sm"
-			className="size-8 text-muted-foreground hover:text-foreground"
+			className="size-10 text-muted-foreground hover:text-foreground sm:size-8"
 			onClick={onToggle}
 			title={isShown ? m.player_hide_incompatible({ label }) : m.player_show_incompatible({ hiddenCount })}
 			aria-label={isShown ? m.player_hide_incompatible({ label }) : m.player_show_incompatible({ hiddenCount })}
@@ -314,9 +314,9 @@ export function PlayerAudioSubtitlesDialog() {
 							setActiveTab(tab);
 						}
 					}}
-					className="w-full"
+					className="w-full min-w-0"
 				>
-					<TabsList className="mb-4 w-fit bg-muted/60">
+					<TabsList className="mb-4 flex w-full max-w-full justify-start overflow-x-auto bg-muted/60 sm:w-fit sm:justify-center">
 						<TabsTrigger value="media">{m.player_tracks_subtitles()}</TabsTrigger>
 						<TabsTrigger value="sync">
 							{m.player_sync_heading()}
@@ -370,8 +370,8 @@ export function PlayerAudioSubtitlesDialog() {
 														{isSelected ? <Check className="size-4 text-primary" /> : null}
 													</div>
 													<div className="flex min-w-0 flex-1 items-center justify-between gap-2">
-														<div className="flex min-w-0 items-center gap-1.5 truncate">
-															<span className="truncate">{formatAudioLabel(stream)}</span>
+														<div className="flex min-w-0 items-center gap-1.5">
+															<span className="min-w-0 break-words">{formatAudioLabel(stream)}</span>
 															{isDirectCompatible ? (
 																<Badge
 																	variant="outline"
@@ -422,7 +422,7 @@ export function PlayerAudioSubtitlesDialog() {
 										aria-pressed={preferredOnlySubtitles}
 										onClick={() => setPreferredOnlySubtitles((value) => !value)}
 										className={cn(
-											"mt-2 self-start rounded-full px-3 py-1 text-xs transition-colors",
+											"mt-2 inline-flex min-h-10 items-center self-start rounded-full px-3 py-1 text-xs transition-colors sm:min-h-0",
 											preferredOnlySubtitles ? "bg-primary/15 text-primary" : "text-muted-foreground hover:text-foreground",
 										)}
 									>
@@ -467,7 +467,7 @@ export function PlayerAudioSubtitlesDialog() {
 													{isSelected ? <Check className="size-4 text-primary" /> : null}
 												</div>
 												<div className="flex min-w-0 flex-1 items-center justify-between gap-2">
-													<span className="truncate">{formatSubtitleLabel(subtitle)}</span>
+													<span className="min-w-0 break-words">{formatSubtitleLabel(subtitle)}</span>
 												</div>
 											</button>
 										);

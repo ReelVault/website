@@ -73,7 +73,7 @@ export function PlayerDiagnostics() {
 	return (
 		<aside
 			aria-label={m.player_diagnostics_label()}
-			className="absolute top-14 left-3 z-40 max-h-[85vh] w-[min(36rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border border-border/80 bg-popover/95 p-3.5 font-mono text-[11px] text-popover-foreground shadow-2xl md:top-16 md:left-8 md:p-4"
+			className="absolute top-14 left-3 z-40 max-h-[85vh] w-[min(36rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border border-border/80 bg-popover/95 p-3.5 font-mono text-popover-foreground text-xs shadow-2xl md:top-16 md:left-8 md:p-4"
 		>
 			{/* Header */}
 			<div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-border/40 border-b pb-2.5 font-sans">
@@ -85,7 +85,7 @@ export function PlayerDiagnostics() {
 					<Badge
 						variant={isTranscode ? "secondary" : "default"}
 						size="sm"
-						className={cn("font-mono text-[10px] uppercase", { "bg-success/90 text-white": !isTranscode })}
+						className={cn("font-mono text-xs uppercase", { "bg-success/90 text-white": !isTranscode })}
 					>
 						{isTranscode ? m.admin_workers_category_streaming() : m.common_direct_stream()}
 					</Badge>
@@ -95,14 +95,21 @@ export function PlayerDiagnostics() {
 						type="button"
 						variant="ghost"
 						size="sm"
-						className="h-7 gap-1 px-2 text-xs"
+						className="h-10 gap-1 px-2 text-xs sm:h-7"
 						onClick={() => detach(handleCopyJson)}
 						title={m.player_copy_raw_json_hint()}
 					>
 						<CopyIcon copied={hasCopied} />
 						<span className="hidden sm:inline">{m.player_copy_json_short()}</span>
 					</Button>
-					<Button type="button" variant="ghost" size="icon-sm" className="size-7" onClick={close} title={m.player_close_diagnostics()}>
+					<Button
+						type="button"
+						variant="ghost"
+						size="icon-sm"
+						className="size-10 sm:size-7"
+						onClick={close}
+						title={m.player_close_diagnostics()}
+					>
 						<X className="size-4" aria-hidden="true" />
 						<span className="sr-only">{m.common_close()}</span>
 					</Button>
@@ -120,7 +127,7 @@ export function PlayerDiagnostics() {
 							<Film className="size-3.5 text-primary" aria-hidden="true" />
 							<span>{m.player_file_source_server()}</span>
 						</div>
-						<div className="grid gap-1 text-[11px]">
+						<div className="grid gap-1 text-xs">
 							<div className="flex justify-between gap-2">
 								<span>{m.player_format_and_size()}</span>
 								<span className="font-medium text-foreground">
@@ -169,7 +176,7 @@ export function PlayerDiagnostics() {
 							<Cpu className="size-3.5 text-primary" aria-hidden="true" />
 							<span>{m.player_stream_pipeline_heading()}</span>
 						</div>
-						<div className="grid gap-1 text-[11px]">
+						<div className="grid gap-1 text-xs">
 							<div className="flex justify-between gap-2">
 								<span>{m.player_server_decision()}</span>
 								<span className="text-right font-medium text-foreground">
@@ -250,7 +257,7 @@ export function PlayerDiagnostics() {
 							<Layers className="size-3.5 text-primary" aria-hidden="true" />
 							<span>{m.player_buffer_network()}</span>
 						</div>
-						<div className="grid gap-1 text-[11px]">
+						<div className="grid gap-1 text-xs">
 							{diagnostics.buffer ? (
 								<>
 									<div className="flex justify-between gap-2">
@@ -295,7 +302,7 @@ export function PlayerDiagnostics() {
 							<Monitor className="size-3.5 text-primary" aria-hidden="true" />
 							<span>{m.player_html5_player()}</span>
 						</div>
-						<div className="grid gap-1 text-[11px]">
+						<div className="grid gap-1 text-xs">
 							<div className="flex justify-between gap-2">
 								<span>{m.player_rendered_resolution()}</span>
 								<span className="font-medium text-foreground">
@@ -316,7 +323,7 @@ export function PlayerDiagnostics() {
 							</div>
 							<div className="flex justify-between gap-2">
 								<span>{m.player_session_id()}</span>
-								<span className="truncate font-mono text-[10px] text-foreground" title={session.sessionId}>
+								<span className="truncate font-mono text-foreground text-xs" title={session.sessionId}>
 									{session.sessionId}
 								</span>
 							</div>

@@ -102,7 +102,7 @@ function SpeedSlider({
 	const fillPercent = ((playbackRate - speedMin) / (speedMax - speedMin)) * 100;
 
 	return (
-		<div className={cn("relative flex h-8 items-center", className)}>
+		<div className={cn("relative flex h-10 items-center sm:h-8", className)}>
 			<div className="relative z-0 h-1.25 w-full rounded-sm bg-foreground/30">
 				<div className="absolute inset-y-0 left-0 rounded-sm bg-primary transition-[width]" style={{ width: `${fillPercent}%` }} />
 				<div className="absolute inset-0 flex items-center justify-between px-0">
