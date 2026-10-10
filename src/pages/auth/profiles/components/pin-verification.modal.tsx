@@ -105,7 +105,7 @@ export function PinVerificationModal({
 						<Button
 							type="button"
 							variant="ghost"
-							className="h-auto w-full justify-center gap-1.5 p-0 hover:bg-transparent sm:gap-3"
+							className="h-auto w-full justify-center gap-1.5 p-0 hover:bg-transparent sm:h-auto sm:min-h-8 sm:gap-3"
 							onClick={() => inputRef.current?.focus()}
 						>
 							{Array.from({ length: Math.min(Math.max(pin.length, 4), 8) }, (_unused, slot) => (

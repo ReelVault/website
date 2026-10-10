@@ -34,7 +34,7 @@ export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 				data-entry-id={entry.id}
 				aria-expanded={expanded}
 				onClick={() => setExpanded((prev) => !prev)}
-				className="h-auto w-full justify-start rounded-none p-3 text-left text-sm"
+				className="h-auto w-full justify-start rounded-none p-3 text-left text-sm sm:h-auto sm:min-h-8"
 			>
 				<span className="shrink-0 text-muted-foreground">
 					{expanded ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}

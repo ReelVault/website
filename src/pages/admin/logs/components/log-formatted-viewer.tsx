@@ -50,7 +50,7 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 								variant="ghost"
 								onClick={handleToggleExpanded}
 								data-index={idx}
-								className="h-auto w-full justify-start rounded-none px-3 py-2 text-left font-mono text-xs"
+								className="h-auto w-full justify-start rounded-none px-3 py-2 text-left font-mono text-xs sm:h-auto sm:min-h-8"
 							>
 								<span className="mr-1.5 shrink-0 text-muted-foreground">
 									{isExpanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}

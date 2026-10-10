@@ -70,7 +70,7 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 									type="button"
 									variant="link"
 									size="sm"
-									className="h-auto px-0 text-muted-foreground text-xs"
+									className="h-auto px-0 text-muted-foreground text-xs sm:h-auto sm:min-h-8"
 									disabled={isDismissing}
 									onClick={() => {
 										detach(onDismiss(notification.id));
@@ -94,7 +94,7 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 										type="button"
 										variant="link"
 										size="sm"
-										className="h-auto px-0 text-primary text-xs"
+										className="h-auto px-0 text-primary text-xs sm:h-auto sm:min-h-8"
 										disabled={isMarkingRead}
 										onClick={() => {
 											detach(onMarkRead(notification.id));

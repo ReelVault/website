@@ -25,7 +25,7 @@ export function AvatarPicker({
 		<FullscreenDialog open={isOpen} onOpenChange={setIsOpen}>
 			<FullscreenDialogTrigger
 				disabled={!editable}
-				render={<Button type="button" variant="ghost" className="group relative h-auto rounded-[2rem] p-0" />}
+				render={<Button type="button" variant="ghost" className="group relative h-auto rounded-[2rem] p-0 sm:h-auto sm:min-h-8" />}
 			>
 				<AvatarDisplay currentAvatar={currentAvatar} size={size} editable={editable} />
 			</FullscreenDialogTrigger>

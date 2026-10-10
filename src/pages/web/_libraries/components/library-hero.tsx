@@ -84,7 +84,7 @@ export function LibraryHero({
 									type="button"
 									variant="ghost"
 									onClick={handleTitleClick}
-									className="h-auto max-w-full cursor-pointer select-none whitespace-normal p-0 transition-opacity hover:bg-transparent hover:opacity-90"
+									className="h-auto max-w-full cursor-pointer select-none whitespace-normal p-0 transition-opacity hover:bg-transparent hover:opacity-90 sm:h-auto"
 								>
 									<span
 										className={cn(
