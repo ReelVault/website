@@ -138,6 +138,7 @@ export default function ProfilesSelectionPage() {
 						type="button"
 						variant="ghost"
 						className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:h-auto sm:w-48"
+						nativeButton={false}
 						render={<Link to="/auth/create-profile" search={redirect ? { redirect } : {}} />}
 					>
 						<div className="flex size-32 items-center justify-center rounded-3xl border-2 border-border border-dashed text-muted-foreground/40 transition-[background-color,border-color,transform,color] duration-500 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/5 group-hover:text-primary sm:size-44">
