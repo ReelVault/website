@@ -1,5 +1,5 @@
 import type { ClientCapabilities, MyPlaybackSessionsResponse, PlaybackCommand, PlaybackSession } from "@reelvault/sdk";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
 import { safeUuid } from "@/utils/id-utils";
@@ -201,5 +201,20 @@ export function useMyPlaybackSessions(options?: { refetchInterval?: number }) {
 			idleMs: 60_000,
 		}),
 		refetchIntervalInBackground: false,
+	});
+}
+
+/** Ends every playback session of the profile, on every device; the remote page's list refetches afterwards. */
+export function useReleaseMyPlaybackSessions() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: () => reelvault.playbackSessions.releaseMine(),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: playbackSessionKeys.mine() });
+		},
+		onError: (error) => {
+			toastError(m.user_playback_sessions_release_failed(), error);
+		},
 	});
 }

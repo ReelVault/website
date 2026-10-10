@@ -297,6 +297,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **TV focus on the player controls** — on TV the D-pad moves focus between the player's control buttons while they are on screen, and Enter selects the focused one. When focus is on the video, Down opens the controls and focuses the first button instead of lowering the volume; Up, Left and Right keep their behaviour.
 - **Clear messages for list query errors** — the codes of list query errors are translated: an invalid or unsupported page cursor, fields that are too long, too many or nested too deeply, and filters with too many values.
 - **Subtitle provider switch** — the admin subtitles page has a switch per subtitle provider. An off provider is not searched for subtitles and cannot be downloaded from. Requires SDK and server with the subtitle provider switch.
+- **Remote control: close all and positions** — the remote page has *Close all* (after a confirmation) that stops every playback session of the profile. Each session shows its position and whether it is paused.
 
 ### Fixes
 

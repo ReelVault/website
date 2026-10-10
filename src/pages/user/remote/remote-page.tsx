@@ -1,7 +1,7 @@
 import type { PlaybackCommand, PlaybackSessionSummary } from "@reelvault/sdk";
 import { Tv } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useMyPlaybackSessions, usePlaybackCommand } from "@/client/hooks/use-playback-session";
+import { useMyPlaybackSessions, usePlaybackCommand, useReleaseMyPlaybackSessions } from "@/client/hooks/use-playback-session";
 import { realtimeConnection, useRealtimeEvent } from "@/client/hooks/use-realtime";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -25,6 +25,7 @@ export default function RemotePage() {
 		selectedSessionId && sessions.some((s) => s.sessionId === selectedSessionId) ? selectedSessionId : (sessions[0]?.sessionId ?? null);
 	const selectedSession = sessions.find((session) => session.sessionId === effectiveSessionId) ?? null;
 	const commandMutation = usePlaybackCommand(effectiveSessionId ?? undefined);
+	const releaseSessions = useReleaseMyPlaybackSessions();
 
 	const refreshSessions = () => detach(sessionsQuery.refetch());
 
@@ -78,7 +79,19 @@ export default function RemotePage() {
 			return <AppEmptyState icon={Tv} title={m.user_no_active_playback()} description={m.user_start_on_any_device()} />;
 		}
 
-		return <RemoteSessionsListSection sessions={sessions} selectedSessionId={effectiveSessionId} onSelectSession={setSelectedSessionId} />;
+		return (
+			<RemoteSessionsListSection
+				sessions={sessions}
+				selectedSessionId={effectiveSessionId}
+				onSelectSession={setSelectedSessionId}
+				onCloseAll={() =>
+					releaseSessions.mutate(undefined, {
+						onSuccess: (result) => toast.success(m.user_playback_sessions_released({ count: result.closed })),
+					})
+				}
+				isClosing={releaseSessions.isPending}
+			/>
+		);
 	};
 
 	return (
