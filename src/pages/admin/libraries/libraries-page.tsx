@@ -1,11 +1,11 @@
 import type { LibraryHealth, LibraryWithRelations } from "@reelvault/sdk";
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAdminLibraries, useCheckLibraryErrors, useLibraryHealth } from "@/client/hooks/use-libraries";
 import { AppErrorState } from "@/components/app-states";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { CreateLibraryDialog } from "./components/create-library-dialog";
-import { EditLibraryDialog } from "./components/edit-library-dialog";
 import { IgnoredAssetsDialog } from "./components/ignored-assets-dialog";
 import { LibraryErrorsCheckDialog } from "./components/library-errors-check-dialog";
 import { LibraryFilterBar, type LibrarySortOption, type LibraryTypeFilter } from "./components/library-filter-bar";
@@ -49,8 +49,7 @@ export default function AdminLibrariesPage() {
 	const [typeFilter, setTypeFilter] = useState<LibraryTypeFilter>("all");
 	const [sort, setSort] = useState<LibrarySortOption>("name");
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-	const [editingLibrary, setEditingLibrary] = useState<LibraryWithRelations | null>(null);
+	const navigate = useNavigate();
 	const [ignoredAssetsLibraryId, setIgnoredAssetsLibraryId] = useState<string | null>(null);
 	const [scanFindingsLibraryId, setScanFindingsLibraryId] = useState<string | null>(null);
 	const checkErrorsMutation = useCheckLibraryErrors();
@@ -73,8 +72,7 @@ export default function AdminLibrariesPage() {
 	const handlePathScan = (libraryId: string, pathId: string) => detach(scanLibraryPath({ libraryId, pathId }));
 
 	const openEditModal = (lib: LibraryWithRelations) => {
-		setEditingLibrary(lib);
-		setIsEditModalOpen(true);
+		detach(navigate({ to: "/admin/libraries/$id", params: { id: lib.id } }));
 	};
 
 	/** Queues the check and opens its result dialog, which follows the check until it has completed. */
@@ -186,7 +184,6 @@ export default function AdminLibrariesPage() {
 				onOpenChange={(open) => !open && setErrorsCheckOperationId(null)}
 			/>
 			<CreateLibraryDialog isOpen={isCreateModalOpen} onOpenChange={setIsCreateModalOpen} />
-			<EditLibraryDialog library={editingLibrary} isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
 			<IgnoredAssetsDialog
 				libraryId={ignoredAssetsLibraryId}
 				isOpen={ignoredAssetsLibraryId !== null}

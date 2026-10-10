@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Edit a library on its own page** — Edit on a library card opens `/admin/libraries/<id>`, with the same fields as before (type, name, source directories, sidecar format, metadata language, provider order). Cancel and Save return to the libraries list. The edit dialog is gone.
 - **Episode files on their own page** — the files action on an episode opens the same files page as a title, showing that episode's files under its number and title, with the episode refresh buttons for admins. The files dialog is gone.
 - **Easier-to-read labels** — small labels on the browse, details, watchlist, profile, notification and sign-in screens use sentence case instead of tracked capitals, and text that was 7–10 px is 12 px. The app footer keeps its decorative capitals.
 - **A title's files on their own page** — File information in a poster's menu opens `/media-files/<id>`, with the title's files, their search, and for admins the refresh buttons. The page replaces the dialog for titles; episode files still open the dialog from the episode list.
