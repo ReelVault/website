@@ -13,7 +13,6 @@ import { LibraryGrid } from "./components/library-grid";
 import { LibraryHeader } from "./components/library-header";
 import { LibraryHealthDialog } from "./components/library-health-dialog";
 import { LibraryKpiGrid } from "./components/library-kpi-grid";
-import { ScanFindingsDialog } from "./components/scan-findings-dialog";
 
 const EMPTY_SET = new Set<string>();
 
@@ -51,7 +50,6 @@ export default function AdminLibrariesPage() {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const navigate = useNavigate();
 	const [ignoredAssetsLibraryId, setIgnoredAssetsLibraryId] = useState<string | null>(null);
-	const [scanFindingsLibraryId, setScanFindingsLibraryId] = useState<string | null>(null);
 	const checkErrorsMutation = useCheckLibraryErrors();
 	const health = useLibraryHealth();
 	const [healthLibraryId, setHealthLibraryId] = useState<string | null>(null);
@@ -73,6 +71,10 @@ export default function AdminLibrariesPage() {
 
 	const openEditModal = (lib: LibraryWithRelations) => {
 		detach(navigate({ to: "/admin/libraries/$id", params: { id: lib.id } }));
+	};
+
+	const openScanFindings = (libraryId: string) => {
+		detach(navigate({ to: "/admin/libraries/$id/findings", params: { id: libraryId }, search: { status: "active" } }));
 	};
 
 	/** Queues the check and opens its result dialog, which follows the check until it has completed. */
@@ -162,7 +164,7 @@ export default function AdminLibrariesPage() {
 				onEdit={openEditModal}
 				onCheckErrors={handleCheckErrors}
 				onShowIgnoredAssets={setIgnoredAssetsLibraryId}
-				onShowScanFindings={setScanFindingsLibraryId}
+				onShowScanFindings={openScanFindings}
 				onAddClick={() => setIsCreateModalOpen(true)}
 				hasSearchQuery={Boolean(search.trim()) || typeFilter !== "all"}
 				invalidPathCounts={invalidPathCounts}
@@ -188,11 +190,6 @@ export default function AdminLibrariesPage() {
 				libraryId={ignoredAssetsLibraryId}
 				isOpen={ignoredAssetsLibraryId !== null}
 				onOpenChange={(open) => !open && setIgnoredAssetsLibraryId(null)}
-			/>
-			<ScanFindingsDialog
-				libraryId={scanFindingsLibraryId}
-				isOpen={scanFindingsLibraryId !== null}
-				onOpenChange={(open) => !open && setScanFindingsLibraryId(null)}
 			/>
 		</div>
 	);

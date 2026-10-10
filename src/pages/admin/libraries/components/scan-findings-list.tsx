@@ -1,114 +1,44 @@
 import type { ScanFinding, ScanFindingStatus } from "@reelvault/sdk";
-import { AlertTriangle, FileQuestion, RefreshCw } from "lucide-react";
-import { type ReactNode, useState } from "react";
-import {
-	useAdminLibraries,
-	useLibraryScanFindings,
-	useScanFindingCandidates,
-	useSetScanFindingIgnored,
-} from "@/client/hooks/use-libraries";
+import { FileQuestion } from "lucide-react";
+import { useState } from "react";
+import { useLibraryScanFindings, useScanFindingCandidates, useSetScanFindingIgnored } from "@/client/hooks/use-libraries";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
-import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { translateByKey } from "@/utils/translate-error";
 
-export function ScanFindingsDialog({
-	libraryId,
-	isOpen,
-	onOpenChange,
-}: {
-	libraryId: string | null;
-	isOpen: boolean;
-	onOpenChange: (open: boolean) => void;
-}) {
-	const [status, setStatus] = useState<ScanFindingStatus>("active");
-	const { data, isLoading, isError, error, refetch } = useLibraryScanFindings(libraryId ?? "", status, isOpen && libraryId !== null);
-	const { scanLibrary, isScanning, mutationVariables } = useAdminLibraries();
+/** The findings of one library for the chosen tab, with each finding's ignore or restore action. */
+export function ScanFindingsList({ libraryId, status }: { libraryId: string; status: ScanFindingStatus }) {
+	const { data, isLoading, isError, error, refetch } = useLibraryScanFindings(libraryId, status, true);
 	const items = data?.data ?? [];
 
-	let findingsBody: ReactNode;
-	if (isLoading) {
-		findingsBody = <AppLoadingState />;
-	} else if (isError) {
-		findingsBody = <AppErrorState error={error} onRetry={() => detach(refetch())} />;
-	} else if (items.length === 0) {
-		findingsBody =
-			status === "ignored" ? (
-				<AppEmptyState
-					icon={FileQuestion}
-					title={m.admin_libraries_findings_ignored_empty()}
-					description={m.admin_libraries_findings_ignored_empty_desc()}
-				/>
-			) : (
-				<AppEmptyState
-					icon={FileQuestion}
-					title={m.admin_libraries_needs_attention_empty()}
-					description={m.admin_libraries_needs_attention_empty_desc()}
-				/>
-			);
-	} else {
-		findingsBody = (
-			<div className="flex flex-col gap-2">
-				{items.map((finding) => (
-					<FindingItem key={finding.filePath} libraryId={libraryId ?? ""} finding={finding} status={status} />
-				))}
-			</div>
+	if (isLoading) return <AppLoadingState />;
+
+	if (isError) return <AppErrorState error={error} onRetry={() => detach(refetch())} />;
+
+	if (items.length === 0) {
+		return status === "ignored" ? (
+			<AppEmptyState
+				icon={FileQuestion}
+				title={m.admin_libraries_findings_ignored_empty()}
+				description={m.admin_libraries_findings_ignored_empty_desc()}
+			/>
+		) : (
+			<AppEmptyState
+				icon={FileQuestion}
+				title={m.admin_libraries_needs_attention_empty()}
+				description={m.admin_libraries_needs_attention_empty_desc()}
+			/>
 		);
 	}
 
 	return (
-		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-lg">
-				<DialogHeader>
-					<DialogTitle className="gap-2">
-						<AlertTriangle className="size-5 text-muted-foreground" />
-						{data ? m.admin_libraries_needs_attention_count({ count: data.counts.active }) : m.admin_libraries_needs_attention()}
-					</DialogTitle>
-					<DialogDescription>{m.admin_libraries_needs_attention_desc()}</DialogDescription>
-				</DialogHeader>
-
-				<ToggleGroup
-					variant="outline"
-					size="sm"
-					value={[status]}
-					onValueChange={(next) => {
-						const nextStatus = next[next.length - 1];
-						if (nextStatus === "active" || nextStatus === "ignored") setStatus(nextStatus);
-					}}
-					className="w-fit"
-				>
-					<ToggleGroupItem value="active" className="px-3">
-						{m.admin_libraries_needs_attention()}
-					</ToggleGroupItem>
-					<ToggleGroupItem value="ignored" className="px-3">
-						{m.admin_libraries_findings_tab_ignored({ count: data?.counts.ignored ?? 0 })}
-					</ToggleGroupItem>
-				</ToggleGroup>
-
-				<div className="max-h-100 overflow-y-auto">{findingsBody}</div>
-
-				{libraryId !== null && status === "active" && items.length > 0 && (
-					<AsyncButton
-						variant="outline"
-						size="sm"
-						className="gap-2 self-start"
-						onClick={() => {
-							onOpenChange(false);
-							detach(scanLibrary(libraryId));
-						}}
-						isPending={isScanning && mutationVariables.scan === libraryId}
-						pendingLabel={m.admin_libraries_scanning()}
-					>
-						<RefreshCw className="size-3.5" />
-						<span>{m.admin_libraries_scan_library()}</span>
-					</AsyncButton>
-				)}
-			</DialogContent>
-		</Dialog>
+		<div className="flex flex-col gap-2">
+			{items.map((finding) => (
+				<FindingItem key={finding.filePath} libraryId={libraryId} finding={finding} status={status} />
+			))}
+		</div>
 	);
 }
 

@@ -8,7 +8,7 @@ import { m } from "@/paraglide/messages";
 import { EditLibraryForm } from "./components/edit-library-form";
 
 export default function LibraryEditPage() {
-	const { id } = useParams({ from: "/admin/libraries/$id" });
+	const { id } = useParams({ from: "/admin/libraries/$id/" });
 	const navigate = useNavigate();
 	const { libraries, isLoading } = useAdminLibraries();
 	const library = libraries.find((lib) => lib.id === id);
