@@ -98,13 +98,13 @@ export function PreferenceLanguageList({
 				<ol className="flex flex-wrap gap-2">
 					{selected.map((code, index) => (
 						<li key={code}>
-							<Badge variant="secondary" className="h-7 gap-1.5 pr-1.5">
+							<Badge variant="secondary" className="h-10 gap-1.5 pr-1.5 sm:h-7">
 								<span className="font-mono text-muted-foreground text-xs">{index + 1}</span>
 								{labelFor(code)}
 								{index > 0 && (
 									<button
 										type="button"
-										className="text-muted-foreground hover:text-foreground"
+										className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
 										aria-label={m.user_language_list_move_earlier({ language: labelFor(code) })}
 										onClick={() => commit([...selected.slice(0, index - 1), code, selected[index - 1] ?? "", ...selected.slice(index + 1)])}
 									>
@@ -113,7 +113,7 @@ export function PreferenceLanguageList({
 								)}
 								<button
 									type="button"
-									className="text-muted-foreground hover:text-foreground"
+									className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
 									aria-label={m.user_language_list_remove({ language: labelFor(code) })}
 									onClick={() => commit(selected.filter((entry) => entry !== code))}
 								>
