@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "bun:test";
 import { calculateSpatialScore, findInitialCandidate, isFormElement } from "../src/lib/spatial-navigation";
 
 function makeRect(x: number, y: number, width: number, height: number): DOMRect {
@@ -102,6 +102,13 @@ describe("isFormElement", () => {
 });
 
 describe("findInitialCandidate", () => {
+	const originalWindow = globalThis.window;
+
+	afterEach(() => {
+		// The stub below replaces the browser window; the suites that run after this one need the real window back.
+		globalThis.window = originalWindow;
+	});
+
 	it("picks candidate in viewport instead of offscreen top candidate", () => {
 		// Mock window dimensions
 		globalThis.window = {
