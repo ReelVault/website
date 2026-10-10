@@ -80,7 +80,10 @@ export function TaxonomyPage({
 	return (
 		<div className="cinema-page">
 			<main className="cinema-shell relative">
-				<Link to={backTo} className="inline-flex items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-primary">
+				<Link
+					to={backTo}
+					className="inline-flex min-h-10 items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-primary sm:min-h-0"
+				>
 					<ArrowLeft className="size-4" aria-hidden="true" /> {backLabel}
 				</Link>
 				{taxonomyQuery.isLoading && (
