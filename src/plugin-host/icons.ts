@@ -85,11 +85,12 @@ const PLUGIN_ICONS: Record<string, LucideIcon> = {
 	Zap,
 };
 
+/** An allowlisted icon for the name; a missing or unknown name gets Puzzle (only a non-empty unknown name is reported). */
 export function getPluginIcon(name?: string): LucideIcon {
-	const resolved = PLUGIN_ICONS[name ?? ""] ?? Puzzle;
-	warnUnknownIcon(resolved === Puzzle ? String(name) : "");
+	if (name && Object.hasOwn(PLUGIN_ICONS, name)) return PLUGIN_ICONS[name] ?? Puzzle;
+	if (name) warnUnknownIcon(name);
 
-	return resolved;
+	return Puzzle;
 }
 
 const warnedIcons = new Set<string>();
