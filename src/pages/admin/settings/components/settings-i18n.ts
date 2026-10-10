@@ -432,6 +432,14 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_ffmpeg_tone_map_algorithm(),
 		description: m.admin_settings_ffmpeg_tone_map_algorithm_description(),
 	},
+	"ffmpeg.audioBitrateKbps": {
+		label: m.admin_settings_ffmpeg_audio_bitrate(),
+		description: m.admin_settings_ffmpeg_audio_bitrate_description(),
+	},
+	"ffmpeg.downmixToStereo": {
+		label: m.admin_settings_ffmpeg_downmix_stereo(),
+		description: m.admin_settings_ffmpeg_downmix_stereo_description(),
+	},
 	"ffprobe.path": {
 		label: m.admin_settings_ffprobe_path(),
 		description: m.admin_settings_ffprobe_path_description(),

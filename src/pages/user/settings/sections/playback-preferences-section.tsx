@@ -38,6 +38,7 @@ const toPreferencesState = (value: ServerPreferences): ProfilePreferencesState =
 	watchlistAutoRemoveWatched: value.watchlistAutoRemoveWatched,
 	hideRatingOverlay: value.hideRatingOverlay,
 	hdrMode: value.hdrMode,
+	maxStreamingBitrateKbps: value.maxStreamingBitrateKbps,
 	mutedNotificationTypes: value.mutedNotificationTypes,
 	hiddenPages: value.hiddenPages,
 	subtitleSize: value.subtitleSize,
@@ -102,6 +103,7 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 				watchlistAutoRemoveWatched: preferences.watchlistAutoRemoveWatched,
 				hideRatingOverlay: preferences.hideRatingOverlay,
 				hdrMode: preferences.hdrMode,
+				maxStreamingBitrateKbps: preferences.maxStreamingBitrateKbps,
 				subtitleSize: preferences.subtitleSize,
 				subtitlePosition: preferences.subtitlePosition,
 				subtitleColor: preferences.subtitleColor,
@@ -150,7 +152,7 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 				/>
 			</SettingsCategory>
 
-			<SettingsCategory title={m.user_hdr_playback_title()}>
+			<SettingsCategory title={m.user_video_quality_title()}>
 				<div className="grid gap-3 sm:grid-cols-2">
 					<PreferenceSelect
 						label={m.user_hdr_playback_label()}
@@ -160,6 +162,18 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 						options={[
 							["auto", m.user_hdr_mode_auto()],
 							["toneMapToSdr", m.user_hdr_mode_tone_map()],
+						]}
+					/>
+					<PreferenceSelect
+						label={m.user_stream_limit_label()}
+						description={m.user_stream_limit_desc()}
+						value={String(preferences.maxStreamingBitrateKbps)}
+						onChange={(value) => updatePreferencesPatch({ maxStreamingBitrateKbps: Number(value) })}
+						options={[
+							["0", m.user_stream_limit_unlimited()],
+							["1500", m.user_stream_limit_mbps({ mbps: "1.5" })],
+							["4000", m.user_stream_limit_mbps({ mbps: "4" })],
+							["8000", m.user_stream_limit_mbps({ mbps: "8" })],
 						]}
 					/>
 				</div>

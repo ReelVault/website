@@ -20,6 +20,7 @@ export interface ProfilePreferencesState {
 	watchlistAutoRemoveWatched: boolean;
 	hideRatingOverlay: boolean;
 	hdrMode: "auto" | "toneMapToSdr";
+	maxStreamingBitrateKbps: number;
 	/** Comma-separated notification types this profile has muted. */
 	mutedNotificationTypes: string;
 	/** Comma-separated optional menu pages this profile hides. */
@@ -49,6 +50,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	watchlistAutoRemoveWatched: false,
 	hideRatingOverlay: false,
 	hdrMode: "auto",
+	maxStreamingBitrateKbps: 0,
 	mutedNotificationTypes: "",
 	hiddenPages: "",
 	subtitleSize: "normal",
@@ -76,6 +78,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"watchlistAutoRemoveWatched",
 	"hideRatingOverlay",
 	"hdrMode",
+	"maxStreamingBitrateKbps",
 	"mutedNotificationTypes",
 	"hiddenPages",
 	"subtitleSize",
