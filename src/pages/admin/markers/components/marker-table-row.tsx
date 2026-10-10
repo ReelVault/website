@@ -108,7 +108,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 							size="sm"
 							variant="ghost"
 							nativeButton={false}
-							render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" />}
+							render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" rel="noopener noreferrer" />}
 							title={m.admin_markers_open_player()}
 							className="h-8 gap-1.5 text-xs hover:text-primary"
 						>

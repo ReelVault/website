@@ -67,7 +67,7 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 						size="sm"
 						variant="ghost"
 						nativeButton={false}
-						render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" />}
+						render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" rel="noopener noreferrer" />}
 						className="h-8 gap-1.5 text-xs hover:text-primary"
 					>
 						<Play className="size-3.5" />

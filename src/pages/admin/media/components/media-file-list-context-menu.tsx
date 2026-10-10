@@ -38,7 +38,10 @@ export function MediaFileListContextMenu({ file, isDeleting, onDelete, onOpenRea
 					<Layers className="size-3.5 text-primary" />
 					<span>{m.components_media_file_change_metadata_assignment()}</span>
 				</ContextMenuItem>
-				<ContextMenuItem render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" />} className="gap-2.5">
+				<ContextMenuItem
+					render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}
+					className="gap-2.5"
+				>
 					<Play className="size-3.5 text-muted-foreground" />
 					<span>{m.admin_markers_open_player()}</span>
 				</ContextMenuItem>

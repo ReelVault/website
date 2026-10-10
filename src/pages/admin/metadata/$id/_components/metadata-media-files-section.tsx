@@ -152,7 +152,7 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 					size="icon"
 					className="size-8"
 					nativeButton={false}
-					render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" />}
+					render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}
 					title={m.admin_metadata_open_in_player()}
 					aria-label={m.admin_metadata_play_file({ fileName: file.fileName })}
 				>
