@@ -102,6 +102,12 @@ describe("profile picker", () => {
 		expect(view.getByText("Add profile").closest("a")?.getAttribute("href")).toBe("/auth/create-profile");
 	});
 
+	test("the add tile is announced as a link, not a button", () => {
+		const view = renderPicker();
+
+		expect(view.getByText("Add profile").closest("a")?.getAttribute("role")).toBe("link");
+	});
+
 	test("the add tile keeps the redirect target", () => {
 		searchState.redirect = "/movies/1";
 
