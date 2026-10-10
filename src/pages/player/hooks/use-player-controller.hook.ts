@@ -897,7 +897,7 @@ export function usePlayerController({
 				}
 			});
 		},
-		delay: HEARTBEAT_INTERVAL_MS,
+		delay: session.heartbeatIntervalMs ?? HEARTBEAT_INTERVAL_MS,
 	});
 
 	const lastProgressFlushAtRef = useRef(0);
