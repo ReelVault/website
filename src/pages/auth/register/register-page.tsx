@@ -26,7 +26,10 @@ const joinBrandMarkup: { brand: InlineMarkupRenderer } = {
 
 const alreadyHaveAccountMarkup: { link: InlineMarkupRenderer } = {
 	link: ({ children }) => (
-		<Link className="font-bold text-foreground underline decoration-primary/50 underline-offset-4 hover:text-primary" to="/auth/login">
+		<Link
+			className="inline-flex min-h-10 items-center font-bold text-foreground underline decoration-primary/50 underline-offset-4 hover:text-primary sm:min-h-0"
+			to="/auth/login"
+		>
 			{children}
 		</Link>
 	),
