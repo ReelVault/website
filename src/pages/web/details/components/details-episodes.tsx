@@ -1,10 +1,9 @@
 import type { SeasonWithEpisodes } from "@reelvault/sdk";
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRefreshEpisode, useRefreshEpisodeImage } from "@/client/hooks/use-episodes";
 import { usePlaybackMutations } from "@/client/hooks/use-me-playback";
 import { AppEmptyState } from "@/components/app-states";
-import { MediaFilesDetailsDialog } from "@/components/media-files-details-dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { detach } from "@/lib/detach";
@@ -36,11 +35,19 @@ export function DetailsEpisodes({
 	const navigateToPlayer = (mediaFileId: string | undefined) => {
 		if (mediaFileId) detach(navigate({ to: "/player/$id", params: { id: mediaFileId } }));
 	};
-	const [selectedEpisodeForFiles, setSelectedEpisodeForFiles] = useState<{
-		id: string;
-		number: number;
-		title?: string | null;
-	} | null>(null);
+	// The files of one episode open on their own page; the episode id and its label travel in the URL.
+	const openEpisodeFiles = (episode: { id: string; number: number; title?: string | null }) => {
+		detach(
+			navigate({
+				to: "/media-files/$id",
+				params: { id: metadataId },
+				search: {
+					episode: episode.id,
+					label: `${episode.number}. ${episode.title ?? m.web_episode_fallback_title({ number: episode.number })}`,
+				},
+			}),
+		);
+	};
 	const episodeRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 
 	const refreshEpisodeMutation = useRefreshEpisode(metadataId);
@@ -153,7 +160,7 @@ export function DetailsEpisodes({
 								onResetProgress={(fileId) => {
 									detach(resetProgress(fileId, "file"));
 								}}
-								onSelectForFiles={setSelectedEpisodeForFiles}
+								onSelectForFiles={openEpisodeFiles}
 								onRefreshEpisode={(id) => refreshEpisodeMutation.mutate(id)}
 								onRefreshImage={(id) => refreshEpisodeImageMutation.mutate(id)}
 								onRegisterRef={(el) => {
@@ -164,18 +171,6 @@ export function DetailsEpisodes({
 					})}
 				</div>
 			</ScrollArea>
-
-			<MediaFilesDetailsDialog
-				open={Boolean(selectedEpisodeForFiles)}
-				onOpenChange={(open) => !open && setSelectedEpisodeForFiles(null)}
-				metadataId={metadataId}
-				episodeId={selectedEpisodeForFiles?.id}
-				title={
-					selectedEpisodeForFiles
-						? `${selectedEpisodeForFiles.number}. ${selectedEpisodeForFiles.title ?? m.web_episode_fallback_title({ number: selectedEpisodeForFiles.number })}`
-						: undefined
-				}
-			/>
 		</div>
 	);
 }
