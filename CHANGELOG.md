@@ -296,6 +296,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Bulk delete of media files and titles** — the admin media and metadata lists delete the selection after a confirmation. If a stream is playing one of the files, a dialog says how many streams are playing and offers *Delete anyway* for the ids still waiting. Requires SDK and server with the bulk delete endpoints.
 - **TV focus on the player controls** — on TV the D-pad moves focus between the player's control buttons while they are on screen, and Enter selects the focused one. When focus is on the video, Down opens the controls and focuses the first button instead of lowering the volume; Up, Left and Right keep their behaviour.
 - **Clear messages for list query errors** — the codes of list query errors are translated: an invalid or unsupported page cursor, fields that are too long, too many or nested too deeply, and filters with too many values.
+- **Subtitle provider switch** — the admin subtitles page has a switch per subtitle provider. An off provider is not searched for subtitles and cannot be downloaded from. Requires SDK and server with the subtitle provider switch.
 
 ### Fixes
 

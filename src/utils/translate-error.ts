@@ -33,6 +33,7 @@ const dynamicMessages = {
 	database_backup_invalid: () => m.database_backup_invalid(),
 	database_backup_upload_disabled: () => m.database_backup_upload_disabled(),
 	subtitle_invalid_upload: () => m.subtitle_invalid_upload(),
+	plugin_subtitle_provider_disabled: () => m.plugin_subtitle_provider_disabled(),
 	validation_invalid_cursor: () => m.validation_invalid_cursor(),
 	validation_cursor_not_supported: () => m.validation_cursor_not_supported(),
 	validation_fields_too_long: (inputs) => m.validation_fields_too_long({ max: String(inputs?.max ?? "") }),

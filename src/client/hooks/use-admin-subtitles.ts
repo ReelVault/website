@@ -141,3 +141,19 @@ export function useUploadSubtitle(mediaFileId: string) {
 		},
 	});
 }
+
+/** Turns a subtitle provider on or off; the provider list is refetched so the switch shows the new state. */
+export function useSetSubtitleProviderEnabled() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: ({ providerId, enabled }: { providerId: string; enabled: boolean }) =>
+			reelvault.subtitles.setProviderEnabled(providerId, enabled),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: subtitleKeys.providers() });
+		},
+		onError: (error) => {
+			toastError(m.admin_subtitles_provider_toggle_failed(), error);
+		},
+	});
+}
