@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { KeyRound, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -5,14 +6,11 @@ import { useBackupCodesStatus } from "@/client/hooks/use-two-factor";
 import { Button } from "@/components/ui/button";
 import { UserSectionTitle, UserSurface } from "@/pages/user/components/user-ui";
 import { m } from "@/paraglide/messages";
-import { TwoFactorBackupCodesDialog } from "../components/two-factor-backup-codes-dialog";
 import { TwoFactorDisableDialog } from "../components/two-factor-disable-dialog";
-import { TwoFactorSetupDialog } from "../components/two-factor-setup-dialog";
 
+// Setup and backup-code regeneration are full pages: the codes must stay on screen until the user confirms they saved them.
 export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boolean }) {
-	const [isSetupOpen, setIsSetupOpen] = useState(false);
 	const [isDisableOpen, setIsDisableOpen] = useState(false);
-	const [isBackupCodesOpen, setIsBackupCodesOpen] = useState(false);
 	const backupCodesStatus = useBackupCodesStatus(twoFactorEnabled);
 
 	return (
@@ -56,7 +54,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 				<div className="flex flex-wrap gap-2">
 					{twoFactorEnabled ? (
 						<>
-							<Button variant="outline" onClick={() => setIsBackupCodesOpen(true)} className="min-h-10">
+							<Button variant="outline" render={<Link to="/two-factor" search={{ mode: "regenerate" }} />} className="min-h-10">
 								{m.user_regenerate_backup_codes()}
 							</Button>
 							<Button
@@ -68,7 +66,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 							</Button>
 						</>
 					) : (
-						<Button onClick={() => setIsSetupOpen(true)} className="min-h-10 gap-2">
+						<Button render={<Link to="/two-factor" search={{ mode: "enable" }} />} className="min-h-10 gap-2">
 							<KeyRound className="size-4" />
 							{m.user_enable_2fa()}
 						</Button>
@@ -76,9 +74,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 				</div>
 			</UserSurface>
 
-			<TwoFactorSetupDialog open={isSetupOpen} onOpenChange={setIsSetupOpen} />
 			<TwoFactorDisableDialog open={isDisableOpen} onOpenChange={setIsDisableOpen} />
-			<TwoFactorBackupCodesDialog open={isBackupCodesOpen} onOpenChange={setIsBackupCodesOpen} />
 		</section>
 	);
 }

@@ -3,7 +3,6 @@ import { QRCodeSVG } from "qrcode.react";
 import type React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -76,7 +75,7 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 			</div>
 
 			<div className="flex flex-col gap-2">
-				<label htmlFor="2fa-verify-code" className="font-semibold text-muted-foreground text-xs uppercase">
+				<label htmlFor="2fa-verify-code" className="font-semibold text-muted-foreground text-sm">
 					{m.auth_two_factor_verify_code_label()}
 				</label>
 				<Input
@@ -91,14 +90,14 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 				/>
 			</div>
 
-			<DialogFooter className="mt-4">
+			<div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
 				<Button type="button" variant="ghost" onClick={onCancel}>
 					{m.common_cancel()}
 				</Button>
 				<Button type="submit" disabled={isPending || code.length !== 6}>
 					{isPending ? m.common_verifying() : m.user_verify_and_enable()}
 				</Button>
-			</DialogFooter>
+			</div>
 		</form>
 	);
 }

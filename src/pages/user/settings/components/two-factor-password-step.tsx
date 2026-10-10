@@ -2,7 +2,6 @@ import { Lock } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { m } from "@/paraglide/messages";
 
@@ -25,7 +24,7 @@ export function TwoFactorPasswordStep({ isPending, onSubmit, onCancel }: TwoFact
 	return (
 		<form onSubmit={handleSubmit} className="flex flex-col gap-4 py-2">
 			<div className="flex flex-col gap-2">
-				<label htmlFor="2fa-setup-password" className="font-semibold text-muted-foreground text-xs uppercase">
+				<label htmlFor="2fa-setup-password" className="font-semibold text-muted-foreground text-sm">
 					{m.user_account_password()}
 				</label>
 				<div className="relative">
@@ -41,14 +40,14 @@ export function TwoFactorPasswordStep({ isPending, onSubmit, onCancel }: TwoFact
 					<Lock className="absolute top-3 right-3 size-4 text-muted-foreground" />
 				</div>
 			</div>
-			<DialogFooter className="mt-4">
+			<div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
 				<Button type="button" variant="ghost" onClick={onCancel}>
 					{m.common_cancel()}
 				</Button>
 				<Button type="submit" disabled={isPending}>
-					{isPending ? "Generowanie..." : m.common_next()}
+					{isPending ? m.user_2fa_generating() : m.common_next()}
 				</Button>
-			</DialogFooter>
+			</div>
 		</form>
 	);
 }

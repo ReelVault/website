@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Two-step verification has its own page** — turning on 2FA and regenerating backup codes open a page at `/two-factor` instead of a dialog. A step list shows where you are (confirm password, add to your app, save backup codes), and the codes stay on screen until you press Finish. The Settings buttons Enable 2FA and Regenerate backup codes open it.
 - **Phone-first layout** — default buttons, text fields and selects are 40 px tall on phones (icon buttons 36–40 px) and keep the denser desktop size from the small breakpoint up. The home hero puts its title and actions at the bottom of the screen, within thumb reach, and its bottom shade is stronger on phones so the description stays readable over bright artwork. The hero and header sections of the library, collection and home pages are shorter, so the first titles appear above the fold. Empty-state titles are larger (base size, semibold).
 - **Dialogs are bottom sheets on phones** — on narrow screens a dialog slides up from the bottom, scrolls inside itself and keeps its footer on screen. From the small breakpoint up it stays a centred card.
 - **New typefaces** — body text is set in Figtree and titles in Bricolage Grotesque. Both are self-hosted (`@fontsource-variable`), so the app looks the same offline and on the local network without an external font service. Eyebrow labels are sentence case instead of tracked all-caps, and the sign-in button shows its label in sentence case.
@@ -319,6 +320,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Backup codes lost when the dialog closed** — the backup-code step lived in a dialog, so closing it (Escape, the close button or a click outside) cleared the codes from view. The codes now stay on the page until Finish, and the success line shows only when 2FA was just turned on, not when codes are regenerated.
 - **Show button outside the password field** — the Show/Hide toggle on the sign-in form used the icon-button size, so its text spilled past the field's frame. It is now sized for its text and sits inside the field.
 - **Empty library message for regular accounts** — the message said to add a library in the app settings, which only administrators can open. It now asks the account to ask the server administrator.
 - **Download and plugin limit messages** — a download refused because the profile's queue is full, a season that would exceed the download storage, a title with no file, a download that cannot be retried, and a plugin that registers too many routes, jobs, scheduled tasks or providers now show their own translated message instead of the raw code.

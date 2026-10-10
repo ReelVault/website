@@ -1,26 +1,28 @@
 import { CheckCircle2, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { copyToClipboard } from "@/utils/clipboard-utils";
 
 interface TwoFactorBackupStepProps {
 	backupCodes: string[];
+	isNewlyEnabled: boolean;
 	onFinish: () => void;
 }
 
-export function TwoFactorBackupStep({ backupCodes, onFinish }: TwoFactorBackupStepProps) {
+export function TwoFactorBackupStep({ backupCodes, isNewlyEnabled, onFinish }: TwoFactorBackupStepProps) {
 	return (
 		<div className="flex flex-col gap-4 py-2">
-			<div className="flex items-center gap-2 text-success">
-				<CheckCircle2 className="size-5" />
-				<span className="font-semibold text-sm">{m.user_2fa_activated()}</span>
-			</div>
+			{isNewlyEnabled && (
+				<div className="flex items-center gap-2 text-success">
+					<CheckCircle2 className="size-5" />
+					<span className="font-semibold text-sm">{m.user_2fa_activated()}</span>
+				</div>
+			)}
 
 			<div className="flex flex-col gap-2">
-				<span className="font-bold text-muted-foreground text-xs uppercase tracking-wider">{m.user_backup_codes_heading()}</span>
-				<div className="grid grid-cols-2 gap-2 rounded-xl border border-border bg-muted/40 p-3 font-mono text-xs">
+				<span className="font-semibold text-muted-foreground text-sm">{m.user_backup_codes_heading()}</span>
+				<div className="grid grid-cols-2 gap-2 rounded-xl border border-border bg-muted/40 p-3 font-mono text-sm sm:text-base">
 					{backupCodes.map((c) => (
 						<span key={c} className="text-foreground">
 							{c}
@@ -33,7 +35,7 @@ export function TwoFactorBackupStep({ backupCodes, onFinish }: TwoFactorBackupSt
 				type="button"
 				variant="outline"
 				onClick={() => {
-					detach(copyToClipboard(backupCodes.join("\n"), "kody zapasowe"));
+					detach(copyToClipboard(backupCodes.join("\n"), m.user_backup_codes_heading()));
 				}}
 				className="gap-2"
 			>
@@ -41,9 +43,9 @@ export function TwoFactorBackupStep({ backupCodes, onFinish }: TwoFactorBackupSt
 				{m.user_settings_copy_all_backup_codes()}
 			</Button>
 
-			<DialogFooter className="mt-4">
+			<div className="flex justify-end pt-2">
 				<Button onClick={onFinish}>{m.common_finish()}</Button>
-			</DialogFooter>
+			</div>
 		</div>
 	);
 }
