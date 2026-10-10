@@ -30,7 +30,7 @@ export function AppNavbar() {
 				"fixed inset-x-0 top-0 z-40 border-border border-b bg-background/80 transition-[background-color,border-color] duration-300 xl:py-2",
 			)}
 		>
-			<div className="mx-auto flex h-14 w-full items-center px-4 sm:px-6 lg:px-24 xl:h-11">
+			<div className="mx-auto flex h-14 w-full items-center px-4 sm:px-6 lg:px-8 xl:h-11 2xl:px-24">
 				<Link to="/dashboard" className="group flex min-h-11 items-center gap-2.5" aria-label={m.web_navbar_home_aria()}>
 					<Logo className="h-7 w-auto transition-transform group-hover:scale-[1.02]" />
 				</Link>
@@ -69,7 +69,7 @@ export function AppNavbar() {
 								to={href}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex min-h-11 items-center gap-2 rounded-lg border-l-2 px-3 font-medium text-sm transition-[background-color,color,border-color]",
+									"flex min-h-11 items-center gap-2 rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
 									{
 										"border-primary bg-muted text-foreground": isActive,
 										"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,
@@ -93,7 +93,7 @@ export function AppNavbar() {
 								to={href}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex min-h-11 items-center gap-2 rounded-lg border-l-2 px-3 font-medium text-sm transition-[background-color,color,border-color]",
+									"flex min-h-11 items-center gap-2 rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
 									{
 										"border-primary bg-muted text-foreground": isActive,
 										"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,

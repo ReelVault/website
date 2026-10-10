@@ -44,7 +44,7 @@ export function NavbarProfile() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger className="group flex items-center gap-3 rounded-2xl pl-3 hover:cursor-pointer hover:bg-muted">
-				<div className="flex flex-col items-end text-left">
+				<div className="hidden flex-col items-end text-left 2xl:flex">
 					<span className="font-semibold text-foreground text-sm">
 						{isLoading && m.common_loading_dots()}
 						{!isLoading && profileName}

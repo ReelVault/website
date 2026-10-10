@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsNarrowLayout } from "@/hooks/use-mobile";
 import { m } from "@/paraglide/messages";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
@@ -66,7 +66,8 @@ function SidebarProvider({
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 }) {
-	const isMobile = useIsMobile();
+	// Below lg the sidebar opens as a sheet (tablets included); above it stays a fixed column.
+	const isMobile = useIsNarrowLayout();
 	const [openMobile, setOpenMobile] = useState(false);
 
 	// This is the internal state of the sidebar.
