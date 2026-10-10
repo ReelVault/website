@@ -176,6 +176,12 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 			);
 		case "text":
 			return <p className={node.variant === "muted" ? "text-muted-foreground text-sm" : "text-sm"}>{resolveLabel(node.text, scope)}</p>;
+		case "code":
+			return (
+				<pre className="max-h-80 overflow-auto whitespace-pre-wrap break-words rounded-md border bg-muted/40 p-3 font-mono text-xs">
+					{resolveLabel(node.text, scope)}
+				</pre>
+			);
 		case "badge":
 			return (
 				<Badge variant={node.variant ?? "secondary"} className="w-fit gap-1.5">
