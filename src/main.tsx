@@ -7,6 +7,9 @@ import { RouteErrorScreen } from "./components/router/route-error-screen";
 import { queryClient } from "./lib/query-client";
 import { routeTree } from "./routeTree.gen";
 import { parseSearchParams, stringifySearchParams } from "./types/search-params";
+import { silenceSkippedViewTransitions } from "./utils/view-transition-rejections";
+
+silenceSkippedViewTransitions();
 
 // Create a new router instance with production-grade defaults
 const router = createRouter({
