@@ -1,4 +1,4 @@
-import type { MetadataType } from "@reelvault/sdk";
+import type { MetadataType, ScanFindingStatus } from "@reelvault/sdk";
 
 export const metadataKeys = {
 	all: ["metadata"] as const,
@@ -52,6 +52,8 @@ export const libraryKeys = {
 	detail: (id: string) => [...libraryKeys.all, "detail", id] as const,
 	ignoreAssets: (id: string) => [...libraryKeys.all, "ignored-assets", id] as const,
 	scanFindings: (id: string) => [...libraryKeys.all, "scan-findings", id] as const,
+	scanFindingsByStatus: (id: string, status: ScanFindingStatus) => [...libraryKeys.scanFindings(id), status] as const,
+	scanFindingCandidates: (id: string, filePath: string) => [...libraryKeys.all, "scan-candidates", id, filePath] as const,
 	admin: () => [...libraryKeys.all, "admin"] as const,
 	health: () => [...libraryKeys.all, "health"] as const,
 	errorsCheck: (operationId: string) => [...libraryKeys.all, "errors-check", operationId] as const,

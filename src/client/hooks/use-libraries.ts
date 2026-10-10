@@ -1,4 +1,4 @@
-import type { MetadataType } from "@reelvault/sdk";
+import type { MetadataType, ScanFindingStatus } from "@reelvault/sdk";
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -243,11 +243,36 @@ export function useLibraryIgnoredAssets(libraryId: string, enabled: boolean) {
 	});
 }
 
-export function useLibraryScanFindings(libraryId: string, enabled: boolean) {
+export function useLibraryScanFindings(libraryId: string, status: ScanFindingStatus, enabled: boolean) {
 	return useQuery({
-		queryKey: libraryKeys.scanFindings(libraryId),
-		queryFn: () => reelvault.libraries.getScanFindings(libraryId),
+		queryKey: libraryKeys.scanFindingsByStatus(libraryId, status),
+		queryFn: () => reelvault.libraries.getScanFindings(libraryId, status),
 		enabled,
+		staleTime: 60_000,
+	});
+}
+
+/** Ignores or restores one finding; every status list and both counts refresh with it. */
+export function useSetScanFindingIgnored(libraryId: string) {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: ({ filePath, ignored }: { filePath: string; ignored: boolean }) =>
+			reelvault.libraries.setScanFindingIgnored(libraryId, { filePath, ignored }),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: libraryKeys.scanFindings(libraryId) });
+		},
+		onError: (error) => {
+			toastError(m.toast_scan_finding_update_error(), error);
+		},
+	});
+}
+
+/** Provider matches for a finding's parsed title. Mount it only when the admin asks, so the search runs on request. */
+export function useScanFindingCandidates(libraryId: string, filePath: string) {
+	return useQuery({
+		queryKey: libraryKeys.scanFindingCandidates(libraryId, filePath),
+		queryFn: () => reelvault.libraries.getScanFindingCandidates(libraryId, filePath),
 		staleTime: 60_000,
 	});
 }
