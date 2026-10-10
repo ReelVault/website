@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import { lazy, Suspense, useState } from "react";
 import { useAdminMetadataEditor } from "@/client/hooks/use-admin-metadata-editor";
 import { useRegenerateTrickplay } from "@/client/hooks/use-admin-trickplay";
-import { LazyIdentifyDialog } from "@/components/lazy-dialogs";
 import { LazyRender } from "@/components/lazy-render";
 import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
@@ -73,7 +72,8 @@ function MetadataEditorContent({
 }) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [dialogType, setDialogType] = useState<"poster" | "backdrop">("poster");
-	const [identifyOpen, setIdentifyOpen] = useState(false);
+	const navigate = useNavigate();
+	const openIdentifyPage = () => detach(() => navigate({ to: "/admin/metadata/$id/identify", params: { id: metadataId } }));
 	const [mergeOpen, setMergeOpen] = useState(false);
 
 	const { updateMutation, deleteMutation, refreshMutation, refreshImagesMutation, deleteImageMutation, mergeMutation } = editor;
@@ -103,7 +103,7 @@ function MetadataEditorContent({
 				onLockAll={handleLockAll}
 				onUnlockAll={handleUnlockAll}
 				onOpenPosterDialog={() => openArtworkDialog("poster")}
-				onOpenIdentifyDialog={() => setIdentifyOpen(true)}
+				onOpenIdentifyDialog={openIdentifyPage}
 				onOpenMergeDialog={() => setMergeOpen(true)}
 				onRefresh={() => refreshMutation.mutate()}
 				onRefreshImages={() => refreshImagesMutation.mutate()}
@@ -126,7 +126,7 @@ function MetadataEditorContent({
 						isLocked={lockedFields.includes("overview")}
 						onToggleLock={toggleFieldLock}
 					/>
-					<MetadataProvidersSection metadata={metadata} onOpenIdentify={() => setIdentifyOpen(true)} />
+					<MetadataProvidersSection metadata={metadata} onOpenIdentify={openIdentifyPage} />
 					<MetadataRatingsSection metadata={metadata} />
 					<MetadataTaxonomySection metadata={metadata} lockedFields={lockedFields} onToggleLock={toggleFieldLock} />
 					<Suspense fallback={<Skeleton className="h-40 rounded-xl" />}>
@@ -165,18 +165,6 @@ function MetadataEditorContent({
 						onOpenChange={setMergeOpen}
 						onMerge={(sourceId) => mergeMutation.mutateAsync(sourceId)}
 						isMerging={mergeMutation.isPending}
-					/>
-				</Suspense>
-			)}
-			{identifyOpen && (
-				<Suspense fallback={null}>
-					<LazyIdentifyDialog
-						metadataId={metadataId}
-						mediaType={metadata.type}
-						initialTitle={metadata.title}
-						initialYear={metadata.releaseDate ? Number(metadata.releaseDate.slice(0, 4)) : undefined}
-						open={identifyOpen}
-						onOpenChange={setIdentifyOpen}
 					/>
 				</Suspense>
 			)}
