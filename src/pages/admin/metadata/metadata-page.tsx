@@ -5,11 +5,14 @@ import {
 	type ADMIN_METADATA_SORTS,
 	type AdminMetadataBrowseFilters,
 	useAdminMetadata,
+	useBulkDeleteMetadata,
 	useBulkRefreshMetadataImages,
 } from "@/client/hooks/use-admin-metadata";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
 import { AppErrorState } from "@/components/app-states";
+import { ConfirmAction } from "@/components/confirm-action";
 import { SimplePagination } from "@/components/simple-pagination";
+import { StreamBlockDialog } from "@/components/stream-block-dialog";
 import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
@@ -158,6 +161,7 @@ export default function AdminMetadataPage() {
 	// Selection spans the pages shown while it lasts, like the admin people list.
 	const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(() => new Set());
 	const bulkRefreshArtwork = useBulkRefreshMetadataImages();
+	const bulkDeleteMetadata = useBulkDeleteMetadata();
 	const allOnPageSelected = data.data.length > 0 && data.data.every((item) => selectedIds.has(item.id));
 
 	const toggleSelect = (id: string) => {
@@ -212,6 +216,15 @@ export default function AdminMetadataPage() {
 
 	return (
 		<div className="flex flex-col gap-6">
+			<StreamBlockDialog
+				isOpen={bulkDeleteMetadata.streamBlock !== null}
+				title={m.admin_metadata_delete_stream_title()}
+				description={m.admin_metadata_delete_stream_description({ activeStreams: bulkDeleteMetadata.streamBlock?.activeStreams ?? 0 })}
+				confirmLabel={m.admin_metadata_delete_stream_confirm()}
+				isPending={bulkDeleteMetadata.isPending}
+				onConfirm={bulkDeleteMetadata.confirmStreamBlock}
+				onCancel={bulkDeleteMetadata.dismissStreamBlock}
+			/>
 			<AdminPageHeader
 				icon={Film}
 				eyebrow={m.admin_libraries_resource_management()}
@@ -270,6 +283,25 @@ export default function AdminMetadataPage() {
 										>
 											{m.admin_metadata_refresh_artwork_selected()}
 										</Button>
+										<ConfirmAction
+											trigger={
+												<Button
+													size="sm"
+													variant="outline"
+													disabled={bulkDeleteMetadata.isPending}
+													className="text-destructive hover:text-destructive"
+												>
+													{m.admin_metadata_delete_selected()}
+												</Button>
+											}
+											title={m.admin_metadata_delete_selected_title({ count: selectedIds.size })}
+											description={m.admin_metadata_delete_selected_description()}
+											confirmLabel={m.admin_metadata_delete_selected()}
+											onConfirm={() => {
+												bulkDeleteMetadata.deleteItems([...selectedIds]);
+												clearSelection();
+											}}
+										/>
 										<Button size="sm" variant="ghost" onClick={clearSelection}>
 											{m.admin_metadata_clear_selection()}
 										</Button>

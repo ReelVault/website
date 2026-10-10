@@ -8,7 +8,7 @@ import { reelvault } from "../client";
 import { pollWhile } from "../utils/poll-while";
 import { adminKeys, mediaKeys, mePlaybackKeys, metadataKeys } from "../utils/query-keys";
 import { TERMINAL_OPERATION_STATUSES } from "../utils/worker-status";
-import { useBulkRefresh } from "./use-bulk-refresh";
+import { useBulkDelete, useBulkRefresh } from "./use-bulk-refresh";
 
 export type AdminMediaFileSortBy = NonNullable<MediaFileSorting["sortBy"]>;
 
@@ -212,6 +212,14 @@ export function useAdminRefreshAllMediaFiles() {
 }
 
 /** Queues a technical refresh for the selected media files, in requests of up to 50 ids. */
+export function useBulkDeleteMediaFiles() {
+	return useBulkDelete({
+		send: (mediaFileIds, force) => reelvault.media.bulkDelete(mediaFileIds, { force }),
+		invalidationKeys: [mediaKeys.adminFiles(), metadataKeys.adminAll()],
+		successMessage: (count) => m.admin_bulk_files_deleted({ count }),
+	});
+}
+
 export function useBulkRefreshMediaFiles() {
 	return useBulkRefresh({
 		send: (mediaFileIds) => reelvault.media.bulkRefresh(mediaFileIds),

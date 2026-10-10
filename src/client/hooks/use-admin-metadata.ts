@@ -6,7 +6,7 @@ import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { purgeMetadataCaches } from "../utils/purge-metadata-caches";
 import { metadataKeys } from "../utils/query-keys";
-import { useBulkRefresh } from "./use-bulk-refresh";
+import { useBulkDelete, useBulkRefresh } from "./use-bulk-refresh";
 
 export type AdminMetadataTypeFilter = "movie" | "tv_show";
 
@@ -270,6 +270,14 @@ export function useRefreshMetadata() {
 }
 
 /** Force-refreshes the artwork of the selected titles in requests of at most 50 (see `useBulkRefresh`). */
+export function useBulkDeleteMetadata() {
+	return useBulkDelete({
+		send: (metadataIds, force) => reelvault.metadata.bulkDelete(metadataIds, { force }),
+		invalidationKeys: [metadataKeys.adminAll()],
+		successMessage: (count) => m.admin_bulk_metadata_deleted({ count }),
+	});
+}
+
 export function useBulkRefreshMetadataImages() {
 	return useBulkRefresh({
 		send: (metadataIds) => reelvault.metadata.bulkRefreshImages(metadataIds),

@@ -6,6 +6,7 @@ import {
 	useAdminMediaFileAudit,
 	useAdminMediaFiles,
 	useAdminRefreshAllMediaFiles,
+	useBulkDeleteMediaFiles,
 	useBulkRefreshMediaFiles,
 } from "@/client/hooks/use-admin-media";
 import { useAdminStats } from "@/client/hooks/use-admin-stats";
@@ -14,6 +15,7 @@ import { useBulkRefreshEpisodes } from "@/client/hooks/use-episodes";
 import { AppErrorState } from "@/components/app-states";
 import { ConfirmAction } from "@/components/confirm-action";
 import { SimplePagination } from "@/components/simple-pagination";
+import { StreamBlockDialog } from "@/components/stream-block-dialog";
 import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
@@ -47,6 +49,7 @@ export default function AdminMediaFilesPage() {
 	const selectedIds: ReadonlySet<string> = new Set(selection.keys());
 	const deleteTrickplayMany = useDeleteTrickplayMany();
 	const bulkRefreshFiles = useBulkRefreshMediaFiles();
+	const bulkDeleteFiles = useBulkDeleteMediaFiles();
 	const bulkRefreshEpisodes = useBulkRefreshEpisodes();
 
 	const clearSelection = () => setSelection(new Map());
@@ -215,6 +218,25 @@ export default function AdminMediaFilesPage() {
 								confirmLabel={m.admin_media_remove_previews_selected()}
 								onConfirm={() => removeSelectedPreviews()}
 							/>
+							<ConfirmAction
+								trigger={
+									<Button
+										size="sm"
+										variant="outline"
+										disabled={bulkDeleteFiles.isPending}
+										className="text-destructive hover:text-destructive"
+									>
+										{m.admin_media_delete_selected()}
+									</Button>
+								}
+								title={m.admin_media_delete_selected_title({ count: selection.size })}
+								description={m.admin_media_delete_selected_description()}
+								confirmLabel={m.admin_media_delete_selected()}
+								onConfirm={() => {
+									bulkDeleteFiles.deleteItems([...selection.keys()]);
+									clearSelection();
+								}}
+							/>
 							<Button size="sm" variant="ghost" onClick={clearSelection}>
 								{m.admin_media_clear_selection()}
 							</Button>
@@ -244,6 +266,15 @@ export default function AdminMediaFilesPage() {
 
 	return (
 		<div className="flex flex-col gap-6">
+			<StreamBlockDialog
+				isOpen={bulkDeleteFiles.streamBlock !== null}
+				title={m.admin_media_delete_stream_title()}
+				description={m.admin_media_delete_stream_description({ activeStreams: bulkDeleteFiles.streamBlock?.activeStreams ?? 0 })}
+				confirmLabel={m.admin_media_delete_stream_confirm()}
+				isPending={bulkDeleteFiles.isPending}
+				onConfirm={bulkDeleteFiles.confirmStreamBlock}
+				onCancel={bulkDeleteFiles.dismissStreamBlock}
+			/>
 			<AdminPageHeader
 				icon={FileVideo}
 				eyebrow={m.admin_libraries_resource_management()}

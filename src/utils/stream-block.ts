@@ -1,5 +1,10 @@
 /** Codes the server answers with when it holds a restart or restore back because streams are playing. */
-const STREAM_BLOCK_CODES: ReadonlySet<string> = new Set(["update.blocked_active_streams", "database.restore_blocked_active_streams"]);
+const STREAM_BLOCK_CODES: ReadonlySet<string> = new Set([
+	"update.blocked_active_streams",
+	"database.restore_blocked_active_streams",
+	"media.delete_blocked_active_streams",
+	"metadata.delete_blocked_active_streams",
+]);
 
 /** The number of active streams when the stream guard held a request back, or `null` for any other error. */
 export function activeStreamsBlocking(error: unknown): number | null {
