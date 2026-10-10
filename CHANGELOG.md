@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **HDR playback setting** — Playback settings let you choose whether HDR videos pass through or are always converted to SDR. The default keeps passthrough where the device supports it.
 - **Plugin configuration errors name the field** — a rejected save that names a field (a required value left blank) marks that field with an inline message, not only a toast.
 - **Backup codes left in security settings** — the two-factor section shows how many backup codes remain. Turning on two-factor enforcement without an administrator who has two-factor enabled is refused, with the reason shown.
 - **Preview before clearing logs or previews** — the log cleanup and the bulk preview removal confirmations show what would be removed (log files with their size, or previews and media files) before anything is deleted.
@@ -301,6 +302,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **HDR transcode reason** — the player's reason text claimed tone-mapping to SDR when the server had no tone-mapping filter. It now says tone-mapping is unavailable.
 - **Active operation count stopped at 50** — the worker activity badges counted only the first page of active operations; they now show the total, so a busy queue is no longer under-reported.
 - **Watchlist showed only the first 20 titles** — the page requested a single page of the paginated endpoint, so larger watchlists were silently truncated and the total/movie/series statistics were wrong. The page now loads every page before rendering.
 - **Worker "Scheduled" and "Active now" filters always showed nothing** — the quick filters compared the filter id with the task category instead of checking triggers and active jobs, so both returned an empty list while their counters were correct.

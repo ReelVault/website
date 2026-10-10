@@ -3,6 +3,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useProfilePreferences, useResetProfilePreferences } from "@/client/hooks/use-profiles";
 import { AsyncButton } from "@/components/async-button";
+import { PreferenceSelect } from "@/components/preference-controls";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { diffPreferences, EMPTY_PREFERENCES, type ProfilePreferencesState } from "@/types/profile-preferences";
@@ -36,6 +37,7 @@ const toPreferencesState = (value: ServerPreferences): ProfilePreferencesState =
 	resumeRewindSeconds: value.resumeRewindSeconds,
 	watchlistAutoRemoveWatched: value.watchlistAutoRemoveWatched,
 	hideRatingOverlay: value.hideRatingOverlay,
+	hdrMode: value.hdrMode,
 	mutedNotificationTypes: value.mutedNotificationTypes,
 	hiddenPages: value.hiddenPages,
 	subtitleSize: value.subtitleSize,
@@ -99,6 +101,7 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 				resumeRewindSeconds: preferences.resumeRewindSeconds,
 				watchlistAutoRemoveWatched: preferences.watchlistAutoRemoveWatched,
 				hideRatingOverlay: preferences.hideRatingOverlay,
+				hdrMode: preferences.hdrMode,
 				subtitleSize: preferences.subtitleSize,
 				subtitlePosition: preferences.subtitlePosition,
 				subtitleColor: preferences.subtitleColor,
@@ -145,6 +148,21 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 					onChangeColor={(subtitleColor) => updatePreferencesPatch({ subtitleColor })}
 					onChangeBackground={(subtitleBackground) => updatePreferencesPatch({ subtitleBackground })}
 				/>
+			</SettingsCategory>
+
+			<SettingsCategory title={m.user_hdr_playback_title()}>
+				<div className="grid gap-3 sm:grid-cols-2">
+					<PreferenceSelect
+						label={m.user_hdr_playback_label()}
+						description={m.user_hdr_playback_desc()}
+						value={preferences.hdrMode}
+						onChange={(hdrMode) => updatePreferencesPatch({ hdrMode: hdrMode === "toneMapToSdr" ? "toneMapToSdr" : "auto" })}
+						options={[
+							["auto", m.user_hdr_mode_auto()],
+							["toneMapToSdr", m.user_hdr_mode_tone_map()],
+						]}
+					/>
+				</div>
 			</SettingsCategory>
 
 			<SettingsCategory title={m.settings_automations_title()}>

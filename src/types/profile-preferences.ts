@@ -19,6 +19,7 @@ export interface ProfilePreferencesState {
 	resumeRewindSeconds: number;
 	watchlistAutoRemoveWatched: boolean;
 	hideRatingOverlay: boolean;
+	hdrMode: "auto" | "toneMapToSdr";
 	/** Comma-separated notification types this profile has muted. */
 	mutedNotificationTypes: string;
 	/** Comma-separated optional menu pages this profile hides. */
@@ -47,6 +48,7 @@ export const EMPTY_PREFERENCES: ProfilePreferencesState = {
 	resumeRewindSeconds: 0,
 	watchlistAutoRemoveWatched: false,
 	hideRatingOverlay: false,
+	hdrMode: "auto",
 	mutedNotificationTypes: "",
 	hiddenPages: "",
 	subtitleSize: "normal",
@@ -73,6 +75,7 @@ export const PREFERENCE_STATE_KEYS = [
 	"resumeRewindSeconds",
 	"watchlistAutoRemoveWatched",
 	"hideRatingOverlay",
+	"hdrMode",
 	"mutedNotificationTypes",
 	"hiddenPages",
 	"subtitleSize",

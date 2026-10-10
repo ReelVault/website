@@ -61,6 +61,10 @@ function hdrLabel(raw: string | null | undefined): string {
 	return m.player_transcode_reason_dolby_vision({ profile: raw });
 }
 
+function transcodeHdrText(codec: string, hdr: string, toneMapped: boolean): string {
+	return toneMapped ? m.reason_video_transcode_hdr({ codec, hdr }) : m.reason_video_transcode_hdr_no_tonemap({ codec, hdr });
+}
+
 function videoText(part: ReasonPart): string {
 	const params = part.params ?? {};
 	const codec = codecLabel(typeof params.codec === "string" ? params.codec : null);
@@ -73,7 +77,7 @@ function videoText(part: ReasonPart): string {
 	} else if (part.code === "video.copy_hdr") {
 		base = m.reason_video_copy_hdr({ codec, hdr: hdrLabel(typeof params.hdr === "string" ? params.hdr : null) });
 	} else if (part.code === "video.transcode_hdr") {
-		base = m.reason_video_transcode_hdr({ codec, hdr: hdrLabel(typeof params.hdr === "string" ? params.hdr : null) });
+		base = transcodeHdrText(codec, hdrLabel(typeof params.hdr === "string" ? params.hdr : null), params.toneMapped !== false);
 	} else {
 		base = m.reason_video_transcode({ codec });
 	}
