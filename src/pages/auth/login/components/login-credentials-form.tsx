@@ -153,9 +153,7 @@ export function LoginCredentialsForm({
 				<div className="absolute inset-0 flex items-center">
 					<span className="w-full border-border/60 border-t" />
 				</div>
-				<span className="relative bg-card/75 px-3 font-semibold text-[11px] text-muted-foreground uppercase tracking-wider">
-					{m.auth_or_divider()}
-				</span>
+				<span className="relative bg-card/75 px-3 font-semibold text-[11px] text-muted-foreground">{m.auth_or_divider()}</span>
 			</div>
 
 			<Button type="button" variant="outline" className="w-full gap-2 rounded-2xl py-5 font-bold" onClick={onQuickConnect}>

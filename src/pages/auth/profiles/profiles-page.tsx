@@ -90,7 +90,7 @@ export default function ProfilesSelectionPage() {
 			</div>
 			<SimpleAnimation className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-16 px-6">
 				<header className="flex flex-col gap-3 text-center">
-					<span className="font-bold text-primary text-xs uppercase tracking-[0.22em]">{m.auth_welcome_back()}</span>
+					<span className="font-bold text-primary text-xs">{m.auth_welcome_back()}</span>
 					<h1 className="font-bold text-4xl tracking-tight sm:text-6xl lg:text-7xl">
 						{m.auth_profiles_heading_prefix()}{" "}
 						<span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">{m.auth_watching_question()}</span>

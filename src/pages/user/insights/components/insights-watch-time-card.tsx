@@ -16,7 +16,7 @@ export function InsightsWatchTimeCard({ totalWatchTime, monthlyIncrease, dailyAv
 					<div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
 						<Clock className="size-5" />
 					</div>
-					<p className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.admin_analytics_watch_time()}</p>
+					<p className="font-bold text-muted-foreground text-xs">{m.admin_analytics_watch_time()}</p>
 				</div>
 
 				<h2 className="font-black text-6xl text-foreground tracking-tight md:text-7xl">
@@ -29,7 +29,7 @@ export function InsightsWatchTimeCard({ totalWatchTime, monthlyIncrease, dailyAv
 
 			<div className="relative z-20 mt-6 flex flex-wrap gap-10 border-border border-t pt-8">
 				<div>
-					<p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.user_change_vs_previous_period()}</p>
+					<p className="mb-1 font-bold text-muted-foreground text-xs">{m.user_change_vs_previous_period()}</p>
 					<div
 						className={cn(
 							"flex items-center gap-2 font-black text-2xl",
@@ -41,7 +41,7 @@ export function InsightsWatchTimeCard({ totalWatchTime, monthlyIncrease, dailyAv
 					</div>
 				</div>
 				<div>
-					<p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.user_daily_average()}</p>
+					<p className="mb-1 font-bold text-muted-foreground text-xs">{m.user_daily_average()}</p>
 					<p className="font-bold text-2xl text-foreground">{dailyAverage}</p>
 				</div>
 			</div>
@@ -49,7 +49,7 @@ export function InsightsWatchTimeCard({ totalWatchTime, monthlyIncrease, dailyAv
 			<div className="absolute top-6 right-6">
 				<div
 					className={cn(
-						"flex items-center gap-1 rounded-full px-3 py-1 font-bold text-[10px] uppercase",
+						"flex items-center gap-1 rounded-full px-3 py-1 font-bold text-xs",
 						monthlyIncrease.trend === "up" ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
 					)}
 				>

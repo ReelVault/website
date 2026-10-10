@@ -24,7 +24,7 @@ export function AvatarGalleryTab({ selectedStyleId, onSelectStyleId, selectedAva
 						onClick={() => onSelectStyleId(style.id)}
 						aria-pressed={selectedStyleId === style.id}
 						className={cn(
-							"rounded-full border-2 px-4 font-black text-[9px] uppercase tracking-widest transition-colors",
+							"rounded-full border-2 px-4 font-black text-xs transition-colors",
 							selectedStyleId === style.id
 								? "border-primary bg-primary/10 text-primary"
 								: "border-transparent bg-muted text-muted-foreground hover:border-border",

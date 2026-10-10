@@ -171,7 +171,7 @@ export default function DashboardHero() {
 					className="cursor-pointer rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-primary"
 				>
 					<div className="flex flex-col items-center gap-2">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-widest">{m.web_discover_more()}</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.web_discover_more()}</span>
 						<ChevronDown className="size-5 animate-bounce text-muted-foreground" />
 					</div>
 				</button>

@@ -102,9 +102,7 @@ export function SubtitleStylePreferences({
 
 			{/* Live preview */}
 			<div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded-xl border border-border bg-slate-900/90 p-4">
-				<span className="absolute top-2 left-3 font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-					{m.admin_subtitles_preview()}
-				</span>
+				<span className="absolute top-2 left-3 font-semibold text-muted-foreground text-xs">{m.admin_subtitles_preview()}</span>
 				<div
 					className={cn(
 						"rounded-md px-4 py-1.5 font-medium font-sans tracking-wide shadow-md [text-shadow:0_1px_4px_rgb(0_0_0/90%),0_2px_10px_rgb(0_0_0/80%)]",

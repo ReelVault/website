@@ -16,7 +16,7 @@ export default function DashboardContinueWatching() {
 				<div className="h-px flex-1 bg-linear-to-r from-border/0 via-border to-border/0" />
 				<div className="flex items-center gap-3">
 					<div className="size-2 animate-pulse rounded-full bg-primary" />
-					<h2 className="font-bold text-foreground text-sm uppercase tracking-[0.2em]">{m.web_resume_session()}</h2>
+					<h2 className="font-bold text-foreground text-sm">{m.web_resume_session()}</h2>
 				</div>
 				<div className="h-px flex-1 bg-linear-to-r from-border/0 via-border to-border/0" />
 			</div>

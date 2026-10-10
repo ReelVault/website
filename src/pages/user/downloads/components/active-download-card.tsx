@@ -16,7 +16,7 @@ export function ActiveDownloadCard({ job, onDelete }: { job: DownloadJob; onDele
 					<div className="min-w-0">
 						<div className="flex flex-wrap items-center gap-2">
 							<h2 className="truncate font-bold text-foreground text-sm">{job.fileName}</h2>
-							<Badge size="sm" variant="secondary" className="font-mono text-[10px] uppercase">
+							<Badge size="sm" variant="secondary" className="font-mono text-xs">
 								{job.quality}
 							</Badge>
 						</div>

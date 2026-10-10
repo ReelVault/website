@@ -133,7 +133,7 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 				) : null}
 
 				<div className="flex flex-col items-center gap-1">
-					<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.auth_pairing_code()}</span>
+					<span className="font-semibold text-muted-foreground text-xs">{m.auth_pairing_code()}</span>
 
 					{isPending ? (
 						<div className="animate-pulse py-3 font-medium text-muted-foreground text-sm">{m.auth_generating_code()}</div>

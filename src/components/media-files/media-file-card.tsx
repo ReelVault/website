@@ -63,12 +63,12 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 								</Badge>
 							)}
 							{file.source !== null && (
-								<Badge variant="outline" size="sm" className="font-mono text-[10px] uppercase">
+								<Badge variant="outline" size="sm" className="font-mono text-xs">
 									{file.source}
 								</Badge>
 							)}
 							{file.formatName !== null && (
-								<Badge variant="outline" size="sm" className="font-mono text-[10px] uppercase">
+								<Badge variant="outline" size="sm" className="font-mono text-xs">
 									{file.formatName}
 								</Badge>
 							)}
@@ -147,9 +147,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				<div className="flex items-center gap-2.5">
 					<Clock className="size-4 shrink-0 text-primary" />
 					<div className="flex flex-col">
-						<span className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-							{m.components_duration_label()}
-						</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.components_duration_label()}</span>
 						<span className="font-bold text-foreground text-sm">
 							{file.duration ? formatDuration(file.duration) : m.common_not_available()}
 						</span>
@@ -159,9 +157,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				<div className="flex items-center gap-2.5">
 					<HardDrive className="size-4 shrink-0 text-primary" />
 					<div className="flex flex-col">
-						<span className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-							{m.components_file_size_label()}
-						</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.components_file_size_label()}</span>
 						<span className="font-bold text-foreground text-sm">
 							{file.size != null && file.size > 0 ? formatFileSize(file.size) : m.common_not_available()}
 						</span>
@@ -171,9 +167,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				<div className="flex items-center gap-2.5">
 					<Layers className="size-4 shrink-0 text-primary" />
 					<div className="flex flex-col">
-						<span className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-							{m.components_media_file_total_bitrate()}
-						</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.components_media_file_total_bitrate()}</span>
 						<span className="font-bold text-foreground text-sm">
 							{file.bitRate ? formatBitrate(file.bitRate) : m.common_not_available()}
 						</span>
@@ -183,7 +177,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				<div className="flex min-w-0 items-center gap-2.5">
 					<FolderOpen className="size-4 shrink-0 text-primary" />
 					<div className="flex min-w-0 flex-col">
-						<span className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">{m.components_library_label()}</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.components_library_label()}</span>
 						<span className="truncate font-bold text-foreground text-sm">{file.library.name}</span>
 					</div>
 				</div>
@@ -191,9 +185,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 
 			{/* FILE PATH */}
 			<div className="flex flex-col gap-1.5">
-				<span className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
-					{m.components_media_file_disk_path()}
-				</span>
+				<span className="font-semibold text-muted-foreground text-xs">{m.components_media_file_disk_path()}</span>
 				<div className="flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-background p-3">
 					<span className="flex-1 select-all break-all font-mono text-foreground/90 text-xs" title={file.filePath}>
 						{file.filePath}
@@ -208,7 +200,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 			{/* STRUMIENIE WIDEO */}
 			{file.videoStreams.length > 0 && (
 				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-2 font-bold text-foreground text-xs uppercase tracking-wider">
+					<div className="flex items-center gap-2 font-bold text-foreground text-xs">
 						<Monitor className="size-4 text-primary" />
 						<span>{m.components_media_file_video_stream({ videoCount: file.videoStreams.length })}</span>
 					</div>
@@ -231,7 +223,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 									</span>
 								)}
 								{vStream.pixelFormat !== null && (
-									<Badge variant="outline" size="sm" className="font-mono text-[10px]">
+									<Badge variant="outline" size="sm" className="font-mono text-xs">
 										{vStream.pixelFormat}
 									</Badge>
 								)}
@@ -245,7 +237,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 			{/* STRUMIENIE AUDIO */}
 			{file.audioStreams.length > 0 && (
 				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-2 font-bold text-foreground text-xs uppercase tracking-wider">
+					<div className="flex items-center gap-2 font-bold text-foreground text-xs">
 						<Volume2 className="size-4 text-primary" />
 						<span>{m.components_media_file_audio_tracks({ audioCount: file.audioStreams.length })}</span>
 					</div>
@@ -270,7 +262,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 									</span>
 								)}
 								{aStream.isDefault && (
-									<Badge variant="outline" size="sm" className="text-[10px]">
+									<Badge variant="outline" size="sm" className="text-xs">
 										{m.common_default_word()}
 									</Badge>
 								)}
@@ -283,7 +275,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 			{/* NAPISY */}
 			{file.subtitles.length > 0 && (
 				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-2 font-bold text-foreground text-xs uppercase tracking-wider">
+					<div className="flex items-center gap-2 font-bold text-foreground text-xs">
 						<Subtitles className="size-4 text-primary" />
 						<span>{m.admin_media_subtitle_tracks_count_title({ count: file.subtitles.length })}</span>
 					</div>
@@ -293,18 +285,18 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 								<Badge variant="outline" size="sm" className="font-semibold">
 									{formatLanguage(sub.language)}
 								</Badge>
-								<span className="font-bold font-mono text-foreground text-xs uppercase">{sub.format}</span>
+								<span className="font-bold font-mono text-foreground text-xs">{sub.format}</span>
 								{sub.label !== null && (
 									<span className="max-w-44 truncate text-muted-foreground italic">
 										{m.components_media_quoted_label({ label: sub.label })}
 									</span>
 								)}
 								{sub.type === "external" ? (
-									<Badge variant="secondary" size="sm" className="text-[10px]">
+									<Badge variant="secondary" size="sm" className="text-xs">
 										{m.admin_subtitles_external_word()}
 									</Badge>
 								) : (
-									<Badge variant="outline" size="sm" className="text-[10px]">
+									<Badge variant="outline" size="sm" className="text-xs">
 										{m.components_built_in()}
 									</Badge>
 								)}

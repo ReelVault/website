@@ -22,7 +22,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 				{/* Directing */}
 				{showDirecting ? (
 					<div className="flex flex-col gap-1.5">
-						<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+						<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs">
 							<Clapperboard className="size-3.5 text-primary" aria-hidden="true" />
 							{m.web_directed_by()}
 						</span>
@@ -43,7 +43,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 
 				{/* Studios */}
 				<div className="flex flex-col gap-1.5">
-					<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+					<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs">
 						<Building2 className="size-3.5 text-primary" aria-hidden="true" /> {m.admin_companies_word()}
 					</span>
 					{studios.length > 0 ? (
@@ -66,7 +66,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 
 				{keywords && keywords.length > 0 && (
 					<div className="flex flex-col gap-2">
-						<span className="flex items-center gap-1.5 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+						<span className="flex items-center gap-1.5 font-semibold text-muted-foreground text-xs">
 							<Tag className="size-3.5 text-primary" aria-hidden="true" /> {m.admin_nav_keywords()}
 						</span>
 						<div className="flex flex-wrap gap-1.5">
@@ -88,7 +88,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 			{/* Dostawcy */}
 			{providers && providers.length > 0 && (
 				<div className="flex flex-wrap items-center gap-2 border-border/40 border-t pt-3">
-					<span className="min-w-20 font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.web_providers_label()}</span>
+					<span className="min-w-20 font-semibold text-muted-foreground text-xs">{m.web_providers_label()}</span>
 					<div className="flex flex-wrap gap-1.5">
 						{providers.map((p) => {
 							const url = getProviderUrl(p.name, p.externalId, mediaType);

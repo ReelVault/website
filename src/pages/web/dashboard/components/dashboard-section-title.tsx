@@ -20,7 +20,7 @@ export default function DashboardSectionTitle({
 	return (
 		<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<header className="relative">
-				<SimpleAnimation className="absolute -top-6 left-0 flex items-center gap-1.5 font-bold text-primary/70 text-xs uppercase tracking-[0.3em]">
+				<SimpleAnimation className="absolute -top-6 left-0 flex items-center gap-1.5 font-bold text-primary/70 text-xs">
 					<Icon className="size-3.5 text-primary" />
 					<span>{category}</span>
 				</SimpleAnimation>

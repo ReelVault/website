@@ -49,9 +49,7 @@ export function LibraryHeroNavigationButton({
 			{isLeft ? (
 				<>
 					<div className="hidden flex-col items-end md:flex">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider transition-colors group-hover:text-primary">
-							{mainLabel}
-						</span>
+						<span className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary">{mainLabel}</span>
 						<span
 							key={isGenreMode ? `genre-${mainLabel}` : subLabel}
 							// initial={{ y: 10, opacity: 0 }}
@@ -74,7 +72,7 @@ export function LibraryHeroNavigationButton({
 					<div className="hidden flex-col items-start md:flex">
 						<span
 							// layout
-							className="font-semibold text-muted-foreground text-xs uppercase tracking-wider transition-colors group-hover:text-primary"
+							className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary"
 						>
 							{mainLabel}
 						</span>

@@ -13,12 +13,12 @@ export function InsightsTopGenreCard({ topGenre }: InsightsTopGenreCardProps) {
 				<div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
 					<Film className="size-5" />
 				</div>
-				<span className="font-black text-[10px] text-muted-foreground uppercase tracking-widest">{m.user_main_genre()}</span>
+				<span className="font-black text-muted-foreground text-xs">{m.user_main_genre()}</span>
 			</div>
 			<div className="flex flex-col gap-4">
 				<h3 className="wrap-break-word font-black text-4xl text-foreground tracking-tighter sm:text-6xl">{topGenre.name}</h3>
 				<div className="flex flex-col gap-2">
-					<div className="flex justify-between font-black text-[9px] text-muted-foreground uppercase tracking-widest">
+					<div className="flex justify-between font-black text-muted-foreground text-xs">
 						<span>{m.user_match_profile()}</span>
 						<span className="text-primary">{m.common_percent_value({ value: topGenre.match })}</span>
 					</div>
@@ -32,7 +32,7 @@ export function InsightsTopGenreCard({ topGenre }: InsightsTopGenreCardProps) {
 					<span
 						key={genre}
 						className={cn(
-							"rounded-full px-3 py-1 font-black text-[8px] uppercase",
+							"rounded-full px-3 py-1 font-black text-xs",
 							genre === topGenre.name ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground",
 						)}
 					>

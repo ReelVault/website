@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Easier-to-read labels** — small labels on the browse, details, watchlist, profile, notification and sign-in screens use sentence case instead of tracked capitals, and text that was 7–10 px is 12 px. The app footer keeps its decorative capitals.
 - **A title's files on their own page** — File information in a poster's menu opens `/media-files/<id>`, with the title's files, their search, and for admins the refresh buttons. The page replaces the dialog for titles; episode files still open the dialog from the episode list.
 - **Create a profile on its own page** — Add profile on the profile picker opens a page at `/auth/create-profile` instead of a dialog. It keeps the avatar, name, PIN and copy-preferences fields, and returns to the picker, to the same place it came from, after saving.
 - **Two-step verification has its own page** — turning on 2FA and regenerating backup codes open a page at `/two-factor` instead of a dialog. A step list shows where you are (confirm password, add to your app, save backup codes), and the codes stay on screen until you press Finish. The Settings buttons Enable 2FA and Regenerate backup codes open it.

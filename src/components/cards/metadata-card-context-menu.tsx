@@ -48,7 +48,7 @@ export function MetadataCardContextMenu(state: MetadataCardMenuState) {
 	return (
 		<ContextMenuContent className="w-64 border-border bg-card/95">
 			<ContextMenuGroup>
-				<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">{state.title}</ContextMenuLabel>
+				<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{state.title}</ContextMenuLabel>
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
@@ -62,7 +62,7 @@ export function MetadataCardContextMenu(state: MetadataCardMenuState) {
 				<>
 					<ContextMenuSeparator />
 					<ContextMenuGroup>
-						<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+						<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 							<Shield className="size-3" />
 							{m.common_admin_tools()}
 						</ContextMenuLabel>

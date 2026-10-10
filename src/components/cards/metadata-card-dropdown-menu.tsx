@@ -56,9 +56,7 @@ export function MetadataCardDropdownMenu(state: MetadataCardMenuState) {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-64 border-border bg-card/95">
 				<DropdownMenuGroup>
-					<DropdownMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-						{state.title}
-					</DropdownMenuLabel>
+					<DropdownMenuLabel className="truncate font-bold text-foreground text-xs">{state.title}</DropdownMenuLabel>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
@@ -73,7 +71,7 @@ export function MetadataCardDropdownMenu(state: MetadataCardMenuState) {
 					<>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+							<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 								<Shield className="size-3" />
 								{m.common_admin_tools()}
 							</DropdownMenuLabel>

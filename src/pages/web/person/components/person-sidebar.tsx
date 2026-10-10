@@ -58,7 +58,7 @@ export function PersonSidebar({
 						: []),
 				].map((stat) => (
 					<div key={stat.label} className="rounded-xl border border-border/50 bg-card/60 p-4">
-						<div className="flex items-center gap-2 font-black text-[10px] text-primary/80 uppercase tracking-wider">
+						<div className="flex items-center gap-2 font-black text-primary/80 text-xs">
 							{stat.icon} <span>{stat.label}</span>
 						</div>
 						<span className="font-bold text-foreground text-sm">{stat.value}</span>
@@ -69,7 +69,7 @@ export function PersonSidebar({
 			{/* Bio */}
 			<div className="relative space-y-4 rounded-xl border border-border/50 bg-card/60 p-6">
 				<Quote className="absolute top-4 right-4 size-8 text-primary/10" />
-				<h3 className="font-black text-primary/80 text-xs uppercase tracking-widest">{m.web_about_artist()}</h3>
+				<h3 className="font-black text-primary/80 text-xs">{m.web_about_artist()}</h3>
 				<p className="text-foreground/70 text-sm leading-relaxed">
 					{personData.biography != null && personData.biography !== "" ? personData.biography : m.web_biography_unavailable()}
 				</p>
@@ -77,7 +77,7 @@ export function PersonSidebar({
 
 			{/* Filmografia (Timeline) */}
 			<section className="space-y-4">
-				<h2 className="px-1 font-black text-foreground/50 text-xs uppercase tracking-[0.2em]">{m.web_person_filmography()}</h2>
+				<h2 className="px-1 font-black text-foreground/50 text-xs">{m.web_person_filmography()}</h2>
 				<ScrollArea className="h-64 pr-4">
 					<div className="space-y-1">
 						{personMetadataList.map((item) => (
@@ -94,9 +94,7 @@ export function PersonSidebar({
 									<h4 className="line-clamp-1 font-medium text-foreground/80 text-sm transition-colors group-hover:text-foreground">
 										{item.title}
 									</h4>
-									<p className="text-[10px] text-foreground/30 uppercase tracking-wider">
-										{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}
-									</p>
+									<p className="text-foreground/30 text-xs">{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}</p>
 								</div>
 							</Link>
 						))}

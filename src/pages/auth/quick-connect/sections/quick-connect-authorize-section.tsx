@@ -47,7 +47,7 @@ export function QuickConnectAuthorizeSection({
 				) : (
 					<div className="flex w-full flex-col gap-6">
 						<div className="flex flex-col items-center gap-2 rounded-2xl border border-primary/20 bg-primary/5 p-6">
-							<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.auth_detected_device_code()}</span>
+							<span className="font-semibold text-muted-foreground text-xs">{m.auth_detected_device_code()}</span>
 							<span className="font-black font-mono text-4xl text-primary tracking-widest sm:text-5xl">{urlCode}</span>
 							<span className="text-muted-foreground text-xs">
 								{m.auth_device_logged_in_note()}

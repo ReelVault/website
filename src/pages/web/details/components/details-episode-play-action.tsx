@@ -30,7 +30,7 @@ function EpisodeVersionMenuItem({ file, index }: { file: EpisodeVersionFile; ind
 				<div className="flex items-center gap-1.5 truncate font-medium text-foreground text-sm">
 					<span className="truncate">{title}</span>
 					{file.isDefault && (
-						<Badge variant="secondary" size="sm" className="px-1.5 py-0 text-[10px]">
+						<Badge variant="secondary" size="sm" className="px-1.5 py-0 text-xs">
 							{m.common_default_word()}
 						</Badge>
 					)}
@@ -93,7 +93,7 @@ export function DetailsEpisodePlayAction({
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" side="bottom" className="w-72 border-border bg-popover p-1.5 shadow-2xl sm:w-80">
 							<DropdownMenuGroup>
-								<DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 font-bold text-muted-foreground text-xs uppercase tracking-wider">
+								<DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 font-bold text-muted-foreground text-xs">
 									<Layers className="size-3.5 text-primary" />
 									<span>{m.web_video_versions_count_label({ count: files.length })}</span>
 								</DropdownMenuLabel>

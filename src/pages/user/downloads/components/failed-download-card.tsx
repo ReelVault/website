@@ -27,7 +27,7 @@ export function FailedDownloadCard({
 				<div className="min-w-0">
 					<div className="flex items-center gap-2">
 						<p className="truncate font-semibold text-xs">{job.fileName}</p>
-						<Badge size="sm" variant="destructive" className="text-[9px]">
+						<Badge size="sm" variant="destructive" className="text-xs">
 							{job.status === "cancelled" ? m.common_cancelled() : m.common_error()}
 						</Badge>
 					</div>

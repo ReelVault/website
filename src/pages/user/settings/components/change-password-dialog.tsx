@@ -62,7 +62,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4 py-2">
 					<div className="flex flex-col gap-2">
-						<label htmlFor="change-password-current" className="font-semibold text-muted-foreground text-xs uppercase">
+						<label htmlFor="change-password-current" className="font-semibold text-muted-foreground text-xs">
 							{m.user_current_password()}
 						</label>
 						<Input
@@ -76,7 +76,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
-						<label htmlFor="change-password-new" className="font-semibold text-muted-foreground text-xs uppercase">
+						<label htmlFor="change-password-new" className="font-semibold text-muted-foreground text-xs">
 							{m.user_new_password()}
 						</label>
 						<Input
@@ -92,7 +92,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 						<p className="text-muted-foreground text-xs">{m.user_password_min_length()}</p>
 					</div>
 					<div className="flex flex-col gap-2">
-						<label htmlFor="change-password-confirm" className="font-semibold text-muted-foreground text-xs uppercase">
+						<label htmlFor="change-password-confirm" className="font-semibold text-muted-foreground text-xs">
 							{m.user_confirm_new_password()}
 						</label>
 						<Input

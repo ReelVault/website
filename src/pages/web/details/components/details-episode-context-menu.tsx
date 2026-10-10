@@ -54,7 +54,7 @@ export function DetailsEpisodeContextMenu({
 	return (
 		<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 			<ContextMenuGroup>
-				<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">{episodeTitle}</ContextMenuLabel>
+				<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{episodeTitle}</ContextMenuLabel>
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
@@ -75,7 +75,7 @@ export function DetailsEpisodeContextMenu({
 									<div className="flex min-w-0 flex-1 flex-col gap-0.5">
 										<div className="flex items-center gap-1.5 truncate font-medium text-sm">
 											<span className="truncate">{getVersionTitle(file, idx)}</span>
-											{file.isDefault && <span className="text-[10px] text-primary">{m.web_default()}</span>}
+											{file.isDefault && <span className="text-primary text-xs">{m.web_default()}</span>}
 										</div>
 										<span className="truncate text-muted-foreground text-xs">{getVersionSubtitle(file)}</span>
 									</div>
@@ -138,7 +138,7 @@ export function DetailsEpisodeContextMenu({
 				<>
 					<ContextMenuSeparator />
 					<ContextMenuGroup>
-						<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+						<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 							<Shield className="size-3" />
 							{m.common_admin_tools()}
 						</ContextMenuLabel>

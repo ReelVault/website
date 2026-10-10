@@ -19,7 +19,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 		<div className="flex min-w-0 flex-col gap-4 md:w-2/3">
 			{/* Scrollable style bar */}
 			<div className="flex min-w-0 flex-col gap-2">
-				<Label className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.auth_avatar_style()}</Label>
+				<Label className="font-bold text-muted-foreground text-xs">{m.auth_avatar_style()}</Label>
 				<ScrollArea className="w-full max-w-[calc(100vw-6rem)] whitespace-nowrap md:max-w-xl">
 					<div className="flex gap-2 overflow-x-auto pb-2">
 						{AVATAR_STYLES.map((style) => (
@@ -36,7 +36,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 								)}
 							>
 								<span className="text-xl">{style.icon}</span>
-								<span className="font-bold text-[10px] uppercase">{style.name}</span>
+								<span className="font-bold text-xs">{style.name}</span>
 							</Button>
 						))}
 					</div>
@@ -46,7 +46,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 
 			{/* Siatka nasion (Seeds) */}
 			<div className="flex flex-col gap-2">
-				<Label className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.auth_choose_character()}</Label>
+				<Label className="font-bold text-muted-foreground text-xs">{m.auth_choose_character()}</Label>
 				<ScrollArea className="h-72 w-full p-4">
 					<div className="grid h-fit grid-cols-3 gap-2 overflow-y-auto rounded-2xl border border-border p-2 sm:grid-cols-4">
 						{AVATAR_SEEDS.map((seed) => (

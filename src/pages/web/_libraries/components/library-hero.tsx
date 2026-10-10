@@ -123,7 +123,7 @@ export function LibraryHero({
 							<SimpleAnimation key={validMetadataLength} from={{ transform: "scale(1.2)" }} className="font-bold text-2xl text-primary">
 								{validMetadataLength}
 							</SimpleAnimation>
-							<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.web_library_items_count()}</span>
+							<span className="font-semibold text-muted-foreground text-xs">{m.web_library_items_count()}</span>
 						</div>
 					</div>
 				</div>

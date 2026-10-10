@@ -28,13 +28,10 @@ export function NavbarBottomBar({ pathname }: NavbarBottomBarProps) {
 							key={href}
 							to={href}
 							aria-current={isActive ? "page" : undefined}
-							className={cn(
-								"flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-[10px] transition-colors",
-								{
-									"bg-muted text-primary": isActive,
-									"text-muted-foreground hover:bg-muted/40 hover:text-foreground": !isActive,
-								},
-							)}
+							className={cn("flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-xs transition-colors", {
+								"bg-muted text-primary": isActive,
+								"text-muted-foreground hover:bg-muted/40 hover:text-foreground": !isActive,
+							})}
 						>
 							<Icon className="size-5" aria-hidden="true" />
 							<span>{label}</span>
@@ -43,7 +40,7 @@ export function NavbarBottomBar({ pathname }: NavbarBottomBarProps) {
 				})}
 				<button
 					type="button"
-					className="flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-[10px] text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
+					className="flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-muted-foreground text-xs transition-colors hover:bg-muted/40 hover:text-foreground"
 					onClick={() => setNavbarMobileMenuOpen(true)}
 				>
 					<Ellipsis className="size-5" aria-hidden="true" />

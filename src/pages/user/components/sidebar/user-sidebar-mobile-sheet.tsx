@@ -23,7 +23,7 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 				render={
 					<button
 						type="button"
-						className="flex min-h-12 w-16 shrink-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-[10px] text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground lg:hidden"
+						className="flex min-h-12 w-16 shrink-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-muted-foreground text-xs transition-colors hover:bg-muted/40 hover:text-foreground lg:hidden"
 						aria-label={m.user_profile_and_account()}
 						onClick={() => onOpenChange(true)}
 					/>

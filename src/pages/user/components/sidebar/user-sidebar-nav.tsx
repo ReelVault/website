@@ -19,9 +19,7 @@ export function UserSidebarNav({ pathname, unreadCount }: UserSidebarNavProps) {
 			className="flex flex-1 items-center justify-around gap-1 lg:flex-col lg:items-stretch lg:justify-start"
 			aria-label={m.user_panel_heading()}
 		>
-			<p className="mb-2 hidden px-3 font-semibold text-[10px] text-muted-foreground uppercase tracking-[0.18em] lg:block">
-				{m.user_your_space()}
-			</p>
+			<p className="mb-2 hidden px-3 font-semibold text-muted-foreground text-xs lg:block">{m.user_your_space()}</p>
 			{navItems.map(({ label, href, icon: Icon }) => {
 				const active = pathname === href;
 				const badge = href === "/notifications" ? unreadCount : 0;
@@ -39,7 +37,7 @@ export function UserSidebarNav({ pathname, unreadCount }: UserSidebarNavProps) {
 						<Icon className="size-4.5" aria-hidden="true" />
 						<span className="hidden font-medium text-sm lg:block">{label}</span>
 						{badge > 0 && (
-							<span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-primary font-bold text-[9px] text-primary-foreground lg:static lg:ml-auto">
+							<span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground text-xs lg:static lg:ml-auto">
 								{badge > 9 ? "9+" : badge}
 							</span>
 						)}

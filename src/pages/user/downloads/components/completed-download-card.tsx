@@ -19,12 +19,10 @@ export function CompletedDownloadCard({ job, onDelete }: { job: DownloadJob; onD
 				<div className="min-w-0">
 					<div className="flex flex-wrap items-center gap-2">
 						<h2 className="truncate font-bold text-foreground text-sm">{job.fileName}</h2>
-						<Badge size="sm" variant="outline" className="font-mono text-[10px] uppercase">
+						<Badge size="sm" variant="outline" className="font-mono text-xs">
 							{job.quality}
 						</Badge>
-						<span className="rounded-full bg-success/10 px-2 py-0.5 font-bold text-[9px] text-success uppercase">
-							{m.user_download_status_ready()}
-						</span>
+						<span className="rounded-full bg-success/10 px-2 py-0.5 font-bold text-success text-xs">{m.user_download_status_ready()}</span>
 					</div>
 					<p className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
 						<span>{job.sizeBytes ? formatFileSize(job.sizeBytes) : m.common_file_size_not_available()}</span>

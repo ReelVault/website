@@ -38,7 +38,7 @@ interface NativeSearchItem {
 
 function SearchGroupHeading({ icon: Icon, label, count }: { icon: typeof Film; label: string; count: number }) {
 	return (
-		<span className="flex items-center gap-2 font-bold text-muted-foreground text-xs uppercase tracking-wider">
+		<span className="flex items-center gap-2 font-bold text-muted-foreground text-xs">
 			<Icon className="size-3.5 text-primary" aria-hidden="true" />
 			{label}
 			<span className="ml-auto font-mono tabular-nums">{count}</span>
@@ -166,7 +166,7 @@ function ExternalCatalogGroup({
 }) {
 	return (
 		<div className="flex flex-col gap-2">
-			<span className="flex items-center gap-2 px-1 font-bold text-muted-foreground text-xs uppercase tracking-wider">
+			<span className="flex items-center gap-2 px-1 font-bold text-muted-foreground text-xs">
 				<Globe className="size-3.5 text-primary" aria-hidden="true" />
 				{m.components_search_plugin_heading()}
 				<span className="ml-auto font-mono tabular-nums">{items.length}</span>
@@ -198,7 +198,7 @@ function ExternalCatalogGroup({
 									</span>
 								)}
 								{alreadyRequested && (
-									<span className="absolute top-1 left-1 rounded-full bg-background/90 px-2 py-0.5 font-semibold text-[10px] text-foreground shadow-sm">
+									<span className="absolute top-1 left-1 rounded-full bg-background/90 px-2 py-0.5 font-semibold text-foreground text-xs shadow-sm">
 										{m.components_search_plugin_requested()}
 									</span>
 								)}
@@ -450,7 +450,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 			>
 				<Search className="size-4 text-muted-foreground transition-colors group-hover:text-primary" />
 				<span className="hidden font-medium xl:inline">{m.components_navbar_search_catalog()}</span>
-				<kbd className="hidden items-center gap-0.5 rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground shadow-xs sm:inline-flex">
+				<kbd className="hidden items-center gap-0.5 rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-muted-foreground text-xs shadow-xs sm:inline-flex">
 					{m.common_shortcut_ctrl_k()}
 				</kbd>
 			</DialogTrigger>
@@ -520,7 +520,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 				<div className="flex items-center justify-between border-border border-t bg-muted/20 px-5 py-3 text-muted-foreground text-xs sm:px-6">
 					<span className="flex items-center gap-2">
 						<span>{m.components_search_press()}</span>
-						<kbd className="rounded border border-border bg-card px-1.5 py-0.5 font-mono text-[10px] text-foreground shadow-xs">
+						<kbd className="rounded border border-border bg-card px-1.5 py-0.5 font-mono text-foreground text-xs shadow-xs">
 							{m.common_shortcut_esc()}
 						</kbd>
 						<span>{m.components_search_to_close()}</span>

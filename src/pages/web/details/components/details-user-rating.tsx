@@ -42,7 +42,7 @@ export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 			className="inline-flex flex-row items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-3.5 py-2 shadow-xs"
 			aria-live="polite"
 		>
-			<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.web_your_rating_label()}</span>
+			<span className="font-semibold text-muted-foreground text-xs">{m.web_your_rating_label()}</span>
 
 			<fieldset className="flex items-center gap-1.5" disabled={isLoading || isSaving}>
 				<legend className="sr-only">{m.web_select_rating()}</legend>

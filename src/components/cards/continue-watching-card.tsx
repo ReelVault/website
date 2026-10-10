@@ -74,10 +74,7 @@ export function ContinueWatchingCard({
 						</div>
 
 						{/* Badge - same size as the default Badge in MetadataCard (text-xs) */}
-						<Badge
-							variant="outline"
-							className="absolute top-3 right-3 z-20 border-border/70 bg-background/80 font-bold text-xs uppercase tracking-wider"
-						>
+						<Badge variant="outline" className="absolute top-3 right-3 z-20 border-border/70 bg-background/80 font-bold text-xs">
 							{episodeBadgeLabel}
 						</Badge>
 
@@ -159,9 +156,7 @@ export function ContinueWatchingCard({
 			{/* MENU KONTEKSTOWE - te same klasy/wzorce co w MetadataCard */}
 			<ContextMenuContent className="w-64 border-border bg-card/95">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-						{item.metadata.title}
-					</ContextMenuLabel>
+					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{item.metadata.title}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>

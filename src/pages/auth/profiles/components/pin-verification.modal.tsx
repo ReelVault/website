@@ -94,7 +94,7 @@ export function PinVerificationModal({
 						</Avatar>
 						<div>
 							<h3 className="font-bold text-lg">{profile.name}</h3>
-							<p className="font-medium text-muted-foreground text-xs uppercase tracking-widest">{m.auth_enter_pin()}</p>
+							<p className="font-medium text-muted-foreground text-xs">{m.auth_enter_pin()}</p>
 						</div>
 					</div>
 

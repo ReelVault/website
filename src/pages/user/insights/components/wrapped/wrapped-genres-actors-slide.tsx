@@ -11,10 +11,7 @@ export function WrappedGenresActorsSlide({ data }: WrappedGenresActorsSlideProps
 	return (
 		<div className="fade-in zoom-in-95 animate-in space-y-6 py-2 duration-300">
 			<div className="text-center">
-				<Badge
-					variant="outline"
-					className="mb-2 border-primary/50 bg-primary/10 px-3 py-1 font-bold text-primary text-xs uppercase tracking-wider"
-				>
+				<Badge variant="outline" className="mb-2 border-primary/50 bg-primary/10 px-3 py-1 font-bold text-primary text-xs">
 					{m.user_prefs_and_stars()}
 				</Badge>
 				<h3 className="font-black text-2xl text-foreground sm:text-4xl">{m.user_genres_and_actors()}</h3>
@@ -24,7 +21,7 @@ export function WrappedGenresActorsSlide({ data }: WrappedGenresActorsSlideProps
 			<div className="grid grid-cols-1 gap-6 pt-2 sm:grid-cols-2">
 				<div className="rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
 					<div className="mb-4 flex items-center justify-between">
-						<p className="font-bold text-muted-foreground text-xs uppercase tracking-wider">{m.admin_top_movie_genres()}</p>
+						<p className="font-bold text-muted-foreground text-xs">{m.admin_top_movie_genres()}</p>
 						<Clapperboard className="size-4 text-primary" />
 					</div>
 					<div className="space-y-3">
@@ -47,7 +44,7 @@ export function WrappedGenresActorsSlide({ data }: WrappedGenresActorsSlideProps
 
 				<div className="rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
 					<div className="mb-4 flex items-center justify-between">
-						<p className="font-bold text-muted-foreground text-xs uppercase tracking-wider">{m.user_most_on_screen()}</p>
+						<p className="font-bold text-muted-foreground text-xs">{m.user_most_on_screen()}</p>
 						<User className="size-4 text-amber-400" />
 					</div>
 					<div className="space-y-3.5">

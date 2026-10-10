@@ -45,7 +45,7 @@ export function AppNavbar() {
 								to={href}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex min-h-12 max-w-24 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-[10px] transition-colors",
+									"flex min-h-12 max-w-24 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-xs transition-colors",
 									{
 										"bg-muted text-primary": isActive,
 										"text-muted-foreground hover:bg-muted/40 hover:text-foreground": !isActive,

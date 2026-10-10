@@ -37,11 +37,11 @@ export function WatchlistSidebar({
 							</div>
 						</div>
 						<div>
-							<p className="font-black text-[10px] text-muted-foreground uppercase tracking-widest">{m.web_watchlist_stats_movies()}</p>
+							<p className="font-black text-muted-foreground text-xs">{m.web_watchlist_stats_movies()}</p>
 							<p className="font-semibold text-lg tabular-nums">{stats.movies}</p>
 						</div>
 						<div>
-							<p className="font-black text-[10px] text-muted-foreground uppercase tracking-widest">{m.web_watchlist_stats_series()}</p>
+							<p className="font-black text-muted-foreground text-xs">{m.web_watchlist_stats_series()}</p>
 							<p className="font-semibold text-lg tabular-nums">{stats.series}</p>
 						</div>
 					</div>

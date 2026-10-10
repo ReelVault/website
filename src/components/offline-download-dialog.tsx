@@ -156,9 +156,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 
 				{!activeJobId && (
 					<div className="flex flex-col gap-3 py-2">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-							{m.components_offline_select_quality()}
-						</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.components_offline_select_quality()}</span>
 						<RadioGroup
 							value={selectedQuality}
 							onValueChange={(value) => {
@@ -195,7 +193,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 											<div className="flex items-center gap-2">
 												<span className="font-bold text-foreground text-sm">{opt.label}</span>
 												{opt.recommended && (
-													<Badge variant="secondary" size="sm" className="gap-1 font-semibold text-[10px]">
+													<Badge variant="secondary" size="sm" className="gap-1 font-semibold text-xs">
 														<Sparkles className="size-3 text-primary" />
 														{m.components_offline_recommended()}
 													</Badge>

@@ -41,14 +41,12 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 						<div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
 							<BarChart2 className="size-4" />
 						</div>
-						<span className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.user_daily_activity()}</span>
+						<span className="font-bold text-muted-foreground text-xs">{m.user_daily_activity()}</span>
 					</div>
 
 					<h2 className="font-black text-2xl text-foreground tracking-tight sm:text-3xl">
 						{m.user_watch_history()}
-						<span className="ml-2 font-mono text-primary text-xs uppercase">
-							{m.user_insights_selected_range({ range: selectedRange })}
-						</span>
+						<span className="ml-2 font-mono text-primary text-xs">{m.user_insights_selected_range({ range: selectedRange })}</span>
 					</h2>
 
 					<p className="font-medium text-muted-foreground text-xs">
@@ -99,11 +97,11 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 
 													<div className="flex h-5 items-center justify-center pt-1">
 														{showLabel ? (
-															<span className="truncate font-bold font-mono text-[9px] text-muted-foreground uppercase transition-colors group-hover:text-foreground">
+															<span className="truncate font-bold font-mono text-muted-foreground text-xs transition-colors group-hover:text-foreground">
 																{shortLabel}
 															</span>
 														) : (
-															<span className="text-[9px] text-muted-foreground/30">{m.common_bullet_symbol()}</span>
+															<span className="text-muted-foreground/30 text-xs">{m.common_bullet_symbol()}</span>
 														)}
 													</div>
 												</div>

@@ -50,7 +50,7 @@ export function QuickConnectRedeemSection({
 					<KeyRound className="size-7" />
 				</div>
 				<h1 className="font-black text-3xl tracking-tight sm:text-4xl">{m.auth_code_login_heading()}</h1>
-				<p className="font-medium text-muted-foreground text-xs uppercase tracking-wider">{m.auth_enter_one_time_code()}</p>
+				<p className="font-medium text-muted-foreground text-xs">{m.auth_enter_one_time_code()}</p>
 			</header>
 
 			<form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-6">

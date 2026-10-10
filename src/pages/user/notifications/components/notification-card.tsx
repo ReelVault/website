@@ -110,7 +110,7 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 
 				<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 					<ContextMenuGroup>
-						<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">{title}</ContextMenuLabel>
+						<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{title}</ContextMenuLabel>
 					</ContextMenuGroup>
 					<ContextMenuSeparator />
 					<ContextMenuGroup>

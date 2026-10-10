@@ -133,7 +133,7 @@ export function NavbarNotifications() {
 											<span className={cn("truncate font-semibold text-xs", isRead ? "text-muted-foreground" : "text-foreground")}>
 												{title}
 											</span>
-											<span className="shrink-0 text-[10px] text-muted-foreground">{timeAgo}</span>
+											<span className="shrink-0 text-muted-foreground text-xs">{timeAgo}</span>
 										</div>
 										{body && <p className="mt-0.5 line-clamp-2 text-muted-foreground text-xs leading-relaxed">{body}</p>}
 									</div>

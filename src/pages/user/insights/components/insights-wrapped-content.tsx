@@ -22,7 +22,7 @@ import { WrappedSummarySlide } from "./wrapped/wrapped-summary-slide";
 import { WrappedTopMediaSlide } from "./wrapped/wrapped-top-media-slide";
 
 // Module-level render prop keeps its identity stable across renders.
-const renderKeyboardKey = (chunks: string) => <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">{chunks}</kbd>;
+const renderKeyboardKey = (chunks: string) => <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{chunks}</kbd>;
 
 /**
  * Static map of the server's viewer personality codes (watched-history

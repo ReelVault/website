@@ -53,9 +53,7 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 							<div className="flex items-center gap-3">
 								<h2 className="truncate font-bold">{deviceTitle}</h2>
 								{session.isCurrent && (
-									<span className="rounded-full bg-primary/10 px-2 py-1 font-bold text-[9px] text-primary uppercase">
-										{m.user_this_device()}
-									</span>
+									<span className="rounded-full bg-primary/10 px-2 py-1 font-bold text-primary text-xs">{m.user_this_device()}</span>
 								)}
 							</div>
 							<p className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
@@ -87,9 +85,7 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 
 				<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
 					<ContextMenuGroup>
-						<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-							{m.user_session_options()}
-						</ContextMenuLabel>
+						<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{m.user_session_options()}</ContextMenuLabel>
 						<ContextMenuSeparator />
 						{session.ipAddress && (
 							<ContextMenuItem

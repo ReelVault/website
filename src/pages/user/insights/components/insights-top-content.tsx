@@ -108,10 +108,7 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 
 				{item.completed && (
 					<div className="absolute top-2 right-2">
-						<Badge
-							variant="secondary"
-							className="gap-1 border-success/30 bg-success/20 px-1.5 py-0.5 font-semibold text-[10px] text-success"
-						>
+						<Badge variant="secondary" className="gap-1 border-success/30 bg-success/20 px-1.5 py-0.5 font-semibold text-success text-xs">
 							<CheckCircle2 className="size-3" />
 							{m.admin_worker_finished_word()}
 						</Badge>

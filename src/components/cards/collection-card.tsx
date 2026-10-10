@@ -105,7 +105,7 @@ export function CollectionCard({
 						{highlight && (
 							<div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1 font-bold text-primary-foreground text-xs shadow-md">
 								<div className="size-1.5 animate-pulse rounded-full bg-primary-foreground" />
-								<span className="text-[10px] tracking-wider">{m.components_now_playing_short()}</span>
+								<span className="text-xs tracking-wider">{m.components_now_playing_short()}</span>
 							</div>
 						)}
 					</AspectRatio>
@@ -114,9 +114,7 @@ export function CollectionCard({
 
 			<ContextMenuContent className="w-64 border-border bg-card/95">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">
-						{metadata.title}
-					</ContextMenuLabel>
+					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{metadata.title}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
@@ -134,7 +132,7 @@ export function CollectionCard({
 					<>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>
-							<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+							<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 								<Shield className="size-3" />
 								{m.common_admin_tools()}
 							</ContextMenuLabel>

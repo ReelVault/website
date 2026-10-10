@@ -136,7 +136,7 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 			<FullscreenDialogHeader className="shrink-0">
 				<div className="mb-2 flex items-center gap-2">
 					<div className="h-px w-4 bg-primary" />
-					<span className="font-black text-[10px] text-primary uppercase tracking-[0.3em]">{m.user_identity()}</span>
+					<span className="font-black text-primary text-xs">{m.user_identity()}</span>
 				</div>
 				<FullscreenDialogTitle className="font-black text-3xl text-foreground uppercase tracking-tighter">
 					{m.user_choose_avatar_cap()}
@@ -165,9 +165,7 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 
 					{(selectedAvatar || previewImage) && (
 						<div className="flex flex-col gap-3">
-							<h4 className="ml-2 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
-								{m.user_selected_avatar_label()}
-							</h4>
+							<h4 className="ml-2 font-black text-muted-foreground text-xs">{m.user_selected_avatar_label()}</h4>
 							<div className="flex items-center justify-center">
 								<div className="relative size-32 overflow-hidden rounded-3xl border-2 border-primary/20">
 									<img
@@ -186,13 +184,13 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 						<TabsList className="grid w-full grid-cols-2 rounded-2xl bg-muted/40 p-1">
 							<TabsTrigger
 								value="gallery"
-								className="rounded-xl font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+								className="rounded-xl font-black text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
 							>
 								{m.user_avatar_from_gallery()}
 							</TabsTrigger>
 							<TabsTrigger
 								value="upload"
-								className="rounded-xl font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+								className="rounded-xl font-black text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
 							>
 								{m.user_upload_own()}
 							</TabsTrigger>
@@ -231,18 +229,12 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 				</AsyncButton>
 
 				<div className="flex gap-3">
-					<Button
-						type="button"
-						variant="outline"
-						onClick={onClose}
-						disabled={isSaving}
-						className="min-h-11 px-6 font-black text-[9px] uppercase tracking-widest"
-					>
+					<Button type="button" variant="outline" onClick={onClose} disabled={isSaving} className="min-h-11 px-6 font-black text-xs">
 						{m.common_cancel()}
 					</Button>
 					<AsyncButton
 						type="button"
-						className="min-h-11 px-6 font-black text-[9px] uppercase tracking-widest"
+						className="min-h-11 px-6 font-black text-xs"
 						onClick={handleConfirm}
 						disabled={!hasPendingChange}
 						isPending={isSaving}

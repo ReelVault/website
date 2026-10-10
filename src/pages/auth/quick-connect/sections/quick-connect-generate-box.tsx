@@ -69,7 +69,7 @@ export function QuickConnectGenerateBox() {
 
 				{generatedState ? (
 					<div className="flex flex-col items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 text-center">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.auth_code_valid_for()}</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.auth_code_valid_for()}</span>
 						<div className="flex items-center gap-2 font-black font-mono text-3xl text-primary tracking-widest sm:text-4xl">
 							{generatedState.code}
 						</div>

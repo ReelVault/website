@@ -30,7 +30,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 						<div className="flex items-center gap-3">
 							<h3 className="font-bold text-foreground text-sm">{twoFactorEnabled ? m.user_2fa_active() : m.user_2fa_disabled()}</h3>
 							<span
-								className={cn("rounded-full px-2 py-0.5 font-bold text-[10px] uppercase tracking-wider", {
+								className={cn("rounded-full px-2 py-0.5 font-bold text-xs", {
 									"bg-success/10 text-success": twoFactorEnabled,
 									"bg-muted text-muted-foreground": !twoFactorEnabled,
 								})}

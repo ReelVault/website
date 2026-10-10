@@ -21,19 +21,19 @@ export function PersonStats({ metadata }: { metadata: Array<RequireFields<Metada
 				<div className="col-span-2 flex flex-col justify-center rounded-xl border border-border/50 bg-linear-to-br from-primary/20 to-transparent p-8 md:col-span-2">
 					<Clapperboard className="mb-4 size-8 text-primary" />
 					<h4 className="font-black text-5xl text-foreground">{metadata.length}</h4>
-					<p className="font-bold text-foreground/40 text-xs uppercase tracking-widest">{m.web_body_of_work_titles()}</p>
+					<p className="font-bold text-foreground/40 text-xs">{m.web_body_of_work_titles()}</p>
 				</div>
 				<div className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/60 p-8 text-center transition-transform hover:scale-[1.02]">
 					<Star className="mb-2 size-6 fill-warning/50 text-warning/50" />
 					<p className="font-black text-2xl text-foreground">
 						{averageRating == null ? m.common_not_available() : formatRating(averageRating)}
 					</p>
-					<p className="font-bold text-[10px] text-foreground/40 uppercase">{m.web_average_rating()}</p>
+					<p className="font-bold text-foreground/40 text-xs">{m.web_average_rating()}</p>
 				</div>
 				<div className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/60 p-8 text-center transition-transform hover:scale-[1.02]">
 					<Calendar className="mb-2 size-6 text-primary/40" />
 					<p className="font-black text-2xl text-foreground">{debutYear ?? m.common_not_available()}</p>
-					<p className="font-bold text-[10px] text-foreground/40 uppercase">{m.web_first_title()}</p>
+					<p className="font-bold text-foreground/40 text-xs">{m.web_first_title()}</p>
 				</div>
 			</section>
 		</SimpleAnimation>

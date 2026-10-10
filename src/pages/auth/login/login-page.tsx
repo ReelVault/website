@@ -129,7 +129,7 @@ export default function LoginPage() {
 								<h1 className="font-black text-4xl tracking-tight sm:text-5xl">
 									<ParaglideMessage message={m.auth_welcome_title} markup={welcomeTitleMarkup} />
 								</h1>
-								<p className="mt-2 font-semibold text-muted-foreground text-xs uppercase tracking-[0.2em]">{getStepLabel()}</p>
+								<p className="mt-2 font-semibold text-muted-foreground text-xs">{getStepLabel()}</p>
 							</div>
 						</header>
 

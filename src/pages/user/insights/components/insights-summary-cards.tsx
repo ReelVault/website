@@ -15,7 +15,7 @@ export function InsightsSummaryCards({ scannedTitles, topActor }: InsightsSummar
 				</div>
 				<div>
 					<h3 className="font-black text-4xl text-foreground tracking-tight">{scannedTitles}</h3>
-					<p className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.user_titles_watched()}</p>
+					<p className="font-bold text-muted-foreground text-xs">{m.user_titles_watched()}</p>
 				</div>
 			</div>
 
@@ -26,7 +26,7 @@ export function InsightsSummaryCards({ scannedTitles, topActor }: InsightsSummar
 				<div className="flex-1">
 					<div className="flex items-center justify-between">
 						<h4 className="font-bold text-2xl text-foreground">{topActor.name}</h4>
-						<span className="rounded-lg bg-primary/10 px-2 py-1 font-bold text-[9px] text-primary uppercase">{m.user_most_watched()}</span>
+						<span className="rounded-lg bg-primary/10 px-2 py-1 font-bold text-primary text-xs">{m.user_most_watched()}</span>
 					</div>
 					<p className="font-medium text-muted-foreground text-xs">{m.user_top_actor_minutes({ productions: topActor.productions })}</p>
 				</div>

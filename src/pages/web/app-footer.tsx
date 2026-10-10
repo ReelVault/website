@@ -17,8 +17,8 @@ export function AppFooter() {
 
 				{/* Main text */}
 				<div className="flex flex-col items-center gap-2">
-					<p className="font-black text-[9px] text-foreground/20 uppercase tracking-[0.6em]">{m.web_footer_tagline()}</p>
-					<p className="font-bold text-[7px] text-foreground/10 uppercase tracking-[0.4em]">{m.web_footer_copyright({ year })}</p>
+					<p className="font-black text-foreground/20 text-xs">{m.web_footer_tagline()}</p>
+					<p className="font-bold text-foreground/10 text-xs">{m.web_footer_copyright({ year })}</p>
 				</div>
 			</div>
 

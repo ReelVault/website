@@ -35,9 +35,7 @@ export function MetadataCardGenreBadges({ genres }: MetadataCardGenreBadgesProps
 							<Icon className="size-4 text-primary" />
 						</div>
 						<span className="grid grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity,margin] duration-200 group-focus-within:ml-1 group-focus-within:grid-cols-[1fr] group-focus-within:opacity-100 group-hover:ml-1 group-hover:grid-cols-[1fr] group-hover:opacity-100">
-							<span className="overflow-hidden whitespace-nowrap font-bold text-[10px] text-foreground uppercase tracking-wider">
-								{genre.name}
-							</span>
+							<span className="overflow-hidden whitespace-nowrap font-bold text-foreground text-xs">{genre.name}</span>
 						</span>
 					</Link>
 				);

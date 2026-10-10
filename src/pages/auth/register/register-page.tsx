@@ -77,7 +77,7 @@ export default function RegisterPage() {
 							<h1 className="font-black text-4xl tracking-tight sm:text-5xl">
 								<ParaglideMessage message={m.auth_join_brand} markup={joinBrandMarkup} />
 							</h1>
-							<p className="font-semibold text-muted-foreground text-xs uppercase tracking-[0.2em]">{m.auth_create_system_profile()}</p>
+							<p className="font-semibold text-muted-foreground text-xs">{m.auth_create_system_profile()}</p>
 						</header>
 
 						<form onSubmit={handleRegister} className="mt-10 flex flex-col gap-6" name="register" autoComplete="on">

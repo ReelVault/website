@@ -164,7 +164,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 					<div className="overflow-x-auto pb-2">
 						<div className="min-w-120">
 							{/* Hours Header */}
-							<div className="mb-1 grid grid-cols-[36px_repeat(24,1fr)] gap-1 text-center font-mono text-[10px] text-muted-foreground">
+							<div className="mb-1 grid grid-cols-[36px_repeat(24,1fr)] gap-1 text-center font-mono text-muted-foreground text-xs">
 								<div />
 								{HOURS.map((hour) => (
 									<div key={hour} className="text-center">
@@ -216,7 +216,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 									<Info className="size-3" />
 									<span>{m.user_hover_for_time()}</span>
 								</div>
-								<div className="flex items-center gap-1.5 font-mono text-[10px]">
+								<div className="flex items-center gap-1.5 font-mono text-xs">
 									<span>{m.common_less()}</span>
 									<div className="size-2.5 rounded-xs border border-border/30 bg-muted/30" />
 									<div className="size-2.5 rounded-xs bg-primary/25" />

@@ -74,7 +74,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 												<Badge className="bg-primary/10 text-primary">{m.common_percent_value({ value: progressPercent })}</Badge>
 											)}
 											{file.source && (
-												<Badge variant="outline" className="text-[10px] text-muted-foreground uppercase">
+												<Badge variant="outline" className="text-muted-foreground text-xs">
 													{file.source}
 												</Badge>
 											)}
@@ -106,9 +106,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 												</div>
 											)}
 											{file.formatName && (
-												<span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground uppercase">
-													{file.formatName}
-												</span>
+												<span className="rounded bg-muted px-1.5 py-0.5 font-mono text-muted-foreground text-xs">{file.formatName}</span>
 											)}
 										</div>
 									</div>

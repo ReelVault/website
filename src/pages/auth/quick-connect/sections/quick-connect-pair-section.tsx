@@ -34,7 +34,7 @@ export function QuickConnectPairSection({
 					<Tv className="size-7" />
 				</div>
 				<h1 className="font-black text-3xl tracking-tight sm:text-4xl">{m.auth_quick_login()}</h1>
-				<p className="font-medium text-muted-foreground text-xs uppercase tracking-wider">{m.auth_scan_qr_hint()}</p>
+				<p className="font-medium text-muted-foreground text-xs">{m.auth_scan_qr_hint()}</p>
 			</header>
 
 			<div className="mt-8 flex flex-col items-center gap-6">
@@ -50,7 +50,7 @@ export function QuickConnectPairSection({
 					)}
 
 					<div className="flex flex-col items-center gap-1">
-						<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.auth_pairing_code_label()}</span>
+						<span className="font-semibold text-muted-foreground text-xs">{m.auth_pairing_code_label()}</span>
 						{isPending ? (
 							<div className="animate-pulse py-2 font-medium text-muted-foreground text-sm">{m.auth_generating_ellipsis()}</div>
 						) : (

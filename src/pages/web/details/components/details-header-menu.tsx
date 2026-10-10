@@ -75,7 +75,7 @@ export function DetailsHeaderMenu({
 					<>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+							<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 								<Shield className="size-3" />
 								{m.common_admin_tools_full()}
 							</DropdownMenuLabel>

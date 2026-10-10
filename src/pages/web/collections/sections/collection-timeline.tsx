@@ -26,7 +26,7 @@ export function CollectionTimeline({ items }: CollectionTimelineProps) {
 				</div>
 				<div className="flex gap-6 text-sm">
 					<div>
-						<p className="text-muted-foreground text-xs uppercase tracking-wider">{m.web_average()}</p>
+						<p className="text-muted-foreground text-xs">{m.web_average()}</p>
 						<p className="mt-1 flex items-center gap-1 font-bold text-lg text-primary">
 							{averageRating == null ? "b/d" : formatRating(averageRating)}{" "}
 							{averageRating != null && <Star className="size-3.5 fill-current" aria-hidden="true" />}

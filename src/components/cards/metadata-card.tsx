@@ -106,7 +106,7 @@ export function MetadataCard({
 							{metadata.title}
 						</h3>
 						<div className="flex items-center gap-2">
-							<span className="font-bold text-[10px] text-muted-foreground">{year}</span>
+							<span className="font-bold text-muted-foreground text-xs">{year}</span>
 							{!hideRatingOverlay && metadata.rating.avgScore > 0 && (
 								<>
 									<div className="h-1 w-1 rounded-full bg-border" />

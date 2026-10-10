@@ -80,7 +80,7 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 
 			<ContextMenuContent className="w-64 border-border bg-card/95">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs uppercase tracking-wider">{personName}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{personName}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
@@ -98,7 +98,7 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 					<>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>
-							<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-[10px] text-primary uppercase tracking-widest">
+							<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
 								<Shield className="size-3" />
 								{m.common_admin_tools()}
 							</ContextMenuLabel>

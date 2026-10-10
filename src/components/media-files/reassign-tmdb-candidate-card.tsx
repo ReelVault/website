@@ -34,7 +34,7 @@ export function ReassignTmdbCandidateCard({ candidate, isReassigning, onApply }:
 			<div className="flex flex-1 flex-col justify-between py-0.5">
 				<div className="space-y-1">
 					<div className="flex items-center gap-2">
-						<Badge variant="outline" className="text-[10px] uppercase">
+						<Badge variant="outline" className="text-xs">
 							{candidate.providerId}
 						</Badge>
 						{releaseYear !== null && (
