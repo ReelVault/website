@@ -4159,7 +4159,7 @@
 	"validation": "Invalid data.",
 	"web_about_artist": "About the artist",
 	"web_add_catalog_titles_hint": "Add titles from the catalog to come back to them later.",
-	"web_add_library_first": "Add a library in the app settings first.",
+	"web_add_library_first": "Ask the server administrator to add a library. Titles will show up here once it is set up.",
 	"web_add_media_hint": "Add media to the library and it will show up here.",
 	"web_add_movies_hint": "Add movies to the library to see them here.",
 	"web_add_series_hint": "Add series to the library to see them here.",

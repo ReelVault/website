@@ -91,7 +91,7 @@ function LibraryInfiniteContent({
 
 	if (queryResult.isError) {
 		return (
-			<div className="cinema-shell py-16">
+			<div className="cinema-shell py-10 lg:py-16">
 				<AppErrorState
 					title={m.web_library_contents_fetch_failed()}
 					description={m.web_check_connection()}

@@ -64,7 +64,7 @@ export function LibraryHero({
 				<div className="flex flex-2 flex-col items-center px-4 md:px-8">
 					<div className="mb-4 flex items-center gap-3">
 						<div className="h-px w-12 bg-linear-to-r from-transparent to-primary" />
-						<div className="flex items-center gap-2 font-bold text-primary text-xs uppercase tracking-[0.3em]">
+						<div className="flex items-center gap-2 font-semibold text-primary text-sm">
 							<Zap className="h-3.5 w-3.5" />
 							{isGenreMode ? m.web_genre_filter() : collectionLabelForType(currentLibrary.type)}
 						</div>

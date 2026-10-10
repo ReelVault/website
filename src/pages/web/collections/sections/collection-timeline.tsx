@@ -16,7 +16,7 @@ export function CollectionTimeline({ items }: CollectionTimelineProps) {
 	const averageRating = items.length > 0 ? ratingSum / items.length : null;
 
 	return (
-		<main className="cinema-shell py-16 lg:py-24">
+		<main className="cinema-shell py-10 lg:py-24">
 			<div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
 				<div>
 					<div className="cinema-section-heading">

@@ -47,13 +47,13 @@ export function CollectionHero({
 	}
 
 	return (
-		<section className="relative min-h-[62vh] border-border border-b lg:min-h-[70vh]">
+		<section className="relative min-h-[46svh] border-border border-b lg:min-h-[70vh]">
 			<div className="absolute inset-0 overflow-hidden bg-card">
 				<CollectionPosterCollage posterImages={posterImages} className="grayscale" />
 				<div className="absolute inset-0 bg-linear-to-t from-background via-background/65 to-background/10" />
 				<div className="absolute inset-0 bg-linear-to-r from-background via-background/40 to-transparent" />
 			</div>
-			<div className="cinema-shell relative flex min-h-[62vh] flex-col justify-end py-16 lg:min-h-[70vh]">
+			<div className="cinema-shell relative flex min-h-[46svh] flex-col justify-end py-10 lg:min-h-[70vh] lg:py-16">
 				<div className="max-w-3xl">
 					<p className="cinema-kicker">
 						<Layers className="size-4" aria-hidden="true" />{" "}

@@ -1,3 +1,6 @@
+/* Self-hosted variable fonts: body (Figtree) and titles (Bricolage Grotesque). */
+@import "@fontsource-variable/figtree/index.css";
+@import "@fontsource-variable/bricolage-grotesque/index.css";
 @import "./shadcn.css";
 
 :root {
@@ -171,17 +174,13 @@
 		@apply relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
 	}
 
+	/* Sentence case on purpose: tracked all-caps labels are hard to read at small sizes. */
 	.cinema-kicker {
-		@apply flex items-center gap-3 font-bold text-[11px] text-primary uppercase tracking-[0.22em];
-	}
-
-	.cinema-kicker::before {
-		content: "";
-		@apply h-px w-7 bg-primary;
+		@apply flex items-center gap-2 font-semibold text-primary text-sm;
 	}
 
 	.cinema-title {
-		@apply text-balance font-black text-4xl tracking-[-0.055em] sm:text-5xl lg:text-7xl;
+		@apply text-balance font-heading font-extrabold text-4xl leading-[1.02] tracking-[-0.03em] sm:text-5xl lg:text-6xl;
 	}
 
 	.cinema-copy {
@@ -197,7 +196,7 @@
 	}
 
 	.cinema-section-heading h2 {
-		@apply font-black text-2xl tracking-[-0.035em] sm:text-3xl;
+		@apply font-heading font-bold text-2xl tracking-[-0.02em] sm:text-3xl;
 	}
 
 	.cinema-section-heading p {

@@ -4192,7 +4192,7 @@
 	"validation": "Nieprawidłowe dane.",
 	"web_about_artist": "O artyście",
 	"web_add_catalog_titles_hint": "Dodaj tytuły z katalogu, aby wrócić do nich później.",
-	"web_add_library_first": "Najpierw dodaj bibliotekę w ustawieniach aplikacji.",
+	"web_add_library_first": "Poproś administratora serwera o dodanie biblioteki. Tytuły pojawią się tutaj po jej skonfigurowaniu.",
 	"web_add_media_hint": "Dodaj materiały do biblioteki, a pojawią się tutaj.",
 	"web_add_movies_hint": "Dodaj filmy do biblioteki, aby pojawiły się w tym miejscu.",
 	"web_add_series_hint": "Dodaj seriale do biblioteki, aby pojawiły się w tym miejscu.",

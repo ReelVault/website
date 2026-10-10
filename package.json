@@ -41,6 +41,8 @@
 		"@base-ui/react": "^1.8.0",
 		"@dnd-kit/helpers": "^0.5.0",
 		"@dnd-kit/react": "^0.5.0",
+		"@fontsource-variable/bricolage-grotesque": "^5.3.0",
+		"@fontsource-variable/figtree": "^5.3.0",
 		"@inlang/paraglide-js": "^2.26.0",
 		"@inlang/paraglide-js-react": "^1.0.3",
 		"@reelvault/sdk": "^1.2.2",

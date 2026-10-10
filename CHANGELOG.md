@@ -186,6 +186,9 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Phone-first layout** — default buttons, text fields and selects are 40 px tall on phones (icon buttons 36–40 px) and keep the denser desktop size from the small breakpoint up. The home hero puts its title and actions at the bottom of the screen, within thumb reach, and its bottom shade is stronger on phones so the description stays readable over bright artwork. The hero and header sections of the library, collection and home pages are shorter, so the first titles appear above the fold. Empty-state titles are larger (base size, semibold).
+- **Dialogs are bottom sheets on phones** — on narrow screens a dialog slides up from the bottom, scrolls inside itself and keeps its footer on screen. From the small breakpoint up it stays a centred card.
+- **New typefaces** — body text is set in Figtree and titles in Bricolage Grotesque. Both are self-hosted (`@fontsource-variable`), so the app looks the same offline and on the local network without an external font service. Eyebrow labels are sentence case instead of tracked all-caps, and the sign-in button shows its label in sentence case.
 - **Interrupted plays in the admin analytics** — the session count shows how many plays finished their title, and a play that ended before it is labelled Interrupted in the recent plays. The settings page offers the minimum playback that counts (`Minimum interrupted play`, default 60 seconds).
 - **Plugin archives are checked before install** — every archive in the install dialog is validated first. An archive that fails the check is listed with its reasons and is not installed; the rest of the batch continues.
 - **Previews for several titles at once** — on the trickplay page, search titles and select several. Their missing previews are queued together, or all of them after a confirmation. A single selected title still shows its seasons.
@@ -316,6 +319,8 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Show button outside the password field** — the Show/Hide toggle on the sign-in form used the icon-button size, so its text spilled past the field's frame. It is now sized for its text and sits inside the field.
+- **Empty library message for regular accounts** — the message said to add a library in the app settings, which only administrators can open. It now asks the account to ask the server administrator.
 - **Download and plugin limit messages** — a download refused because the profile's queue is full, a season that would exceed the download storage, a title with no file, a download that cannot be retried, and a plugin that registers too many routes, jobs, scheduled tasks or providers now show their own translated message instead of the raw code.
 - **Probe-failed scan reason shows its text** — a file whose video could not be analysed showed the raw key `scan_reason_probe_failed` in the needs-attention dialog. The reason now has its translated label.
 - **HDR transcode reason** — the player's reason text claimed tone-mapping to SDR when the server had no tone-mapping filter. It now says tone-mapping is unavailable.

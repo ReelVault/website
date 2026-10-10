@@ -128,7 +128,7 @@ export function LoginCredentialsForm({
 						/>
 						<InputGroupButton
 							type="button"
-							size="icon-sm"
+							size="sm"
 							aria-label={showPassword ? m.auth_hide_password() : m.auth_show_password()}
 							aria-pressed={showPassword}
 							onClick={() => setShowPassword((visible) => !visible)}
@@ -141,7 +141,7 @@ export function LoginCredentialsForm({
 
 			<AsyncButton
 				type="submit"
-				className="w-full rounded-2xl py-5 font-black uppercase tracking-widest"
+				className="h-12 w-full rounded-xl font-semibold text-base"
 				isPending={isPending}
 				pendingLabel={m.auth_login_pending()}
 			>

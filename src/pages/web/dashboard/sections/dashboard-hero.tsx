@@ -47,7 +47,7 @@ export default function DashboardHero() {
 
 	if (discoverQuery.isPending) {
 		return (
-			<section className="relative h-[88svh] overflow-hidden lg:h-screen lg:min-h-150">
+			<section className="relative h-[82svh] min-h-120 overflow-hidden lg:h-screen lg:min-h-150">
 				<DashboardHeroSkeleton />
 			</section>
 		);
@@ -55,7 +55,7 @@ export default function DashboardHero() {
 
 	if (discoverQuery.isError) {
 		return (
-			<section className="relative h-[88svh] overflow-hidden lg:h-screen lg:min-h-150">
+			<section className="relative h-[82svh] min-h-120 overflow-hidden lg:h-screen lg:min-h-150">
 				<div className="flex h-full flex-col items-center justify-center gap-3 text-center">
 					<p className="text-destructive">{m.web_recommendations_fetch_failed_short()}</p>
 					<Button
@@ -80,7 +80,7 @@ export default function DashboardHero() {
 	const nextIndex = items.length > 1 ? (current + 1) % items.length : current;
 
 	return (
-		<section className="relative h-[88svh] overflow-hidden bg-background lg:h-screen lg:min-h-150">
+		<section className="relative h-[82svh] min-h-120 overflow-hidden bg-background lg:h-screen lg:min-h-150">
 			{/* Backdrops: crossfade, no remount. The rotator steps forward, so only
 			the active and next slides stay mounted — the remaining backdrops are
 			near-viewport-width downloads that first paint would never show. */}
@@ -105,10 +105,11 @@ export default function DashboardHero() {
 
 			{/* Overlays: rendered once, independent of the slide */}
 			<div className="absolute inset-0 bg-linear-to-r from-background via-background/80 to-background/20" />
-			<div className="absolute inset-0 bg-linear-to-t from-background via-background/20 to-transparent" />
+			<div className="absolute inset-0 bg-linear-to-t from-background via-background/20 to-transparent max-lg:via-background/75" />
 
 			{/* Info: active item only */}
-			<div className="flex h-full items-center justify-start gap-12 px-6 pb-20 lg:px-24 lg:pb-0">
+			{/* Phones: content sits at the bottom (near the thumb and the slide dots); desktop centres it. */}
+			<div className="flex h-full items-end justify-start gap-12 px-5 pt-24 pb-16 sm:px-6 lg:items-center lg:px-24 lg:pt-0 lg:pb-0">
 				{items.length > 1 && (
 					<div className="z-50 hidden items-center justify-between gap-2 lg:flex">
 						<div className="flex flex-col items-center gap-2">

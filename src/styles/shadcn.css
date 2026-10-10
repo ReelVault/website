@@ -9,6 +9,11 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+	/* Figtree carries body text (very legible at small sizes); Bricolage Grotesque
+	   carries titles. Both are self-hosted via @fontsource-variable (see main.tsx). */
+	--font-sans: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-heading: "Bricolage Grotesque Variable", "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);

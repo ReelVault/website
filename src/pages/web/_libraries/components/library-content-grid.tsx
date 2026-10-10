@@ -33,7 +33,7 @@ export function LibraryContentGrid({
 
 	if (validMetadata.length === 0) {
 		return (
-			<div className="cinema-shell py-16">
+			<div className="cinema-shell py-10 lg:py-16">
 				<SimpleAnimation>
 					<AppEmptyState icon={Search} title={m.components_search_no_results()} description={m.web_change_search_hint()} />
 				</SimpleAnimation>
