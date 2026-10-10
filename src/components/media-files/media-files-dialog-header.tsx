@@ -21,7 +21,7 @@ interface MediaFilesDialogHeaderProps {
 	onRefreshImages: () => void;
 }
 
-type AdminRefreshButtonsProps = Pick<
+export type AdminRefreshButtonsProps = Pick<
 	MediaFilesDialogHeaderProps,
 	| "episodeId"
 	| "metadataId"
@@ -35,7 +35,7 @@ type AdminRefreshButtonsProps = Pick<
 	| "onRefreshImages"
 >;
 
-function AdminRefreshButtons({
+export function AdminRefreshButtons({
 	episodeId,
 	metadataId,
 	isRefreshingEpisode,

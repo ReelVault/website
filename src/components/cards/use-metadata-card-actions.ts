@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { startTransition, useState } from "react";
 import { reelvault } from "@/client/client";
 import { useRefreshMetadata, useRefreshMetadataImages } from "@/client/hooks/use-admin-metadata";
@@ -6,6 +7,7 @@ import { useIsAdmin } from "@/client/hooks/use-current-profile";
 import { usePlaybackMutations, usePlaybackSuggestion } from "@/client/hooks/use-me-playback";
 import { useIsOnWatchlist, useWatchlistToggle } from "@/client/hooks/use-watchlist";
 import { mePlaybackKeys } from "@/client/utils/query-keys";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { copyEntityLink, copyToClipboard } from "@/utils/clipboard-utils";
 import { toast } from "@/utils/toast-facade";
@@ -16,7 +18,7 @@ interface MetadataCardTarget {
 }
 
 export function useMetadataCardActions(metadata: MetadataCardTarget) {
-	const [fileDetailsOpen, setFileDetailsOpen] = useState(false);
+	const navigate = useNavigate();
 	const [identifyOpen, setIdentifyOpen] = useState(false);
 	const [isInteracted, setIsInteracted] = useState(false);
 
@@ -79,14 +81,13 @@ export function useMetadataCardActions(metadata: MetadataCardTarget) {
 		if (!isInteracted) setIsInteracted(true);
 	};
 
-	const handleOpenFileDetails = () => setFileDetailsOpen(true);
+	// The file list is a full page now, so the card navigates instead of opening a dialog.
+	const handleOpenFileDetails = () => detach(navigate({ to: "/media-files/$id", params: { id: metadata.id } }));
 	const handleOpenIdentify = () => setIdentifyOpen(true);
 	const handleRefreshMetadata = () => refreshMetadataMutation.mutate(metadata.id);
 	const handleRefreshImages = () => refreshImagesMutation.mutate(metadata.id);
 
 	return {
-		fileDetailsOpen,
-		setFileDetailsOpen,
 		identifyOpen,
 		setIdentifyOpen,
 		isInteracted,

@@ -155,8 +155,6 @@ export function MetadataCard({
 				title={metadata.title}
 				mediaType={metadata.type}
 				year={year}
-				fileDetailsOpen={actions.fileDetailsOpen}
-				onFileDetailsOpenChange={actions.setFileDetailsOpen}
 				isAdmin={actions.isAdmin}
 				identifyOpen={actions.identifyOpen}
 				onIdentifyOpenChange={actions.setIdentifyOpen}
