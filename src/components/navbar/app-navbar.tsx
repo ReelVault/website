@@ -69,7 +69,7 @@ export function AppNavbar() {
 								to={href}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex min-h-11 items-center gap-2 rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
+									"flex min-h-11 items-center gap-2 whitespace-nowrap rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
 									{
 										"border-primary bg-muted text-foreground": isActive,
 										"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,
@@ -93,7 +93,7 @@ export function AppNavbar() {
 								to={href}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex min-h-11 items-center gap-2 rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
+									"flex min-h-11 items-center gap-2 whitespace-nowrap rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
 									{
 										"border-primary bg-muted text-foreground": isActive,
 										"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,
