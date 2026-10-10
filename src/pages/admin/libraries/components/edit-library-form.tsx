@@ -154,7 +154,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 										if (Number.isNaN(nextPriority)) return;
 										upsertPriority(provider.id, provider.priority, override?.enabled ?? provider.enabled, nextPriority);
 									}}
-									className="h-8 w-20 bg-background text-sm"
+									className="h-10 w-20 bg-background text-sm sm:h-8"
 								/>
 								<Switch
 									checked={override?.enabled ?? provider.enabled}

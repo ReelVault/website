@@ -90,7 +90,7 @@ export function LibraryCardHeader({
 							onClick={() => {
 								detach(handleCopyId());
 							}}
-							className="inline-flex size-5 items-center justify-center rounded-sm text-muted-foreground/60 hover:text-foreground"
+							className="-m-2.5 inline-flex size-10 items-center justify-center rounded-sm text-muted-foreground/60 hover:text-foreground sm:m-0 sm:size-5"
 							title={m.admin_libraries_copy_full_id()}
 							aria-label={m.admin_libraries_copy_full_id()}
 						>
@@ -105,7 +105,7 @@ export function LibraryCardHeader({
 				<Button
 					variant="outline"
 					size="sm"
-					className="h-8 gap-1.5 px-2.5 text-xs"
+					className="h-10 gap-1.5 px-2.5 text-xs sm:h-8"
 					nativeButton={false}
 					render={<Link to="/admin/media" search={{ libraryId: lib.id }} />}
 					title={m.admin_libraries_show_files()}
@@ -117,7 +117,7 @@ export function LibraryCardHeader({
 				<Button
 					variant="outline"
 					size="sm"
-					className="h-8 gap-1.5 px-2.5 text-xs"
+					className="h-10 gap-1.5 px-2.5 text-xs sm:h-8"
 					onClick={() => onEdit(lib)}
 					title={m.admin_libraries_edit_library()}
 					aria-label={m.admin_libraries_edit_named({ name: lib.name })}
@@ -129,7 +129,7 @@ export function LibraryCardHeader({
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						render={
-							<Button variant="ghost" size="icon" className="size-8" aria-label={m.plugins_bugs_more_options()}>
+							<Button variant="ghost" size="icon" className="size-10 sm:size-8" aria-label={m.plugins_bugs_more_options()}>
 								<MoreVertical className="size-4 text-muted-foreground" />
 							</Button>
 						}

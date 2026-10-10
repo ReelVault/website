@@ -68,11 +68,17 @@ export default function DiscoveryPage() {
 				)}
 
 				<nav className="mt-4 flex flex-wrap gap-5 border-border/70 border-t pt-7 text-sm" aria-label={m.web_more_from_catalog()}>
-					<Link to="/movies" className="inline-flex items-center gap-2 font-semibold text-primary hover:text-primary/75">
+					<Link
+						to="/movies"
+						className="inline-flex min-h-10 items-center gap-2 font-semibold text-primary hover:text-primary/75 sm:min-h-0"
+					>
 						{m.web_whole_library()}
 						<ArrowRight className="size-4" aria-hidden="true" />
 					</Link>
-					<Link to="/companies" className="inline-flex items-center gap-2 font-semibold text-primary hover:text-primary/75">
+					<Link
+						to="/companies"
+						className="inline-flex min-h-10 items-center gap-2 font-semibold text-primary hover:text-primary/75 sm:min-h-0"
+					>
 						{m.web_browse_studios()}
 						<ArrowRight className="size-4" aria-hidden="true" />
 					</Link>

@@ -226,7 +226,7 @@ export default function AdminSubtitlesPage() {
 							type="button"
 							onClick={() => setType(filter.value)}
 							className={cn(
-								"inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
+								"inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow] sm:min-h-0",
 								(type ?? "all") === filter.value
 									? "border-border bg-secondary text-foreground shadow-xs"
 									: "border-border/40 bg-card/40 text-muted-foreground hover:bg-muted/40 hover:text-foreground",

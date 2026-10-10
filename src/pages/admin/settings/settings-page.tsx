@@ -213,7 +213,7 @@ export default function AdminSettingsPage() {
 					onValueChange={(value: string) => runTransition("tab", () => setActiveTab(value))}
 					className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8"
 				>
-					<TabsList className="max-w-full max-lg:flex-row! max-lg:overflow-x-auto lg:sticky lg:top-20 lg:w-56 lg:shrink-0 lg:self-start">
+					<TabsList className="max-w-full max-lg:h-12! max-lg:flex-row! max-lg:overflow-x-auto lg:sticky lg:top-20 lg:w-56 lg:shrink-0 lg:self-start">
 						<TabsTrigger value="resources" className={settingsTabTriggerClass}>
 							<Cpu className="size-3.5" />
 							<span>{m.admin_settings_cpu_section()}</span>

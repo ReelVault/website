@@ -80,7 +80,7 @@ export function LibraryFilterBar({
 					className="w-full sm:max-w-xs"
 				/>
 				<Select value={sort} onValueChange={(value) => isSortOption(value) && onSortChange(value)}>
-					<SelectTrigger className="h-9 w-full sm:w-40" aria-label={m.admin_libraries_sort_label()}>
+					<SelectTrigger className="h-10 w-full sm:h-9 sm:w-40" aria-label={m.admin_libraries_sort_label()}>
 						<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
 					</SelectTrigger>
 					<SelectContent>

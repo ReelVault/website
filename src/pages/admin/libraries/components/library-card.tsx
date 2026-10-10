@@ -131,7 +131,7 @@ export function LibraryCard({
 								</CollapsibleTrigger>
 								{paths.length > 1 && (
 									<Select value={pathSort} onValueChange={(value) => isPathSortOption(value) && setPathSort(value)}>
-										<SelectTrigger className="h-7 w-auto gap-1 px-2 text-xs" aria-label={m.admin_libraries_paths_sort_label()}>
+										<SelectTrigger className="h-10 w-auto gap-1 px-2 text-xs sm:h-7" aria-label={m.admin_libraries_paths_sort_label()}>
 											<SelectValue>{PATH_SORT_LABELS[pathSort]()}</SelectValue>
 										</SelectTrigger>
 										<SelectContent>
@@ -160,7 +160,7 @@ export function LibraryCard({
 								) : (
 									<div className="rounded-lg border border-border/80 border-dashed p-4 text-center">
 										<p className="text-muted-foreground text-xs">{m.admin_libraries_no_paths()}</p>
-										<Button variant="ghost" size="sm" className="mt-1.5 h-7 text-primary text-xs" onClick={() => onEdit(lib)}>
+										<Button variant="ghost" size="sm" className="mt-1.5 h-10 text-primary text-xs sm:h-7" onClick={() => onEdit(lib)}>
 											{m.admin_libraries_add_path()}
 										</Button>
 									</div>
@@ -181,7 +181,7 @@ export function LibraryCard({
 					<AsyncButton
 						variant="default"
 						size="default"
-						className="h-9 flex-1 gap-2 font-medium text-sm shadow-xs"
+						className="h-10 flex-1 gap-2 font-medium text-sm shadow-xs sm:h-9"
 						onClick={() => onScan(lib.id)}
 						isPending={isScanning || scanProgress !== undefined}
 						pendingLabel={scanProgressLabel(scanProgress)}
@@ -195,7 +195,7 @@ export function LibraryCard({
 							<Button
 								variant="outline"
 								size="icon"
-								className="size-9 shrink-0 text-destructive hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+								className="size-10 shrink-0 text-destructive hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive sm:size-9"
 								disabled={isDeleting}
 								title={m.admin_libraries_delete_library()}
 								aria-label={m.admin_libraries_delete_named({ name: lib.name })}

@@ -44,7 +44,7 @@ export function LogViewerHeader({
 			</div>
 			<div className="flex items-center justify-between gap-2 sm:justify-end">
 				{viewMode === "raw" && (
-					<Button variant="ghost" size="sm" className="h-7 gap-1 px-2 text-xs" onClick={onCopyRaw}>
+					<Button variant="ghost" size="sm" className="h-10 gap-1 px-2 text-xs sm:h-7" onClick={onCopyRaw}>
 						<CopyIcon copied={hasCopied} />
 						{hasCopied ? m.admin_logs_copied() : m.common_copy()}
 					</Button>

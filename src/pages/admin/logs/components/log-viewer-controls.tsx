@@ -83,28 +83,28 @@ export function LogViewerControls({
 					value={moduleFilter}
 					placeholder={m.admin_logs_filter_module()}
 					aria-label={m.admin_logs_filter_module()}
-					className="h-8 w-40 text-xs"
+					className="h-10 w-40 text-xs sm:h-8"
 					onChange={(event) => onModuleChange(event.target.value)}
 				/>
 				<Input
 					value={excludeQuery}
 					placeholder={m.admin_logs_filter_exclude()}
 					aria-label={m.admin_logs_filter_exclude()}
-					className="h-8 w-48 text-xs"
+					className="h-10 w-48 text-xs sm:h-8"
 					onChange={(event) => onExcludeChange(event.target.value)}
 				/>
 				<Input
 					type="datetime-local"
 					value={fromDate}
 					aria-label={m.admin_logs_filter_from()}
-					className="h-8 w-auto text-xs"
+					className="h-10 w-auto text-xs sm:h-8"
 					onChange={(event) => onFromChange(event.target.value)}
 				/>
 				<Input
 					type="datetime-local"
 					value={toDate}
 					aria-label={m.admin_logs_filter_to()}
-					className="h-8 w-auto text-xs"
+					className="h-10 w-auto text-xs sm:h-8"
 					onChange={(event) => onToChange(event.target.value)}
 				/>
 			</div>

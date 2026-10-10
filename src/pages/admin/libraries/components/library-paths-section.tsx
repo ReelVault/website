@@ -63,7 +63,7 @@ export function LibraryPathsSection({ paths, onChange, idPrefix, showDashedAddBu
 					<Label className="font-medium text-foreground text-sm">{m.admin_libraries_source_directories_with_media()}</Label>
 					<p className="text-muted-foreground text-xs">{m.admin_libraries_point_to_folders()}</p>
 				</div>
-				<Button type="button" variant="outline" size="sm" onClick={addPathField} className="h-8 gap-1.5 text-xs shadow-xs">
+				<Button type="button" variant="outline" size="sm" onClick={addPathField} className="h-10 gap-1.5 text-xs shadow-xs sm:h-8">
 					<Plus className="size-3.5 text-primary" />
 					<span>{m.admin_libraries_add_directory()}</span>
 				</Button>

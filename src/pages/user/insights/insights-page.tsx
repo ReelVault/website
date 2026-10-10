@@ -65,7 +65,7 @@ export default function InsightsPage() {
 									size="sm"
 									variant={selectedRange === range.value ? "default" : "ghost"}
 									onClick={() => setSelectedRange(range.value)}
-									className="h-9 text-xs sm:h-7"
+									className="h-10 text-xs sm:h-7"
 								>
 									{range.label}
 								</Button>

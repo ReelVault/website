@@ -32,7 +32,7 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 						variant="ghost"
 						size="sm"
 						onClick={() => onRemove(index)}
-						className="h-7 gap-1 px-2 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
+						className="h-10 gap-1 px-2 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive sm:h-7"
 					>
 						<Trash2 className="size-3.5" />
 						<span>{m.common_delete()}</span>
@@ -88,7 +88,7 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 				>
 					<SelectTrigger
 						aria-label={m.admin_libraries_metadata_mode_aria({ index: index + 1 })}
-						className="h-9 w-full bg-background text-xs"
+						className="h-10 w-full bg-background text-xs sm:h-9"
 					>
 						<SelectValue />
 					</SelectTrigger>

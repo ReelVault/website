@@ -33,7 +33,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					<button
 						type="button"
 						onClick={() => detach(copyPath(path.path, m.components_media_file_path_word()))}
-						className="inline-flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+						className="-m-2 inline-flex size-10 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:m-0 sm:size-6"
 						title={m.admin_libraries_copy_path()}
 						aria-label={m.admin_libraries_copy_path_named({ path: path.path })}
 					>
@@ -81,7 +81,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 			<AsyncButton
 				variant="outline"
 				size="sm"
-				className="h-7 shrink-0 gap-1.5 self-start px-2.5 text-xs sm:self-center"
+				className="h-10 shrink-0 gap-1.5 self-start px-2.5 text-xs sm:h-7 sm:self-center"
 				onClick={() => onPathScan(libraryId, path.id)}
 				isPending={isPathScanning}
 				pendingLabel={m.common_scanning()}

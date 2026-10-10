@@ -22,7 +22,7 @@ export function MetadataLanguageSelector({ value, onChange }: MetadataLanguageSe
 				<span>{m.admin_libraries_metadata_language()}</span>
 			</div>
 			<Select value={value ?? DEFAULT_SENTINEL} onValueChange={(next) => onChange(next === DEFAULT_SENTINEL ? null : next)}>
-				<SelectTrigger aria-label={m.admin_libraries_metadata_language()} className="h-9 w-full bg-background text-xs">
+				<SelectTrigger aria-label={m.admin_libraries_metadata_language()} className="h-10 w-full bg-background text-xs sm:h-9">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent className="max-h-72 w-[calc(100vw-4rem)] overflow-y-auto sm:w-120">

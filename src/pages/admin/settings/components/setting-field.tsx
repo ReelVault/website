@@ -79,7 +79,7 @@ function NumberSettingInput({
 				}}
 				disabled={disabled}
 				aria-invalid={isInvalid}
-				className="min-w-0 flex-1 text-right text-xs sm:w-32 sm:flex-none"
+				className="min-w-0 shrink-0 text-right text-xs sm:w-32"
 			/>
 			{isInvalid && (
 				<p role="alert" className="text-destructive text-xs">
