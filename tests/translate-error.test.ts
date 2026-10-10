@@ -43,6 +43,12 @@ describe("codes named in the v1.3.0 changelog", () => {
 	test("a rejected account request says the server rejected it", () => {
 		expect(translateByKey("auth.request_rejected")).toBe("The server rejected this request.");
 	});
+
+	test("a list query error says what to do: reload the list, or change the sort or the filter", () => {
+		expect(translateByKey("validation.invalid_cursor")).toBe("The page cursor is no longer valid. Reload the list.");
+		expect(translateByKey("validation.cursor_not_supported")).toBe("This sort order does not support cursor paging.");
+		expect(translateByKey("validation.filter_too_many_values", { max: 500 })).toContain("500");
+	});
 });
 
 describe("translateByKey", () => {
