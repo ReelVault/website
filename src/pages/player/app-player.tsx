@@ -513,6 +513,7 @@ function AppPlayerSurface() {
 
 	usePlayerShortcuts({
 		actions,
+		revealControls: showControls,
 		containerRef,
 		duration: info.duration,
 		volume: volumeState.volume,

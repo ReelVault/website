@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
+import { moveFocus, type SpatialDirection } from "@/lib/spatial-navigation";
 import { m } from "@/paraglide/messages";
+import { isTvDevice } from "@/utils/tv-device";
 import { showPlayerFeedback } from "../components/player-feedback-hud";
 import type { PlayerActionsValue } from "../player-context";
 import { isBitmapSubtitle } from "../utils/player.types";
@@ -8,6 +10,7 @@ import { nextPlaybackRate } from "../utils/player-speed";
 import { detach, toggleFullscreen, togglePiP, togglePlayPause } from "../utils/player-utils";
 
 interface UsePlayerShortcutsProps {
+	revealControls?: () => void;
 	/** Controller actions (video ref + playback commands) — read through stateRef, never during render. */
 	actions: PlayerActionsValue;
 	containerRef: React.RefObject<HTMLDivElement | null>;
@@ -28,8 +31,21 @@ interface UsePlayerShortcutsProps {
 	isDisabled?: boolean;
 }
 
+/** Arrow keys that move focus between the player's control buttons on TV. */
+const TV_ARROW_DIRECTIONS: Partial<Record<string, SpatialDirection>> = {
+	ArrowUp: "up",
+	ArrowDown: "down",
+	ArrowLeft: "left",
+	ArrowRight: "right",
+};
+
+function focusFirstPlayerControl(): void {
+	document.querySelector<HTMLElement>("[data-player-chrome] button:not(:disabled)")?.focus();
+}
+
 export function usePlayerShortcuts({
 	actions,
+	revealControls,
 	containerRef,
 	duration,
 	volume,
@@ -149,6 +165,29 @@ export function usePlayerShortcuts({
 			} = stateRef.current;
 
 			signalActivity?.();
+
+			// On TV the D-pad moves focus between the control buttons while they are on screen. Elsewhere the arrows seek and
+			// set the volume, and Down shows the controls when focus is still on the video.
+			if (isTvDevice()) {
+				const inControls = target instanceof HTMLElement && target.closest("[data-player-chrome]") !== null;
+				const direction = TV_ARROW_DIRECTIONS[e.key];
+				if (inControls && direction) {
+					e.preventDefault();
+					moveFocus(direction);
+
+					return;
+				}
+
+				if (inControls && (e.key === "Enter" || e.key === " ")) return;
+
+				if (!inControls && e.key === "ArrowDown" && revealControls) {
+					e.preventDefault();
+					revealControls();
+					requestAnimationFrame(focusFirstPlayerControl);
+
+					return;
+				}
+			}
 
 			switch (e.key) {
 				// Play / Pause
@@ -380,5 +419,5 @@ export function usePlayerShortcuts({
 		window.addEventListener("keydown", handleKeyDown);
 
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [containerRef]);
+	}, [containerRef, revealControls]);
 }

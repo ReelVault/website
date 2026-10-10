@@ -64,6 +64,13 @@ export function PlayerChrome({
 }: PlayerChromeProps) {
 	const [equalizerOpen, setEqualizerOpen] = useState(false);
 
+	// Focus must not stay on a control that has faded out, or the arrow keys would keep moving between hidden buttons.
+	useEffect(() => {
+		if (controlsVisible) return;
+
+		const active = document.activeElement;
+		if (active instanceof HTMLElement && active.closest("[data-player-chrome]")) active.blur();
+	}, [controlsVisible]);
 	return (
 		<>
 			{/* Headless subscribers — media session sync; renders null */}
@@ -86,6 +93,7 @@ export function PlayerChrome({
 			{/* Controls chrome — pointer-events-none on container so clicks outside header/footer pass through to playback surface */}
 			{/* biome-ignore lint/a11y/noStaticElementInteractions: controls overlay receives mouse events to pause auto-hide timer */}
 			<div
+				data-player-chrome
 				className={cn(
 					"pointer-events-none absolute inset-0 z-20 flex flex-col justify-between bg-linear-to-t from-background/80 via-transparent to-background/60 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-opacity duration-300 sm:px-6 sm:pt-4 sm:pb-[max(1rem,env(safe-area-inset-bottom))] lg:px-12 lg:pt-6 lg:pb-[max(1.5rem,env(safe-area-inset-bottom))]",
 					{

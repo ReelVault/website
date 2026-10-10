@@ -294,6 +294,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Database backup upload** — the database page has *Upload backup* once *Allow backup upload* is turned on in system settings (off by default); until then, a line above the list says how to turn it on. The uploaded copy appears in the backup list and can be restored like any other. Requires SDK and server with the backup upload endpoint.
 - **Subtitle upload and image-based marking** — the media file page has *Upload subtitles* (a language code, an optional label, and an SRT, WebVTT or ASS file of up to 1 MB), and its subtitle list marks image-based tracks (PGS, VobSub). Requires SDK and server with the subtitle upload endpoint.
 - **Bulk delete of media files and titles** — the admin media and metadata lists delete the selection after a confirmation. If a stream is playing one of the files, a dialog says how many streams are playing and offers *Delete anyway* for the ids still waiting. Requires SDK and server with the bulk delete endpoints.
+- **TV focus on the player controls** — on TV the D-pad moves focus between the player's control buttons while they are on screen, and Enter selects the focused one. When focus is on the video, Down opens the controls and focuses the first button instead of lowering the volume; Up, Left and Right keep their behaviour.
 
 ### Fixes
 
