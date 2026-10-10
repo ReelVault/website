@@ -4,6 +4,7 @@ import { flattenProviderSearchResults } from "@/client/hooks/use-providers";
 import { useRematchMetadata } from "@/client/hooks/use-rematch-metadata";
 import { AppEmptyState } from "@/components/app-states";
 import { CandidateSkeletonList } from "@/components/candidate-skeleton";
+import { PreferenceToggle } from "@/components/preference-controls";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { m } from "@/paraglide/messages";
@@ -27,6 +28,7 @@ export function IdentifyDialog({
 }) {
 	const [actionMode, setActionMode] = useState<"replace" | "supplement">("replace");
 	const [selectedCandidate, setSelectedCandidate] = useState<{ providerId: string; externalId: string } | null>(null);
+	const [overwriteLocked, setOverwriteLocked] = useState(false);
 
 	const { searchResults, isSearching, triggerSearch, triggerExternalIdSearch, rematch, isRematching, linkProvider, isLinking } =
 		useRematchMetadata({
@@ -47,7 +49,7 @@ export function IdentifyDialog({
 			return;
 		}
 
-		rematch({ providerId, externalId });
+		rematch({ providerId, externalId, overwriteLocked });
 	};
 
 	const allCandidates = flattenProviderSearchResults(searchResults);
@@ -120,6 +122,15 @@ export function IdentifyDialog({
 						{m.components_identify_fill_gaps()}
 					</ToggleGroupItem>
 				</ToggleGroup>
+
+				{actionMode === "replace" && (
+					<PreferenceToggle
+						label={m.identify_overwrite_locked_label()}
+						description={m.identify_overwrite_locked_desc()}
+						checked={overwriteLocked}
+						onChange={setOverwriteLocked}
+					/>
+				)}
 
 				<IdentifySearchForm
 					initialTitle={initialTitle}

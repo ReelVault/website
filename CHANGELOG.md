@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Re-identify a media file** — the file page has a Re-identify button that matches the title the file belongs to again. The identify dialog's switch overwrites locked fields only when it is turned on.
 - **Code blocks in plugin dialogs** — plugin dialogs can show read-only preformatted text with its line breaks kept and a scrollable area.
 - **Unsaved settings ask before leaving** — leaving the settings page with unsaved changes asks Stay or Leave inside the app, not only when the tab is closed or reloaded.
 - **Video quality settings** — Playback settings offer a maximum stream bitrate (no limit, 1.5, 4 or 8 Mb/s) next to the HDR choice. The admin settings label the new audio options.

@@ -1,6 +1,6 @@
 import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { Clapperboard, Clock, FileVideo, HardDrive, Layers, RefreshCw, Save, ShieldCheck, Trash2, Tv } from "lucide-react";
+import { Clapperboard, Clock, FileVideo, HardDrive, Layers, RefreshCw, Save, Search, ShieldCheck, Trash2, Tv } from "lucide-react";
 import { Suspense, useState } from "react";
 import { useDeleteTrickplay } from "@/client/hooks/use-admin-trickplay";
 import { AsyncButton } from "@/components/async-button";
@@ -13,6 +13,7 @@ import { Card } from "@/components/ui/card";
 import { AdminBackLink } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
+import { MediaFileReidentifyDialog } from "./media-file-reidentify-dialog";
 import { MediaFileScanDialog } from "./media-file-scan-dialog";
 
 interface MediaFileHeaderProps {
@@ -29,6 +30,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 	const isMovie = file.library.type === "movies";
 	const [isScanDialogOpen, setIsScanDialogOpen] = useState(false);
 	const [isReassignDialogOpen, setIsReassignDialogOpen] = useState(false);
+	const [isReidentifyOpen, setIsReidentifyOpen] = useState(false);
 	const deleteTrickplay = useDeleteTrickplay();
 
 	return (
@@ -74,6 +76,11 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 						</div>
 
 						<div className="flex flex-wrap items-center gap-2 self-start pt-1">
+							<Button variant="outline" size="sm" onClick={() => setIsReidentifyOpen(true)} className="gap-2 shadow-xs">
+								<Search className="size-4 text-primary" />
+								<span>{m.components_media_file_reidentify()}</span>
+							</Button>
+
 							<Button variant="outline" size="sm" onClick={() => setIsReassignDialogOpen(true)} className="gap-2 shadow-xs">
 								<Layers className="size-4 text-primary" />
 								<span>{m.components_media_file_change_metadata_assignment()}</span>
@@ -150,6 +157,12 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 					onOpenChange={setIsScanDialogOpen}
 					mediaFileId={mediaFileId}
 					fileName={file.fileName}
+				/>
+				<MediaFileReidentifyDialog
+					metadataId={file.metadataId}
+					mediaType={isMovie ? "movie" : "tv_show"}
+					open={isReidentifyOpen}
+					onOpenChange={setIsReidentifyOpen}
 				/>
 				{isReassignDialogOpen && (
 					<Suspense fallback={null}>

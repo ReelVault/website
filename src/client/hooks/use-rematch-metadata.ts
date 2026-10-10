@@ -40,8 +40,15 @@ export function useRematchMetadata({
 	});
 
 	const rematchMutation = useMutation({
-		mutationFn: ({ providerId, externalId }: { providerId: string; externalId: string }) =>
-			reelvault.metadata.rematch(metadataId, { providerId, externalId }),
+		mutationFn: ({
+			providerId,
+			externalId,
+			overwriteLocked = false,
+		}: {
+			providerId: string;
+			externalId: string;
+			overwriteLocked?: boolean;
+		}) => reelvault.metadata.rematch(metadataId, { providerId, externalId, overwriteLocked }),
 		onSuccess: async () => {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: metadataKeys.byId(metadataId) }),
