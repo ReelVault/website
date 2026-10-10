@@ -56,7 +56,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 														{m.admin_worker_finished_word()}
 													</Badge>
 												) : (
-													<span className="text-muted-foreground text-xs">{m.web_watched_status_in_progress()}</span>
+													<span className="text-muted-foreground text-xs">{m.admin_analytics_status_interrupted()}</span>
 												)}
 											</TableCell>
 											<TableCell className="text-right text-[11px] text-muted-foreground">{formatDateTime(play.watchedAt)}</TableCell>

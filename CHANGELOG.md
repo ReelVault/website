@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Interrupted plays in the admin analytics** — the session count shows how many plays finished their title, and a play that ended before it is labelled Interrupted in the recent plays. The settings page offers the minimum playback that counts (`Minimum interrupted play`, default 60 seconds).
 - **Plugin archives are checked before install** — every archive in the install dialog is validated first. An archive that fails the check is listed with its reasons and is not installed; the rest of the batch continues.
 - **Previews for several titles at once** — on the trickplay page, search titles and select several. Their missing previews are queued together, or all of them after a confirmation. A single selected title still shows its seasons.
 - **Download a session's log** — each ended playback session in the admin live view links to its log archive (ZIP).

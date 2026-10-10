@@ -4,7 +4,7 @@ import { AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
 interface AnalyticsKpiGridProps {
-	data: Pick<AdminAnalytics, "totalWatchMinutes" | "totalPlaysCount" | "activeUsersCount" | "mostWatchedTitle">;
+	data: Pick<AdminAnalytics, "totalWatchMinutes" | "totalPlaysCount" | "completedPlaysCount" | "activeUsersCount" | "mostWatchedTitle">;
 }
 
 export function AnalyticsKpiGrid({ data }: AnalyticsKpiGridProps) {
@@ -15,7 +15,12 @@ export function AnalyticsKpiGrid({ data }: AnalyticsKpiGridProps) {
 	return (
 		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			<AdminStatCard label={m.admin_analytics_total_play_time()} value={formattedTotalTime} icon={Clock} />
-			<AdminStatCard label={m.admin_analytics_session_count()} value={data.totalPlaysCount} icon={Play} />
+			<AdminStatCard
+				label={m.admin_analytics_session_count()}
+				value={data.totalPlaysCount}
+				description={m.admin_analytics_completed_plays({ count: data.completedPlaysCount })}
+				icon={Play}
+			/>
 			<AdminStatCard label={m.admin_analytics_active_viewers()} value={data.activeUsersCount} icon={Users} />
 			<AdminStatCard label={m.admin_analytics_most_popular_title()} value={data.mostWatchedTitle?.title ?? "—"} icon={Trophy} />
 		</div>

@@ -556,6 +556,10 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		label: m.admin_settings_analytics_window_days(),
 		description: m.admin_settings_analytics_window_days_description(),
 	},
+	"system.analytics.minPlaySeconds": {
+		label: m.admin_settings_analytics_min_play_seconds(),
+		description: m.admin_settings_analytics_min_play_seconds_description(),
+	},
 };
 
 export function getSettingLabel(key: string): string {
