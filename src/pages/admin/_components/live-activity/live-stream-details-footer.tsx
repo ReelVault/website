@@ -1,6 +1,7 @@
 import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { Pause, Play, Square } from "lucide-react";
 import { useState } from "react";
+import { ConfirmAction } from "@/components/confirm-action";
 import { CopyIcon } from "@/components/copy-icon";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
@@ -11,7 +12,7 @@ import { toast } from "@/utils/toast-facade";
 
 interface LiveStreamDetailsFooterProps {
 	stream: AdminLiveStreamItem;
-	onTerminate: () => void;
+	onTerminate: () => Promise<void>;
 	onSendCommand: (type: "play" | "pause" | "stop") => Promise<void>;
 	isSendingCommand: boolean;
 	isTerminating: boolean;
@@ -90,17 +91,18 @@ export function LiveStreamDetailsFooter({
 					<span>{m.admin_resume()}</span>
 				</Button>
 
-				<Button
-					type="button"
-					variant="destructive"
-					size="sm"
-					onClick={onTerminate}
-					disabled={isTerminating}
-					className="gap-1 font-semibold text-xs"
-				>
-					<Square className="size-3 fill-current" />
-					<span>{m.admin_live_stop_session()}</span>
-				</Button>
+				<ConfirmAction
+					title={m.admin_live_stop_title()}
+					description={m.admin_live_stop_confirm({ title: stream.title, viewer: stream.profileName })}
+					confirmLabel={m.admin_live_stop_session()}
+					onConfirm={onTerminate}
+					trigger={
+						<Button type="button" variant="destructive" size="sm" disabled={isTerminating} className="gap-1 font-semibold text-xs">
+							<Square className="size-3 fill-current" />
+							<span>{m.admin_live_stop_session()}</span>
+						</Button>
+					}
+				/>
 
 				<DialogClose render={<Button type="button" variant="secondary" size="sm" />}>{m.common_close()}</DialogClose>
 			</div>

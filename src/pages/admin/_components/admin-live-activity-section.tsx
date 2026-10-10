@@ -28,12 +28,9 @@ export function AdminLiveActivitySection() {
 
 	const data = liveQuery.data;
 
-	const handleTerminateStream = async (sessionId: string, title: string, viewer: string) => {
+	// Called from the ConfirmAction on the stream card; the dialog closes once the stop request has finished.
+	const handleTerminateStream = async (sessionId: string, viewer: string): Promise<void> => {
 		if (terminateMutation.isPending) return;
-
-		if (!confirm(m.admin_live_stop_confirm({ title, viewer }))) {
-			return;
-		}
 
 		setTerminatingSessionId(sessionId);
 		try {
@@ -173,9 +170,7 @@ export function AdminLiveActivitySection() {
 									</label>
 									<LiveStreamCard
 										stream={stream}
-										onTerminate={(sessionId, title, viewer) => {
-											detach(handleTerminateStream(sessionId, title, viewer));
-										}}
+										onTerminate={handleTerminateStream}
 										isTerminating={terminatingSessionId === stream.sessionId}
 										onDownloadLog={openSessionLog}
 									/>

@@ -17,7 +17,7 @@ const LiveStreamDetailsDialog = lazy(async () => ({
 
 interface LiveStreamCardProps {
 	stream: AdminLiveStreamItem;
-	onTerminate: (sessionId: string, title: string, viewer: string) => void;
+	onTerminate: (sessionId: string, viewer: string) => Promise<void>;
 	onDownloadLog: (sessionId: string) => void;
 	isTerminating: boolean;
 }
@@ -157,7 +157,8 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						onClose={() => setIsDetailsOpen(false)}
 						onTerminate={() => {
 							setIsDetailsOpen(false);
-							onTerminate(stream.sessionId, stream.title, stream.profileName);
+
+							return onTerminate(stream.sessionId, stream.profileName);
 						}}
 						onSendCommand={handleSendCommand}
 						isSendingCommand={commandMutation.isPending}

@@ -1,11 +1,12 @@
 import type { AdminLiveStreamItem } from "@reelvault/sdk";
 import { Download, Info, Pause, Play, Square } from "lucide-react";
+import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
 
 interface LiveStreamCardControlsProps {
 	stream: AdminLiveStreamItem;
-	onTerminate: (sessionId: string, title: string, viewer: string) => void;
+	onTerminate: (sessionId: string, viewer: string) => Promise<void>;
 	onOpenDetails: () => void;
 	onDownloadLog: (sessionId: string) => void;
 	onSendCommand: (type: "play" | "pause" | "stop") => void;
@@ -74,18 +75,25 @@ export function LiveStreamCardControls({
 				<span className="hidden sm:inline">{m.admin_live_download_log()}</span>
 			</Button>
 
-			<Button
-				type="button"
-				variant="destructive"
-				size="sm"
-				onClick={() => onTerminate(stream.sessionId, stream.title, stream.profileName)}
-				disabled={isTerminating}
-				className="h-7 cursor-pointer gap-1 px-2.5 font-semibold text-[11px]"
-				title={m.admin_live_stop_session_hint()}
-			>
-				<Square className="size-3 fill-current" />
-				<span className="hidden sm:inline">{m.admin_workers_stop_word()}</span>
-			</Button>
+			<ConfirmAction
+				title={m.admin_live_stop_title()}
+				description={m.admin_live_stop_confirm({ title: stream.title, viewer: stream.profileName })}
+				confirmLabel={m.admin_workers_stop_word()}
+				onConfirm={() => onTerminate(stream.sessionId, stream.profileName)}
+				trigger={
+					<Button
+						type="button"
+						variant="destructive"
+						size="sm"
+						disabled={isTerminating}
+						className="h-7 cursor-pointer gap-1 px-2.5 font-semibold text-[11px]"
+						title={m.admin_live_stop_session_hint()}
+					>
+						<Square className="size-3 fill-current" />
+						<span className="hidden sm:inline">{m.admin_workers_stop_word()}</span>
+					</Button>
+				}
+			/>
 		</div>
 	);
 }

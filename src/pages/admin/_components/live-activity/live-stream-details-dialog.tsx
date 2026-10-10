@@ -13,7 +13,7 @@ interface LiveStreamDetailsDialogProps {
 	stream: AdminLiveStreamItem;
 	isOpen: boolean;
 	onClose: () => void;
-	onTerminate: () => void;
+	onTerminate: () => Promise<void>;
 	onSendCommand: (type: "play" | "pause" | "stop") => Promise<void>;
 	isSendingCommand: boolean;
 	isTerminating: boolean;

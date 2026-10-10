@@ -597,6 +597,7 @@
 	"admin_live_server_decision": "Server decision:",
 	"admin_live_session_stopped_toast": "Session stopped for user {viewer}",
 	"admin_live_stop_confirm": "Are you sure you want to immediately stop playback of \"{title}\" for user {viewer}?",
+	"admin_live_stop_title": "Stop this stream?",
 	"admin_live_stop_session": "Stop the session",
 	"admin_live_stop_session_hint": "Immediately stop this session",
 	"admin_live_download_log": "Log",
