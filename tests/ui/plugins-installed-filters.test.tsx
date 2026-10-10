@@ -94,7 +94,7 @@ await mock.module("@/client/hooks/use-plugin-catalog", () => ({
 		installPlugin: noop,
 		installArchive: noop,
 		archiveEntries: [],
-		archiveSummary: undefined,
+		archiveSummary: null,
 		isInstallingArchive: false,
 		clearArchiveEntries: () => undefined,
 		uninstallPlugin: noop,
@@ -131,10 +131,6 @@ await mock.module("@/pages/admin/plugins/components/plugin-repositories-dialog",
 
 await mock.module("@/pages/admin/plugins/components/plugin-upload-dialog", () => ({
 	PluginUploadDialog: () => null,
-}));
-
-await mock.module("@/pages/admin/plugins/components/plugin-upload-progress", () => ({
-	PluginUploadProgress: () => null,
 }));
 
 const { default: AdminPluginsPage } = await import("@/pages/admin/plugins/plugins-page");
