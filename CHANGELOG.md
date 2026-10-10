@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Unsaved settings ask before leaving** — leaving the settings page with unsaved changes asks Stay or Leave inside the app, not only when the tab is closed or reloaded.
 - **Video quality settings** — Playback settings offer a maximum stream bitrate (no limit, 1.5, 4 or 8 Mb/s) next to the HDR choice. The admin settings label the new audio options.
 - **HDR playback setting** — Playback settings let you choose whether HDR videos pass through or are always converted to SDR. The default keeps passthrough where the device supports it.
 - **Plugin configuration errors name the field** — a rejected save that names a field (a required value left blank) marks that field with an inline message, not only a toast.
