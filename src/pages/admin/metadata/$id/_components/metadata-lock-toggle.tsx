@@ -31,7 +31,7 @@ export function MetadataLockToggle({
 						size="icon"
 						onClick={() => onToggle(field)}
 						className={cn(
-							"size-8 shrink-0 rounded-md transition-colors",
+							"size-10 shrink-0 rounded-md transition-colors sm:size-8",
 							isLocked ? "bg-warning/10 text-warning hover:bg-warning/20" : "text-muted-foreground/40 hover:bg-muted hover:text-foreground",
 							className,
 						)}

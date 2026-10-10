@@ -141,7 +141,7 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 					type="button"
 					variant="ghost"
 					size="icon"
-					className="size-8 shrink-0 text-muted-foreground hover:text-foreground"
+					className="size-10 shrink-0 text-muted-foreground hover:text-foreground sm:size-8"
 					onClick={handleCopy}
 					title={m.admin_metadata_copy_id_named({ name: shortName })}
 					aria-label={m.admin_metadata_copy_id_named({ name: shortName })}

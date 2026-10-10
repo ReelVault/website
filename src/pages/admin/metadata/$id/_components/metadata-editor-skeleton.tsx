@@ -14,7 +14,7 @@ export function MetadataEditorSkeleton() {
 				</div>
 			</div>
 			<Skeleton className="h-48 w-full rounded-2xl" />
-			<div className="grid gap-6 lg:grid-cols-3">
+			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<Skeleton className="h-96 w-full rounded-2xl lg:col-span-2" />
 				<Skeleton className="h-96 w-full rounded-2xl" />
 			</div>

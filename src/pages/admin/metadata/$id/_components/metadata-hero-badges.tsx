@@ -94,7 +94,7 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 										href={url}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="inline-flex items-center gap-1 rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 font-mono text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted"
+										className="inline-flex min-h-10 items-center gap-1 rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 font-mono text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted sm:min-h-0"
 									>
 										<span>{m.admin_metadata_provider_external_id({ provider: short, id: p.externalId })}</span>
 										<ExternalLink className="size-2.5 text-muted-foreground" />

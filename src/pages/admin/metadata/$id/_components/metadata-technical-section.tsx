@@ -79,7 +79,7 @@ function IdRow({ label, value }: { label: string; value: string }) {
 				type="button"
 				variant="ghost"
 				size="icon"
-				className="size-8 shrink-0 text-muted-foreground hover:text-foreground"
+				className="size-10 shrink-0 text-muted-foreground hover:text-foreground sm:size-8"
 				onClick={() => detach(copy(value, label))}
 				title={m.admin_metadata_copy_label({ label })}
 				aria-label={m.admin_metadata_copy_label({ label })}

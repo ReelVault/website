@@ -143,7 +143,7 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="size-8"
+					className="size-10 sm:size-8"
 					disabled={file.isDefault || isUpdating}
 					onClick={handleSetDefault}
 					title={file.isDefault ? m.admin_metadata_default_video_file() : m.admin_metadata_set_default_file()}
@@ -156,7 +156,7 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="size-8"
+					className="size-10 sm:size-8"
 					nativeButton={false}
 					render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}
 					title={m.admin_metadata_open_in_player()}
@@ -167,7 +167,7 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="size-8"
+					className="size-10 sm:size-8"
 					nativeButton={false}
 					render={<Link to="/admin/media/$id" params={{ id: file.id }} />}
 					title={m.admin_media_edit_file()}

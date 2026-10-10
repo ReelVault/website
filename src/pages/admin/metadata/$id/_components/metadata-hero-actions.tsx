@@ -112,7 +112,7 @@ export function MetadataHeroActions({
 					<Button
 						variant="ghost"
 						size="icon"
-						className="ml-auto size-9 text-destructive hover:bg-destructive/10 hover:text-destructive"
+						className="ml-auto size-10 text-destructive hover:bg-destructive/10 hover:text-destructive sm:size-9"
 						disabled={isDeleting}
 						title={m.admin_metadata_delete_metadata()}
 						aria-label={m.admin_metadata_delete_metadata()}

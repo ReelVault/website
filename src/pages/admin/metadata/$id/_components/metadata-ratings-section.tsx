@@ -108,7 +108,7 @@ function RatingCard({
 					<Button
 						variant="ghost"
 						size="sm"
-						className="h-6 gap-1 px-1.5 text-primary text-xs hover:bg-primary/10 hover:text-primary"
+						className="h-10 gap-1 px-1.5 text-primary text-xs hover:bg-primary/10 hover:text-primary sm:h-6"
 						nativeButton={false}
 						render={
 							<a href={resolvedUrl} target="_blank" rel="noopener noreferrer" aria-label={m.admin_metadata_rating_source_profile()} />

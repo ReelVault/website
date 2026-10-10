@@ -142,7 +142,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 							<Button
 								variant="ghost"
 								size="sm"
-								className="h-6 text-primary text-xs"
+								className="h-10 text-primary text-xs sm:h-6"
 								nativeButton={false}
 								render={<Link to="/admin/worker" />}
 							>

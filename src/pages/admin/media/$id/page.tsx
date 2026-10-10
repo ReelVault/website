@@ -66,7 +66,7 @@ export default function MediaFileEditor() {
 					</div>
 				</div>
 				<Skeleton className="h-40 w-full rounded-2xl" />
-				<div className="grid gap-6 lg:grid-cols-3">
+				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 					<Skeleton className="h-96 w-full rounded-2xl lg:col-span-2" />
 					<Skeleton className="h-96 w-full rounded-2xl" />
 				</div>
@@ -108,7 +108,7 @@ export default function MediaFileEditor() {
 				onSave={save}
 			/>
 
-			<div className="grid gap-6 lg:grid-cols-3">
+			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<MediaFileForm form={form} file={file} onChange={set} />
 				<MediaFileSidebar file={file} />
 			</div>

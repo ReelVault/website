@@ -46,7 +46,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 							type="button"
 							variant="ghost"
 							size="icon"
-							className="size-8 text-muted-foreground hover:text-foreground"
+							className="size-10 text-muted-foreground hover:text-foreground sm:size-8"
 							onClick={() => detach(copy(file.id, m.admin_media_video_id()))}
 							title={m.admin_markers_copy_file_id()}
 							aria-label={m.admin_markers_copy_file_id()}
@@ -69,7 +69,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 						<Button
 							variant="ghost"
 							size="sm"
-							className="h-6 px-1.5 text-primary text-xs"
+							className="h-10 px-1.5 text-primary text-xs sm:h-6"
 							onClick={onOpenReassign}
 							title={m.admin_media_change_file_metadata_assignment()}
 						>

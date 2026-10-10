@@ -40,12 +40,12 @@ export default function AdminDashboardPage() {
 		return (
 			<div className="flex flex-col gap-6" role="status" aria-label="Dashboard loading">
 				<div className="h-24 animate-pulse rounded-xl bg-muted/60" />
-				<div className="grid gap-6 lg:grid-cols-3">
+				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
 					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
 					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
 				</div>
-				<div className="grid gap-6 lg:grid-cols-3">
+				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
 					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
 					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
@@ -81,7 +81,7 @@ export default function AdminDashboardPage() {
 			/>
 
 			{/* 3. RESOURCES AND LIBRARY STRUCTURE */}
-			<div className="grid gap-6 lg:grid-cols-3">
+			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<DashboardServerResources
 					stats={stats}
 					isPending={statsQuery.isPending}
@@ -95,7 +95,7 @@ export default function AdminDashboardPage() {
 			</div>
 
 			{/* 4. WORKER QUEUE + AUDIT FEED + WARNING LOGS */}
-			<div className="grid gap-6 lg:grid-cols-3">
+			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<DashboardWorkerQueue />
 				<DashboardAuditFeed />
 				<DashboardErrorLogs />
