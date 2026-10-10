@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { usePlayerSubtitles, usePlayerTime } from "../player-context";
+import { sanitizeSubtitleMarkup } from "../utils/subtitle-markup.utils";
 
 export type SubtitleVerticalAlign = "top" | "middle" | "bottom";
 
@@ -117,27 +118,7 @@ const COLOR_MAP: Record<string, string> = {
 	black: "#000000",
 };
 
-const HTML_ESCAPE_REGEX = /[&<>"']/g;
-const HTML_ESCAPES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
-const ALLOWED_SUBTITLE_TAG_REGEX =
-	/<\/?(?:i|b|u|s)>|<br\s*\/?>|<span class="opacity-75 italic">|<\/span>|<span style="color: (?:#[0-9a-fA-F]{3,8}|[a-zA-Z]+)">/gi;
 const HEX_COLOR_REGEX = /^#[0-9a-f]{3}$|^#[0-9a-f]{6}$|^#[0-9a-f]{8}$/;
-
-function escapeHtml(value: string): string {
-	return value.replace(HTML_ESCAPE_REGEX, (char) => HTML_ESCAPES[char] ?? char);
-}
-
-/** Allows only the fixed set of tags this function itself generates; everything else is escaped. */
-function sanitizeSubtitleMarkup(converted: string): string {
-	const preserved: string[] = [];
-	const tokenized = converted.replace(ALLOWED_SUBTITLE_TAG_REGEX, (match) => {
-		preserved.push(match);
-
-		return `\uE000${preserved.length - 1}\uE000`;
-	});
-
-	return escapeHtml(tokenized).replace(/\uE000(\d+)\uE000/g, (_, index: string) => preserved[Number(index)] ?? "");
-}
 
 /** Font colors come from untrusted subtitle text — accept only hex or a known named color. */
 function normalizeFontColor(value: string): string | undefined {
