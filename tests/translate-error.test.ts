@@ -6,6 +6,39 @@ import { translateByKey, translateCode, translateError } from "../src/utils/tran
 // chain, which under a DOM-shimmed test run touches window.localStorage.
 overwriteGetLocale(() => "en");
 
+/** Codes the v1.3.0 changelog says show their own message; each must translate instead of falling back to the raw code. */
+const V13_CODES = [
+	"auth.email_registered",
+	"auth.invalid_email",
+	"auth.user_banned",
+	"database.backup_failed",
+	"downloads.disabled",
+	"downloads.no_media_file",
+	"downloads.not_retryable",
+	"downloads.queue_full",
+	"downloads.quota_exceeded",
+	"downloads.season_exceeds_quota",
+	"media.probe_failed",
+	"plugin.registration_limit.routes",
+	"scan_reason_probe_failed",
+] as const;
+
+describe("codes named in the v1.3.0 changelog", () => {
+	for (const code of V13_CODES) {
+		test(`${code} shows its own message`, () => {
+			expect(translateByKey(code)).not.toBe(code);
+		});
+	}
+
+	test("a stream limit names the limit", () => {
+		expect(translateByKey("stream.limit_reached", { limit: 3 })).toContain("3");
+	});
+
+	test("a throttled session start names the wait", () => {
+		expect(translateByKey("stream.creation_throttled", { retryAfterSeconds: 7 })).toContain("7");
+	});
+});
+
 describe("translateByKey", () => {
 	test("translates a known server error code (dots normalized to underscores)", () => {
 		const translated = translateByKey("profile.pin_invalid");

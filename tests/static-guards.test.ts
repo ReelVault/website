@@ -20,6 +20,7 @@ const SAFE_REL = /noopener|noreferrer/;
 const SOURCE_FILE = /\.(ts|tsx)$/;
 const TEST_FILE = /\.test\.tsx?$/;
 const BLANK_TARGET = 'target="_blank"';
+const HARDCODED_POLISH_LABEL = /["'`](logi|ID operacji)["'`]/;
 const CREDENTIAL_PATTERNS = [
 	/ghp_[A-Za-z0-9]{20,}/,
 	/sk_live_[A-Za-z0-9]{10,}/,
@@ -48,6 +49,12 @@ const rel = (path: string) => relative(SRC, path);
 describe("source guards", () => {
 	test("the source tree is actually scanned", () => {
 		expect(FILES.length).toBeGreaterThan(300);
+	});
+
+	test("no interface label is hardcoded in Polish (clipboard toasts use the catalogue)", () => {
+		const offenders = FILES.filter((file) => HARDCODED_POLISH_LABEL.test(read(file))).map(rel);
+
+		expect(offenders).toEqual([]);
 	});
 
 	test("raw HTML sinks appear only in the reviewed allowlist", () => {
