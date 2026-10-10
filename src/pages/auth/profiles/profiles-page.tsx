@@ -1,6 +1,6 @@
 import type { Profile } from "@reelvault/sdk";
 import { ReelVaultError } from "@reelvault/sdk/client";
-import { useSearch, useRouter as useTanStackRouter } from "@tanstack/react-router";
+import { Link, useSearch, useRouter as useTanStackRouter } from "@tanstack/react-router";
 import { Lock, Plus, User } from "lucide-react";
 import { useState } from "react";
 import { resolveApiAssetUrl } from "@/client/client";
@@ -16,7 +16,6 @@ import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { useSpatialNavigation } from "@/lib/use-spatial-navigation";
 import { m } from "@/paraglide/messages";
-import { CreateProfileModal } from "./components/create-profile.modal";
 import { PinVerificationModal } from "./components/pin-verification.modal";
 
 export default function ProfilesSelectionPage() {
@@ -28,7 +27,6 @@ export default function ProfilesSelectionPage() {
 	const redirectTarget = redirect ?? "/dashboard";
 	const { profiles, isLoading: isProfilesLoading, error: profilesError, refetch } = useProfiles();
 	const switchProfileMutation = useSwitchProfile();
-	const [isCreating, setIsCreating] = useState(false);
 	const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
 	const [isPinModalOpen, setIsPinModalOpen] = useState(false);
 	const [switchingProfileId, setSwitchingProfileId] = useState<string>();
@@ -140,7 +138,7 @@ export default function ProfilesSelectionPage() {
 						type="button"
 						variant="ghost"
 						className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:w-48"
-						onClick={() => setIsCreating(true)}
+						render={<Link to="/auth/create-profile" search={redirect ? { redirect } : {}} />}
 					>
 						<div className="flex size-32 items-center justify-center rounded-3xl border-2 border-border border-dashed text-muted-foreground/40 transition-[background-color,border-color,transform,color] duration-500 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/5 group-hover:text-primary sm:size-44">
 							<Plus className="size-8" />
@@ -152,7 +150,6 @@ export default function ProfilesSelectionPage() {
 				</div>
 			</SimpleAnimation>
 
-			<CreateProfileModal isOpen={isCreating} onClose={() => setIsCreating(false)} onSuccess={() => detach(refetch())} />
 			<PinVerificationModal
 				profile={selectedProfile}
 				isOpen={isPinModalOpen}

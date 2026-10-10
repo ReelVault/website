@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Create a profile on its own page** — Add profile on the profile picker opens a page at `/auth/create-profile` instead of a dialog. It keeps the avatar, name, PIN and copy-preferences fields, and returns to the picker, to the same place it came from, after saving.
 - **Two-step verification has its own page** — turning on 2FA and regenerating backup codes open a page at `/two-factor` instead of a dialog. A step list shows where you are (confirm password, add to your app, save backup codes), and the codes stay on screen until you press Finish. The Settings buttons Enable 2FA and Regenerate backup codes open it.
 - **Phone-first layout** — default buttons, text fields and selects are 40 px tall on phones (icon buttons 36–40 px) and keep the denser desktop size from the small breakpoint up. The home hero puts its title and actions at the bottom of the screen, within thumb reach, and its bottom shade is stronger on phones so the description stays readable over bright artwork. The hero and header sections of the library, collection and home pages are shorter, so the first titles appear above the fold. Empty-state titles are larger (base size, semibold).
 - **Dialogs are bottom sheets on phones** — on narrow screens a dialog slides up from the bottom, scrolls inside itself and keeps its footer on screen. From the small breakpoint up it stays a centred card.
