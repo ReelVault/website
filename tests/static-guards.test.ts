@@ -21,6 +21,12 @@ const SOURCE_FILE = /\.(ts|tsx)$/;
 const TEST_FILE = /\.test\.tsx?$/;
 const BLANK_TARGET = 'target="_blank"';
 const HARDCODED_POLISH_LABEL = /["'`](logi|ID operacji)["'`]/;
+const BROWSER_DIALOG_CALL = /(^|[^\w.$])(window\.)?(confirm|alert|prompt)\s*\(/;
+/** The card and the details footer each stop a live stream; both confirm in the app's dialog. */
+const LIVE_STREAM_STOP_FILES = [
+	"pages/admin/_components/live-activity/live-stream-card-controls.tsx",
+	"pages/admin/_components/live-activity/live-stream-details-footer.tsx",
+];
 const CREDENTIAL_PATTERNS = [
 	/ghp_[A-Za-z0-9]{20,}/,
 	/sk_live_[A-Za-z0-9]{10,}/,
@@ -55,6 +61,20 @@ describe("source guards", () => {
 		const offenders = FILES.filter((file) => HARDCODED_POLISH_LABEL.test(read(file))).map(rel);
 
 		expect(offenders).toEqual([]);
+	});
+
+	test("the admin pages confirm in the app's dialog, never in the browser's confirmation box", () => {
+		const offenders = FILES.map(rel)
+			.filter((file) => file.startsWith("pages/admin/"))
+			.filter((file) => BROWSER_DIALOG_CALL.test(read(join(SRC, file))));
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("both stop actions of a live stream confirm in the app's dialog", () => {
+		for (const file of LIVE_STREAM_STOP_FILES) {
+			expect(read(join(SRC, file))).toContain("<ConfirmAction");
+		}
 	});
 
 	test("raw HTML sinks appear only in the reviewed allowlist", () => {
