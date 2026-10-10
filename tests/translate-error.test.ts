@@ -13,6 +13,7 @@ const V13_CODES = [
 	"auth.user_banned",
 	"database.backup_failed",
 	"downloads.disabled",
+	"downloads.in_progress",
 	"downloads.no_media_file",
 	"downloads.not_retryable",
 	"downloads.queue_full",
