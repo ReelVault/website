@@ -3434,6 +3434,7 @@
 	"player_sleep_timer_off": "Wyłączony",
 	"player_sleep_timer_stops_at": "Zatrzyma odtwarzanie o {time}",
 	"player_transcode_prepared": "Przygotowano {percent}%",
+	"player_transcode_finished": "Przygotowanie zakończone pomyślnie",
 	"player_video_transcode_bitrate_limit": " (limit {value} kbps)",
 	"player_seek_10s": "Przewiń o 10 sekund w tył / w przód",
 	"player_seek_back_10s": "Cofnij 10 sekund",

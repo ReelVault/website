@@ -1,5 +1,8 @@
 import type { TranscodeProgressResponse } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
+import { m } from "@/paraglide/messages";
+import { toast } from "@/utils/toast-facade";
 import { reelvault } from "../client";
 import { playbackSessionKeys, subtitleKeys } from "../utils/query-keys";
 
@@ -50,6 +53,23 @@ export function transcodePollInterval(data: TranscodeProgressResponse | undefine
 	if (data.duration != null && data.duration > 0 && data.transcodedUntil / data.duration >= 0.99) return false;
 
 	return TRANSCODE_POLL_INTERVAL_MS;
+}
+
+/**
+ * Says once when a transcode that was running in this player has finished. The poll stops at the same
+ * point, so the notice follows the poll's own definition of finished, including the 99% tolerance.
+ * A title that was already finished when the player opened stays silent.
+ */
+export function useTranscodeFinishedNotice(data: TranscodeProgressResponse | undefined) {
+	const wasRunning = useRef(false);
+
+	useEffect(() => {
+		if (!data) return;
+
+		const finished = transcodePollInterval(data) === false;
+		if (finished && wasRunning.current) toast.success(m.player_transcode_finished());
+		wasRunning.current = !finished;
+	}, [data]);
 }
 
 /**

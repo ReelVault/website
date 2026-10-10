@@ -15,6 +15,7 @@ import {
 	useSubtitleContent,
 	useSubtitleDownload,
 	useSubtitleSearch,
+	useTranscodeFinishedNotice,
 	useTranscodeProgress,
 } from "@/client/hooks/use-player-playback";
 import { realtimeConnection, useRealtimeEvent } from "@/client/hooks/use-realtime";
@@ -318,6 +319,7 @@ export function usePlayerController({
 	// Server ranges show how far the transcode has gotten (the bar's buffered
 	// overlay can span hours); hls.js only appends ~30-60 s to video.buffered.
 	const transcodeProgressQuery = useTranscodeProgress(sessionId, isDocumentVisible);
+	useTranscodeFinishedNotice(transcodeProgressQuery.data);
 	const transcodedRanges: BufferedRange[] =
 		transcodeProgressQuery.data?.ranges.map((range) => ({ startTime: range.startTime, endTime: range.endTime })) ?? EMPTY_BUFFERED_RANGES;
 
