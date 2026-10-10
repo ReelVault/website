@@ -68,19 +68,19 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 						variant="ghost"
 						nativeButton={false}
 						render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" rel="noopener noreferrer" />}
-						className="h-8 gap-1.5 text-xs hover:text-primary"
+						className="h-10 gap-1.5 text-xs hover:text-primary sm:h-8"
 					>
 						<Play className="size-3.5" />
 						{m.common_player_word()}
 					</Button>
 
 					<div className="flex items-center gap-1.5">
-						<Button size="sm" variant="outline" onClick={() => onOpenEdit(marker)} className="h-8 text-xs">
+						<Button size="sm" variant="outline" onClick={() => onOpenEdit(marker)} className="h-10 text-xs sm:h-8">
 							{m.common_edit()}
 						</Button>
 						<ConfirmAction
 							trigger={
-								<Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive">
+								<Button size="sm" variant="ghost" className="h-10 w-10 p-0 text-muted-foreground hover:text-destructive sm:h-8 sm:w-8">
 									<Trash2 className="size-3.5" />
 								</Button>
 							}

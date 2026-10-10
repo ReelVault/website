@@ -63,7 +63,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 							placeholder={m.admin_workers_search_placeholder()}
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="h-8 w-44 bg-background/60 pl-8 text-xs"
+							className="h-10 w-44 bg-background/60 pl-8 text-xs sm:h-8"
 						/>
 					</div>
 

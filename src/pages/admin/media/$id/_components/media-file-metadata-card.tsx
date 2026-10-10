@@ -78,7 +78,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 					<Button
 						variant="ghost"
 						size="sm"
-						className="h-7 gap-1 px-2 text-primary text-xs hover:bg-primary/10 hover:text-primary"
+						className="h-10 gap-1 px-2 text-primary text-xs hover:bg-primary/10 hover:text-primary sm:h-7"
 						nativeButton={false}
 						render={<Link to="/admin/metadata/$id" params={{ id: metadata.id }} />}
 					>
@@ -105,7 +105,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 			title={m.admin_media_assigned_metadata()}
 			description={m.admin_media_catalog_title_description()}
 			actions={
-				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign} className="h-8 gap-1.5 text-xs shadow-xs">
+				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign} className="h-10 gap-1.5 text-xs shadow-xs sm:h-8">
 					<Layers className="size-3.5 text-primary" />
 					<span>{m.admin_media_change_link()}</span>
 				</Button>

@@ -31,7 +31,7 @@ export function LiveStreamCardControls({
 				size="sm"
 				onClick={() => onSendCommand("pause")}
 				disabled={isPending}
-				className="h-7 cursor-pointer gap-1 px-2 font-medium text-xs"
+				className="h-10 cursor-pointer gap-1 px-2 font-medium text-xs sm:h-7"
 				title={m.admin_live_remote_pause_hint()}
 			>
 				<Pause className="size-3 fill-current text-warning" />
@@ -44,7 +44,7 @@ export function LiveStreamCardControls({
 				size="sm"
 				onClick={() => onSendCommand("play")}
 				disabled={isPending}
-				className="h-7 cursor-pointer gap-1 px-2 font-medium text-xs"
+				className="h-10 cursor-pointer gap-1 px-2 font-medium text-xs sm:h-7"
 				title={m.admin_resume_remote_playback()}
 			>
 				<Play className="size-3 fill-current text-primary" />
@@ -56,7 +56,7 @@ export function LiveStreamCardControls({
 				variant="outline"
 				size="sm"
 				onClick={onOpenDetails}
-				className="h-7 cursor-pointer gap-1 px-2 font-medium text-xs"
+				className="h-10 cursor-pointer gap-1 px-2 font-medium text-xs sm:h-7"
 				title={m.admin_open_stream_diagnostics()}
 			>
 				<Info className="size-3 text-primary" />
@@ -68,7 +68,7 @@ export function LiveStreamCardControls({
 				variant="outline"
 				size="sm"
 				onClick={() => onDownloadLog(stream.sessionId)}
-				className="h-7 cursor-pointer gap-1 px-2 font-medium text-xs"
+				className="h-10 cursor-pointer gap-1 px-2 font-medium text-xs sm:h-7"
 				title={m.admin_live_download_log_hint()}
 			>
 				<Download className="size-3 text-primary" />
@@ -86,7 +86,7 @@ export function LiveStreamCardControls({
 						variant="destructive"
 						size="sm"
 						disabled={isTerminating}
-						className="h-7 cursor-pointer gap-1 px-2.5 font-semibold text-xs"
+						className="h-10 cursor-pointer gap-1 px-2.5 font-semibold text-xs sm:h-7"
 						title={m.admin_live_stop_session_hint()}
 					>
 						<Square className="size-3 fill-current" />

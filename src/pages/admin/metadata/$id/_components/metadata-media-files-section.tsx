@@ -83,7 +83,13 @@ export function MetadataMediaFilesSection({ metadataId }: { metadataId: string }
 			title={m.admin_metadata_linked_files_section({ total })}
 			description={m.admin_metadata_linked_files_desc()}
 			actions={
-				<Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" nativeButton={false} render={<Link to="/admin/media" />}>
+				<Button
+					variant="outline"
+					size="sm"
+					className="h-10 gap-1.5 text-xs sm:h-8"
+					nativeButton={false}
+					render={<Link to="/admin/media" />}
+				>
 					<ExternalLink className="size-3.5" />
 					<span>{m.admin_metadata_manage_files()}</span>
 				</Button>

@@ -107,7 +107,13 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 								<p className="font-medium text-foreground text-xs">{m.admin_workers_no_triggers()}</p>
 								<p className="mt-0.5 max-w-xs text-muted-foreground text-xs">{m.admin_workers_no_triggers_desc()}</p>
 								{!isAdding && (
-									<Button type="button" size="sm" variant="outline" onClick={() => setIsAdding(true)} className="mt-3 h-7 gap-1.5 text-xs">
+									<Button
+										type="button"
+										size="sm"
+										variant="outline"
+										onClick={() => setIsAdding(true)}
+										className="mt-3 h-10 gap-1.5 text-xs sm:h-7"
+									>
 										<Plus className="size-3" />
 										{m.admin_workers_add_first_trigger()}
 									</Button>

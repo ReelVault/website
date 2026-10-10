@@ -94,7 +94,7 @@ export function MetadataBrowseFilters({ filters, onChange }: MetadataBrowseFilte
 				</SelectContent>
 			</Select>
 			<Select value={filters.startsWith ?? ANY} onValueChange={(value) => onChange({ startsWith: parseMetadataStartsWith(value) })}>
-				<SelectTrigger className="h-9 w-full sm:w-40" aria-label={m.admin_metadata_letter_label()}>
+				<SelectTrigger className="h-10 w-full sm:h-9 sm:w-40" aria-label={m.admin_metadata_letter_label()}>
 					<SelectValue>{filters.startsWith === undefined ? m.admin_metadata_letter_any() : letterLabel(filters.startsWith)}</SelectValue>
 				</SelectTrigger>
 				<SelectContent>

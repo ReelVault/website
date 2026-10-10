@@ -110,13 +110,19 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 							nativeButton={false}
 							render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" rel="noopener noreferrer" />}
 							title={m.admin_markers_open_player()}
-							className="h-8 gap-1.5 text-xs hover:text-primary"
+							className="h-10 gap-1.5 text-xs hover:text-primary sm:h-8"
 						>
 							<Play className="size-3.5" />
 							{m.common_player_word()}
 						</Button>
 
-						<Button size="sm" variant="ghost" onClick={() => onOpenEdit(marker)} className="h-8 w-8 p-0" title={m.admin_markers_edit()}>
+						<Button
+							size="sm"
+							variant="ghost"
+							onClick={() => onOpenEdit(marker)}
+							className="h-10 w-10 p-0 sm:h-8 sm:w-8"
+							title={m.admin_markers_edit()}
+						>
 							<Edit3 className="size-3.5 text-muted-foreground hover:text-foreground" />
 						</Button>
 
@@ -125,7 +131,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 								<Button
 									size="sm"
 									variant="ghost"
-									className="h-8 w-8 p-0 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+									className="h-10 w-10 p-0 text-muted-foreground hover:bg-destructive/10 hover:text-destructive sm:h-8 sm:w-8"
 									title={m.admin_markers_delete_marker()}
 								>
 									<Trash2 className="size-3.5" />

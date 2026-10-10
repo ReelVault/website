@@ -56,7 +56,7 @@ export function WorkerPageHeader({
 						type="button"
 						onClick={onRefreshAll}
 						disabled={isAnyRefetching}
-						className="h-8 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
+						className="h-10 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground sm:h-8"
 					>
 						<RefreshCw className={cn("size-3.5", isAnyRefetching && "animate-spin text-primary")} />
 						<span>{m.common_refresh()}</span>
@@ -69,7 +69,7 @@ export function WorkerPageHeader({
 							type="button"
 							onClick={() => cancelAllWorkers()}
 							disabled={isCancellingAll}
-							className="h-8 cursor-pointer gap-1.5 border-warning/40 text-warning text-xs transition-colors hover:bg-warning/10 hover:text-warning"
+							className="h-10 cursor-pointer gap-1.5 border-warning/40 text-warning text-xs transition-colors hover:bg-warning/10 hover:text-warning sm:h-8"
 						>
 							<Square className="size-3.5 fill-current" />
 							<span>{isCancellingAll ? m.common_cancelling() : m.admin_workers_stop_all()}</span>

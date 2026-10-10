@@ -117,7 +117,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 							size="sm"
 							onClick={handleRefresh}
 							disabled={isLoading}
-							className="h-8 shrink-0 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
+							className="h-10 shrink-0 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground sm:h-8"
 						>
 							<RotateCcw className={cn("size-3.5", isLoading && "animate-spin text-primary")} />
 							<span>{m.common_refresh()}</span>

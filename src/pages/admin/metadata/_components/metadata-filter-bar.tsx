@@ -65,7 +65,7 @@ export function MetadataFilterBar({
 					className="w-full sm:max-w-xs"
 				/>
 				<Select value={typeFilter ?? "all"} onValueChange={(value) => onTypeChange(isAdminMetadataType(value) ? value : undefined)}>
-					<SelectTrigger className="h-9 w-full sm:w-32" aria-label={m.admin_metadata_type_filter_label()}>
+					<SelectTrigger className="h-10 w-full sm:h-9 sm:w-32" aria-label={m.admin_metadata_type_filter_label()}>
 						<SelectValue>{TYPE_LABELS[typeFilter ?? "all"]()}</SelectValue>
 					</SelectTrigger>
 					<SelectContent>
@@ -77,7 +77,7 @@ export function MetadataFilterBar({
 					</SelectContent>
 				</Select>
 				<Select value={sort} onValueChange={(value) => isAdminMetadataSort(value) && onSortChange(value)}>
-					<SelectTrigger className="h-9 w-full sm:w-44" aria-label={m.admin_metadata_sort_label()}>
+					<SelectTrigger className="h-10 w-full sm:h-9 sm:w-44" aria-label={m.admin_metadata_sort_label()}>
 						<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
 					</SelectTrigger>
 					<SelectContent>

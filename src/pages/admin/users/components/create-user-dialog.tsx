@@ -120,7 +120,7 @@ export function CreateUserDialog({
 					<Field className="gap-2">
 						<FieldLabel>{m.admin_users_role_label()}</FieldLabel>
 						<Select value={formState.role} onValueChange={(value) => value !== null && updateField("role", value)}>
-							<SelectTrigger className="h-9 w-full">
+							<SelectTrigger className="h-10 w-full sm:h-9">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>

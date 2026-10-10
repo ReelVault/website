@@ -91,7 +91,7 @@ export function ArtworkSlot({
 			</div>
 
 			<div className="flex items-center gap-2">
-				<Button type="button" variant="outline" size="sm" onClick={() => onOpenDialog(kind)} className="h-8 flex-1 gap-1.5 text-xs">
+				<Button type="button" variant="outline" size="sm" onClick={() => onOpenDialog(kind)} className="h-10 flex-1 gap-1.5 text-xs sm:h-8">
 					<ImageIcon className="size-3.5 text-primary" />
 					<span>{changeLabel}</span>
 				</Button>
@@ -102,7 +102,7 @@ export function ArtworkSlot({
 							type="button"
 							variant="ghost"
 							size="sm"
-							className="h-8 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
+							className="h-10 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive sm:h-8"
 							disabled={isDeletingImage}
 						>
 							<Trash2 className="size-3.5" />

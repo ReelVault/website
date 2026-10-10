@@ -67,7 +67,7 @@ export function MediaFileScanConfig({
 							value={customDuration}
 							onChange={(e) => onCustomDurationChange(e.target.value)}
 							placeholder={m.admin_media_scan_seconds_placeholder()}
-							className="h-9 text-xs"
+							className="h-10 text-xs sm:h-9"
 							min={1}
 						/>
 					)}

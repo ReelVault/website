@@ -25,7 +25,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 		<AdminSection title={m.admin_metadata_cast_crew()} description={m.admin_metadata_cast_crew_description()}>
 			<Tabs defaultValue={cast.length > 0 ? "cast" : "crew"} className="w-full">
 				<div className="flex items-center justify-between gap-2 border-border/50 border-b pb-3">
-					<TabsList className="h-9">
+					<TabsList className="h-10 sm:h-9">
 						<TabsTrigger value="cast" disabled={cast.length === 0} className="gap-1.5 text-xs">
 							<Users className="size-3.5" />
 							<span>{m.admin_metadata_cast_count({ count: cast.length })}</span>

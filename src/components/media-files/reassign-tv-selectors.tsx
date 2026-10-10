@@ -30,7 +30,7 @@ export function ReassignTvSelectors({
 			<div className="space-y-1.5">
 				<Label className="text-xs">{m.components_select_season_label()}</Label>
 				<Select value={selectedSeasonId ?? ""} onValueChange={onSeasonChange}>
-					<SelectTrigger className="h-9 text-xs">
+					<SelectTrigger className="h-10 text-xs sm:h-9">
 						<SelectValue placeholder={m.common_select_season()} />
 					</SelectTrigger>
 					<SelectContent>
@@ -48,7 +48,7 @@ export function ReassignTvSelectors({
 			<div className="space-y-1.5">
 				<Label className="text-xs">{m.components_select_episode_label()}</Label>
 				<Select value={selectedEpisodeId ?? ""} onValueChange={onEpisodeChange} disabled={!selectedSeasonId || localEpisodes.length === 0}>
-					<SelectTrigger className="h-9 text-xs">
+					<SelectTrigger className="h-10 text-xs sm:h-9">
 						<SelectValue placeholder={selectedSeasonId ? m.common_select_episode() : m.common_select_season_first()} />
 					</SelectTrigger>
 					<SelectContent>

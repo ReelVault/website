@@ -37,7 +37,7 @@ export function OperationFilterBar({ searchQuery, onSearchChange, statusFilter, 
 					placeholder={m.admin_workers_scheduled_filters_placeholder()}
 					value={searchQuery}
 					onChange={(e) => onSearchChange(e.target.value)}
-					className="h-8 bg-background/60 pl-8 text-xs"
+					className="h-10 bg-background/60 pl-8 text-xs sm:h-8"
 				/>
 			</div>
 

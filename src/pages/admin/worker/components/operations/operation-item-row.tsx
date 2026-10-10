@@ -111,7 +111,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 							size="sm"
 							disabled={isRetrying}
 							onClick={() => onRetry(item.id)}
-							className="h-7 gap-1 text-primary text-xs hover:text-primary"
+							className="h-10 gap-1 text-primary text-xs hover:text-primary sm:h-7"
 						>
 							<RotateCw className="size-3" />
 							<span>{m.admin_workers_retry_word()}</span>
@@ -123,7 +123,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 							variant="ghost"
 							size="sm"
 							onClick={onToggleExpand}
-							className="h-7 gap-1 text-muted-foreground text-xs hover:text-foreground"
+							className="h-10 gap-1 text-muted-foreground text-xs hover:text-foreground sm:h-7"
 						>
 							<Code2 className="size-3" />
 							<span>{isExpanded ? m.admin_worker_hide_details() : m.admin_worker_show_details()}</span>

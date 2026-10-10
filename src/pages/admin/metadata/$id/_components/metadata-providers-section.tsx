@@ -27,7 +27,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 			title={m.admin_metadata_providers_section()}
 			description={m.admin_metadata_sources_description()}
 			actions={
-				<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="h-8 gap-1.5 text-xs shadow-xs">
+				<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="h-10 gap-1.5 text-xs shadow-xs sm:h-8">
 					<Link2 className="size-3.5 text-primary" />
 					<span>{m.admin_metadata_match_link_provider()}</span>
 				</Button>
@@ -66,7 +66,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 						variant="outline"
 						size="sm"
 						onClick={onOpenIdentify}
-						className="h-8 shrink-0 gap-1.5 bg-background/80 text-xs hover:bg-background"
+						className="h-10 shrink-0 gap-1.5 bg-background/80 text-xs hover:bg-background sm:h-8"
 					>
 						<Search className="size-3.5 text-primary" />
 						<span>{m.admin_metadata_change_match()}</span>
@@ -157,7 +157,7 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 					<Button
 						variant="ghost"
 						size="sm"
-						className="h-7 gap-1 px-2 text-primary text-xs hover:bg-primary/10 hover:text-primary"
+						className="h-10 gap-1 px-2 text-primary text-xs hover:bg-primary/10 hover:text-primary sm:h-7"
 						nativeButton={false}
 						render={
 							<a

@@ -68,7 +68,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						readOnly
 						value={duration}
 						placeholder="0"
-						className="h-9 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs"
+						className="h-10 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs sm:h-9"
 					/>
 				</div>
 
@@ -84,7 +84,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						readOnly
 						value={size}
 						placeholder="0"
-						className="h-9 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs"
+						className="h-10 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs sm:h-9"
 					/>
 				</div>
 
@@ -100,7 +100,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						readOnly
 						value={bitRate}
 						placeholder="0"
-						className="h-9 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs"
+						className="h-10 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs sm:h-9"
 					/>
 				</div>
 			</div>
