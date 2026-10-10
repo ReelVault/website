@@ -1,4 +1,4 @@
-import type { PluginCatalogResult, PluginRepository } from "@reelvault/sdk";
+import type { PluginCatalogResult, PluginRepository, PluginValidationIssue } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
@@ -18,7 +18,7 @@ export interface InstallCatalogPluginInput {
 export interface PluginArchiveEntry {
 	id: string;
 	file: File;
-	status: "queued" | "uploading" | "installing" | "installed" | "failed";
+	status: "queued" | "checking" | "uploading" | "installing" | "installed" | "failed";
 	uploadedBytes: number;
 	totalBytes: number;
 	error?: string | undefined;
@@ -49,6 +49,15 @@ function entryProgressPercent(entry: PluginArchiveEntry): number {
 	const installFraction = entry.status === "installing" ? 1 : 0;
 
 	return Math.round(((uploadFraction + installFraction) / UPLOAD_INSTALL_STEPS) * 100);
+}
+
+/** Why an archive that failed the check is not installed: its error issues in translated words, or a fallback. */
+function describeInvalidArchive(issues: PluginValidationIssue[]): string {
+	const reasons = issues.filter((issue) => issue.severity === "error").map((issue) => translateCode(issue.code, issue.message));
+
+	return reasons.length > 0
+		? m.admin_plugins_upload_validation_failed({ reason: reasons.join("; ") })
+		: m.admin_plugins_upload_validation_no_details();
 }
 
 export function usePluginCatalog() {
@@ -142,6 +151,22 @@ export function usePluginCatalog() {
 			let installed = 0;
 			let failed = 0;
 			for (const entry of queued) {
+				patchArchiveEntry(entry.id, { status: "checking" });
+				try {
+					const report = await reelvault.admin.validatePluginArchive(entry.file);
+					if (!report.valid) {
+						batchClockRef.current.uploadedBytes += entry.file.size;
+						patchArchiveEntry(entry.id, { status: "failed", error: describeInvalidArchive(report.issues) });
+						failed += 1;
+						continue;
+					}
+				} catch (error) {
+					batchClockRef.current.uploadedBytes += entry.file.size;
+					patchArchiveEntry(entry.id, { status: "failed", error: error instanceof Error ? error.message : String(error) });
+					failed += 1;
+					continue;
+				}
+
 				patchArchiveEntry(entry.id, { status: "uploading" });
 				try {
 					await reelvault.admin.installPluginArchive(entry.file, (uploadedBytes, totalBytes) => {
@@ -184,7 +209,7 @@ export function usePluginCatalog() {
 	}, []);
 
 	const isInstallingArchive = archiveEntries.some(
-		(entry) => entry.status === "queued" || entry.status === "uploading" || entry.status === "installing",
+		(entry) => entry.status === "queued" || entry.status === "checking" || entry.status === "uploading" || entry.status === "installing",
 	);
 
 	const archiveSummary = useMemo<PluginArchiveSummary | null>(() => {

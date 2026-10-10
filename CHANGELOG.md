@@ -186,6 +186,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Features
 
+- **Plugin archives are checked before install** — every archive in the install dialog is validated first. An archive that fails the check is listed with its reasons and is not installed; the rest of the batch continues.
 - **Previews for several titles at once** — on the trickplay page, search titles and select several. Their missing previews are queued together, or all of them after a confirmation. A single selected title still shows its seasons.
 - **Download a session's log** — each ended playback session in the admin live view links to its log archive (ZIP).
 - **Scan progress on library cards** — the Scan library button of a library with an active scan says it is queued, or shows the percent of the enqueued work once the scan starts handing files to its queues. The progress refreshes every two seconds only while a scan is active.

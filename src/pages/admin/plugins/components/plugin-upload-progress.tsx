@@ -18,6 +18,8 @@ function statusLabel(entry: PluginArchiveEntry): string {
 	switch (entry.status) {
 		case "queued":
 			return m.admin_plugins_upload_status_queued();
+		case "checking":
+			return m.admin_plugins_upload_status_checking();
 		case "uploading":
 			return m.admin_plugins_upload_status_uploading();
 		case "installing":
@@ -33,6 +35,7 @@ function statusLabel(entry: PluginArchiveEntry): string {
 
 function StatusIcon({ entry }: { entry: PluginArchiveEntry }) {
 	switch (entry.status) {
+		case "checking":
 		case "uploading":
 		case "installing":
 			return <Spinner className="text-primary" aria-hidden="true" />;
