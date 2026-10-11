@@ -8,6 +8,7 @@ import { setNativeKeepAwake, setNativeLandscapeLock } from "@/lib/capacitor-nati
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { PlayerChrome } from "./components/player-chrome";
+import { useCaptionTrack } from "./hooks/use-caption-track";
 import { usePlayerShortcuts } from "./hooks/use-player-shortcuts";
 import { usePlayerTouchGestures } from "./hooks/use-player-touch-gestures";
 import type { PendingChange } from "./player-context";
@@ -26,7 +27,6 @@ import type { PlaybackSettings, PlaybackSettingsActions, PlayerMediaFile, Player
 import { toPlaybackError } from "./utils/player-preferences.storage";
 import { detach, noopCleanup, toggleFullscreen } from "./utils/player-utils";
 import { getShortcutsDisabledCookie, setShortcutsDisabledCookie } from "./utils/shortcuts-cookie";
-import { getSubtitleTrackUrl } from "./utils/subtitle-track.utils";
 
 export function AppPlayer({
 	mediaFileId,
@@ -88,19 +88,12 @@ export function AppPlayer({
 // all DOM events to the controller, and renders the UI chrome on top.
 // ---------------------------------------------------------------------------
 
-/**
- * The overlay draws the subtitles. The caption track stays loaded for assistive
- * tech but hidden, so the same text is never shown twice.
- */
-function keepCaptionsHidden(element: HTMLTrackElement | null) {
-	if (element) element.track.mode = "hidden";
-}
-
 function AppPlayerSurface() {
 	const info = usePlayerInfo();
 	const actions = usePlayerActions();
 	const subtitles = usePlayerSubtitles();
-	const subtitleTrackUrl = getSubtitleTrackUrl(subtitles.subtitleContent);
+	const captionTrackRef = useRef<HTMLTrackElement | null>(null);
+	useCaptionTrack(captionTrackRef, subtitles.subtitleContent);
 	const nextEpisode = usePlayerNextEpisode();
 	const status = usePlayerStatus();
 	const volumeState = usePlayerVolume();
@@ -665,7 +658,7 @@ function AppPlayerSurface() {
 					onPointerUp={handleSurfacePointerUp}
 					onPointerCancel={touchGestures.onPointerCancel}
 				>
-					<track ref={keepCaptionsHidden} kind="captions" src={subtitleTrackUrl} srcLang={subtitles.selectedSubtitle?.language} />
+					<track ref={captionTrackRef} kind="captions" srcLang={subtitles.selectedSubtitle?.language} />
 				</video>
 
 				<PlayerChrome

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { parseSubtitles } from "@/pages/player/components/player-subtitle-overlay";
-import { buildWebVtt, formatVttTimestamp, getSubtitleTrackUrl } from "@/pages/player/utils/subtitle-track.utils";
+import { buildSubtitleVtt, buildWebVtt, formatVttTimestamp } from "@/pages/player/utils/subtitle-track.utils";
 
 describe("formatVttTimestamp", () => {
 	it("writes hours, minutes, seconds and milliseconds", () => {
@@ -37,21 +37,16 @@ describe("buildWebVtt", () => {
 	});
 });
 
-describe("getSubtitleTrackUrl", () => {
-	const prefix = "data:text/vtt;charset=utf-8,";
+describe("buildSubtitleVtt", () => {
+	it("is the WebVTT of the readable cues", () => {
+		const vtt = buildSubtitleVtt("1\n00:00:01,000 --> 00:00:02,000\nHi, there");
 
-	it("is a WebVTT data URL carrying the readable cues", () => {
-		const url = getSubtitleTrackUrl("1\n00:00:01,000 --> 00:00:02,000\nHi, there");
-
-		expect(url?.startsWith(prefix)).toBe(true);
-		expect(decodeURIComponent(url?.slice(prefix.length) ?? "")).toContain("00:00:01.000 --> 00:00:02.000\nHi, there");
+		expect(vtt).toContain("00:00:01.000 --> 00:00:02.000\nHi, there");
 	});
 
-	it("is an empty WebVTT document without content or readable cues", () => {
-		const empty = "data:text/vtt;charset=utf-8,WEBVTT";
-
-		expect(getSubtitleTrackUrl(undefined)).toBe(empty);
-		expect(getSubtitleTrackUrl("")).toBe(empty);
-		expect(getSubtitleTrackUrl("not subtitles at all")).toBe(empty);
+	it("is undefined without content or without readable cues", () => {
+		expect(buildSubtitleVtt(undefined)).toBeUndefined();
+		expect(buildSubtitleVtt("")).toBeUndefined();
+		expect(buildSubtitleVtt("not subtitles at all")).toBeUndefined();
 	});
 });

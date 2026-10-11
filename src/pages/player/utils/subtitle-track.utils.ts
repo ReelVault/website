@@ -31,15 +31,11 @@ export function buildWebVtt(cues: readonly SubtitleCue[]): string {
 	return `WEBVTT\n\n${blocks.join("\n\n")}\n`;
 }
 
-/** WebVTT with no cues: a `<track>` without `src` fires an error, so an empty document stands in. */
-const EMPTY_TRACK_URL = "data:text/vtt;charset=utf-8,WEBVTT";
-
 /**
- * `data:` URL of the subtitles as WebVTT, for the `<track>` element. Without
- * content or readable cues (for example bitmap subtitles) it is the empty
- * document. A data URL is a plain value: unlike an object URL it needs no revoking.
+ * WebVTT of the active subtitles, or undefined without content or readable cues
+ * (for example bitmap subtitles).
  */
-export function getSubtitleTrackUrl(content: string | undefined): string {
+export function buildSubtitleVtt(content: string | undefined): string | undefined {
 	const cues = content ? parseSubtitles(content) : [];
-	return cues.length > 0 ? `data:text/vtt;charset=utf-8,${encodeURIComponent(buildWebVtt(cues))}` : EMPTY_TRACK_URL;
+	return cues.length > 0 ? buildWebVtt(cues) : undefined;
 }
