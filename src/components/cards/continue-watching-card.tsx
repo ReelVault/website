@@ -102,7 +102,7 @@ export function ContinueWatchingCard({
 							type="button"
 							variant="outline"
 							size="icon"
-							className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+							className="opacity-0 pointer-coarse:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100"
 							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
@@ -123,7 +123,7 @@ export function ContinueWatchingCard({
 									type="button"
 									variant="outline"
 									size="icon"
-									className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+									className="opacity-0 pointer-coarse:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100"
 									disabled={isBusy}
 									aria-label={m.components_cw_reset_progress_named({ title: item.metadata.title })}
 									title={m.components_cw_reset_progress()}
@@ -143,7 +143,7 @@ export function ContinueWatchingCard({
 							type="button"
 							variant="outline"
 							size="icon"
-							className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+							className="opacity-0 pointer-coarse:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100"
 							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
