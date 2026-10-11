@@ -1,20 +1,11 @@
 import type { SystemSettingItemView } from "@reelvault/sdk";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "@tanstack/react-router";
 import { Check, RotateCcw, Save } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmAction } from "@/components/confirm-action";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { UnsavedChangesDialog } from "@/components/unsaved-changes-dialog";
+import { useUnsavedChangesGuard } from "@/hooks/use-unsaved-changes-guard";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { SettingField } from "./setting-field";
@@ -142,40 +133,8 @@ export function SettingsGroupView({
 		return () => subscription.unsubscribe();
 	}, [form, items]);
 
-	// Closing or reloading the tab with unsaved edits asks the browser to confirm.
-	useEffect(() => {
-		const warnBeforeUnload = (event: BeforeUnloadEvent) => {
-			if (hasChanges) event.preventDefault();
-		};
-		window.addEventListener("beforeunload", warnBeforeUnload);
-
-		return () => window.removeEventListener("beforeunload", warnBeforeUnload);
-	}, [hasChanges]);
-
-	// Leaving the page with unsaved edits asks first. The history blocker waits for the answer: `true` keeps the
-	// user here, `false` lets the navigation through. Closing or reloading the tab is covered by the unload prompt above.
-	const router = useRouter();
-	const [leaveRequested, setLeaveRequested] = useState(false);
-	const leaveAnswer = useRef<((leave: boolean) => void) | null>(null);
-	useEffect(
-		() =>
-			hasChanges
-				? router.history.block({
-						blockerFn: () =>
-							new Promise<boolean>((resolve) => {
-								leaveAnswer.current = (leave) => resolve(!leave);
-								setLeaveRequested(true);
-							}),
-					})
-				: undefined,
-		[hasChanges, router],
-	);
-
-	const answerLeave = (leave: boolean) => {
-		setLeaveRequested(false);
-		leaveAnswer.current?.(leave);
-		leaveAnswer.current = null;
-	};
+	// Unsaved edits: closing the tab asks the browser, leaving the page asks in the dialog below.
+	const { leaveRequested, answerLeave } = useUnsavedChangesGuard(hasChanges);
 
 	const handleResetSingle = (item: SystemSettingItemView) => {
 		if (item.isCustom) {
@@ -242,23 +201,7 @@ export function SettingsGroupView({
 					</Button>
 				</div>
 			</div>
-			<AlertDialog
-				open={leaveRequested}
-				onOpenChange={(open) => {
-					if (!open) answerLeave(false);
-				}}
-			>
-				<AlertDialogContent>
-					<AlertDialogHeader>
-						<AlertDialogTitle>{m.admin_settings_unsaved_changes()}</AlertDialogTitle>
-						<AlertDialogDescription>{m.admin_settings_leave_unsaved_description()}</AlertDialogDescription>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel onClick={() => answerLeave(false)}>{m.admin_settings_stay_here()}</AlertDialogCancel>
-						<AlertDialogAction onClick={() => answerLeave(true)}>{m.admin_settings_leave_page()}</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+			<UnsavedChangesDialog open={leaveRequested} onAnswer={answerLeave} />
 		</div>
 	);
 }

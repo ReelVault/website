@@ -10,6 +10,8 @@ import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Button } from "@/components/ui/button";
+import { UnsavedChangesDialog } from "@/components/unsaved-changes-dialog";
+import { useUnsavedChangesGuard } from "@/hooks/use-unsaved-changes-guard";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
@@ -84,6 +86,8 @@ export default function AdminPluginSettingsPage() {
 	const { reloadPlugin, isReloading } = useAdminPlugins();
 
 	const [formValues, setFormValues] = useState<Record<string, unknown>>({});
+	// The values as saved on the server: the form is dirty when it differs from them.
+	const [savedValues, setSavedValues] = useState<Record<string, unknown>>({});
 	const [showSecrets, setShowSecrets] = useState<Record<string, boolean>>({});
 	const [fieldErrors, setFieldErrors] = useState<Record<string, string | undefined>>({});
 
@@ -97,8 +101,12 @@ export default function AdminPluginSettingsPage() {
 			}
 
 			setFormValues(initial);
+			setSavedValues(initial);
 		}
 	}, [configDetails]);
+
+	const hasChanges = JSON.stringify(formValues) !== JSON.stringify(savedValues);
+	const { leaveRequested, answerLeave } = useUnsavedChangesGuard(hasChanges);
 
 	const handleValueChange = (name: string, value: unknown) => {
 		setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
@@ -299,6 +307,8 @@ export default function AdminPluginSettingsPage() {
 					</div>
 				</form>
 			)}
+
+			<UnsavedChangesDialog open={leaveRequested} onAnswer={answerLeave} />
 
 			<PluginUiSwitches pluginId={pluginId} />
 
