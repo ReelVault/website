@@ -15,24 +15,24 @@ interface InsightsTopContentProps {
 
 export function InsightsTopContent({ topMovies, topShows }: InsightsTopContentProps) {
 	return (
-		<Card className="col-span-1 border-border/70 bg-card/65 md:col-span-6 lg:col-span-12">
-			<CardHeader className="flex flex-row items-center justify-between pb-4">
+		<Card variant="subtle" className="col-span-1 md:col-span-6 lg:col-span-12">
+			<CardHeader className="flex flex-row items-center justify-between">
 				<div>
 					<div className="flex items-center gap-2">
 						<Award className="size-5 text-warning" />
-						<CardTitle className="font-bold text-lg">{m.user_most_watched_titles()}</CardTitle>
+						<CardTitle>{m.user_most_watched_titles()}</CardTitle>
 					</div>
-					<CardDescription className="text-xs">{m.user_top_titles_ranking()}</CardDescription>
+					<CardDescription size="xs">{m.user_top_titles_ranking()}</CardDescription>
 				</div>
 			</CardHeader>
 			<CardContent>
 				<Tabs defaultValue="movies" className="w-full">
 					<TabsList className="mb-4">
-						<TabsTrigger value="movies" className="gap-2 text-xs">
+						<TabsTrigger value="movies">
 							<Film className="size-3.5" />
 							<span>{m.user_insights_movies_tab({ count: topMovies.length })}</span>
 						</TabsTrigger>
-						<TabsTrigger value="shows" className="gap-2 text-xs">
+						<TabsTrigger value="shows">
 							<Tv className="size-3.5" />
 							<span>{m.user_insights_shows_tab({ count: topShows.length })}</span>
 						</TabsTrigger>
@@ -88,7 +88,8 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 					alt={item.title}
 					fill
 					sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
-					className="object-cover transition-transform duration-300 group-hover:scale-105"
+					zoom
+					className="object-cover"
 				/>
 				<div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-black/30" />
 
@@ -108,7 +109,7 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 
 				{item.completed && (
 					<div className="absolute top-2 right-2">
-						<Badge variant="secondary" className="gap-1 border-success/30 bg-success/20 px-1.5 py-0.5 font-semibold text-success text-xs">
+						<Badge weight="semibold" variant="success">
 							<CheckCircle2 className="size-3" />
 							{m.admin_worker_finished_word()}
 						</Badge>

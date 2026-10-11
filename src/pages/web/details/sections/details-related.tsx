@@ -40,7 +40,7 @@ export function DetailsRelated({ metadataId }: { metadataId: string }) {
 				<DetailsSection title={m.web_more_like_this()} icon={Compass}>
 					<div className="flex gap-4 overflow-hidden" role="status" aria-label={m.web_loading_similar()}>
 						{["one", "two", "three", "four", "five"].map((key) => (
-							<Skeleton key={key} className="aspect-2/3 w-48 shrink-0 rounded-xl" />
+							<Skeleton key={key} className="aspect-2/3 w-48 shrink-0" />
 						))}
 					</div>
 				</DetailsSection>

@@ -65,7 +65,6 @@ export function TwoFactorDisableDialog({ open, onOpenChange }: TwoFactorDisableD
 							placeholder={m.user_your_password()}
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
-							className="h-10"
 						/>
 					</div>
 					<DialogFooter className="mt-4">

@@ -136,7 +136,7 @@ export function DetailsEpisodes({
 					{m.web_mark_season_unwatched()}
 				</Button>
 			</div>
-			<ScrollArea className="h-[80svh] w-full rounded-xl lg:h-[65vh]">
+			<ScrollArea className="h-[80svh] w-full lg:h-[65vh]">
 				<div className="grid gap-4 pr-4">
 					{episodes.map((episode) => {
 						const files = episode.mediaFiles;

@@ -66,7 +66,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
 					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_resource()}</span>
 					<div className="flex flex-wrap items-center gap-1.5">
-						<Badge variant="outline" className="font-mono text-xs">
+						<Badge variant="outline" font="mono">
 							{entry.resourceType}
 						</Badge>
 						{renderResourceLink()}

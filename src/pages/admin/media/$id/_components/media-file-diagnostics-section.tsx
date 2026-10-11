@@ -57,7 +57,7 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 			{/* Raw Inputs */}
 			<div className="grid gap-4 sm:grid-cols-3">
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor="media-duration" className="font-medium text-muted-foreground text-xs">
+					<Label htmlFor="media-duration" tone="muted" size="xs">
 						{m.admin_media_duration_raw_seconds()}
 					</Label>
 					<Input
@@ -68,12 +68,13 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						readOnly
 						value={duration}
 						placeholder="0"
-						className="h-10 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs sm:h-9"
+						font="mono"
+						className="cursor-not-allowed"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor="media-size" className="font-medium text-muted-foreground text-xs">
+					<Label htmlFor="media-size" tone="muted" size="xs">
 						{m.media_size_raw_bytes()}
 					</Label>
 					<Input
@@ -84,12 +85,13 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						readOnly
 						value={size}
 						placeholder="0"
-						className="h-10 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs sm:h-9"
+						font="mono"
+						className="cursor-not-allowed"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor="media-bitrate" className="font-medium text-muted-foreground text-xs">
+					<Label htmlFor="media-bitrate" tone="muted" size="xs">
 						{m.admin_media_bitrate_raw_bps()}
 					</Label>
 					<Input
@@ -100,7 +102,8 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 						readOnly
 						value={bitRate}
 						placeholder="0"
-						className="h-10 cursor-not-allowed bg-muted/40 px-3 font-mono text-muted-foreground text-xs sm:h-9"
+						font="mono"
+						className="cursor-not-allowed"
 					/>
 				</div>
 			</div>

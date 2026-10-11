@@ -26,7 +26,7 @@ export function DetailsHeaderDesktopTitle({ title, originalTitle, year, genres, 
 
 			<div className="mt-4 flex flex-wrap items-center gap-2">
 				{year && year !== "N/A" && (
-					<Badge key={year} size="lg" variant="outline" className="gap-2 text-foreground">
+					<Badge key={year} size="lg" variant="outline">
 						<Calendar className="size-3.5 text-secondary" />
 						{year}
 					</Badge>
@@ -35,13 +35,7 @@ export function DetailsHeaderDesktopTitle({ title, originalTitle, year, genres, 
 					const GenreIcon = genresIcons[genre.name] ?? Flame;
 
 					return (
-						<Badge
-							key={genre.id}
-							size="lg"
-							variant="outline"
-							render={<Link to="/genres/$id" params={{ id: genre.id }} />}
-							className="gap-2 text-foreground"
-						>
+						<Badge key={genre.id} size="lg" variant="outline" render={<Link to="/genres/$id" params={{ id: genre.id }} />}>
 							<GenreIcon className="size-3.5 text-primary" />
 							{genre.name}
 						</Badge>

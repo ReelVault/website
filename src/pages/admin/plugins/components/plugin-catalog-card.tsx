@@ -48,10 +48,7 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 							<Puzzle className="size-5" />
 						)}
 					</div>
-					<Badge
-						variant={hasUpdate ? "default" : "outline"}
-						className={hasUpdate ? "gap-1 bg-primary/15 text-primary" : "text-muted-foreground text-xs"}
-					>
+					<Badge variant={hasUpdate ? "primary" : "outline"} tone={hasUpdate ? "default" : "muted"}>
 						{statusLabel}
 					</Badge>
 				</div>
@@ -59,7 +56,7 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 				<div className="flex flex-col gap-1">
 					<div className="flex flex-wrap items-center gap-2">
 						<h3 className="font-bold text-base text-foreground tracking-tight">{entry.name}</h3>
-						<Badge variant="outline" className="font-mono text-xs">
+						<Badge variant="outline" font="mono">
 							{m.common_version_badge({ version: entry.version })}
 						</Badge>
 					</div>
@@ -69,16 +66,16 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 				{entry.description && <p className="mt-3 line-clamp-2 min-h-8 text-muted-foreground text-xs">{entry.description}</p>}
 
 				<div className="mt-4 flex flex-wrap gap-2 text-xs">
-					<Badge variant="secondary" className="gap-1 font-normal">
+					<Badge weight="normal" variant="secondary">
 						{pluginCatalogCategoryLabel(entry.category)}
 					</Badge>
 					{entry.installedVersion && isInstalled && (
-						<Badge variant="secondary" className="gap-1 font-normal">
+						<Badge weight="normal" variant="secondary">
 							{m.admin_plugins_catalog_installed_version({ version: entry.installedVersion })}
 						</Badge>
 					)}
 					{entry.minServerVersion && (
-						<Badge variant="outline" className="gap-1 font-normal">
+						<Badge weight="normal" variant="outline">
 							{m.admin_plugins_catalog_min_server_version({ version: entry.minServerVersion })}
 						</Badge>
 					)}
@@ -86,12 +83,7 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 			</div>
 
 			<div className="mt-6 flex items-center justify-between border-border/60 border-t pt-4">
-				<Button
-					variant="ghost"
-					size="sm"
-					className="gap-1 text-muted-foreground text-xs hover:text-foreground"
-					onClick={() => onOpenDetails(entry)}
-				>
+				<Button tone="muted" variant="ghost" size="sm" onClick={() => onOpenDetails(entry)}>
 					{m.admin_plugins_catalog_details()}
 				</Button>
 				<Button
@@ -99,7 +91,6 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 					size="sm"
 					disabled={isBusy || isInstalled}
 					onClick={() => onOpenDetails(entry)}
-					className="gap-1.5 text-xs"
 				>
 					{hasUpdate ? <RefreshCcw className="size-3.5" /> : <Download className="size-3.5" />}
 					{actionLabel}

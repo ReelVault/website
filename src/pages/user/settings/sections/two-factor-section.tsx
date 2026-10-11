@@ -57,16 +57,12 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 							<Button variant="outline" render={<Link to="/two-factor" search={{ mode: "regenerate" }} />} className="min-h-10">
 								{m.user_regenerate_backup_codes()}
 							</Button>
-							<Button
-								variant="outline"
-								onClick={() => setIsDisableOpen(true)}
-								className="min-h-10 text-destructive hover:bg-destructive/10 hover:text-destructive"
-							>
+							<Button variant="destructive-outline" onClick={() => setIsDisableOpen(true)} className="min-h-10">
 								{m.user_disable_2fa()}
 							</Button>
 						</>
 					) : (
-						<Button render={<Link to="/two-factor" search={{ mode: "enable" }} />} className="min-h-10 gap-2">
+						<Button render={<Link to="/two-factor" search={{ mode: "enable" }} />} className="min-h-10">
 							<KeyRound className="size-4" />
 							{m.user_enable_2fa()}
 						</Button>

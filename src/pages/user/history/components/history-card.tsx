@@ -23,7 +23,9 @@ export function HistoryCard({ item }: { item: HistoryItem }) {
 					width={384}
 					aspectRatio={16 / 9}
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					className="object-cover opacity-55 transition-transform duration-500 group-hover:scale-105 group-hover:opacity-75"
+					zoom
+					dim={55}
+					className="object-cover"
 				/>
 				<div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent" />
 			</div>

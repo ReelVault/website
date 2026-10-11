@@ -61,7 +61,7 @@ export function ContinueWatchingCard({
 							alt={item.metadata.title}
 							fill
 							sizes="(max-width: 768px) 320px, 384px"
-							className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+							className="object-cover group-hover:scale-[1.03]"
 						/>
 
 						<div className="absolute inset-0 z-10 bg-linear-to-t from-background via-background/40 to-transparent" />
@@ -74,7 +74,7 @@ export function ContinueWatchingCard({
 						</div>
 
 						{/* Badge - same size as the default Badge in MetadataCard (text-xs) */}
-						<Badge variant="outline" className="absolute top-3 right-3 z-20 border-border/70 bg-background/80 font-bold text-xs">
+						<Badge weight="bold" variant="outline" className="absolute top-3 right-3 z-20">
 							{episodeBadgeLabel}
 						</Badge>
 
@@ -97,10 +97,12 @@ export function ContinueWatchingCard({
 					{/* Action buttons: mark as watched and reset - round, consistent with MetadataCard actions */}
 					<div className="absolute top-3 left-3 z-30 flex items-center gap-1.5">
 						<Button
+							tone="muted"
+							shape="pill"
 							type="button"
 							variant="outline"
 							size="icon"
-							className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-focus-within:opacity-100 group-hover:opacity-100"
+							className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
 							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
@@ -110,16 +112,18 @@ export function ContinueWatchingCard({
 							aria-label={m.components_mark_watched_named({ title: item.metadata.title })}
 							title={m.components_mark_watched()}
 						>
-							{isMarkingWatched ? <Spinner className="size-4" /> : <Check className="size-4" />}
+							{isMarkingWatched ? <Spinner size="default" /> : <Check className="size-4" />}
 						</Button>
 
 						<ConfirmAction
 							trigger={
 								<Button
+									tone="muted"
+									shape="pill"
 									type="button"
 									variant="outline"
 									size="icon"
-									className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-focus-within:opacity-100 group-hover:opacity-100"
+									className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
 									disabled={isBusy}
 									aria-label={m.components_cw_reset_progress_named({ title: item.metadata.title })}
 									title={m.components_cw_reset_progress()}
@@ -134,10 +138,12 @@ export function ContinueWatchingCard({
 						/>
 
 						<Button
+							tone="muted"
+							shape="pill"
 							type="button"
 							variant="outline"
 							size="icon"
-							className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-focus-within:opacity-100 group-hover:opacity-100"
+							className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
 							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
@@ -147,39 +153,39 @@ export function ContinueWatchingCard({
 							aria-label={m.components_cw_dismiss_named({ title: item.metadata.title })}
 							title={m.components_cw_dismiss()}
 						>
-							{isDismissing ? <Spinner className="size-4" /> : <EyeOff className="size-4" />}
+							{isDismissing ? <Spinner size="default" /> : <EyeOff className="size-4" />}
 						</Button>
 					</div>
 				</div>
 			</ContextMenuTrigger>
 
 			{/* MENU KONTEKSTOWE - te same klasy/wzorce co w MetadataCard */}
-			<ContextMenuContent className="w-64 border-border bg-card/95">
+			<ContextMenuContent className="w-64">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{item.metadata.title}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate">{item.metadata.title}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/player/$id" params={{ id: item.mediaFileId }} />} className="cursor-pointer gap-2.5">
+					<ContextMenuItem render={<Link to="/player/$id" params={{ id: item.mediaFileId }} />} className="cursor-pointer">
 						<Play className="size-4 fill-primary/20 text-primary" />
 						<span>{item.progressPercent === 0 ? m.components_episode_play() : m.components_resume_playback()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem render={<Link to="/details/$id" params={{ id: item.metadata.id }} />} className="cursor-pointer gap-2.5">
+					<ContextMenuItem render={<Link to="/details/$id" params={{ id: item.metadata.id }} />} className="cursor-pointer">
 						<Info className="size-4 text-muted-foreground" />
 						<span>{m.components_cw_show_metadata()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem disabled={isBusy} onClick={handleMarkWatched} className="cursor-pointer gap-2.5">
+					<ContextMenuItem disabled={isBusy} onClick={handleMarkWatched} className="cursor-pointer">
 						<Check className="size-4 text-muted-foreground" />
 						<span>{m.components_mark_watched()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem disabled={isBusy} onClick={handleDismiss} className="cursor-pointer gap-2.5">
+					<ContextMenuItem disabled={isBusy} onClick={handleDismiss} className="cursor-pointer">
 						<EyeOff className="size-4 text-muted-foreground" />
 						<span>{m.components_cw_dismiss()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem disabled={isBusy} onClick={handleReset} className="cursor-pointer gap-2.5">
+					<ContextMenuItem disabled={isBusy} onClick={handleReset} className="cursor-pointer">
 						<RotateCcw className="size-4 text-muted-foreground" />
 						<span>{m.components_cw_reset_progress_button()}</span>
 					</ContextMenuItem>

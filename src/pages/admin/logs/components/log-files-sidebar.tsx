@@ -107,11 +107,9 @@ export function LogFilesSidebar({
 	return (
 		<div className={cn("hidden flex-col gap-4 lg:col-span-4 lg:flex", isFullscreen && "lg:hidden")}>
 			<Card className="flex h-[calc(100vh-16rem)] min-h-125 flex-col">
-				<CardHeader className="flex flex-col gap-3 p-4 pb-2">
+				<CardHeader className="flex flex-col gap-3">
 					<div className="flex items-center justify-between">
-						<CardTitle className="font-semibold text-sm">
-							{m.admin_logs_journal_files_count({ filtered: filteredFiles.length, total: files.length })}
-						</CardTitle>
+						<CardTitle>{m.admin_logs_journal_files_count({ filtered: filteredFiles.length, total: files.length })}</CardTitle>
 						<Button variant="ghost" size="icon-sm" onClick={onRefetchFiles} aria-label={m.admin_logs_refresh_journal_files()}>
 							<RefreshCw className="size-3.5" aria-hidden="true" />
 						</Button>
@@ -125,18 +123,18 @@ export function LogFilesSidebar({
 						size="sm"
 						className="w-full justify-start"
 					>
-						<ToggleGroupItem value="all" className="flex-1 text-xs">
+						<ToggleGroupItem value="all" size="sm" className="flex-1">
 							{m.common_all()}
 						</ToggleGroupItem>
-						<ToggleGroupItem value="server" className="flex-1 text-xs">
+						<ToggleGroupItem value="server" size="sm" className="flex-1">
 							{m.common_server()}
 						</ToggleGroupItem>
-						<ToggleGroupItem value="ffmpeg" className="flex-1 text-xs">
+						<ToggleGroupItem value="ffmpeg" size="sm" className="flex-1">
 							{m.admin_logs_ffmpeg_label()}
 						</ToggleGroupItem>
 					</ToggleGroup>
 				</CardHeader>
-				<CardContent className="flex-1 overflow-hidden p-2">{filesContent}</CardContent>
+				<CardContent className="flex-1 overflow-hidden">{filesContent}</CardContent>
 			</Card>
 			<AlertDialog open={pendingDelete !== null} onOpenChange={(open) => !open && setPendingDelete(null)}>
 				<AlertDialogContent>

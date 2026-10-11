@@ -64,7 +64,9 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 				<div className="flex flex-col gap-4 py-2">
 					{/* Status Selection */}
 					<div className="flex flex-col gap-2">
-						<Label className="font-semibold text-foreground text-xs">{m.admin_worker_record_type()}</Label>
+						<Label weight="semibold" size="xs">
+							{m.admin_worker_record_type()}
+						</Label>
 						<Select
 							value={formState.status}
 							onValueChange={(val) => {
@@ -85,7 +87,9 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 
 					{/* Age / Retention Selection */}
 					<div className="flex flex-col gap-2">
-						<Label className="font-semibold text-foreground text-xs">{m.admin_worker_record_age()}</Label>
+						<Label weight="semibold" size="xs">
+							{m.admin_worker_record_age()}
+						</Label>
 						<Select
 							value={formState.olderThanDays}
 							onValueChange={(val) => {
@@ -134,14 +138,7 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 					>
 						{m.common_cancel()}
 					</Button>
-					<Button
-						type="button"
-						variant="destructive"
-						size="sm"
-						onClick={handlePurge}
-						disabled={purgeMutation.isPending}
-						className="gap-1.5"
-					>
+					<Button type="button" variant="destructive" size="sm" onClick={handlePurge} disabled={purgeMutation.isPending}>
 						{purgeMutation.isPending ? (
 							<>
 								<RefreshCw className="size-3.5 animate-spin" />

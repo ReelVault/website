@@ -33,7 +33,7 @@ export function ReassignMediaFileDialog({ mediaFileId, fileName, mediaType, open
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-3xl">
 				<DialogHeader>
-					<DialogTitle className="flex items-center gap-2 text-xl">
+					<DialogTitle className="flex items-center">
 						<Layers className="size-5 text-primary" />
 						{m.components_reassign_dialog_title()}
 					</DialogTitle>
@@ -45,11 +45,11 @@ export function ReassignMediaFileDialog({ mediaFileId, fileName, mediaType, open
 
 				<Tabs value={activeTab} onValueChange={handleTabChange} className="mt-2 w-full">
 					<TabsList className="grid w-full grid-cols-2">
-						<TabsTrigger value="provider" className="gap-2">
+						<TabsTrigger value="provider">
 							<Globe className="size-4" />
 							{m.components_reassign_tmdb_heading()}
 						</TabsTrigger>
-						<TabsTrigger value="library" className="gap-2">
+						<TabsTrigger value="library">
 							<FolderSearch className="size-4" />
 							{m.components_reassign_library_heading()}
 						</TabsTrigger>

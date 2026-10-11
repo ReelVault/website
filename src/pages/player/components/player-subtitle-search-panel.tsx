@@ -42,7 +42,6 @@ export function PlayerSubtitleSearchPanel() {
 							size="sm"
 							variant={code === subtitleLanguage.trim().toLowerCase() ? "default" : "outline"}
 							onClick={() => setSubtitleLanguage(code)}
-							className="h-7 px-2.5 text-xs uppercase"
 						>
 							{code}
 						</Button>
@@ -53,7 +52,7 @@ export function PlayerSubtitleSearchPanel() {
 				<label className="sr-only" htmlFor="subtitle-language">
 					{m.admin_users_subtitle_language()}
 				</label>
-				<InputGroup className="h-9 min-w-0 flex-1">
+				<InputGroup className="min-w-0 flex-1">
 					<InputGroupInput
 						id="subtitle-language"
 						name="subtitle-language"
@@ -98,14 +97,14 @@ export function PlayerSubtitleSearchPanel() {
 							</span>
 							<Button
 								type="button"
-								variant="ghost"
+								variant="primary-ghost"
 								size="icon-lg"
-								className="size-11 shrink-0 text-primary"
+								className="shrink-0"
 								disabled={isDownloadingSubtitle}
 								onClick={() => downloadSubtitle(candidate.providerId, candidate.id)}
 								aria-label={m.player_subtitles_label({ label: candidate.label ?? candidate.language })}
 							>
-								{isThisDownloading ? <Spinner className="text-primary" aria-hidden="true" /> : <Download aria-hidden="true" />}
+								{isThisDownloading ? <Spinner aria-hidden="true" /> : <Download aria-hidden="true" />}
 							</Button>
 						</div>
 					);

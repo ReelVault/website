@@ -70,7 +70,7 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 			className="flex flex-col gap-4 py-2"
 		>
 			<div className="flex flex-col gap-1.5">
-				<Label htmlFor={`${id}-media-file`} className="text-xs">
+				<Label htmlFor={`${id}-media-file`} size="xs">
 					{m.admin_markers_media_file_id()}
 				</Label>
 				<Input
@@ -79,17 +79,17 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 					value={formData.mediaFileId}
 					onChange={(e) => setFormData((prev) => ({ ...prev, mediaFileId: e.target.value }))}
 					disabled={!isCreating}
-					className="font-mono text-sm"
+					font="mono"
 					required
 				/>
 			</div>
 
 			<div className="flex flex-col gap-1.5">
-				<Label htmlFor={`${id}-type`} className="text-xs">
+				<Label htmlFor={`${id}-type`} size="xs">
 					{m.admin_markers_filter_type()}
 				</Label>
 				<Select value={formData.type} onValueChange={(val) => val && setFormData((prev) => ({ ...prev, type: val }))}>
-					<SelectTrigger id={`${id}-type`} className="bg-card">
+					<SelectTrigger id={`${id}-type`}>
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
@@ -104,7 +104,7 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 
 			{formData.type === "highlight" ? (
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor={`${id}-start`} className="text-xs">
+					<Label htmlFor={`${id}-start`} size="xs">
 						{m.plugins_markers_moment_time_seconds()}
 					</Label>
 					<Input
@@ -117,13 +117,13 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 							const val = Number(e.target.value);
 							setFormData((prev) => ({ ...prev, startSeconds: val, endSeconds: val }));
 						}}
-						className="font-mono text-sm"
+						font="mono"
 					/>
 				</div>
 			) : (
 				<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor={`${id}-start`} className="text-xs">
+						<Label htmlFor={`${id}-start`} size="xs">
 							{m.plugins_markers_start_seconds()}
 						</Label>
 						<Input
@@ -134,11 +134,11 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 							value={formData.startSeconds}
 							aria-invalid={showErrors && hasRangeError}
 							onChange={(e) => setFormData((prev) => ({ ...prev, startSeconds: Number(e.target.value) }))}
-							className="font-mono text-sm"
+							font="mono"
 						/>
 					</div>
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor={`${id}-end`} className="text-xs">
+						<Label htmlFor={`${id}-end`} size="xs">
 							{m.plugins_markers_end_seconds()}
 						</Label>
 						<Input
@@ -149,7 +149,7 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 							value={formData.endSeconds}
 							aria-invalid={showErrors && hasRangeError}
 							onChange={(e) => setFormData((prev) => ({ ...prev, endSeconds: Number(e.target.value) }))}
-							className="font-mono text-sm"
+							font="mono"
 						/>
 						{showErrors && hasRangeError && (
 							<p role="alert" className="text-destructive text-xs">
@@ -161,7 +161,7 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 			)}
 
 			<div className="flex flex-col gap-1.5">
-				<Label htmlFor={`${id}-label`} className="text-xs">
+				<Label htmlFor={`${id}-label`} size="xs">
 					{m.plugins_markers_optional_description()}
 				</Label>
 				<Input
@@ -170,11 +170,10 @@ export function MarkerDialogForm({ editingMarker, isPending, onSubmit, onCancel 
 					value={formData.label}
 					onChange={(e) => setFormData((prev) => ({ ...prev, label: e.target.value }))}
 					maxLength={100}
-					className="text-sm"
 				/>
 			</div>
 
-			<DialogFooter className="pt-2">
+			<DialogFooter>
 				<Button type="button" variant="ghost" onClick={onCancel}>
 					{m.common_cancel()}
 				</Button>

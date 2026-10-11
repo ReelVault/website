@@ -20,7 +20,7 @@ export function LogRawViewer({ logs, page }: LogRawViewerProps) {
 	const logKeyCounts = new Map<string, number>();
 
 	return (
-		<ScrollArea className="h-full bg-muted/20 font-mono text-xs">
+		<ScrollArea className="h-full">
 			<div className="flex select-text flex-col gap-1 p-4">
 				{logs.map((log, idx) => {
 					const lineText = log.msg ?? extractErrorMessage(log.err) ?? stringifyLogDetail(log.errorDetails) ?? JSON.stringify(log);

@@ -21,7 +21,7 @@ export function DashboardHeroBackdrop({
 				style={{ opacity: isActive ? 1 : 0 }}
 				aria-hidden={!isActive}
 			>
-				<ApiImage fileId={fileId} cacheKey={cacheKey} alt={alt} fill priority={priority} className="size-full object-cover saturate-110" />
+				<ApiImage fileId={fileId} cacheKey={cacheKey} alt={alt} fill priority={priority} className="object-cover" />
 			</div>
 		</SimpleAnimation>
 	);

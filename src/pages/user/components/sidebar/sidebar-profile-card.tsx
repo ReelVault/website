@@ -12,9 +12,9 @@ interface SidebarProfileCardProps {
 export function SidebarProfileCard({ profile, account }: SidebarProfileCardProps) {
 	return (
 		<div className="mb-2 flex items-center gap-3 rounded-xl border border-border/60 p-3">
-			<Avatar className="size-10 shrink-0 rounded-xl after:hidden">
-				<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" className="rounded-xl" />
-				<AvatarFallback className="rounded-xl bg-primary/10 text-primary">
+			<Avatar className="size-10 shrink-0 after:hidden">
+				<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt="" />
+				<AvatarFallback>
 					<UserRound aria-hidden="true" />
 				</AvatarFallback>
 			</Avatar>

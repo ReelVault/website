@@ -41,10 +41,10 @@ export function MediaFileScanDialog({ open, onOpenChange, mediaFileId, fileName 
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className="max-w-xl rounded-2xl border-border bg-card p-6 shadow-xl">
+			<DialogContent size="xl">
 				<DialogHeader>
-					<DialogTitle className="font-bold text-foreground text-xl">{m.admin_media_integrity_scan()}</DialogTitle>
-					<DialogDescription className="truncate font-mono text-muted-foreground text-sm">{fileName}</DialogDescription>
+					<DialogTitle>{m.admin_media_integrity_scan()}</DialogTitle>
+					<DialogDescription className="truncate">{fileName}</DialogDescription>
 				</DialogHeader>
 
 				{!(scanResult ?? isScanning) && (
@@ -71,10 +71,10 @@ export function MediaFileScanDialog({ open, onOpenChange, mediaFileId, fileName 
 				<DialogFooter className="gap-2">
 					{!(scanResult ?? isScanning) && (
 						<>
-							<Button variant="ghost" onClick={handleClose} className="rounded-xl">
+							<Button variant="ghost" onClick={handleClose}>
 								{m.common_cancel()}
 							</Button>
-							<Button onClick={handleScan} className="gap-1.5 rounded-xl">
+							<Button onClick={handleScan}>
 								<Play className="size-3.5" />
 								{m.admin_media_run_scan()}
 							</Button>
@@ -82,13 +82,11 @@ export function MediaFileScanDialog({ open, onOpenChange, mediaFileId, fileName 
 					)}
 					{scanResult && !isScanning && (
 						<>
-							<Button variant="outline" onClick={handleScan} className="gap-1.5 rounded-xl">
+							<Button variant="outline" onClick={handleScan}>
 								<RefreshCw className="size-3.5" />
 								{m.admin_media_run_again()}
 							</Button>
-							<Button onClick={handleClose} className="rounded-xl">
-								{m.common_close()}
-							</Button>
+							<Button onClick={handleClose}>{m.common_close()}</Button>
 						</>
 					)}
 				</DialogFooter>

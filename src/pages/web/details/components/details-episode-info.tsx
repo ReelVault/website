@@ -34,23 +34,19 @@ export function DetailsEpisodeInfo({ episode, filesLength, defaultFile, isWatche
 					<div className="flex flex-wrap items-center gap-2">
 						{episode.episodeType === "special" && <Badge variant="secondary">{m.web_episode_special()}</Badge>}
 						{hasMultipleVersions && (
-							<Badge
-								variant="outline"
-								className="gap-1 border-primary/40 bg-primary/10 font-medium text-primary"
-								title={m.web_episode_has_versions({ count: filesLength })}
-							>
+							<Badge variant="primary" title={m.web_episode_has_versions({ count: filesLength })}>
 								<Layers className="size-3" />
 								{m.details_versions_count({ fileCount: filesLength })}
 							</Badge>
 						)}
 						{isWatched ? (
-							<Badge variant="outline" className="border-success/30 bg-success/10 text-success">
+							<Badge variant="success">
 								<Check className="mr-1 size-3" />
 								{m.common_watched_badge()}
 							</Badge>
 						) : (
 							episodePlayback?.status === "in_progress" && (
-								<Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
+								<Badge variant="primary">
 									<Clock className="mr-1 size-3" />
 									{m.common_percent_value({
 										value: getProgressPercent(episodePlayback.progress?.position, episodePlayback.progress?.duration),

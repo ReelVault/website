@@ -44,7 +44,7 @@ export function ProviderRow({ provider, index, disabled, onToggle }: ProviderRow
 			<div className="min-w-0 flex-1">
 				<div className="flex flex-wrap items-center gap-2">
 					<span className="font-semibold text-foreground text-sm">{provider.name}</span>
-					<Badge variant="outline" className="gap-1 font-mono text-muted-foreground text-xs">
+					<Badge tone="muted" variant="outline" font="mono">
 						<span>{provider.id}</span>
 						<button
 							type="button"
@@ -56,7 +56,7 @@ export function ProviderRow({ provider, index, disabled, onToggle }: ProviderRow
 							<CopyIcon copied={hasCopied} className="size-2.5" copiedClassName="text-primary" />
 						</button>
 					</Badge>
-					<Badge variant="secondary" className="font-mono text-xs">
+					<Badge variant="secondary" font="mono">
 						{m.common_version_badge({ version: provider.version })}
 					</Badge>
 				</div>

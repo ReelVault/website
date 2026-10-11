@@ -169,7 +169,7 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 
 			<div className="flex flex-col gap-2">
 				{/* autoFocus: TV/D-pad starts from the computed focus (instead of waiting for the first keypress). */}
-				<Button type="button" variant="outline" className="gap-2" autoFocus onClick={handleStartPairing} disabled={isPending}>
+				<Button type="button" variant="outline" autoFocus onClick={handleStartPairing} disabled={isPending}>
 					<RefreshCw className="size-4" />
 					{m.auth_generate_new_code()}
 				</Button>

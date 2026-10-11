@@ -81,10 +81,11 @@ export function LibraryHero({
 						<SimpleAnimation key={currentLibrary.id + (isGenreMode ? (activeGenre ?? "") : "")} direction="none" duration={220}>
 							{availableGenres.length > 0 ? (
 								<Button
+									size="inline"
 									type="button"
 									variant="ghost"
 									onClick={handleTitleClick}
-									className="h-auto max-w-full cursor-pointer select-none whitespace-normal p-0 transition-opacity hover:bg-transparent hover:opacity-90 sm:h-auto"
+									className="max-w-full cursor-pointer select-none whitespace-normal"
 								>
 									<span
 										className={cn(

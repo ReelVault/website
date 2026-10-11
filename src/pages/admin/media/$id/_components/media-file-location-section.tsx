@@ -14,9 +14,7 @@ export function MediaFileLocationSection({ fileName, filePath }: MediaFileLocati
 			<div className="flex flex-col gap-4">
 				<div className="flex flex-col gap-1.5">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="media-file-name" className="font-medium text-sm">
-							{m.admin_media_disk_file_name()}
-						</Label>
+						<Label htmlFor="media-file-name">{m.admin_media_disk_file_name()}</Label>
 						<span className="text-muted-foreground text-xs">{m.admin_media_auto_read()}</span>
 					</div>
 					<Input
@@ -26,15 +24,14 @@ export function MediaFileLocationSection({ fileName, filePath }: MediaFileLocati
 						disabled
 						readOnly
 						value={fileName}
-						className="h-10 cursor-not-allowed bg-muted/40 px-3.5 font-mono text-muted-foreground text-sm"
+						font="mono"
+						className="cursor-not-allowed"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="media-file-path" className="font-medium text-sm">
-							{m.admin_libraries_system_path()}
-						</Label>
+						<Label htmlFor="media-file-path">{m.admin_libraries_system_path()}</Label>
 						<span className="text-muted-foreground text-xs">{m.admin_media_auto_read()}</span>
 					</div>
 					<Input
@@ -44,7 +41,8 @@ export function MediaFileLocationSection({ fileName, filePath }: MediaFileLocati
 						disabled
 						readOnly
 						value={filePath}
-						className="h-10 cursor-not-allowed bg-muted/40 px-3.5 font-mono text-muted-foreground text-sm"
+						font="mono"
+						className="cursor-not-allowed"
 					/>
 				</div>
 			</div>

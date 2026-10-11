@@ -33,16 +33,16 @@ export function AppErrorState({
 	className?: string;
 }) {
 	return (
-		<Alert variant="destructive" className={cn("flex flex-col items-start gap-2 p-3.5", className)} aria-live="assertive">
+		<Alert variant="destructive" className={cn("flex flex-col items-start gap-2", className)} aria-live="assertive">
 			<div className="flex w-full items-start gap-2.5">
 				<CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-destructive" />
 				<div className="min-w-0 flex-1 space-y-0.5">
-					<AlertTitle className="font-semibold text-xs">{title}</AlertTitle>
-					<AlertDescription className="text-muted-foreground text-xs">{getSdkErrorMessage(error) ?? description}</AlertDescription>
+					<AlertTitle>{title}</AlertTitle>
+					<AlertDescription>{getSdkErrorMessage(error) ?? description}</AlertDescription>
 				</div>
 			</div>
 			{onRetry !== undefined && (
-				<Button type="button" variant="outline" size="sm" onClick={onRetry} className="mt-1 h-10 text-xs sm:h-7">
+				<Button type="button" variant="outline" size="sm" onClick={onRetry} className="mt-1">
 					<RefreshCw className="mr-1 size-3" />
 					{m.common_try_again()}
 				</Button>
@@ -65,7 +65,7 @@ export function AppEmptyState({
 	className?: string;
 }) {
 	return (
-		<Empty className={cn("min-h-48 border", className)}>
+		<Empty className={cn("min-h-48", className)}>
 			<EmptyHeader>
 				{Icon !== undefined && (
 					<EmptyMedia variant="icon">

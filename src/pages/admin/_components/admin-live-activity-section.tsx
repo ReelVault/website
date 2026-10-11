@@ -129,17 +129,12 @@ export function AdminLiveActivitySection() {
 							</label>
 							{selectedOnScreen.length > 0 && (
 								<div className="flex items-center gap-2">
-									<Button variant="ghost" size="sm" className="text-xs" onClick={() => setSelectedIds(new Set())}>
+									<Button variant="ghost" size="sm" onClick={() => setSelectedIds(new Set())}>
 										{m.admin_live_clear_selection()}
 									</Button>
 									<ConfirmAction
 										trigger={
-											<Button
-												variant="outline"
-												size="sm"
-												disabled={terminateManyMutation.isPending}
-												className="gap-1.5 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
-											>
+											<Button variant="destructive-outline" size="sm" disabled={terminateManyMutation.isPending}>
 												<PauseCircle className="size-3.5" />
 												{m.admin_live_stop_selected({ count: selectedOnScreen.length })}
 											</Button>

@@ -18,12 +18,10 @@ export function MetadataFinancialsFields({ budget, revenue, isLocked, onChange, 
 		<>
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-budget" className="font-medium text-sm">
-						{m.admin_metadata_budget_usd()}
-					</Label>
+					<Label htmlFor="metadata-budget">{m.admin_metadata_budget_usd()}</Label>
 					<MetadataLockToggle field="budget" label={m.admin_metadata_budget()} isLocked={isLocked("budget")} onToggle={onToggleLock} />
 				</div>
-				<InputGroup className="h-10 bg-background">
+				<InputGroup>
 					<InputGroupAddon>
 						<DollarSign className="size-4 text-muted-foreground" />
 					</InputGroupAddon>
@@ -40,12 +38,10 @@ export function MetadataFinancialsFields({ budget, revenue, isLocked, onChange, 
 
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-revenue" className="font-medium text-sm">
-						{m.admin_metadata_revenue_usd()}
-					</Label>
+					<Label htmlFor="metadata-revenue">{m.admin_metadata_revenue_usd()}</Label>
 					<MetadataLockToggle field="revenue" label={m.admin_metadata_revenue()} isLocked={isLocked("revenue")} onToggle={onToggleLock} />
 				</div>
-				<InputGroup className="h-10 bg-background">
+				<InputGroup>
 					<InputGroupAddon>
 						<DollarSign className="size-4 text-muted-foreground" />
 					</InputGroupAddon>

@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
@@ -23,12 +22,7 @@ export function AvatarGalleryTab({ selectedStyleId, onSelectStyleId, selectedAva
 						size="sm"
 						onClick={() => onSelectStyleId(style.id)}
 						aria-pressed={selectedStyleId === style.id}
-						className={cn(
-							"rounded-full border-2 px-4 font-black text-xs transition-colors",
-							selectedStyleId === style.id
-								? "border-primary bg-primary/10 text-primary"
-								: "border-transparent bg-muted text-muted-foreground hover:border-border",
-						)}
+						selected={selectedStyleId === style.id}
 					>
 						{style.label}
 					</Button>
@@ -43,12 +37,8 @@ export function AvatarGalleryTab({ selectedStyleId, onSelectStyleId, selectedAva
 						size="icon-lg"
 						key={avatar.id}
 						onClick={() => onSelectAvatar(avatar.url)}
-						className={cn(
-							"group/avatar relative aspect-square size-20 overflow-hidden rounded-2xl border-2 p-0 transition-[background-color,border-color,opacity,transform] sm:size-24",
-							selectedAvatar === avatar.url
-								? "border-primary bg-primary/10"
-								: "border-transparent bg-muted opacity-50 hover:scale-105 hover:opacity-100 disabled:opacity-30",
-						)}
+						className="group/avatar relative aspect-square size-20 overflow-hidden sm:size-24"
+						selected={selectedAvatar === avatar.url}
 						aria-label={m.user_choose_avatar({ id: avatar.id })}
 						aria-pressed={selectedAvatar === avatar.url}
 					>

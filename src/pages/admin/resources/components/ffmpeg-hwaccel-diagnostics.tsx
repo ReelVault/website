@@ -98,7 +98,7 @@ export function FfmpegHwaccelDiagnostics() {
 			badge={
 				<div className="flex flex-wrap items-center gap-2">
 					{isHardware ? (
-						<Badge className="border-success/30 bg-success/10 text-success" variant="outline">
+						<Badge variant="success">
 							<Gpu data-icon="inline-start" />
 							{HWACCEL_LABELS[effective.type]}
 						</Badge>
@@ -106,12 +106,7 @@ export function FfmpegHwaccelDiagnostics() {
 						<Badge variant="secondary">{m.player_hwaccel_cpu()}</Badge>
 					)}
 					{decodeTest && (
-						<Badge
-							variant="outline"
-							className={cn(
-								decodeTest.ok ? "border-success/30 bg-success/10 text-success" : "border-destructive/30 bg-destructive/10 text-destructive",
-							)}
-						>
+						<Badge variant={decodeTest.ok ? "success" : "destructive"}>
 							{decodeTest.ok ? <CheckCircle2 data-icon="inline-start" /> : <TriangleAlert data-icon="inline-start" />}
 							{m.admin_resources_decoding_status({ status: decodeTest.ok ? m.common_ok() : m.admin_resources_error_word() })}
 						</Badge>

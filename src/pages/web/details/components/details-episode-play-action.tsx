@@ -19,10 +19,7 @@ function EpisodeVersionMenuItem({ file, index }: { file: EpisodeVersionFile; ind
 	const subtitle = getVersionSubtitle(file);
 
 	return (
-		<DropdownMenuItem
-			render={<Link to="/player/$id" params={{ id: file.id }} />}
-			className="cursor-pointer gap-3 rounded-md p-2.5 transition-colors focus:bg-accent focus:text-accent-foreground"
-		>
+		<DropdownMenuItem render={<Link to="/player/$id" params={{ id: file.id }} />} className="cursor-pointer">
 			<div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
 				<Play className="size-3.5 fill-current pl-0.5" />
 			</div>
@@ -30,7 +27,7 @@ function EpisodeVersionMenuItem({ file, index }: { file: EpisodeVersionFile; ind
 				<div className="flex items-center gap-1.5 truncate font-medium text-foreground text-sm">
 					<span className="truncate">{title}</span>
 					{file.isDefault && (
-						<Badge variant="secondary" size="sm" className="px-1.5 py-0 text-xs">
+						<Badge variant="secondary" size="sm">
 							{m.common_default_word()}
 						</Badge>
 					)}
@@ -72,7 +69,7 @@ export function DetailsEpisodePlayAction({
 						className="flex-1 sm:flex-initial"
 						title={m.web_play_version_named({ version: getVersionTitle(defaultFile) })}
 					>
-						<Button className="w-full gap-2 rounded-r-none rounded-l-lg border-r-0 sm:w-auto" size="lg" variant="outline">
+						<Button className="w-full sm:w-auto" size="lg" variant="outline">
 							<Play className="size-4 fill-current pl-0.5" aria-hidden="true" />
 							{m.components_metadata_card_play()}
 						</Button>
@@ -81,9 +78,9 @@ export function DetailsEpisodePlayAction({
 						<DropdownMenuTrigger
 							render={
 								<Button
+									tone="muted"
 									variant="outline"
 									size="lg"
-									className="rounded-r-lg rounded-l-none px-2.5 text-muted-foreground transition-colors hover:text-foreground"
 									title={m.web_select_episode_version()}
 									aria-label={m.web_select_episode_version()}
 								/>
@@ -91,9 +88,9 @@ export function DetailsEpisodePlayAction({
 						>
 							<ChevronDown className="size-4" />
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end" side="bottom" className="w-72 border-border bg-popover p-1.5 shadow-2xl sm:w-80">
+						<DropdownMenuContent align="end" side="bottom" className="w-72 sm:w-80">
 							<DropdownMenuGroup>
-								<DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 font-bold text-muted-foreground text-xs">
+								<DropdownMenuLabel className="flex items-center">
 									<Layers className="size-3.5 text-primary" />
 									<span>{m.web_video_versions_count_label({ count: files.length })}</span>
 								</DropdownMenuLabel>
@@ -113,7 +110,7 @@ export function DetailsEpisodePlayAction({
 		if (mediaFileId) {
 			return (
 				<Link to="/player/$id" params={{ id: mediaFileId }} className="block w-full sm:w-auto">
-					<Button className="w-full gap-2 rounded-lg sm:w-auto" size="lg" variant="outline">
+					<Button className="w-full sm:w-auto" size="lg" variant="outline">
 						<Play className="size-4 fill-current pl-0.5" aria-hidden="true" />
 						{m.components_metadata_card_play()}
 					</Button>
@@ -122,7 +119,7 @@ export function DetailsEpisodePlayAction({
 		}
 
 		return (
-			<Button className="w-full gap-2 rounded-lg sm:w-auto" size="lg" variant="outline" disabled>
+			<Button className="w-full sm:w-auto" size="lg" variant="outline" disabled>
 				<Play className="size-4" aria-hidden="true" />
 				{m.admin_metadata_no_file_chip()}
 			</Button>
@@ -136,7 +133,6 @@ export function DetailsEpisodePlayAction({
 			<Button
 				variant="outline"
 				size="icon-lg"
-				className="rounded-lg"
 				title={m.web_video_file_info()}
 				aria-label={m.web_video_file_info_for({ episode: episodeTitle ?? m.web_offline_episode_hint({ number: episodeNumber }) })}
 				onClick={() =>

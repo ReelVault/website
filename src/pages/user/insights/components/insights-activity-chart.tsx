@@ -107,7 +107,7 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 												</div>
 											}
 										/>
-										<TooltipContent side="top" className="text-xs">
+										<TooltipContent side="top">
 											<p className="font-bold">{date}</p>
 											<p className="text-muted-foreground">{value > 0 ? timeStr : m.user_no_activity()}</p>
 										</TooltipContent>

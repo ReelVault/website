@@ -45,19 +45,19 @@ export function WorkerActivityTab({
 				title={m.admin_worker_worker_operations()}
 				description={m.admin_workers_queue_desc()}
 				badge={
-					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+					<Badge variant="secondary" font="mono" size="count">
 						{activeTotal}
 					</Badge>
 				}
 				actions={
 					activeOperations.length > 0 && (
 						<Button
-							variant="outline"
+							variant="warning"
 							size="sm"
 							type="button"
 							onClick={() => detach(cancelAll.mutateAsync)}
 							disabled={cancelAll.isPending}
-							className="h-8.5 cursor-pointer gap-1.5 border-warning/40 text-warning text-xs transition-colors hover:bg-warning/10 hover:text-warning"
+							className="cursor-pointer"
 						>
 							<Square className="size-3.5 fill-current" />
 							<span>{cancelAll.isPending ? m.common_cancelling() : m.admin_workers_cancel_all_operations()}</span>
@@ -68,8 +68,8 @@ export function WorkerActivityTab({
 				<div className="flex flex-col gap-3">
 					{activeStatus.isLoading && (
 						<div className="flex flex-col gap-3">
-							<Skeleton className="h-28 w-full rounded-xl" />
-							<Skeleton className="h-28 w-full rounded-xl" />
+							<Skeleton className="h-28 w-full" />
+							<Skeleton className="h-28 w-full" />
 						</div>
 					)}
 

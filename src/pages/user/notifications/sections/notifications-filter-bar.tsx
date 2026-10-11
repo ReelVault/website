@@ -53,7 +53,7 @@ export function NotificationsFilterBar({
 					variant={showUnreadOnly ? "default" : "outline"}
 					onClick={onToggleUnreadOnly}
 					aria-pressed={showUnreadOnly}
-					className="min-h-11 gap-2"
+					className="min-h-11"
 				>
 					<Filter data-icon="inline-start" aria-hidden="true" />
 					{m.user_unread_only()}

@@ -45,8 +45,6 @@ const LazyPluginTabContents = lazy(async () => {
 });
 
 /** Compact pills in the mobile scroll row, comfortable full-width rows in the desktop nav column. */
-const settingsTabTriggerClass = "gap-2 px-2.5 py-1.5 text-xs lg:text-sm";
-
 const SETTINGS_TABS = [
 	"resources",
 	"workers",
@@ -178,12 +176,7 @@ export default function AdminSettingsPage() {
 						/>
 						<ConfirmAction
 							trigger={
-								<Button
-									variant="outline"
-									size="sm"
-									className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-									disabled={isResetting || isUpdating}
-								>
+								<Button variant="destructive-outline" size="sm" disabled={isResetting || isUpdating}>
 									<RotateCcw className="size-4" />
 									{m.admin_settings_restore_all()}
 								</Button>
@@ -213,48 +206,48 @@ export default function AdminSettingsPage() {
 					onValueChange={(value: string) => runTransition("tab", () => setActiveTab(value))}
 					className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8"
 				>
-					<TabsList className="max-w-full max-lg:h-12! max-lg:flex-row! max-lg:overflow-x-auto lg:sticky lg:top-20 lg:w-56 lg:shrink-0 lg:self-start">
-						<TabsTrigger value="resources" className={settingsTabTriggerClass}>
+					<TabsList size="lg" className="max-w-full lg:sticky lg:top-20 lg:w-56 lg:shrink-0 lg:self-start">
+						<TabsTrigger value="resources" size="comfortable">
 							<Cpu className="size-3.5" />
 							<span>{m.admin_settings_cpu_section()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="workers" className={settingsTabTriggerClass}>
+						<TabsTrigger value="workers" size="comfortable">
 							<Activity className="size-3.5" />
 							<span>{m.admin_settings_tab_workers()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="streaming" className={settingsTabTriggerClass}>
+						<TabsTrigger value="streaming" size="comfortable">
 							<Tv className="size-3.5" />
 							<span>{m.admin_settings_tab_streaming()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="scanning" className={settingsTabTriggerClass}>
+						<TabsTrigger value="scanning" size="comfortable">
 							<FolderSearch className="size-3.5" />
 							<span>{m.admin_settings_tab_scanning()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="images" className={settingsTabTriggerClass}>
+						<TabsTrigger value="images" size="comfortable">
 							<ImageIcon className="size-3.5" />
 							<span>{m.admin_settings_tab_images()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="markers" className={settingsTabTriggerClass}>
+						<TabsTrigger value="markers" size="comfortable">
 							<Bookmark className="size-3.5" />
 							<span>{m.admin_settings_tab_markers()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="trickplay" className={settingsTabTriggerClass}>
+						<TabsTrigger value="trickplay" size="comfortable">
 							<Clapperboard className="size-3.5" />
 							<span>{m.admin_settings_tab_trickplay()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="playback_defaults" className={settingsTabTriggerClass}>
+						<TabsTrigger value="playback_defaults" size="comfortable">
 							<UserCheck className="size-3.5" />
 							<span>{m.admin_settings_tab_player()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="downloads" className={settingsTabTriggerClass}>
+						<TabsTrigger value="downloads" size="comfortable">
 							<Download className="size-3.5" />
 							<span>{m.admin_settings_tab_downloads()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="network" className={settingsTabTriggerClass}>
+						<TabsTrigger value="network" size="comfortable">
 							<Globe className="size-3.5" />
 							<span>{m.admin_settings_network()}</span>
 						</TabsTrigger>
-						<TabsTrigger value="system" className={settingsTabTriggerClass}>
+						<TabsTrigger value="system" size="comfortable">
 							<Sliders className="size-3.5" />
 							<span>{m.admin_settings_tab_system()}</span>
 						</TabsTrigger>

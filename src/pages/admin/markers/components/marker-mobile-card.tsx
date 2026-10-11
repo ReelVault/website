@@ -1,6 +1,5 @@
 import type { MediaMarker } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { cn } from "cn";
 import { Clock, Play, Trash2 } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
@@ -21,18 +20,16 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 	const isPoint = marker.type === "highlight" || marker.startSeconds === marker.endSeconds;
 
 	return (
-		<Card key={marker.id} className="border-border/80 bg-card p-4">
+		<Card key={marker.id}>
 			<div className="flex flex-col gap-3">
 				<div className="flex items-start justify-between gap-2">
 					<div className="flex flex-col gap-1">
-						<Badge variant="outline" className={cn("font-semibold text-xs", config.badgeClass)}>
-							{config.label}
-						</Badge>
+						<Badge variant={config.badgeVariant}>{config.label}</Badge>
 						{marker.label && (
 							<p className="font-medium text-foreground text-sm">{m.components_media_quoted_label({ label: marker.label })}</p>
 						)}
 					</div>
-					<Badge variant="secondary" className="font-mono text-xs">
+					<Badge variant="secondary" font="mono">
 						{marker.source}
 					</Badge>
 				</div>
@@ -68,19 +65,18 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 						variant="ghost"
 						nativeButton={false}
 						render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" rel="noopener noreferrer" />}
-						className="h-10 gap-1.5 text-xs hover:text-primary sm:h-8"
 					>
 						<Play className="size-3.5" />
 						{m.common_player_word()}
 					</Button>
 
 					<div className="flex items-center gap-1.5">
-						<Button size="sm" variant="outline" onClick={() => onOpenEdit(marker)} className="h-10 text-xs sm:h-8">
+						<Button size="sm" variant="outline" onClick={() => onOpenEdit(marker)}>
 							{m.common_edit()}
 						</Button>
 						<ConfirmAction
 							trigger={
-								<Button size="sm" variant="ghost" className="h-10 w-10 p-0 text-muted-foreground hover:text-destructive sm:h-8 sm:w-8">
+								<Button tone="muted" size="sm" variant="ghost" className="w-10 sm:w-8">
 									<Trash2 className="size-3.5" />
 								</Button>
 							}

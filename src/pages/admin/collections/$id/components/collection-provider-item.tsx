@@ -29,7 +29,7 @@ export function CollectionProviderItem({ provider }: { provider: CollectionProvi
 				<div className="flex min-w-0 flex-col">
 					<div className="flex items-center gap-2">
 						<span className="font-semibold text-foreground text-sm">{provider.name.toUpperCase()}</span>
-						<Badge variant="outline" size="sm" className="font-mono text-muted-foreground text-xs">
+						<Badge tone="muted" variant="outline" size="sm" font="mono">
 							{provider.externalId}
 						</Badge>
 					</div>

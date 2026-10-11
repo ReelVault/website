@@ -32,7 +32,7 @@ export function MetadataRatingsSection({ metadata }: { metadata: MetadataWithRel
 					</div>
 
 					<div className="flex items-center gap-2 border-border/50 border-t pt-3 sm:border-t-0 sm:pt-0">
-						<Badge variant="secondary" size="sm" className="gap-1 font-medium text-xs">
+						<Badge variant="secondary" size="sm">
 							<ThumbsUp className="size-3 text-primary" />
 							<span>{m.admin_metadata_rating_sources_total({ count: scores.length })}</span>
 						</Badge>
@@ -95,7 +95,7 @@ function RatingCard({
 						<span>{m.admin_score_percent()}</span>
 						<span className="font-mono font-semibold text-foreground">{m.common_percent_value({ value: percentage })}</span>
 					</div>
-					<Progress value={percentage} className="h-1.5" />
+					<Progress value={percentage} size="sm" />
 				</div>
 			</div>
 
@@ -106,9 +106,8 @@ function RatingCard({
 
 				{resolvedUrl && (
 					<Button
-						variant="ghost"
+						variant="primary-ghost"
 						size="sm"
-						className="h-10 gap-1 px-1.5 text-primary text-xs hover:bg-primary/10 hover:text-primary sm:h-6"
 						nativeButton={false}
 						render={
 							<a href={resolvedUrl} target="_blank" rel="noopener noreferrer" aria-label={m.admin_metadata_rating_source_profile()} />

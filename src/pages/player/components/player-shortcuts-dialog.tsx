@@ -128,10 +128,10 @@ export function PlayerShortcutsDialog({
 }) {
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-md border-border bg-popover shadow-2xl">
+			<DialogContent size="md">
 				<DialogHeader>
 					<div className="flex items-center justify-between gap-4">
-						<DialogTitle className="flex items-center gap-2 text-lg">
+						<DialogTitle className="flex items-center">
 							<Keyboard className="size-5 text-primary" />
 							{m.player_shortcuts()}
 						</DialogTitle>

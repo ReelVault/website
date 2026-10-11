@@ -42,7 +42,7 @@ export function UserFilterBar({ search, onSearchChange, role, onRoleChange, stat
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-			<Button onClick={onOpenCreate} className="gap-2">
+			<Button onClick={onOpenCreate}>
 				<UserPlus className="size-4" /> {m.app_create_account()}
 			</Button>
 		</div>

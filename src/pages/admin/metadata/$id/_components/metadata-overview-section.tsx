@@ -30,7 +30,7 @@ export function MetadataOverviewSection({
 				onChange={(e) => onChange(e.target.value)}
 				rows={7}
 				placeholder={m.admin_metadata_paste_plot_hint()}
-				className="resize-y bg-background p-3.5 text-sm leading-relaxed"
+				className="resize-y"
 			/>
 		</AdminSection>
 	);

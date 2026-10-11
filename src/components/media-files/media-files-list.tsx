@@ -46,11 +46,12 @@ export function MediaFilesList({
 					<div className="relative">
 						<Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
 						<Input
+							leadingIcon
 							type="text"
 							placeholder={m.components_media_files_search_placeholder()}
 							value={searchQuery}
 							onChange={handleSearchChange}
-							className="h-10 bg-background pl-9 text-xs sm:h-9"
+							className=""
 						/>
 					</div>
 				</div>

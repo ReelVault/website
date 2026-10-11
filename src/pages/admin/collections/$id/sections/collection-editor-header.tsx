@@ -31,7 +31,7 @@ export function CollectionEditorHeader({ collectionId, collection, isSubmitting,
 				eyebrow={m.admin_nav_collections()}
 				title={m.admin_collections_edit_collections()}
 				badge={
-					<Badge variant="outline" className="gap-1 font-mono text-muted-foreground text-xs">
+					<Badge tone="muted" variant="outline" font="mono">
 						<span>{m.common_short_id({ id: collectionId.slice(0, 8) })}</span>
 						<button
 							type="button"

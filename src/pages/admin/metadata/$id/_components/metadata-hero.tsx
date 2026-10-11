@@ -52,7 +52,7 @@ export function MetadataHero({
 	const lockedCount = lockedFields.length;
 
 	return (
-		<Card className="overflow-hidden border-border/80 bg-card/60 shadow-none">
+		<Card variant="subtle" className="overflow-hidden">
 			<div className="flex flex-col gap-5 p-6 sm:p-7">
 				{/* Poster & title details */}
 				<div className="flex flex-col gap-5 sm:flex-row sm:items-start">
@@ -64,7 +64,7 @@ export function MetadataHero({
 							width={120}
 							aspectRatio={2 / 3}
 							sizes="120px"
-							className="h-full w-full object-cover"
+							className="w-full object-cover"
 						/>
 						<button
 							type="button"

@@ -41,7 +41,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					</button>
 
 					{!path.isActive && (
-						<Badge variant="outline" size="sm" className="h-4 border-warning/30 px-1.5 text-warning text-xs">
+						<Badge variant="warning-outline" size="sm">
 							{m.common_inactive()}
 						</Badge>
 					)}
@@ -54,7 +54,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					{pathMode && (
 						<>
 							<span>{m.common_dot_separator()}</span>
-							<Badge variant="outline" size="sm" className="h-4 px-1.5 text-xs">
+							<Badge variant="outline" size="sm">
 								{pathMode}
 							</Badge>
 						</>

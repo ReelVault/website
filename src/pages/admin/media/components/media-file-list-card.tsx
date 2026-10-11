@@ -6,6 +6,7 @@ import { ConfirmAction } from "@/components/confirm-action";
 import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
 import { formatDuration } from "@/utils/duration-utils";
@@ -43,7 +44,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 	return (
 		<>
 			<ContextMenu>
-				<ContextMenuTrigger className="group flex flex-col gap-3 rounded-xl border border-border/80 bg-card p-4 shadow-2xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:border-primary/40 hover:shadow-sm">
+				<ContextMenuTrigger render={<Card variant="interactive" />} className="group flex flex-col">
 					<div className="flex items-start justify-between gap-3">
 						<div className="flex min-w-0 items-center gap-3">
 							<input
@@ -67,7 +68,6 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							<Button
 								variant="ghost"
 								size="icon"
-								className="size-8"
 								nativeButton={false}
 								render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}
 								title={m.admin_metadata_open_in_player()}
@@ -78,7 +78,6 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							<Button
 								variant="ghost"
 								size="icon"
-								className="size-8"
 								nativeButton={false}
 								render={<Link to="/admin/media/$id" params={{ id: file.id }} />}
 								title={m.admin_media_edit_file()}
@@ -89,9 +88,8 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							<ConfirmAction
 								trigger={
 									<Button
-										variant="ghost"
+										variant="destructive-ghost"
 										size="icon"
-										className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
 										disabled={isDeleting}
 										title={m.admin_logs_delete_file()}
 										aria-label={m.admin_media_delete_file_named({ fileName: file.fileName })}
@@ -109,17 +107,17 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 
 					<div className="flex flex-wrap items-center gap-1.5">
 						{file.library.name && (
-							<Badge variant="outline" size="sm" className="font-normal text-xs">
+							<Badge weight="normal" variant="outline" size="sm">
 								{file.library.name}
 							</Badge>
 						)}
 						{file.qualityTag && (
-							<Badge variant="secondary" size="sm" className="font-mono text-xs">
+							<Badge variant="secondary" size="sm" font="mono">
 								{file.qualityTag}
 							</Badge>
 						)}
 						{file.source && (
-							<Badge variant="outline" size="sm" className="font-mono text-xs">
+							<Badge variant="outline" size="sm" font="mono">
 								{file.source}
 							</Badge>
 						)}
@@ -129,7 +127,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							</span>
 						)}
 						{file.isDefault && (
-							<Badge variant="default" size="sm" className="text-xs">
+							<Badge variant="default" size="sm">
 								{m.common_default_badge()}
 							</Badge>
 						)}

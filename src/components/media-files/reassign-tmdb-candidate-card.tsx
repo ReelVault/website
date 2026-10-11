@@ -34,9 +34,7 @@ export function ReassignTmdbCandidateCard({ candidate, isReassigning, onApply }:
 			<div className="flex flex-1 flex-col justify-between py-0.5">
 				<div className="space-y-1">
 					<div className="flex items-center gap-2">
-						<Badge variant="outline" className="text-xs">
-							{candidate.providerId}
-						</Badge>
+						<Badge variant="outline">{candidate.providerId}</Badge>
 						{releaseYear !== null && (
 							<span className="flex items-center gap-1 font-medium text-muted-foreground text-xs">
 								<Calendar className="size-3" />
@@ -54,7 +52,7 @@ export function ReassignTmdbCandidateCard({ candidate, isReassigning, onApply }:
 						size="sm"
 						disabled={isReassigning}
 						onClick={() => onApply(candidate.providerId, candidate.externalId)}
-						className="w-full gap-1.5 rounded-lg text-xs"
+						className="w-full"
 					>
 						<Check className="size-3.5" />
 						{m.common_assign_this_title()}

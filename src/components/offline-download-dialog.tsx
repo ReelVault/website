@@ -133,15 +133,15 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent className="max-w-xl">
+			<DialogContent size="xl">
 				<DialogHeader>
 					<div className="flex items-center gap-2">
 						<div className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
 							<Download className="size-5" />
 						</div>
 						<div>
-							<DialogTitle className="text-lg">{m.components_offline_heading()}</DialogTitle>
-							<DialogDescription className="text-xs">
+							<DialogTitle>{m.components_offline_heading()}</DialogTitle>
+							<DialogDescription>
 								{title ? m.components_preparing_file_for({ title }) : m.components_offline_convert_download()}
 							</DialogDescription>
 						</div>
@@ -193,7 +193,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 											<div className="flex items-center gap-2">
 												<span className="font-bold text-foreground text-sm">{opt.label}</span>
 												{opt.recommended && (
-													<Badge variant="secondary" size="sm" className="gap-1 font-semibold text-xs">
+													<Badge weight="semibold" variant="secondary" size="sm">
 														<Sparkles className="size-3 text-primary" />
 														{m.components_offline_recommended()}
 													</Badge>
@@ -216,7 +216,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 							{isProcessing && (
 								<>
 									<div className="relative flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
-										<Spinner className="size-7" />
+										<Spinner size="xl" />
 									</div>
 									<div className="flex flex-col gap-1">
 										<span className="font-bold text-base text-foreground">{m.components_offline_in_progress()}</span>
@@ -285,7 +285,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 						<>
 							<div className="flex items-center gap-2">
 								{isProcessing && (
-									<Button variant="ghost" size="sm" onClick={handleCancel} className="text-destructive hover:bg-destructive/10">
+									<Button variant="destructive-ghost" size="sm" onClick={handleCancel}>
 										{m.components_offline_cancel_job()}
 									</Button>
 								)}
@@ -295,7 +295,6 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 									nativeButton={false}
 									render={<Link to={"/downloads"} />}
 									onClick={() => onOpenChange(false)}
-									className="gap-1.5 text-xs"
 								>
 									<span>{m.components_offline_open_download_list()}</span>
 									<ArrowRight className="size-3.5" />
@@ -310,9 +309,9 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 							<Button variant="ghost" onClick={() => onOpenChange(false)}>
 								{m.common_cancel()}
 							</Button>
-							<Button onClick={handleStartPrepare} disabled={prepareMutation.isPending} className="gap-2 font-medium">
+							<Button onClick={handleStartPrepare} disabled={prepareMutation.isPending}>
 								{prepareMutation.isPending ? (
-									<Spinner className="size-4" />
+									<Spinner size="default" />
 								) : (
 									<Download data-icon="inline-start" className="size-4" aria-hidden="true" />
 								)}

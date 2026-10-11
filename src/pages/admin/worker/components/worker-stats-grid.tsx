@@ -48,7 +48,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 			title={m.admin_worker_queues_pools()}
 			description={m.admin_worker_concurrency_config()}
 			badge={
-				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+				<Badge variant="secondary" font="mono" size="count">
 					{workerStats.length}
 				</Badge>
 			}
@@ -59,11 +59,12 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 					<div className="relative">
 						<Search className="absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
 						<Input
+							leadingIcon
 							type="text"
 							placeholder={m.admin_workers_search_placeholder()}
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="h-10 w-44 bg-background/60 pl-8 text-xs sm:h-8"
+							className="w-44"
 						/>
 					</div>
 

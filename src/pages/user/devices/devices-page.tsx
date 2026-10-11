@@ -46,7 +46,7 @@ export default function DevicesPage() {
 					(sessions?.total ?? 0) > 1 && (
 						<ConfirmAction
 							trigger={
-								<Button variant="outline" className="min-h-11 gap-2" disabled={isRevokingOthers}>
+								<Button variant="outline" className="min-h-11" disabled={isRevokingOthers}>
 									<LogOut className="size-4" aria-hidden="true" /> {m.user_log_out_rest()}
 								</Button>
 							}
@@ -65,7 +65,7 @@ export default function DevicesPage() {
 					return (
 						<div className="flex flex-col gap-4" aria-busy="true">
 							{SKELETON_KEYS.map((key) => (
-								<Skeleton key={key} className="h-28 rounded-2xl" />
+								<Skeleton key={key} className="h-28" />
 							))}
 						</div>
 					);

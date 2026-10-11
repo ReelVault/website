@@ -28,14 +28,16 @@ export function PathPickerSearchForm({ activePath, onNavigate }: PathPickerSearc
 			<div className="relative flex-1">
 				<FolderOpen className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
 				<Input
+					leadingIcon
 					type="text"
 					value={inputPath}
 					onChange={handleInputChange}
 					placeholder="/mnt/media/movies"
-					className="h-10 bg-background pl-9 font-mono text-xs"
+					font="mono"
+					className=""
 				/>
 			</div>
-			<Button type="submit" variant="secondary" className="h-10 gap-1.5 px-3.5 font-medium text-xs">
+			<Button type="submit" variant="secondary" size="sm">
 				<Search className="size-4" />
 				<span>{m.components_path_picker_go()}</span>
 			</Button>

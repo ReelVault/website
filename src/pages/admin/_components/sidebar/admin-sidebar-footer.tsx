@@ -23,7 +23,7 @@ export function AdminSidebarFooter() {
 	};
 
 	return (
-		<SidebarFooter className="gap-3 border-border border-t p-4">
+		<SidebarFooter size="comfortable" className="gap-3 border-t">
 			<div className="flex items-center gap-3 px-2 py-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
 				<div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary/15 font-bold text-sidebar-primary text-xs">
 					{m.admin_sidebar_user_initials()}

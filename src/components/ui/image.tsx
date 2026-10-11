@@ -62,6 +62,7 @@ export function Image({
 	scale = 1,
 	loader,
 	className,
+	zoom = false,
 	loading,
 	priority,
 	sizes,
@@ -74,6 +75,7 @@ export function Image({
 	...props
 }: Omit<ComponentProps<"img">, "src"> & {
 	src?: string | { src: string } | null;
+	zoom?: boolean;
 	fallbackSrc?: string;
 	placeholderSrc?: string | null;
 	fill?: boolean;
@@ -177,6 +179,7 @@ export function Image({
 				// Priority images keep the LQIP blur-up visible (it paints this
 				// element's background); lazy grids fade in over the parent surface.
 				!priority && (isLoaded ? "opacity-100 transition-opacity duration-300" : "opacity-0"),
+				zoom && "transition-transform duration-300 ease-out group-hover:scale-105",
 				className,
 			)}
 			{...props}

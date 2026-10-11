@@ -24,7 +24,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 	if (isLoading) {
 		cardBody = (
 			<div className="flex items-center gap-3">
-				<Skeleton className="h-20 w-14 rounded-lg" />
+				<Skeleton className="h-20 w-14" />
 				<div className="flex flex-1 flex-col gap-2">
 					<Skeleton className="h-4 w-48" />
 					<Skeleton className="h-3 w-32" />
@@ -42,18 +42,18 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 							alt={metadata.title}
 							width={80}
 							aspectRatio={2 / 3}
-							className="size-full object-cover"
+							className="object-cover"
 						/>
 					</div>
 
 					<div className="flex min-w-0 flex-1 flex-col gap-1">
 						<div className="flex flex-wrap items-center gap-1.5">
-							<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 text-xs capitalize">
+							<Badge variant={isMovie ? "default" : "secondary"} size="sm" transform="capitalize">
 								{isMovie ? <Clapperboard className="size-3" /> : <Tv className="size-3" />}
 								<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 							</Badge>
 							{releaseYear && (
-								<Badge variant="outline" size="sm" className="font-mono text-xs">
+								<Badge variant="outline" size="sm" font="mono">
 									{releaseYear}
 								</Badge>
 							)}
@@ -76,9 +76,8 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 				<div className="flex items-center justify-between border-border/40 border-t pt-2 text-xs">
 					<span className="font-mono text-muted-foreground text-xs">{m.common_short_id({ id: metadata.id.slice(0, 16) })}</span>
 					<Button
-						variant="ghost"
+						variant="primary-ghost"
 						size="sm"
-						className="h-10 gap-1 px-2 text-primary text-xs hover:bg-primary/10 hover:text-primary sm:h-7"
 						nativeButton={false}
 						render={<Link to="/admin/metadata/$id" params={{ id: metadata.id }} />}
 					>
@@ -92,7 +91,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 		cardBody = (
 			<div className="rounded-xl border border-border/80 border-dashed bg-muted/20 p-4 text-center">
 				<p className="font-medium text-foreground text-xs">{m.admin_media_no_metadata({ id: file.metadataId })}</p>
-				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign} className="mt-2 gap-1.5 text-xs">
+				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign} className="mt-2">
 					<Layers className="size-3.5" />
 					<span>{m.admin_media_assign_to_metadata()}</span>
 				</Button>
@@ -105,7 +104,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 			title={m.admin_media_assigned_metadata()}
 			description={m.admin_media_catalog_title_description()}
 			actions={
-				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign} className="h-10 gap-1.5 text-xs shadow-xs sm:h-8">
+				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign}>
 					<Layers className="size-3.5 text-primary" />
 					<span>{m.admin_media_change_link()}</span>
 				</Button>

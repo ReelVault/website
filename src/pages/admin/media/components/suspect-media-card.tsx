@@ -29,7 +29,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 							</div>
 						</div>
 						{item.libraryName && (
-							<Badge variant="outline" className="shrink-0 text-xs">
+							<Badge variant="outline" className="shrink-0">
 								{item.libraryName}
 							</Badge>
 						)}
@@ -41,7 +41,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 							const key = `${r.code}-${r.params ? JSON.stringify(r.params) : ""}`;
 							if (r.severity === "high") {
 								return (
-									<Badge key={key} variant="destructive" className="gap-1 font-medium text-xs">
+									<Badge key={key} variant="destructive">
 										<AlertTriangle className="size-3" />
 										{r.code === "sequel_mismatch" && m.admin_media_part_mismatch()}
 										{r.code === "year_mismatch" && m.admin_media_year_mismatch()}
@@ -54,7 +54,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 							}
 
 							return (
-								<Badge key={key} variant="outline" className="gap-1 border-warning/50 bg-warning/10 font-medium text-warning text-xs">
+								<Badge key={key} variant="warning">
 									<AlertTriangle className="size-3" />
 									{r.code === "year_mismatch" && m.admin_media_year_mismatch()}
 									{r.code === "low_confidence" && m.admin_media_low_confidence()}
@@ -138,7 +138,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 						</Link>
 					</div>
 
-					<Button variant="default" size="sm" className="gap-2 shadow-2xs" onClick={() => setIsReassignDialogOpen(true)}>
+					<Button variant="default" size="sm" onClick={() => setIsReassignDialogOpen(true)}>
 						<Layers className="size-4" />
 						<span>{m.admin_media_change_assignment()}</span>
 					</Button>

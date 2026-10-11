@@ -89,17 +89,17 @@ export function QuickConnectPairSection({
 				</div>
 
 				<div className="flex w-full flex-col gap-3">
-					<Button type="button" variant="outline" className="gap-2 rounded-xl" onClick={onStartPairing} disabled={isPending}>
+					<Button type="button" variant="outline" onClick={onStartPairing} disabled={isPending}>
 						<RefreshCw className="size-4" />
 						{m.auth_generate_new_code()}
 					</Button>
 
-					<Button type="button" variant="ghost" onClick={onSwitchToRedeem} className="text-xs">
+					<Button type="button" variant="ghost" onClick={onSwitchToRedeem} size="sm">
 						{m.auth_have_code_manual()}
 					</Button>
 
 					<Link to="/auth/login" className="text-center">
-						<Button type="button" variant="ghost" className="text-muted-foreground text-xs">
+						<Button tone="muted" type="button" variant="ghost" size="sm">
 							<ArrowLeft className="size-4" />
 							{m.auth_back_to_traditional_login()}
 						</Button>

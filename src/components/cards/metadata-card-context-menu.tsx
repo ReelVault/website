@@ -27,7 +27,7 @@ function ContextMenuItemRenderer({ item, onAction }: { item: MetadataCardMenuIte
 						}
 					: undefined
 			}
-			className="cursor-pointer gap-2.5"
+			className="cursor-pointer"
 		>
 			<item.icon className={cn("size-4", item.iconClassName)} />
 			<span>{item.label}</span>
@@ -46,9 +46,9 @@ export function MetadataCardContextMenu(state: MetadataCardMenuState) {
 	const adminItems = items.filter((item) => item.admin === true);
 
 	return (
-		<ContextMenuContent className="w-64 border-border bg-card/95">
+		<ContextMenuContent className="w-64">
 			<ContextMenuGroup>
-				<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{state.title}</ContextMenuLabel>
+				<ContextMenuLabel className="truncate">{state.title}</ContextMenuLabel>
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
@@ -62,7 +62,7 @@ export function MetadataCardContextMenu(state: MetadataCardMenuState) {
 				<>
 					<ContextMenuSeparator />
 					<ContextMenuGroup>
-						<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+						<ContextMenuLabel className="flex items-center">
 							<Shield className="size-3" />
 							{m.common_admin_tools()}
 						</ContextMenuLabel>

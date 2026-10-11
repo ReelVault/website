@@ -6,7 +6,6 @@ import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFullDateTime } from "@/utils/format-utils";
 import { translateByKey } from "@/utils/translate-error";
-import { getPressureColor } from "./resource-metrics-grid";
 
 type ResourceAlert = NonNullable<NonNullable<ReturnType<typeof useAdminResources>["data"]>["alerts"]>[number];
 
@@ -43,7 +42,7 @@ export function ResourceAlertsSection({ alerts }: { alerts: ResourceAlert[] }) {
 									{m.admin_resources_alert_value_threshold({ metric: alert.metric.toFixed(1), threshold: alert.threshold })}
 								</span>
 							)}
-							<Badge variant="outline" className={cn("text-xs", getPressureColor(alert.severity === "critical" ? "critical" : "high"))}>
+							<Badge variant={alert.severity === "critical" ? "destructive" : "warning"}>
 								{alert.severity === "critical" ? m.admin_resources_critical_word() : m.components_status_warning()}
 							</Badge>
 						</div>

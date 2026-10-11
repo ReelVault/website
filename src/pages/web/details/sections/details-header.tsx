@@ -67,7 +67,8 @@ export default function DetailsHeader({
 					fill
 					priority
 					sizes="100vw"
-					className="size-full object-cover opacity-25"
+					dim={25}
+					className="object-cover"
 				/>
 				<div className="absolute inset-0 bg-linear-to-b from-background/90 via-background/70 to-background" />
 				<div className="absolute inset-0 bg-linear-to-r from-background via-transparent to-background/30" />

@@ -34,10 +34,10 @@ export function CreateProfileDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={(nextOpen) => handleOpenChange(nextOpen, onOpenChange)}>
-			<DialogContent className="gap-6 p-6 sm:max-w-md">
+			<DialogContent className="sm:max-w-md">
 				<DialogHeader className="gap-1.5">
-					<DialogTitle className="font-semibold text-xl tracking-tight">{m.admin_users_create_profile()}</DialogTitle>
-					<DialogDescription className="text-muted-foreground text-sm">{m.admin_users_add_profile_desc()}</DialogDescription>
+					<DialogTitle>{m.admin_users_create_profile()}</DialogTitle>
+					<DialogDescription>{m.admin_users_add_profile_desc()}</DialogDescription>
 				</DialogHeader>
 				<form
 					onSubmit={(event) => {
@@ -72,7 +72,7 @@ export function CreateProfileDialog({
 							placeholder={m.admin_users_pin_optional_hint()}
 						/>
 					</Field>
-					<DialogFooter className="gap-3 border-border/60 border-t pt-4">
+					<DialogFooter className="gap-3 border-t">
 						<Button type="button" variant="outline" onClick={() => handleOpenChange(false, onOpenChange)}>
 							{m.common_cancel()}
 						</Button>

@@ -33,18 +33,18 @@ function PluginVersionRow({ version, isLatest, isInstalled, isBusy, onInstall }:
 			<CollapsibleTrigger
 				type="button"
 				onClick={() => setExpanded((value) => !value)}
-				className="flex w-full flex-wrap items-center gap-2 px-3 py-2 text-left hover:bg-muted/40"
+				className="flex w-full flex-wrap items-center text-left"
 			>
 				<ChevronDown className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", !expanded && "-rotate-90")} />
 				<span className="font-mono text-xs">{m.common_version_badge({ version: version.version })}</span>
 				{version.date && <span className="text-muted-foreground text-xs">{formatDateTime(version.date)}</span>}
 				{isLatest && (
-					<Badge variant="secondary" className="px-1.5 py-0 text-xs">
+					<Badge variant="secondary" size="count">
 						{m.admin_plugins_catalog_version_latest()}
 					</Badge>
 				)}
 				{isInstalled && (
-					<Badge variant="outline" className="px-1.5 py-0 text-xs">
+					<Badge variant="outline" size="count">
 						{m.admin_plugins_catalog_version_installed()}
 					</Badge>
 				)}
@@ -53,7 +53,7 @@ function PluginVersionRow({ version, isLatest, isInstalled, isBusy, onInstall }:
 				<div className="flex flex-col gap-2 px-3 pb-3 pl-8">
 					{version.changelog && <p className="wrap-break-word whitespace-pre-line text-muted-foreground text-sm">{version.changelog}</p>}
 					{!isInstalled && (
-						<Button variant="outline" size="sm" disabled={isBusy} onClick={() => onInstall(version.version)} className="gap-1.5 self-start">
+						<Button variant="outline" size="sm" disabled={isBusy} onClick={() => onInstall(version.version)} className="self-start">
 							<Download className="size-3.5" />
 							{m.admin_plugins_catalog_version_install()}
 						</Button>
@@ -134,7 +134,7 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 				<h2 className="font-semibold text-sm">{m.admin_plugins_catalog_capabilities()}</h2>
 				<div className="flex flex-wrap gap-1.5">
 					{(entry.capabilities ?? []).map((capability) => (
-						<Badge key={capability} variant="outline" className="font-mono text-xs">
+						<Badge key={capability} variant="outline" font="mono">
 							{capability}
 						</Badge>
 					))}
@@ -151,11 +151,7 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 				{isInstalled ? (
 					<ConfirmAction
 						trigger={
-							<Button
-								variant="outline"
-								disabled={isBusy}
-								className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
-							>
+							<Button variant="destructive-outline" disabled={isBusy}>
 								<Trash2 className="size-4" />
 								{m.admin_plugins_catalog_uninstall()}
 							</Button>
@@ -166,7 +162,7 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 						onConfirm={() => onUninstall(entry.id)}
 					/>
 				) : (
-					<Button variant="default" disabled={isBusy} onClick={() => onInstall(entry)} className="gap-1.5">
+					<Button variant="default" disabled={isBusy} onClick={() => onInstall(entry)}>
 						{hasUpdate ? <RefreshCcw className="size-4" /> : <Download className="size-4" />}
 						{hasUpdate ? m.admin_plugins_catalog_update() : m.admin_plugins_catalog_install()}
 					</Button>

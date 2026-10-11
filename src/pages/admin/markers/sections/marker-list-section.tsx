@@ -37,7 +37,7 @@ export function MarkerListSection({
 		sectionBody = (
 			<div className="flex flex-col gap-3">
 				{SKELETON_KEYS.map((key) => (
-					<Skeleton key={key} className="h-20 rounded-lg" />
+					<Skeleton key={key} className="h-20" />
 				))}
 			</div>
 		);

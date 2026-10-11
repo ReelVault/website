@@ -38,7 +38,7 @@ function StatusIcon({ entry }: { entry: PluginArchiveEntry }) {
 		case "checking":
 		case "uploading":
 		case "installing":
-			return <Spinner className="text-primary" aria-hidden="true" />;
+			return <Spinner aria-hidden="true" />;
 		case "installed":
 			return <CheckCircle2 className="size-4 text-success" aria-hidden="true" />;
 		case "queued":

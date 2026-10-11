@@ -73,14 +73,14 @@ function NativePosterGroup({
 	const isPeople = itemsKey === "people";
 
 	return (
-		<CommandGroup heading={<SearchGroupHeading icon={Icon} label={label} count={items.length} />} className="px-1 py-1">
+		<CommandGroup heading={<SearchGroupHeading icon={Icon} label={label} count={items.length} />}>
 			<div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
 				{items.map((item) => (
 					<CommandItem
 						key={`${itemsKey}-${item.id}`}
 						value={`${itemsKey}-${item.id}-${item.label ?? ""}`}
 						onSelect={() => onSelect(item.id, buildHref)}
-						className={cn("rounded-xl p-1.5", isPeople ? "flex-col items-center gap-1.5" : "flex-col items-stretch gap-1.5")}
+						className={cn("flex-col gap-1.5", isPeople ? "items-center" : "items-stretch")}
 					>
 						<div
 							className={cn("w-full overflow-hidden bg-primary/10", isPeople ? "aspect-square rounded-full" : "aspect-[2/3] rounded-lg")}
@@ -92,7 +92,7 @@ function NativePosterGroup({
 									alt=""
 									width={240}
 									aspectRatio={isPeople ? 1 : 2 / 3}
-									className="size-full object-cover"
+									className="object-cover"
 								/>
 							) : (
 								<span className="flex size-full items-center justify-center">
@@ -130,14 +130,9 @@ function NativeRowGroup({
 	onSelect: (id: string, buildHref: (id: string) => string) => void;
 }) {
 	return (
-		<CommandGroup heading={<SearchGroupHeading icon={Icon} label={label} count={items.length} />} className="px-1 py-1">
+		<CommandGroup heading={<SearchGroupHeading icon={Icon} label={label} count={items.length} />}>
 			{items.map((item) => (
-				<CommandItem
-					key={item.id}
-					value={`${label}-${item.id}-${item.label ?? ""}`}
-					onSelect={() => onSelect(item.id, buildHref)}
-					className="gap-3 rounded-xl px-2 py-2"
-				>
+				<CommandItem key={item.id} value={`${label}-${item.id}-${item.label ?? ""}`} onSelect={() => onSelect(item.id, buildHref)}>
 					<div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10">
 						<Icon aria-hidden="true" className="size-5 text-muted-foreground" />
 					</div>
@@ -181,7 +176,7 @@ function ExternalCatalogGroup({
 							key={`plugin-${item.providerId}-${item.externalId}`}
 							value={`plugin-${item.providerId}-${item.externalId}-${item.title}`}
 							onSelect={() => onSelect(item)}
-							className="flex-col items-stretch gap-1.5 rounded-xl p-1.5"
+							className="flex-col items-stretch"
 						>
 							<div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary/10">
 								{item.imageUrl ? (
@@ -204,11 +199,12 @@ function ExternalCatalogGroup({
 								)}
 								{requestEndpoint && (
 									<Button
+										shape="pill"
 										type="button"
 										tabIndex={-1}
 										size="icon-sm"
 										aria-label={m.components_search_plugin_request()}
-										className="absolute right-1 bottom-1 size-7 rounded-full bg-background/90 text-foreground shadow-md hover:bg-background"
+										className="absolute right-1 bottom-1"
 										disabled={isRequestingThis}
 										onClick={(event) => {
 											// Keep cmdk from also treating the press as a card select.
@@ -216,11 +212,7 @@ function ExternalCatalogGroup({
 											onRequest(item);
 										}}
 									>
-										{isRequestingThis ? (
-											<Spinner className="size-3.5" aria-hidden="true" />
-										) : (
-											<Send className="size-3.5" aria-hidden="true" />
-										)}
+										{isRequestingThis ? <Spinner size="sm" aria-hidden="true" /> : <Send className="size-3.5" aria-hidden="true" />}
 									</Button>
 								)}
 							</div>
@@ -354,7 +346,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 	if (isLoading) {
 		listContent = (
 			<div className="flex flex-col items-center justify-center py-14 text-center">
-				<Spinner className="size-8 text-primary" aria-hidden="true" />
+				<Spinner size="xl" aria-hidden="true" />
 				<p className="mt-4 font-semibold text-foreground">{m.components_navbar_searching_catalog()}</p>
 				<p className="mt-1 text-muted-foreground text-sm">{m.components_search_matching()}</p>
 			</div>
@@ -446,7 +438,8 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 			<DialogTrigger
 				aria-label={m.components_search_open_shortcut()}
 				aria-keyshortcuts="Control+K"
-				className="group flex h-10 items-center gap-2.5 rounded-xl border border-border/70 bg-background/50 px-3 text-muted-foreground text-xs transition-[border-color,background-color,color] hover:border-primary/50 hover:bg-muted/80 hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary"
+				render={<Button variant="outline" size="sm" />}
+				className="flex items-center"
 			>
 				<Search className="size-4 text-muted-foreground transition-colors group-hover:text-primary" />
 				<span className="hidden font-medium xl:inline">{m.components_navbar_search_catalog()}</span>
@@ -455,15 +448,12 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 				</kbd>
 			</DialogTrigger>
 
-			<DialogContent
-				showCloseButton={false}
-				className="max-h-[85vh] w-[95vw] max-w-3xl gap-0 overflow-hidden rounded-2xl border-border bg-popover/95 p-0 shadow-2xl shadow-black/40 sm:max-w-4xl lg:max-w-5xl"
-			>
-				<DialogHeader className="border-border border-b px-5 pt-5 pb-4 sm:px-6">
+			<DialogContent showCloseButton={false} size="3xl" className="max-h-[85vh] w-[95vw] overflow-hidden p-0 sm:max-w-4xl lg:max-w-5xl">
+				<DialogHeader className="border-b">
 					<div className="flex items-center justify-between gap-4">
 						<div>
-							<DialogTitle className="font-bold text-lg">{m.components_navbar_search_heading()}</DialogTitle>
-							<DialogDescription className="mt-0.5 text-xs">{m.components_navbar_search_catalog_hint()}</DialogDescription>
+							<DialogTitle>{m.components_navbar_search_heading()}</DialogTitle>
+							<DialogDescription className="mt-0.5">{m.components_navbar_search_catalog_hint()}</DialogDescription>
 							{searchProvider && (
 								<div className="mt-2.5 flex items-center gap-2">
 									<Switch
@@ -472,7 +462,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 										onCheckedChange={handlePluginSearchToggle}
 										aria-label={m.components_search_plugin_toggle_label()}
 									/>
-									<Label htmlFor="navbar-search-plugin-toggle" className="cursor-pointer text-muted-foreground text-xs">
+									<Label htmlFor="navbar-search-plugin-toggle" tone="muted" size="xs" className="cursor-pointer">
 										{m.components_search_plugin_toggle_label()}
 									</Label>
 								</div>
@@ -484,7 +474,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 					</div>
 				</DialogHeader>
 
-				<Command shouldFilter={false} loop className="gap-0">
+				<Command shouldFilter={false} loop>
 					<div className="relative border-border border-b px-5 pt-4 pb-4 sm:px-6">
 						<CommandInput
 							autoFocus
@@ -492,10 +482,10 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 							onValueChange={setQuery}
 							placeholder={m.components_search_placeholder()}
 							aria-label={m.components_navbar_search_catalog()}
-							className="h-12 rounded-xl border-border bg-background/80 pr-20 text-base focus-visible:border-primary focus-visible:ring-primary/30"
+							className="pr-20"
 						/>
 						<div className="pointer-events-none absolute top-1/2 right-7 flex -translate-y-1/2 items-center gap-1">
-							{isFetching && <Spinner className="mr-1 size-4 text-primary" aria-label={m.components_search_loading()} />}
+							{isFetching && <Spinner size="default" className="mr-1" aria-label={m.components_search_loading()} />}
 							{query && !isFetching && (
 								<Button
 									type="button"
@@ -512,9 +502,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 						</div>
 					</div>
 
-					<CommandList aria-live="polite" className="max-h-[min(60vh,36rem)] min-h-80 px-3 py-4 sm:px-4">
-						{listContent}
-					</CommandList>
+					<CommandList aria-live="polite">{listContent}</CommandList>
 				</Command>
 
 				<div className="flex items-center justify-between border-border border-t bg-muted/20 px-5 py-3 text-muted-foreground text-xs sm:px-6">

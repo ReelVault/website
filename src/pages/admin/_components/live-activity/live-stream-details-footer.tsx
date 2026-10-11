@@ -44,12 +44,11 @@ export function LiveStreamDetailsFooter({
 	};
 
 	return (
-		<DialogFooter className="mt-2 flex flex-row items-center justify-between gap-2 border-border/40 border-t pt-3 font-sans">
+		<DialogFooter className="mt-2 flex flex-row items-center justify-between gap-2 border-t">
 			<Button
 				type="button"
 				variant="outline"
 				size="sm"
-				className="gap-1.5 font-mono text-xs"
 				onClick={() => {
 					detach(handleCopyJson());
 				}}
@@ -69,7 +68,6 @@ export function LiveStreamDetailsFooter({
 						detach(onSendCommand("pause"));
 					}}
 					disabled={isSendingCommand}
-					className="gap-1.5 font-mono text-xs"
 					title={m.admin_live_remote_pause_aria()}
 				>
 					<Pause className="size-3.5 fill-current text-warning" />
@@ -84,7 +82,6 @@ export function LiveStreamDetailsFooter({
 						detach(onSendCommand("play"));
 					}}
 					disabled={isSendingCommand}
-					className="gap-1.5 font-mono text-xs"
 					title={m.admin_live_remote_resume_title()}
 				>
 					<Play className="size-3.5 fill-current text-primary" />
@@ -97,7 +94,7 @@ export function LiveStreamDetailsFooter({
 					confirmLabel={m.admin_live_stop_session()}
 					onConfirm={onTerminate}
 					trigger={
-						<Button type="button" variant="destructive" size="sm" disabled={isTerminating} className="gap-1 font-semibold text-xs">
+						<Button type="button" variant="destructive" size="sm" disabled={isTerminating}>
 							<Square className="size-3 fill-current" />
 							<span>{m.admin_live_stop_session()}</span>
 						</Button>

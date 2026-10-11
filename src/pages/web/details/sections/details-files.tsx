@@ -6,6 +6,7 @@ import { useDetailsView } from "@/client/hooks/use-metadata-queries";
 import { AppErrorState } from "@/components/app-states";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -59,7 +60,10 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 
 					return (
 						<ContextMenu key={file.id}>
-							<ContextMenuTrigger className="group relative flex flex-col gap-4 rounded-xl border border-border/60 bg-card p-4 transition-[background-color,border-color,box-shadow] duration-200 hover:border-primary/40 hover:bg-muted/30 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
+							<ContextMenuTrigger
+								render={<Card variant="interactive" />}
+								className="group relative flex flex-col sm:flex-row sm:items-center sm:justify-between"
+							>
 								{/* Left side: resolution icon + title and tags */}
 								<div className="flex items-start gap-3.5 sm:items-center">
 									<div className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-border/55 bg-background shadow-xs">
@@ -69,12 +73,12 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 										<div className="flex flex-wrap items-center gap-2">
 											<h4 className="font-semibold text-base text-foreground tracking-tight">{versionTitle}</h4>
 											{file.qualityTag && <Badge size="sm">{file.qualityTag}</Badge>}
-											{progress?.status === "watched" && <Badge className="bg-success/10 text-success">{m.common_watched_badge()}</Badge>}
+											{progress?.status === "watched" && <Badge variant="success">{m.common_watched_badge()}</Badge>}
 											{progress?.status === "in_progress" && (
-												<Badge className="bg-primary/10 text-primary">{m.common_percent_value({ value: progressPercent })}</Badge>
+												<Badge variant="primary">{m.common_percent_value({ value: progressPercent })}</Badge>
 											)}
 											{file.source && (
-												<Badge variant="outline" className="text-muted-foreground text-xs">
+												<Badge tone="muted" variant="outline">
 													{file.source}
 												</Badge>
 											)}
@@ -118,7 +122,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 										<Button
 											variant="outline"
 											size="icon"
-											className="mr-2 size-10 sm:size-8"
+											className="mr-2"
 											disabled={refreshingMediaFileId === file.id}
 											onClick={() => refreshMediaFile(file.id)}
 											aria-label={m.web_refresh_file_info_named({ version: versionTitle })}
@@ -128,7 +132,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 										</Button>
 									)}
 									<Link to="/player/$id" params={{ id: file.id }} className="w-full sm:w-auto">
-										<Button className="w-full gap-2 font-medium shadow-xs transition-transform active:scale-95 sm:w-auto">
+										<Button className="w-full sm:w-auto">
 											<Play className="size-3 transition-transform group-hover:scale-110" />
 											{m.components_metadata_card_play()}
 										</Button>

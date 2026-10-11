@@ -46,7 +46,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 
 	return (
 		<ContextMenu>
-			<ContextMenuTrigger className="group relative flex cursor-pointer flex-col gap-2">
+			<ContextMenuTrigger className="group relative flex cursor-pointer flex-col">
 				<label className="absolute top-2 right-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md bg-background/85 backdrop-blur-sm">
 					<input
 						type="checkbox"
@@ -69,25 +69,25 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 							width={208}
 							aspectRatio={2 / 3}
 							sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 208px"
-							className="object-cover transition-[transform,opacity] duration-300 group-hover:scale-[1.03] group-hover:opacity-50"
+							className="object-cover group-hover:scale-[1.03] group-hover:opacity-50"
 						/>
 
 						{(Boolean(isOrphanView) || lowConfidence || item.hasMissingTranslation) && (
 							<div className="absolute top-2 left-2 flex flex-col items-start gap-1.5">
 								{isOrphanView && (
-									<Badge variant="outline" className="gap-1 border-warning/30 bg-background/80 text-warning text-xs">
+									<Badge variant="warning-outline">
 										<AlertTriangle className="size-2.5" />
 										{m.admin_metadata_no_file_chip()}
 									</Badge>
 								)}
 								{lowConfidence && (
-									<Badge variant="outline" className="gap-1 border-warning/30 bg-background/80 text-warning text-xs">
+									<Badge variant="warning-outline">
 										<AlertTriangle className="size-2.5" />
 										{m.common_percent_value({ value: Math.round((item.matchScore ?? 0) * 100) })}
 									</Badge>
 								)}
 								{item.hasMissingTranslation && (
-									<Badge variant="outline" className="gap-1 border-warning/40 bg-background/80 text-warning text-xs">
+									<Badge variant="warning-outline">
 										<AlertTriangle className="size-2.5" />
 										{m.admin_metadata_no_pl_fallback()}
 									</Badge>
@@ -102,7 +102,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 						{item.title}
 					</p>
 					<div className="flex flex-wrap items-center gap-1.5">
-						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 font-medium text-xs capitalize">
+						<Badge variant={isMovie ? "default" : "secondary"} size="sm" transform="capitalize">
 							{isMovie ? <Clapperboard className="size-2.5" /> : <Tv className="size-2.5" />}
 							<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 						</Badge>
@@ -119,23 +119,23 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 
 			<ContextMenuContent className="w-56">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-semibold text-xs">{item.title}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate">{item.title}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/admin/metadata/$id" params={{ id: item.id }} />} className="gap-2.5">
+					<ContextMenuItem render={<Link to="/admin/metadata/$id" params={{ id: item.id }} />}>
 						<Pencil className="size-3.5 text-muted-foreground" />
 						<span>{m.admin_metadata_edit()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={() => refreshMetadataMutation.mutate(item.id)} className="gap-2.5">
+					<ContextMenuItem onClick={() => refreshMetadataMutation.mutate(item.id)}>
 						<RefreshCw className="size-3.5 text-primary" />
 						<span>{m.components_metadata_card_refresh_metadata()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={() => refreshImagesMutation.mutate(item.id)} className="gap-2.5">
+					<ContextMenuItem onClick={() => refreshImagesMutation.mutate(item.id)}>
 						<ImageDown className="size-3.5 text-primary" />
 						<span>{m.components_metadata_card_force_artwork()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={copyId} className="gap-2.5">
+					<ContextMenuItem onClick={copyId}>
 						<Copy className="size-3.5 text-muted-foreground" />
 						<span>{m.common_copy_id()}</span>
 					</ContextMenuItem>
@@ -145,7 +145,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 					<ConfirmAction
 						nativeButton={false}
 						trigger={
-							<ContextMenuItem variant="destructive" disabled={isDeleting} className="gap-2.5 text-destructive focus:text-destructive">
+							<ContextMenuItem variant="destructive" disabled={isDeleting}>
 								<Trash2 className="size-3.5" />
 								<span>{m.admin_metadata_delete_metadata()}</span>
 							</ContextMenuItem>

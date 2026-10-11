@@ -79,8 +79,7 @@ export function UserActions({
 				trigger={
 					<Button
 						size="icon-lg"
-						variant="ghost"
-						className="size-11 text-destructive hover:bg-destructive/10 hover:text-destructive"
+						variant="destructive-ghost"
 						disabled={isUpdating}
 						aria-label={m.admin_users_delete_account_named({ name: user.name })}
 					>

@@ -28,14 +28,14 @@ export function ReassignTvSelectors({
 	return (
 		<div className="grid grid-cols-2 gap-3 rounded-lg border border-border/80 bg-muted/20 p-3">
 			<div className="space-y-1.5">
-				<Label className="text-xs">{m.components_select_season_label()}</Label>
+				<Label size="xs">{m.components_select_season_label()}</Label>
 				<Select value={selectedSeasonId ?? ""} onValueChange={onSeasonChange}>
-					<SelectTrigger className="h-10 text-xs sm:h-9">
+					<SelectTrigger density="compact">
 						<SelectValue placeholder={m.common_select_season()} />
 					</SelectTrigger>
 					<SelectContent>
 						{localSeasons.map((season) => (
-							<SelectItem key={season.id} value={season.id} className="text-xs">
+							<SelectItem key={season.id} value={season.id}>
 								{season.seasonNumber === 0
 									? m.components_special_episodes()
 									: m.components_season_number_label({ number: season.seasonNumber })}
@@ -46,14 +46,14 @@ export function ReassignTvSelectors({
 			</div>
 
 			<div className="space-y-1.5">
-				<Label className="text-xs">{m.components_select_episode_label()}</Label>
+				<Label size="xs">{m.components_select_episode_label()}</Label>
 				<Select value={selectedEpisodeId ?? ""} onValueChange={onEpisodeChange} disabled={!selectedSeasonId || localEpisodes.length === 0}>
-					<SelectTrigger className="h-10 text-xs sm:h-9">
+					<SelectTrigger density="compact">
 						<SelectValue placeholder={selectedSeasonId ? m.common_select_episode() : m.common_select_season_first()} />
 					</SelectTrigger>
 					<SelectContent>
 						{localEpisodes.map((ep) => (
-							<SelectItem key={ep.id} value={ep.id} className="text-xs">
+							<SelectItem key={ep.id} value={ep.id}>
 								{m.components_episode_numbered({ number: ep.episodeNumber, title: ep.title ?? "" })}
 							</SelectItem>
 						))}

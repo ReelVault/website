@@ -63,12 +63,12 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 								</Badge>
 							)}
 							{file.source !== null && (
-								<Badge variant="outline" size="sm" className="font-mono text-xs">
+								<Badge variant="outline" size="sm" font="mono">
 									{file.source}
 								</Badge>
 							)}
 							{file.formatName !== null && (
-								<Badge variant="outline" size="sm" className="font-mono text-xs">
+								<Badge variant="outline" size="sm" font="mono">
 									{file.formatName}
 								</Badge>
 							)}
@@ -78,13 +78,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				</div>
 
 				<div className="flex shrink-0 items-center gap-2">
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={handleOpenDownloadDialog}
-						className="gap-1.5 font-medium text-xs"
-						title={m.components_offline_download_title()}
-					>
+					<Button variant="outline" size="sm" onClick={handleOpenDownloadDialog} title={m.components_offline_download_title()}>
 						<Download className="size-3.5 text-primary" />
 						<span className="hidden sm:inline">{m.components_offline_download_short()}</span>
 					</Button>
@@ -111,7 +105,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 							</Button>
 						</>
 					)}
-					<Button nativeButton={false} render={<Link to="/player/$id" params={{ id: file.id }} />} className="gap-2 font-medium">
+					<Button nativeButton={false} render={<Link to="/player/$id" params={{ id: file.id }} />}>
 						<Play data-icon="inline-start" className="size-4 fill-current" aria-hidden="true" />
 						{m.components_metadata_card_play()}
 					</Button>
@@ -190,7 +184,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 					<span className="flex-1 select-all break-all font-mono text-foreground/90 text-xs" title={file.filePath}>
 						{file.filePath}
 					</span>
-					<Button variant="outline" size="xs" onClick={handleCopyPath} className="shrink-0 gap-1.5 font-medium text-xs">
+					<Button variant="outline" size="xs" onClick={handleCopyPath} className="shrink-0">
 						<CopyIcon copied={copied} className="size-3" />
 						<span>{copied ? m.common_copied() : m.common_copy()}</span>
 					</Button>
@@ -210,7 +204,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 								key={`${vStream.mediaFileId}-v-${vStream.index}`}
 								className="flex flex-wrap items-center gap-3 rounded-lg border border-border/60 bg-background/80 p-3 text-xs"
 							>
-								<Badge variant="default" size="sm" className="font-bold font-mono uppercase">
+								<Badge weight="bold" variant="default" size="sm" font="mono" transform="uppercase">
 									{vStream.codecName}
 								</Badge>
 								{vStream.profile !== null && <span className="font-medium text-foreground">{vStream.profile}</span>}
@@ -223,7 +217,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 									</span>
 								)}
 								{vStream.pixelFormat !== null && (
-									<Badge variant="outline" size="sm" className="font-mono text-xs">
+									<Badge variant="outline" size="sm" font="mono">
 										{vStream.pixelFormat}
 									</Badge>
 								)}
@@ -247,7 +241,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 								key={`${aStream.mediaFileId}-a-${aStream.index}`}
 								className="flex flex-wrap items-center gap-3 rounded-lg border border-border/60 bg-background/80 p-3 text-xs"
 							>
-								<Badge variant="secondary" size="sm" className="font-semibold">
+								<Badge weight="semibold" variant="secondary" size="sm">
 									{formatLanguage(aStream.language)}
 								</Badge>
 								<span className="font-bold font-mono text-foreground uppercase">{aStream.codecName}</span>
@@ -262,7 +256,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 									</span>
 								)}
 								{aStream.isDefault && (
-									<Badge variant="outline" size="sm" className="text-xs">
+									<Badge variant="outline" size="sm">
 										{m.common_default_word()}
 									</Badge>
 								)}
@@ -282,7 +276,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 					<div className="flex flex-wrap gap-2">
 						{file.subtitles.map((sub) => (
 							<div key={sub.id} className="flex items-center gap-2 rounded-lg border border-border/60 bg-background/80 px-3 py-2 text-xs">
-								<Badge variant="outline" size="sm" className="font-semibold">
+								<Badge weight="semibold" variant="outline" size="sm">
 									{formatLanguage(sub.language)}
 								</Badge>
 								<span className="font-bold font-mono text-foreground text-xs">{sub.format}</span>
@@ -292,11 +286,11 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 									</span>
 								)}
 								{sub.type === "external" ? (
-									<Badge variant="secondary" size="sm" className="text-xs">
+									<Badge variant="secondary" size="sm">
 										{m.admin_subtitles_external_word()}
 									</Badge>
 								) : (
-									<Badge variant="outline" size="sm" className="text-xs">
+									<Badge variant="outline" size="sm">
 										{m.components_built_in()}
 									</Badge>
 								)}

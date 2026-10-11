@@ -12,13 +12,13 @@ interface AnalyticsTopContentProps {
 
 export function AnalyticsTopContent({ topContent }: AnalyticsTopContentProps) {
 	return (
-		<Card className="col-span-1 border-border/70 bg-card/50 lg:col-span-5">
+		<Card variant="subtle" className="col-span-1 lg:col-span-5">
 			<CardHeader>
 				<div className="flex items-center gap-2">
 					<Flame className="size-5 text-primary" />
-					<CardTitle className="font-bold text-base">{m.admin_analytics_top_productions()}</CardTitle>
+					<CardTitle>{m.admin_analytics_top_productions()}</CardTitle>
 				</div>
-				<CardDescription className="text-xs">{m.admin_analytics_top_viewership_description()}</CardDescription>
+				<CardDescription size="xs">{m.admin_analytics_top_viewership_description()}</CardDescription>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-3">
 				{topContent.length === 0 ? (
@@ -54,9 +54,7 @@ export function AnalyticsTopContent({ topContent }: AnalyticsTopContentProps) {
 										{item.title}
 									</p>
 									<div className="flex items-center gap-2 text-muted-foreground text-xs">
-										<Badge variant="outline" className="px-1 py-0 text-xs">
-											{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}
-										</Badge>
+										<Badge variant="outline">{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}</Badge>
 										<span>{m.admin_analytics_item_play_count({ watchCount: item.watchCount })}</span>
 									</div>
 								</div>

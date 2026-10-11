@@ -129,7 +129,7 @@ function MetadataEditorContent({
 					<MetadataProvidersSection metadata={metadata} onOpenIdentify={openIdentifyPage} />
 					<MetadataRatingsSection metadata={metadata} />
 					<MetadataTaxonomySection metadata={metadata} lockedFields={lockedFields} onToggleLock={toggleFieldLock} />
-					<Suspense fallback={<Skeleton className="h-40 rounded-xl" />}>
+					<Suspense fallback={<Skeleton className="h-40" />}>
 						<LazyRender>{() => <MetadataPeopleSection metadata={metadata} />}</LazyRender>
 					</Suspense>
 				</div>
@@ -147,7 +147,7 @@ function MetadataEditorContent({
 				</div>
 			</div>
 
-			<Suspense fallback={<Skeleton className="h-64 rounded-xl" />}>
+			<Suspense fallback={<Skeleton className="h-64" />}>
 				<LazyRender>{() => <MetadataMediaFilesSection metadataId={metadataId} />}</LazyRender>
 			</Suspense>
 

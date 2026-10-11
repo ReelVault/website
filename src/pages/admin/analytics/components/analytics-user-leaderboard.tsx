@@ -41,9 +41,9 @@ function LeaderboardCard({ user, index }: RankedEntry) {
 		<div className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4">
 			<div className="flex items-center justify-between gap-3">
 				<div className="flex min-w-0 items-center gap-2.5">
-					<Avatar className="size-9 border border-border/50">
+					<Avatar className="size-9">
 						{user.profileAvatar !== null && <AvatarImage src={user.profileAvatar} alt={user.profileName} />}
-						<AvatarFallback className="font-bold text-xs">{user.profileName.slice(0, 2)}</AvatarFallback>
+						<AvatarFallback>{user.profileName.slice(0, 2)}</AvatarFallback>
 					</Avatar>
 					<div className="min-w-0">
 						<p className="truncate font-semibold text-foreground text-sm">{user.profileName}</p>
@@ -74,13 +74,13 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 	const rankedEntries: RankedEntry[] = leaderboard.map((user, index) => ({ user, index }));
 
 	return (
-		<Card className="col-span-1 border-border/70 bg-card/50 lg:col-span-7">
+		<Card variant="subtle" className="col-span-1 lg:col-span-7">
 			<CardHeader>
 				<div className="flex items-center gap-2">
 					<Award className="size-5 text-warning" />
-					<CardTitle className="font-bold text-base">{m.admin_analytics_viewer_activity_ranking()}</CardTitle>
+					<CardTitle>{m.admin_analytics_viewer_activity_ranking()}</CardTitle>
 				</div>
-				<CardDescription className="text-xs">{m.admin_analytics_top_screen_time_profiles()}</CardDescription>
+				<CardDescription size="xs">{m.admin_analytics_top_screen_time_profiles()}</CardDescription>
 			</CardHeader>
 			<CardContent>
 				{leaderboard.length === 0 ? (
@@ -93,7 +93,7 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 							<div className="overflow-x-auto">
 								<Table>
 									<TableHeader>
-										<TableRow className="border-border/60 text-xs">
+										<TableRow>
 											<TableHead className="w-10 text-center">{m.common_hash_symbol()}</TableHead>
 											<TableHead>{m.admin_analytics_viewer_column()}</TableHead>
 											<TableHead className="text-center">{m.components_search_titles_heading()}</TableHead>
@@ -103,13 +103,15 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 									</TableHeader>
 									<TableBody>
 										{items.map(({ user, index }) => (
-											<TableRow key={user.profileId} className="border-border/40 text-xs">
-												<TableCell className="text-center font-bold font-mono">{getRankLabel(index)}</TableCell>
+											<TableRow key={user.profileId}>
+												<TableCell tone="mono" className="text-center">
+													{getRankLabel(index)}
+												</TableCell>
 												<TableCell>
 													<div className="flex items-center gap-2.5">
-														<Avatar className="size-7 border border-border/50">
+														<Avatar className="size-7">
 															{user.profileAvatar !== null && <AvatarImage src={user.profileAvatar} alt={user.profileName} />}
-															<AvatarFallback className="font-bold text-xs">{user.profileName.slice(0, 2)}</AvatarFallback>
+															<AvatarFallback>{user.profileName.slice(0, 2)}</AvatarFallback>
 														</Avatar>
 														<div className="min-w-0">
 															<p className="truncate font-semibold text-foreground">{user.profileName}</p>
@@ -117,9 +119,13 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 														</div>
 													</div>
 												</TableCell>
-												<TableCell className="text-center font-mono">{user.titlesCount}</TableCell>
-												<TableCell className="text-right font-bold font-mono text-primary">{formatWatchTime(user.totalMinutes)}</TableCell>
-												<TableCell className="text-right text-muted-foreground text-xs">
+												<TableCell tone="mono" className="text-center">
+													{user.titlesCount}
+												</TableCell>
+												<TableCell tone="mono" className="text-right">
+													{formatWatchTime(user.totalMinutes)}
+												</TableCell>
+												<TableCell tone="muted" size="sm" className="text-right">
 													{user.lastWatchedAt ? formatDate(user.lastWatchedAt) : m.common_no_value()}
 												</TableCell>
 											</TableRow>

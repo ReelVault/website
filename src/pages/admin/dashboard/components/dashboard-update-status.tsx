@@ -115,16 +115,8 @@ export function DashboardUpdateStatus() {
 							<Monitor className="size-3.5" />
 							{status?.webVersion ?? "—"}
 						</span>
-						{serverUpdate && (
-							<Badge variant="outline" className="border-warning/30 bg-warning/10 text-warning">
-								{m.admin_updates_new_version_short({ version: serverUpdate.version })}
-							</Badge>
-						)}
-						{webUpdate && (
-							<Badge variant="outline" className="border-warning/30 bg-warning/10 text-warning">
-								{m.admin_updates_new_version_short({ version: webUpdate.version })}
-							</Badge>
-						)}
+						{serverUpdate && <Badge variant="warning">{m.admin_updates_new_version_short({ version: serverUpdate.version })}</Badge>}
+						{webUpdate && <Badge variant="warning">{m.admin_updates_new_version_short({ version: webUpdate.version })}</Badge>}
 					</div>
 				</div>
 			</div>

@@ -54,7 +54,8 @@ export function QuickConnectRedeemForm({ onSuccess, onSwitchToPair, isInitiating
 							value={qcCode}
 							onChange={(e) => handleQcCodeChange(e.target.value)}
 							placeholder={m.auth_quick_connect_code_placeholder()}
-							className="text-center font-bold font-mono text-lg uppercase tracking-widest"
+							font="mono"
+							className="text-center"
 							maxLength={9}
 							autoFocus
 						/>
@@ -74,13 +75,7 @@ export function QuickConnectRedeemForm({ onSuccess, onSwitchToPair, isInitiating
 				<ArrowRight data-icon="inline-end" className="size-4" aria-hidden="true" />
 			</AsyncButton>
 
-			<Button
-				type="button"
-				variant="outline"
-				className="w-full gap-2 rounded-2xl py-5 font-bold"
-				onClick={onSwitchToPair}
-				disabled={isInitiatingPair}
-			>
+			<Button size="lg" type="button" variant="outline" className="w-full" onClick={onSwitchToPair} disabled={isInitiatingPair}>
 				<QrCodeIcon className="size-4" />
 				{m.auth_show_qr_pairing_tv()}
 			</Button>

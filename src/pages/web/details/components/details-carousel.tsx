@@ -25,7 +25,7 @@ export function DetailsCarousel({
 				startIndex: initialIndex ?? 0,
 			}}
 			setApi={setApi}
-			className="w-full px-1 sm:px-0"
+			className="w-full"
 		>
 			<CarouselContent className="-ml-4">
 				{items.map((item) => (

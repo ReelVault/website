@@ -60,22 +60,22 @@ export function ScheduledTaskActions({
 		<div className="flex shrink-0 items-center justify-end gap-2 pt-2 sm:pt-0">
 			{/* Pausing stops automatic runs only; manual runs and the queue stay available. */}
 			<Button
+				tone="muted"
 				type="button"
 				variant="outline"
 				size="sm"
 				disabled={isBusy}
 				onClick={() => onToggleSchedule(taskId, !scheduleEnabled)}
-				className="h-8.5 gap-1.5 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
 			>
 				{scheduleEnabled ? <PauseCircle className="size-3.5" /> : <PlayCircle className="size-3.5" />}
 				<span>{scheduleEnabled ? m.admin_workers_pause_word() : m.admin_workers_resume_word()}</span>
 			</Button>
 			<Button
+				tone="muted"
 				type="button"
 				variant="outline"
 				size="sm"
 				onClick={() => onConfigureTriggers(taskId)}
-				className="h-8.5 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
 				title={m.admin_workers_edit_trigger_schedule()}
 			>
 				<Settings2 className="size-3.5" />
@@ -83,39 +83,26 @@ export function ScheduledTaskActions({
 			</Button>
 
 			{isRunning || isQueued ? (
-				<Button
-					type="button"
-					variant="destructive"
-					size="sm"
-					disabled={isBusy}
-					onClick={() => onCancelTask(taskId)}
-					className="h-8.5 gap-1.5 font-medium text-xs"
-				>
+				<Button type="button" variant="destructive" size="sm" disabled={isBusy} onClick={() => onCancelTask(taskId)}>
 					<Square className="size-3.5 fill-current" />
 					<span>{m.admin_workers_stop_word()}</span>
 				</Button>
 			) : (
 				<>
 					<Button
+						tone="muted"
 						type="button"
 						variant="outline"
 						size="icon-sm"
 						disabled={isBusy}
 						onClick={() => setIsPayloadOpen(true)}
-						className="h-8.5 w-8.5 text-muted-foreground hover:text-foreground"
+						className="w-8.5"
 						title={m.admin_workers_run_with_payload()}
 						aria-label={m.admin_workers_run_with_payload()}
 					>
 						<Braces className="size-3.5" />
 					</Button>
-					<Button
-						type="button"
-						variant="default"
-						size="sm"
-						disabled={isBusy}
-						onClick={() => onRunTask(taskId)}
-						className="h-8.5 gap-1.5 font-medium text-xs shadow-xs"
-					>
+					<Button type="button" variant="default" size="sm" disabled={isBusy} onClick={() => onRunTask(taskId)}>
 						<Play className="size-3.5 fill-current" />
 						<span>{m.admin_workers_run_word()}</span>
 					</Button>
@@ -123,12 +110,10 @@ export function ScheduledTaskActions({
 			)}
 
 			<Dialog open={isPayloadOpen} onOpenChange={setIsPayloadOpen}>
-				<DialogContent className="gap-5 sm:max-w-lg">
+				<DialogContent className="sm:max-w-lg">
 					<DialogHeader className="gap-1.5">
-						<DialogTitle className="font-semibold text-lg tracking-tight">
-							{m.admin_workers_run_payload_title({ task: taskName })}
-						</DialogTitle>
-						<DialogDescription className="text-muted-foreground text-sm">{m.admin_workers_run_payload_description()}</DialogDescription>
+						<DialogTitle>{m.admin_workers_run_payload_title({ task: taskName })}</DialogTitle>
+						<DialogDescription>{m.admin_workers_run_payload_description()}</DialogDescription>
 					</DialogHeader>
 					<div className="flex flex-col gap-2">
 						<Textarea
@@ -139,7 +124,7 @@ export function ScheduledTaskActions({
 							}}
 							placeholder={m.admin_workers_run_payload_placeholder()}
 							aria-invalid={isPayloadInvalid}
-							className="min-h-28 font-mono text-xs"
+							className="min-h-28"
 						/>
 						{isPayloadInvalid && (
 							<p role="alert" className="text-destructive text-xs">
@@ -147,11 +132,11 @@ export function ScheduledTaskActions({
 							</p>
 						)}
 					</div>
-					<DialogFooter className="gap-3 border-border/60 border-t pt-4">
+					<DialogFooter className="gap-3 border-t">
 						<Button type="button" variant="outline" onClick={() => setIsPayloadOpen(false)}>
 							{m.common_cancel()}
 						</Button>
-						<Button type="button" onClick={runWithPayload} className="gap-1.5">
+						<Button type="button" onClick={runWithPayload}>
 							<Play className="size-3.5 fill-current" />
 							{m.admin_workers_run_word()}
 						</Button>

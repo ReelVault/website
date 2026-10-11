@@ -27,7 +27,7 @@ export function FailedDownloadCard({
 				<div className="min-w-0">
 					<div className="flex items-center gap-2">
 						<p className="truncate font-semibold text-xs">{job.fileName}</p>
-						<Badge size="sm" variant="destructive" className="text-xs">
+						<Badge size="sm" variant="destructive">
 							{job.status === "cancelled" ? m.common_cancelled() : m.common_error()}
 						</Badge>
 					</div>
@@ -37,21 +37,15 @@ export function FailedDownloadCard({
 
 			<div className="flex items-center gap-2">
 				{job.metadataId && (
-					<Button
-						variant="ghost"
-						size="sm"
-						nativeButton={false}
-						render={<Link to="/details/$id" params={{ id: job.metadataId }} />}
-						className="text-xs"
-					>
+					<Button variant="ghost" size="sm" nativeButton={false} render={<Link to="/details/$id" params={{ id: job.metadataId }} />}>
 						{m.user_open_title()}
 					</Button>
 				)}
-				<Button variant="outline" size="sm" disabled={isRetrying} onClick={() => onRetry(job.id)} className="gap-1.5 text-xs">
+				<Button variant="outline" size="sm" disabled={isRetrying} onClick={() => onRetry(job.id)}>
 					<RotateCcw className="size-3.5" />
 					{m.user_retry_download()}
 				</Button>
-				<Button variant="ghost" size="sm" onClick={() => onDelete(job.id)} className="text-muted-foreground text-xs hover:text-foreground">
+				<Button tone="muted" variant="ghost" size="sm" onClick={() => onDelete(job.id)}>
 					{m.user_delete_entry()}
 				</Button>
 			</div>

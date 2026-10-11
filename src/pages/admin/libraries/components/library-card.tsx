@@ -1,5 +1,4 @@
 import type { LibraryScanProgress, LibraryWithRelations } from "@reelvault/sdk";
-import { cn } from "cn";
 import { AlertTriangle, FolderOpen, RefreshCw, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useLibraryScanProgress } from "@/client/hooks/use-libraries";
@@ -84,12 +83,7 @@ export function LibraryCard({
 		<ContextMenu>
 			<ContextMenuTrigger
 				render={
-					<Card
-						className={cn(
-							"group relative flex flex-col justify-between overflow-hidden border-border/80 bg-card transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-md",
-							isScanning && "border-primary/50 shadow-[0_0_20px_color-mix(in_oklab,var(--primary)_30%,transparent)]",
-						)}
-					/>
+					<Card variant="interactive" selected={isScanning} className="group relative flex flex-col justify-between overflow-hidden" />
 				}
 			>
 				<div>
@@ -104,9 +98,9 @@ export function LibraryCard({
 						onShowScanFindings={onShowScanFindings}
 					/>
 
-					<CardContent className="flex flex-col gap-5 p-5 pt-0">
+					<CardContent size="comfortable" className="flex flex-col gap-5">
 						{invalidPathCount > 0 && (
-							<Button variant="outline" size="sm" className="w-fit gap-1.5 text-warning" onClick={() => onShowHealth(lib.id)}>
+							<Button variant="warning" size="sm" className="w-fit" onClick={() => onShowHealth(lib.id)}>
 								<AlertTriangle className="size-3.5" aria-hidden="true" />
 								{m.admin_libraries_health_invalid_count({ count: invalidPathCount })}
 							</Button>
@@ -131,7 +125,7 @@ export function LibraryCard({
 								</CollapsibleTrigger>
 								{paths.length > 1 && (
 									<Select value={pathSort} onValueChange={(value) => isPathSortOption(value) && setPathSort(value)}>
-										<SelectTrigger className="h-10 w-auto gap-1 px-2 text-xs sm:h-7" aria-label={m.admin_libraries_paths_sort_label()}>
+										<SelectTrigger density="compact" className="w-auto" aria-label={m.admin_libraries_paths_sort_label()}>
 											<SelectValue>{PATH_SORT_LABELS[pathSort]()}</SelectValue>
 										</SelectTrigger>
 										<SelectContent>
@@ -160,7 +154,7 @@ export function LibraryCard({
 								) : (
 									<div className="rounded-lg border border-border/80 border-dashed p-4 text-center">
 										<p className="text-muted-foreground text-xs">{m.admin_libraries_no_paths()}</p>
-										<Button variant="ghost" size="sm" className="mt-1.5 h-10 text-primary text-xs sm:h-7" onClick={() => onEdit(lib)}>
+										<Button variant="primary-ghost" size="sm" className="mt-1.5" onClick={() => onEdit(lib)}>
 											{m.admin_libraries_add_path()}
 										</Button>
 									</div>
@@ -193,9 +187,9 @@ export function LibraryCard({
 					<ConfirmAction
 						trigger={
 							<Button
-								variant="outline"
+								variant="destructive-outline"
 								size="icon"
-								className="size-10 shrink-0 text-destructive hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive sm:size-9"
+								className="shrink-0"
 								disabled={isDeleting}
 								title={m.admin_libraries_delete_library()}
 								aria-label={m.admin_libraries_delete_named({ name: lib.name })}

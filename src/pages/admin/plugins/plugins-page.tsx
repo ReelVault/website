@@ -165,21 +165,15 @@ export default function AdminPluginsPage() {
 				description={m.admin_plugins_manage_description()}
 				actions={
 					<>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => setUploadDialogOpen(true)}
-							disabled={isBusy}
-							className="gap-2 font-medium text-xs"
-						>
+						<Button variant="outline" size="sm" onClick={() => setUploadDialogOpen(true)} disabled={isBusy}>
 							<Upload className={cn("size-3.5", { "animate-pulse": isInstallingArchive })} />
 							{m.admin_plugins_upload_install()}
 						</Button>
-						<Button variant="outline" size="sm" onClick={() => setRepositoriesOpen(true)} className="gap-2 font-medium text-xs">
+						<Button variant="outline" size="sm" onClick={() => setRepositoriesOpen(true)}>
 							<Store className="size-3.5" />
 							{m.admin_plugins_repositories_manage()}
 						</Button>
-						<Button variant="outline" size="sm" onClick={() => detach(reloadAll())} disabled={isBusy} className="gap-2 font-medium text-xs">
+						<Button variant="outline" size="sm" onClick={() => detach(reloadAll())} disabled={isBusy}>
 							<RefreshCw className={cn("size-3.5", { "animate-spin": isReloadingAll })} />
 							{m.admin_plugins_reload_all()}
 						</Button>
@@ -199,11 +193,11 @@ export default function AdminPluginsPage() {
 					size="sm"
 					className="justify-start"
 				>
-					<ToggleGroupItem value="available" className="gap-1.5 px-3">
+					<ToggleGroupItem value="available">
 						<span>{m.admin_plugins_view_available()}</span>
 						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{availableCount}</span>
 					</ToggleGroupItem>
-					<ToggleGroupItem value="installed" className="gap-1.5 px-3">
+					<ToggleGroupItem value="installed">
 						<span>{m.admin_plugins_view_installed()}</span>
 						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{plugins.length}</span>
 					</ToggleGroupItem>
@@ -228,11 +222,9 @@ export default function AdminPluginsPage() {
 				size="sm"
 				className="flex-wrap justify-start"
 			>
-				<ToggleGroupItem value="all" className="gap-1.5 px-3">
-					{m.common_all()}
-				</ToggleGroupItem>
+				<ToggleGroupItem value="all">{m.common_all()}</ToggleGroupItem>
 				{categoriesWithCounts.map((entry) => (
-					<ToggleGroupItem key={entry.value} value={entry.value} className="gap-1.5 px-3">
+					<ToggleGroupItem key={entry.value} value={entry.value}>
 						<span>{entry.label}</span>
 						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{entry.count}</span>
 					</ToggleGroupItem>
@@ -263,13 +255,13 @@ export default function AdminPluginsPage() {
 							{selectedIds.size > 0 && (
 								<div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/80 bg-card p-3 text-xs">
 									<span className="font-medium">{m.admin_plugins_bulk_selected({ count: selectedIds.size })}</span>
-									<Button size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(true)} className="text-xs">
+									<Button size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(true)}>
 										{m.admin_plugins_bulk_enable()}
 									</Button>
-									<Button variant="outline" size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(false)} className="text-xs">
+									<Button variant="outline" size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(false)}>
 										{m.admin_plugins_bulk_disable()}
 									</Button>
-									<Button variant="ghost" size="sm" onClick={() => setSelectedIds(new Set())} className="text-xs">
+									<Button variant="ghost" size="sm" onClick={() => setSelectedIds(new Set())}>
 										{m.admin_plugins_bulk_clear()}
 									</Button>
 								</div>

@@ -107,12 +107,8 @@ export function IdentifyPanel({ metadataId, mediaType, initialTitle, initialYear
 					}}
 					className="w-fit max-w-full"
 				>
-					<ToggleGroupItem value="replace" className="px-3">
-						{m.common_replace_match()}
-					</ToggleGroupItem>
-					<ToggleGroupItem value="supplement" className="px-3">
-						{m.components_identify_fill_gaps()}
-					</ToggleGroupItem>
+					<ToggleGroupItem value="replace">{m.common_replace_match()}</ToggleGroupItem>
+					<ToggleGroupItem value="supplement">{m.components_identify_fill_gaps()}</ToggleGroupItem>
 				</ToggleGroup>
 			</div>
 

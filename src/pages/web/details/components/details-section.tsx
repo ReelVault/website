@@ -27,7 +27,7 @@ export function DetailsSection({
 			<section>
 				<div className="mb-8 flex items-center gap-4">
 					<div className="flex flex-row items-center gap-4">
-						<Badge className="flex size-11 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 font-bold text-primary">
+						<Badge weight="bold" variant="primary" className="flex items-center justify-center">
 							<Icon className="size-5" />
 						</Badge>
 
@@ -39,7 +39,7 @@ export function DetailsSection({
 					</div>
 
 					{/* Decorative Line */}
-					<Separator className="ml-4 h-px flex-1 bg-linear-to-r from-border to-transparent" />
+					<Separator className="ml-4 flex-1" />
 					{action && <div>{action}</div>}
 				</div>
 				{children}

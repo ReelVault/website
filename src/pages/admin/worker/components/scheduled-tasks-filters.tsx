@@ -33,11 +33,12 @@ export function ScheduledTasksFilters({
 			<div className="relative flex-1 sm:max-w-md">
 				<Search className="absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-muted-foreground" />
 				<Input
+					leadingIcon
 					type="text"
 					placeholder={m.admin_workers_jobs_search_placeholder()}
 					value={searchQuery}
 					onChange={(e) => onSearchChange(e.target.value)}
-					className="h-10 bg-background/60 pr-3 pl-8 text-xs sm:h-8.5"
+					density="compact"
 				/>
 			</div>
 

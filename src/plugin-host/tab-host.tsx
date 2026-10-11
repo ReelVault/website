@@ -25,7 +25,7 @@ export function PluginTabTriggers({ host }: { host: PluginTabHostName }) {
 				const value = `${tab.pluginId}:${tab.id}`;
 
 				return (
-					<TabsTrigger key={value} value={value} className="gap-1.5">
+					<TabsTrigger key={value} value={value}>
 						<Icon className="size-3.5" aria-hidden="true" />
 						{resolvePluginText(tab.label, tab.defaultLocale)}
 					</TabsTrigger>

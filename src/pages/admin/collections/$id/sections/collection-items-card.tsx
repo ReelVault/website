@@ -69,11 +69,11 @@ export function CollectionItemsCard({
 	}
 
 	return (
-		<Card className="border-border/80 bg-card">
+		<Card>
 			<CardHeader>
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col gap-1">
-						<CardTitle className="font-semibold text-base">
+						<CardTitle>
 							{sortMode === "manual"
 								? m.admin_collections_manual_order_count({ count: orderItems.length })
 								: m.admin_collections_titles_in_collection_count({ count: orderItems.length })}
@@ -82,7 +82,7 @@ export function CollectionItemsCard({
 							{sortMode === "manual" ? m.admin_collections_order_help() : m.admin_collections_sorted_by_label({ sort: currentSortLabel })}
 						</CardDescription>
 					</div>
-					{isLoading && <Spinner className="size-4" />}
+					{isLoading && <Spinner size="default" />}
 				</div>
 			</CardHeader>
 			<CardContent>

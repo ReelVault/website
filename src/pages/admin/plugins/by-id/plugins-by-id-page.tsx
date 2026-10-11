@@ -200,22 +200,15 @@ export default function AdminPluginSettingsPage() {
 				description={configDetails.description ?? m.admin_plugins_config_description()}
 				actions={
 					<div className="flex flex-wrap items-center gap-2">
-						<Button variant="outline" size="sm" nativeButton={false} render={<Link to={"/admin/plugins"} />} className="gap-2 text-xs">
+						<Button variant="outline" size="sm" nativeButton={false} render={<Link to={"/admin/plugins"} />}>
 							<ArrowLeft className="size-3.5" />
 							{m.admin_plugins_back_to_list()}
 						</Button>
-						<Button type="button" variant="outline" size="sm" onClick={() => detach(handleExport())} className="gap-2 text-xs">
+						<Button type="button" variant="outline" size="sm" onClick={() => detach(handleExport())}>
 							<Download className="size-3.5" />
 							{m.admin_plugins_config_export()}
 						</Button>
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							disabled={isImporting}
-							onClick={() => importInput.current?.click()}
-							className="gap-2 text-xs"
-						>
+						<Button type="button" variant="outline" size="sm" disabled={isImporting} onClick={() => importInput.current?.click()}>
 							<Upload className="size-3.5" />
 							{m.admin_plugins_config_import()}
 						</Button>
@@ -227,11 +220,11 @@ export default function AdminPluginSettingsPage() {
 							onChange={(event) => detach(handleImportFile(event))}
 						/>
 						<Button
+							tone="muted"
 							variant="ghost"
 							size="sm"
 							disabled={isReloading}
 							onClick={() => detach(() => reloadPlugin(configDetails.id))}
-							className="gap-1.5 text-muted-foreground text-xs hover:text-foreground"
 						>
 							<RefreshCw className={cn("size-3.5", { "animate-spin": isReloading })} />
 							{m.admin_plugins_reload()}
@@ -264,11 +257,12 @@ export default function AdminPluginSettingsPage() {
 									{fieldErrors[field.name] && <p className="text-destructive text-xs">{fieldErrors[field.name]}</p>}
 									{canRestoreField(field, formValues[field.name]) && (
 										<Button
+											tone="muted"
 											type="button"
 											variant="ghost"
 											size="sm"
 											onClick={() => handleValueChange(field.name, field.default)}
-											className="gap-1.5 self-start text-muted-foreground text-xs hover:text-foreground"
+											className="self-start"
 										>
 											<RotateCcw className="size-3" />
 											{m.admin_plugins_field_reset()}
@@ -282,13 +276,7 @@ export default function AdminPluginSettingsPage() {
 					<div className="flex items-center justify-between border-border/80 border-t pt-4">
 						<ConfirmAction
 							trigger={
-								<Button
-									type="button"
-									variant="ghost"
-									size="sm"
-									disabled={isResetting}
-									className="gap-1.5 text-muted-foreground text-xs hover:text-foreground"
-								>
+								<Button tone="muted" type="button" variant="ghost" size="sm" disabled={isResetting}>
 									<RotateCcw className="size-3.5" />
 									{m.admin_settings_restore_default()}
 								</Button>
@@ -300,14 +288,7 @@ export default function AdminPluginSettingsPage() {
 						/>
 
 						<div className="flex items-center gap-3">
-							<Button
-								type="button"
-								variant="ghost"
-								size="sm"
-								nativeButton={false}
-								render={<Link to={"/admin/plugins"} />}
-								className="text-xs"
-							>
+							<Button type="button" variant="ghost" size="sm" nativeButton={false} render={<Link to={"/admin/plugins"} />}>
 								{m.common_cancel()}
 							</Button>
 							<AsyncButton type="submit" size="sm" isPending={isUpdating} pendingLabel={m.common_saving_dots()} className="gap-1.5 text-xs">

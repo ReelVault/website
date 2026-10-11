@@ -59,7 +59,7 @@ export function AdminSidebarBody() {
 
 	return (
 		<>
-			<SidebarHeader className="gap-3 border-border border-b p-4">
+			<SidebarHeader size="comfortable" className="gap-3 border-b">
 				<Link to="/" className="flex items-center justify-center">
 					<Logo className="h-7 w-auto" />
 				</Link>
@@ -68,7 +68,7 @@ export function AdminSidebarBody() {
 						placeholder={m.admin_sidebar_search_placeholder()}
 						value={searchQuery}
 						onChange={handleSearchChange}
-						className="pl-8 text-xs"
+						className="pl-8"
 					/>
 					<Search className="pointer-events-none absolute top-2.5 left-2.5 size-4 text-muted-foreground" />
 					<button
@@ -82,7 +82,7 @@ export function AdminSidebarBody() {
 				</div>
 			</SidebarHeader>
 
-			<SidebarContent className="gap-2 py-4">
+			<SidebarContent size="comfortable" className="gap-2">
 				{hasAnyResults ? (
 					filteredStaticGroups.map((group, groupIndex) => (
 						<div key={group.id}>

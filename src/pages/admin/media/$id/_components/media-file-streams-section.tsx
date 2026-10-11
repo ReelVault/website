@@ -27,17 +27,17 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 											<span className="text-muted-foreground">{m.admin_media_codec_profile({ profile: stream.profile })}</span>
 										)}
 										{stream.isDefault && (
-											<Badge variant="secondary" size="sm" className="text-xs">
+											<Badge variant="secondary" size="sm">
 												{m.admin_users_default()}
 											</Badge>
 										)}
 										{stream.isForced && (
-											<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
+											<Badge variant="warning-outline" size="sm">
 												{m.admin_media_forced_badge()}
 											</Badge>
 										)}
 									</div>
-									<Badge variant="secondary" size="sm" className="font-mono text-xs">
+									<Badge variant="secondary" size="sm" font="mono">
 										{m.common_rank_number({ index: stream.index })}
 									</Badge>
 								</div>
@@ -57,12 +57,12 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 									{stream.colorPrimaries && <span>{m.common_dot_value({ value: stream.colorPrimaries })}</span>}
 									{stream.colorSpace && <span>{m.admin_media_color_space({ value: stream.colorSpace })}</span>}
 									{stream.doviProfile != null && (
-										<Badge variant="outline" size="sm" className="text-xs">
+										<Badge variant="outline" size="sm">
 											{m.admin_media_dolby_vision_profile({ profile: stream.doviProfile })}
 										</Badge>
 									)}
 									{stream.language && (
-										<Badge variant="outline" size="sm" className="text-xs">
+										<Badge variant="outline" size="sm">
 											{stream.language}
 										</Badge>
 									)}
@@ -90,22 +90,22 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 										<AudioLines className="size-3.5 text-primary" />
 										<span className="font-semibold text-foreground">{stream.codecName.toUpperCase()}</span>
 										{stream.language && (
-											<Badge variant="outline" size="sm" className="font-bold text-xs">
+											<Badge weight="bold" variant="outline" size="sm">
 												{stream.language}
 											</Badge>
 										)}
 										{stream.isDefault && (
-											<Badge variant="secondary" size="sm" className="text-xs">
+											<Badge variant="secondary" size="sm">
 												{m.admin_users_default()}
 											</Badge>
 										)}
 										{stream.isForced && (
-											<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
+											<Badge variant="warning-outline" size="sm">
 												{m.admin_media_forced_badge()}
 											</Badge>
 										)}
 									</div>
-									<Badge variant="secondary" size="sm" className="font-mono text-xs">
+									<Badge variant="secondary" size="sm" font="mono">
 										{m.common_rank_number({ index: stream.index })}
 									</Badge>
 								</div>

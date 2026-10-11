@@ -38,7 +38,7 @@ export function CollectionTimelineItem({ movie, index }: CollectionTimelineItemP
 								<span>{movie.type === "movie" ? m.common_movie_word() : m.common_series_word()}</span>
 								<Separator orientation="vertical" className="h-4" />
 								<span>{getYearFromDate(movie.releaseDate) || m.web_year_unknown()}</span>
-								<Badge variant="secondary" className="gap-1">
+								<Badge variant="secondary">
 									<Star className="size-3 fill-current" aria-hidden="true" /> {formatRating(movie.rating.avgScore)}
 								</Badge>
 							</div>

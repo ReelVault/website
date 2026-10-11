@@ -22,13 +22,13 @@ export function MediaFileScanConfig({
 	return (
 		<div className="flex flex-col gap-6 py-4">
 			<div className="flex flex-col gap-3">
-				<Label className="font-medium text-foreground text-sm">{m.admin_media_decode_test_duration()}</Label>
+				<Label>{m.admin_media_decode_test_duration()}</Label>
 				<div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
 					<Button
 						type="button"
 						variant={durationPreset === "10" ? "default" : "outline"}
 						onClick={() => onDurationPresetChange("10")}
-						className="text-xs"
+						size="sm"
 					>
 						{m.admin_media_scan_preset_quick()}
 					</Button>
@@ -36,7 +36,7 @@ export function MediaFileScanConfig({
 						type="button"
 						variant={durationPreset === "60" ? "default" : "outline"}
 						onClick={() => onDurationPresetChange("60")}
-						className="text-xs"
+						size="sm"
 					>
 						{m.admin_media_scan_preset_standard()}
 					</Button>
@@ -44,7 +44,7 @@ export function MediaFileScanConfig({
 						type="button"
 						variant={durationPreset === "all" ? "default" : "outline"}
 						onClick={() => onDurationPresetChange("all")}
-						className="text-xs"
+						size="sm"
 					>
 						{m.admin_media_full_scan()}
 					</Button>
@@ -57,7 +57,8 @@ export function MediaFileScanConfig({
 						type="button"
 						variant={durationPreset === "custom" ? "default" : "outline"}
 						onClick={() => onDurationPresetChange("custom")}
-						className="shrink-0 text-xs"
+						size="sm"
+						className="shrink-0"
 					>
 						{m.admin_media_other_time()}
 					</Button>
@@ -67,7 +68,6 @@ export function MediaFileScanConfig({
 							value={customDuration}
 							onChange={(e) => onCustomDurationChange(e.target.value)}
 							placeholder={m.admin_media_scan_seconds_placeholder()}
-							className="h-10 text-xs sm:h-9"
 							min={1}
 						/>
 					)}

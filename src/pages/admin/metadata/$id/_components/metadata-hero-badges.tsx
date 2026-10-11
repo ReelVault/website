@@ -18,15 +18,15 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 
 	return (
 		<div className="flex flex-wrap items-center gap-2">
-			<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="gap-1 font-medium capitalize">
+			<Badge variant={isMovie ? "default" : "secondary"} size="sm" transform="capitalize">
 				{isMovie ? <Clapperboard className="size-3" /> : <Tv className="size-3" />}
 				<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 			</Badge>
-			<Badge variant="outline" size="sm" className="font-mono text-xs">
+			<Badge variant="outline" size="sm" font="mono">
 				{releaseYear}
 			</Badge>
 			{metadata.status !== null && (
-				<Badge variant="secondary" size="sm" className="text-xs">
+				<Badge variant="secondary" size="sm">
 					{metadata.status}
 				</Badge>
 			)}
@@ -40,7 +40,7 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 							</span>
 						}
 					/>
-					<TooltipContent side="top" className="flex flex-col gap-1 text-xs">
+					<TooltipContent side="top" className="flex flex-col">
 						<div className="border-border/50 border-b pb-1 font-semibold text-foreground">
 							{m.admin_metadata_average_rating({ rating })}
 						</div>
@@ -67,7 +67,7 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 				<Tooltip>
 					<TooltipTrigger
 						render={
-							<Badge variant="outline" size="sm" className="gap-1 border-primary/30 bg-primary/5 font-mono text-primary text-xs">
+							<Badge variant="primary" size="sm" font="mono">
 								<Radio className="size-3" />
 								<span>
 									{m.admin_metadata_source_label()} {formatProviderShortName(metadata.primaryProviderId)}
@@ -75,7 +75,7 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 							</Badge>
 						}
 					/>
-					<TooltipContent side="top" className="text-xs">
+					<TooltipContent side="top">
 						{m.admin_metadata_primary_provider_tooltip({ provider: formatProviderName(metadata.primaryProviderId) })}
 					</TooltipContent>
 				</Tooltip>
@@ -100,13 +100,13 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 										<ExternalLink className="size-2.5 text-muted-foreground" />
 									</a>
 								) : (
-									<Badge variant="outline" size="sm" className="font-mono text-xs">
+									<Badge variant="outline" size="sm" font="mono">
 										{m.admin_metadata_provider_external_id({ provider: short, id: p.externalId })}
 									</Badge>
 								)
 							}
 						/>
-						<TooltipContent side="top" className="text-xs">
+						<TooltipContent side="top">
 							{m.admin_metadata_external_identifier({ provider: formatProviderName(p.name), id: p.externalId })}
 							{p.name.toLowerCase() === metadata.primaryProviderId?.toLowerCase() && m.admin_metadata_primary_provider_paren()}
 						</TooltipContent>
@@ -115,12 +115,12 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 			})}
 
 			{lockedCount > 0 ? (
-				<Badge variant="outline" size="sm" className="gap-1 border-warning/30 bg-warning/10 text-warning text-xs">
+				<Badge variant="warning" size="sm">
 					<Lock className="size-3" />
 					<span>{m.admin_metadata_locked_fields_total({ count: lockedCount })}</span>
 				</Badge>
 			) : (
-				<Badge variant="outline" size="sm" className="gap-1 text-muted-foreground text-xs">
+				<Badge tone="muted" variant="outline" size="sm">
 					<Unlock className="size-3" />
 					<span>{m.admin_metadata_no_locked_fields()}</span>
 				</Badge>

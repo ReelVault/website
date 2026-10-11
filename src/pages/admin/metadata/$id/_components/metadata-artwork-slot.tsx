@@ -76,7 +76,7 @@ export function ArtworkSlot({
 					width={imageWidth}
 					aspectRatio={aspectRatio}
 					sizes={sizes}
-					className="h-full w-full object-cover"
+					className="w-full object-cover"
 				/>
 				<button
 					type="button"
@@ -91,20 +91,14 @@ export function ArtworkSlot({
 			</div>
 
 			<div className="flex items-center gap-2">
-				<Button type="button" variant="outline" size="sm" onClick={() => onOpenDialog(kind)} className="h-10 flex-1 gap-1.5 text-xs sm:h-8">
+				<Button type="button" variant="outline" size="sm" onClick={() => onOpenDialog(kind)} className="flex-1">
 					<ImageIcon className="size-3.5 text-primary" />
 					<span>{changeLabel}</span>
 				</Button>
 
 				<ConfirmAction
 					trigger={
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							className="h-10 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive sm:h-8"
-							disabled={isDeletingImage}
-						>
+						<Button type="button" variant="destructive-ghost" size="sm" disabled={isDeletingImage}>
 							<Trash2 className="size-3.5" />
 							<span>{m.common_delete()}</span>
 						</Button>

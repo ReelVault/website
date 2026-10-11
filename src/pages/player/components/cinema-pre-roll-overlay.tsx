@@ -87,26 +87,13 @@ export function CinemaPreRollOverlay({ entries, featureTitle, onDone }: CinemaPr
 						{featureTitle && <span className="text-sm text-white/70">{m.player_cinema_up_next({ title: featureTitle })}</span>}
 					</div>
 					<div className="pointer-events-auto flex items-center gap-2">
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							className="text-white hover:bg-white/10 hover:text-white"
-							onClick={() => setIsMuted(false)}
-							disabled={!isMuted}
-						>
+						<Button type="button" variant="ghost" size="sm" onClick={() => setIsMuted(false)} disabled={!isMuted}>
 							{m.player_cinema_unmute()}
 						</Button>
-						<Button type="button" variant="ghost" size="sm" className="text-white hover:bg-white/10 hover:text-white" onClick={advance}>
+						<Button type="button" variant="ghost" size="sm" onClick={advance}>
 							{index + 1 >= entries.length ? m.player_cinema_skip_all() : m.player_cinema_next_trailer()}
 						</Button>
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							className="border-white/30 text-white hover:bg-white/10 hover:text-white"
-							onClick={onDone}
-						>
+						<Button type="button" variant="outline" size="sm" onClick={onDone}>
 							{m.player_cinema_skip_all()}
 						</Button>
 					</div>

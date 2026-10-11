@@ -51,31 +51,31 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 	let statusBadge: ReactNode;
 	if (isRunning) {
 		statusBadge = (
-			<Badge variant="default" className="h-5 gap-1.5 bg-primary px-2 font-medium text-primary-foreground text-xs shadow-xs">
+			<Badge variant="default" size="sm">
 				<span className="size-1.5 animate-ping rounded-full bg-white" /> {m.admin_worker_running_badge()}
 			</Badge>
 		);
 	} else if (operation.status === "pending") {
 		statusBadge = (
-			<Badge variant="secondary" className="h-5 border border-warning/30 bg-warning/10 px-2 text-warning text-xs">
+			<Badge variant="warning" size="sm">
 				{m.admin_workers_queued()}
 			</Badge>
 		);
 	} else if (isCompleted) {
 		statusBadge = (
-			<Badge variant="outline" className="h-5 gap-1 border-success/30 bg-success/5 px-2 text-success text-xs">
+			<Badge variant="success" size="sm">
 				<CheckCircle2 className="size-3" /> {m.admin_worker_finished_word()}
 			</Badge>
 		);
 	} else if (isFailed) {
 		statusBadge = (
-			<Badge variant="destructive" className="h-5 gap-1 px-2 text-xs">
+			<Badge variant="destructive" size="sm">
 				<AlertCircle className="size-3" /> {m.common_error()}
 			</Badge>
 		);
 	} else {
 		statusBadge = (
-			<Badge variant="secondary" className="h-5 px-2 text-xs">
+			<Badge variant="secondary" size="sm">
 				{labels[operation.status]}
 			</Badge>
 		);
@@ -108,7 +108,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 							<span className="rounded border border-border/40 bg-muted/40 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
 								{operation.type}
 							</span>
-							<Badge variant="outline" className="h-5 gap-1 font-mono text-muted-foreground text-xs">
+							<Badge tone="muted" variant="outline" font="mono" size="sm">
 								<span>{m.common_truncated_id({ id: operation.id.slice(0, 8) })}</span>
 								<button
 									type="button"
@@ -123,7 +123,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 							{statusBadge}
 
 							{operation.cancelRequested && (
-								<Badge variant="outline" className="h-5 border-warning/30 text-warning text-xs">
+								<Badge variant="warning-outline" size="sm">
 									{m.admin_worker_cancel_requested()}
 								</Badge>
 							)}
@@ -139,7 +139,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 									</span>
 									<span className="font-semibold text-foreground">{m.common_percent_value({ value: Math.round(progress) })}</span>
 								</div>
-								<Progress value={Math.min(100, Math.max(0, progress))} className="h-1.5 w-full bg-muted/60" />
+								<Progress value={Math.min(100, Math.max(0, progress))} className="w-full" />
 							</div>
 						)}
 
@@ -174,13 +174,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 
 				{/* Right Actions */}
 				<div className="flex shrink-0 items-center justify-end gap-2 pt-2 sm:pt-0">
-					<Button
-						type="button"
-						variant="outline"
-						size="sm"
-						onClick={() => onInspect(operation)}
-						className="h-8.5 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
-					>
+					<Button tone="muted" type="button" variant="outline" size="sm" onClick={() => onInspect(operation)}>
 						<ListTree className="size-3.5" />
 						<span>{m.admin_worker_show_items()}</span>
 					</Button>
@@ -188,10 +182,9 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 					{isResumable && (
 						<Button
 							type="button"
-							variant="outline"
+							variant="primary-outline"
 							size="sm"
 							disabled={resuming}
-							className="h-8.5 gap-1.5 border-primary/40 font-medium text-primary text-xs hover:bg-primary/10"
 							onClick={() => {
 								if (resumeOperation) detach(() => resumeOperation(operation.id));
 							}}
@@ -204,7 +197,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 					{isActive && (
 						<ConfirmAction
 							trigger={
-								<Button type="button" variant="destructive" size="sm" disabled={cancelling} className="h-8.5 gap-1.5 font-medium text-xs">
+								<Button type="button" variant="destructive" size="sm" disabled={cancelling}>
 									<Square className="size-3.5 fill-current" />
 									<span>{cancelling ? m.admin_workers_cancelling_ellipsis() : m.admin_workers_stop_word()}</span>
 								</Button>

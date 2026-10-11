@@ -21,7 +21,7 @@ export function NotFoundScreen() {
 				<p className="mt-3 text-muted-foreground text-sm leading-relaxed">{m.components_not_found_description()}</p>
 
 				<div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-					<Button type="button" variant="outline" onClick={() => router.history.back()} className="gap-2 rounded-xl">
+					<Button type="button" variant="outline" onClick={() => router.history.back()}>
 						<ArrowLeftIcon className="size-4" />
 						{m.common_back()}
 					</Button>

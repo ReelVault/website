@@ -58,7 +58,7 @@ export function DetailsSimilarByActor({
 				<DetailsSection key={sectionKey} title={m.web_more_from_named({ name: actorData.name })} icon={Sparkles}>
 					<div className="flex gap-4 overflow-hidden" role="status" aria-label={m.web_loading_titles_from({ name: actorData.name })}>
 						{["one", "two", "three", "four", "five"].map((key) => (
-							<Skeleton key={key} className="aspect-2/3 w-48 shrink-0 rounded-xl" />
+							<Skeleton key={key} className="aspect-2/3 w-48 shrink-0" />
 						))}
 					</div>
 				</DetailsSection>

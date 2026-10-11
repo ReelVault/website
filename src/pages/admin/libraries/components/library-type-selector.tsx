@@ -12,7 +12,7 @@ interface LibraryTypeSelectorProps {
 export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProps) {
 	return (
 		<div className="flex flex-col gap-2.5">
-			<Label className="font-medium text-foreground text-sm">{m.admin_libraries_content_type()}</Label>
+			<Label>{m.admin_libraries_content_type()}</Label>
 			<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 				<button
 					type="button"
@@ -36,7 +36,7 @@ export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProp
 						<div className="flex items-center justify-between">
 							<span className="font-semibold text-base text-foreground">{m.web_watchlist_stats_movies()}</span>
 							{value === "movies" && (
-								<Badge variant="default" size="sm" className="h-5 gap-1 px-1.5">
+								<Badge variant="default" size="compact">
 									<Check className="size-3" />
 									<span>{m.admin_libraries_selected()}</span>
 								</Badge>
@@ -68,7 +68,7 @@ export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProp
 						<div className="flex items-center justify-between">
 							<span className="font-semibold text-base text-foreground">{m.web_watchlist_stats_series()}</span>
 							{value === "tv_shows" && (
-								<Badge variant="default" size="sm" className="h-5 gap-1 px-1.5">
+								<Badge variant="default" size="compact">
 									<Check className="size-3" />
 									<span>{m.admin_libraries_selected()}</span>
 								</Badge>

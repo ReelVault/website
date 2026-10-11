@@ -223,10 +223,10 @@ function CompatibilityToggleButton({
 }) {
 	return (
 		<Button
+			tone="muted"
 			type="button"
 			variant="ghost"
 			size="icon-sm"
-			className="size-10 text-muted-foreground hover:text-foreground sm:size-8"
 			onClick={onToggle}
 			title={isShown ? m.player_hide_incompatible({ label }) : m.player_show_incompatible({ hiddenCount })}
 			aria-label={isShown ? m.player_hide_incompatible({ label }) : m.player_show_incompatible({ hiddenCount })}
@@ -298,12 +298,10 @@ export function PlayerAudioSubtitlesDialog() {
 				<Subtitles className="size-5" aria-hidden="true" />
 			</PlayerControlButton>
 
-			<FullscreenDialogContent className="max-h-[85vh] w-full max-w-4xl border-border/40 bg-background/95 p-6 shadow-2xl md:p-8">
+			<FullscreenDialogContent className="max-h-[85vh] w-full max-w-4xl">
 				<FullscreenDialogHeader className="mb-3">
-					<FullscreenDialogTitle className="font-bold text-xl">{m.player_audio_subtitles()}</FullscreenDialogTitle>
-					<FullscreenDialogDescription className="text-muted-foreground text-xs">
-						{m.player_pick_preferred_tracks()}
-					</FullscreenDialogDescription>
+					<FullscreenDialogTitle>{m.player_audio_subtitles()}</FullscreenDialogTitle>
+					<FullscreenDialogDescription>{m.player_pick_preferred_tracks()}</FullscreenDialogDescription>
 				</FullscreenDialogHeader>
 
 				<Tabs
@@ -316,7 +314,7 @@ export function PlayerAudioSubtitlesDialog() {
 					}}
 					className="w-full min-w-0"
 				>
-					<TabsList className="mb-4 flex w-full max-w-full justify-start overflow-x-auto bg-muted/60 sm:w-fit sm:justify-center">
+					<TabsList className="mb-4 w-full max-w-full justify-start overflow-x-auto sm:w-fit sm:justify-center">
 						<TabsTrigger value="media">{m.player_tracks_subtitles()}</TabsTrigger>
 						<TabsTrigger value="sync">
 							{m.player_sync_heading()}
@@ -331,7 +329,7 @@ export function PlayerAudioSubtitlesDialog() {
 					</TabsList>
 
 					{/* Main two-column view: audio on the left, subtitles on the right */}
-					<TabsContent value="media" className="mt-0 outline-none">
+					<TabsContent value="media" className="mt-0">
 						<div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
 							{/* Left column: audio */}
 							<div className="flex flex-col">
@@ -373,17 +371,11 @@ export function PlayerAudioSubtitlesDialog() {
 														<div className="flex min-w-0 items-center gap-1.5">
 															<span className="min-w-0 break-words">{formatAudioLabel(stream)}</span>
 															{isDirectCompatible ? (
-																<Badge
-																	variant="outline"
-																	className="shrink-0 border-success/30 bg-success/10 px-1.5 py-0 text-[10px] text-success"
-																>
+																<Badge variant="success" size="xs" className="shrink-0">
 																	{m.player_best_compat()}
 																</Badge>
 															) : (
-																<Badge
-																	variant="outline"
-																	className="shrink-0 border-warning/30 bg-warning/10 px-1.5 py-0 text-[10px] text-warning"
-																>
+																<Badge variant="warning" size="xs" className="shrink-0">
 																	{m.player_needs_transcoding()}
 																</Badge>
 															)}
@@ -476,23 +468,11 @@ export function PlayerAudioSubtitlesDialog() {
 
 								{/* Szybkie akcje pod napisami */}
 								<div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-border/30 border-t pt-3">
-									<Button
-										type="button"
-										variant="ghost"
-										size="sm"
-										className="text-muted-foreground text-xs hover:text-foreground"
-										onClick={() => setActiveTab("styling")}
-									>
+									<Button tone="muted" type="button" variant="ghost" size="sm" onClick={() => setActiveTab("styling")}>
 										<SlidersHorizontal className="mr-1.5 size-3.5" />
 										{m.player_sub_style_position()}
 									</Button>
-									<Button
-										type="button"
-										variant="ghost"
-										size="sm"
-										className="text-muted-foreground text-xs hover:text-foreground"
-										onClick={() => setActiveTab("search")}
-									>
+									<Button tone="muted" type="button" variant="ghost" size="sm" onClick={() => setActiveTab("search")}>
 										<Search className="mr-1.5 size-3.5" />
 										{m.player_subtitles_search_online()}
 									</Button>
@@ -502,7 +482,7 @@ export function PlayerAudioSubtitlesDialog() {
 					</TabsContent>
 
 					{/* Subtitle styling and position tab */}
-					<TabsContent value="styling" className="mt-0 space-y-5 py-1 outline-none">
+					<TabsContent value="styling" className="mt-0 space-y-5 py-1">
 						<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 							{/* Size */}
 							<div className="space-y-2">
@@ -515,7 +495,7 @@ export function PlayerAudioSubtitlesDialog() {
 											aria-pressed={subtitleSize === option.value}
 											variant={subtitleSize === option.value ? "default" : "outline"}
 											size="sm"
-											className="justify-start text-xs"
+											className="justify-start"
 											onClick={() => detach(() => updateSubtitlePreferences({ subtitleSize: option.value }))}
 										>
 											{option.label}
@@ -535,7 +515,7 @@ export function PlayerAudioSubtitlesDialog() {
 											aria-pressed={subtitlePosition === option.value}
 											variant={subtitlePosition === option.value ? "default" : "outline"}
 											size="sm"
-											className="justify-start text-xs"
+											className="justify-start"
 											onClick={() => detach(() => updateSubtitlePreferences({ subtitlePosition: option.value }))}
 										>
 											{option.label}
@@ -555,7 +535,7 @@ export function PlayerAudioSubtitlesDialog() {
 											aria-pressed={subtitleColor === option.value}
 											variant={subtitleColor === option.value ? "default" : "outline"}
 											size="sm"
-											className="justify-start text-xs"
+											className="justify-start"
 											onClick={() => detach(() => updateSubtitlePreferences({ subtitleColor: option.value }))}
 										>
 											<span className={cn("mr-2 size-2.5 rounded-full border border-black/20", option.colorClass)} />
@@ -576,7 +556,7 @@ export function PlayerAudioSubtitlesDialog() {
 											aria-pressed={subtitleBackground === option.value}
 											variant={subtitleBackground === option.value ? "default" : "outline"}
 											size="sm"
-											className="justify-start text-xs"
+											className="justify-start"
 											onClick={() => detach(() => updateSubtitlePreferences({ subtitleBackground: option.value }))}
 										>
 											{option.label}
@@ -610,7 +590,7 @@ export function PlayerAudioSubtitlesDialog() {
 					</TabsContent>
 
 					{/* Subtitle sync tab */}
-					<TabsContent value="sync" className="mt-0 space-y-6 py-2 outline-none">
+					<TabsContent value="sync" className="mt-0 space-y-6 py-2">
 						<div className="flex flex-col gap-6">
 							{/* Current offset preview */}
 							<div className="flex flex-col items-center justify-center rounded-2xl border border-border/60 bg-muted/40 p-6 text-center shadow-xs">
@@ -634,7 +614,6 @@ export function PlayerAudioSubtitlesDialog() {
 										type="button"
 										variant="outline"
 										size="sm"
-										className="h-9 gap-1 text-xs"
 										onClick={() => adjustSubtitleOffset(-1.0)}
 										aria-label={m.player_delay_minus_1()}
 									>
@@ -644,7 +623,6 @@ export function PlayerAudioSubtitlesDialog() {
 										type="button"
 										variant="outline"
 										size="sm"
-										className="h-9 gap-1 text-xs"
 										onClick={() => adjustSubtitleOffset(-0.1)}
 										aria-label={m.player_delay_minus_point1()}
 									>
@@ -654,7 +632,7 @@ export function PlayerAudioSubtitlesDialog() {
 										type="button"
 										variant={subtitleOffset === 0 ? "secondary" : "outline"}
 										size="sm"
-										className="col-span-2 h-9 gap-1 font-semibold text-xs sm:col-span-1"
+										className="col-span-2 sm:col-span-1"
 										onClick={() => setSubtitleOffset(0)}
 										disabled={subtitleOffset === 0}
 									>
@@ -664,7 +642,6 @@ export function PlayerAudioSubtitlesDialog() {
 										type="button"
 										variant="outline"
 										size="sm"
-										className="h-9 gap-1 text-xs"
 										onClick={() => adjustSubtitleOffset(0.1)}
 										aria-label={m.player_delay_plus_point1()}
 									>
@@ -674,7 +651,6 @@ export function PlayerAudioSubtitlesDialog() {
 										type="button"
 										variant="outline"
 										size="sm"
-										className="h-9 gap-1 text-xs"
 										onClick={() => adjustSubtitleOffset(1.0)}
 										aria-label={m.player_delay_plus_1()}
 									>
@@ -720,7 +696,7 @@ export function PlayerAudioSubtitlesDialog() {
 					</TabsContent>
 
 					{/* Online subtitle search tab */}
-					<TabsContent value="search" className="mt-0 py-2 outline-none">
+					<TabsContent value="search" className="mt-0 py-2">
 						<PlayerSubtitleSearchPanel />
 					</TabsContent>
 				</Tabs>

@@ -9,10 +9,10 @@ export function CollectionEditorSkeleton() {
 					<Skeleton className="h-4 w-40" />
 					<Skeleton className="h-9 w-72" />
 				</div>
-				<Skeleton className="h-9 w-36 rounded-lg" />
+				<Skeleton className="h-9 w-36" />
 			</div>
-			<Skeleton className="h-32 w-full rounded-2xl" />
-			<Skeleton className="h-40 w-full rounded-2xl" />
+			<Skeleton className="h-32 w-full" />
+			<Skeleton className="h-40 w-full" />
 		</div>
 	);
 }

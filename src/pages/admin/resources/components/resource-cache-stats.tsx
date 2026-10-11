@@ -25,7 +25,7 @@ function HitRateBadge({ hitRate }: { hitRate: number | null }) {
 
 	return (
 		<div className="flex min-w-20 flex-1 items-center gap-2">
-			<Progress value={percent} className="h-1.5 min-w-0 flex-1" />
+			<Progress value={percent} size="sm" className="min-w-0 flex-1" />
 			<span className="font-mono text-foreground text-xs tabular-nums">{m.common_percent_value({ value: percent })}</span>
 		</div>
 	);

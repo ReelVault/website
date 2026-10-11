@@ -14,13 +14,7 @@ const ADMIN_BACK_LINK_ROUTES = ["/admin/users", "/admin/collections", "/admin/me
 /** Shared back-navigation affordance for admin detail pages, rendered above the page header. */
 export function AdminBackLink({ to, label }: { to: (typeof ADMIN_BACK_LINK_ROUTES)[number]; label: string }) {
 	return (
-		<Button
-			variant="ghost"
-			size="sm"
-			className="h-10 w-fit gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground sm:h-8"
-			nativeButton={false}
-			render={<Link to={to} />}
-		>
+		<Button tone="muted" variant="ghost" size="sm" className="w-fit" nativeButton={false} render={<Link to={to} />}>
 			<ArrowLeft className="size-3.5" />
 			<span>{label}</span>
 		</Button>
@@ -54,7 +48,7 @@ export function AdminPageHeader({
 				<div className="flex flex-wrap items-center gap-3">
 					<h1 className="font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{title}</h1>
 					{count !== undefined && (
-						<Badge variant="secondary" className="font-mono text-xs">
+						<Badge variant="secondary" font="mono">
 							{count}
 						</Badge>
 					)}
@@ -85,22 +79,26 @@ export function AdminSection({
 	contentClassName?: string;
 }) {
 	return (
-		<Card className={cn("border-border/80 bg-card/60 shadow-none", className)}>
+		<Card variant="subtle" className={className}>
 			{(title !== undefined || description !== undefined || actions !== undefined || badge !== undefined) && (
-				<CardHeader className="flex flex-col gap-3 border-border/70 border-b p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5">
+				<CardHeader size="section" className="flex flex-col gap-3 border-b sm:flex-row sm:items-start sm:justify-between">
 					<div className="flex flex-col gap-1">
 						<div className="flex items-center gap-2.5">
-							{title !== undefined && <CardTitle className="font-semibold text-base text-foreground">{title}</CardTitle>}
+							{title !== undefined && <CardTitle>{title}</CardTitle>}
 							{badge}
 						</div>
 						{description !== undefined && (
-							<CardDescription className="text-muted-foreground text-xs leading-relaxed">{description}</CardDescription>
+							<CardDescription size="xs" leading="relaxed">
+								{description}
+							</CardDescription>
 						)}
 					</div>
 					{actions !== undefined && <div className="flex flex-row flex-wrap items-center gap-2">{actions}</div>}
 				</CardHeader>
 			)}
-			<CardContent className={cn("p-4 sm:p-6", contentClassName)}>{children}</CardContent>
+			<CardContent size="spacious" className={contentClassName}>
+				{children}
+			</CardContent>
 		</Card>
 	);
 }
@@ -131,7 +129,6 @@ export function AdminSearch({
 				value={value}
 				onChange={handleChange}
 				placeholder={resolvedPlaceholder}
-				className="text-xs"
 			/>
 		</InputGroup>
 	);
@@ -178,8 +175,8 @@ export function AdminStatCard({
 	}[tone];
 
 	return (
-		<Card className={cn("border-border/80 bg-card/60 shadow-none transition-colors hover:border-border", className)}>
-			<CardContent className="flex flex-col gap-3 p-4 sm:p-5">
+		<Card variant="subtle" className={className}>
+			<CardContent size="comfortable" className="flex flex-col gap-3">
 				<div className="flex items-center justify-between gap-2">
 					<span className="font-semibold text-muted-foreground text-xs">{label}</span>
 					{Icon !== undefined && (

@@ -1,6 +1,6 @@
 import type { SeasonWithEpisodes } from "@reelvault/sdk";
-import { cn } from "cn";
 import { LazyRender } from "@/components/lazy-render";
+import { Card, CardContent } from "@/components/ui/card";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
 import { DetailsEpisodeContextMenu } from "./details-episode-context-menu";
@@ -81,47 +81,47 @@ export function DetailsEpisodeCard({
 								onNavigateToPlayer(mediaFileId);
 							}
 						}}
-						className={cn(
-							"group relative block overflow-hidden rounded-xl border p-4 transition-[background-color,border-color,box-shadow] hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 md:p-6",
-							isHighlighted ? "border-primary/60 bg-primary/5 shadow-lg shadow-primary/10" : "border-border/50",
-						)}
+						render={<Card variant="interactive" selected={isHighlighted} />}
+						className="group relative block"
 					>
-						<div className="flex flex-col gap-6 md:flex-row md:items-start">
-							<DetailsEpisodeThumbnail
-								imageId={episode.imageId}
-								episodeTitle={episodeTitle}
-								mediaFileId={mediaFileId}
-								isWatched={isWatched}
-								hasProgress={hasProgress}
-								isEpisodePending={isEpisodePending}
-								isEpisodeMarking={isEpisodeMarking}
-								isEpisodeUnmarking={isEpisodeUnmarking}
-								isEpisodeResetting={isEpisodeResetting}
-								onToggleWatched={handleToggle}
-								onResetProgress={handleReset}
-							/>
-
-							<DetailsEpisodeInfo
-								episode={episode}
-								filesLength={files.length}
-								defaultFile={defaultFile}
-								isWatched={isWatched}
-								episodePlayback={episodePlayback}
-							/>
-
-							<div className="shrink-0 self-center pt-2 md:pt-0 md:pl-4">
-								<DetailsEpisodePlayAction
-									files={files}
-									defaultFile={defaultFile}
+						<CardContent>
+							<div className="flex flex-col gap-6 md:flex-row md:items-start">
+								<DetailsEpisodeThumbnail
+									imageId={episode.imageId}
+									episodeTitle={episodeTitle}
 									mediaFileId={mediaFileId}
-									episodeNumber={episode.episodeNumber}
-									episodeTitle={episode.title}
-									onSelectForFiles={onSelectForFiles}
-									episodeId={episode.id}
+									isWatched={isWatched}
+									hasProgress={hasProgress}
+									isEpisodePending={isEpisodePending}
+									isEpisodeMarking={isEpisodeMarking}
+									isEpisodeUnmarking={isEpisodeUnmarking}
+									isEpisodeResetting={isEpisodeResetting}
+									onToggleWatched={handleToggle}
+									onResetProgress={handleReset}
 								/>
+
+								<DetailsEpisodeInfo
+									episode={episode}
+									filesLength={files.length}
+									defaultFile={defaultFile}
+									isWatched={isWatched}
+									episodePlayback={episodePlayback}
+								/>
+
+								<div className="shrink-0 self-center pt-2 md:pt-0 md:pl-4">
+									<DetailsEpisodePlayAction
+										files={files}
+										defaultFile={defaultFile}
+										mediaFileId={mediaFileId}
+										episodeNumber={episode.episodeNumber}
+										episodeTitle={episode.title}
+										onSelectForFiles={onSelectForFiles}
+										episodeId={episode.id}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="absolute inset-y-0 left-0 w-1 bg-linear-to-b from-primary to-primary/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+							<div className="absolute inset-y-0 left-0 w-1 bg-linear-to-b from-primary to-primary/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+						</CardContent>
 					</ContextMenuTrigger>
 
 					<DetailsEpisodeContextMenu

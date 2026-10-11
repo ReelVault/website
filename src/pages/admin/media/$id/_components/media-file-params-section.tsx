@@ -17,7 +17,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 				<div className="mb-2 flex flex-col gap-3 sm:col-span-2">
 					<div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-3.5">
 						<div className="flex flex-col gap-0.5">
-							<Label htmlFor="media-is-enabled" className="cursor-pointer font-semibold text-sm">
+							<Label weight="semibold" htmlFor="media-is-enabled" className="cursor-pointer">
 								{m.admin_media_enabled_active()}
 							</Label>
 							<p className="text-muted-foreground text-xs">{m.admin_media_disable_blocks_playback()}</p>
@@ -27,7 +27,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 
 					<div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-3.5">
 						<div className="flex flex-col gap-0.5">
-							<Label htmlFor="media-is-default" className="cursor-pointer font-semibold text-sm">
+							<Label weight="semibold" htmlFor="media-is-default" className="cursor-pointer">
 								{m.admin_media_default_playback()}
 							</Label>
 							<p className="text-muted-foreground text-xs">{m.admin_media_auto_selected_notice()}</p>
@@ -37,9 +37,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 				</div>
 
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor="media-edition" className="font-medium text-sm">
-						{m.media_edition_label()}
-					</Label>
+					<Label htmlFor="media-edition">{m.media_edition_label()}</Label>
 					<Input
 						id="media-edition"
 						name="edition"
@@ -47,14 +45,11 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 						value={form.edition}
 						onChange={(e) => onChange("edition", e.target.value)}
 						placeholder={m.admin_media_edition_examples()}
-						className="h-10 bg-background px-3.5 text-sm"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor="media-quality" className="font-medium text-sm">
-						{m.admin_media_quality_tag()}
-					</Label>
+					<Label htmlFor="media-quality">{m.admin_media_quality_tag()}</Label>
 					<Input
 						id="media-quality"
 						name="qualityTag"
@@ -62,14 +57,11 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 						value={form.qualityTag}
 						onChange={(e) => onChange("qualityTag", e.target.value)}
 						placeholder={m.admin_media_quality_placeholder()}
-						className="h-10 bg-background px-3.5 text-sm"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
-					<Label htmlFor="media-source" className="font-medium text-sm">
-						{m.admin_media_source_label()}
-					</Label>
+					<Label htmlFor="media-source">{m.admin_media_source_label()}</Label>
 					<Input
 						id="media-source"
 						name="source"
@@ -77,15 +69,12 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 						value={form.source}
 						onChange={(e) => onChange("source", e.target.value)}
 						placeholder={m.admin_media_source_placeholder()}
-						className="h-10 bg-background px-3.5 text-sm"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="media-format" className="font-medium text-sm">
-							{m.media_container_format()}
-						</Label>
+						<Label htmlFor="media-format">{m.media_container_format()}</Label>
 						<span className="text-muted-foreground text-xs">{m.admin_media_format_auto_label()}</span>
 					</div>
 					<Input
@@ -95,7 +84,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 						disabled
 						readOnly
 						value={form.formatName || "—"}
-						className="h-10 cursor-not-allowed bg-muted/40 px-3.5 text-muted-foreground text-sm"
+						className="cursor-not-allowed"
 					/>
 				</div>
 			</div>

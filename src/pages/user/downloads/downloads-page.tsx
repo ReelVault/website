@@ -54,7 +54,7 @@ export default function DownloadsPage() {
 			return (
 				<div className="flex flex-col gap-4" aria-busy="true">
 					{["one", "two", "three"].map((key) => (
-						<Skeleton key={key} className="h-28 rounded-2xl" />
+						<Skeleton key={key} className="h-28" />
 					))}
 				</div>
 			);
@@ -128,7 +128,7 @@ export default function DownloadsPage() {
 						onClick={() => {
 							detach(refetch());
 						}}
-						className="min-h-11 gap-2"
+						className="min-h-11"
 					>
 						<RefreshCw className="size-4" />
 						{m.common_refresh()}

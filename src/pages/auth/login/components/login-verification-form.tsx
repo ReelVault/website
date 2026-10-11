@@ -113,9 +113,9 @@ export function LoginVerificationForm({
 			</Button>
 
 			<Button
+				tone="muted"
 				type="button"
 				variant="ghost"
-				className="text-muted-foreground"
 				onClick={() => {
 					setCode("");
 					onBack();

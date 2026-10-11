@@ -44,7 +44,7 @@ export function SchemaField({ node, scope, value, onChange }: SchemaFieldProps) 
 		return (
 			<div className="flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-card p-3">
 				<div className="space-y-0.5">
-					<Label className="font-medium text-sm">
+					<Label>
 						{label}
 						{requiredMark}
 					</Label>
@@ -58,7 +58,7 @@ export function SchemaField({ node, scope, value, onChange }: SchemaFieldProps) 
 	if (node.input === "select") {
 		return (
 			<div>
-				<Label className="text-sm">
+				<Label>
 					{label}
 					{requiredMark}
 				</Label>
@@ -118,7 +118,7 @@ export function SchemaField({ node, scope, value, onChange }: SchemaFieldProps) 
 
 	return (
 		<div>
-			<Label className="text-sm">
+			<Label>
 				{label}
 				{requiredMark}
 			</Label>

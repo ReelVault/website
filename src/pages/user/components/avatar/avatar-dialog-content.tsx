@@ -132,13 +132,13 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 	const hasPendingChange = Boolean(pendingUploadFile) || (Boolean(selectedAvatar) && selectedAvatar !== currentAvatar);
 
 	return (
-		<FullscreenDialogContent className="flex max-h-[85vh] max-w-2xl flex-col border-border bg-popover sm:rounded-2xl">
+		<FullscreenDialogContent className="flex max-h-[85vh] max-w-2xl flex-col">
 			<FullscreenDialogHeader className="shrink-0">
 				<div className="mb-2 flex items-center gap-2">
 					<div className="h-px w-4 bg-primary" />
 					<span className="font-black text-primary text-xs">{m.user_identity()}</span>
 				</div>
-				<FullscreenDialogTitle className="font-black text-3xl text-foreground uppercase tracking-tighter">
+				<FullscreenDialogTitle>
 					{m.user_choose_avatar_cap()}
 					<span className="text-primary">{m.user_avatar_title_period()}</span>
 				</FullscreenDialogTitle>
@@ -181,19 +181,9 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 					)}
 
 					<Tabs value={activeTab} onValueChange={handleTabChange}>
-						<TabsList className="grid w-full grid-cols-2 rounded-2xl bg-muted/40 p-1">
-							<TabsTrigger
-								value="gallery"
-								className="rounded-xl font-black text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-							>
-								{m.user_avatar_from_gallery()}
-							</TabsTrigger>
-							<TabsTrigger
-								value="upload"
-								className="rounded-xl font-black text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-							>
-								{m.user_upload_own()}
-							</TabsTrigger>
+						<TabsList className="grid w-full grid-cols-2">
+							<TabsTrigger value="gallery">{m.user_avatar_from_gallery()}</TabsTrigger>
+							<TabsTrigger value="upload">{m.user_upload_own()}</TabsTrigger>
 						</TabsList>
 
 						<TabsContent value="gallery">
@@ -229,7 +219,7 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 				</AsyncButton>
 
 				<div className="flex gap-3">
-					<Button type="button" variant="outline" onClick={onClose} disabled={isSaving} className="min-h-11 px-6 font-black text-xs">
+					<Button type="button" variant="outline" onClick={onClose} disabled={isSaving} size="sm" className="min-h-11">
 						{m.common_cancel()}
 					</Button>
 					<AsyncButton

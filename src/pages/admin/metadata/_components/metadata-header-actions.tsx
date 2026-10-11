@@ -56,12 +56,7 @@ export function MetadataHeaderActions({
 			/>
 			<ConfirmAction
 				trigger={
-					<Button
-						variant="outline"
-						size="sm"
-						className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-						disabled={isDeletingOrphans}
-					>
+					<Button variant="destructive-outline" size="sm" disabled={isDeletingOrphans}>
 						<Trash2 className="size-4" />
 						{m.admin_metadata_delete_orphans()}
 					</Button>

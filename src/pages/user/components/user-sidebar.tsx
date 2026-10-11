@@ -38,7 +38,7 @@ export function UserSidebar() {
 				</Link>
 
 				<div className="hidden border-border/60 border-y py-4 lg:block">
-					{isLoading ? <Skeleton className="h-11 rounded-xl" /> : <SidebarProfileCard profile={profile} account={account} />}
+					{isLoading ? <Skeleton className="h-11" /> : <SidebarProfileCard profile={profile} account={account} />}
 				</div>
 
 				<UserSidebarNav pathname={pathname} unreadCount={data?.count ?? 0} />

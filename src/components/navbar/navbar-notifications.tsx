@@ -39,23 +39,20 @@ export function NavbarNotifications() {
 				}
 			/>
 
-			<DropdownMenuContent
-				align="end"
-				sideOffset={8}
-				className="w-[min(24rem,calc(100vw-2rem))] rounded-2xl border-border bg-popover/95 p-0 shadow-2xl backdrop-blur-md"
-			>
+			<DropdownMenuContent align="end" sideOffset={8} className="w-[min(24rem,calc(100vw-2rem))] p-0">
 				{/* Header */}
 				<div className="flex items-center justify-between border-border/40 border-b px-4 py-3">
 					<div className="flex items-center gap-2">
 						<span className="font-semibold text-foreground text-sm">{m.user_notifications_heading()}</span>
 						{unreadCount > 0 && (
-							<Badge variant="secondary" size="sm" className="h-5 px-1.5 font-semibold text-xs">
+							<Badge weight="semibold" variant="secondary" size="compact">
 								{unreadCount}
 							</Badge>
 						)}
 					</div>
 					{unreadCount > 0 && (
 						<Button
+							tone="muted"
 							type="button"
 							variant="ghost"
 							size="xs"
@@ -67,7 +64,6 @@ export function NavbarNotifications() {
 									await markAllRead();
 								});
 							}}
-							className="h-10 gap-1 text-muted-foreground text-xs hover:text-foreground sm:h-7"
 							title={m.components_navbar_clear_notifications()}
 						>
 							<CheckCheck className="size-3.5" aria-hidden="true" />
@@ -90,7 +86,7 @@ export function NavbarNotifications() {
 								<EmptyMedia variant="icon">
 									<BellOff aria-hidden="true" />
 								</EmptyMedia>
-								<EmptyDescription className="text-xs">{m.components_navbar_no_notifications()}</EmptyDescription>
+								<EmptyDescription>{m.components_navbar_no_notifications()}</EmptyDescription>
 							</EmptyHeader>
 						</Empty>
 					)}
@@ -119,10 +115,7 @@ export function NavbarNotifications() {
 											}
 										});
 									}}
-									className={cn(
-										"group flex items-start gap-3 rounded-none border-border/10 border-b p-3 text-left transition-colors last:border-b-0 hover:cursor-pointer focus:bg-muted/70",
-										isRead ? "text-muted-foreground hover:bg-muted/40" : "bg-primary/4 text-foreground hover:bg-primary/8",
-									)}
+									className="group flex items-start gap-3"
 								>
 									<div className={cn("mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg text-sm", colorClass)}>
 										<Icon className="size-4" aria-hidden="true" />
@@ -140,10 +133,11 @@ export function NavbarNotifications() {
 
 									{!isRead && (
 										<Button
+											tone="muted"
 											type="button"
 											variant="ghost"
 											size="icon-xs"
-											className="mt-0.5 shrink-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+											className="mt-0.5 shrink-0"
 											title={m.components_navbar_mark_read()}
 											aria-label={m.components_navbar_mark_read()}
 											disabled={isMarkingRead}
@@ -166,11 +160,11 @@ export function NavbarNotifications() {
 				{/* Footer */}
 				<div className="border-border/40 border-t p-2">
 					<Button
-						variant="ghost"
+						variant="primary-ghost"
 						size="sm"
 						nativeButton={false}
 						render={<Link to="/notifications" onClick={() => setOpen(false)} />}
-						className="w-full justify-center gap-1 text-primary text-xs hover:bg-primary/10 hover:text-primary"
+						className="w-full justify-center"
 					>
 						<span>{m.components_navbar_view_all_notifications()}</span>
 						<ArrowRight className="size-3.5" aria-hidden="true" />

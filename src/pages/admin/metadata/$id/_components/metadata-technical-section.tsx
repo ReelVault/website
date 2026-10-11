@@ -38,11 +38,11 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 				<div className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 px-3 py-2 text-xs">
 					<span className="text-muted-foreground">{m.admin_metadata_translation_state()}</span>
 					{metadata.hasMissingTranslation ? (
-						<Badge variant="outline" size="sm" className="border-warning/30 bg-warning/10 text-warning text-xs">
+						<Badge variant="warning" size="sm">
 							{m.admin_metadata_no_translation()}
 						</Badge>
 					) : (
-						<Badge variant="outline" size="sm" className="border-success/30 bg-success/10 text-success text-xs">
+						<Badge variant="success" size="sm">
 							{m.admin_metadata_translation_complete()}
 						</Badge>
 					)}
@@ -76,10 +76,11 @@ function IdRow({ label, value }: { label: string; value: string }) {
 				<code className="truncate font-medium font-mono text-foreground text-xs">{value}</code>
 			</div>
 			<Button
+				tone="muted"
 				type="button"
 				variant="ghost"
 				size="icon"
-				className="size-10 shrink-0 text-muted-foreground hover:text-foreground sm:size-8"
+				className="shrink-0"
 				onClick={() => detach(copy(value, label))}
 				title={m.admin_metadata_copy_label({ label })}
 				aria-label={m.admin_metadata_copy_label({ label })}

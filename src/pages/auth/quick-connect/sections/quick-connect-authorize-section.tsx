@@ -41,7 +41,7 @@ export function QuickConnectAuthorizeSection({
 							<p className="text-muted-foreground text-xs">{m.auth_second_device_notice()}</p>
 						</div>
 						<Link to="/" className="mt-2">
-							<Button className="rounded-xl">{m.auth_go_to_library()}</Button>
+							<Button>{m.auth_go_to_library()}</Button>
 						</Link>
 					</div>
 				) : (

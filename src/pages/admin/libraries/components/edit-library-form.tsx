@@ -95,9 +95,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 
 			{/* Step 2: Name */}
 			<div className="flex flex-col gap-2">
-				<Label htmlFor="edit-lib-name" className="font-medium text-foreground text-sm">
-					{m.admin_libraries_name_label()}
-				</Label>
+				<Label htmlFor="edit-lib-name">{m.admin_libraries_name_label()}</Label>
 				<Input
 					id="edit-lib-name"
 					name="library-name"
@@ -106,7 +104,6 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 					placeholder={type === "movies" ? m.admin_libraries_name_movies_placeholder() : m.admin_libraries_name_series_placeholder()}
-					className="h-10 bg-background px-3.5 text-sm"
 				/>
 			</div>
 
@@ -123,15 +120,9 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 			{providers.length > 0 && (
 				<div className="flex flex-col gap-2 rounded-2xl border border-border p-4">
 					<div className="flex items-center justify-between gap-2">
-						<Label className="font-medium text-sm">{m.admin_libraries_provider_overrides()}</Label>
+						<Label>{m.admin_libraries_provider_overrides()}</Label>
 						{providerPriorities.length > 0 && (
-							<Button
-								type="button"
-								variant="ghost"
-								size="sm"
-								className="text-muted-foreground text-xs"
-								onClick={() => setProviderPriorities([])}
-							>
+							<Button tone="muted" type="button" variant="ghost" size="sm" onClick={() => setProviderPriorities([])}>
 								{m.admin_libraries_provider_overrides_reset()}
 							</Button>
 						)}
@@ -143,7 +134,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 
 						return (
 							<div key={provider.id} className="flex items-center justify-between gap-3">
-								<Label className="min-w-0 flex-1 truncate font-normal">{provider.name}</Label>
+								<Label className="min-w-0 flex-1 truncate">{provider.name}</Label>
 								<Input
 									type="number"
 									min={1}
@@ -154,7 +145,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 										if (Number.isNaN(nextPriority)) return;
 										upsertPriority(provider.id, provider.priority, override?.enabled ?? provider.enabled, nextPriority);
 									}}
-									className="h-10 w-20 bg-background text-sm sm:h-8"
+									className="w-20"
 								/>
 								<Switch
 									checked={override?.enabled ?? provider.enabled}

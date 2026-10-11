@@ -19,7 +19,8 @@ export function ProfileAvatarPreview({ avatarUrl, onRandomize }: ProfileAvatarPr
 			<Button
 				type="button"
 				onClick={onRandomize}
-				className="absolute -right-2 -bottom-2 size-10 rounded-xl bg-primary shadow-lg transition-transform duration-300 hover:rotate-180"
+				size="icon"
+				className="absolute -right-2 -bottom-2"
 				aria-label={m.auth_profile_random_avatar()}
 			>
 				<Dices className="size-4" />

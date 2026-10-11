@@ -3,6 +3,7 @@ import type { useSessions } from "@/client/hooks/use-sessions";
 import { ConfirmAction } from "@/components/confirm-action";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -44,7 +45,10 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 	return (
 		<SimpleAnimation direction="up" delay={Math.min(index * 35, 240)} duration={240}>
 			<ContextMenu>
-				<ContextMenuTrigger className="flex flex-col gap-5 rounded-2xl border border-border/70 bg-card/70 p-5 transition-[border-color,background-color] hover:border-primary/40 hover:bg-card sm:flex-row sm:items-center sm:justify-between">
+				<ContextMenuTrigger
+					render={<Card variant="interactive" />}
+					className="flex flex-col sm:flex-row sm:items-center sm:justify-between"
+				>
 					<div className="flex min-w-0 items-center gap-4">
 						<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
 							{isMobile ? <Smartphone className="size-5" aria-hidden="true" /> : <Laptop className="size-5" aria-hidden="true" />}
@@ -66,11 +70,7 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 					{!session.isCurrent && (
 						<ConfirmAction
 							trigger={
-								<Button
-									variant="ghost"
-									className="min-h-11 text-destructive hover:bg-destructive/10 hover:text-destructive"
-									disabled={isRevoking}
-								>
+								<Button variant="destructive-ghost" className="min-h-11" disabled={isRevoking}>
 									{m.auth_logout()}
 								</Button>
 							}
@@ -83,16 +83,16 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 					)}
 				</ContextMenuTrigger>
 
-				<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
+				<ContextMenuContent className="w-64">
 					<ContextMenuGroup>
-						<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{m.user_session_options()}</ContextMenuLabel>
+						<ContextMenuLabel className="truncate">{m.user_session_options()}</ContextMenuLabel>
 						<ContextMenuSeparator />
 						{session.ipAddress && (
 							<ContextMenuItem
 								onClick={() => {
 									detach(copyToClipboard(session.ipAddress ?? "", m.common_ip_address_label()));
 								}}
-								className="cursor-pointer gap-2.5"
+								className="cursor-pointer"
 							>
 								<Globe className="size-4 text-muted-foreground" />
 								<span>{m.common_copy_ip()}</span>
@@ -103,7 +103,7 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 								onClick={() => {
 									detach(copyToClipboard(session.userAgent ?? "", m.common_user_agent_label()));
 								}}
-								className="cursor-pointer gap-2.5"
+								className="cursor-pointer"
 							>
 								<Copy className="size-4 text-muted-foreground" />
 								<span>{m.common_copy_user_agent()}</span>
@@ -116,7 +116,8 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 									onClick={() => {
 										detach(revokeSession(onRevoke, session.id));
 									}}
-									className="cursor-pointer gap-2.5 text-destructive focus:bg-destructive/10 focus:text-destructive"
+									variant="destructive"
+									className="cursor-pointer"
 								>
 									<LogOut className="size-4" />
 									<span>{m.user_log_out_device()}</span>

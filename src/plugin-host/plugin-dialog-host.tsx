@@ -1,14 +1,13 @@
-import { cn } from "cn";
 import { resolvePluginText, usePluginDialogs } from "@/client/hooks/use-plugin-ui";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { PluginDialogRequest } from "./plugin-dialog-context";
 import { PluginSurface } from "./surface";
 
-const DIALOG_SIZE_CLASS = {
-	sm: "sm:max-w-md",
-	md: "sm:max-w-xl",
-	lg: "sm:max-w-3xl",
-	xl: "sm:max-w-5xl",
+const PLUGIN_DIALOG_SIZE = {
+	sm: "md",
+	md: "xl",
+	lg: "3xl",
+	xl: "4xl",
 } as const;
 
 /**
@@ -28,7 +27,7 @@ export function PluginDialogHost({ request, onClose }: { request: PluginDialogRe
 
 	return (
 		<Dialog open onOpenChange={(open) => !open && onClose()}>
-			<DialogContent className={cn("flex max-h-[85vh] flex-col overflow-hidden", DIALOG_SIZE_CLASS[dialog.size ?? "md"])}>
+			<DialogContent size={PLUGIN_DIALOG_SIZE[dialog.size ?? "md"]} className="flex max-h-[85vh] flex-col overflow-hidden">
 				<DialogHeader>
 					<DialogTitle>{title}</DialogTitle>
 				</DialogHeader>

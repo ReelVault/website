@@ -74,13 +74,9 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 
 	return (
 		<>
-			<FullscreenDialogHeader className="gap-1.5 border-border/60 border-b pb-4">
-				<FullscreenDialogTitle className="font-semibold text-xl tracking-tight sm:text-2xl">
-					{m.admin_libraries_create_heading()}
-				</FullscreenDialogTitle>
-				<FullscreenDialogDescription className="text-muted-foreground text-sm">
-					{m.admin_libraries_create_desc()}
-				</FullscreenDialogDescription>
+			<FullscreenDialogHeader className="gap-1.5 border-b">
+				<FullscreenDialogTitle>{m.admin_libraries_create_heading()}</FullscreenDialogTitle>
+				<FullscreenDialogDescription>{m.admin_libraries_create_desc()}</FullscreenDialogDescription>
 			</FullscreenDialogHeader>
 
 			<form
@@ -99,9 +95,7 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				<form.Field name="name">
 					{(field) => (
 						<div className="flex flex-col gap-2">
-							<Label htmlFor="create-lib-name" className="font-medium text-foreground text-sm">
-								{m.admin_libraries_name_label()}
-							</Label>
+							<Label htmlFor="create-lib-name">{m.admin_libraries_name_label()}</Label>
 							<Input
 								id="create-lib-name"
 								name="library-name"
@@ -114,7 +108,6 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 										? m.admin_libraries_name_movies_placeholder()
 										: m.admin_libraries_name_series_placeholder()
 								}
-								className="h-10 bg-background px-3.5 text-sm"
 							/>
 						</div>
 					)}
@@ -143,7 +136,7 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				)}
 
 				{/* Footer */}
-				<FullscreenDialogFooter className="gap-3 border-border/60 border-t pt-4 sm:justify-end">
+				<FullscreenDialogFooter className="gap-3 border-t sm:justify-end">
 					<Button type="button" variant="outline" size="default" onClick={onClose}>
 						{m.common_cancel()}
 					</Button>

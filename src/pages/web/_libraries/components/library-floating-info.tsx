@@ -20,7 +20,7 @@ export function LibraryFloatingInfo({
 			from={{ transform: "translateY(100px)" }}
 			className="mx-auto mt-8 w-full max-w-xl px-4 pb-6 lg:fixed lg:right-6 lg:bottom-6 lg:left-auto lg:z-40 lg:mt-0 lg:w-auto lg:max-w-none lg:px-0 lg:pb-0"
 		>
-			<Card className="flex items-center justify-between gap-4 rounded-xl border-border px-4 py-3 sm:px-5">
+			<Card className="flex items-center justify-between">
 				<div className="flex min-w-0 items-center gap-3">
 					<div className="rounded-lg bg-primary/10 p-2 text-primary">
 						<Zap className="size-4" aria-hidden="true" />

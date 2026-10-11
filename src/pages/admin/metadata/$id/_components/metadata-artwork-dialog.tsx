@@ -54,7 +54,7 @@ export function MetadataArtworkDialog({
 	const skeletonGrid = (
 		<div className={cn("grid gap-3", isPoster ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3")}>
 			{SKELETON_SLOTS.map((index) => (
-				<Skeleton key={`${type}-skeleton-${index}`} className={cn("w-full rounded-xl", isPoster ? "aspect-2/3" : "aspect-video")} />
+				<Skeleton key={`${type}-skeleton-${index}`} className={cn("w-full", isPoster ? "aspect-2/3" : "aspect-video")} />
 			))}
 		</div>
 	);
@@ -79,7 +79,8 @@ export function MetadataArtworkDialog({
 							width={isPoster ? 220 : 360}
 							height={isPoster ? 330 : 200}
 							unoptimized
-							className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+							zoom
+							className="h-full w-full object-cover"
 							loading="lazy"
 						/>
 						<div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
@@ -118,12 +119,10 @@ export function MetadataArtworkDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="max-h-[90vh] w-full gap-5 overflow-y-auto p-6 sm:max-w-3xl sm:p-7 lg:max-w-4xl">
-				<DialogHeader className="border-border/60 border-b pb-3">
-					<DialogTitle className="font-semibold text-xl tracking-tight">{title}</DialogTitle>
-					<DialogDescription className="text-muted-foreground text-xs sm:text-sm">
-						{m.admin_metadata_artwork_dialog_desc()}
-					</DialogDescription>
+			<DialogContent className="max-h-[90vh] w-full overflow-y-auto sm:max-w-3xl lg:max-w-4xl">
+				<DialogHeader className="border-b">
+					<DialogTitle>{title}</DialogTitle>
+					<DialogDescription>{m.admin_metadata_artwork_dialog_desc()}</DialogDescription>
 				</DialogHeader>
 
 				{/* Upload Bar */}
@@ -156,7 +155,7 @@ export function MetadataArtworkDialog({
 					</div>
 
 					{options.length > 0 && (
-						<Badge variant="secondary" size="sm" className="text-xs">
+						<Badge variant="secondary" size="sm">
 							{m.admin_metadata_available_artwork({ count: options.length })}
 						</Badge>
 					)}

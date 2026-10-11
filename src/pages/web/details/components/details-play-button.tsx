@@ -11,7 +11,7 @@ export function DetailsPlayButton({ suggestion }: { suggestion?: SmartPlaySugges
 	return (
 		<Button
 			size="lg"
-			className="h-12 w-full max-w-xs"
+			className="w-full max-w-xs"
 			nativeButton={false}
 			render={<Link to="/player/$id" params={{ id: suggestion.mediaFileId }} />}
 		>

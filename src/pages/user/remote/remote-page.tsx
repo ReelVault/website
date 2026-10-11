@@ -65,7 +65,7 @@ export default function RemotePage() {
 			return (
 				<div className="flex flex-col gap-4" aria-busy="true">
 					{SKELETON_KEYS.map((key) => (
-						<Skeleton key={key} className="h-24 rounded-2xl" />
+						<Skeleton key={key} className="h-24" />
 					))}
 				</div>
 			);

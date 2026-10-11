@@ -58,7 +58,7 @@ export function MetadataHeroActions({
 				<span>{m.common_save_changes()}</span>
 			</AsyncButton>
 
-			<Button variant="outline" size="default" onClick={onOpenIdentifyDialog} className="gap-1.5 shadow-xs">
+			<Button variant="outline" size="default" onClick={onOpenIdentifyDialog}>
 				<Search className="size-4 text-primary" />
 				<span>{m.admin_metadata_match_tmdb()}</span>
 			</Button>
@@ -66,7 +66,7 @@ export function MetadataHeroActions({
 			<DropdownMenu>
 				<DropdownMenuTrigger
 					render={
-						<Button variant="outline" size="default" className="gap-1.5 shadow-xs">
+						<Button variant="outline" size="default">
 							<MoreHorizontal className="size-4" />
 							<span>{m.admin_metadata_more_action()}</span>
 						</Button>
@@ -110,9 +110,9 @@ export function MetadataHeroActions({
 			<ConfirmAction
 				trigger={
 					<Button
-						variant="ghost"
+						variant="destructive-ghost"
 						size="icon"
-						className="ml-auto size-10 text-destructive hover:bg-destructive/10 hover:text-destructive sm:size-9"
+						className="ml-auto"
 						disabled={isDeleting}
 						title={m.admin_metadata_delete_metadata()}
 						aria-label={m.admin_metadata_delete_metadata()}

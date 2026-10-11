@@ -53,12 +53,8 @@ export default function LibraryFindingsPage() {
 				}}
 				className="w-fit"
 			>
-				<ToggleGroupItem value="active" className="px-3">
-					{m.admin_libraries_needs_attention()}
-				</ToggleGroupItem>
-				<ToggleGroupItem value="ignored" className="px-3">
-					{m.admin_libraries_findings_tab_ignored({ count: data?.counts.ignored ?? 0 })}
-				</ToggleGroupItem>
+				<ToggleGroupItem value="active">{m.admin_libraries_needs_attention()}</ToggleGroupItem>
+				<ToggleGroupItem value="ignored">{m.admin_libraries_findings_tab_ignored({ count: data?.counts.ignored ?? 0 })}</ToggleGroupItem>
 			</ToggleGroup>
 
 			<ScanFindingsList libraryId={id} status={status} />

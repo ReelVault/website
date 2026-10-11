@@ -31,7 +31,7 @@ export function MetadataList({
 			<div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" aria-busy="true">
 				{["m-skel-1", "m-skel-2", "m-skel-3", "m-skel-4", "m-skel-5", "m-skel-6"].map((key) => (
 					<div key={key} className="flex flex-col gap-2">
-						<Skeleton className="aspect-2/3 w-full rounded-xl" />
+						<Skeleton className="aspect-2/3 w-full" />
 						<Skeleton className="h-4 w-3/4" />
 						<Skeleton className="h-3 w-1/2" />
 					</div>

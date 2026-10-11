@@ -5,8 +5,8 @@ import { resolveApiAssetUrl } from "@/client/client";
 import { useLogout } from "@/client/hooks/use-auth";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { isAdminUser } from "@/components/auth/admin-access";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -43,7 +43,7 @@ export function NavbarProfile() {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger className="group flex items-center gap-3 rounded-2xl pl-3 hover:cursor-pointer hover:bg-muted">
+			<DropdownMenuTrigger render={<Button variant="ghost" size="lg" className="gap-3" />}>
 				<div className="hidden flex-col items-end text-left 2xl:flex">
 					<span className="font-semibold text-foreground text-sm">
 						{isLoading && m.common_loading_dots()}
@@ -51,21 +51,21 @@ export function NavbarProfile() {
 					</span>
 				</div>
 
-				<Avatar className="size-9 ring-2 ring-background transition-shadow group-hover:ring-primary/50">
+				<Avatar className="size-9 group-hover:ring-primary/50">
 					<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt={profileName} />
-					<AvatarFallback className="bg-muted text-muted-foreground">
+					<AvatarFallback>
 						<User className="size-5" />
 					</AvatarFallback>
 				</Avatar>
 			</DropdownMenuTrigger>
 
-			<DropdownMenuContent align="end" sideOffset={12} className="w-72 rounded-2xl border-border bg-popover/90 shadow-2xl">
+			<DropdownMenuContent align="end" sideOffset={12} size="lg">
 				<DropdownMenuGroup>
-					<DropdownMenuLabel className="p-4">
+					<DropdownMenuLabel size="lg">
 						<div className="flex items-center gap-4">
 							<Avatar className="size-12">
 								<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} />
-								<AvatarFallback className="bg-muted">
+								<AvatarFallback>
 									<User className="size-6" />
 								</AvatarFallback>
 							</Avatar>
@@ -77,35 +77,35 @@ export function NavbarProfile() {
 					</DropdownMenuLabel>
 				</DropdownMenuGroup>
 
-				<DropdownMenuSeparator className="bg-border/30" />
+				<DropdownMenuSeparator />
 
 				<DropdownMenuGroup>
 					{/* Plugin profile-menu slot — contributions from ui.json (no per-plugin code). */}
 					<PluginSlotHost name="navbar-profile-menu" />
 
 					<Link to={"/remote"}>
-						<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-sm hover:cursor-pointer hover:bg-muted">
+						<DropdownMenuItem size="lg">
 							<MonitorSmartphone className="size-4 text-muted-foreground" />
 							{m.user_remote_pilot_heading()}
 						</DropdownMenuItem>
 					</Link>
 
 					<Link to={"/quick-connect"}>
-						<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-sm hover:cursor-pointer hover:bg-muted">
+						<DropdownMenuItem size="lg">
 							<Unplug className="size-4 text-muted-foreground" />
 							{m.components_navbar_quick_connect()}
 						</DropdownMenuItem>
 					</Link>
 
 					<Link to={"/devices"}>
-						<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-sm hover:cursor-pointer hover:bg-muted">
+						<DropdownMenuItem size="lg">
 							<Monitor className="size-4 text-muted-foreground" />
 							{m.components_navbar_my_devices()}
 						</DropdownMenuItem>
 					</Link>
 
 					<Link to={"/settings"}>
-						<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-sm hover:cursor-pointer hover:bg-muted">
+						<DropdownMenuItem size="lg">
 							<Settings className="size-4 text-muted-foreground" />
 							{m.navbar_settings()}
 						</DropdownMenuItem>
@@ -113,7 +113,7 @@ export function NavbarProfile() {
 
 					{isAdminUser(user) && (
 						<Link to={"/admin"}>
-							<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-primary text-sm hover:cursor-pointer hover:bg-primary/10">
+							<DropdownMenuItem size="lg">
 								<Shield className="size-4" />
 								{m.navbar_admin_panel()}
 							</DropdownMenuItem>
@@ -121,21 +121,17 @@ export function NavbarProfile() {
 					)}
 				</DropdownMenuGroup>
 
-				<DropdownMenuSeparator className="bg-border/30" />
+				<DropdownMenuSeparator />
 
 				<DropdownMenuGroup>
 					<Link to={"/auth/profiles"}>
-						<DropdownMenuItem className="gap-3 rounded-xl px-4 py-3 text-sm hover:cursor-pointer hover:bg-muted">
+						<DropdownMenuItem size="lg">
 							<Users className="size-4 text-muted-foreground" />
 							{m.components_navbar_change_profile()}
 						</DropdownMenuItem>
 					</Link>
 
-					<DropdownMenuItem
-						disabled={logoutMutation.isPending}
-						onClick={handleLogout}
-						className="gap-3 rounded-xl px-4 py-3 text-destructive text-sm hover:cursor-pointer hover:bg-destructive/10"
-					>
+					<DropdownMenuItem size="lg" disabled={logoutMutation.isPending} onClick={handleLogout} variant="destructive">
 						<LogOut className="size-4" />
 						{logoutMutation.isPending ? m.components_navbar_logging_out() : m.components_navbar_log_out()}
 					</DropdownMenuItem>

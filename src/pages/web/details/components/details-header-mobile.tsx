@@ -29,10 +29,10 @@ export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpda
 						aspectRatio={2 / 3}
 						priority
 						sizes="112px"
-						className="size-full object-cover"
+						className="object-cover"
 					/>
 				</div>
-				<Badge size="sm" className="absolute bottom-1.5 left-1.5 border-border/60 bg-background/90 shadow-md">
+				<Badge size="sm" className="absolute bottom-1.5 left-1.5">
 					<Star className="size-3 fill-warning text-warning" />
 					<span className="font-bold text-foreground text-xs">{formatRating(avgScore)}</span>
 				</Badge>
@@ -45,7 +45,7 @@ export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpda
 				)}
 				<div className="mt-3 flex flex-wrap items-center gap-2">
 					{year && year !== "N/A" && (
-						<Badge key={`m-${year}`} size="lg" variant="outline" className="gap-2 text-foreground">
+						<Badge key={`m-${year}`} size="lg" variant="outline">
 							<Calendar className="size-3.5 text-secondary" />
 							{year}
 						</Badge>
@@ -54,13 +54,7 @@ export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpda
 						const GenreIcon = genresIcons[genre.name] ?? Flame;
 
 						return (
-							<Badge
-								key={`m-${genre.id}`}
-								size="lg"
-								variant="outline"
-								render={<Link to="/genres/$id" params={{ id: genre.id }} />}
-								className="min-h-10 gap-2 text-foreground sm:min-h-0"
-							>
+							<Badge key={`m-${genre.id}`} size="lg" variant="outline" render={<Link to="/genres/$id" params={{ id: genre.id }} />}>
 								<GenreIcon className="size-3.5 text-primary" />
 								{genre.name}
 							</Badge>

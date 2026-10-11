@@ -64,16 +64,16 @@ export function PathPickerDialog({ open, onOpenChange, initialPath = "/", onSele
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="flex max-h-[90vh] w-full max-w-[calc(100%-2rem)] flex-col overflow-hidden border-border bg-popover p-0 shadow-2xl sm:max-w-2xl sm:rounded-2xl">
+			<DialogContent className="flex max-h-[90vh] w-full max-w-[calc(100%-2rem)] flex-col overflow-hidden p-0 sm:max-w-2xl">
 				{/* HEADER */}
-				<DialogHeader className="shrink-0 border-border border-b bg-muted/30 p-6 pb-4">
+				<DialogHeader className="shrink-0 border-b">
 					<div className="flex items-center gap-2.5">
 						<div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-xs">
 							<Server className="size-5" />
 						</div>
 						<div className="flex flex-col gap-0.5">
-							<DialogTitle className="font-bold text-foreground text-lg tracking-tight">{m.components_path_picker_select()}</DialogTitle>
-							<DialogDescription className="text-muted-foreground text-xs">{m.common_browse_server_dirs_hint()}</DialogDescription>
+							<DialogTitle>{m.components_path_picker_select()}</DialogTitle>
+							<DialogDescription>{m.common_browse_server_dirs_hint()}</DialogDescription>
 						</div>
 					</div>
 				</DialogHeader>

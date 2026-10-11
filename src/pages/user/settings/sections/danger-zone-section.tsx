@@ -24,7 +24,7 @@ export function DangerZoneSection({ profileName, onDelete }: DangerZoneSectionPr
 
 			<ConfirmAction
 				trigger={
-					<Button type="button" variant="destructive" className="mt-5 min-h-11 gap-2">
+					<Button type="button" variant="destructive" className="mt-5 min-h-11">
 						<Trash2 className="size-4" aria-hidden="true" /> {m.admin_users_delete_profile()}
 					</Button>
 				}

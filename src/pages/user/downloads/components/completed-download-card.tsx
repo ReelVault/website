@@ -19,7 +19,7 @@ export function CompletedDownloadCard({ job, onDelete }: { job: DownloadJob; onD
 				<div className="min-w-0">
 					<div className="flex flex-wrap items-center gap-2">
 						<h2 className="truncate font-bold text-foreground text-sm">{job.fileName}</h2>
-						<Badge size="sm" variant="outline" className="font-mono text-xs">
+						<Badge size="sm" variant="outline" font="mono">
 							{job.quality}
 						</Badge>
 						<span className="rounded-full bg-success/10 px-2 py-0.5 font-bold text-success text-xs">{m.user_download_status_ready()}</span>
@@ -43,12 +43,7 @@ export function CompletedDownloadCard({ job, onDelete }: { job: DownloadJob; onD
 				</a>
 				<ConfirmAction
 					trigger={
-						<Button
-							variant="ghost"
-							size="icon"
-							className="size-10 text-muted-foreground hover:bg-destructive/10 hover:text-destructive sm:size-8"
-							title={m.user_delete_from_server()}
-						>
+						<Button tone="muted" variant="ghost" size="icon" title={m.user_delete_from_server()}>
 							<Trash2 className="size-4" />
 						</Button>
 					}

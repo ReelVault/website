@@ -22,7 +22,7 @@ export function IdentifyDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-3xl">
 				<DialogHeader>
-					<DialogTitle className="flex items-center gap-2 text-xl">
+					<DialogTitle className="flex items-center">
 						{mediaType === "movie" ? <Film className="size-5 text-primary" /> : <Tv className="size-5 text-primary" />}
 						{m.identify_dialog_change_match()}
 					</DialogTitle>

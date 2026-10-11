@@ -75,7 +75,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 
 					{/* Quick Pipeline Badges */}
 					<div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
-						<Badge variant="outline" className="h-5 px-1.5 text-xs">
+						<Badge variant="outline" size="compact">
 							{stream.videoTranscode ? (
 								<span className="text-warning dark:text-warning">{m.admin_live_video_encoder({ encoder: stream.videoEncoder })}</span>
 							) : (
@@ -83,7 +83,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 							)}
 						</Badge>
 
-						<Badge variant="outline" className="h-5 px-1.5 text-xs">
+						<Badge variant="outline" size="compact">
 							{stream.audioTranscode ? (
 								<span className="text-warning dark:text-warning">{m.admin_live_audio_encoder({ encoder: stream.audioEncoder })}</span>
 							) : (
@@ -92,7 +92,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						</Badge>
 
 						{stream.hwaccel && stream.hwaccel !== "none" && (
-							<Badge variant="outline" className="h-5 border-primary/40 px-1.5 text-primary text-xs">
+							<Badge variant="primary-outline" size="compact">
 								{stream.hwaccel.toUpperCase()}
 							</Badge>
 						)}
@@ -123,9 +123,9 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 					{/* User Footer & Actions */}
 					<div className="flex items-center justify-between border-border/50 border-t pt-2.5">
 						<div className="flex min-w-0 items-center gap-2">
-							<Avatar className="size-6 border border-border/60">
+							<Avatar className="size-6">
 								{stream.profileAvatar && <AvatarImage src={stream.profileAvatar} alt={stream.profileName} />}
-								<AvatarFallback className="font-bold text-xs">{stream.profileName.slice(0, 2)}</AvatarFallback>
+								<AvatarFallback>{stream.profileName.slice(0, 2)}</AvatarFallback>
 							</Avatar>
 							<div className="min-w-0">
 								<p className="truncate font-bold text-foreground text-xs">{stream.profileName}</p>

@@ -148,28 +148,26 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 	};
 
 	return (
-		<FullscreenDialogContent className="flex h-[88vh] max-h-205 w-[95vw] max-w-4xl flex-col gap-0 overflow-hidden rounded-3xl border border-border/80 bg-background p-0 shadow-2xl lg:max-w-5xl">
+		<FullscreenDialogContent className="flex h-[88vh] max-h-205 w-[95vw] max-w-4xl flex-col overflow-hidden p-0 lg:max-w-5xl">
 			{/* Top Story-style Progress Bars */}
 			<WrappedProgressBar slideIndex={slideIndex} onSelectSlide={setSlideIndex} />
 
 			{/* Header Info */}
-			<FullscreenDialogHeader className="relative z-20 flex flex-row items-center justify-between px-8 py-3">
+			<FullscreenDialogHeader className="relative z-20 flex flex-row items-center justify-between">
 				<div className="flex items-center gap-3">
 					<div className="flex size-9 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400">
 						<Trophy className="size-5" />
 					</div>
 					<div>
-						<FullscreenDialogTitle className="font-black text-foreground text-lg tracking-tight">
+						<FullscreenDialogTitle>
 							{m.common_brand_name()} <span className="text-primary">{m.wrapped_title_year({ year: year ?? resolvedYear })}</span>
 						</FullscreenDialogTitle>
-						<FullscreenDialogDescription className="text-muted-foreground text-xs">
-							{m.user_yearly_summary_desc()}
-						</FullscreenDialogDescription>
+						<FullscreenDialogDescription>{m.user_yearly_summary_desc()}</FullscreenDialogDescription>
 					</div>
 				</div>
 
 				<div className="flex items-center gap-3 pr-8">
-					<Badge variant="outline" className="font-mono text-xs">
+					<Badge variant="outline" font="mono">
 						{m.common_page_indicator({ current: slideIndex + 1, total: TOTAL_SLIDES })}
 					</Badge>
 				</div>
@@ -182,14 +180,7 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 
 			{/* Bottom Navigation Controls */}
 			<div className="relative z-20 flex items-center justify-between border-border/60 border-t bg-card/60 px-8 py-4">
-				<Button
-					type="button"
-					variant="ghost"
-					size="default"
-					onClick={handlePrev}
-					disabled={slideIndex === 0}
-					className="cursor-pointer gap-2 font-semibold text-xs"
-				>
+				<Button type="button" variant="ghost" size="default" onClick={handlePrev} disabled={slideIndex === 0} className="cursor-pointer">
 					<ChevronLeft className="size-4" />
 					{m.components_simple_pagination_previous()}
 				</Button>
@@ -207,7 +198,7 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 					size="default"
 					onClick={handleNext}
 					disabled={slideIndex === TOTAL_SLIDES - 1}
-					className="cursor-pointer gap-2 font-semibold text-xs"
+					className="cursor-pointer"
 				>
 					{m.components_simple_pagination_next()}
 					<ChevronRight className="size-4" />

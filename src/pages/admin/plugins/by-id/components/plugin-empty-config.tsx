@@ -10,8 +10,8 @@ interface PluginEmptyConfigProps {
 
 export function PluginEmptyConfig({ pluginName }: PluginEmptyConfigProps) {
 	return (
-		<Card className="border-border/80 bg-card/60">
-			<CardContent className="flex flex-col items-center justify-center p-8 text-center">
+		<Card variant="subtle">
+			<CardContent className="flex flex-col items-center justify-center text-center">
 				<div className="rounded-full bg-primary/10 p-3 text-primary">
 					<Info className="size-6" />
 				</div>
@@ -20,7 +20,7 @@ export function PluginEmptyConfig({ pluginName }: PluginEmptyConfigProps) {
 					{m.admin_plugins_no_config_desc_1()} <strong className="text-foreground">{pluginName}</strong>{" "}
 					{m.admin_plugins_no_config_desc_2()}
 				</p>
-				<Button variant="outline" size="sm" nativeButton={false} render={<Link to={"/admin/plugins"} />} className="mt-6 text-xs">
+				<Button variant="outline" size="sm" nativeButton={false} render={<Link to={"/admin/plugins"} />} className="mt-6">
 					{m.admin_plugins_back()}
 				</Button>
 			</CardContent>

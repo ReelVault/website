@@ -38,7 +38,7 @@ export function PluginUiSwitches({ pluginId }: { pluginId: string }) {
 			description={m.admin_plugins_ui_description()}
 			actions={
 				isCustomized ? (
-					<Button variant="ghost" size="sm" disabled={isSaving} onClick={() => detach(reset)} className="gap-1.5 text-xs">
+					<Button variant="ghost" size="sm" disabled={isSaving} onClick={() => detach(reset)}>
 						<Eye className="size-3.5" />
 						{m.admin_plugins_ui_show_all()}
 					</Button>

@@ -57,17 +57,15 @@ export function LiveMaintenanceBanner({
 
 				<div className="flex flex-wrap items-center gap-2 self-end sm:self-center">
 					<Badge
-						variant="outline"
-						className={cn("gap-1.5 font-mono text-xs", {
-							"border-destructive/50 text-destructive": activeStreamsCount > 0,
-							"border-border text-muted-foreground": activeStreamsCount <= 0,
-						})}
+						variant={activeStreamsCount > 0 ? "destructive-outline" : "outline"}
+						tone={activeStreamsCount > 0 ? "default" : "muted"}
+						font="mono"
 					>
 						<Video className="size-3.5" />
 						<span>{m.admin_live_active_video_streams_count({ count: activeStreamsCount })}</span>
 					</Badge>
 
-					<Badge variant="outline" className="gap-1.5 border-border font-mono text-muted-foreground text-xs">
+					<Badge tone="muted" variant="outline" font="mono">
 						<Users className="size-3.5" />
 						<span>{m.admin_live_connected_devices({ count: activeDevicesCount })}</span>
 					</Badge>

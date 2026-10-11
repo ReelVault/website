@@ -48,20 +48,20 @@ export function DetailsHeaderMenu({
 			<DropdownMenuTrigger aria-label={m.plugins_bugs_more_options()} render={<Button variant="outline" size="icon-lg" />}>
 				<MoreVertical className="size-4" />
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="start" className="w-64 border-border bg-popover shadow-xl">
+			<DropdownMenuContent align="start" className="w-64">
 				<DropdownMenuGroup>
-					<DropdownMenuItem onClick={onCopyLink} className="cursor-pointer gap-2.5">
+					<DropdownMenuItem onClick={onCopyLink} className="cursor-pointer">
 						<Share2 className="size-4 text-muted-foreground" />
 						<span>{m.web_share()}</span>
 					</DropdownMenuItem>
 					{playableMediaFileId && (
-						<DropdownMenuItem onClick={() => detach(resetProgress(playableMediaFileId, "title"))} className="cursor-pointer gap-2.5">
+						<DropdownMenuItem onClick={() => detach(resetProgress(playableMediaFileId, "title"))} className="cursor-pointer">
 							<RotateCcw className="size-4 text-muted-foreground" />
 							<span>{m.web_reset_title_progress()}</span>
 						</DropdownMenuItem>
 					)}
 					{playableMediaFileId && (
-						<DropdownMenuItem onClick={onDownloadOpen} className="cursor-pointer gap-2.5">
+						<DropdownMenuItem onClick={onDownloadOpen} className="cursor-pointer">
 							<Download className="size-4 text-primary" />
 							<span>{m.player_download_offline_mp4()}</span>
 						</DropdownMenuItem>
@@ -75,31 +75,31 @@ export function DetailsHeaderMenu({
 					<>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+							<DropdownMenuLabel className="flex items-center">
 								<Shield className="size-3" />
 								{m.common_admin_tools_full()}
 							</DropdownMenuLabel>
 							<DropdownMenuItem
 								nativeButton={false}
 								render={<Link to="/admin/metadata/$id" params={{ id: metadataId }} />}
-								className="cursor-pointer gap-2.5"
+								className="cursor-pointer"
 							>
 								<Pencil className="size-4 text-primary" />
 								<span>{m.common_edit()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onRefreshMetadata} className="cursor-pointer gap-2.5">
+							<DropdownMenuItem onClick={onRefreshMetadata} className="cursor-pointer">
 								<RefreshCw className="size-4 text-primary" />
 								<span>{m.components_metadata_card_refresh_metadata()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onRefreshImages} className="cursor-pointer gap-2.5">
+							<DropdownMenuItem onClick={onRefreshImages} className="cursor-pointer">
 								<ImageDown className="size-4 text-primary" />
 								<span>{m.components_metadata_card_force_artwork()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onIdentifyOpen} className="cursor-pointer gap-2.5">
+							<DropdownMenuItem onClick={onIdentifyOpen} className="cursor-pointer">
 								<Search className="size-4 text-primary" />
 								<span>{m.components_metadata_card_change_match()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onCopyId} className="cursor-pointer gap-2.5">
+							<DropdownMenuItem onClick={onCopyId} className="cursor-pointer">
 								<Copy className="size-4 text-muted-foreground" />
 								<span>{m.common_copy_id()}</span>
 							</DropdownMenuItem>

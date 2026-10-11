@@ -11,12 +11,12 @@ export function ActiveDownloadCard({ job, onDelete }: { job: DownloadJob; onDele
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<div className="flex min-w-0 items-center gap-3.5">
 					<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-						<Spinner className="size-5" />
+						<Spinner size="lg" />
 					</div>
 					<div className="min-w-0">
 						<div className="flex flex-wrap items-center gap-2">
 							<h2 className="truncate font-bold text-foreground text-sm">{job.fileName}</h2>
-							<Badge size="sm" variant="secondary" className="font-mono text-xs">
+							<Badge size="sm" variant="secondary" font="mono">
 								{job.quality}
 							</Badge>
 						</div>
@@ -27,7 +27,7 @@ export function ActiveDownloadCard({ job, onDelete }: { job: DownloadJob; onDele
 				</div>
 
 				<div className="flex shrink-0 items-center gap-2">
-					<Button variant="ghost" size="sm" onClick={() => onDelete(job.id)} className="text-destructive text-xs hover:bg-destructive/10">
+					<Button variant="destructive-ghost" size="sm" onClick={() => onDelete(job.id)}>
 						{m.common_cancel()}
 					</Button>
 				</div>

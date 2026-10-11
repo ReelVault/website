@@ -25,7 +25,7 @@ export function TaskTriggerItem({ trigger, onDelete }: TaskTriggerItemProps) {
 				<div className="min-w-0">
 					<div className="flex items-center gap-2">
 						<span className="font-medium text-foreground text-xs">{formatTriggerDescription(trigger)}</span>
-						<Badge variant="outline" className="border-border/60 px-1.5 py-0 font-mono text-muted-foreground text-xs">
+						<Badge tone="muted" variant="outline" font="mono">
 							{trigger.type}
 						</Badge>
 					</div>
@@ -36,12 +36,12 @@ export function TaskTriggerItem({ trigger, onDelete }: TaskTriggerItemProps) {
 			</div>
 
 			<Button
+				tone="muted"
 				type="button"
 				variant="ghost"
 				size="icon-xs"
 				onClick={() => onDelete(trigger.id)}
 				title={m.admin_worker_delete_trigger()}
-				className="size-7 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
 			>
 				<Trash2 className="size-3.5" />
 			</Button>

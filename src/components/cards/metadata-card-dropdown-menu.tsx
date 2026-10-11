@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { MoreVertical, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -29,7 +30,7 @@ function DropdownMenuItemRenderer({ item, onAction }: { item: MetadataCardMenuIt
 						}
 					: undefined
 			}
-			className="cursor-pointer gap-2.5"
+			className="cursor-pointer"
 		>
 			<item.icon className={cn("size-4", item.iconClassName)} />
 			<span>{item.label}</span>
@@ -50,13 +51,14 @@ export function MetadataCardDropdownMenu(state: MetadataCardMenuState) {
 		<DropdownMenu>
 			<DropdownMenuTrigger
 				aria-label={m.components_options_for({ title: state.title })}
-				className="flex size-10 items-center justify-center rounded-full border border-border/70 bg-background/80 transition-colors hover:bg-background focus-visible:ring-2 focus-visible:ring-primary"
+				render={<Button variant="outline" size="icon" />}
+				className="flex items-center justify-center"
 			>
 				<MoreVertical className="size-4 text-foreground" />
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="w-64 border-border bg-card/95">
+			<DropdownMenuContent align="end" className="w-64">
 				<DropdownMenuGroup>
-					<DropdownMenuLabel className="truncate font-bold text-foreground text-xs">{state.title}</DropdownMenuLabel>
+					<DropdownMenuLabel className="truncate">{state.title}</DropdownMenuLabel>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
@@ -71,7 +73,7 @@ export function MetadataCardDropdownMenu(state: MetadataCardMenuState) {
 					<>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+							<DropdownMenuLabel className="flex items-center">
 								<Shield className="size-3" />
 								{m.common_admin_tools()}
 							</DropdownMenuLabel>

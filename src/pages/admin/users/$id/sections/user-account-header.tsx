@@ -36,7 +36,7 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 				title={m.admin_users_account_title({ name: user?.name ?? m.admin_users_account_label() })}
 				badge={
 					user && (
-						<Badge variant="outline" className="min-h-10 gap-1 font-mono text-muted-foreground text-xs sm:min-h-0">
+						<Badge tone="muted" variant="outline" font="mono">
 							<span>{m.admin_users_short_id({ id: user.id.slice(0, 8) })}</span>
 							<button
 								type="button"
@@ -57,11 +57,11 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 								status={user.banned ? "error" : "success"}
 								label={user.banned ? m.admin_users_blocked_status() : m.common_active()}
 							/>
-							<Badge variant={user.role === "admin" ? "default" : "secondary"} size="sm" className="gap-1">
+							<Badge variant={user.role === "admin" ? "default" : "secondary"} size="sm">
 								<Shield className="size-3" />
 								{user.role === "admin" ? m.admin_users_role_admin() : m.admin_users_role_user()}
 							</Badge>
-							<Badge variant={user.twoFactorEnabled ? "outline" : "secondary"} size="sm" className="gap-1">
+							<Badge variant={user.twoFactorEnabled ? "outline" : "secondary"} size="sm">
 								{user.twoFactorEnabled ? (
 									<>
 										<ShieldCheck className="size-3 text-success" />

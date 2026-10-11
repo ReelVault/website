@@ -75,16 +75,12 @@ export function EditSubtitleDialog({
 				</div>
 
 				<div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 p-3">
-					<Label htmlFor="subtitle-default" className="text-sm">
-						{m.admin_subtitles_default()}
-					</Label>
+					<Label htmlFor="subtitle-default">{m.admin_subtitles_default()}</Label>
 					<Switch id="subtitle-default" checked={isDefault} onCheckedChange={setIsDefault} />
 				</div>
 
 				<div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 p-3">
-					<Label htmlFor="subtitle-forced" className="text-sm">
-						{m.admin_subtitles_forced_force()}
-					</Label>
+					<Label htmlFor="subtitle-forced">{m.admin_subtitles_forced_force()}</Label>
 					<Switch id="subtitle-forced" checked={isForced} onCheckedChange={setIsForced} />
 				</div>
 			</div>
@@ -93,7 +89,7 @@ export function EditSubtitleDialog({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-md">
+			<DialogContent size="md">
 				<DialogHeader>
 					<DialogTitle>{m.admin_subtitles_edit_dialog()}</DialogTitle>
 					<DialogDescription>{m.admin_subtitles_edit_metadata()}</DialogDescription>

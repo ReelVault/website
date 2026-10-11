@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { cn } from "cn";
 import { ArrowUpRight, CheckCircle2, Clock, RefreshCw, XCircle } from "lucide-react";
 import type { ReactNode } from "react";
 import { useAdminJobs } from "@/client/hooks/use-admin-jobs";
@@ -11,6 +10,13 @@ import { SkeletonList } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+
+function queueBadgeVariant(isFailed: boolean, isCompleted: boolean, isProcessing: boolean) {
+	if (isFailed) return "destructive";
+	if (isCompleted) return "success";
+	if (isProcessing) return "primary";
+	return "outline";
+}
 
 export function DashboardWorkerQueue() {
 	const { operations, operationsQuery } = useAdminJobs(undefined, 8, true);
@@ -54,20 +60,13 @@ export function DashboardWorkerQueue() {
 									{statusIcon}
 									<span className="truncate font-semibold text-foreground capitalize">{op.type.replace(/_/g, " ")}</span>
 								</div>
-								<Badge
-									variant="outline"
-									className={cn("shrink-0 text-xs capitalize", {
-										"border-primary/30 bg-primary/10 text-primary": isProcessing,
-										"border-success/30 bg-success/10 text-success": isCompleted,
-										"border-destructive/30 bg-destructive/10 text-destructive": isFailed,
-									})}
-								>
+								<Badge variant={queueBadgeVariant(isFailed, isCompleted, isProcessing)} transform="capitalize">
 									{op.status}
 								</Badge>
 							</div>
 							{op.totalItems > 0 && (
 								<div className="flex flex-col gap-1">
-									<Progress value={Math.min(100, Math.max(0, progress))} className="h-1" />
+									<Progress value={Math.min(100, Math.max(0, progress))} />
 									<div className="flex justify-between text-muted-foreground text-xs">
 										<span>{m.admin_dashboard_job_progress_ratio({ completed: op.completedItems, total: op.totalItems })}</span>
 										<span>{m.common_percent_value({ value: Math.round(progress) })}</span>

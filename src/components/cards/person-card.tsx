@@ -78,17 +78,17 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 				</Link>
 			</ContextMenuTrigger>
 
-			<ContextMenuContent className="w-64 border-border bg-card/95">
+			<ContextMenuContent className="w-64">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{personName}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate">{personName}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/person/$id" params={{ id: personId }} />} className="cursor-pointer gap-2.5">
+					<ContextMenuItem render={<Link to="/person/$id" params={{ id: personId }} />} className="cursor-pointer">
 						<User className="size-4 text-muted-foreground" />
 						<span>{m.components_person_view_profile()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={handleCopyLink} className="cursor-pointer gap-2.5">
+					<ContextMenuItem onClick={handleCopyLink} className="cursor-pointer">
 						<Copy className="size-4 text-muted-foreground" />
 						<span>{m.components_copy_profile_link()}</span>
 					</ContextMenuItem>
@@ -98,19 +98,19 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 					<>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>
-							<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+							<ContextMenuLabel className="flex items-center">
 								<Shield className="size-3" />
 								{m.common_admin_tools()}
 							</ContextMenuLabel>
-							<ContextMenuItem onClick={() => refreshPersonMutation.mutate(personId)} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => refreshPersonMutation.mutate(personId)} className="cursor-pointer">
 								<RefreshCw className="size-4 text-primary" />
 								<span>{m.components_person_refresh_data()}</span>
 							</ContextMenuItem>
-							<ContextMenuItem onClick={() => refreshPersonImageMutation.mutate(personId)} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => refreshPersonImageMutation.mutate(personId)} className="cursor-pointer">
 								<ImageDown className="size-4 text-primary" />
 								<span>{m.components_person_force_photo()}</span>
 							</ContextMenuItem>
-							<ContextMenuItem onClick={handleCopyId} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={handleCopyId} className="cursor-pointer">
 								<Copy className="size-4 text-muted-foreground" />
 								<span>{m.components_copy_person_id()}</span>
 							</ContextMenuItem>

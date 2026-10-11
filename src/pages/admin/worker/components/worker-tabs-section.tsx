@@ -68,28 +68,28 @@ export function WorkerTabsSection({
 			}}
 			className="flex flex-col gap-6"
 		>
-			<TabsList className="grid w-full max-w-xl grid-cols-3 rounded-xl border border-border/60 bg-muted/40 p-1.5 group-data-horizontal/tabs:h-14 max-sm:max-w-full sm:group-data-horizontal/tabs:h-12">
-				<TabsTrigger value="scheduled" className="flex items-center gap-2 rounded-lg font-semibold text-sm">
+			<TabsList variant="boxed" size="lg" className="grid w-full max-w-xl grid-cols-3 max-sm:max-w-full">
+				<TabsTrigger value="scheduled" className="flex items-center">
 					<CalendarClock className="size-4" />
 					<span>{m.admin_workers_scheduled_tab()}</span>
-					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+					<Badge variant="secondary" font="mono" size="count">
 						{tasks.length}
 					</Badge>
 				</TabsTrigger>
-				<TabsTrigger value="activity" className="flex items-center gap-2 rounded-lg font-semibold text-sm">
+				<TabsTrigger value="activity" className="flex items-center">
 					<ListTree className="size-4" />
 					<span>{m.admin_workers_activity_tab()}</span>
 					{activeOperationsTotal > 0 ? (
-						<Badge variant="default" className="bg-primary px-1.5 py-0 font-mono text-primary-foreground text-xs">
+						<Badge variant="default" font="mono" size="count">
 							{activeOperationsTotal}
 						</Badge>
 					) : (
-						<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+						<Badge variant="secondary" font="mono" size="count">
 							{0}
 						</Badge>
 					)}
 				</TabsTrigger>
-				<TabsTrigger value="history" className="flex items-center gap-2 rounded-lg font-semibold text-sm">
+				<TabsTrigger value="history" className="flex items-center">
 					<History className="size-4" />
 					<span>{m.admin_workers_history_tab()}</span>
 				</TabsTrigger>

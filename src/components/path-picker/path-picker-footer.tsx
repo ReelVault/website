@@ -12,18 +12,15 @@ interface PathPickerFooterProps {
 
 export function PathPickerFooter({ exists, onCancel, onConfirm }: PathPickerFooterProps) {
 	return (
-		<DialogFooter className="shrink-0 flex-col gap-3 border-border border-t bg-muted/30 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+		<DialogFooter className="shrink-0 flex-col gap-3 border-t sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex items-center gap-2">
 				{exists ? (
-					<Badge
-						variant="outline"
-						className="gap-1.5 border-green-500/40 bg-green-500/10 font-medium text-green-600 text-xs dark:text-green-400"
-					>
+					<Badge variant="success">
 						<Check className="size-3.5" />
 						<span>{m.components_path_exists()}</span>
 					</Badge>
 				) : (
-					<Badge variant="outline" className="gap-1.5 border-warning/40 bg-warning/10 font-medium text-warning text-xs dark:text-warning">
+					<Badge variant="warning">
 						<AlertCircle className="size-3.5" />
 						<span>{m.components_path_picker_not_accessible()}</span>
 					</Badge>
@@ -31,10 +28,10 @@ export function PathPickerFooter({ exists, onCancel, onConfirm }: PathPickerFoot
 			</div>
 
 			<div className="flex items-center gap-2 sm:justify-end">
-				<Button type="button" variant="outline" onClick={onCancel} className="text-xs">
+				<Button type="button" variant="outline" onClick={onCancel} size="sm">
 					{m.common_cancel()}
 				</Button>
-				<Button type="button" onClick={onConfirm} disabled={!exists} className="gap-2 font-semibold text-xs">
+				<Button type="button" onClick={onConfirm} disabled={!exists} size="sm">
 					<Check className="size-4" />
 					<span>{m.components_path_picker_select_this()}</span>
 				</Button>

@@ -23,29 +23,23 @@ export function MediaViewModeToggle({ viewMode, onViewModeChange, total, suspect
 				}}
 				className="justify-start gap-1"
 			>
-				<ToggleGroupItem
-					value="all"
-					className="gap-2 px-3 py-1.5 font-medium text-xs data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
-				>
+				<ToggleGroupItem value="all" size="sm">
 					<ListFilter className="size-3.5" />
 					<span>{m.admin_media_all_files()}</span>
-					<Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+					<Badge variant="secondary" size="compact" className="ml-1">
 						{total}
 					</Badge>
 				</ToggleGroupItem>
 
-				<ToggleGroupItem
-					value="audit"
-					className="gap-2 px-3 py-1.5 font-medium text-xs data-[state=on]:bg-destructive data-[state=on]:text-destructive-foreground"
-				>
+				<ToggleGroupItem value="audit" size="sm">
 					<AlertTriangle className="size-3.5" />
 					<span>{m.admin_media_match_audit()}</span>
 					{suspectCount > 0 ? (
-						<Badge variant="destructive" className="ml-1 h-5 px-1.5 text-xs">
+						<Badge variant="destructive" size="compact" className="ml-1">
 							{suspectCount}
 						</Badge>
 					) : (
-						<Badge variant="outline" className="ml-1 h-5 border-success/40 text-success text-xs">
+						<Badge variant="success-outline" size="sm" className="ml-1">
 							{m.admin_media_audit_zero()}
 						</Badge>
 					)}

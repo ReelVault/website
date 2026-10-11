@@ -188,7 +188,7 @@ export function PlayerSettingsMenu({
 				setIsMenuOpen(open);
 			}}
 		>
-			<SheetContent side="bottom" className="max-h-[85svh] overflow-y-auto rounded-t-2xl">
+			<SheetContent side="bottom" className="max-h-[85svh] overflow-y-auto">
 				<SheetHeader>
 					<SheetTitle>{m.player_settings_heading()}</SheetTitle>
 					<SheetDescription>{m.player_quality_menu_description()}</SheetDescription>
@@ -339,7 +339,7 @@ export function PlayerSettingsMenu({
 						{availableVersions.length > 1 && (
 							<>
 								<DropdownMenuRadioGroup value={info.mediaFileId} onValueChange={(newId) => selectVersion(String(newId))}>
-									<DropdownMenuLabel className="flex items-center gap-1.5 font-bold text-muted-foreground text-xs uppercase tracking-wider">
+									<DropdownMenuLabel className="flex items-center">
 										<Layers className="size-3.5 text-primary" />
 										<span>{m.player_version_named({ count: availableVersions.length })}</span>
 									</DropdownMenuLabel>
@@ -348,7 +348,7 @@ export function PlayerSettingsMenu({
 										const meta = [file.qualityTag, file.source].filter(Boolean).join(" • ");
 
 										return (
-											<DropdownMenuRadioItem key={file.id} value={file.id} className="cursor-pointer py-1.5">
+											<DropdownMenuRadioItem key={file.id} value={file.id} className="cursor-pointer">
 												<div className="flex flex-col gap-0.5">
 													<div className="flex items-center gap-1.5 font-medium text-sm">
 														<span>{label}</span>
@@ -387,7 +387,7 @@ export function PlayerSettingsMenu({
 								checked={preferences?.autoplay ?? false}
 								disabled={!canEditPreferences}
 								onCheckedChange={toggleAutoplay}
-								className="cursor-pointer gap-2.5"
+								className="cursor-pointer"
 							>
 								<span>{m.admin_users_autoplay_next()}</span>
 							</DropdownMenuCheckboxItem>
@@ -395,7 +395,7 @@ export function PlayerSettingsMenu({
 								checked={preferences?.autoSkipIntro ?? false}
 								disabled={!canEditPreferences}
 								onCheckedChange={toggleAutoSkipIntro}
-								className="cursor-pointer gap-2.5"
+								className="cursor-pointer"
 							>
 								<span>{m.user_auto_skip_intro_label()}</span>
 							</DropdownMenuCheckboxItem>
@@ -403,7 +403,7 @@ export function PlayerSettingsMenu({
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							{onOpenEqualizer && (
-								<DropdownMenuItem onClick={onOpenEqualizer} className="cursor-pointer gap-2.5">
+								<DropdownMenuItem onClick={onOpenEqualizer} className="cursor-pointer">
 									<SlidersHorizontal className="size-4 text-muted-foreground" />
 									<span>{m.player_audio_equalizer()}</span>
 								</DropdownMenuItem>
@@ -414,12 +414,12 @@ export function PlayerSettingsMenu({
 							<DropdownMenuCheckboxItem
 								checked={!shortcutsDisabled}
 								onCheckedChange={(checked) => onShortcutsDisabledChange?.(!checked)}
-								className="cursor-pointer gap-2.5"
+								className="cursor-pointer"
 							>
 								<Keyboard className="size-4 text-muted-foreground" />
 								<span>{m.player_shortcuts_enabled_status()}</span>
 							</DropdownMenuCheckboxItem>
-							<DropdownMenuItem onClick={handleOpenShortcuts} className="cursor-pointer gap-2.5">
+							<DropdownMenuItem onClick={handleOpenShortcuts} className="cursor-pointer">
 								<Keyboard className="size-4 text-muted-foreground" />
 								<span>{m.player_list_shortcut_key()}</span>
 							</DropdownMenuItem>

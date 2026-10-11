@@ -74,21 +74,21 @@ export function PinVerificationModal({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={handleClose}>
-			<DialogContent className="max-w-md overflow-hidden rounded-3xl border-border p-0 shadow-2xl">
-				<DialogHeader className="border-border border-b bg-linear-to-r from-primary/10 to-transparent p-6">
+			<DialogContent size="md" className="overflow-hidden p-0">
+				<DialogHeader className="border-b">
 					<div className="flex items-center gap-3">
 						<div className="flex size-10 items-center justify-center rounded-xl bg-primary/20 text-primary">
 							<Lock className="size-5" aria-hidden="true" />
 						</div>
-						<DialogTitle className="font-black text-xl uppercase tracking-tight">{m.auth_profile_protected()}</DialogTitle>
+						<DialogTitle>{m.auth_profile_protected()}</DialogTitle>
 					</div>
 					<DialogDescription className="sr-only">{m.auth_enter_pin_to_switch({ profileName: profile.name })}</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-8 p-5 sm:p-8">
 					<div className="flex flex-col items-center gap-4 text-center">
-						<Avatar size="lg" className="size-24 rounded-2xl border-2 border-primary shadow-lg after:hidden">
-							{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" className="rounded-2xl" />}
-							<AvatarFallback className="rounded-2xl">
+						<Avatar size="lg" className="size-24 after:hidden">
+							{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" />}
+							<AvatarFallback>
 								<User className="size-8 text-muted-foreground/40" />
 							</AvatarFallback>
 						</Avatar>
@@ -103,9 +103,10 @@ export function PinVerificationModal({
 							{m.auth_pin_code()}
 						</Label>
 						<Button
+							size="inline"
 							type="button"
 							variant="ghost"
-							className="h-auto w-full justify-center gap-1.5 p-0 hover:bg-transparent sm:h-auto sm:min-h-8 sm:gap-3"
+							className="w-full justify-center sm:min-h-8"
 							onClick={() => inputRef.current?.focus()}
 						>
 							{Array.from({ length: Math.min(Math.max(pin.length, 4), 8) }, (_unused, slot) => (

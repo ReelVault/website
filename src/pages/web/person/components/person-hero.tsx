@@ -26,7 +26,6 @@ export function PersonHero({ personId, name }: { personId: string; name: string 
 						<Button
 							variant="outline"
 							size="sm"
-							className="gap-2 rounded-lg"
 							onClick={() => refreshPersonMutation.mutate(personId)}
 							disabled={refreshPersonMutation.isPending}
 						>
@@ -36,7 +35,6 @@ export function PersonHero({ personId, name }: { personId: string; name: string 
 						<Button
 							variant="outline"
 							size="sm"
-							className="gap-2 rounded-lg"
 							onClick={() => refreshPersonImageMutation.mutate(personId)}
 							disabled={refreshPersonImageMutation.isPending}
 						>

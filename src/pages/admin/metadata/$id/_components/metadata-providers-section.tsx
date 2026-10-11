@@ -27,7 +27,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 			title={m.admin_metadata_providers_section()}
 			description={m.admin_metadata_sources_description()}
 			actions={
-				<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="h-10 gap-1.5 text-xs shadow-xs sm:h-8">
+				<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify}>
 					<Link2 className="size-3.5 text-primary" />
 					<span>{m.admin_metadata_match_link_provider()}</span>
 				</Button>
@@ -44,11 +44,11 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 							<div className="flex flex-wrap items-center gap-2">
 								<span className="font-semibold text-muted-foreground text-xs">{m.admin_metadata_primary_data_provider()}</span>
 								{primaryId ? (
-									<Badge variant="default" size="sm" className="font-semibold">
+									<Badge weight="semibold" variant="default" size="sm">
 										{formatProviderName(primaryId)}
 									</Badge>
 								) : (
-									<Badge variant="outline" size="sm" className="text-muted-foreground">
+									<Badge tone="muted" variant="outline" size="sm">
 										{m.admin_metadata_no_local_provider()}
 									</Badge>
 								)}
@@ -61,13 +61,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 						</div>
 					</div>
 
-					<Button
-						type="button"
-						variant="outline"
-						size="sm"
-						onClick={onOpenIdentify}
-						className="h-10 shrink-0 gap-1.5 bg-background/80 text-xs hover:bg-background sm:h-8"
-					>
+					<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="shrink-0">
 						<Search className="size-3.5 text-primary" />
 						<span>{m.admin_metadata_change_match()}</span>
 					</Button>
@@ -89,7 +83,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 							<p className="font-medium text-foreground text-sm">{m.admin_metadata_no_external_ids()}</p>
 							<p className="max-w-md text-muted-foreground text-xs">{m.admin_metadata_no_external_ids_hint()}</p>
 						</div>
-						<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="mt-1 gap-1.5 text-xs">
+						<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="mt-1">
 							<Search className="size-3.5 text-primary" />
 							<span>{m.admin_metadata_search_link_tmdb()}</span>
 						</Button>
@@ -125,7 +119,7 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 					</div>
 				</div>
 				{isPrimary && (
-					<Badge variant="secondary" size="sm" className="shrink-0 border-primary/30 bg-primary/10 text-primary text-xs">
+					<Badge variant="primary" size="sm" className="shrink-0">
 						{m.admin_metadata_primary()}
 					</Badge>
 				)}
@@ -138,10 +132,11 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 				</div>
 
 				<Button
+					tone="muted"
 					type="button"
 					variant="ghost"
 					size="icon"
-					className="size-10 shrink-0 text-muted-foreground hover:text-foreground sm:size-8"
+					className="shrink-0"
 					onClick={handleCopy}
 					title={m.admin_metadata_copy_id_named({ name: shortName })}
 					aria-label={m.admin_metadata_copy_id_named({ name: shortName })}
@@ -155,9 +150,8 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 
 				{externalUrl && (
 					<Button
-						variant="ghost"
+						variant="primary-ghost"
 						size="sm"
-						className="h-10 gap-1 px-2 text-primary text-xs hover:bg-primary/10 hover:text-primary sm:h-7"
 						nativeButton={false}
 						render={
 							<a

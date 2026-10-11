@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import { LucideAnnoyed, LucideFaceGrinning, LucideSmile } from "lucide-react";
 import { useDetailsView } from "@/client/hooks/use-metadata-queries";
 import { useUserRatingMutations } from "@/client/hooks/use-user-rating";
@@ -25,6 +24,13 @@ const RATING_OPTIONS = [
 		icon: LucideFaceGrinning,
 	},
 ] as const;
+
+function ratingBadgeVariant(isActive: boolean, value: number) {
+	if (!isActive) return "outline";
+	if (value === 0) return "destructive";
+	if (value === 2) return "warning";
+	return "default";
+}
 
 export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 	// The rating comes from the details-view composite — no separate query.
@@ -56,22 +62,7 @@ export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 								aria-label={opt.label}
 								aria-pressed={isActive}
 								onClick={() => handleRate(opt.value)}
-								render={
-									<Button
-										type="button"
-										variant="outline"
-										size="icon-sm"
-										className={cn(
-											"size-11 rounded-full transition-[border-color,background-color,color,box-shadow] duration-200 sm:size-8",
-											{
-												"border-border/50 text-muted-foreground hover:bg-muted hover:text-foreground": !isActive,
-												"border-destructive/40 bg-destructive/15 text-destructive hover:bg-destructive/20": isActive && opt.value === 0,
-												"border-primary/40 bg-primary/15 text-primary hover:bg-primary/20": isActive && opt.value === 1,
-												"border-warning/40 bg-warning/15 text-warning hover:bg-warning/20": isActive && opt.value === 2,
-											},
-										)}
-									/>
-								}
+								render={<Button type="button" variant={ratingBadgeVariant(isActive, opt.value)} size="icon-sm" />}
 							>
 								<Icon className="size-4" aria-hidden="true" />
 							</TooltipTrigger>

@@ -49,13 +49,7 @@ export function WrappedSummarySlide({ data, year, personalityTitle, onCopySummar
 				</div>
 			</div>
 
-			<Button
-				type="button"
-				variant="outline"
-				size="default"
-				onClick={onCopySummary}
-				className="gap-2 font-semibold text-xs transition-[border-color,background-color,color,box-shadow] hover:scale-105"
-			>
+			<Button type="button" variant="outline" size="default" onClick={onCopySummary}>
 				<Share2 className="size-4" />
 				{m.user_copy_wrapped()}
 			</Button>

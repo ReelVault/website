@@ -40,13 +40,15 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 		const isChecked = typeof value === "boolean" ? value : fallbackDefault;
 
 		return (
-			<Card className="border-border/80 bg-card/60 transition-colors hover:border-border">
-				<CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+			<Card variant="subtle">
+				<CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 					<div className="flex flex-col gap-1">
 						<div className="flex items-center gap-2">
-							<Label className="cursor-pointer font-semibold text-foreground text-sm">{field.label}</Label>
+							<Label weight="semibold" className="cursor-pointer">
+								{field.label}
+							</Label>
 							{field.required && (
-								<Badge variant="outline" className="text-destructive text-xs">
+								<Badge tone="destructive" variant="outline">
 									{m.common_required()}
 								</Badge>
 							)}
@@ -65,14 +67,14 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 		const numValue = typeof value === "number" ? value : numericDefault;
 
 		return (
-			<Card className="border-border/80 bg-card/60 transition-colors hover:border-border">
-				<CardContent className="flex flex-col gap-3 p-4">
+			<Card variant="subtle">
+				<CardContent className="flex flex-col gap-3">
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col gap-0.5">
 							<div className="flex items-center gap-2">
-								<Label className="font-semibold text-foreground text-sm">{field.label}</Label>
+								<Label weight="semibold">{field.label}</Label>
 								{field.required && (
-									<Badge variant="outline" className="text-destructive text-xs">
+									<Badge tone="destructive" variant="outline">
 										{m.common_required()}
 									</Badge>
 								)}
@@ -93,7 +95,8 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						step={field.step ?? 1}
 						onChange={(e) => onChange(Number(e.target.value))}
 						placeholder={field.default !== undefined ? defaultToText(field.default) : ""}
-						className="max-w-xs font-mono text-sm"
+						font="mono"
+						className="max-w-xs"
 					/>
 				</CardContent>
 			</Card>
@@ -106,14 +109,14 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 		const strValue = typeof value === "string" ? value : stringDefault;
 
 		return (
-			<Card className="border-border/80 bg-card/60 transition-colors hover:border-border">
-				<CardContent className="flex flex-col gap-3 p-4">
+			<Card variant="subtle">
+				<CardContent className="flex flex-col gap-3">
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col gap-0.5">
 							<div className="flex items-center gap-2">
-								<Label className="font-semibold text-foreground text-sm">{field.label}</Label>
+								<Label weight="semibold">{field.label}</Label>
 								{field.required && (
-									<Badge variant="outline" className="text-destructive text-xs">
+									<Badge tone="destructive" variant="outline">
 										{m.common_required()}
 									</Badge>
 								)}
@@ -127,7 +130,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						)}
 					</div>
 					<Select value={strValue} onValueChange={(val) => onChange(val)}>
-						<SelectTrigger className="max-w-xs bg-background text-sm">
+						<SelectTrigger className="max-w-xs">
 							<SelectValue placeholder={m.admin_settings_select_option()} />
 						</SelectTrigger>
 						<SelectContent>
@@ -150,28 +153,20 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 	const secretPlaceholder = field.hasValue ? m.admin_plugins_secret_stored() : m.admin_plugins_enter_secret();
 
 	return (
-		<Card className="border-border/80 bg-card/60 transition-colors hover:border-border">
-			<CardContent className="flex flex-col gap-3 p-4">
+		<Card variant="subtle">
+			<CardContent className="flex flex-col gap-3">
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col gap-0.5">
 						<div className="flex items-center gap-2">
 							{isSecret && <KeyRound className="size-3.5 text-warning" />}
-							<Label className="font-semibold text-foreground text-sm">{field.label}</Label>
+							<Label weight="semibold">{field.label}</Label>
 							{field.required && (
-								<Badge variant="outline" className="text-destructive text-xs">
+								<Badge tone="destructive" variant="outline">
 									{m.common_required()}
 								</Badge>
 							)}
-							{isSecret && (
-								<Badge variant="secondary" className="border-warning/20 bg-warning/10 text-warning text-xs">
-									{m.admin_plugins_secret_badge()}
-								</Badge>
-							)}
-							{isSecret && field.hasValue && (
-								<Badge variant="outline" className="border-success/30 text-success text-xs">
-									{m.admin_plugins_secret_set()}
-								</Badge>
-							)}
+							{isSecret && <Badge variant="warning">{m.admin_plugins_secret_badge()}</Badge>}
+							{isSecret && field.hasValue && <Badge variant="success-outline">{m.admin_plugins_secret_set()}</Badge>}
 						</div>
 						{field.description && <p className="text-muted-foreground text-xs">{field.description}</p>}
 					</div>
@@ -188,15 +183,17 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						value={strValue}
 						onChange={(e) => onChange(e.target.value)}
 						placeholder={isSecret ? secretPlaceholder : ""}
-						className={isSecret ? "pr-10 font-mono text-sm" : "text-sm"}
+						font={isSecret ? "mono" : "sans"}
+						className={isSecret ? "pr-10" : undefined}
 					/>
 					{isSecret && (
 						<Button
+							tone="muted"
 							type="button"
 							variant="ghost"
 							size="icon-sm"
 							onClick={onToggleSecret}
-							className="absolute top-1/2 right-1 size-7 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+							className="absolute top-1/2 right-1 -translate-y-1/2"
 							title={showSecret ? m.admin_plugins_show_secret() : m.admin_plugins_show_secret()}
 						>
 							{showSecret ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}

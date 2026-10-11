@@ -36,19 +36,13 @@ export function LogMobileFileSelect({
 				</SelectTrigger>
 				<SelectContent>
 					{filteredFiles.map((file) => (
-						<SelectItem key={file.id} value={file.id} className="font-mono text-xs">
+						<SelectItem key={file.id} value={file.id}>
 							{file.name} {m.common_dot_separator()} {formatFileSize(file.size)}
 						</SelectItem>
 					))}
 				</SelectContent>
 			</Select>
-			<Button
-				variant="outline"
-				size="icon"
-				className="size-10 shrink-0 sm:size-9"
-				onClick={onRefetchFiles}
-				aria-label={m.admin_logs_refresh_journal_files()}
-			>
+			<Button variant="outline" size="icon" className="shrink-0" onClick={onRefetchFiles} aria-label={m.admin_logs_refresh_journal_files()}>
 				<RefreshCw className={cn("size-4", isLoadingFiles && "animate-spin")} />
 			</Button>
 		</div>

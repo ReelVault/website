@@ -60,7 +60,7 @@ export default function AdminCollectionsPage() {
 							className="w-full sm:max-w-xs"
 						/>
 						<Select value={sort} onValueChange={handleSortChange}>
-							<SelectTrigger className="h-10 w-full sm:h-9 sm:w-44" aria-label={m.admin_collections_sort_label()}>
+							<SelectTrigger className="w-full sm:w-44" aria-label={m.admin_collections_sort_label()}>
 								<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
 							</SelectTrigger>
 							<SelectContent>
@@ -81,21 +81,18 @@ export default function AdminCollectionsPage() {
 				) : (
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 						{filteredCollections.map((collection) => (
-							<Card
-								key={collection.id}
-								className="group overflow-hidden border-border/80 bg-card transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-xs"
-							>
-								<CardContent className="flex flex-col gap-3.5 p-5">
+							<Card key={collection.id} className="group overflow-hidden">
+								<CardContent size="comfortable" className="flex flex-col gap-3.5">
 									<div className="flex items-start justify-between gap-3">
 										<div className="flex size-11 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary shadow-xs">
 											<Layers className="size-5" />
 										</div>
 										<Button
+											tone="muted"
 											type="button"
 											variant="ghost"
 											size="icon-sm"
 											aria-label={m.admin_collections_edit_named_aria({ name: collection.name })}
-											className="text-muted-foreground hover:bg-primary/10 hover:text-primary"
 											nativeButton={false}
 											render={<Link to="/admin/collections/$id" params={{ id: collection.id }} />}
 										>
@@ -114,7 +111,7 @@ export default function AdminCollectionsPage() {
 									</div>
 
 									<div className="flex flex-wrap gap-1.5 pt-1">
-										<Badge variant="secondary" size="sm" className="font-medium text-xs">
+										<Badge variant="secondary" size="sm">
 											{COLLECTION_SORT_LABELS[collection.sortMode]}
 										</Badge>
 									</div>

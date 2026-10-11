@@ -35,15 +35,36 @@ function TableHead({ className, ...props }: ComponentProps<"th">) {
 	return (
 		<th
 			data-slot="table-head"
-			className={cn("h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground has-[[role=checkbox]]:pr-0", className)}
+			className={cn(
+				"h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-muted-foreground text-xs has-[[role=checkbox]]:pr-0",
+				className,
+			)}
 			{...props}
 		/>
 	);
 }
 
-function TableCell({ className, ...props }: ComponentProps<"td">) {
+function TableCell({
+	className,
+	size = "default",
+	tone = "default",
+	...props
+}: ComponentProps<"td"> & {
+	size?: "default" | "sm";
+	tone?: "default" | "muted" | "mono";
+}) {
 	return (
-		<td data-slot="table-cell" className={cn("whitespace-nowrap p-2 align-middle has-[[role=checkbox]]:pr-0", className)} {...props} />
+		<td
+			data-slot="table-cell"
+			className={cn(
+				"whitespace-nowrap p-2 align-middle has-[[role=checkbox]]:pr-0",
+				size === "sm" ? "text-xs" : "text-sm",
+				tone === "muted" && "text-muted-foreground",
+				tone === "mono" && "font-mono text-muted-foreground",
+				className,
+			)}
+			{...props}
+		/>
 	);
 }
 

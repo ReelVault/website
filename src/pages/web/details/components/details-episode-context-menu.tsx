@@ -52,25 +52,21 @@ export function DetailsEpisodeContextMenu({
 	const hasMultipleVersions = files.length > 1;
 
 	return (
-		<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
+		<ContextMenuContent className="w-64">
 			<ContextMenuGroup>
-				<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{episodeTitle}</ContextMenuLabel>
+				<ContextMenuLabel className="truncate">{episodeTitle}</ContextMenuLabel>
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
 				{hasMultipleVersions ? (
 					<ContextMenuSub>
-						<ContextMenuSubTrigger className="cursor-pointer gap-2.5">
+						<ContextMenuSubTrigger className="cursor-pointer">
 							<Layers className="size-4 text-primary" />
 							<span>{m.web_play_version_count({ filesCount: files.length })}</span>
 						</ContextMenuSubTrigger>
-						<ContextMenuSubContent className="w-72 border-border bg-popover p-1 shadow-2xl">
+						<ContextMenuSubContent className="w-72">
 							{files.map((file, idx) => (
-								<ContextMenuItem
-									key={file.id}
-									render={<Link to="/player/$id" params={{ id: file.id }} />}
-									className="cursor-pointer gap-2.5 py-2"
-								>
+								<ContextMenuItem key={file.id} render={<Link to="/player/$id" params={{ id: file.id }} />} className="cursor-pointer">
 									<Play className="size-3.5 shrink-0 text-primary" />
 									<div className="flex min-w-0 flex-1 flex-col gap-0.5">
 										<div className="flex items-center gap-1.5 truncate font-medium text-sm">
@@ -85,7 +81,7 @@ export function DetailsEpisodeContextMenu({
 					</ContextMenuSub>
 				) : (
 					mediaFileId && (
-						<ContextMenuItem render={<Link to="/player/$id" params={{ id: mediaFileId }} />} className="cursor-pointer gap-2.5">
+						<ContextMenuItem render={<Link to="/player/$id" params={{ id: mediaFileId }} />} className="cursor-pointer">
 							<Play className="size-4 fill-primary/20 text-primary" />
 							<span>{m.web_play_episode()}</span>
 							<ContextMenuShortcut>{m.common_key_enter()}</ContextMenuShortcut>
@@ -100,7 +96,7 @@ export function DetailsEpisodeContextMenu({
 							title: episodeTitle,
 						})
 					}
-					className="cursor-pointer gap-2.5"
+					className="cursor-pointer"
 				>
 					<Info className="size-4 text-muted-foreground" />
 					<span>{m.web_files_info_with_count({ count: files.length })}</span>
@@ -109,7 +105,7 @@ export function DetailsEpisodeContextMenu({
 					onClick={() => {
 						detach(handleCopyEpisodeLink(mediaFileId));
 					}}
-					className="cursor-pointer gap-2.5"
+					className="cursor-pointer"
 				>
 					<Copy className="size-4 text-muted-foreground" />
 					<span>{m.common_copy_link()}</span>
@@ -120,12 +116,12 @@ export function DetailsEpisodeContextMenu({
 				<>
 					<ContextMenuSeparator />
 					<ContextMenuGroup>
-						<ContextMenuItem disabled={isEpisodePending} onClick={onToggleWatched} className="cursor-pointer gap-2.5">
+						<ContextMenuItem disabled={isEpisodePending} onClick={onToggleWatched} className="cursor-pointer">
 							<Check className={cn("size-4", isWatched ? "text-success" : "text-muted-foreground")} />
 							<span>{isWatched ? m.components_unmark_watched() : m.components_mark_watched()}</span>
 						</ContextMenuItem>
 						{(hasProgress || isWatched) && (
-							<ContextMenuItem disabled={isEpisodePending} onClick={onResetProgress} className="cursor-pointer gap-2.5">
+							<ContextMenuItem disabled={isEpisodePending} onClick={onResetProgress} className="cursor-pointer">
 								<RotateCcw className="size-4 text-muted-foreground" />
 								<span>{m.components_cw_reset_progress_button()}</span>
 							</ContextMenuItem>
@@ -138,18 +134,18 @@ export function DetailsEpisodeContextMenu({
 				<>
 					<ContextMenuSeparator />
 					<ContextMenuGroup>
-						<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+						<ContextMenuLabel className="flex items-center">
 							<Shield className="size-3" />
 							{m.common_admin_tools()}
 						</ContextMenuLabel>
 						{onRefreshEpisode && (
-							<ContextMenuItem onClick={() => onRefreshEpisode(episodeId)} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => onRefreshEpisode(episodeId)} className="cursor-pointer">
 								<RefreshCw className="size-4 text-primary" />
 								<span>{m.components_media_files_refresh_episode_metadata()}</span>
 							</ContextMenuItem>
 						)}
 						{onRefreshImage && (
-							<ContextMenuItem onClick={() => onRefreshImage(episodeId)} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => onRefreshImage(episodeId)} className="cursor-pointer">
 								<ImageDown className="size-4 text-primary" />
 								<span>{m.web_force_download_thumbnail()}</span>
 							</ContextMenuItem>
@@ -158,7 +154,7 @@ export function DetailsEpisodeContextMenu({
 							onClick={() => {
 								detach(handleCopyId(episodeId));
 							}}
-							className="cursor-pointer gap-2.5"
+							className="cursor-pointer"
 						>
 							<Copy className="size-4 text-muted-foreground" />
 							<span>{m.web_copy_episode_id()}</span>

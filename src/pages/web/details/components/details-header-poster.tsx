@@ -40,11 +40,11 @@ export function DetailsHeaderPoster({ metadataId, title, posterId, posterUpdated
 							width={384}
 							aspectRatio={2 / 3}
 							priority
-							className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+							className="object-cover group-hover:scale-[1.02]"
 						/>
 					</div>
 
-					<Badge size="lg" className="absolute bottom-3 left-3 border-border/60 bg-background/90 shadow-md">
+					<Badge size="lg" className="absolute bottom-3 left-3">
 						<Tooltip>
 							<TooltipTrigger>
 								<div className="flex items-center gap-1.5 font-bold">
@@ -52,7 +52,7 @@ export function DetailsHeaderPoster({ metadataId, title, posterId, posterUpdated
 									<span className="text-base text-foreground">{formatRating(rating.avgScore)}</span>
 								</div>
 							</TooltipTrigger>
-							<TooltipContent className="flex flex-col items-start justify-center gap-0.5">
+							<TooltipContent className="flex flex-col items-start justify-center">
 								{rating.scores.map((r) => (
 									<span key={r.source} className="flex items-center gap-1">
 										{r.url ? (

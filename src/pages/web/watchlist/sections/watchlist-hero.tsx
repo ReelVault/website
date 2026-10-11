@@ -17,7 +17,8 @@ export function WatchlistHero({ featuredItem }: { featuredItem: WatchlistItem })
 					alt=""
 					fill
 					priority
-					className="object-cover opacity-50"
+					dim={50}
+					className="object-cover"
 				/>
 				<div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent" />
 
@@ -27,11 +28,7 @@ export function WatchlistHero({ featuredItem }: { featuredItem: WatchlistItem })
 					</p>
 					<h1 className="cinema-title mt-4 max-w-4xl">{featuredItem.title}</h1>
 					<div className="mt-6 flex gap-4">
-						<Button
-							nativeButton={false}
-							render={<Link to="/details/$id" params={{ id: featuredItem.id }} />}
-							className="h-11 gap-3 px-6 font-bold"
-						>
+						<Button nativeButton={false} render={<Link to="/details/$id" params={{ id: featuredItem.id }} />} size="lg">
 							<Play className="size-4 fill-current" data-icon="inline-start" aria-hidden="true" />
 							{m.plugins_bug_reports_view_details()}
 						</Button>

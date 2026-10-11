@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import type { useAdminResources } from "@/client/hooks/use-admin-resources";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";
@@ -11,13 +10,7 @@ export function ResourceConfigSection({ config }: { config: ResourceConfig }) {
 		{
 			label: m.admin_resources_monitoring_label(),
 			node: (
-				<Badge
-					variant="outline"
-					className={cn("text-xs", {
-						"border-success/30 bg-success/10 text-success": config.monitoringEnabled,
-						"border-muted-foreground/30 bg-muted/10 text-muted-foreground": !config.monitoringEnabled,
-					})}
-				>
+				<Badge variant={config.monitoringEnabled ? "success" : "muted"}>
 					{config.monitoringEnabled ? m.admin_resources_enabled() : m.plugins_webhooks_disabled()}
 				</Badge>
 			),
@@ -25,13 +18,7 @@ export function ResourceConfigSection({ config }: { config: ResourceConfig }) {
 		{
 			label: m.admin_resources_dynamic_throttling(),
 			node: (
-				<Badge
-					variant="outline"
-					className={cn("text-xs", {
-						"border-success/30 bg-success/10 text-success": config.enableDynamicThrottling,
-						"border-muted-foreground/30 bg-muted/10 text-muted-foreground": !config.enableDynamicThrottling,
-					})}
-				>
+				<Badge variant={config.enableDynamicThrottling ? "success" : "muted"}>
 					{config.enableDynamicThrottling ? m.admin_resources_enabled() : m.plugins_webhooks_disabled()}
 				</Badge>
 			),

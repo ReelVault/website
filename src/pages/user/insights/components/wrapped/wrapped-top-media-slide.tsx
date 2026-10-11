@@ -13,7 +13,7 @@ export function WrappedTopMediaSlide({ data }: WrappedTopMediaSlideProps) {
 	return (
 		<div className="fade-in zoom-in-95 animate-in space-y-6 py-2 duration-300">
 			<div className="text-center">
-				<Badge variant="outline" className="mb-2 border-primary/50 bg-primary/10 px-3 py-1 font-bold text-primary text-xs">
+				<Badge weight="bold" variant="primary" className="mb-2">
 					{m.user_productions_of_year()}
 				</Badge>
 				<h3 className="font-black text-2xl text-foreground sm:text-4xl">{m.user_number_one_titles()}</h3>
@@ -34,7 +34,9 @@ export function WrappedTopMediaSlide({ data }: WrappedTopMediaSlideProps) {
 							/>
 						</div>
 						<div className="min-w-0 flex-1 space-y-2 text-center sm:text-left">
-							<Badge className="bg-amber-500/20 font-bold text-amber-400 text-xs">{m.user_no1_movie_of_year()}</Badge>
+							<Badge weight="bold" variant="warning">
+								{m.user_no1_movie_of_year()}
+							</Badge>
 							<h4 className="truncate font-bold text-foreground text-lg sm:text-xl" title={data.topMovie.title}>
 								{data.topMovie.title}
 							</h4>
@@ -67,7 +69,9 @@ export function WrappedTopMediaSlide({ data }: WrappedTopMediaSlideProps) {
 							/>
 						</div>
 						<div className="min-w-0 flex-1 space-y-2 text-center sm:text-left">
-							<Badge className="bg-purple-500/20 font-bold text-purple-400 text-xs">{m.user_no1_series_of_year()}</Badge>
+							<Badge weight="bold" variant="primary">
+								{m.user_no1_series_of_year()}
+							</Badge>
 							<h4 className="truncate font-bold text-foreground text-lg sm:text-xl" title={data.topShow.title}>
 								{data.topShow.title}
 							</h4>

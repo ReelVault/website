@@ -11,7 +11,7 @@ export function HistorySkeleton() {
 			</div>
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 				{SKELETON_KEYS.map((key) => (
-					<Skeleton key={key} className="h-48 rounded-2xl" />
+					<Skeleton key={key} className="h-48" />
 				))}
 			</div>
 		</div>

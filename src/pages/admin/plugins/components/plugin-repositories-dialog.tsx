@@ -107,7 +107,6 @@ export function PluginRepositoriesDialog({
 										variant="ghost"
 										size="icon"
 										disabled={isBusy}
-										className="size-7"
 										aria-label={m.admin_plugins_repositories_refresh()}
 										title={m.admin_plugins_repositories_refresh()}
 										onClick={() => detach(onRefresh(repository.id))}
@@ -117,10 +116,9 @@ export function PluginRepositoriesDialog({
 									<ConfirmAction
 										trigger={
 											<Button
-												variant="ghost"
+												variant="destructive-ghost"
 												size="icon"
 												disabled={isBusy}
-												className="size-7 text-destructive hover:bg-destructive/10 hover:text-destructive"
 												aria-label={m.admin_plugins_repositories_remove()}
 												title={m.admin_plugins_repositories_remove()}
 											>
@@ -163,7 +161,7 @@ export function PluginRepositoriesDialog({
 							value={url}
 							onChange={(event) => setUrl(event.target.value)}
 							placeholder="https://example.com/reelvault-catalog.json"
-							className="font-mono text-xs"
+							font="mono"
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
@@ -174,12 +172,12 @@ export function PluginRepositoriesDialog({
 							value={token}
 							onChange={(event) => setToken(event.target.value)}
 							placeholder={m.admin_plugins_repositories_token_placeholder()}
-							className="font-mono text-xs"
+							font="mono"
 						/>
 						<p className="text-muted-foreground text-xs">{m.admin_plugins_repositories_token_hint()}</p>
 					</div>
-					<Button variant="outline" size="sm" disabled={!canSubmit} onClick={submit} className="gap-1.5 self-start text-xs">
-						{isSubmitting ? <Spinner className="size-3.5" /> : <Plus className="size-3.5" />}
+					<Button variant="outline" size="sm" disabled={!canSubmit} onClick={submit} className="self-start">
+						{isSubmitting ? <Spinner size="sm" /> : <Plus className="size-3.5" />}
 						{m.admin_plugins_repositories_add()}
 					</Button>
 				</div>

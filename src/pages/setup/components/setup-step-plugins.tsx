@@ -116,7 +116,6 @@ export function SetupStepPlugins() {
 												type="button"
 												variant="outline"
 												size="sm"
-												className="gap-1.5 text-xs"
 												onClick={() => setConfigPluginId((current) => (current === plugin.id ? null : plugin.id))}
 											>
 												<Settings className="size-3.5" />
@@ -177,10 +176,10 @@ export function SetupStepPlugins() {
 										<span className="flex min-w-0 flex-1 flex-col gap-1">
 											<span className="flex flex-wrap items-center gap-2">
 												<span className="font-semibold text-sm">{entry.name}</span>
-												<Badge variant="outline" className="font-mono text-xs">
+												<Badge variant="outline" font="mono">
 													{m.common_version_badge({ version: entry.version })}
 												</Badge>
-												<Badge variant="secondary" className="font-normal text-xs">
+												<Badge weight="normal" variant="secondary">
 													{pluginCatalogCategoryLabel(entry.category)}
 												</Badge>
 											</span>
@@ -193,7 +192,7 @@ export function SetupStepPlugins() {
 					</ul>
 
 					<div className="flex flex-wrap items-center gap-3">
-						<Button type="button" className="gap-2" disabled={isBusy || selectedIds.size === 0} onClick={installSelected}>
+						<Button type="button" disabled={isBusy || selectedIds.size === 0} onClick={installSelected}>
 							<Download className="size-4" />
 							{m.setup_plugins_install_selected()}
 						</Button>
@@ -202,7 +201,7 @@ export function SetupStepPlugins() {
 				</>
 			)}
 
-			<Button type="button" variant="outline" className="gap-2 self-start" disabled={isBusy} onClick={() => setIsUploadOpen(true)}>
+			<Button type="button" variant="outline" className="self-start" disabled={isBusy} onClick={() => setIsUploadOpen(true)}>
 				<Upload className="size-4" />
 				{m.setup_plugins_upload()}
 			</Button>

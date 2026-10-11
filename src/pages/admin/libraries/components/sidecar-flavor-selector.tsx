@@ -23,7 +23,7 @@ export function SidecarFlavorSelector({ value, onChange }: SidecarFlavorSelector
 					if (next === "reelvault" || next === "kodi") onChange(next);
 				}}
 			>
-				<SelectTrigger aria-label={m.admin_libraries_sidecar_flavor()} className="h-10 w-full bg-background text-xs sm:h-9">
+				<SelectTrigger density="compact" aria-label={m.admin_libraries_sidecar_flavor()} className="w-full">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent className="w-[calc(100vw-4rem)] sm:w-120">

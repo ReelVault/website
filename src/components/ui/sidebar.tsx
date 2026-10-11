@@ -320,12 +320,27 @@ function SidebarInput({ className, ...props }: ComponentProps<typeof Input>) {
 	);
 }
 
-function SidebarHeader({ className, ...props }: ComponentProps<"div">) {
-	return <div data-slot="sidebar-header" data-sidebar="header" className={cn("flex flex-col gap-2 p-2", className)} {...props} />;
+// Comfortable: 16 px inset (admin sidebar header and footer), default is 8 px.
+function SidebarHeader({ className, size = "default", ...props }: ComponentProps<"div"> & { size?: "default" | "comfortable" }) {
+	return (
+		<div
+			data-slot="sidebar-header"
+			data-sidebar="header"
+			className={cn("flex flex-col gap-2 p-2", size === "comfortable" && "p-4", className)}
+			{...props}
+		/>
+	);
 }
 
-function SidebarFooter({ className, ...props }: ComponentProps<"div">) {
-	return <div data-slot="sidebar-footer" data-sidebar="footer" className={cn("flex flex-col gap-2 p-2", className)} {...props} />;
+function SidebarFooter({ className, size = "default", ...props }: ComponentProps<"div"> & { size?: "default" | "comfortable" }) {
+	return (
+		<div
+			data-slot="sidebar-footer"
+			data-sidebar="footer"
+			className={cn("flex flex-col gap-2 p-2", size === "comfortable" && "p-4", className)}
+			{...props}
+		/>
+	);
 }
 
 function SidebarSeparator({ className, ...props }: ComponentProps<typeof Separator>) {
@@ -339,13 +354,14 @@ function SidebarSeparator({ className, ...props }: ComponentProps<typeof Separat
 	);
 }
 
-function SidebarContent({ className, ...props }: ComponentProps<"div">) {
+function SidebarContent({ className, size = "default", ...props }: ComponentProps<"div"> & { size?: "default" | "comfortable" }) {
 	return (
 		<div
 			data-slot="sidebar-content"
 			data-sidebar="content"
 			className={cn(
 				"no-scrollbar flex min-h-0 flex-1 flex-col gap-0 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+				size === "comfortable" && "py-4",
 				className,
 			)}
 			{...props}

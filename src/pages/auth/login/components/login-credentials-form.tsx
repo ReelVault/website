@@ -156,7 +156,7 @@ export function LoginCredentialsForm({
 				<span className="relative bg-card/75 px-3 font-semibold text-muted-foreground text-xs">{m.auth_or_divider()}</span>
 			</div>
 
-			<Button type="button" variant="outline" className="w-full gap-2 rounded-2xl py-5 font-bold" onClick={onQuickConnect}>
+			<Button size="lg" type="button" variant="outline" className="w-full" onClick={onQuickConnect}>
 				<QrCodeIcon className="size-4" /> {m.auth_quick_connect_button()}
 			</Button>
 		</form>

@@ -95,28 +95,29 @@ export function ScheduledTasksCategoryGroup({
 		<section className="flex flex-col gap-3">
 			<Collapsible open={expanded} className="flex flex-col gap-3">
 				<div className="flex items-start justify-between gap-3">
-					<CollapsibleTrigger type="button" onClick={() => setExpanded((v) => !v)} className="group min-w-0 flex-1 rounded-lg text-left">
+					<CollapsibleTrigger type="button" onClick={() => setExpanded((v) => !v)} className="min-w-0 flex-1 text-left">
 						<div className="flex items-center gap-2">
 							<ChevronDown
 								className={cn("size-4 shrink-0 text-muted-foreground transition-transform duration-200", !expanded && "-rotate-90")}
 							/>
 							<h3 className="font-bold text-foreground text-sm tracking-tight">{meta.title}</h3>
-							<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+							<Badge variant="secondary" font="mono" size="count">
 								{tasks.length}
 							</Badge>
 						</div>
 						<p className="pl-6 text-muted-foreground text-xs">{meta.description}</p>
 					</CollapsibleTrigger>
 					<Button
+						tone="muted"
 						type="button"
 						variant="outline"
 						size="sm"
 						disabled={isRunningCategory}
 						onClick={() => detach(onRunCategory(category))}
-						className="h-8.5 shrink-0 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground"
+						className="shrink-0"
 						title={m.admin_workers_run_all()}
 					>
-						{isRunningCategory ? <Spinner className="size-3.5" /> : <Play className="size-3.5 fill-current" />}
+						{isRunningCategory ? <Spinner size="sm" /> : <Play className="size-3.5 fill-current" />}
 						<span>{m.admin_workers_run_all()}</span>
 					</Button>
 				</div>

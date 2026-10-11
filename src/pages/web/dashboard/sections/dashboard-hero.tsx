@@ -120,7 +120,7 @@ export default function DashboardHero() {
 									variant="ghost"
 									size="icon-lg"
 									onClick={() => goTo(index)}
-									className="my-2 size-11 w-fit"
+									className="my-2 w-fit"
 									aria-label={m.web_show_slide({ index1: index + 1 })}
 									aria-pressed={index === current}
 								>
@@ -149,7 +149,7 @@ export default function DashboardHero() {
 							variant="ghost"
 							size="icon-lg"
 							onClick={() => goTo(index)}
-							className="size-11 w-fit"
+							className="w-fit"
 							aria-label={m.web_show_slide({ index1: index + 1 })}
 							aria-pressed={index === current}
 						>

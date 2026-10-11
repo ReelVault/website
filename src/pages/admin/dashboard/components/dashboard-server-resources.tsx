@@ -2,40 +2,43 @@ import type { AdminStats } from "@reelvault/sdk";
 import { Activity } from "lucide-react";
 import type { ReactNode } from "react";
 import { AppErrorState } from "@/components/app-states";
-import { Badge } from "@/components/ui/badge";
+import { Badge, type BadgeVariant } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { SkeletonList } from "@/components/ui/skeleton";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatMemory } from "./dashboard-utils";
 
-const PRESSURE_STATE: Record<"low" | "medium" | "high" | "critical", { readonly label: string; badgeClass: string; active: boolean }> = {
+const PRESSURE_STATE: Record<
+	"low" | "medium" | "high" | "critical",
+	{ readonly label: string; badgeVariant: BadgeVariant; active: boolean }
+> = {
 	low: {
 		get label() {
 			return m.admin_dashboard_healthy();
 		},
-		badgeClass: "border-success/30 bg-success/10 text-xs text-success",
+		badgeVariant: "success",
 		active: true,
 	},
 	medium: {
 		get label() {
 			return m.admin_dashboard_healthy();
 		},
-		badgeClass: "border-success/30 bg-success/10 text-xs text-success",
+		badgeVariant: "success",
 		active: true,
 	},
 	high: {
 		get label() {
 			return m.admin_dashboard_loaded();
 		},
-		badgeClass: "border-warning/30 bg-warning/10 text-xs text-warning",
+		badgeVariant: "warning",
 		active: false,
 	},
 	critical: {
 		get label() {
 			return m.admin_dashboard_critical();
 		},
-		badgeClass: "border-destructive/30 bg-destructive/10 text-xs text-destructive",
+		badgeVariant: "destructive",
 		active: false,
 	},
 };
@@ -73,7 +76,7 @@ export function DashboardServerResources({
 						<span className="font-medium text-foreground">{m.admin_resources_v8_heap_usage()}</span>
 						<span className="font-bold font-mono text-primary tabular-nums">{m.common_percent_value({ value: heapPercent })}</span>
 					</div>
-					<Progress value={heapPercent} className="h-2" />
+					<Progress value={heapPercent} />
 					<div className="flex items-center justify-between text-muted-foreground text-xs">
 						<span>
 							{m.admin_dashboard_used_label()} {formatMemory(heapUsed)}
@@ -91,7 +94,7 @@ export function DashboardServerResources({
 								{m.common_percent_value({ value: systemMemory.percent })}
 							</span>
 						</div>
-						<Progress value={systemMemory.percent} className="h-2" />
+						<Progress value={systemMemory.percent} />
 						<div className="flex items-center justify-between text-muted-foreground text-xs">
 							<span>
 								{m.admin_dashboard_used_label_system()} {formatMemory(systemMemory.usedMb * 1024 * 1024)}
@@ -120,9 +123,7 @@ export function DashboardServerResources({
 						<Activity className={pressureState.active ? "size-3.5 text-success" : "size-3.5 text-warning"} />
 						{m.admin_dashboard_process_state()}
 					</span>
-					<Badge variant="outline" className={pressureState.badgeClass}>
-						{pressureState.label}
-					</Badge>
+					<Badge variant={pressureState.badgeVariant}>{pressureState.label}</Badge>
 				</div>
 			</div>
 		);

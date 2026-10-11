@@ -1,5 +1,4 @@
 import type { AdminLiveStreamItem } from "@reelvault/sdk";
-import { cn } from "cn";
 import { ApiImage } from "@/components/ui/api-image";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";
@@ -22,7 +21,8 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 				alt={stream.title}
 				fill
 				sizes="(max-width: 1024px) 100vw, 50vw"
-				className="object-cover transition-transform duration-300 group-hover:scale-105"
+				zoom
+				className="object-cover"
 			/>
 			<div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-black/60" />
 
@@ -36,14 +36,7 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 					</div>
 				</div>
 
-				<Badge
-					className={cn("font-bold text-xs", {
-						"border-success/40 bg-success/30 text-success": isDirect,
-						"border-warning/40 bg-warning/30 text-warning": !isDirect,
-					})}
-				>
-					{isDirect ? m.common_direct_stream() : m.common_transcoding()}
-				</Badge>
+				<Badge variant={isDirect ? "success" : "warning"}>{isDirect ? m.common_direct_stream() : m.common_transcoding()}</Badge>
 			</div>
 
 			{/* Title Overlay Info */}

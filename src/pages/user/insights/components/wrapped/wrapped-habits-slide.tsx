@@ -12,7 +12,7 @@ export function WrappedHabitsSlide({ data }: WrappedHabitsSlideProps) {
 	return (
 		<div className="fade-in zoom-in-95 animate-in space-y-6 py-2 text-center duration-300">
 			<div>
-				<Badge variant="outline" className="mb-2 border-primary/50 bg-primary/10 px-3 py-1 font-bold text-primary text-xs">
+				<Badge weight="bold" variant="primary" className="mb-2">
 					{m.user_habits_and_records()}
 				</Badge>
 				<h3 className="font-black text-2xl text-foreground sm:text-4xl">{m.user_when_watch_most()}</h3>

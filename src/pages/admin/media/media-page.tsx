@@ -177,7 +177,7 @@ export default function AdminMediaFilesPage() {
 			<AdminSection title={m.admin_media_heading_files_list({ total })} description={m.admin_media_physical_files_description()}>
 				<div className="flex flex-col gap-4">
 					{search.libraryId && (
-						<Button variant="outline" size="sm" className="w-fit gap-1.5" onClick={handleClearLibrary}>
+						<Button variant="outline" size="sm" className="w-fit" onClick={handleClearLibrary}>
 							<X className="size-3.5" />
 							{m.admin_media_library_filter_clear()}
 						</Button>
@@ -220,12 +220,7 @@ export default function AdminMediaFilesPage() {
 							/>
 							<ConfirmAction
 								trigger={
-									<Button
-										size="sm"
-										variant="outline"
-										disabled={bulkDeleteFiles.isPending}
-										className="text-destructive hover:text-destructive"
-									>
+									<Button size="sm" variant="destructive-outline" disabled={bulkDeleteFiles.isPending}>
 										{m.admin_media_delete_selected()}
 									</Button>
 								}

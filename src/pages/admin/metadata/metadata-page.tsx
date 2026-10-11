@@ -285,12 +285,7 @@ export default function AdminMetadataPage() {
 										</Button>
 										<ConfirmAction
 											trigger={
-												<Button
-													size="sm"
-													variant="outline"
-													disabled={bulkDeleteMetadata.isPending}
-													className="text-destructive hover:text-destructive"
-												>
+												<Button size="sm" variant="destructive-outline" disabled={bulkDeleteMetadata.isPending}>
 													{m.admin_metadata_delete_selected()}
 												</Button>
 											}

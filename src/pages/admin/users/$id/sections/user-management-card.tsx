@@ -32,19 +32,19 @@ export function UserManagementCard({
 	onOpenPassword,
 	onRemoveUser,
 }: UserManagementCardProps) {
-	if (isLoading) return <Skeleton className="h-32 rounded-lg" />;
+	if (isLoading) return <Skeleton className="h-32" />;
 
 	if (!user) return null;
 
 	return (
-		<Card className="shadow-none">
-			<CardHeader className="flex flex-col gap-3 border-border border-b sm:flex-row sm:items-start sm:justify-between">
+		<Card>
+			<CardHeader className="flex flex-col gap-3 border-b sm:flex-row sm:items-start sm:justify-between">
 				<div className="flex flex-col gap-1">
-					<CardTitle className="text-base">{m.admin_users_account_management()}</CardTitle>
+					<CardTitle>{m.admin_users_account_management()}</CardTitle>
 					<CardDescription>{m.admin_users_role_access_description()}</CardDescription>
 				</div>
 			</CardHeader>
-			<CardContent className="flex flex-wrap items-center gap-3 p-4 sm:p-6">
+			<CardContent size="spacious" className="flex flex-wrap items-center gap-3">
 				<AsyncButton size="sm" variant="outline" isPending={isUpdating} pendingLabel={m.common_saving_dots()} onClick={onToggleRole}>
 					<UserCog className="size-4" aria-hidden="true" />{" "}
 					{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}
@@ -58,12 +58,12 @@ export function UserManagementCard({
 				>
 					{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}
 				</AsyncButton>
-				<Button size="sm" variant="outline" className="gap-2" onClick={onOpenPassword}>
+				<Button size="sm" variant="outline" onClick={onOpenPassword}>
 					<Key className="size-4" aria-hidden="true" /> {m.admin_users_change_password()}
 				</Button>
 				<ConfirmAction
 					trigger={
-						<Button size="sm" variant="destructive" className="gap-2" disabled={isDeleting}>
+						<Button size="sm" variant="destructive" disabled={isDeleting}>
 							<Trash2 className="size-4" aria-hidden="true" /> {m.admin_users_delete_account()}
 						</Button>
 					}

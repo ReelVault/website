@@ -50,9 +50,9 @@ export function IgnoredAssetsDialog({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-lg">
+			<DialogContent size="lg">
 				<DialogHeader>
-					<DialogTitle className="gap-2">
+					<DialogTitle>
 						<AlertTriangle className="size-5 text-muted-foreground" />
 						{m.admin_libraries_skipped_assets()}
 					</DialogTitle>

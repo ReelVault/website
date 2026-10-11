@@ -1,5 +1,4 @@
 import type { AdminLiveStreamItem } from "@reelvault/sdk";
-import { cn } from "cn";
 import { Activity } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -36,25 +35,18 @@ export function LiveStreamDetailsDialog({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-			<DialogContent className="max-h-[90vh] w-full overflow-y-auto font-mono text-xs sm:max-w-2xl">
-				<DialogHeader className="font-sans">
+			<DialogContent className="max-h-[90vh] w-full overflow-y-auto sm:max-w-2xl">
+				<DialogHeader>
 					<div className="flex flex-wrap items-center justify-between gap-2 pr-6">
 						<div className="flex items-center gap-2">
 							<Activity className="size-4.5 text-primary" />
-							<DialogTitle className="font-bold text-base text-foreground">
-								{m.admin_session_details({ streamTitle: stream.title })}
-							</DialogTitle>
+							<DialogTitle>{m.admin_session_details({ streamTitle: stream.title })}</DialogTitle>
 						</div>
-						<Badge
-							variant={isDirect ? "default" : "secondary"}
-							className={cn("font-mono text-xs", {
-								"bg-success/90 text-white": isDirect,
-							})}
-						>
+						<Badge variant={isDirect ? "success" : "secondary"} font="mono">
 							{isDirect ? m.common_direct_stream() : m.common_transcoding()}
 						</Badge>
 					</div>
-					<DialogDescription className="font-mono text-muted-foreground text-xs">
+					<DialogDescription>
 						{m.admin_live_stream_session_viewer({
 							sessionId: stream.sessionId,
 							profileName: stream.profileName,

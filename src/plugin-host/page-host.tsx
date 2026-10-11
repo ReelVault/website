@@ -23,7 +23,7 @@ export function PluginPageHost({ pluginId, pagePath, params }: PluginPageHostPro
 		return (
 			<div className={SHELL_CLASS}>
 				<div className="flex min-h-[50vh] items-center justify-center">
-					<Spinner className="size-6 text-muted-foreground" />
+					<Spinner size="xl" />
 				</div>
 			</div>
 		);

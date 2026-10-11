@@ -98,11 +98,13 @@ export function UserTable({
 									<TableCell>
 										<UserStatus user={user} />
 									</TableCell>
-									<TableCell className="whitespace-nowrap text-muted-foreground text-xs">{formatDate(user.createdAt)}</TableCell>
-									<TableCell className="whitespace-nowrap text-muted-foreground text-xs">
+									<TableCell tone="muted" size="sm" className="whitespace-nowrap">
+										{formatDate(user.createdAt)}
+									</TableCell>
+									<TableCell tone="muted" size="sm" className="whitespace-nowrap">
 										{user.lastActiveAt ? formatTimeAgo(user.lastActiveAt) : m.admin_users_never_active()}
 									</TableCell>
-									<TableCell className="text-xs tabular-nums">{user.activeSessionCount}</TableCell>
+									<TableCell size="sm">{user.activeSessionCount}</TableCell>
 									<TableCell className="text-right">
 										<UserActions
 											user={user}
@@ -114,28 +116,25 @@ export function UserTable({
 									</TableCell>
 								</ContextMenuTrigger>
 
-								<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
+								<ContextMenuContent className="w-64">
 									<ContextMenuGroup>
-										<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{user.name}</ContextMenuLabel>
+										<ContextMenuLabel className="truncate">{user.name}</ContextMenuLabel>
 									</ContextMenuGroup>
 									<ContextMenuSeparator />
 									<ContextMenuGroup>
-										<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer gap-2.5">
+										<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer">
 											<Shield className="size-4 text-primary" />
 											<span>{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}</span>
 										</ContextMenuItem>
-										<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer gap-2.5">
+										<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer">
 											{user.banned ? <UserCheck className="size-4 text-success" /> : <UserRoundX className="size-4 text-warning" />}
 											<span>{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}</span>
 										</ContextMenuItem>
-										<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer gap-2.5">
+										<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer">
 											<Copy className="size-4 text-muted-foreground" />
 											<span>{m.common_copy_email()}</span>
 										</ContextMenuItem>
-										<ContextMenuItem
-											onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))}
-											className="cursor-pointer gap-2.5"
-										>
+										<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer">
 											<Copy className="size-4 text-muted-foreground" />
 											<span>{m.admin_users_copy_account_id()}</span>
 										</ContextMenuItem>
@@ -144,7 +143,8 @@ export function UserTable({
 									<ContextMenuGroup>
 										<ContextMenuItem
 											onClick={() => detach(() => onDelete(user.id, user.name))}
-											className="cursor-pointer gap-2.5 text-destructive focus:bg-destructive/10 focus:text-destructive"
+											variant="destructive"
+											className="cursor-pointer"
 										>
 											<Trash2 className="size-4" />
 											<span>{m.admin_users_delete_account()}</span>
@@ -159,7 +159,7 @@ export function UserTable({
 			renderCard={(user) => (
 				<ContextMenu key={user.id}>
 					<ContextMenuTrigger render={<Card />}>
-						<CardContent className="flex flex-col gap-4 p-4">
+						<CardContent className="flex flex-col gap-4">
 							<label className="flex items-center gap-2 text-xs">
 								<input
 									type="checkbox"
@@ -200,35 +200,32 @@ export function UserTable({
 						</CardContent>
 					</ContextMenuTrigger>
 
-					<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
+					<ContextMenuContent className="w-64">
 						<ContextMenuGroup>
-							<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{user.name}</ContextMenuLabel>
+							<ContextMenuLabel className="truncate">{user.name}</ContextMenuLabel>
 						</ContextMenuGroup>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>
-							<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer">
 								<Shield className="size-4 text-primary" />
 								<span>{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}</span>
 							</ContextMenuItem>
-							<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer">
 								{user.banned ? <UserCheck className="size-4 text-success" /> : <UserRoundX className="size-4 text-warning" />}
 								<span>{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}</span>
 							</ContextMenuItem>
-							<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer">
 								<Copy className="size-4 text-muted-foreground" />
 								<span>{m.common_copy_email()}</span>
 							</ContextMenuItem>
-							<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer">
 								<Copy className="size-4 text-muted-foreground" />
 								<span>{m.common_copy_id()}</span>
 							</ContextMenuItem>
 						</ContextMenuGroup>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>
-							<ContextMenuItem
-								onClick={() => detach(() => onDelete(user.id, user.name))}
-								className="cursor-pointer gap-2.5 text-destructive focus:bg-destructive/10 focus:text-destructive"
-							>
+							<ContextMenuItem onClick={() => detach(() => onDelete(user.id, user.name))} variant="destructive" className="cursor-pointer">
 								<Trash2 className="size-4" />
 								<span>{m.admin_users_delete_account()}</span>
 							</ContextMenuItem>

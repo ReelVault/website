@@ -66,7 +66,7 @@ export function DashboardStorageBreakdown({
 										<p className="text-muted-foreground text-xs">{m.admin_dashboard_percent_of_total({ percentage })}</p>
 									</div>
 								</div>
-								<Progress value={percentage} className="h-1.5" />
+								<Progress value={percentage} size="sm" />
 							</div>
 						);
 					})}

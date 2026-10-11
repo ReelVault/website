@@ -32,13 +32,13 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 				<UserRound className="size-4.5" aria-hidden="true" />
 				<span>{m.user_profile_page_title()}</span>
 			</SheetTrigger>
-			<SheetContent side="bottom" className="rounded-t-2xl">
+			<SheetContent side="bottom">
 				<SheetHeader>
 					<SheetTitle>{m.user_profile_and_account()}</SheetTitle>
 					<SheetDescription>{account?.email ?? m.user_active_profile()}</SheetDescription>
 				</SheetHeader>
 				<div className="flex flex-col gap-1 px-4 pb-6">
-					{isLoading ? <Skeleton className="h-14 rounded-xl" /> : <SidebarProfileCard profile={profile} account={account} />}
+					{isLoading ? <Skeleton className="h-14" /> : <SidebarProfileCard profile={profile} account={account} />}
 					<SheetClose render={<Link to="/auth/profiles" />}>
 						<span className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-muted-foreground text-sm hover:bg-muted/60 hover:text-foreground">
 							<RotateCcw className="size-4.5" />

@@ -89,7 +89,7 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 
 				<Field className="max-w-xl gap-3">
 					<FieldLabel htmlFor="profile-name">{m.user_display_name()}</FieldLabel>
-					<InputGroup className="h-11 rounded-xl bg-background/70">
+					<InputGroup>
 						<InputGroupAddon>
 							<User className="size-4" aria-hidden="true" />
 						</InputGroupAddon>
@@ -100,13 +100,12 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 							autoComplete="nickname"
 							value={name}
 							onChange={(event) => setName(event.target.value)}
-							className="h-10 px-2 font-medium"
 						/>
 					</InputGroup>
 				</Field>
 				<Field className="max-w-xl gap-3">
 					<FieldLabel htmlFor="profile-pin">{m.user_new_pin_optional()}</FieldLabel>
-					<InputGroup className="h-11 rounded-xl bg-background/70">
+					<InputGroup>
 						<InputGroupAddon>
 							<KeyRound className="size-4" aria-hidden="true" />
 						</InputGroupAddon>
@@ -120,7 +119,6 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 							value={pin}
 							onChange={(event) => setPin(event.target.value.replace(/\D/g, ""))}
 							placeholder={m.admin_users_pin_keep_empty()}
-							className="h-10 px-2 font-medium"
 						/>
 					</InputGroup>
 					<FieldDescription>{m.user_pin_exact_digits()}</FieldDescription>

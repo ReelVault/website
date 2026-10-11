@@ -28,9 +28,7 @@ export function MetadataBasicInfoSection({
 
 				<div className="flex flex-col gap-1.5">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="metadata-release-date" className="font-medium text-sm">
-							{m.admin_metadata_release_date_required()}
-						</Label>
+						<Label htmlFor="metadata-release-date">{m.admin_metadata_release_date_required()}</Label>
 						<MetadataLockToggle
 							field="releaseDate"
 							label={m.admin_metadata_release_date_label()}
@@ -45,15 +43,12 @@ export function MetadataBasicInfoSection({
 						required
 						value={basic.releaseDate}
 						onChange={(e) => onChange("releaseDate", e.target.value)}
-						className="h-10 bg-background px-3.5 text-sm"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="metadata-status" className="font-medium text-sm">
-							{m.admin_metadata_production_status()}
-						</Label>
+						<Label htmlFor="metadata-status">{m.admin_metadata_production_status()}</Label>
 						<MetadataLockToggle field="status" label={m.common_status()} isLocked={isLocked("status")} onToggle={onToggleLock} />
 					</div>
 					<Input
@@ -63,7 +58,6 @@ export function MetadataBasicInfoSection({
 						value={basic.status}
 						onChange={(e) => onChange("status", e.target.value)}
 						placeholder={m.admin_metadata_status_placeholder()}
-						className="h-10 bg-background px-3.5 text-sm"
 					/>
 				</div>
 

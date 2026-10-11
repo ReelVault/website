@@ -82,34 +82,16 @@ export function PlayerDiagnostics() {
 						<Activity className="size-4 text-primary" aria-hidden="true" />
 						<p className="font-bold text-foreground text-sm">{m.player_diagnostics_heading()}</p>
 					</div>
-					<Badge
-						variant={isTranscode ? "secondary" : "default"}
-						size="sm"
-						className={cn("font-mono text-xs uppercase", { "bg-success/90 text-white": !isTranscode })}
-					>
+					<Badge variant={isTranscode ? "secondary" : "success"} size="sm" font="mono" transform="uppercase">
 						{isTranscode ? m.admin_workers_category_streaming() : m.common_direct_stream()}
 					</Badge>
 				</div>
 				<div className="flex items-center gap-1">
-					<Button
-						type="button"
-						variant="ghost"
-						size="sm"
-						className="h-10 gap-1 px-2 text-xs sm:h-7"
-						onClick={() => detach(handleCopyJson)}
-						title={m.player_copy_raw_json_hint()}
-					>
+					<Button type="button" variant="ghost" size="sm" onClick={() => detach(handleCopyJson)} title={m.player_copy_raw_json_hint()}>
 						<CopyIcon copied={hasCopied} />
 						<span className="hidden sm:inline">{m.player_copy_json_short()}</span>
 					</Button>
-					<Button
-						type="button"
-						variant="ghost"
-						size="icon-sm"
-						className="size-10 sm:size-7"
-						onClick={close}
-						title={m.player_close_diagnostics()}
-					>
+					<Button type="button" variant="ghost" size="icon-sm" onClick={close} title={m.player_close_diagnostics()}>
 						<X className="size-4" aria-hidden="true" />
 						<span className="sr-only">{m.common_close()}</span>
 					</Button>

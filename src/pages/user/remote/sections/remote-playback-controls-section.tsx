@@ -93,9 +93,9 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 
 				<div className="flex flex-wrap items-center justify-center gap-3">
 					<Button
+						shape="pill"
 						variant="outline"
 						size="icon"
-						className="size-14 rounded-full"
 						aria-label={m.user_remote_rewind_10s()}
 						title={m.user_remote_rewind_10s()}
 						disabled={isPending}
@@ -104,9 +104,9 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						<RotateCcw className="size-5" />
 					</Button>
 					<Button
+						shape="pill"
 						variant={isPaused === false ? "default" : "outline"}
 						size="icon"
-						className="size-16 rounded-full"
 						aria-label={m.user_remote_pause()}
 						aria-pressed={!isPaused}
 						disabled={isPending}
@@ -115,9 +115,9 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						<Pause className="size-6" />
 					</Button>
 					<Button
+						shape="pill"
 						variant={isPaused === true ? "default" : "outline"}
 						size="icon"
-						className="size-16 rounded-full"
 						aria-label={m.user_remote_play()}
 						aria-pressed={!isPaused}
 						disabled={isPending}
@@ -126,9 +126,9 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						<Play className="size-6" />
 					</Button>
 					<Button
+						shape="pill"
 						variant="outline"
 						size="icon"
-						className="size-14 rounded-full"
 						aria-label={m.user_remote_forward_10s()}
 						title={m.user_remote_forward_10s()}
 						disabled={isPending}
@@ -137,9 +137,8 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						<RotateCw className="size-5" />
 					</Button>
 					<Button
-						variant="outline"
+						variant="destructive-outline"
 						size="icon"
-						className="size-14 rounded-full text-destructive hover:bg-destructive/10 hover:text-destructive"
 						aria-label={m.user_stop_playback_aria()}
 						disabled={isPending}
 						onClick={() => onSendCommand({ type: "stop" })}
@@ -150,10 +149,11 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 
 				<div className="mx-auto flex w-full max-w-sm items-center gap-3">
 					<Button
+						tone="muted"
 						type="button"
 						variant="ghost"
 						size="icon"
-						className="size-8 shrink-0 text-muted-foreground hover:text-foreground"
+						className="shrink-0"
 						onClick={handleToggleMute}
 						aria-label={volume === 0 ? m.user_remote_unmute() : m.user_remote_mute()}
 						title={volume === 0 ? m.user_remote_unmute() : m.user_remote_mute()}

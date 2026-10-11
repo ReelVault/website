@@ -40,19 +40,19 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, 
 				<div className="min-w-0 flex-1">
 					<div className="flex flex-wrap items-center gap-2">
 						<p className="font-medium text-foreground text-sm">{subtitle.label ?? subtitle.language}</p>
-						<Badge variant="outline" size="sm" className="text-xs">
+						<Badge variant="outline" size="sm">
 							{subtitle.format}
 						</Badge>
-						<Badge variant={subtitle.type === "embedded" ? "secondary" : "default"} size="sm" className="text-xs">
+						<Badge variant={subtitle.type === "embedded" ? "secondary" : "default"} size="sm">
 							{subtitle.type === "embedded" ? m.admin_subtitles_embedded() : m.admin_subtitles_external()}
 						</Badge>
 						{subtitle.isDefault && (
-							<Badge variant="outline" size="sm" className="border-primary/40 text-primary text-xs">
+							<Badge variant="primary-outline" size="sm">
 								{m.admin_subtitles_default()}
 							</Badge>
 						)}
 						{subtitle.isForced && (
-							<Badge variant="outline" size="sm" className="border-warning/40 text-warning text-xs">
+							<Badge variant="warning-outline" size="sm">
 								{m.player_forced_word()}
 							</Badge>
 						)}
@@ -74,27 +74,24 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, 
 
 			{/* Actions */}
 			<div className="flex items-center gap-1">
-				<Button variant="ghost" size="icon" className="size-8" aria-label={m.admin_subtitles_preview()} onClick={() => onView(subtitle.id)}>
+				<Button variant="ghost" size="icon" aria-label={m.admin_subtitles_preview()} onClick={() => onView(subtitle.id)}>
 					<Eye className="size-4 text-muted-foreground" />
 				</Button>
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						render={
-							<Button variant="ghost" size="icon" className="size-8" aria-label={m.plugins_bugs_more_options()}>
+							<Button variant="ghost" size="icon" aria-label={m.plugins_bugs_more_options()}>
 								<MoreVertical className="size-4 text-muted-foreground" />
 							</Button>
 						}
 					/>
 					<DropdownMenuContent align="end" className="w-44">
-						<DropdownMenuItem onClick={() => onEdit(subtitle.id)} className="gap-2.5">
+						<DropdownMenuItem onClick={() => onEdit(subtitle.id)}>
 							<Pencil className="size-3.5 text-muted-foreground" />
 							<span>{m.common_edit()}</span>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem
-							onClick={() => onDelete(subtitle.id)}
-							className="gap-2.5 text-destructive focus:bg-destructive/10 focus:text-destructive"
-						>
+						<DropdownMenuItem onClick={() => onDelete(subtitle.id)} variant="destructive">
 							<Trash2 className="size-3.5" />
 							<span>{m.common_delete()}</span>
 						</DropdownMenuItem>

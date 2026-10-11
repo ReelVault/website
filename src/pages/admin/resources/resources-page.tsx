@@ -45,10 +45,10 @@ export default function AdminResourcesPage() {
 			<div className="flex flex-col gap-6">
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 					{SKELETON_KEYS.map((key) => (
-						<Skeleton key={key} className="h-32 rounded-xl" />
+						<Skeleton key={key} className="h-32" />
 					))}
 				</div>
-				<Skeleton className="h-64 rounded-xl" />
+				<Skeleton className="h-64" />
 			</div>
 		);
 	} else if (resourcesQuery.isError) {
@@ -77,17 +77,17 @@ export default function AdminResourcesPage() {
 						size="sm"
 					>
 						{RESOURCE_WINDOWS.map((option) => (
-							<ToggleGroupItem key={option} value={String(option)} className="text-xs">
+							<ToggleGroupItem key={option} value={String(option)} size="sm">
 								{windowLabel(option)}
 							</ToggleGroupItem>
 						))}
 					</ToggleGroup>
 					<div className="flex items-center gap-2">
-						<Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => openResourceExport("csv", hours)}>
+						<Button variant="outline" size="sm" onClick={() => openResourceExport("csv", hours)}>
 							<Download className="size-3.5" />
 							{m.admin_resources_export_csv()}
 						</Button>
-						<Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => openResourceExport("json", hours)}>
+						<Button variant="outline" size="sm" onClick={() => openResourceExport("json", hours)}>
 							<Download className="size-3.5" />
 							{m.admin_resources_export_json()}
 						</Button>
@@ -142,13 +142,7 @@ export default function AdminResourcesPage() {
 				title={m.admin_resources_system_section()}
 				description={m.admin_resources_monitoring_description()}
 				actions={
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={() => detach(resourcesQuery.refetch)}
-						disabled={resourcesQuery.isFetching}
-						className="gap-2 text-xs"
-					>
+					<Button variant="outline" size="sm" onClick={() => detach(resourcesQuery.refetch)} disabled={resourcesQuery.isFetching}>
 						<RefreshCw className={cn("size-3.5", { "animate-spin": resourcesQuery.isFetching })} />
 						{m.common_refresh()}
 					</Button>

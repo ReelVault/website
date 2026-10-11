@@ -1,6 +1,5 @@
 import type { MediaMarker } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
-import { cn } from "cn";
 import { Clock, Copy, Edit3, Play, Trash2 } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
@@ -35,9 +34,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 			<ContextMenuTrigger render={<TableRow />}>
 				<TableCell>
 					<div className="flex items-center gap-2">
-						<Badge variant="outline" className={cn("font-semibold text-xs", config.badgeClass)}>
-							{config.label}
-						</Badge>
+						<Badge variant={config.badgeVariant}>{config.label}</Badge>
 						{marker.label && (
 							<span className="font-medium text-foreground text-sm">{m.components_media_quoted_label({ label: marker.label })}</span>
 						)}
@@ -84,7 +81,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 				</TableCell>
 				<TableCell>
 					<div className="flex flex-col gap-0.5">
-						<Badge variant="secondary" className="w-fit font-mono text-xs">
+						<Badge variant="secondary" font="mono" className="w-fit">
 							{marker.source}
 						</Badge>
 						{marker.pluginId && (
@@ -110,30 +107,18 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 							nativeButton={false}
 							render={<Link to="/player/$id" params={{ id: marker.mediaFileId }} target="_blank" rel="noopener noreferrer" />}
 							title={m.admin_markers_open_player()}
-							className="h-10 gap-1.5 text-xs hover:text-primary sm:h-8"
 						>
 							<Play className="size-3.5" />
 							{m.common_player_word()}
 						</Button>
 
-						<Button
-							size="sm"
-							variant="ghost"
-							onClick={() => onOpenEdit(marker)}
-							className="h-10 w-10 p-0 sm:h-8 sm:w-8"
-							title={m.admin_markers_edit()}
-						>
+						<Button size="sm" variant="ghost" onClick={() => onOpenEdit(marker)} className="w-10 sm:w-8" title={m.admin_markers_edit()}>
 							<Edit3 className="size-3.5 text-muted-foreground hover:text-foreground" />
 						</Button>
 
 						<ConfirmAction
 							trigger={
-								<Button
-									size="sm"
-									variant="ghost"
-									className="h-10 w-10 p-0 text-muted-foreground hover:bg-destructive/10 hover:text-destructive sm:h-8 sm:w-8"
-									title={m.admin_markers_delete_marker()}
-								>
+								<Button tone="muted" size="sm" variant="ghost" className="w-10 sm:w-8" title={m.admin_markers_delete_marker()}>
 									<Trash2 className="size-3.5" />
 								</Button>
 							}
@@ -148,27 +133,24 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 				</TableCell>
 			</ContextMenuTrigger>
 
-			<ContextMenuContent className="w-56 border-border bg-popover shadow-xl">
+			<ContextMenuContent className="w-56">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{config.label}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate">{config.label}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem onClick={() => onOpenEdit(marker)} className="cursor-pointer gap-2.5">
+					<ContextMenuItem onClick={() => onOpenEdit(marker)} className="cursor-pointer">
 						<Edit3 className="size-4 text-primary" />
 						<span>{m.admin_markers_edit()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={() => onCopy(marker.mediaFileId, m.admin_media_video_id())} className="cursor-pointer gap-2.5">
+					<ContextMenuItem onClick={() => onCopy(marker.mediaFileId, m.admin_media_video_id())} className="cursor-pointer">
 						<Copy className="size-4 text-muted-foreground" />
 						<span>{m.admin_markers_copy_file_id()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem
-						onClick={() => onDelete(marker)}
-						className="cursor-pointer gap-2.5 text-destructive focus:bg-destructive/10 focus:text-destructive"
-					>
+					<ContextMenuItem onClick={() => onDelete(marker)} variant="destructive" className="cursor-pointer">
 						<Trash2 className="size-4" />
 						<span>{m.admin_markers_delete_marker()}</span>
 					</ContextMenuItem>

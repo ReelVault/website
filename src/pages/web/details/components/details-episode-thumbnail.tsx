@@ -46,7 +46,7 @@ export function DetailsEpisodeThumbnail({
 					width={256}
 					aspectRatio={16 / 9}
 					sizes="(max-width: 768px) 100vw, 224px"
-					className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+					className="object-cover group-hover:scale-[1.03]"
 				/>
 				{mediaFileId && (
 					<Link
@@ -65,10 +65,12 @@ export function DetailsEpisodeThumbnail({
 				{mediaFileId && (
 					<div className="absolute top-2 left-2 z-30 flex items-center gap-1.5">
 						<Button
+							tone="muted"
+							shape="pill"
 							type="button"
 							variant="outline"
 							size="icon"
-							className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-100 transition-opacity hover:text-foreground md:size-8 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+							className="opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
 							disabled={isEpisodePending}
 							onClick={(e) => {
 								e.preventDefault();
@@ -83,7 +85,7 @@ export function DetailsEpisodeThumbnail({
 							title={isWatched ? m.components_unmark_watched() : m.components_mark_watched()}
 						>
 							{isEpisodeMarking || isEpisodeUnmarking ? (
-								<Spinner className="size-3.5" />
+								<Spinner size="sm" />
 							) : (
 								<Check className={cn("size-3.5", isWatched && "text-success")} />
 							)}
@@ -93,10 +95,12 @@ export function DetailsEpisodeThumbnail({
 							<ConfirmAction
 								trigger={
 									<Button
+										tone="muted"
+										shape="pill"
 										type="button"
 										variant="outline"
 										size="icon"
-										className="size-10 rounded-full border-border/70 bg-background/80 text-muted-foreground opacity-100 transition-opacity hover:text-foreground md:size-8 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+										className="opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
 										disabled={isEpisodePending}
 										aria-label={m.web_reset_episode_progress({ episodeTitle })}
 										title={m.components_cw_reset_progress()}
@@ -105,7 +109,7 @@ export function DetailsEpisodeThumbnail({
 											e.stopPropagation();
 										}}
 									>
-										{isEpisodeResetting ? <Spinner className="size-3.5" /> : <RotateCcw className="size-3.5" />}
+										{isEpisodeResetting ? <Spinner size="sm" /> : <RotateCcw className="size-3.5" />}
 									</Button>
 								}
 								title={m.components_cw_reset_progress_confirm()}

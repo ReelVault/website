@@ -57,16 +57,16 @@ export function LibraryFilterBar({
 				size="sm"
 				className="justify-start"
 			>
-				<ToggleGroupItem value="all" aria-label={m.admin_libraries_filter_all()} className="gap-1.5 px-3">
+				<ToggleGroupItem value="all" aria-label={m.admin_libraries_filter_all()}>
 					<span>{m.common_all()}</span>
 					<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{totalCount}</span>
 				</ToggleGroupItem>
-				<ToggleGroupItem value="movies" aria-label={m.admin_libraries_filter_movies()} className="gap-1.5 px-3">
+				<ToggleGroupItem value="movies" aria-label={m.admin_libraries_filter_movies()}>
 					<Clapperboard className="size-3.5 text-primary" />
 					<span>{m.web_watchlist_stats_movies()}</span>
 					<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{movieCount}</span>
 				</ToggleGroupItem>
-				<ToggleGroupItem value="tv_shows" aria-label={m.admin_libraries_filter_series()} className="gap-1.5 px-3">
+				<ToggleGroupItem value="tv_shows" aria-label={m.admin_libraries_filter_series()}>
 					<span>{m.web_watchlist_stats_series()}</span>
 					<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{tvCount}</span>
 				</ToggleGroupItem>
@@ -80,7 +80,7 @@ export function LibraryFilterBar({
 					className="w-full sm:max-w-xs"
 				/>
 				<Select value={sort} onValueChange={(value) => isSortOption(value) && onSortChange(value)}>
-					<SelectTrigger className="h-10 w-full sm:h-9 sm:w-40" aria-label={m.admin_libraries_sort_label()}>
+					<SelectTrigger className="w-full sm:w-40" aria-label={m.admin_libraries_sort_label()}>
 						<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
 					</SelectTrigger>
 					<SelectContent>

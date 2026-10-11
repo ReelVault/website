@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import type { ComponentProps } from "react";
 import { Badge } from "@/components/ui/badge";
 import { m } from "@/paraglide/messages";
@@ -32,28 +31,20 @@ const statusLabels: Record<Status, string> = {
 	},
 };
 
-const statusClasses: Record<Status, string> = {
-	idle: "text-muted-foreground",
-	pending: "bg-secondary/60 text-secondary-foreground",
-	running: "bg-primary/10 text-primary",
-	completed: "border-success/30 bg-success/10 text-success",
-	success: "border-success/30 bg-success/10 text-success",
-	warning: "border-warning/30 bg-warning/10 text-warning",
-	error: "border-destructive/30 bg-destructive/10 text-destructive",
-	cancelled: "border-border bg-muted text-muted-foreground",
+const statusVariant: Record<Status, ComponentProps<typeof Badge>["variant"]> = {
+	idle: "outline",
+	pending: "secondary",
+	running: "primary",
+	completed: "success",
+	success: "success",
+	warning: "warning",
+	error: "destructive",
+	cancelled: "muted",
 };
 
-function statusVariant(status: Status): "destructive" | "outline" | "secondary" {
-	if (status === "error") return "destructive";
-
-	if (status === "idle" || status === "cancelled") return "outline";
-
-	return "secondary";
-}
-
-export function StatusBadge({ status, label, className, ...props }: ComponentProps<typeof Badge> & { status: Status; label?: string }) {
+export function StatusBadge({ status, label, ...props }: ComponentProps<typeof Badge> & { status: Status; label?: string }) {
 	return (
-		<Badge variant={statusVariant(status)} className={cn(statusClasses[status], className)} {...props}>
+		<Badge variant={statusVariant[status]} {...props}>
 			{label ?? statusLabels[status]}
 		</Badge>
 	);

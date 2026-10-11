@@ -91,13 +91,13 @@ export function PlayerEqualizerPanel() {
 					<div className="flex items-center gap-2">
 						<Sliders className="size-4 text-primary" />
 						<h3 className="font-semibold text-foreground text-sm">{m.player_equalizer_compressor()}</h3>
-						<Badge variant={active ? "default" : "secondary"} className="text-[10px]">
+						<Badge variant={active ? "default" : "secondary"} size="xs">
 							{active ? m.player_active_direct_play() : m.player_bypass_original()}
 						</Badge>
 					</div>
 					<p className="text-muted-foreground text-xs">{m.player_works_in_browser_note()}</p>
 				</div>
-				<Button type="button" variant="outline" size="sm" onClick={resetEqualizer} disabled={!active} className="h-8 gap-1.5 text-xs">
+				<Button type="button" variant="outline" size="sm" onClick={resetEqualizer} disabled={!active}>
 					<RotateCcw className="size-3.5" />
 					{m.player_reset_to_zero()}
 				</Button>
@@ -143,7 +143,7 @@ export function PlayerEqualizerPanel() {
 						<div className="flex items-center gap-2">
 							<span className="font-semibold text-foreground text-sm">{m.player_compressor_night_mode()}</span>
 							{config.compressorEnabled && (
-								<Badge variant="outline" className="border-primary/40 text-[10px] text-primary">
+								<Badge variant="primary-outline" size="xs">
 									{m.admin_resources_enabled()}
 								</Badge>
 							)}

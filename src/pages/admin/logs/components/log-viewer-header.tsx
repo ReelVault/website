@@ -37,27 +37,21 @@ export function LogViewerHeader({
 	};
 
 	return (
-		<CardHeader className="flex flex-col gap-2 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+		<CardHeader className="flex flex-col gap-2 border-b sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex min-w-0 items-center gap-2">
 				<Activity className="size-4 shrink-0 text-muted-foreground" />
 				<span className="truncate font-medium font-mono text-xs sm:max-w-md">{activeFile?.name ?? "reelvault.log"}</span>
 			</div>
 			<div className="flex items-center justify-between gap-2 sm:justify-end">
 				{viewMode === "raw" && (
-					<Button variant="ghost" size="sm" className="h-10 gap-1 px-2 text-xs sm:h-7" onClick={onCopyRaw}>
+					<Button variant="ghost" size="sm" onClick={onCopyRaw}>
 						<CopyIcon copied={hasCopied} />
 						{hasCopied ? m.admin_logs_copied() : m.common_copy()}
 					</Button>
 				)}
 				<ConfirmAction
 					trigger={
-						<Button
-							variant="ghost"
-							size="icon-sm"
-							className="size-7 text-muted-foreground hover:text-destructive"
-							title={m.admin_logs_delete_this_log_file()}
-							disabled={isDeleting}
-						>
+						<Button tone="muted" variant="ghost" size="icon-sm" title={m.admin_logs_delete_this_log_file()} disabled={isDeleting}>
 							<Trash2 className="size-3.5" />
 						</Button>
 					}
@@ -66,13 +60,10 @@ export function LogViewerHeader({
 					confirmLabel={m.admin_logs_delete_file()}
 					onConfirm={handleConfirmDelete}
 				/>
-				<Badge variant="outline" className="text-xs tabular-nums">
-					{m.admin_logs_entries_count({ count: totalEntries })}
-				</Badge>
+				<Badge variant="outline">{m.admin_logs_entries_count({ count: totalEntries })}</Badge>
 				<Button
 					variant="ghost"
 					size="icon-sm"
-					className="size-7"
 					onClick={onToggleFullscreen}
 					title={isFullscreen ? m.admin_logs_close_fullscreen() : m.admin_logs_fullscreen()}
 				>

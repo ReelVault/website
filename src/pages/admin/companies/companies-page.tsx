@@ -46,8 +46,8 @@ export default function AdminCompaniesPage() {
 						<LazyRender key={company.id} minHeight={76}>
 							{() => (
 								<Link to="/companies/$id" params={{ id: company.id }} className="group block focus:outline-none">
-									<Card className="h-full overflow-hidden border-border/80 bg-card transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-muted/20 hover:shadow-xs">
-										<CardContent className="flex items-center gap-3.5 p-4">
+									<Card className="h-full overflow-hidden">
+										<CardContent className="flex items-center gap-3.5">
 											<div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary shadow-xs transition-colors group-hover:bg-primary/20">
 												<Building2 className="size-5" />
 											</div>

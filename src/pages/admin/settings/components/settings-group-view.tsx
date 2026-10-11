@@ -223,13 +223,7 @@ export function SettingsGroupView({
 			<div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-border/80 border-t pt-4">
 				<ConfirmAction
 					trigger={
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-							disabled={disabled}
-						>
+						<Button type="button" variant="destructive-outline" size="sm" disabled={disabled}>
 							<RotateCcw className="size-3.5" />
 							{m.admin_settings_restore_section()}
 						</Button>
@@ -242,7 +236,7 @@ export function SettingsGroupView({
 
 				<div className="flex items-center gap-2">
 					{hasChanges && <span className="text-muted-foreground text-xs">{m.admin_settings_unsaved_changes()}</span>}
-					<Button type="button" size="sm" onClick={() => detach(form.handleSubmit())} disabled={!hasChanges || disabled} className="gap-2">
+					<Button type="button" size="sm" onClick={() => detach(form.handleSubmit())} disabled={!hasChanges || disabled}>
 						{isSaving ? <Save className="size-3.5 animate-spin" /> : <Check className="size-3.5" />}
 						{m.common_save_changes()}
 					</Button>

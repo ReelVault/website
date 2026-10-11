@@ -28,7 +28,7 @@ export function MediaFileSubtitlesSection({
 			title={m.admin_media_subtitles_section({ count: subtitleList.length })}
 			description={m.admin_media_subtitle_tracks_description()}
 			actions={
-				<Button variant="outline" size="sm" onClick={() => setUploadOpen((open) => !open)} className="gap-1.5 text-xs">
+				<Button variant="outline" size="sm" onClick={() => setUploadOpen((open) => !open)}>
 					<Upload className="size-3.5" />
 					{m.admin_media_upload_subtitle()}
 				</Button>
@@ -59,7 +59,7 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 		<div className="flex flex-col gap-2 rounded-xl border border-border/80 bg-muted/20 p-3 text-xs">
 			<div className="flex flex-wrap items-center justify-between gap-2">
 				<div className="flex flex-wrap items-center gap-2">
-					<Badge variant="outline" size="sm" className="font-bold font-mono text-foreground text-xs">
+					<Badge weight="bold" variant="outline" size="sm" font="mono">
 						{subtitle.language || "UND"}
 					</Badge>
 
@@ -76,29 +76,29 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 
 				<div className="flex flex-wrap items-center gap-1.5">
 					{isEmbedded ? (
-						<Badge variant="secondary" size="sm" className="font-mono text-xs">
+						<Badge variant="secondary" size="sm" font="mono">
 							{m.admin_media_subtitle_embedded_index({ index: subtitle.streamIndex ?? 0 })}
 						</Badge>
 					) : (
-						<Badge variant="default" size="sm" className="text-xs">
+						<Badge variant="default" size="sm">
 							{m.admin_media_external_file()}
 						</Badge>
 					)}
 
 					{isBitmapSubtitle(subtitle.format) && (
-						<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
+						<Badge variant="warning-outline" size="sm">
 							{m.admin_media_subtitle_image_based()}
 						</Badge>
 					)}
 
 					{subtitle.isDefault && (
-						<Badge variant="secondary" size="sm" className="border-primary/20 bg-primary/10 text-primary text-xs">
+						<Badge variant="primary" size="sm">
 							{m.admin_subtitles_default()}
 						</Badge>
 					)}
 
 					{subtitle.isForced && (
-						<Badge variant="outline" size="sm" className="border-warning/30 text-warning text-xs">
+						<Badge variant="warning-outline" size="sm">
 							{m.player_forced_word()}
 						</Badge>
 					)}
@@ -115,10 +115,11 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 					</div>
 
 					<Button
+						tone="muted"
 						type="button"
 						variant="ghost"
 						size="icon"
-						className="size-6 shrink-0 text-muted-foreground hover:text-foreground"
+						className="shrink-0"
 						onClick={() => detach(copy(subtitle.filePath ?? "", m.admin_media_subtitle_path_word()))}
 						title={m.admin_media_copy_file_path()}
 						aria-label={m.admin_media_copy_file_path()}

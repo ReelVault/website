@@ -29,7 +29,7 @@ export function PersonSidebar({
 						width={320}
 						aspectRatio={3 / 4}
 						priority
-						className="object-cover transition-transform duration-700 hover:scale-105"
+						className="object-cover"
 					/>
 				</div>
 			</div>

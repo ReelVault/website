@@ -84,9 +84,9 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 
 	return (
 		<FullscreenDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-			<FullscreenDialogContent className="flex max-h-[90vh] w-[95vw] max-w-5xl flex-col overflow-hidden border-border/60 bg-card p-4 shadow-2xl sm:p-6">
+			<FullscreenDialogContent className="flex max-h-[90vh] w-[95vw] max-w-5xl flex-col overflow-hidden">
 				{/* Dialog Header */}
-				<FullscreenDialogHeader className="border-border/50 border-b pb-4">
+				<FullscreenDialogHeader className="border-b">
 					<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 						<div className="flex items-center gap-3">
 							<div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
@@ -94,15 +94,15 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 							</div>
 							<div>
 								<div className="flex items-center gap-2">
-									<FullscreenDialogTitle className="font-bold text-base text-foreground tracking-tight">{meta.title}</FullscreenDialogTitle>
-									<Badge variant="outline" className="px-1.5 py-0 font-mono text-xs">
+									<FullscreenDialogTitle>{meta.title}</FullscreenDialogTitle>
+									<Badge variant="outline" font="mono" size="count">
 										{operation.type}
 									</Badge>
-									<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+									<Badge variant="secondary" font="mono" size="count">
 										{m.admin_worker_jobs_total({ count: summary.total })}
 									</Badge>
 								</div>
-								<FullscreenDialogDescription className="mt-0.5 font-mono text-muted-foreground text-xs">
+								<FullscreenDialogDescription className="mt-0.5">
 									{m.admin_worker_operation_id_line({
 										id: operation.id,
 										created: formatDate(operation.createdAt),
@@ -112,12 +112,13 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 						</div>
 
 						<Button
+							tone="muted"
 							type="button"
 							variant="outline"
 							size="sm"
 							onClick={handleRefresh}
 							disabled={isLoading}
-							className="h-10 shrink-0 gap-1.5 border-border/60 text-muted-foreground text-xs hover:bg-secondary hover:text-foreground sm:h-8"
+							className="shrink-0"
 						>
 							<RotateCcw className={cn("size-3.5", isLoading && "animate-spin text-primary")} />
 							<span>{m.common_refresh()}</span>
@@ -138,10 +139,10 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 				<div className="flex flex-1 flex-col gap-4 overflow-y-auto py-3 pr-1">
 					{isLoading && (
 						<div className="flex flex-col gap-2.5">
-							<Skeleton className="h-12 w-full rounded-lg" />
-							<Skeleton className="h-12 w-full rounded-lg" />
-							<Skeleton className="h-12 w-full rounded-lg" />
-							<Skeleton className="h-12 w-full rounded-lg" />
+							<Skeleton className="h-12 w-full" />
+							<Skeleton className="h-12 w-full" />
+							<Skeleton className="h-12 w-full" />
+							<Skeleton className="h-12 w-full" />
 						</div>
 					)}
 
@@ -161,12 +162,12 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 							<div className="overflow-hidden rounded-xl border border-border/60 bg-card/40">
 								<Table>
 									<TableHeader>
-										<TableRow className="border-border/60 border-b bg-muted/40 hover:bg-muted/40">
+										<TableRow className="border-b">
 											<TableHead className="w-8" />
-											<TableHead className="font-semibold text-foreground text-xs">{m.admin_workers_worker_type()}</TableHead>
-											<TableHead className="font-semibold text-foreground text-xs">{m.common_status()}</TableHead>
-											<TableHead className="font-semibold text-foreground text-xs">{m.admin_worker_stage_attempt()}</TableHead>
-											<TableHead className="font-semibold text-foreground text-xs">{m.components_duration_label()}</TableHead>
+											<TableHead>{m.admin_workers_worker_type()}</TableHead>
+											<TableHead>{m.common_status()}</TableHead>
+											<TableHead>{m.admin_worker_stage_attempt()}</TableHead>
+											<TableHead>{m.components_duration_label()}</TableHead>
 											<TableHead className="w-24 text-right" />
 										</TableRow>
 									</TableHeader>

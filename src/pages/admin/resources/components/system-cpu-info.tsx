@@ -1,14 +1,14 @@
 import type { AdminSystemCpu } from "@reelvault/sdk";
 import { Cpu, Gauge, Zap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge, type BadgeVariant } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
-const PROFILE_LABELS: Record<AdminSystemCpu["cpuProfile"], { label: string; badgeClass: string }> = {
-	conservative: { label: "Conservative", badgeClass: "border-info/30 bg-info/10 text-info" },
-	balanced: { label: "Balanced", badgeClass: "border-success/30 bg-success/10 text-success" },
-	performance: { label: "Performance", badgeClass: "border-warning/30 bg-warning/10 text-warning" },
-	custom: { label: "Custom", badgeClass: "border-primary/30 bg-primary/10 text-primary" },
+const PROFILE_LABELS: Record<AdminSystemCpu["cpuProfile"], { label: string; badgeVariant: BadgeVariant }> = {
+	conservative: { label: "Conservative", badgeVariant: "info" },
+	balanced: { label: "Balanced", badgeVariant: "success" },
+	performance: { label: "Performance", badgeVariant: "warning" },
+	custom: { label: "Custom", badgeVariant: "primary" },
 };
 
 function MetricItem({ label, value, unit }: { label: string; value: number; unit?: string }) {
@@ -45,9 +45,7 @@ export function SystemCpuInfo({ cpu }: { cpu?: AdminSystemCpu | null }) {
 						<Cpu className="size-4 text-primary" aria-hidden="true" />
 						<p className="font-medium text-xs">{m.admin_resources_detected_cores()}</p>
 					</div>
-					<Badge variant="outline" className={profile.badgeClass}>
-						{profile.label}
-					</Badge>
+					<Badge variant={profile.badgeVariant}>{profile.label}</Badge>
 				</div>
 
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

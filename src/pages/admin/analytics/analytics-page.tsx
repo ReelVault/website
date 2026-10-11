@@ -75,14 +75,14 @@ export default function AdminAnalyticsPage() {
 									size="sm"
 									variant={selectedDays === opt.days ? "default" : "ghost"}
 									onClick={handleTimeFilterChange}
-									className="h-10 flex-auto whitespace-nowrap text-xs sm:h-7 sm:flex-none"
+									className="flex-auto whitespace-nowrap sm:flex-none"
 								>
 									{opt.label}
 								</Button>
 							))}
 						</div>
 
-						<Button type="button" variant="outline" size="sm" onClick={handleRefetchAnalytics} className="gap-1.5 text-xs">
+						<Button type="button" variant="outline" size="sm" onClick={handleRefetchAnalytics}>
 							<RefreshCw className={cn("size-3.5", { "animate-spin": analyticsQuery.isFetching })} />
 							{m.common_refresh()}
 						</Button>

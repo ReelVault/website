@@ -102,21 +102,21 @@ export function ScheduledTaskCard({
 					<div className="flex min-w-0 flex-1 flex-col gap-1.5">
 						<div className="flex flex-wrap items-center gap-2">
 							<h4 className="font-semibold text-foreground text-sm tracking-tight">{taskTitle}</h4>
-							<Badge variant="outline" className="px-1.5 py-0 font-mono text-muted-foreground text-xs">
+							<Badge tone="muted" variant="outline" font="mono" size="count">
 								{task.id}
 							</Badge>
 							{isRunning && (
-								<Badge variant="default" className="h-5 gap-1.5 bg-primary px-2 font-medium text-primary-foreground text-xs shadow-xs">
+								<Badge variant="default" size="sm">
 									<span className="size-1.5 animate-ping rounded-full bg-white" /> {m.admin_worker_running_badge()}
 								</Badge>
 							)}
 							{!task.scheduleEnabled && (
-								<Badge variant="secondary" className="h-5 px-2 text-xs">
+								<Badge variant="secondary" size="sm">
 									{m.admin_workers_schedule_paused()}
 								</Badge>
 							)}
 							{isQueued && (
-								<Badge variant="secondary" className="h-5 px-2 text-xs">
+								<Badge variant="secondary" size="sm">
 									{m.admin_workers_queued()}
 								</Badge>
 							)}
@@ -185,7 +185,7 @@ export function ScheduledTaskCard({
 						</span>
 						<span className="font-semibold text-foreground">{m.common_percent_value({ value: Math.round(progress) })}</span>
 					</div>
-					<Progress value={progress} className="h-1.5 w-full bg-muted/60" />
+					<Progress value={progress} className="w-full" />
 				</div>
 			)}
 		</div>

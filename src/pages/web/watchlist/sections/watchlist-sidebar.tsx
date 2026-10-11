@@ -46,17 +46,13 @@ export function WatchlistSidebar({
 						</div>
 					</div>
 
-					<Button variant="outline" nativeButton={false} render={<Link to="/insights" />} className="mt-6 w-full gap-2 font-medium">
+					<Button variant="outline" nativeButton={false} render={<Link to="/insights" />} className="mt-6 w-full">
 						<BarChart3 className="size-4 text-primary" data-icon="inline-start" aria-hidden="true" />
 						{m.web_watchlist_stats_full_insights()}
 					</Button>
 
 					{suggestedItem && (
-						<Button
-							nativeButton={false}
-							render={<Link to="/details/$id" params={{ id: suggestedItem.id }} />}
-							className="mt-3 w-full font-bold"
-						>
+						<Button nativeButton={false} render={<Link to="/details/$id" params={{ id: suggestedItem.id }} />} className="mt-3 w-full">
 							{m.web_watchlist_open_suggestion()}
 						</Button>
 					)}

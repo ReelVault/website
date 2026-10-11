@@ -83,13 +83,7 @@ export function MetadataMediaFilesSection({ metadataId }: { metadataId: string }
 			title={m.admin_metadata_linked_files_section({ total })}
 			description={m.admin_metadata_linked_files_desc()}
 			actions={
-				<Button
-					variant="outline"
-					size="sm"
-					className="h-10 gap-1.5 text-xs sm:h-8"
-					nativeButton={false}
-					render={<Link to="/admin/media" />}
-				>
+				<Button variant="outline" size="sm" nativeButton={false} render={<Link to="/admin/media" />}>
 					<ExternalLink className="size-3.5" />
 					<span>{m.admin_metadata_manage_files()}</span>
 				</Button>
@@ -130,7 +124,7 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<div className="flex items-center gap-2">
 					<p className="truncate font-medium text-foreground text-sm">{file.fileName}</p>
 					{file.isDefault && (
-						<Badge variant="secondary" size="sm" className="shrink-0 text-xs">
+						<Badge variant="secondary" size="sm" className="shrink-0">
 							{m.common_default_badge()}
 						</Badge>
 					)}
@@ -143,7 +137,6 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="size-10 sm:size-8"
 					disabled={file.isDefault || isUpdating}
 					onClick={handleSetDefault}
 					title={file.isDefault ? m.admin_metadata_default_video_file() : m.admin_metadata_set_default_file()}
@@ -156,7 +149,6 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="size-10 sm:size-8"
 					nativeButton={false}
 					render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}
 					title={m.admin_metadata_open_in_player()}
@@ -167,7 +159,6 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="size-10 sm:size-8"
 					nativeButton={false}
 					render={<Link to="/admin/media/$id" params={{ id: file.id }} />}
 					title={m.admin_media_edit_file()}

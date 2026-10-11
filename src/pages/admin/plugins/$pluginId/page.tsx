@@ -54,7 +54,6 @@ export default function PluginAdminPage() {
 					size="sm"
 					nativeButton={false}
 					render={<Link to="/admin/plugins/$id" params={{ id: encodeURIComponent(plugin.id) }} />}
-					className="gap-1.5 text-xs"
 				>
 					<Sliders className="size-3.5" />
 					{m.admin_plugins_settings_section()}
@@ -105,7 +104,7 @@ export default function PluginAdminPage() {
 						const Icon = getPluginIcon(page.icon);
 
 						return (
-							<TabsTrigger key={page.id} value={`${pluginId}:${page.id}`} className="gap-1.5">
+							<TabsTrigger key={page.id} value={`${pluginId}:${page.id}`}>
 								<Icon className="size-3.5" aria-hidden="true" />
 								{resolvePluginText(page.name, pluginDefaultLocale)}
 							</TabsTrigger>

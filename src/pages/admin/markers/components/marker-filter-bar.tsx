@@ -34,7 +34,7 @@ export function MarkerFilterBar({
 		<div className="flex flex-wrap items-center gap-3">
 			<AdminSearch value={search} onChange={onSearchChange} placeholder={m.admin_markers_search_placeholder()} />
 			<Select value={typeFilter} onValueChange={(val) => onTypeFilterChange(val ?? "all")}>
-				<SelectTrigger className="w-full min-w-0 bg-card text-xs sm:w-40 sm:flex-none">
+				<SelectTrigger density="compact" className="w-full min-w-0 sm:w-40 sm:flex-none">
 					<SelectValue placeholder={m.admin_markers_filter_type()} />
 				</SelectTrigger>
 				<SelectContent>
@@ -47,7 +47,7 @@ export function MarkerFilterBar({
 				</SelectContent>
 			</Select>
 			<Select value={sourceFilter} onValueChange={(val) => onSourceFilterChange(val ?? "all")}>
-				<SelectTrigger className="w-full min-w-0 bg-card text-xs sm:w-36 sm:flex-none">
+				<SelectTrigger density="compact" className="w-full min-w-0 sm:w-36 sm:flex-none">
 					<SelectValue placeholder={m.admin_markers_source()} />
 				</SelectTrigger>
 				<SelectContent>
@@ -57,11 +57,11 @@ export function MarkerFilterBar({
 					<SelectItem value="automatic">{m.admin_markers_automatic()}</SelectItem>
 				</SelectContent>
 			</Select>
-			<Button size="sm" variant="outline" onClick={onExport} className="gap-1.5 text-xs">
+			<Button size="sm" variant="outline" onClick={onExport}>
 				<Download className="size-3.5" />
 				{m.admin_markers_export()}
 			</Button>
-			<Button size="sm" variant="outline" onClick={() => importInputRef.current?.click()} className="gap-1.5 text-xs">
+			<Button size="sm" variant="outline" onClick={() => importInputRef.current?.click()}>
 				<Upload className="size-3.5" />
 				{m.admin_markers_import()}
 			</Button>
@@ -76,7 +76,7 @@ export function MarkerFilterBar({
 					if (file) onImportFile(file);
 				}}
 			/>
-			<Button size="sm" onClick={onOpenCreateDialog} className="gap-1.5 text-xs">
+			<Button size="sm" onClick={onOpenCreateDialog}>
 				<Plus className="size-3.5" />
 				{m.admin_markers_add()}
 			</Button>

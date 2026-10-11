@@ -88,9 +88,9 @@ export function SubtitleDetailDialog({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-md">
+			<DialogContent size="md">
 				<DialogHeader>
-					<DialogTitle className="gap-2">
+					<DialogTitle>
 						<Info className="size-5 text-muted-foreground" />
 						{m.admin_subtitles_details()}
 					</DialogTitle>

@@ -52,11 +52,11 @@ export function LogViewerControls({
 				<AdminSearch value={searchQuery} onChange={onSearchChange} placeholder={m.admin_logs_search_content()} className="sm:max-w-xs" />
 				<div className="flex flex-wrap items-center gap-2">
 					<ToggleGroup multiple={false} value={[viewMode]} onValueChange={handleViewModeChange} variant="outline" size="sm">
-						<ToggleGroupItem value="formatted" className="gap-1 px-2.5 text-xs">
+						<ToggleGroupItem value="formatted" size="sm">
 							<List className="size-3.5" />
 							{m.media_format()}
 						</ToggleGroupItem>
-						<ToggleGroupItem value="raw" className="gap-1 px-2.5 text-xs">
+						<ToggleGroupItem value="raw" size="sm">
 							<Code className="size-3.5" />
 							{m.admin_logs_raw_view()}
 						</ToggleGroupItem>
@@ -71,7 +71,7 @@ export function LogViewerControls({
 						className="flex-wrap"
 					>
 						{["all", "error", "warn", "info", "debug"].map((level) => (
-							<ToggleGroupItem key={level} value={level} className="text-xs">
+							<ToggleGroupItem key={level} value={level} size="sm">
 								{level}
 							</ToggleGroupItem>
 						))}
@@ -83,28 +83,28 @@ export function LogViewerControls({
 					value={moduleFilter}
 					placeholder={m.admin_logs_filter_module()}
 					aria-label={m.admin_logs_filter_module()}
-					className="h-10 w-40 text-xs sm:h-8"
+					className="w-40"
 					onChange={(event) => onModuleChange(event.target.value)}
 				/>
 				<Input
 					value={excludeQuery}
 					placeholder={m.admin_logs_filter_exclude()}
 					aria-label={m.admin_logs_filter_exclude()}
-					className="h-10 w-48 text-xs sm:h-8"
+					className="w-48"
 					onChange={(event) => onExcludeChange(event.target.value)}
 				/>
 				<Input
 					type="datetime-local"
 					value={fromDate}
 					aria-label={m.admin_logs_filter_from()}
-					className="h-10 w-auto text-xs sm:h-8"
+					className="w-auto"
 					onChange={(event) => onFromChange(event.target.value)}
 				/>
 				<Input
 					type="datetime-local"
 					value={toDate}
 					aria-label={m.admin_logs_filter_to()}
-					className="h-10 w-auto text-xs sm:h-8"
+					className="w-auto"
 					onChange={(event) => onToChange(event.target.value)}
 				/>
 			</div>

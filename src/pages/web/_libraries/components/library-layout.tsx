@@ -133,7 +133,7 @@ function GridSkeleton() {
 			<div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 				{SKELETON_PLACEHOLDERS.map((placeholder) => (
 					<div key={placeholder} className="flex flex-col gap-3">
-						<Skeleton className="aspect-2/3 w-full rounded-xl" />
+						<Skeleton className="aspect-2/3 w-full" />
 						<Skeleton className="h-4 w-3/4" />
 					</div>
 				))}

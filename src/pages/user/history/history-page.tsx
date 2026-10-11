@@ -40,7 +40,7 @@ export default function HistoryPage() {
 					history.length > 0 && (
 						<ConfirmAction
 							trigger={
-								<Button type="button" variant="outline" className="min-h-11 gap-2" disabled={isClearing}>
+								<Button type="button" variant="outline" className="min-h-11" disabled={isClearing}>
 									<Trash2 className="size-4" aria-hidden="true" /> {m.admin_worker_clear_history()}
 								</Button>
 							}

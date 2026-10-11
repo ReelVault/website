@@ -127,7 +127,7 @@ function AdminAuditContent() {
 		auditContent = (
 			<div className="flex flex-col gap-1 p-4">
 				{SKELETON_KEYS.map((key) => (
-					<Skeleton key={key} className="h-14 w-full rounded-lg" />
+					<Skeleton key={key} className="h-14 w-full" />
 				))}
 			</div>
 		);
@@ -275,7 +275,7 @@ function AdminAuditContent() {
 			<AdminSection
 				title={m.admin_audit_entries_section()}
 				badge={
-					<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+					<Badge variant="secondary" font="mono" size="count">
 						{total}
 					</Badge>
 				}
@@ -297,8 +297,8 @@ function AuditSkeleton() {
 				<Skeleton className="h-4 w-48" />
 				<Skeleton className="h-8 w-72" />
 			</div>
-			<Skeleton className="h-9 w-full rounded-md" />
-			<Skeleton className="h-96 w-full rounded-xl" />
+			<Skeleton className="h-9 w-full" />
+			<Skeleton className="h-96 w-full" />
 		</div>
 	);
 }

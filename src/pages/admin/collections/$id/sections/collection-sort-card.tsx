@@ -12,9 +12,9 @@ interface CollectionSortCardProps {
 
 export function CollectionSortCard({ sortMode, onSortOptionClick }: CollectionSortCardProps) {
 	return (
-		<Card className="border-border/80 bg-card">
+		<Card>
 			<CardHeader>
-				<CardTitle className="font-semibold text-base">{m.admin_collections_title_sorting()}</CardTitle>
+				<CardTitle>{m.admin_collections_title_sorting()}</CardTitle>
 				<CardDescription>{m.admin_collections_order_description()}</CardDescription>
 			</CardHeader>
 			<CardContent>

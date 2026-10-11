@@ -20,7 +20,7 @@ function PlayStatus({ play }: { play: RecentPlay }) {
 	}
 
 	return (
-		<Badge className="border-success/30 bg-success/10 text-success text-xs">
+		<Badge variant="success">
 			<CheckCircle2 className="mr-1 size-3" />
 			{m.admin_worker_finished_word()}
 		</Badge>
@@ -35,7 +35,7 @@ function RecentPlayCard({ play }: { play: RecentPlay }) {
 		<div className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4">
 			<div className="flex items-start justify-between gap-3">
 				<p className="min-w-0 break-words font-semibold text-foreground text-sm">{play.title}</p>
-				<Badge variant="outline" className="shrink-0 text-xs">
+				<Badge variant="outline" className="shrink-0">
 					{mediaTypeLabel}
 				</Badge>
 			</div>
@@ -63,7 +63,7 @@ function RecentPlayCard({ play }: { play: RecentPlay }) {
 export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsProps) {
 	return (
 		<AdminSection title={m.admin_analytics_recent_streams_section()}>
-			<Card className="border-border/70 bg-card/50">
+			<Card variant="subtle">
 				<CardContent className="p-0">
 					{recentPlays.length === 0 ? (
 						<p className="py-8 text-center text-muted-foreground text-xs">{m.admin_analytics_no_plays()}</p>
@@ -76,7 +76,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 								<div className="overflow-x-auto">
 									<Table>
 										<TableHeader>
-											<TableRow className="border-border/60 text-xs">
+											<TableRow>
 												<TableHead>{m.admin_analytics_title_column()}</TableHead>
 												<TableHead>{m.common_type_word()}</TableHead>
 												<TableHead>{m.user_profile_page_title()}</TableHead>
@@ -87,12 +87,10 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 										</TableHeader>
 										<TableBody>
 											{items.map((play) => (
-												<TableRow key={play.id} className="border-border/40 text-xs">
-													<TableCell className="font-semibold text-foreground">{play.title}</TableCell>
+												<TableRow key={play.id}>
+													<TableCell>{play.title}</TableCell>
 													<TableCell>
-														<Badge variant="outline" className="text-xs">
-															{play.mediaType === "movie" ? m.common_movie_word() : m.common_series_word()}
-														</Badge>
+														<Badge variant="outline">{play.mediaType === "movie" ? m.common_movie_word() : m.common_series_word()}</Badge>
 													</TableCell>
 													<TableCell>
 														<span className="font-medium text-foreground">{play.profileName}</span>
@@ -100,13 +98,15 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 															{m.admin_analytics_profile_user({ user: play.userName })}
 														</span>
 													</TableCell>
-													<TableCell className="text-right font-mono text-xs">
+													<TableCell tone="mono" size="sm" className="text-right">
 														{play.durationWatched ? `${play.durationWatched} min` : "—"}
 													</TableCell>
 													<TableCell className="text-center">
 														<PlayStatus play={play} />
 													</TableCell>
-													<TableCell className="text-right text-muted-foreground text-xs">{formatDateTime(play.watchedAt)}</TableCell>
+													<TableCell tone="muted" size="sm" className="text-right">
+														{formatDateTime(play.watchedAt)}
+													</TableCell>
 												</TableRow>
 											))}
 										</TableBody>

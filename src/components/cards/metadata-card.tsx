@@ -110,7 +110,7 @@ export function MetadataCard({
 							{!hideRatingOverlay && metadata.rating.avgScore > 0 && (
 								<>
 									<div className="h-1 w-1 rounded-full bg-border" />
-									<Badge variant="secondary" size="sm" className="gap-1 bg-warning/10 text-warning">
+									<Badge variant="warning" size="sm">
 										<Star className="size-3 fill-current" aria-hidden="true" />
 										{formatRating(metadata.rating.avgScore)}
 									</Badge>

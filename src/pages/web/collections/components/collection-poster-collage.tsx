@@ -50,7 +50,7 @@ export function CollectionPosterCollage({ posterImages, className }: CollectionP
 							alt=""
 							width={128}
 							aspectRatio={2 / 3}
-							className="size-full object-cover"
+							className="object-cover"
 						/>
 					) : (
 						<div key={uniqueKey} className="flex items-center justify-center bg-muted/60 text-muted-foreground">

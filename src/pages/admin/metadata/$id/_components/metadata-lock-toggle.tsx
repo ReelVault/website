@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import { Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -27,14 +26,10 @@ export function MetadataLockToggle({
 				render={
 					<Button
 						type="button"
-						variant="ghost"
 						size="icon"
 						onClick={() => onToggle(field)}
-						className={cn(
-							"size-10 shrink-0 rounded-md transition-colors sm:size-8",
-							isLocked ? "bg-warning/10 text-warning hover:bg-warning/20" : "text-muted-foreground/40 hover:bg-muted hover:text-foreground",
-							className,
-						)}
+						variant={isLocked ? "warning" : "ghost"}
+						className={className}
 					/>
 				}
 			>
@@ -43,7 +38,7 @@ export function MetadataLockToggle({
 					{isLocked ? m.admin_metadata_unlock_field({ field: label ?? field }) : m.admin_metadata_lock_field({ field: label ?? field })}
 				</span>
 			</TooltipTrigger>
-			<TooltipContent side="top" className="max-w-xs text-xs">
+			<TooltipContent side="top" className="max-w-xs">
 				{tooltipText}
 			</TooltipContent>
 		</Tooltip>

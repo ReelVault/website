@@ -24,7 +24,7 @@ export function PlayerLoadingOverlay() {
 	return (
 		<div role="status" className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center bg-background/45">
 			<div className="flex items-center gap-3 rounded-full bg-popover/70 px-5 py-3 font-bold text-popover-foreground text-sm shadow-xl backdrop-blur">
-				<Spinner className="size-5 text-primary" aria-label={label ?? m.player_buffering()} />
+				<Spinner size="lg" aria-label={label ?? m.player_buffering()} />
 				{label && label}
 			</div>
 		</div>

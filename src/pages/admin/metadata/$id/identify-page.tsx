@@ -34,9 +34,10 @@ export default function MetadataIdentifyPage() {
 	return (
 		<div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6">
 			<Button
+				tone="muted"
 				variant="ghost"
 				size="sm"
-				className="h-10 w-fit gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground sm:h-8"
+				className="w-fit"
 				nativeButton={false}
 				render={<Link to="/admin/metadata/$id" params={{ id: metadataId }} />}
 			>

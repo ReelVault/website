@@ -52,7 +52,7 @@ export function PathPickerDirectoryList({ data, isPending, isError, error, onRet
 						</button>
 					)}
 
-					<ScrollArea className="h-80 w-full rounded-xl border border-border/70 bg-background/50 p-1.5">
+					<ScrollArea className="h-80 w-full p-1.5">
 						{data?.directories.length === 0 ? (
 							<AppEmptyState title={m.components_path_picker_no_subdirs()} />
 						) : (

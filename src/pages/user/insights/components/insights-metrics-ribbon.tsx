@@ -12,8 +12,8 @@ export function InsightsMetricsRibbon({ insight }: InsightsMetricsRibbonProps) {
 	return (
 		<SimpleAnimation direction="up" delay={50} duration={260}>
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-				<Card className="border-border/60 bg-card/40">
-					<CardContent className="flex items-center gap-4 p-5">
+				<Card variant="subtle">
+					<CardContent size="comfortable" className="flex items-center gap-4">
 						<div className="flex size-11 items-center justify-center rounded-xl bg-success/10 text-success">
 							<CheckCircle2 className="size-5.5" />
 						</div>
@@ -24,8 +24,8 @@ export function InsightsMetricsRibbon({ insight }: InsightsMetricsRibbonProps) {
 					</CardContent>
 				</Card>
 
-				<Card className="border-border/60 bg-card/40">
-					<CardContent className="flex items-center gap-4 p-5">
+				<Card variant="subtle">
+					<CardContent size="comfortable" className="flex items-center gap-4">
 						<div className="flex size-11 items-center justify-center rounded-xl bg-warning/10 text-warning">
 							<Zap className="size-5.5" />
 						</div>
@@ -41,8 +41,8 @@ export function InsightsMetricsRibbon({ insight }: InsightsMetricsRibbonProps) {
 					</CardContent>
 				</Card>
 
-				<Card className="border-border/60 bg-card/40">
-					<CardContent className="flex items-center gap-4 p-5">
+				<Card variant="subtle">
+					<CardContent size="comfortable" className="flex items-center gap-4">
 						<div className="flex size-11 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400">
 							<Award className="size-5.5" />
 						</div>

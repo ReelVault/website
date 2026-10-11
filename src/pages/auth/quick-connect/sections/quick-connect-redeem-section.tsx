@@ -69,7 +69,8 @@ export function QuickConnectRedeemSection({
 								value={manualCode}
 								onChange={(e) => handleManualCodeChange(e.target.value)}
 								placeholder={m.auth_quick_connect_code_placeholder()}
-								className="text-center font-bold font-mono text-xl uppercase tracking-widest"
+								font="mono"
+								className="text-center"
 								maxLength={7}
 								autoFocus
 							/>
@@ -96,7 +97,7 @@ export function QuickConnectRedeemSection({
 					</Button>
 
 					<Link to="/auth/login" className="text-center">
-						<Button type="button" variant="ghost" className="text-muted-foreground text-xs">
+						<Button tone="muted" type="button" variant="ghost" size="sm">
 							<ArrowLeft className="size-4" />
 							{m.auth_back_to_password_login()}
 						</Button>

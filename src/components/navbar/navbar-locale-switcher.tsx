@@ -1,4 +1,5 @@
 import { Languages } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { m } from "@/paraglide/messages";
 import { getAppLocale, setAppLocale } from "@/utils/locale";
@@ -11,7 +12,8 @@ export function NavbarLocaleSwitcher() {
 		<DropdownMenu>
 			<DropdownMenuTrigger
 				aria-label={m.navbar_language()}
-				className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground sm:size-9"
+				render={<Button variant="ghost" size="icon" />}
+				className="flex shrink-0 items-center justify-center"
 			>
 				<Languages className="size-5" aria-hidden="true" />
 			</DropdownMenuTrigger>
@@ -20,12 +22,7 @@ export function NavbarLocaleSwitcher() {
 					const Icon = locale.icon;
 
 					return (
-						<DropdownMenuItem
-							key={locale.code}
-							disabled={locale.code === current}
-							onClick={() => setAppLocale(locale.code)}
-							className="hover:cursor-pointer"
-						>
+						<DropdownMenuItem key={locale.code} disabled={locale.code === current} onClick={() => setAppLocale(locale.code)}>
 							<Icon />
 							{locale.label}
 						</DropdownMenuItem>

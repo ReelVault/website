@@ -41,10 +41,7 @@ export function LibraryHeroNavigationButton({
 			size="icon-lg"
 			onClick={handleClick}
 			aria-label={`${mainLabel}${subLabel ? `: ${subLabel}` : ""}`}
-			className={cn("group min-h-11 min-w-11 flex-1 items-center gap-4 px-1", {
-				"justify-end": isLeft,
-				"justify-start": !isLeft,
-			})}
+			className={cn("group min-h-11 min-w-11 flex-1 items-center", isLeft ? "justify-end" : "justify-start")}
 		>
 			{isLeft ? (
 				<>

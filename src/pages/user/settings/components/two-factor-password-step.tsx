@@ -35,7 +35,6 @@ export function TwoFactorPasswordStep({ isPending, onSubmit, onCancel }: TwoFact
 						placeholder={m.user_your_password()}
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						className="h-10"
 					/>
 					<Lock className="absolute top-3 right-3 size-4 text-muted-foreground" />
 				</div>

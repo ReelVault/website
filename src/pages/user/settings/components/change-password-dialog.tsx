@@ -72,7 +72,6 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 							required
 							value={currentPassword}
 							onChange={(e) => setCurrentPassword(e.target.value)}
-							className="h-10"
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
@@ -87,7 +86,6 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 							minLength={MIN_PASSWORD_LENGTH}
 							value={newPassword}
 							onChange={(e) => setNewPassword(e.target.value)}
-							className="h-10"
 						/>
 						<p className="text-muted-foreground text-xs">{m.user_password_min_length()}</p>
 					</div>
@@ -103,7 +101,6 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 							aria-invalid={mismatch}
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
-							className="h-10"
 						/>
 						{mismatch && <p className="text-destructive text-xs">{m.user_passwords_do_not_match()}</p>}
 					</div>

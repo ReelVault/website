@@ -15,7 +15,7 @@ export function AuditActorSummary({ filters }: { filters: AdminAuditSummaryFilte
 
 	let content: ReactNode;
 	if (isLoading) {
-		content = <Skeleton className="h-16 w-full rounded-lg" />;
+		content = <Skeleton className="h-16 w-full" />;
 	} else if (error) {
 		content = <AppErrorState title={m.admin_audit_failed_to_fetch()} error={error} onRetry={() => detach(refetch)} />;
 	} else if (actors.length === 0) {
@@ -36,19 +36,19 @@ export function AuditActorSummary({ filters }: { filters: AdminAuditSummaryFilte
 							)}
 						</div>
 						<div className="flex flex-wrap items-center gap-1.5 text-xs">
-							<Badge variant="secondary" className="gap-1 font-normal">
+							<Badge weight="normal" variant="secondary">
 								<span>{m.admin_audit_creations()}</span>
 								<strong className="font-semibold">{actor.creates}</strong>
 							</Badge>
-							<Badge variant="secondary" className="gap-1 font-normal">
+							<Badge weight="normal" variant="secondary">
 								<span>{m.admin_audit_edits()}</span>
 								<strong className="font-semibold">{actor.updates}</strong>
 							</Badge>
-							<Badge variant="secondary" className="gap-1 font-normal">
+							<Badge weight="normal" variant="secondary">
 								<span>{m.admin_audit_deletions()}</span>
 								<strong className="font-semibold">{actor.deletes}</strong>
 							</Badge>
-							<Badge variant="outline" className="font-mono text-xs">
+							<Badge variant="outline" font="mono">
 								{actor.total}
 							</Badge>
 						</div>
@@ -63,7 +63,7 @@ export function AuditActorSummary({ filters }: { filters: AdminAuditSummaryFilte
 			title={m.admin_audit_by_admin_section()}
 			description={m.admin_audit_by_admin_description()}
 			badge={
-				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+				<Badge variant="secondary" font="mono">
 					{data?.total ?? 0}
 				</Badge>
 			}

@@ -44,7 +44,7 @@ export default function CollectionsPage() {
 					{isLoading && (
 						<div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label={m.web_loading_collection()}>
 							{SKELETON_KEYS.map((key) => (
-								<Skeleton key={key} className="aspect-video rounded-xl" />
+								<Skeleton key={key} className="aspect-video" />
 							))}
 						</div>
 					)}

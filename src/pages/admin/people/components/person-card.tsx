@@ -42,7 +42,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 						/>
 					</label>
 					<Link to="/person/$id" params={{ id: person.id }} className="group block focus:outline-none">
-						<Card className="h-full overflow-hidden border-border/80 bg-card transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-muted/20 hover:shadow-xs">
+						<Card className="h-full overflow-hidden">
 							<div className="relative aspect-2/3 w-full overflow-hidden border-border/60 border-b bg-muted/40">
 								{person.imageId ? (
 									<ApiImage
@@ -51,7 +51,8 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 										width={220}
 										aspectRatio={2 / 3}
 										sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
-										className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+										zoom
+										className="w-full object-cover"
 									/>
 								) : (
 									<div className="flex h-full w-full items-center justify-center text-muted-foreground/50">
@@ -59,7 +60,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 									</div>
 								)}
 							</div>
-							<CardContent className="p-3 text-center">
+							<CardContent className="text-center">
 								<h3 className="truncate font-semibold text-foreground text-sm tracking-tight group-hover:text-primary" title={person.name}>
 									{person.name}
 								</h3>
@@ -68,13 +69,13 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 					</Link>
 				</div>
 			</ContextMenuTrigger>
-			<ContextMenuContent className="w-64 border-border bg-popover shadow-xl">
+			<ContextMenuContent className="w-64">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{person.name}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate">{person.name}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/person/$id" params={{ id: person.id }} />} className="cursor-pointer gap-2.5">
+					<ContextMenuItem render={<Link to="/person/$id" params={{ id: person.id }} />} className="cursor-pointer">
 						<User className="size-4 text-muted-foreground" />
 						<span>{m.components_person_view_profile()}</span>
 					</ContextMenuItem>
@@ -82,7 +83,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 						onClick={() => {
 							detach(copyToClipboard(`${window.location.origin}/person/${person.id}`, m.components_profile_link_word()));
 						}}
-						className="cursor-pointer gap-2.5"
+						className="cursor-pointer"
 					>
 						<Copy className="size-4 text-muted-foreground" />
 						<span>{m.components_copy_profile_link()}</span>
@@ -90,15 +91,15 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+					<ContextMenuLabel className="flex items-center">
 						<Shield className="size-3" />
 						{m.common_admin_tools()}
 					</ContextMenuLabel>
-					<ContextMenuItem onClick={() => onRefresh(person.id)} className="cursor-pointer gap-2.5">
+					<ContextMenuItem onClick={() => onRefresh(person.id)} className="cursor-pointer">
 						<RefreshCw className="size-4 text-primary" />
 						<span>{m.components_person_refresh_data()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={() => onRefreshImage(person.id)} className="cursor-pointer gap-2.5">
+					<ContextMenuItem onClick={() => onRefreshImage(person.id)} className="cursor-pointer">
 						<ImageDown className="size-4 text-primary" />
 						<span>{m.components_person_force_photo()}</span>
 					</ContextMenuItem>
@@ -106,7 +107,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 						onClick={() => {
 							detach(copyToClipboard(person.id, m.components_person_id()));
 						}}
-						className="cursor-pointer gap-2.5"
+						className="cursor-pointer"
 					>
 						<Copy className="size-4 text-muted-foreground" />
 						<span>{m.components_copy_person_id()}</span>

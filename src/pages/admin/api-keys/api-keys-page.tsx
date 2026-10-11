@@ -78,10 +78,9 @@ export default function AdminApiKeysPage() {
 									size="sm"
 									aria-pressed={page.expiringOnly}
 									onClick={() => page.setExpiringOnly((value) => !value)}
-									className="gap-1.5 text-xs"
 								>
 									{m.admin_api_keys_expiring_filter()}
-									<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+									<Badge variant="secondary" font="mono">
 										{expiringCount}
 									</Badge>
 								</Button>
@@ -91,14 +90,10 @@ export default function AdminApiKeysPage() {
 									<div className="flex min-w-0 flex-col gap-1">
 										<div className="flex items-center gap-2">
 											<span className="font-semibold text-sm">{apiKey.name}</span>
-											<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} className="font-mono text-xs">
+											<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} font="mono">
 												{apiKey.scope === "full" ? m.admin_api_keys_scope_full() : m.admin_api_keys_scope_read_only()}
 											</Badge>
-											{apiKey.expiresAt && isExpired(apiKey.expiresAt) && (
-												<Badge variant="destructive" className="text-xs">
-													{m.admin_api_keys_expired()}
-												</Badge>
-											)}
+											{apiKey.expiresAt && isExpired(apiKey.expiresAt) && <Badge variant="destructive">{m.admin_api_keys_expired()}</Badge>}
 										</div>
 										<div className="flex flex-wrap gap-x-4 text-muted-foreground text-xs">
 											<span className="font-mono">{`${apiKey.keyPrefix}…`}</span>
@@ -238,7 +233,7 @@ function EditKeyDialog({
 }) {
 	return (
 		<Dialog open={apiKey !== null} onOpenChange={(open) => !open && onClose()}>
-			<DialogContent className="max-w-lg">
+			<DialogContent size="lg">
 				{/* Keyed by the edited key, so each opening starts from that key's own values. */}
 				{apiKey ? <EditKeyForm key={apiKey.id} apiKey={apiKey} onClose={onClose} onSave={onSave} pending={pending} /> : null}
 			</DialogContent>
@@ -366,7 +361,7 @@ function CreateKeyDialog({
 				}
 			}}
 		>
-			<DialogContent className="max-w-lg">
+			<DialogContent size="lg">
 				{state.createdSecret ? (
 					<>
 						<DialogHeader>

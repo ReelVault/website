@@ -17,7 +17,7 @@ export function SearchInput({
 	};
 
 	return (
-		<InputGroup className="h-11 rounded-xl bg-background">
+		<InputGroup>
 			<InputGroupAddon>
 				<Search className="size-4 text-primary" aria-hidden="true" />
 			</InputGroupAddon>
@@ -29,7 +29,6 @@ export function SearchInput({
 				placeholder={placeholder}
 				value={value}
 				onChange={handleChange}
-				className="h-10 px-2"
 			/>
 			{value && (
 				<InputGroupAddon align="inline-end">

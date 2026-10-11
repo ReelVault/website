@@ -47,7 +47,7 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 
 				{setupSecret && (
 					<div className="flex w-full items-center gap-2">
-						<Input readOnly value={setupSecret} className="h-10 font-mono text-xs sm:h-9" />
+						<Input readOnly value={setupSecret} font="mono" />
 						<Button
 							type="button"
 							size="icon-sm"
@@ -63,9 +63,10 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 				)}
 
 				<Button
+					tone="muted"
 					type="button"
 					variant="ghost"
-					className="text-muted-foreground text-xs"
+					size="sm"
 					onClick={() => {
 						detach(copyToClipboard(totpUri, m.auth_copy_totp_uri()));
 					}}
@@ -86,7 +87,8 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 					placeholder={m.auth_two_factor_code_placeholder()}
 					value={code}
 					onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-					className="h-11 text-center font-bold font-mono text-lg tracking-widest"
+					font="mono"
+					className="text-center"
 				/>
 			</div>
 

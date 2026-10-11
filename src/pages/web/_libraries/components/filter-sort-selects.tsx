@@ -42,7 +42,7 @@ export function FilterSortSelects({
 							if (isOneOf(LIBRARY_SORT_BY_VALUES, value)) setSortBy(value);
 						}}
 					>
-						<SelectTrigger id="library-sort-by" className="h-10 w-full">
+						<SelectTrigger id="library-sort-by" className="w-full">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
@@ -66,7 +66,7 @@ export function FilterSortSelects({
 							if (isOneOf(LIBRARY_SORT_ORDER_VALUES, value)) setSortOrder(value);
 						}}
 					>
-						<SelectTrigger id="library-sort-order" className="h-10 w-full">
+						<SelectTrigger id="library-sort-order" className="w-full">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
@@ -89,7 +89,7 @@ export function FilterSortSelects({
 							if (isOneOf(LIBRARY_WATCHED_VALUES, value)) setWatchedStatus(value);
 						}}
 					>
-						<SelectTrigger id="library-watched-status" className="h-10 w-full">
+						<SelectTrigger id="library-watched-status" className="w-full">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
@@ -111,7 +111,7 @@ export function FilterSortSelects({
 							if (isOneOf(LIBRARY_RATING_VALUES, value)) setUserRating(value);
 						}}
 					>
-						<SelectTrigger id="library-user-rating" className="h-10 w-full">
+						<SelectTrigger id="library-user-rating" className="w-full">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>

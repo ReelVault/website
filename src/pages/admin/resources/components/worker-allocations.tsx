@@ -41,7 +41,7 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 								</p>
 							</div>
 							{alloc.throttled && (
-								<Badge variant="outline" className="shrink-0 border-warning/30 bg-warning/10 text-warning text-xs">
+								<Badge variant="warning" className="shrink-0">
 									{m.admin_resources_throttled()}
 								</Badge>
 							)}

@@ -65,7 +65,7 @@ export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: Quick
 								value={authorizeCode}
 								onChange={(e) => handleAuthorizeCodeChange(e.target.value)}
 								placeholder={m.auth_quick_connect_code_placeholder()}
-								className="font-mono uppercase tracking-wider"
+								font="mono"
 								maxLength={7}
 							/>
 						</InputGroup>

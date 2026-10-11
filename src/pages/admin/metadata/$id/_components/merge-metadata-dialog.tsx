@@ -71,13 +71,13 @@ export function MergeMetadataDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="max-h-[90vh] w-full gap-5 overflow-y-auto p-6 sm:max-w-2xl sm:p-7">
-				<DialogHeader className="border-border/60 border-b pb-3">
+			<DialogContent className="max-h-[90vh] w-full overflow-y-auto sm:max-w-2xl">
+				<DialogHeader className="border-b">
 					<div className="flex items-center gap-2 text-primary">
 						<Combine className="size-5" />
-						<DialogTitle className="font-semibold text-xl tracking-tight">{m.admin_metadata_link_metadata()}</DialogTitle>
+						<DialogTitle>{m.admin_metadata_link_metadata()}</DialogTitle>
 					</div>
-					<DialogDescription className="text-muted-foreground text-xs sm:text-sm">
+					<DialogDescription>
 						{m.admin_metadata_merge_desc_1()} <strong>{m.admin_metadata_merge_quoted_title({ title: metadata.title })}</strong>
 						{m.admin_metadata_merge_desc_2()}
 					</DialogDescription>
@@ -87,10 +87,11 @@ export function MergeMetadataDialog({
 				<div className="relative">
 					<Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
 					<Input
+						leadingIcon
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder={m.admin_metadata_search_second_title()}
-						className="h-10 bg-background pl-9 text-sm"
+						className=""
 					/>
 				</div>
 

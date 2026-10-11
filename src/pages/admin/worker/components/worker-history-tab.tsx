@@ -68,7 +68,7 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 			title={m.admin_worker_full_history()}
 			description={m.admin_workers_queue_desc()}
 			badge={
-				<Badge variant="secondary" className="px-1.5 py-0 font-mono text-xs">
+				<Badge variant="secondary" font="mono" size="count">
 					{total}
 				</Badge>
 			}
@@ -99,8 +99,8 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 
 				{historyStatus.isLoading && (
 					<div className="flex flex-col gap-3">
-						<Skeleton className="h-28 w-full rounded-xl" />
-						<Skeleton className="h-28 w-full rounded-xl" />
+						<Skeleton className="h-28 w-full" />
+						<Skeleton className="h-28 w-full" />
 					</div>
 				)}
 

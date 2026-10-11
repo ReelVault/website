@@ -33,7 +33,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 				<InfoRow label={m.admin_media_library()}>
 					<div className="flex items-center gap-2">
 						<Badge variant="secondary">{file.library.name}</Badge>
-						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="text-xs">
+						<Badge variant={isMovie ? "default" : "secondary"} size="sm">
 							{isMovie ? m.admin_libraries_type_movies() : m.admin_libraries_type_series()}
 						</Badge>
 					</div>
@@ -43,10 +43,10 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 					<div className="flex items-center gap-1.5 font-mono text-foreground text-xs">
 						<span>{m.common_truncated_id({ id: file.id.slice(0, 16) })}</span>
 						<Button
+							tone="muted"
 							type="button"
 							variant="ghost"
 							size="icon"
-							className="size-10 text-muted-foreground hover:text-foreground sm:size-8"
 							onClick={() => detach(copy(file.id, m.admin_media_video_id()))}
 							title={m.admin_markers_copy_file_id()}
 							aria-label={m.admin_markers_copy_file_id()}
@@ -66,13 +66,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 							<LucideLink className="size-3.5" />
 							{m.common_truncated_id({ id: file.metadataId.slice(0, 16) })}
 						</Link>
-						<Button
-							variant="ghost"
-							size="sm"
-							className="h-10 px-1.5 text-primary text-xs sm:h-6"
-							onClick={onOpenReassign}
-							title={m.admin_media_change_file_metadata_assignment()}
-						>
+						<Button variant="primary-ghost" size="sm" onClick={onOpenReassign} title={m.admin_media_change_file_metadata_assignment()}>
 							<Layers className="size-3.5" />
 							<span className="text-xs">{m.admin_media_change()}</span>
 						</Button>

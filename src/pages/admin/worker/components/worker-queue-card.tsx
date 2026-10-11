@@ -36,20 +36,20 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 	let statusBadge: ReactNode;
 	if (worker.stats.active > 0) {
 		statusBadge = (
-			<Badge variant="default" className="h-5 shrink-0 gap-1 bg-primary px-1.5 font-mono text-primary-foreground text-xs">
+			<Badge variant="default" font="mono" size="compact" className="shrink-0">
 				<span className="size-1.5 animate-ping rounded-full bg-white" />
 				{m.admin_worker_active_of_concurrency({ active: worker.stats.active, concurrency: worker.concurrency })}
 			</Badge>
 		);
 	} else if (worker.stats.waiting > 0) {
 		statusBadge = (
-			<Badge variant="secondary" className="h-5 shrink-0 border border-warning/30 bg-warning/10 px-1.5 font-mono text-warning text-xs">
+			<Badge variant="warning" font="mono" size="compact" className="shrink-0">
 				{m.admin_worker_queue_label({ count: worker.stats.waiting })}
 			</Badge>
 		);
 	} else {
 		statusBadge = (
-			<Badge variant="outline" className="h-5 shrink-0 border-border/50 font-normal text-muted-foreground/80 text-xs">
+			<Badge weight="normal" variant="outline" size="sm" className="shrink-0">
 				{m.components_status_idle()}
 			</Badge>
 		);

@@ -238,7 +238,7 @@ export default function AdminSubtitlesPage() {
 						</button>
 					))}
 					<Select value={language ?? ""} onValueChange={(value) => setLanguage(value ?? "")}>
-						<SelectTrigger className="h-10 w-44 text-xs sm:h-8" aria-label={m.admin_subtitles_language_filter()}>
+						<SelectTrigger density="compact" className="w-44" aria-label={m.admin_subtitles_language_filter()}>
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
@@ -252,7 +252,7 @@ export default function AdminSubtitlesPage() {
 						</SelectContent>
 					</Select>
 					<Select value={sort} onValueChange={(value) => setSort(value ?? "added")}>
-						<SelectTrigger className="h-10 w-44 text-xs sm:h-8" aria-label={m.admin_subtitles_sort_label()}>
+						<SelectTrigger density="compact" className="w-44" aria-label={m.admin_subtitles_sort_label()}>
 							<SelectValue>{SORT_LABELS[sort]()}</SelectValue>
 						</SelectTrigger>
 						<SelectContent>

@@ -37,19 +37,19 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 		<>
 			<AdminBackLink to="/admin/media" label={m.admin_nav_media_files()} />
 
-			<Card className="border-border/80 bg-card/60 p-4 shadow-none sm:p-6">
+			<Card variant="subtle">
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
 						<div className="flex flex-col gap-1.5">
 							<div className="flex flex-wrap items-center gap-2">
 								<h1 className="font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{file.fileName}</h1>
-								<Badge variant={isMovie ? "default" : "secondary"} className="gap-1 text-xs">
+								<Badge variant={isMovie ? "default" : "secondary"}>
 									{isMovie ? <Clapperboard className="size-3" /> : <Tv className="size-3" />}
 									{isMovie ? m.plugins_movie_word() : m.admin_media_episode_of_series()}
 								</Badge>
 								{file.qualityTag && <Badge variant="outline">{file.qualityTag}</Badge>}
 								{file.edition && <Badge variant="secondary">{file.edition}</Badge>}
-								<Badge variant="outline" className="font-mono text-muted-foreground text-xs">
+								<Badge tone="muted" variant="outline" font="mono">
 									{m.common_truncated_id({ id: mediaFileId.slice(0, 8) })}
 								</Badge>
 							</div>
@@ -76,24 +76,24 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 						</div>
 
 						<div className="flex flex-wrap items-center gap-2 self-start pt-1">
-							<Button variant="outline" size="sm" onClick={() => setIsReidentifyOpen(true)} className="gap-2 shadow-xs">
+							<Button variant="outline" size="sm" onClick={() => setIsReidentifyOpen(true)}>
 								<Search className="size-4 text-primary" />
 								<span>{m.components_media_file_reidentify()}</span>
 							</Button>
 
-							<Button variant="outline" size="sm" onClick={() => setIsReassignDialogOpen(true)} className="gap-2 shadow-xs">
+							<Button variant="outline" size="sm" onClick={() => setIsReassignDialogOpen(true)}>
 								<Layers className="size-4 text-primary" />
 								<span>{m.components_media_file_change_metadata_assignment()}</span>
 							</Button>
 
-							<Button variant="outline" size="sm" onClick={() => setIsScanDialogOpen(true)} className="gap-2 shadow-xs">
+							<Button variant="outline" size="sm" onClick={() => setIsScanDialogOpen(true)}>
 								<ShieldCheck className="size-4 text-success" />
 								<span>{m.admin_media_scan_file()}</span>
 							</Button>
 
 							<ConfirmAction
 								trigger={
-									<Button variant="outline" size="sm" disabled={deleteTrickplay.isPending} className="gap-2 shadow-xs">
+									<Button variant="outline" size="sm" disabled={deleteTrickplay.isPending}>
 										<Trash2 className="size-4 text-destructive" />
 										<span>{m.admin_media_remove_trickplay()}</span>
 									</Button>
@@ -139,13 +139,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 						>
 							<StatusBadge status={refreshStatus === "pending" ? "pending" : "running"} label={m.admin_media_worker_in_progress()} />
 							<span className="text-muted-foreground">{m.admin_media_reading_streams_notice()}</span>
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-10 text-primary text-xs sm:h-6"
-								nativeButton={false}
-								render={<Link to="/admin/worker" />}
-							>
+							<Button variant="primary-ghost" size="sm" nativeButton={false} render={<Link to="/admin/worker" />}>
 								{m.admin_media_show_in_worker()}
 							</Button>
 						</div>

@@ -49,7 +49,7 @@ export default function MediaFilesPage() {
 
 				<div className="flex flex-wrap items-center gap-2">
 					{files.length > 0 && (
-						<Badge variant="secondary" className="px-2.5 py-1 font-mono text-xs">
+						<Badge variant="secondary" font="mono">
 							{m.common_files_count({ count: files.length })}
 						</Badge>
 					)}

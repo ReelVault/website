@@ -38,7 +38,7 @@ export function CollectionOrderItemRow({ item, index, totalCount, sortMode, isSu
 						alt=""
 						width={44}
 						aspectRatio={2 / 3}
-						className="size-full object-cover"
+						className="object-cover"
 					/>
 				) : (
 					<GripVertical className="size-4 text-muted-foreground" aria-hidden="true" />
@@ -59,7 +59,7 @@ export function CollectionOrderItemRow({ item, index, totalCount, sortMode, isSu
 					})}
 				</p>
 			</div>
-			<Badge variant="secondary" size="sm" className="hidden font-mono sm:inline-flex">
+			<Badge variant="secondary" size="sm" font="mono" className="hidden sm:inline-flex">
 				{m.common_rank_number({ index: index + 1 })}
 			</Badge>
 			{sortMode === "manual" && (

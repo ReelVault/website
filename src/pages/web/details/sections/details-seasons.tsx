@@ -64,12 +64,12 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 			<DetailsSection title={m.player_seasons_and_episodes_caps()} icon={Tv}>
 				<div className="space-y-6" role="status" aria-label={m.web_loading_seasons()}>
 					<div className="flex gap-2">
-						<Skeleton className="h-9 w-24 rounded-lg" />
-						<Skeleton className="h-9 w-24 rounded-lg" />
+						<Skeleton className="h-9 w-24" />
+						<Skeleton className="h-9 w-24" />
 					</div>
 					<div className="space-y-3">
-						<Skeleton className="h-24 w-full rounded-xl" />
-						<Skeleton className="h-24 w-full rounded-xl" />
+						<Skeleton className="h-24 w-full" />
+						<Skeleton className="h-24 w-full" />
 					</div>
 				</div>
 			</DetailsSection>
@@ -120,7 +120,7 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 				</ScrollArea>
 
 				<div className="flex justify-end">
-					<Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => setSeasonDownloadOpen(true)}>
+					<Button type="button" variant="outline" size="sm" onClick={() => setSeasonDownloadOpen(true)}>
 						<Download className="size-3.5" aria-hidden="true" />
 						{m.components_season_download()}
 					</Button>

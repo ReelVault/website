@@ -142,14 +142,14 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 	};
 
 	return (
-		<Card className="col-span-1 border-border/70 bg-card/65 md:col-span-3 lg:col-span-6">
-			<CardHeader className="flex flex-row items-center justify-between pb-2">
+		<Card variant="subtle" className="col-span-1 md:col-span-3 lg:col-span-6">
+			<CardHeader className="flex flex-row items-center justify-between">
 				<div>
 					<div className="flex items-center gap-2">
 						<Calendar className="size-4.5 text-primary" />
-						<CardTitle className="font-bold text-base">{m.user_watch_habits_hours()}</CardTitle>
+						<CardTitle>{m.user_watch_habits_hours()}</CardTitle>
 					</div>
-					<CardDescription className="text-xs">{m.user_activity_heatmap_description()}</CardDescription>
+					<CardDescription size="xs">{m.user_activity_heatmap_description()}</CardDescription>
 				</div>
 
 				{maxSlot > 0 && (
@@ -199,7 +199,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 															/>
 														}
 													/>
-													<TooltipContent side="top" className="text-xs">
+													<TooltipContent side="top">
 														<p className="font-bold">{m.user_day_hour_range({ day: day.fullName, hour: hour })}</p>
 														<p className="text-muted-foreground">{minutes > 0 ? timeStr : m.user_no_activity()}</p>
 													</TooltipContent>

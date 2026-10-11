@@ -37,7 +37,6 @@ export function TwoFactorBackupStep({ backupCodes, isNewlyEnabled, onFinish }: T
 				onClick={() => {
 					detach(copyToClipboard(backupCodes.join("\n"), m.user_backup_codes_heading()));
 				}}
-				className="gap-2"
 			>
 				<Copy className="size-4" />
 				{m.user_settings_copy_all_backup_codes()}

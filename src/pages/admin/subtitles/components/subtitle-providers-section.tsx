@@ -21,7 +21,7 @@ export function SubtitleProvidersSection({ providers }: SubtitleProvidersSection
 					<div key={provider.id} className="flex items-center gap-2.5 rounded-xl border border-border/80 bg-muted/20 px-3.5 py-2.5">
 						<ExternalLink className="size-3.5 text-primary" />
 						<span className="font-semibold text-foreground text-sm">{provider.name}</span>
-						<Badge variant="outline" size="sm" className="text-xs">
+						<Badge variant="outline" size="sm">
 							{m.common_version_badge({ version: provider.version })}
 						</Badge>
 						<Switch

@@ -24,7 +24,7 @@ export function RouteErrorScreen({ error, reset }: ErrorComponentProps) {
 
 				<div className="mt-6 flex flex-wrap items-center justify-center gap-3">
 					{
-						<Button type="button" onClick={reset} className="gap-2 rounded-xl">
+						<Button type="button" onClick={reset}>
 							<RefreshCwIcon className="size-4" />
 							{m.common_try_again()}
 						</Button>

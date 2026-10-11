@@ -146,13 +146,13 @@ export function PlayerEpisodesDrawer() {
 	let headerBadge: ReactNode = null;
 	if (isCollectionMode) {
 		headerBadge = (
-			<Badge variant="secondary" className="border-none bg-primary/15 px-3 py-1 font-semibold text-primary text-sm hover:bg-primary/20">
+			<Badge weight="semibold" variant="primary">
 				{m.player_collection_mode_badge()}
 			</Badge>
 		);
 	} else if (currentEpisode) {
 		headerBadge = (
-			<Badge variant="secondary" className="border-none bg-primary/15 px-3 py-1 font-semibold text-primary text-sm hover:bg-primary/20">
+			<Badge weight="semibold" variant="primary">
 				{m.player_now_playing_badge({
 					season: currentEpisode.seasonNumber,
 					episode: currentEpisode.episodeNumber,
@@ -241,14 +241,14 @@ export function PlayerEpisodesDrawer() {
 				{isCollectionMode ? <Layers className="size-5" aria-hidden="true" /> : <SquareStack className="size-5" aria-hidden="true" />}
 			</PlayerControlButton>
 
-			<DrawerContent className="fixed inset-y-0 right-0 flex h-full w-full flex-col border-border border-l bg-background sm:max-w-md md:max-w-lg">
-				<DrawerHeader className="shrink-0 space-y-4 border-border/60 border-b px-5 pt-5 pb-4 text-left">
+			<DrawerContent className="fixed inset-y-0 right-0 flex h-full w-full flex-col border-l sm:max-w-md md:max-w-lg">
+				<DrawerHeader className="shrink-0 space-y-4 border-b text-left">
 					<div className="flex flex-wrap items-center justify-between gap-3">
 						<div className="space-y-1">
-							<DrawerTitle className="font-bold text-foreground text-xl tracking-tight sm:text-2xl">
+							<DrawerTitle>
 								{isCollectionMode ? (collectionDetailsQuery.data?.name ?? m.web_collections_kicker()) : m.player_seasons_episodes()}
 							</DrawerTitle>
-							<DrawerDescription className="flex items-center gap-2 text-muted-foreground text-sm">
+							<DrawerDescription className="flex items-center">
 								{isCollectionMode ? (
 									<span className="font-medium">{m.common_titles_count({ count: collectionItems.length })}</span>
 								) : (
@@ -288,10 +288,7 @@ export function PlayerEpisodesDrawer() {
 											variant={isSelected ? "default" : "outline"}
 											size="sm"
 											onClick={() => setSelectedSeasonId(season.id)}
-											className={cn(
-												"rounded-full font-semibold text-sm transition-[border-color,background-color,color,box-shadow] duration-200",
-												isSelected ? "shadow-md" : "hover:bg-muted/80",
-											)}
+											selected={isSelected}
 										>
 											{season.seasonNumber === 0
 												? m.player_special_episodes()
@@ -364,14 +361,7 @@ function DrawerItemRow({
 
 			{/* Thumbnail */}
 			<div className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-md border border-border/40 shadow-sm sm:w-32">
-				<ApiImage
-					fileId={imageFileId}
-					cacheKey={imageCacheKey}
-					alt={imageAlt}
-					fill
-					sizes="128px"
-					className="object-cover transition-transform duration-500 group-hover:scale-105"
-				/>
+				<ApiImage fileId={imageFileId} cacheKey={imageCacheKey} alt={imageAlt} fill sizes="128px" zoom className="object-cover" />
 
 				<div
 					className={cn(
@@ -395,7 +385,7 @@ function DrawerItemRow({
 			<div className="flex h-full min-w-0 flex-1 flex-col justify-center space-y-1.5 py-0.5">
 				<div className="flex items-center gap-2">
 					{isCurrent && (
-						<Badge className="border-none bg-primary/20 px-1.5 py-0 font-semibold text-[10px] text-primary uppercase tracking-wider hover:bg-primary/20">
+						<Badge weight="semibold" variant="primary" size="xs" transform="uppercase">
 							{m.player_playing_word()}
 						</Badge>
 					)}
@@ -419,7 +409,7 @@ function DrawerItemRow({
 
 				{progressPercent > 0 && progressPercent < 100 && (
 					<div className="flex items-center gap-2 pt-1">
-						<Progress value={progressPercent} className="h-1.5 flex-1 bg-muted-foreground/20" />
+						<Progress value={progressPercent} size="sm" className="flex-1" />
 						<span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
 							{m.common_percent_value({ value: progressPercent })}
 						</span>

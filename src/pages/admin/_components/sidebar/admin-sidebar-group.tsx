@@ -22,7 +22,7 @@ interface AdminSidebarGroupProps {
 export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupProps) {
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel className="font-semibold text-muted-foreground text-xs">{group.group}</SidebarGroupLabel>
+			<SidebarGroupLabel>{group.group}</SidebarGroupLabel>
 			<SidebarGroupContent>
 				<SidebarMenu className="gap-1">
 					{group.items.map((item) => {
@@ -31,13 +31,13 @@ export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupP
 						let badge: ReactNode = null;
 						if (item.href === "/admin/worker" && (stats?.workers?.active ?? 0) > 0) {
 							badge = (
-								<SidebarMenuBadge className="ml-auto bg-sidebar-primary/15 font-mono text-sidebar-primary text-xs group-data-[collapsible=icon]:hidden">
+								<SidebarMenuBadge className="ml-auto text-sidebar-primary group-data-[collapsible=icon]:hidden">
 									{stats?.workers?.active}
 								</SidebarMenuBadge>
 							);
 						} else if (item.href === "/admin/analytics" && (stats?.streaming.activeSessions ?? 0) > 0) {
 							badge = (
-								<SidebarMenuBadge className="ml-auto bg-success/15 font-mono text-success text-xs group-data-[collapsible=icon]:hidden">
+								<SidebarMenuBadge className="ml-auto group-data-[collapsible=icon]:hidden">
 									{stats?.streaming.activeSessions}
 								</SidebarMenuBadge>
 							);
@@ -49,10 +49,7 @@ export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupP
 									render={<Link to={item.href} aria-current={isActive ? "page" : undefined} />}
 									isActive={isActive}
 									tooltip={item.name}
-									className={cn(
-										"relative transition-[border-color,background-color,color,box-shadow] duration-150",
-										isActive && "font-semibold",
-									)}
+									className="relative"
 								>
 									{isActive && <div className="absolute inset-y-0 left-0 w-1 rounded-r-md bg-sidebar-primary" />}
 									<Icon className={cn("size-4 shrink-0 transition-colors", isActive ? "text-sidebar-primary" : "text-muted-foreground")} />

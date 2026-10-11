@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
@@ -19,7 +18,9 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 		<div className="flex min-w-0 flex-col gap-4 md:w-2/3">
 			{/* Scrollable style bar */}
 			<div className="flex min-w-0 flex-col gap-2">
-				<Label className="font-bold text-muted-foreground text-xs">{m.auth_avatar_style()}</Label>
+				<Label tone="muted" size="xs">
+					{m.auth_avatar_style()}
+				</Label>
 				<ScrollArea className="w-full max-w-[calc(100vw-6rem)] whitespace-nowrap md:max-w-xl">
 					<div className="flex gap-2 overflow-x-auto pb-2">
 						{AVATAR_STYLES.map((style) => (
@@ -28,12 +29,8 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 								type="button"
 								variant="ghost"
 								onClick={() => onSelectStyle(style.id)}
-								className={cn(
-									"flex size-18 shrink-0 flex-col items-center gap-1 rounded-xl border-2 px-2 py-2 transition-[background-color,border-color,color]",
-									activeStyle === style.id
-										? "border-primary bg-primary/10 text-primary"
-										: "border-border text-muted-foreground hover:border-primary/50",
-								)}
+								className="flex size-18 shrink-0 flex-col items-center gap-1"
+								selected={activeStyle === style.id}
 							>
 								<span className="text-xl">{style.icon}</span>
 								<span className="font-bold text-xs">{style.name}</span>
@@ -46,7 +43,9 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 
 			{/* Siatka nasion (Seeds) */}
 			<div className="flex flex-col gap-2">
-				<Label className="font-bold text-muted-foreground text-xs">{m.auth_choose_character()}</Label>
+				<Label tone="muted" size="xs">
+					{m.auth_choose_character()}
+				</Label>
 				<ScrollArea className="h-72 w-full p-4">
 					<div className="grid h-fit grid-cols-3 gap-2 overflow-y-auto rounded-2xl border border-border p-2 sm:grid-cols-4">
 						{AVATAR_SEEDS.map((seed) => (
@@ -55,10 +54,8 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 								type="button"
 								variant="ghost"
 								onClick={() => onSelectSeed(seed)}
-								className={cn(
-									"group relative m-1 aspect-square overflow-hidden rounded-xl transition-[border-color,transform]",
-									activeSeed === seed ? "border-primary" : "border-transparent hover:border-primary/30",
-								)}
+								className="group relative m-1 aspect-square overflow-hidden"
+								selected={activeSeed === seed}
 							>
 								<picture>
 									<Image
@@ -68,7 +65,8 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 										height={96}
 										unoptimized
 										loading="lazy"
-										className="h-full w-full transition-transform group-hover:scale-110"
+										zoom
+										className="h-full w-full group-hover:scale-110"
 									/>
 								</picture>
 								{activeSeed === seed && (

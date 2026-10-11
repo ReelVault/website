@@ -88,7 +88,7 @@ export function TaxonomyPage({
 				</Link>
 				{taxonomyQuery.isLoading && (
 					<div className="mt-8 flex gap-5">
-						<Skeleton className="size-28 rounded-2xl" />
+						<Skeleton className="size-28" />
 						<div className="flex flex-1 flex-col gap-3">
 							<Skeleton className="h-4 w-28" />
 							<Skeleton className="h-14 max-w-lg" />
@@ -110,7 +110,7 @@ export function TaxonomyPage({
 											alt={item.name}
 											width={224}
 											aspectRatio={1}
-											className="size-full object-contain"
+											className="object-contain"
 										/>
 									) : (
 										<Icon className="size-9" aria-hidden="true" />
@@ -131,7 +131,7 @@ export function TaxonomyPage({
 							{metadataQuery.isLoading && (
 								<div className="poster-shelf mt-8">
 									{TITLE_SKELETONS.map((key) => (
-										<Skeleton key={key} className="aspect-2/3 w-full rounded-xl" />
+										<Skeleton key={key} className="aspect-2/3 w-full" />
 									))}
 								</div>
 							)}

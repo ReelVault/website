@@ -43,9 +43,7 @@ export function ServerRescueStatus({ rescue }: { rescue?: AdminRescueState | nul
 				<div className="flex-1">
 					<p className="flex items-center gap-2 font-semibold text-destructive text-sm">
 						{m.admin_server_rescue_mode()}
-						<Badge variant="outline" className="border-destructive/30 bg-destructive/10 text-destructive text-xs">
-							{m.admin_resources_rescue_badge()}
-						</Badge>
+						<Badge variant="destructive">{m.admin_resources_rescue_badge()}</Badge>
 					</p>
 					<p className="mt-1 text-muted-foreground text-xs">{m.admin_resources_rescue_workers_stopped()}</p>
 					{rescue.reason && (

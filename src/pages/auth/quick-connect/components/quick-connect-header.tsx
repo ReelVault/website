@@ -16,13 +16,13 @@ export function QuickConnectHeader({ hasUser }: QuickConnectHeaderProps) {
 
 			{hasUser ? (
 				<Link to="/">
-					<Button variant="outline" size="sm" className="gap-2 rounded-xl">
+					<Button variant="outline" size="sm">
 						{m.auth_back_to_home()}
 					</Button>
 				</Link>
 			) : (
 				<Link to="/auth/login">
-					<Button variant="outline" size="sm" className="gap-2 rounded-xl">
+					<Button variant="outline" size="sm">
 						{m.auth_password_login()}
 					</Button>
 				</Link>

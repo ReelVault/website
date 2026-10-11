@@ -27,7 +27,7 @@ function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; targ
 	const isServer = target === "server";
 	if (status.job?.target === target) {
 		return (
-			<Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
+			<Badge variant="primary">
 				<RefreshCw className="size-3 animate-spin" />
 				{UPDATE_JOB_STATE_LABELS[status.job.state]?.() ?? status.job.state}
 			</Badge>
@@ -38,18 +38,14 @@ function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; targ
 	const latest = isServer ? status.serverLatest : status.webLatest;
 	if (updateAvailable) {
 		return (
-			<Badge variant="outline" className="border-warning/30 bg-warning/10 text-warning">
+			<Badge variant="warning">
 				<ArrowUpCircle className="size-3" />
 				{m.admin_updates_update_available({ version: latest?.version ?? "" })}
 			</Badge>
 		);
 	}
 
-	return (
-		<Badge variant="outline" className="border-success/30 bg-success/10 text-success">
-			{m.admin_updates_up_to_date()}
-		</Badge>
-	);
+	return <Badge variant="success">{m.admin_updates_up_to_date()}</Badge>;
 }
 
 function VersionCard({ icon, label, version, badge }: { icon: ReactNode; label: string; version: string | null; badge: ReactNode }) {
@@ -119,7 +115,6 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 						<Button
 							type="button"
 							variant="outline"
-							className="gap-1.5"
 							disabled={isCancelling}
 							onClick={() => {
 								detach(cancel(target));
@@ -133,7 +128,7 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 					{rollbackAvailable && !jobRunning && (
 						<ConfirmAction
 							trigger={
-								<Button type="button" variant="outline" className="gap-1.5">
+								<Button type="button" variant="outline">
 									<History className="size-4" />
 									{m.admin_updates_rollback()}
 								</Button>
@@ -159,9 +154,9 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 				)}
 
 				{latest && (
-					<Collapsible className="rounded-lg border border-border/60 p-3">
+					<Collapsible>
 						<div className="flex items-center justify-between gap-3">
-							<CollapsibleTrigger className="group flex min-w-0 items-center gap-1">
+							<CollapsibleTrigger className="flex min-w-0 items-center">
 								<span className="truncate font-medium text-foreground text-sm group-hover:underline">
 									{m.admin_updates_release_notes({ version: latest.version })}
 								</span>
@@ -211,7 +206,7 @@ function JobCard({ status }: { status: AdminUpdateStatus }) {
 				</span>
 				<span className="text-muted-foreground tabular-nums">{m.common_percent_value({ value: job.progressPercent })}</span>
 			</div>
-			<Progress value={job.progressPercent} className="h-2" />
+			<Progress value={job.progressPercent} />
 			{job.target === "server" && <p className="text-muted-foreground text-xs">{m.admin_updates_restart_notice()}</p>}
 		</AdminSection>
 	);
@@ -255,7 +250,7 @@ function EnvironmentSection({ environment }: { environment: AdminUpdateEnvironme
 function HistoryStatusBadge({ status }: { status: AdminUpdateHistoryEntry["status"] }) {
 	if (status === "running") {
 		return (
-			<Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
+			<Badge variant="primary">
 				<RefreshCw className="size-3 animate-spin" />
 				{m.admin_updates_history_status_running()}
 			</Badge>
@@ -263,24 +258,16 @@ function HistoryStatusBadge({ status }: { status: AdminUpdateHistoryEntry["statu
 	}
 	if (status === "cancelled") {
 		return (
-			<Badge variant="outline" className="border-border text-muted-foreground">
+			<Badge tone="muted" variant="outline">
 				{m.admin_updates_history_status_cancelled()}
 			</Badge>
 		);
 	}
 	if (status === "failed") {
-		return (
-			<Badge variant="outline" className="border-destructive/30 bg-destructive/10 text-destructive">
-				{m.admin_updates_history_status_failed()}
-			</Badge>
-		);
+		return <Badge variant="destructive">{m.admin_updates_history_status_failed()}</Badge>;
 	}
 
-	return (
-		<Badge variant="outline" className="border-success/30 bg-success/10 text-success">
-			{m.admin_updates_history_status_succeeded()}
-		</Badge>
-	);
+	return <Badge variant="success">{m.admin_updates_history_status_succeeded()}</Badge>;
 }
 
 function HistoryRow({ entry }: { entry: AdminUpdateHistoryEntry }) {

@@ -9,10 +9,10 @@ export function WorkerStatsSummaryKpis({ totals, isLoading, isError }: { totals:
 	if (isLoading) {
 		return (
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-				<Skeleton className="h-32 rounded-xl" />
-				<Skeleton className="h-32 rounded-xl" />
-				<Skeleton className="h-32 rounded-xl" />
-				<Skeleton className="h-32 rounded-xl" />
+				<Skeleton className="h-32" />
+				<Skeleton className="h-32" />
+				<Skeleton className="h-32" />
+				<Skeleton className="h-32" />
 			</div>
 		);
 	}

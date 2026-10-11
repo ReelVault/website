@@ -35,7 +35,6 @@ export function AdminRefreshButtons({
 				<Button
 					variant="outline"
 					size="sm"
-					className="h-10 gap-1.5 text-xs sm:h-8"
 					onClick={onRefreshEpisode}
 					disabled={isRefreshingEpisode}
 					title={m.components_media_files_refresh_episode_metadata()}
@@ -46,7 +45,6 @@ export function AdminRefreshButtons({
 				<Button
 					variant="outline"
 					size="sm"
-					className="h-10 gap-1.5 text-xs sm:h-8"
 					onClick={onRefreshEpisodeImage}
 					disabled={isRefreshingEpisodeImage}
 					title={m.components_media_files_force_thumbnail()}
@@ -64,7 +62,6 @@ export function AdminRefreshButtons({
 				<Button
 					variant="outline"
 					size="sm"
-					className="h-10 gap-1.5 text-xs sm:h-8"
 					onClick={onRefreshMetadata}
 					disabled={isRefreshingMetadata}
 					title={m.components_metadata_card_refresh_metadata()}
@@ -75,7 +72,6 @@ export function AdminRefreshButtons({
 				<Button
 					variant="outline"
 					size="sm"
-					className="h-10 gap-1.5 text-xs sm:h-8"
 					onClick={onRefreshImages}
 					disabled={isRefreshingImages}
 					title={m.components_metadata_card_force_artwork()}

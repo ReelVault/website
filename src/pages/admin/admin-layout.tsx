@@ -145,7 +145,7 @@ function AdminHeader() {
 									</BreadcrumbItem>
 									<BreadcrumbSeparator />
 									<BreadcrumbItem>
-										<BreadcrumbPage className="max-w-48 truncate font-mono text-xs">
+										<BreadcrumbPage className="max-w-48 truncate">
 											{subId === "pages" ? (segments[3] ?? m.admin_plugins_singular()) : breadcrumbId}
 										</BreadcrumbPage>
 									</BreadcrumbItem>
@@ -174,9 +174,9 @@ function AdminHeader() {
 					<StatusBadge status={apiStatus} label={apiLabel} className="hidden sm:inline-flex" />
 
 					<Button
+						tone="muted"
 						variant="ghost"
 						size="sm"
-						className="gap-1.5 text-muted-foreground text-xs hover:text-foreground"
 						nativeButton={false}
 						render={<Link to="/" />}
 						title={m.admin_nav_go_to_cinema_app()}

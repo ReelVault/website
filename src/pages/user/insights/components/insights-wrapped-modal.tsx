@@ -28,11 +28,7 @@ export function InsightsWrappedModal({ year }: { year?: number }) {
 		>
 			<FullscreenDialogTrigger
 				render={
-					<Button
-						type="button"
-						variant="default"
-						className="group relative overflow-hidden bg-linear-to-r from-amber-500 via-primary to-purple-600 px-4 py-2 font-bold text-white text-xs shadow-lg transition-[border-color,background-color,color,box-shadow] hover:scale-105 hover:shadow-primary/25"
-					>
+					<Button type="button" variant="default" size="sm" className="group relative overflow-hidden">
 						<Sparkles className="mr-2 size-4 animate-pulse text-amber-300" />
 						<span>{m.user_wrapped_title({ year: resolvedYear })}</span>
 					</Button>

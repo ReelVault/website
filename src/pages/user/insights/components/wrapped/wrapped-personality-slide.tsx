@@ -20,7 +20,7 @@ export function WrappedPersonalitySlide({ data, personalityTitle, personalityDes
 			</div>
 
 			<div className="space-y-2">
-				<Badge className="border-amber-500/50 bg-amber-500/20 px-3 py-1 font-bold text-amber-300 text-xs">
+				<Badge weight="bold" variant="warning">
 					{m.user_viewer_personality()}
 				</Badge>
 				<h2 className="font-black text-3xl text-foreground tracking-tight sm:text-5xl">{personalityTitle}</h2>

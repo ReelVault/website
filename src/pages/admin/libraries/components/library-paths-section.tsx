@@ -60,10 +60,10 @@ export function LibraryPathsSection({ paths, onChange, idPrefix, showDashedAddBu
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
 				<div>
-					<Label className="font-medium text-foreground text-sm">{m.admin_libraries_source_directories_with_media()}</Label>
+					<Label>{m.admin_libraries_source_directories_with_media()}</Label>
 					<p className="text-muted-foreground text-xs">{m.admin_libraries_point_to_folders()}</p>
 				</div>
-				<Button type="button" variant="outline" size="sm" onClick={addPathField} className="h-10 gap-1.5 text-xs shadow-xs sm:h-8">
+				<Button type="button" variant="outline" size="sm" onClick={addPathField}>
 					<Plus className="size-3.5 text-primary" />
 					<span>{m.admin_libraries_add_directory()}</span>
 				</Button>
@@ -85,12 +85,7 @@ export function LibraryPathsSection({ paths, onChange, idPrefix, showDashedAddBu
 			</div>
 
 			{showDashedAddButton && (
-				<Button
-					type="button"
-					variant="outline"
-					onClick={addPathField}
-					className="h-10 w-full gap-2 border-border/80 border-dashed text-muted-foreground text-xs hover:border-primary/60 hover:text-foreground"
-				>
+				<Button tone="muted" type="button" variant="outline" onClick={addPathField} size="sm" className="w-full">
 					<Plus className="size-4" />
 					<span>{m.admin_libraries_add_another_path()}</span>
 				</Button>

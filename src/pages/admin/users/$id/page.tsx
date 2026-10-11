@@ -126,7 +126,7 @@ export default function AdminUserProfilesPage() {
 			{isLoading && (
 				<div className="flex flex-col gap-4">
 					{SKELETON_KEYS.map((key) => (
-						<Skeleton key={key} className="h-44 rounded-lg" />
+						<Skeleton key={key} className="h-44" />
 					))}
 				</div>
 			)}
@@ -136,7 +136,7 @@ export default function AdminUserProfilesPage() {
 					title={m.admin_users_no_profiles()}
 					description={m.admin_users_create_first_profile_hint()}
 					action={
-						<Button onClick={() => setCreateOpen(true)} className="gap-2">
+						<Button onClick={() => setCreateOpen(true)}>
 							<Plus className="size-4" aria-hidden="true" /> {m.admin_users_create_profile()}
 						</Button>
 					}
@@ -145,7 +145,7 @@ export default function AdminUserProfilesPage() {
 
 			<div className="flex flex-col gap-5">
 				{profiles.length > 0 && (
-					<Button onClick={() => setCreateOpen(true)} className="w-fit gap-2">
+					<Button onClick={() => setCreateOpen(true)} className="w-fit">
 						<Plus className="size-4" aria-hidden="true" /> {m.admin_users_create_profile()}
 					</Button>
 				)}

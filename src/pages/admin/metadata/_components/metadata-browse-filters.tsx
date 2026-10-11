@@ -34,7 +34,7 @@ function YearInput({ label, value, onCommit }: YearInputProps) {
 			defaultValue={value}
 			placeholder={label}
 			aria-label={label}
-			className="h-10 w-28 sm:h-9"
+			className="w-28"
 			onBlur={(event) => {
 				const next = parseMetadataYear(event.currentTarget.value);
 				if (next !== value) onCommit(next);
@@ -62,7 +62,7 @@ export function MetadataBrowseFilters({ filters, onChange }: MetadataBrowseFilte
 				value={filters.minMatchScore === undefined ? ANY : String(filters.minMatchScore)}
 				onValueChange={(value) => onChange({ minMatchScore: parseMetadataMinMatchScore(value) })}
 			>
-				<SelectTrigger className="h-10 w-full sm:h-9 sm:w-44" aria-label={m.admin_metadata_min_match_label()}>
+				<SelectTrigger className="w-full sm:w-44" aria-label={m.admin_metadata_min_match_label()}>
 					<SelectValue>
 						{filters.minMatchScore === undefined ? m.admin_metadata_min_match_any() : percentLabel(filters.minMatchScore)}
 					</SelectValue>
@@ -79,7 +79,7 @@ export function MetadataBrowseFilters({ filters, onChange }: MetadataBrowseFilte
 				</SelectContent>
 			</Select>
 			<Select value={filters.status ?? ANY} onValueChange={(value) => onChange({ status: value === ANY || !value ? undefined : value })}>
-				<SelectTrigger className="h-10 w-full sm:h-9 sm:w-44" aria-label={m.admin_metadata_status_label()}>
+				<SelectTrigger className="w-full sm:w-44" aria-label={m.admin_metadata_status_label()}>
 					<SelectValue>{filters.status ?? m.admin_metadata_status_any()}</SelectValue>
 				</SelectTrigger>
 				<SelectContent>
@@ -94,7 +94,7 @@ export function MetadataBrowseFilters({ filters, onChange }: MetadataBrowseFilte
 				</SelectContent>
 			</Select>
 			<Select value={filters.startsWith ?? ANY} onValueChange={(value) => onChange({ startsWith: parseMetadataStartsWith(value) })}>
-				<SelectTrigger className="h-10 w-full sm:h-9 sm:w-40" aria-label={m.admin_metadata_letter_label()}>
+				<SelectTrigger className="w-full sm:w-40" aria-label={m.admin_metadata_letter_label()}>
 					<SelectValue>{filters.startsWith === undefined ? m.admin_metadata_letter_any() : letterLabel(filters.startsWith)}</SelectValue>
 				</SelectTrigger>
 				<SelectContent>

@@ -33,11 +33,7 @@ export function PlayerMarkerButton() {
 				isNextEpisodeOverlayShowing ? "bottom-64" : "bottom-28 sm:bottom-24",
 			)}
 		>
-			<Button
-				variant="outline"
-				onClick={skipActiveMarker}
-				className="h-11 gap-2 rounded-full border-border/80 bg-background/80 px-5 font-semibold text-foreground text-sm transition-[border-color,background-color,color,box-shadow] hover:scale-105 hover:border-primary/50 hover:bg-background active:scale-95"
-			>
+			<Button shape="pill" variant="outline" onClick={skipActiveMarker} size="lg">
 				<FastForward className="size-4 text-primary" aria-hidden="true" />
 				<span>{label}</span>
 			</Button>

@@ -109,10 +109,7 @@ export function PluginSlotHost({ name, variant, buttonClassName, playerContext, 
 
 					return (
 						<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
-							<DropdownMenuItem
-								className="gap-3 rounded-xl px-4 py-3 text-sm hover:cursor-pointer hover:bg-muted"
-								onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}
-							>
+							<DropdownMenuItem onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}>
 								<Icon className="size-4 text-muted-foreground" />
 								<span>{label}</span>
 							</DropdownMenuItem>

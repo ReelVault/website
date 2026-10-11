@@ -42,7 +42,7 @@ export function MetadataTaxonomySection({
 						isFirst={firstVisibleIndex === 0}
 					>
 						{genres.map((g) => (
-							<Badge key={g.id} variant="secondary" size="sm" className="font-medium">
+							<Badge key={g.id} variant="secondary" size="sm">
 								{g.name}
 							</Badge>
 						))}
@@ -76,7 +76,7 @@ export function MetadataTaxonomySection({
 						isFirst={firstVisibleIndex === 2}
 					>
 						{collections.map((col) => (
-							<Badge key={col.id} variant="secondary" size="sm" className="gap-1.5 font-medium">
+							<Badge key={col.id} variant="secondary" size="sm">
 								<span>{col.name}</span>
 								<span className="font-normal text-xs opacity-70">{m.admin_metadata_collection_sort_mode({ mode: col.sortMode })}</span>
 							</Badge>

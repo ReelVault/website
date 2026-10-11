@@ -59,7 +59,7 @@ export default function ProfilesSelectionPage() {
 				<div className="grid w-full max-w-xl grid-cols-2 gap-8 sm:grid-cols-3">
 					{["one", "two", "three"].map((key) => (
 						<div key={key} className="flex flex-col items-center gap-5">
-							<Skeleton className="size-32 rounded-3xl sm:size-44" />
+							<Skeleton className="size-32 sm:size-44" />
 							<Skeleton className="h-5 w-24" />
 						</div>
 					))}
@@ -114,15 +114,15 @@ export default function ProfilesSelectionPage() {
 								<div className="relative">
 									<Avatar
 										size="default"
-										className="size-32 rounded-3xl bg-muted transition-[box-shadow,transform] duration-500 after:hidden group-hover:scale-110 group-hover:shadow-xl group-hover:ring-2 group-hover:ring-primary sm:size-44"
+										className="size-32 after:hidden group-hover:scale-110 group-hover:shadow-xl group-hover:ring-2 group-hover:ring-primary sm:size-44"
 									>
-										{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" className="rounded-3xl" />}
-										<AvatarFallback className="rounded-3xl">
+										{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" />}
+										<AvatarFallback>
 											<User className="size-10 text-muted-foreground/50" />
 										</AvatarFallback>
 									</Avatar>
 									{profile.pin && (
-										<Badge variant="outline" className="absolute -top-2 -right-2 gap-1 rounded-xl bg-card px-2 py-1 shadow-xl">
+										<Badge variant="outline" className="absolute -top-2 -right-2">
 											<Lock className="size-3" aria-hidden="true" /> {m.auth_profile_pin_badge()}
 										</Badge>
 									)}
@@ -135,9 +135,10 @@ export default function ProfilesSelectionPage() {
 					))}
 
 					<Button
+						size="inline"
 						type="button"
 						variant="ghost"
-						className="group h-auto w-36 flex-col gap-5 p-2 hover:bg-transparent sm:h-auto sm:w-48"
+						className="group w-36 flex-col sm:w-48"
 						nativeButton={false}
 						render={<Link to="/auth/create-profile" search={redirect ? { redirect } : {}} />}
 					>

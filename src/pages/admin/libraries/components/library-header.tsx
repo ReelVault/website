@@ -39,7 +39,7 @@ export function LibraryHeader({
 						<RefreshCw className={cn("size-4", { "animate-spin": isScanningAll })} />
 						<span>{m.admin_libraries_scan_libraries()}</span>
 					</AsyncButton>
-					<Button type="button" size="sm" onClick={onAddClick} className="gap-2 shadow-xs">
+					<Button type="button" size="sm" onClick={onAddClick}>
 						<FolderPlus className="size-4" />
 						<span>{m.admin_libraries_add_library()}</span>
 					</Button>

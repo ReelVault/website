@@ -74,7 +74,7 @@ export default function AdminDownloadsPage() {
 				description={m.admin_downloads_description()}
 				actions={
 					<div className="flex flex-wrap items-center gap-2">
-						<Button variant="outline" size="sm" nativeButton={false} render={<Link to="/admin/settings" />} className="gap-1.5 text-xs">
+						<Button variant="outline" size="sm" nativeButton={false} render={<Link to="/admin/settings" />}>
 							<Settings className="size-3.5" />
 							{m.admin_downloads_settings()}
 						</Button>
@@ -84,7 +84,6 @@ export default function AdminDownloadsPage() {
 							onClick={() => {
 								detach(refetch());
 							}}
-							className="gap-1.5 text-xs"
 						>
 							<RefreshCw className="size-3.5" />
 							{m.common_refresh()}
@@ -131,7 +130,7 @@ export default function AdminDownloadsPage() {
 					className="mb-3 flex-wrap"
 				>
 					{STATUS_FILTERS.map((option) => (
-						<ToggleGroupItem key={option} value={option} className="text-xs">
+						<ToggleGroupItem key={option} value={option} size="sm">
 							{option === "all" ? m.common_all() : option}
 						</ToggleGroupItem>
 					))}
@@ -154,9 +153,7 @@ export default function AdminDownloadsPage() {
 										<div className="flex flex-wrap items-center gap-2">
 											<span className="font-medium text-sm">{job.fileName ?? job.id}</span>
 											<Badge variant={statusVariant}>{job.status}</Badge>
-											<Badge variant="outline" className="text-xs">
-												{job.quality}
-											</Badge>
+											<Badge variant="outline">{job.quality}</Badge>
 											<span className="font-mono text-muted-foreground text-xs">
 												{m.admin_downloads_profile_label({ id: job.profileId })}
 											</span>
@@ -176,12 +173,7 @@ export default function AdminDownloadsPage() {
 									</div>
 									<ConfirmAction
 										trigger={
-											<Button
-												variant="ghost"
-												size="icon-sm"
-												aria-label={m.admin_logs_delete_file()}
-												className="text-muted-foreground hover:text-destructive"
-											>
+											<Button tone="muted" variant="ghost" size="icon-sm" aria-label={m.admin_logs_delete_file()}>
 												<Trash2 className="size-4" />
 											</Button>
 										}

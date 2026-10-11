@@ -1,8 +1,7 @@
 import type { AdminLogEntry } from "@reelvault/sdk";
-import { cn } from "cn";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Badge, type BadgeVariant } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { m } from "@/paraglide/messages";
@@ -11,12 +10,12 @@ import { extractErrorMessage, extractErrorStack, stringifyLogDetail } from "./lo
 
 // Subtle per-level tints instead of solid pills — a wall of saturated badges
 // made the log body unreadable.
-const LEVEL_CLASSES: Record<string, string> = {
-	error: "border-destructive/30 bg-destructive/10 text-destructive",
-	fatal: "border-destructive/30 bg-destructive/10 text-destructive",
-	warn: "border-warning/30 bg-warning/10 text-warning",
-	info: "border-info/30 bg-info/10 text-info",
-	debug: "border-border bg-muted/40 text-muted-foreground",
+const LEVEL_VARIANT: Record<string, BadgeVariant> = {
+	error: "destructive",
+	fatal: "destructive",
+	warn: "warning",
+	info: "info",
+	debug: "muted",
 };
 
 interface LogFormattedViewerProps {
@@ -50,14 +49,13 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 								variant="ghost"
 								onClick={handleToggleExpanded}
 								data-index={idx}
-								className="h-auto w-full justify-start rounded-none px-3 py-2 text-left font-mono text-xs sm:h-auto sm:min-h-8"
+								size="sm"
+								className="w-full justify-start text-left sm:min-h-8"
 							>
 								<span className="mr-1.5 shrink-0 text-muted-foreground">
 									{isExpanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
 								</span>
-								<Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-xs", LEVEL_CLASSES[level])}>
-									{level}
-								</Badge>
+								<Badge variant={LEVEL_VARIANT[level]}>{level}</Badge>
 								{log.module !== undefined && (
 									<span className="shrink-0 text-muted-foreground text-xs">{m.admin_logs_module_label({ module: log.module })}</span>
 								)}

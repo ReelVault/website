@@ -26,7 +26,7 @@ export function DetailsMultipleFilesBadge({ metadataId }: { metadataId: string }
 	if (!(hasMultipleForTv || hasMultipleForMovie)) return null;
 
 	return (
-		<Badge size="lg" variant="outline" className="gap-2 border-primary/30 bg-primary/5 text-foreground">
+		<Badge size="lg" variant="primary">
 			<Layers className="size-4 text-primary" />
 			{m.web_multiple_releases()}
 		</Badge>

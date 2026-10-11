@@ -1,5 +1,4 @@
 import type { WorkerJob } from "@reelvault/sdk";
-import { cn } from "cn";
 import { AlertCircle, ChevronDown, ChevronRight, Code2, RotateCw } from "lucide-react";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
@@ -65,16 +64,16 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 
 	return (
 		<>
-			<TableRow className={cn("transition-colors hover:bg-muted/30", isExpanded && "bg-muted/20")}>
-				<TableCell className="w-8 px-2 text-center">
+			<TableRow data-state={isExpanded ? "selected" : undefined}>
+				<TableCell className="w-8 text-center">
 					{hasDetails ? (
 						<Button
+							tone="muted"
 							type="button"
 							variant="ghost"
 							size="icon-xs"
 							aria-label={isExpanded ? m.admin_worker_collapse_details() : m.admin_worker_expand_details()}
 							onClick={onToggleExpand}
-							className="size-6 text-muted-foreground hover:text-foreground"
 						>
 							{isExpanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
 						</Button>
@@ -83,7 +82,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 					)}
 				</TableCell>
 
-				<TableCell className="font-medium text-xs">
+				<TableCell size="sm">
 					<div>
 						<span className="font-semibold text-foreground">{meta.title}</span>
 						<span className="block font-mono text-muted-foreground text-xs">{item.workerId}</span>
@@ -94,37 +93,24 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 					<StatusBadge status={item.status === "failed" ? "error" : item.status} label={labels[item.status]} />
 				</TableCell>
 
-				<TableCell className="text-xs">
+				<TableCell size="sm">
 					<span className="text-muted-foreground">{stage}</span>
 					{countdownLabel && <span className="block font-mono text-primary text-xs">{countdownLabel}</span>}
 				</TableCell>
 
-				<TableCell className="font-mono text-muted-foreground text-xs tabular-nums">
+				<TableCell tone="mono" size="sm">
 					{duration === undefined ? m.common_no_value() : formatMsDuration(duration)}
 				</TableCell>
 
 				<TableCell className="text-right">
 					{item.status === "failed" && onRetry && (
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							disabled={isRetrying}
-							onClick={() => onRetry(item.id)}
-							className="h-10 gap-1 text-primary text-xs hover:text-primary sm:h-7"
-						>
+						<Button type="button" variant="primary-ghost" size="sm" disabled={isRetrying} onClick={() => onRetry(item.id)}>
 							<RotateCw className="size-3" />
 							<span>{m.admin_workers_retry_word()}</span>
 						</Button>
 					)}
 					{hasDetails && (
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							onClick={onToggleExpand}
-							className="h-10 gap-1 text-muted-foreground text-xs hover:text-foreground sm:h-7"
-						>
+						<Button tone="muted" type="button" variant="ghost" size="sm" onClick={onToggleExpand}>
 							<Code2 className="size-3" />
 							<span>{isExpanded ? m.admin_worker_hide_details() : m.admin_worker_show_details()}</span>
 						</Button>
@@ -133,8 +119,8 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 			</TableRow>
 
 			{isExpanded && hasDetails && (
-				<TableRow className="border-border/60 border-b bg-muted/15">
-					<TableCell colSpan={6} className="p-3 pl-10">
+				<TableRow className="border-b">
+					<TableCell colSpan={6} className="pl-10">
 						<div className="flex flex-col gap-2">
 							{item.error && (
 								<div className="rounded-lg border border-destructive/30 bg-destructive/10 p-2.5 text-destructive text-xs">

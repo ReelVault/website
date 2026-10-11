@@ -46,14 +46,14 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 		<section className="flex flex-col gap-5 rounded-lg border border-border bg-card p-4 sm:p-6">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 				<div className="flex items-center gap-3.5">
-					<Avatar className="size-11 border border-border">
+					<Avatar className="size-11">
 						{profile.avatarUrl && <AvatarImage src={profile.avatarUrl} alt={profile.name} />}
-						<AvatarFallback className="font-semibold text-xs">{profile.name.slice(0, 2)}</AvatarFallback>
+						<AvatarFallback>{profile.name.slice(0, 2)}</AvatarFallback>
 					</Avatar>
 					<div className="flex flex-col gap-1">
 						<div className="flex flex-wrap items-center gap-2">
 							<h2 className="font-bold text-xl">{profile.name}</h2>
-							<Badge variant="outline" className="min-h-10 gap-1 font-mono text-muted-foreground text-xs sm:min-h-0">
+							<Badge tone="muted" variant="outline" font="mono">
 								<span>{m.common_short_id({ id: profile.id.slice(0, 8) })}</span>
 								<button
 									type="button"
@@ -64,7 +64,7 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</Badge>
-							<Badge variant={profile.hasPin ? "secondary" : "outline"} size="sm" className="gap-1">
+							<Badge variant={profile.hasPin ? "secondary" : "outline"} size="sm">
 								{profile.hasPin ? <Lock className="size-3 text-warning" /> : <Unlock className="size-3 text-muted-foreground" />}
 								<span>{profile.hasPin ? m.admin_users_profile_has_pin() : m.admin_users_no_pin()}</span>
 							</Badge>
@@ -110,7 +110,7 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 					/>
 				</Field>
 				<Field>
-					<Label htmlFor={`profile-pin-${profile.id}`} className="flex items-center gap-2">
+					<Label htmlFor={`profile-pin-${profile.id}`} className="flex items-center">
 						<Key className="size-3.5" />
 						{m.admin_users_new_pin()}
 					</Label>

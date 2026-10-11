@@ -58,9 +58,10 @@ export function MetadataCardPoster({
 	if (suggestion?.mediaFileId) {
 		overlayAction = (
 			<Button
+				shape="pill"
 				size="icon-lg"
 				aria-label={m.components_metadata_card_play_title({ title: metadata.title })}
-				className="pointer-events-auto size-12 rounded-full shadow-2xl transition-transform duration-200 group-hover:scale-105"
+				className="pointer-events-auto group-hover:scale-105"
 				nativeButton={false}
 				render={<Link to="/player/$id" params={{ id: suggestion.mediaFileId }} />}
 			>
@@ -69,12 +70,7 @@ export function MetadataCardPoster({
 		);
 	} else if (isInteracted && isSuggestionLoading) {
 		overlayAction = (
-			<Button
-				size="icon-lg"
-				disabled
-				aria-label={m.components_metadata_card_loading_player()}
-				className="pointer-events-auto size-12 rounded-full opacity-75 shadow-2xl"
-			>
+			<Button shape="pill" size="icon-lg" disabled aria-label={m.components_metadata_card_loading_player()} className="pointer-events-auto">
 				<RefreshCw className="size-5 animate-spin" aria-hidden="true" />
 			</Button>
 		);

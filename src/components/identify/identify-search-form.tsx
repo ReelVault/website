@@ -54,12 +54,8 @@ export function IdentifySearchForm({ initialTitle, initialYear, isSearching, onS
 				}}
 				className="w-fit"
 			>
-				<ToggleGroupItem value="title" className="px-3">
-					{m.admin_analytics_title_column()}
-				</ToggleGroupItem>
-				<ToggleGroupItem value="externalId" className="px-3">
-					{m.common_provider_id()}
-				</ToggleGroupItem>
+				<ToggleGroupItem value="title">{m.admin_analytics_title_column()}</ToggleGroupItem>
+				<ToggleGroupItem value="externalId">{m.common_provider_id()}</ToggleGroupItem>
 			</ToggleGroup>
 
 			{searchMode === "title" ? (
@@ -97,7 +93,7 @@ export function IdentifySearchForm({ initialTitle, initialYear, isSearching, onS
 					<div className="space-y-1.5 sm:col-span-2">
 						<Label htmlFor="identify-id-provider">{m.components_metadata_provider_label()}</Label>
 						<Select value={idProviderId} onValueChange={(value) => setIdProviderId(value ?? "")}>
-							<SelectTrigger id="identify-id-provider" className="w-full bg-card">
+							<SelectTrigger id="identify-id-provider" className="w-full">
 								<SelectValue placeholder={m.common_select_service()} />
 							</SelectTrigger>
 							<SelectContent>

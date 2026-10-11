@@ -82,12 +82,12 @@ export function LibraryFilterSection(props: {
 						<Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
 							<SheetTrigger
 								className="lg:hidden"
-								render={<Button variant="outline" className="min-h-11 gap-2" onClick={() => setShowAdvanced(true)} />}
+								render={<Button variant="outline" className="min-h-11" onClick={() => setShowAdvanced(true)} />}
 							>
 								<SlidersHorizontal data-icon="inline-start" aria-hidden="true" />
 								{m.web_open_filters()}
 							</SheetTrigger>
-							<SheetContent side="bottom" className="max-h-[85vh] overflow-y-auto rounded-t-2xl lg:hidden">
+							<SheetContent side="bottom" className="max-h-[85vh] overflow-y-auto lg:hidden">
 								<SheetHeader>
 									<SheetTitle>{m.web_filters_heading()}</SheetTitle>
 									<SheetDescription>{m.web_sort_year_range_hint()}</SheetDescription>
@@ -99,7 +99,7 @@ export function LibraryFilterSection(props: {
 						<Button
 							variant={showAdvanced ? "default" : "outline"}
 							onClick={() => setShowAdvanced(!showAdvanced)}
-							className="hidden min-h-11 gap-2 lg:inline-flex"
+							className="hidden min-h-11 lg:inline-flex"
 						>
 							<SlidersHorizontal data-icon="inline-start" aria-hidden="true" />
 							{showAdvanced ? m.web_hide_filters() : m.web_advanced_filters()}

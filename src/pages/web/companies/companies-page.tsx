@@ -39,7 +39,7 @@ export default function CompaniesPage() {
 					{isLoading && (
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label={m.web_loading_companies()}>
 							{COMPANY_SKELETONS.map((key) => (
-								<Skeleton key={key} className="h-24 rounded-2xl" />
+								<Skeleton key={key} className="h-24" />
 							))}
 						</div>
 					)}
@@ -78,7 +78,7 @@ export default function CompaniesPage() {
 														alt=""
 														width={128}
 														aspectRatio={1}
-														className="size-full object-contain p-2.5"
+														className="object-contain"
 													/>
 												) : (
 													<Building2 className="size-6" aria-hidden="true" />

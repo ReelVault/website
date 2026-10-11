@@ -41,14 +41,7 @@ export function SetupStepLibraries() {
 									{library.type === "movies" ? m.web_watchlist_stats_movies() : m.web_watchlist_stats_series()}
 								</span>
 							</div>
-							<Button
-								type="button"
-								variant="outline"
-								size="sm"
-								className="gap-1.5"
-								disabled={isScanning}
-								onClick={() => detach(scanLibrary(library.id))}
-							>
+							<Button type="button" variant="outline" size="sm" disabled={isScanning} onClick={() => detach(scanLibrary(library.id))}>
 								<ScanLine className="size-3.5" />
 								{m.setup_libraries_scan()}
 							</Button>
@@ -57,7 +50,7 @@ export function SetupStepLibraries() {
 				</ul>
 			)}
 
-			<Button type="button" variant="outline" className="gap-2 self-start" onClick={() => setIsDialogOpen(true)}>
+			<Button type="button" variant="outline" className="self-start" onClick={() => setIsDialogOpen(true)}>
 				<Plus className="size-4" />
 				{m.setup_libraries_add()}
 			</Button>

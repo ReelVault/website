@@ -38,9 +38,9 @@ export function WorkerScheduledTasksTab({
 	if (isLoading) {
 		return (
 			<div className="flex flex-col gap-4">
-				<Skeleton className="h-28 w-full rounded-2xl" />
-				<Skeleton className="h-28 w-full rounded-2xl" />
-				<Skeleton className="h-28 w-full rounded-2xl" />
+				<Skeleton className="h-28 w-full" />
+				<Skeleton className="h-28 w-full" />
+				<Skeleton className="h-28 w-full" />
 			</div>
 		);
 	}

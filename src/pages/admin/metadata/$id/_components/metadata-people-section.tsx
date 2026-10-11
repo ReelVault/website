@@ -25,12 +25,12 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 		<AdminSection title={m.admin_metadata_cast_crew()} description={m.admin_metadata_cast_crew_description()}>
 			<Tabs defaultValue={cast.length > 0 ? "cast" : "crew"} className="w-full">
 				<div className="flex items-center justify-between gap-2 border-border/50 border-b pb-3">
-					<TabsList className="h-10 sm:h-9">
-						<TabsTrigger value="cast" disabled={cast.length === 0} className="gap-1.5 text-xs">
+					<TabsList>
+						<TabsTrigger value="cast" disabled={cast.length === 0}>
 							<Users className="size-3.5" />
 							<span>{m.admin_metadata_cast_count({ count: cast.length })}</span>
 						</TabsTrigger>
-						<TabsTrigger value="crew" disabled={crew.length === 0} className="gap-1.5 text-xs">
+						<TabsTrigger value="crew" disabled={crew.length === 0}>
 							<Clapperboard className="size-3.5" />
 							<span>{m.admin_metadata_crew_count({ count: crew.length })}</span>
 						</TabsTrigger>
@@ -39,7 +39,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 
 				{/* Cast Content */}
 				{cast.length > 0 && (
-					<TabsContent value="cast" className="pt-4 outline-hidden">
+					<TabsContent value="cast" className="pt-4">
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 							{visibleCast.map((actor) => (
 								<PersonCard
@@ -55,13 +55,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 
 						{cast.length > INITIAL_LIMIT && (
 							<div className="mt-4 flex justify-center">
-								<Button
-									type="button"
-									variant="outline"
-									size="sm"
-									onClick={() => setShowAllCast((prev) => !prev)}
-									className="gap-1.5 text-xs"
-								>
+								<Button type="button" variant="outline" size="sm" onClick={() => setShowAllCast((prev) => !prev)}>
 									{showAllCast ? (
 										<>
 											<ChevronUp className="size-3.5" />
@@ -81,7 +75,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 
 				{/* Crew Content */}
 				{crew.length > 0 && (
-					<TabsContent value="crew" className="pt-4 outline-hidden">
+					<TabsContent value="crew" className="pt-4">
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 							{visibleCrew.map((member) => (
 								<PersonCard
@@ -100,13 +94,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 
 						{crew.length > INITIAL_LIMIT && (
 							<div className="mt-4 flex justify-center">
-								<Button
-									type="button"
-									variant="outline"
-									size="sm"
-									onClick={() => setShowAllCrew((prev) => !prev)}
-									className="gap-1.5 text-xs"
-								>
+								<Button type="button" variant="outline" size="sm" onClick={() => setShowAllCrew((prev) => !prev)}>
 									{showAllCrew ? (
 										<>
 											<ChevronUp className="size-3.5" />
@@ -151,7 +139,7 @@ function PersonCard({
 						alt={name}
 						width={60}
 						aspectRatio={1}
-						className="size-full object-cover"
+						className="object-cover"
 					/>
 				) : (
 					<div className="flex size-full items-center justify-center text-muted-foreground/60">

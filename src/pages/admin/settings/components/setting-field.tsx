@@ -79,7 +79,7 @@ function NumberSettingInput({
 				}}
 				disabled={disabled}
 				aria-invalid={isInvalid}
-				className="min-w-0 shrink-0 text-right text-xs sm:w-32"
+				className="min-w-0 shrink-0 text-right sm:w-32"
 			/>
 			{isInvalid && (
 				<p role="alert" className="text-destructive text-xs">
@@ -131,12 +131,12 @@ export function SettingField({
 	} else if (item.type === "enum" && item.options) {
 		control = (
 			<Select value={String(currentValue ?? item.default)} onValueChange={onChange} disabled={disabled}>
-				<SelectTrigger id={fieldId} className="min-w-0 flex-1 text-xs sm:w-56 sm:flex-none">
+				<SelectTrigger density="compact" id={fieldId} className="min-w-0 flex-1 sm:w-56 sm:flex-none">
 					<SelectValue placeholder={m.admin_settings_select_option()} />
 				</SelectTrigger>
 				<SelectContent>
 					{item.options.map((opt: string) => (
-						<SelectItem key={opt} value={opt} className="text-xs">
+						<SelectItem key={opt} value={opt}>
 							{getSettingOptionLabel(item.key, opt)}
 						</SelectItem>
 					))}
@@ -171,7 +171,7 @@ export function SettingField({
 				}}
 				disabled={disabled}
 				placeholder=".mp4, .mkv, .avi"
-				className="min-w-0 flex-1 text-xs sm:w-64 sm:flex-none"
+				className="min-w-0 flex-1 sm:w-64 sm:flex-none"
 			/>
 		);
 	} else {
@@ -183,7 +183,7 @@ export function SettingField({
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				placeholder={item.default === null ? m.common_none_lowercase() : settingValueToText(item.default)}
-				className="min-w-0 flex-1 text-xs sm:w-48 sm:flex-none"
+				className="min-w-0 flex-1 sm:w-48 sm:flex-none"
 			/>
 		);
 	}
@@ -192,22 +192,18 @@ export function SettingField({
 		<div className="flex flex-col justify-between gap-3 rounded-lg border border-border/60 bg-card/50 p-4 transition-[border-color,background-color,color,box-shadow] hover:border-border sm:flex-row sm:items-center">
 			<div className="flex flex-1 flex-col gap-1">
 				<div className="flex flex-wrap items-center gap-2">
-					<Label htmlFor={fieldId} className="font-semibold text-foreground text-sm">
+					<Label weight="semibold" htmlFor={fieldId}>
 						{label}
 					</Label>
-					<Badge variant="outline" className="font-mono text-muted-foreground text-xs">
+					<Badge tone="muted" variant="outline" font="mono">
 						{item.key}
 					</Badge>
 					{item.isCustom && (
-						<Badge variant="secondary" className="text-primary text-xs">
+						<Badge tone="primary" variant="secondary">
 							{m.admin_settings_custom_value()}
 						</Badge>
 					)}
-					{isUnsaved && (
-						<Badge variant="outline" className="border-warning/40 text-warning text-xs">
-							{m.admin_settings_unsaved_change()}
-						</Badge>
-					)}
+					{isUnsaved && <Badge variant="warning-outline">{m.admin_settings_unsaved_change()}</Badge>}
 				</div>
 				{description && <p className="text-muted-foreground text-xs leading-relaxed">{description}</p>}
 				{item.restartRequired && <p className="font-medium text-warning text-xs">{m.admin_settings_takes_effect_on_restart()}</p>}
@@ -223,6 +219,7 @@ export function SettingField({
 
 			{canReset && (
 				<Button
+					tone="muted"
 					type="button"
 					variant="ghost"
 					size="icon-xs"
@@ -230,7 +227,6 @@ export function SettingField({
 					disabled={disabled}
 					title={item.isCustom ? m.admin_settings_restore_factory_value() : m.admin_settings_undo_change()}
 					aria-label={m.admin_settings_restore_default_for({ label })}
-					className="size-8 text-muted-foreground hover:text-foreground"
 				>
 					<RotateCcw className="size-3.5" />
 				</Button>

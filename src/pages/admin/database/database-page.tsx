@@ -66,7 +66,7 @@ export default function AdminDatabasePage() {
 		backupsContent = (
 			<div className="flex flex-col gap-3">
 				{SKELETON_KEYS.map((key) => (
-					<Skeleton key={key} className="h-16 rounded-xl" />
+					<Skeleton key={key} className="h-16" />
 				))}
 			</div>
 		);
@@ -124,7 +124,6 @@ export default function AdminDatabasePage() {
 							size="sm"
 							disabled={integrityMutation.isPending}
 							onClick={() => detach(integrityMutation.mutateAsync())}
-							className="gap-1.5 text-xs"
 						>
 							<HeartPulse className="size-3.5" />
 							{m.admin_database_check_integrity()}
@@ -134,12 +133,11 @@ export default function AdminDatabasePage() {
 							size="sm"
 							disabled={optimizeMutation.isPending}
 							onClick={() => detach(optimizeMutation.mutateAsync())}
-							className="gap-1.5 text-xs"
 						>
 							<Wrench className="size-3.5" />
 							{m.admin_database_optimize()}
 						</Button>
-						<Button variant="outline" size="sm" onClick={handleRefetch} disabled={backupsQuery.isFetching} className="gap-1.5 text-xs">
+						<Button variant="outline" size="sm" onClick={handleRefetch} disabled={backupsQuery.isFetching}>
 							<RefreshCw className={cn("size-3.5", { "animate-spin": backupsQuery.isFetching })} />
 							{m.common_refresh()}
 						</Button>
@@ -157,7 +155,6 @@ export default function AdminDatabasePage() {
 									size="sm"
 									disabled={uploadBackupMutation.isPending}
 									onClick={() => uploadInputRef.current?.click()}
-									className="gap-1.5 text-xs"
 								>
 									<Upload className="size-3.5" />
 									{m.admin_database_upload_backup()}
@@ -170,7 +167,6 @@ export default function AdminDatabasePage() {
 								detach(handleCreateBackup());
 							}}
 							disabled={createBackupMutation.isPending}
-							className="gap-1.5 text-xs"
 						>
 							{createBackupMutation.isPending ? <RefreshCw className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
 							{m.admin_database_create_backup()}

@@ -51,7 +51,7 @@ export function MediaSearchSortBar({
 						className="w-full sm:max-w-xs"
 					/>
 					<Select value={sortOption} onValueChange={onSortChange}>
-						<SelectTrigger className="w-full min-w-0 bg-card text-xs sm:w-52 sm:flex-none" aria-label={m.admin_media_file_sorting()}>
+						<SelectTrigger density="compact" className="w-full min-w-0 sm:w-52 sm:flex-none" aria-label={m.admin_media_file_sorting()}>
 							<SelectValue placeholder={m.web_library_sorting_label()} />
 						</SelectTrigger>
 						<SelectContent>

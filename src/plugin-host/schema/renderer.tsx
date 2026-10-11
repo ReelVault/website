@@ -84,7 +84,7 @@ export function PluginSchemaSurface({ pluginId, schema, context, onClose, classN
 		<div className={className}>
 			{runtime.dataLoading && (
 				<div className="flex justify-center py-2">
-					<Spinner className="size-4" />
+					<Spinner size="default" />
 				</div>
 			)}
 			{errors.length > 0 && (
@@ -194,7 +194,7 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 			);
 		case "badge":
 			return (
-				<Badge variant={node.variant ?? "secondary"} className="w-fit gap-1.5">
+				<Badge variant={node.variant ?? "secondary"} className="w-fit">
 					{node.icon ? <PluginIcon name={node.icon} className="size-3" /> : null}
 					{resolveLabel(node.text, scope)}
 				</Badge>
@@ -217,7 +217,7 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 					variant={node.variant ?? "default"}
 					disabled={disabled}
 					onClick={confirmation === undefined ? () => runtime.runAction(node.action, scope) : undefined}
-					className="w-fit gap-1.5"
+					className="w-fit"
 				>
 					{node.icon ? <PluginIcon name={node.icon} className="size-4" /> : null}
 					{resolveLabel(node.label, scope)}
@@ -242,7 +242,7 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 					{node.items.map((item, index) => {
 						return (
 							<Card key={`stat-${index}`}>
-								<CardContent className="flex flex-col gap-1 p-4">
+								<CardContent className="flex flex-col gap-1">
 									<div className="flex items-center justify-between">
 										<span className="text-muted-foreground text-xs uppercase tracking-wider">{resolveLabel(item.label, scope)}</span>
 										{item.icon ? <PluginIcon name={item.icon} className="size-4 text-primary" /> : null}
@@ -290,7 +290,7 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 										</TableCell>
 									))}
 									{node.rowActions ? (
-										<TableCell className="flex justify-end gap-1.5">
+										<TableCell className="flex justify-end">
 											<SchemaNodes nodes={node.rowActions} scope={rowScope} runtime={runtime} />
 										</TableCell>
 									) : null}
@@ -313,7 +313,7 @@ function SchemaNodeView({ node, scope, runtime }: { node: PluginSchemaNode; scop
 
 						return (
 							<Card key={`list-${index}`}>
-								<CardContent className="p-4">
+								<CardContent>
 									<SchemaNodes nodes={node.item} scope={{ ...scope, item, index }} runtime={runtime} />
 								</CardContent>
 							</Card>

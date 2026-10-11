@@ -82,7 +82,7 @@ export function QuickConnectGenerateBox() {
 						<QuickConnectCountdown expiresAt={generatedState.expiresAt} onExpire={() => setGeneratedState(null)} gapClass="gap-1.5" />
 
 						<div className="mt-2 flex w-full gap-2">
-							<Button type="button" variant="outline" size="sm" className="flex-1 gap-2" onClick={handleCopy}>
+							<Button type="button" variant="outline" size="sm" className="flex-1" onClick={handleCopy}>
 								<CopyIcon copied={hasCopied} className="size-4" />
 								{hasCopied ? m.auth_copied_word() : m.auth_copy_code()}
 							</Button>

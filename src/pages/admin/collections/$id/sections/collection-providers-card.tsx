@@ -9,11 +9,11 @@ interface CollectionProvidersCardProps {
 
 export function CollectionProvidersCard({ providers }: CollectionProvidersCardProps) {
 	return (
-		<Card className="border-border/80 bg-card">
+		<Card>
 			<CardHeader>
 				<div className="flex items-center justify-between">
 					<div>
-						<CardTitle className="font-semibold text-base">{m.admin_collections_external_providers()}</CardTitle>
+						<CardTitle>{m.admin_collections_external_providers()}</CardTitle>
 						<CardDescription>{m.admin_collections_external_identifiers()}</CardDescription>
 					</div>
 					{providers && providers.length > 0 && (

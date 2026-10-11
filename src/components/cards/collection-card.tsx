@@ -64,7 +64,7 @@ export function CollectionCard({
 							: "border-border/70 hover:border-primary/50 hover:shadow-lg",
 					)}
 				>
-					<AspectRatio ratio={16 / 9} className="bg-muted">
+					<AspectRatio ratio={16 / 9}>
 						<ApiImage
 							fileId={backdropId}
 							cacheKey={getMetadataBackdrop(metadata)?.updatedAt}
@@ -112,17 +112,17 @@ export function CollectionCard({
 				</Link>
 			</ContextMenuTrigger>
 
-			<ContextMenuContent className="w-64 border-border bg-card/95">
+			<ContextMenuContent className="w-64">
 				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate font-bold text-foreground text-xs">{metadata.title}</ContextMenuLabel>
+					<ContextMenuLabel className="truncate">{metadata.title}</ContextMenuLabel>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/details/$id" params={{ id: metadata.id }} />} className="cursor-pointer gap-2.5">
+					<ContextMenuItem render={<Link to="/details/$id" params={{ id: metadata.id }} />} className="cursor-pointer">
 						<Eye className="size-4 text-muted-foreground" />
 						<span>{m.common_details()}</span>
 					</ContextMenuItem>
-					<ContextMenuItem onClick={handleCopyLink} className="cursor-pointer gap-2.5">
+					<ContextMenuItem onClick={handleCopyLink} className="cursor-pointer">
 						<Copy className="size-4 text-muted-foreground" />
 						<span>{m.common_copy_link()}</span>
 					</ContextMenuItem>
@@ -132,11 +132,11 @@ export function CollectionCard({
 					<>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>
-							<ContextMenuLabel className="flex items-center gap-1.5 font-bold text-primary text-xs">
+							<ContextMenuLabel className="flex items-center">
 								<Shield className="size-3" />
 								{m.common_admin_tools()}
 							</ContextMenuLabel>
-							<ContextMenuItem onClick={handleCopyId} className="cursor-pointer gap-2.5">
+							<ContextMenuItem onClick={handleCopyId} className="cursor-pointer">
 								<Copy className="size-4 text-muted-foreground" />
 								<span>{m.common_copy_id()}</span>
 							</ContextMenuItem>

@@ -75,7 +75,7 @@ export function PlayerNextEpisodeOverlay() {
 					)}
 				</div>
 
-				<Button type="button" onClick={playNextEpisode} size="lg" className="w-full gap-2 rounded-xl">
+				<Button type="button" onClick={playNextEpisode} size="lg" className="w-full">
 					<Play className="size-3.5 fill-current" />
 					{m.player_play_next()}
 				</Button>

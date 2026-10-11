@@ -48,22 +48,22 @@ export function LibraryGrid({
 		return (
 			<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 				{["skel-1", "skel-2", "skel-3", "skel-4"].map((key) => (
-					<Card key={key} className="overflow-hidden border-border/80 bg-card">
-						<CardHeader className="flex flex-row items-center justify-between gap-4 p-5 pb-4">
+					<Card key={key} className="overflow-hidden">
+						<CardHeader className="flex flex-row items-center justify-between gap-4">
 							<div className="flex items-center gap-3.5">
-								<Skeleton className="size-11 rounded-xl" />
+								<Skeleton className="size-11" />
 								<div className="flex flex-col gap-2">
-									<Skeleton className="h-5 w-40 rounded-md" />
-									<Skeleton className="h-3.5 w-24 rounded-md" />
+									<Skeleton className="h-5 w-40" />
+									<Skeleton className="h-3.5 w-24" />
 								</div>
 							</div>
-							<Skeleton className="h-8 w-16 rounded-md" />
+							<Skeleton className="h-8 w-16" />
 						</CardHeader>
-						<CardContent className="flex flex-col gap-4 p-5 pt-0">
-							<Skeleton className="h-16 w-full rounded-lg" />
+						<CardContent size="comfortable" className="flex flex-col gap-4">
+							<Skeleton className="h-16 w-full" />
 							<div className="flex flex-col gap-2">
-								<Skeleton className="h-12 w-full rounded-lg" />
-								<Skeleton className="h-12 w-full rounded-lg" />
+								<Skeleton className="h-12 w-full" />
+								<Skeleton className="h-12 w-full" />
 							</div>
 						</CardContent>
 					</Card>
@@ -85,7 +85,7 @@ export function LibraryGrid({
 				<h3 className="mt-4 font-semibold text-foreground text-lg">{m.admin_libraries_empty_heading()}</h3>
 				<p className="mt-1.5 max-w-md text-muted-foreground text-sm">{m.admin_libraries_empty_desc()}</p>
 				{onAddClick !== undefined && (
-					<Button type="button" size="default" onClick={onAddClick} className="mt-5 gap-2">
+					<Button type="button" size="default" onClick={onAddClick} className="mt-5">
 						<Plus className="size-4" />
 						<span>{m.admin_libraries_add_first_library()}</span>
 					</Button>

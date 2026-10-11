@@ -73,12 +73,12 @@ export function PluginCard({
 				<div className="flex flex-col gap-1">
 					<div className="flex flex-wrap items-center gap-2">
 						<h3 className="font-bold text-base text-foreground tracking-tight">{plugin.name}</h3>
-						<Badge variant="outline" className="font-mono text-xs">
+						<Badge variant="outline" font="mono">
 							{m.common_version_badge({ version: plugin.version })}
 						</Badge>
-						{plugin.updateAvailable && <Badge className="text-xs">{m.admin_plugins_update_available()}</Badge>}
+						{plugin.updateAvailable && <Badge>{m.admin_plugins_update_available()}</Badge>}
 						{plugin.integrityOk === false && (
-							<Badge variant="destructive" className="gap-1 text-xs">
+							<Badge variant="destructive">
 								<AlertTriangle className="size-3" />
 								{m.admin_plugins_integrity_mismatch()}
 							</Badge>
@@ -92,15 +92,15 @@ export function PluginCard({
 
 				{/* Stats / Capabilities */}
 				<div className="mt-4 flex flex-wrap gap-2 text-xs">
-					<Badge variant="secondary" className="gap-1 font-normal">
+					<Badge weight="normal" variant="secondary">
 						<span>{m.common_providers_label()}</span>
 						<strong className="font-semibold">{plugin.providers}</strong>
 					</Badge>
-					<Badge variant="secondary" className="gap-1 font-normal">
+					<Badge weight="normal" variant="secondary">
 						<span>{m.common_subtitles()}</span>
 						<strong className="font-semibold">{plugin.subtitleProviders}</strong>
 					</Badge>
-					<Badge variant="secondary" className="gap-1 font-normal">
+					<Badge weight="normal" variant="secondary">
 						<span>{m.admin_plugins_jobs_label()}</span>
 						<strong className="font-semibold">{plugin.jobs}</strong>
 					</Badge>
@@ -149,7 +149,6 @@ export function PluginCard({
 						size="sm"
 						nativeButton={false}
 						render={<Link to="/admin/plugins/$id" params={{ id: encodeURIComponent(plugin.id) }} />}
-						className="gap-1.5 text-xs hover:text-primary"
 						title={m.admin_plugins_configure_hint()}
 					>
 						<Sliders className="size-3.5" />
@@ -170,7 +169,6 @@ export function PluginCard({
 							disabled={isBusy}
 							onClick={() => onSetPinned(plugin.id, plugin.pinned !== true)}
 							title={m.admin_plugins_pin_hint()}
-							className="gap-1.5 text-xs"
 						>
 							{plugin.pinned ? m.admin_plugins_unpin() : m.admin_plugins_pin()}
 						</Button>
@@ -183,7 +181,6 @@ export function PluginCard({
 							disabled={isBusy}
 							onClick={() => onSetCsp(plugin.id, plugin.cspDisabled === true)}
 							title={m.admin_plugins_csp_hint()}
-							className="gap-1.5 text-xs"
 						>
 							<ShieldCheck className="size-3.5" />
 							{plugin.cspDisabled ? m.admin_plugins_csp_allow() : m.admin_plugins_csp_refuse()}
@@ -191,7 +188,7 @@ export function PluginCard({
 					)}
 
 					{onOpenDetails && (
-						<Button variant="outline" size="sm" disabled={isBusy} onClick={onOpenDetails} className="gap-1.5 text-xs hover:text-primary">
+						<Button variant="outline" size="sm" disabled={isBusy} onClick={onOpenDetails}>
 							<Info className="size-3.5" />
 							{m.admin_plugins_catalog_details()}
 						</Button>
@@ -200,12 +197,7 @@ export function PluginCard({
 					{onUninstall && (
 						<ConfirmAction
 							trigger={
-								<Button
-									variant="outline"
-									size="sm"
-									disabled={isBusy}
-									className="gap-1.5 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
-								>
+								<Button variant="destructive-outline" size="sm" disabled={isBusy}>
 									<Trash2 className="size-3.5" />
 									{m.admin_plugins_catalog_uninstall()}
 								</Button>
@@ -220,12 +212,7 @@ export function PluginCard({
 					{isEnabled ? (
 						<ConfirmAction
 							trigger={
-								<Button
-									variant="outline"
-									size="sm"
-									disabled={isBusy}
-									className="gap-1.5 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
-								>
+								<Button variant="destructive-outline" size="sm" disabled={isBusy}>
 									<PauseCircle className="size-3.5" />
 									{m.admin_plugins_disable()}
 								</Button>
@@ -236,20 +223,14 @@ export function PluginCard({
 							onConfirm={() => onDisable(plugin.id)}
 						/>
 					) : (
-						<Button variant="default" size="sm" disabled={isBusy} onClick={() => onEnable(plugin.id)} className="gap-1.5 text-xs">
+						<Button variant="default" size="sm" disabled={isBusy} onClick={() => onEnable(plugin.id)}>
 							<PlayCircle className="size-3.5" />
 							{m.admin_plugins_enable()}
 						</Button>
 					)}
 				</div>
 
-				<Button
-					variant="ghost"
-					size="sm"
-					disabled={isBusy}
-					onClick={() => onReload(plugin.id)}
-					className="gap-1 text-muted-foreground text-xs hover:text-foreground"
-				>
+				<Button tone="muted" variant="ghost" size="sm" disabled={isBusy} onClick={() => onReload(plugin.id)}>
 					<RefreshCw className="size-3" />
 					{m.admin_plugins_reload()}
 				</Button>

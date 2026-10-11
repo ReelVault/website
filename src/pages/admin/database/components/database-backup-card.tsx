@@ -41,18 +41,13 @@ export function DatabaseBackupCard({ backup, isPending, onDelete, onRestore, res
 			</div>
 
 			<div className="flex shrink-0 items-center gap-2">
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={() => window.open(downloadUrl(backup.fileName), "_blank", "noopener,noreferrer")}
-					className="gap-1.5 text-xs"
-				>
+				<Button variant="ghost" size="sm" onClick={() => window.open(downloadUrl(backup.fileName), "_blank", "noopener,noreferrer")}>
 					<Download className="size-3.5" />
 					{m.admin_database_download()}
 				</Button>
 				<ConfirmAction
 					trigger={
-						<Button variant="ghost" size="sm" disabled={restorePending} className="gap-1.5 text-xs">
+						<Button variant="ghost" size="sm" disabled={restorePending}>
 							<ArchiveRestore className="size-3.5" />
 							{m.admin_database_restore()}
 						</Button>
@@ -64,12 +59,7 @@ export function DatabaseBackupCard({ backup, isPending, onDelete, onRestore, res
 				/>
 				<ConfirmAction
 					trigger={
-						<Button
-							variant="ghost"
-							size="sm"
-							disabled={isPending}
-							className="gap-1.5 text-destructive text-xs hover:bg-destructive/10 hover:text-destructive"
-						>
+						<Button variant="destructive-ghost" size="sm" disabled={isPending}>
 							<Trash2 className="size-3.5" />
 							{m.common_delete()}
 						</Button>

@@ -17,9 +17,7 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 		<>
 			<div className="flex flex-col gap-1.5 sm:col-span-2">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-title" className="font-medium text-sm">
-						{m.admin_metadata_title_required()}
-					</Label>
+					<Label htmlFor="metadata-title">{m.admin_metadata_title_required()}</Label>
 					<MetadataLockToggle field="title" label={m.admin_analytics_title_column()} isLocked={isLocked("title")} onToggle={onToggleLock} />
 				</div>
 				<Input
@@ -30,15 +28,12 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 					value={basic.title}
 					onChange={(e) => onChange("title", e.target.value)}
 					placeholder={m.admin_metadata_title_in_polish()}
-					className="h-10 bg-background px-3.5 text-sm"
 				/>
 			</div>
 
 			<div className="flex flex-col gap-1.5 sm:col-span-2">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-sort-title" className="font-medium text-sm">
-						{m.admin_metadata_sort_title()}
-					</Label>
+					<Label htmlFor="metadata-sort-title">{m.admin_metadata_sort_title()}</Label>
 					<MetadataLockToggle
 						field="sortTitle"
 						label={m.admin_metadata_sort_title()}
@@ -53,22 +48,19 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 					value={basic.sortTitle}
 					onChange={(e) => onChange("sortTitle", e.target.value)}
 					placeholder={m.admin_metadata_sort_title_placeholder()}
-					className="h-10 bg-background px-3.5 text-sm"
 				/>
 				<p className="text-muted-foreground text-xs">{m.admin_metadata_manual_sort_notice()}</p>
 			</div>
 
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-numbering" className="font-medium text-sm">
-						{m.admin_metadata_episode_numbering()}
-					</Label>
+					<Label htmlFor="metadata-numbering">{m.admin_metadata_episode_numbering()}</Label>
 				</div>
 				<Select
 					value={basic.numberingMode || "seasonal"}
 					onValueChange={(value) => onChange("numberingMode", value === "seasonal" || value === null ? "" : value)}
 				>
-					<SelectTrigger id="metadata-numbering" className="h-10 w-full bg-background">
+					<SelectTrigger id="metadata-numbering" className="w-full">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
@@ -81,9 +73,7 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-orig-title" className="font-medium text-sm">
-						{m.admin_metadata_original_title()}
-					</Label>
+					<Label htmlFor="metadata-orig-title">{m.admin_metadata_original_title()}</Label>
 					<MetadataLockToggle
 						field="originalTitle"
 						label={m.admin_metadata_original_title()}
@@ -98,15 +88,12 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 					value={basic.originalTitle}
 					onChange={(e) => onChange("originalTitle", e.target.value)}
 					placeholder={m.admin_metadata_original_title_example()}
-					className="h-10 bg-background px-3.5 text-sm"
 				/>
 			</div>
 
 			<div className="flex flex-col gap-1.5 sm:col-span-2">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="metadata-tagline" className="font-medium text-sm">
-						{m.admin_metadata_tagline_label()}
-					</Label>
+					<Label htmlFor="metadata-tagline">{m.admin_metadata_tagline_label()}</Label>
 					<MetadataLockToggle field="tagline" label="Tagline" isLocked={isLocked("tagline")} onToggle={onToggleLock} />
 				</div>
 				<Input
@@ -116,7 +103,6 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 					value={basic.tagline}
 					onChange={(e) => onChange("tagline", e.target.value)}
 					placeholder={m.admin_metadata_promo_password_placeholder()}
-					className="h-10 bg-background px-3.5 text-sm"
 				/>
 			</div>
 		</>

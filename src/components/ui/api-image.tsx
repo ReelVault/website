@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import type { ComponentProps } from "react";
 import { getReelVaultApiUrl } from "@/client/client";
 import { Image, type ImageLoaderProps } from "./image";
@@ -70,11 +71,16 @@ export function ApiImage({
 	fileId,
 	cacheKey,
 	placeholder = true,
+	zoom = false,
+	dim,
+	className,
 	...props
 }: Omit<ComponentProps<typeof Image>, "src"> & {
 	fileId: string | undefined | null;
 	cacheKey?: string | number | Date | null;
 	placeholder?: boolean;
+	zoom?: boolean;
+	dim?: 25 | 50 | 55;
 }) {
 	let width = 500;
 	if (props.width) {
@@ -86,5 +92,20 @@ export function ApiImage({
 	const source = fileId && buildImageUrl(fileId, { width, cacheKey });
 	const placeholderSrc = placeholder && fileId ? buildImageUrl(fileId, { width: 32, quality: 45, cacheKey }) : undefined;
 
-	return <Image src={source} placeholderSrc={placeholderSrc} loader={apiImageLoader} {...props} />;
+	return (
+		<Image
+			src={source}
+			placeholderSrc={placeholderSrc}
+			loader={apiImageLoader}
+			className={cn(
+				"object-cover",
+				zoom && "transition-transform duration-300 group-hover:scale-105",
+				dim === 25 && "opacity-25",
+				dim === 50 && "opacity-50",
+				dim === 55 && "opacity-55",
+				className,
+			)}
+			{...props}
+		/>
+	);
 }

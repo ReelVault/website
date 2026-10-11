@@ -59,10 +59,10 @@ export function CreateUserDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={(nextOpen) => handleOpenChange(nextOpen, onOpenChange)}>
-			<DialogContent className="gap-6 p-6 sm:max-w-md">
+			<DialogContent className="sm:max-w-md">
 				<DialogHeader className="gap-1.5">
-					<DialogTitle className="font-semibold text-xl tracking-tight">{m.admin_users_create_account()}</DialogTitle>
-					<DialogDescription className="text-muted-foreground text-sm">{m.admin_users_account_signup_desc()}</DialogDescription>
+					<DialogTitle>{m.admin_users_create_account()}</DialogTitle>
+					<DialogDescription>{m.admin_users_account_signup_desc()}</DialogDescription>
 				</DialogHeader>
 				<form
 					onSubmit={(event) => {
@@ -120,7 +120,7 @@ export function CreateUserDialog({
 					<Field className="gap-2">
 						<FieldLabel>{m.admin_users_role_label()}</FieldLabel>
 						<Select value={formState.role} onValueChange={(value) => value !== null && updateField("role", value)}>
-							<SelectTrigger className="h-10 w-full sm:h-9">
+							<SelectTrigger className="w-full">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
@@ -131,7 +131,7 @@ export function CreateUserDialog({
 							</SelectContent>
 						</Select>
 					</Field>
-					<DialogFooter className="gap-3 border-border/60 border-t pt-4">
+					<DialogFooter className="gap-3 border-t">
 						<Button type="button" variant="outline" onClick={() => handleOpenChange(false, onOpenChange)}>
 							{m.common_cancel()}
 						</Button>

@@ -30,16 +30,17 @@ export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 	return (
 		<div className="transition-colors hover:bg-muted/30">
 			<Button
+				size="inline"
 				variant="ghost"
 				data-entry-id={entry.id}
 				aria-expanded={expanded}
 				onClick={() => setExpanded((prev) => !prev)}
-				className="h-auto w-full justify-start rounded-none p-3 text-left text-sm sm:h-auto sm:min-h-8"
+				className="w-full justify-start text-left sm:min-h-8"
 			>
 				<span className="shrink-0 text-muted-foreground">
 					{expanded ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
 				</span>
-				<Badge variant={variant} className="shrink-0 px-1.5 py-0 text-xs">
+				<Badge variant={variant} className="shrink-0">
 					{entry.action}
 				</Badge>
 				<span className="min-w-0 flex-1 truncate">{auditEntryLabel(entry)}</span>

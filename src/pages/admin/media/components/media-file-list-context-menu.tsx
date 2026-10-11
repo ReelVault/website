@@ -26,22 +26,19 @@ export function MediaFileListContextMenu({ file, isDeleting, onDelete, onOpenRea
 	return (
 		<ContextMenuContent className="w-56">
 			<ContextMenuGroup>
-				<ContextMenuLabel className="truncate font-semibold text-xs">{file.fileName}</ContextMenuLabel>
+				<ContextMenuLabel className="truncate">{file.fileName}</ContextMenuLabel>
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
-				<ContextMenuItem render={<Link to="/admin/media/$id" params={{ id: file.id }} />} className="gap-2.5">
+				<ContextMenuItem render={<Link to="/admin/media/$id" params={{ id: file.id }} />}>
 					<Pencil className="size-3.5 text-muted-foreground" />
 					<span>{m.admin_media_edit_file()}</span>
 				</ContextMenuItem>
-				<ContextMenuItem onClick={onOpenReassign} className="gap-2.5">
+				<ContextMenuItem onClick={onOpenReassign}>
 					<Layers className="size-3.5 text-primary" />
 					<span>{m.components_media_file_change_metadata_assignment()}</span>
 				</ContextMenuItem>
-				<ContextMenuItem
-					render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}
-					className="gap-2.5"
-				>
+				<ContextMenuItem render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}>
 					<Play className="size-3.5 text-muted-foreground" />
 					<span>{m.admin_markers_open_player()}</span>
 				</ContextMenuItem>
@@ -51,7 +48,7 @@ export function MediaFileListContextMenu({ file, isDeleting, onDelete, onOpenRea
 				<ConfirmAction
 					nativeButton={false}
 					trigger={
-						<ContextMenuItem variant="destructive" disabled={isDeleting} className="gap-2.5 text-destructive focus:text-destructive">
+						<ContextMenuItem variant="destructive" disabled={isDeleting}>
 							<Trash2 className="size-3.5" />
 							<span>{m.admin_logs_delete_file()}</span>
 						</ContextMenuItem>

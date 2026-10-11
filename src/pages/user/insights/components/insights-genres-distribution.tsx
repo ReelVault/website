@@ -14,13 +14,13 @@ export function InsightsGenresDistribution({ genres }: InsightsGenresDistributio
 	}
 
 	return (
-		<Card className="col-span-1 border-border/70 bg-card/65 md:col-span-3 lg:col-span-6">
-			<CardHeader className="pb-3">
+		<Card variant="subtle" className="col-span-1 md:col-span-3 lg:col-span-6">
+			<CardHeader>
 				<div className="flex items-center gap-2">
 					<PieChart className="size-4.5 text-primary" />
-					<CardTitle className="font-bold text-base">{m.user_genre_breakdown()}</CardTitle>
+					<CardTitle>{m.user_genre_breakdown()}</CardTitle>
 				</div>
-				<CardDescription className="text-xs">{m.user_favorite_categories()}</CardDescription>
+				<CardDescription size="xs">{m.user_favorite_categories()}</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{genres.map((genre, index) => {
@@ -40,7 +40,7 @@ export function InsightsGenresDistribution({ genres }: InsightsGenresDistributio
 									<span className="font-bold text-primary">{m.common_percent_value({ value: genre.percentage })}</span>
 								</div>
 							</div>
-							<Progress value={genre.percentage} className="h-2 rounded-full" />
+							<Progress value={genre.percentage} />
 						</div>
 					);
 				})}

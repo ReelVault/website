@@ -53,7 +53,7 @@ export function LoginQuickConnectStep({
 				<QuickConnectPairView onAuthenticated={navigateToProfiles} onSwitchToRedeem={() => setQcSubStep("redeem")} />
 			)}
 
-			<Button type="button" variant="ghost" className="text-muted-foreground" onClick={onBack}>
+			<Button tone="muted" type="button" variant="ghost" onClick={onBack}>
 				<ArrowLeft className="size-4" />
 				{m.auth_back_to_password_login()}
 			</Button>

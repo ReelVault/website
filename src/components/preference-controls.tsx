@@ -24,7 +24,7 @@ export function PreferenceSelect({
 		<Field className="gap-2">
 			<FieldLabel>{label}</FieldLabel>
 			<Select value={value} onValueChange={(nextValue) => nextValue !== null && onChange(nextValue)}>
-				<SelectTrigger className={className ?? "h-11 w-full rounded-xl"}>
+				<SelectTrigger className={className}>
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -98,7 +98,7 @@ export function PreferenceLanguageList({
 				<ol className="flex flex-wrap gap-2">
 					{selected.map((code, index) => (
 						<li key={code}>
-							<Badge variant="secondary" className="h-10 gap-1.5 pr-1.5 sm:h-7">
+							<Badge variant="secondary">
 								<span className="font-mono text-muted-foreground text-xs">{index + 1}</span>
 								{labelFor(code)}
 								{index > 0 && (
@@ -126,7 +126,7 @@ export function PreferenceLanguageList({
 			)}
 			{remaining.length > 0 && (
 				<Select value="" onValueChange={(code) => code !== null && code !== "" && commit([...selected, code])}>
-					<SelectTrigger className="h-11 w-full rounded-xl">
+					<SelectTrigger className="w-full">
 						<SelectValue placeholder={m.user_language_list_add()} />
 					</SelectTrigger>
 					<SelectContent>

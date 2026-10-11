@@ -58,7 +58,7 @@ export function LibraryCardHeader({
 	const handleCopyId = () => copy(lib.id, m.admin_libraries_library_id());
 
 	return (
-		<CardHeader className="flex flex-row items-start justify-between gap-4 p-5 pb-4">
+		<CardHeader className="flex flex-row items-start justify-between gap-4">
 			<div className="flex min-w-0 items-center gap-3.5">
 				<div
 					className={cn(
@@ -74,11 +74,11 @@ export function LibraryCardHeader({
 				<div className="min-w-0">
 					<div className="flex flex-wrap items-center gap-2">
 						<h2 className="truncate font-semibold text-foreground text-lg tracking-tight sm:text-xl">{lib.name}</h2>
-						<Badge variant={isMovie ? "default" : "secondary"} size="sm" className="font-medium capitalize">
+						<Badge variant={isMovie ? "default" : "secondary"} size="sm" transform="capitalize">
 							{isMovie ? m.admin_libraries_type_movies() : m.admin_libraries_type_series()}
 						</Badge>
 						{globalStorageMode && (
-							<Badge variant="outline" size="sm" className="text-muted-foreground text-xs">
+							<Badge tone="muted" variant="outline" size="sm">
 								{globalStorageMode}
 							</Badge>
 						)}
@@ -104,8 +104,7 @@ export function LibraryCardHeader({
 			<div className="flex shrink-0 items-center gap-1.5">
 				<Button
 					variant="outline"
-					size="sm"
-					className="h-10 gap-1.5 px-2.5 text-xs sm:h-8"
+					size="sm-comfortable"
 					nativeButton={false}
 					render={<Link to="/admin/media" search={{ libraryId: lib.id }} />}
 					title={m.admin_libraries_show_files()}
@@ -116,8 +115,7 @@ export function LibraryCardHeader({
 
 				<Button
 					variant="outline"
-					size="sm"
-					className="h-10 gap-1.5 px-2.5 text-xs sm:h-8"
+					size="sm-comfortable"
 					onClick={() => onEdit(lib)}
 					title={m.admin_libraries_edit_library()}
 					aria-label={m.admin_libraries_edit_named({ name: lib.name })}
@@ -129,22 +127,22 @@ export function LibraryCardHeader({
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						render={
-							<Button variant="ghost" size="icon" className="size-10 sm:size-8" aria-label={m.plugins_bugs_more_options()}>
+							<Button variant="ghost" size="icon" aria-label={m.plugins_bugs_more_options()}>
 								<MoreVertical className="size-4 text-muted-foreground" />
 							</Button>
 						}
 					/>
 					<DropdownMenuContent align="end" className="w-52">
 						<DropdownMenuGroup>
-							<DropdownMenuLabel className="font-semibold text-xs">{lib.name}</DropdownMenuLabel>
+							<DropdownMenuLabel>{lib.name}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 						</DropdownMenuGroup>
 						<DropdownMenuGroup>
-							<DropdownMenuItem onClick={() => onScan(lib.id)} className="gap-2.5">
+							<DropdownMenuItem onClick={() => onScan(lib.id)}>
 								<RefreshCw className="size-3.5 text-primary" />
 								<span>{m.admin_libraries_scan_library()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => onEdit(lib)} className="gap-2.5">
+							<DropdownMenuItem onClick={() => onEdit(lib)}>
 								<Pencil className="size-3.5 text-muted-foreground" />
 								<span>{m.admin_libraries_edit_configuration()}</span>
 							</DropdownMenuItem>
@@ -152,20 +150,19 @@ export function LibraryCardHeader({
 								onClick={() => {
 									detach(handleCopyId());
 								}}
-								className="gap-2.5"
 							>
 								<Copy className="size-3.5 text-muted-foreground" />
 								<span>{m.common_copy_id()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => onCheckErrors(lib.paths.map((p) => p.path))} className="gap-2.5">
+							<DropdownMenuItem onClick={() => onCheckErrors(lib.paths.map((p) => p.path))}>
 								<ScanSearch className="size-3.5 text-primary" />
 								<span>{m.admin_libraries_check_error()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => onShowIgnoredAssets(lib.id)} className="gap-2.5">
+							<DropdownMenuItem onClick={() => onShowIgnoredAssets(lib.id)}>
 								<AlertTriangle className="size-3.5 text-muted-foreground" />
 								<span>{m.admin_libraries_skipped_assets()}</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => onShowScanFindings(lib.id)} className="gap-2.5">
+							<DropdownMenuItem onClick={() => onShowScanFindings(lib.id)}>
 								<FileWarning className="size-3.5 text-muted-foreground" />
 								<span>{m.admin_libraries_needs_attention()}</span>
 							</DropdownMenuItem>
@@ -176,7 +173,7 @@ export function LibraryCardHeader({
 								onClick={() => {
 									detach(onDelete(lib.id, lib.name));
 								}}
-								className="gap-2.5 text-destructive focus:bg-destructive/10 focus:text-destructive"
+								variant="destructive"
 							>
 								<Trash2 className="size-3.5" />
 								<span>{m.admin_libraries_delete_library()}</span>
