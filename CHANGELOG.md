@@ -329,6 +329,8 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 ### Fixes
 
+- **Continue-watching actions on touch screens** — the mark-watched, reset-progress and dismiss buttons on a continue-watching card stay visible on touch screens instead of appearing only on hover.
+- **Unsaved plugin settings ask before leaving** — leaving a plugin's configuration page with edited fields asks Stay or Leave, the same as the settings page, and closing the tab asks the browser to confirm.
 - **Captions for assistive tech in the player** — the video element now carries the active subtitles as a hidden WebVTT track, so screen readers get the captions. On-screen subtitles look the same and no text is shown twice.
 - **Admin sidebar on tablets** — the admin sidebar stayed a fixed column up to 768 px and then took 256 px of the content width. Below 1024 px (`lg`) it now opens as a sheet, so tablet screens no longer scroll sideways: the analytics page was 864 px wide on a 758 px viewport and is now 758 px. Phones and the other breakpoints are unchanged.
 - **Web navbar at 1280 px** — the right-hand cluster (search, notifications, language, profile) and the five labelled links ran 103 px past the screen edge. Below 1536 px the navbar uses a smaller side padding and tighter links, and the profile name shows from 1536 px. At 1280 px the navbar and the dashboard, watchlist and details pages no longer scroll sideways.
