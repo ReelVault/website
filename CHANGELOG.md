@@ -33,7 +33,6 @@
 - **Flat pagination envelopes** — admin hooks and pages now read `{ page, limit, total, totalPages, data }` directly from the server response.
 - **Subtitle → media-file links** — subtitle rows show a shortened `mediaFileId` linking to the media-file page.
 - **Offline-capable app shell (PWA)** — a service worker precaches the app shell and icons, runtime-caches content-hashed JS/CSS chunks, and allows repeat loads to work without a connection. API, realtime and media/subtitle requests are never intercepted, and the web app is installable with the correct `start_url`/`scope`.
-"""
 
 ## Fixes
 
@@ -326,6 +325,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Translated server errors for plugins, streaming and background tasks** — admin screens show the specific reason of each server error in English or Polish, for example the invalid field of a plugin manifest or the missing media tools. An error that arrives without the values its text needs shows the generic text instead of a sentence with blanks.
 - **One visual language for the shared UI components** — the shared components (buttons, badges, cards, dialogs, inputs, labels, tables, tabs, menus, selects, sidebars and the other primitives in `components/ui`) own their look through variants and sizes, so the same control looks the same on every page. Pages pass only meaning (a `variant` such as `warning` or `success`, a `size`, `selected`, `font="mono"`, a `Card` `variant="interactive"`) and layout (width, grid placement, margins). Visual classes on a shared component at a call site dropped from 1,470 usages to 352 (188 of the rest are Skeleton placeholder sizes and container gaps, kept on purpose), and dynamic class strings with visual tokens from 71 to 24. A static test (`tests/ui-classname-guard.test.ts`) fails when a page adds a new visual override to a shared component. Measured: 207 tests pass, react-doctor 71.
 - **Preparation finished notice** — the player says "Preparation finished successfully" when the server finishes preparing a title that was still being prepared while it was open, including after a seek. A title that was already prepared when the player opened stays silent.
+- **Localized plugin settings** — the labels and descriptions of plugin settings follow the active language, and fall back to the first available translation.
 
 ### Fixes
 
