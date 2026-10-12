@@ -27,6 +27,7 @@ bun run test
 - Update `CHANGELOG.md` in the same task as any behavior change, under the current unreleased version heading (`# vX.Y.Z`).
 - Sections and their intent:
   - `### Features` — user-facing functionality and API changes.
+  - `### UI` - visual changes, new components, and UX improvements.
   - `### Fixes` — concrete bugs and their causes.
   - `### Performance` — what was optimized, as prose/bullets. Keep smaller measurements and request counts inline in the change description; do not turn every change into a table row.
   - `### Performance benchmarks` — a short table of only the most important, actually measurable A/B results (`Before` / `After` / `Change`), with the measurement context.
