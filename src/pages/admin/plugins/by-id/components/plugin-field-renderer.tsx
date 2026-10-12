@@ -1,5 +1,6 @@
 import type { PluginConfigDetails } from "@reelvault/sdk";
 import { Eye, EyeOff, KeyRound } from "lucide-react";
+import { resolvePluginText } from "@/client/hooks/use-plugin-ui";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -45,7 +46,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 					<div className="flex flex-col gap-1">
 						<div className="flex items-center gap-2">
 							<Label weight="semibold" className="cursor-pointer">
-								{field.label}
+								{resolvePluginText(field.label)}
 							</Label>
 							{field.required && (
 								<Badge tone="destructive" variant="outline">
@@ -53,7 +54,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 								</Badge>
 							)}
 						</div>
-						{field.description && <p className="text-muted-foreground text-xs">{field.description}</p>}
+						{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
 					</div>
 					<Switch checked={isChecked} onCheckedChange={onChange} />
 				</CardContent>
@@ -72,14 +73,14 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col gap-0.5">
 							<div className="flex items-center gap-2">
-								<Label weight="semibold">{field.label}</Label>
+								<Label weight="semibold">{resolvePluginText(field.label)}</Label>
 								{field.required && (
 									<Badge tone="destructive" variant="outline">
 										{m.common_required()}
 									</Badge>
 								)}
 							</div>
-							{field.description && <p className="text-muted-foreground text-xs">{field.description}</p>}
+							{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
 						</div>
 						{field.default !== undefined && (
 							<span className="text-muted-foreground text-xs">
@@ -114,14 +115,14 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col gap-0.5">
 							<div className="flex items-center gap-2">
-								<Label weight="semibold">{field.label}</Label>
+								<Label weight="semibold">{resolvePluginText(field.label)}</Label>
 								{field.required && (
 									<Badge tone="destructive" variant="outline">
 										{m.common_required()}
 									</Badge>
 								)}
 							</div>
-							{field.description && <p className="text-muted-foreground text-xs">{field.description}</p>}
+							{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
 						</div>
 						{field.default !== undefined && (
 							<span className="text-muted-foreground text-xs">
@@ -136,7 +137,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						<SelectContent>
 							{field.options.map((opt) => (
 								<SelectItem key={String(opt.value)} value={String(opt.value)}>
-									{opt.label}
+									{resolvePluginText(opt.label)}
 								</SelectItem>
 							))}
 						</SelectContent>
@@ -159,7 +160,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 					<div className="flex flex-col gap-0.5">
 						<div className="flex items-center gap-2">
 							{isSecret && <KeyRound className="size-3.5 text-warning" />}
-							<Label weight="semibold">{field.label}</Label>
+							<Label weight="semibold">{resolvePluginText(field.label)}</Label>
 							{field.required && (
 								<Badge tone="destructive" variant="outline">
 									{m.common_required()}
@@ -168,7 +169,7 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 							{isSecret && <Badge variant="warning">{m.admin_plugins_secret_badge()}</Badge>}
 							{isSecret && field.hasValue && <Badge variant="success-outline">{m.admin_plugins_secret_set()}</Badge>}
 						</div>
-						{field.description && <p className="text-muted-foreground text-xs">{field.description}</p>}
+						{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
 					</div>
 					{!isSecret && field.default !== undefined && (
 						<span className="text-muted-foreground text-xs">
