@@ -3,15 +3,9 @@ import { Link } from "@tanstack/react-router";
 import { Broccoli } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useMetadataRecentlyAdded } from "@/client/hooks/use-metadata-queries";
-import { AppEmptyState, AppErrorState } from "@/components/app-states";
-import { MetadataCard } from "@/components/cards/metadata-card";
-import { LazyRender } from "@/components/lazy-render";
-import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { DashboardCarouselSkeleton } from "../components/dashboard-carousel-skeleton";
+import { DashboardCarousel } from "../components/dashboard-carousel";
 import DashboardSectionTitle from "../components/dashboard-section-title";
 
 interface RecentlyAddedSectionProps {
@@ -37,43 +31,9 @@ function RecentlyAddedSection({
 	delay = 80,
 	limit = 12,
 }: RecentlyAddedSectionProps) {
+	// Fetched only once the row is about to scroll into view.
 	const { ref, inView } = useInView({ triggerOnce: true, rootMargin: "600px 0px" });
 	const query = useMetadataRecentlyAdded(limit, type, { enabled: inView });
-	const items = query.data?.data ?? [];
-
-	const renderCarouselArea = () => {
-		if (query.isPending) {
-			return <DashboardCarouselSkeleton />;
-		}
-
-		if (query.isError) {
-			return <AppErrorState title={errorTitle} error={query.error} onRetry={() => detach(query.refetch())} />;
-		}
-
-		if (items.length > 0) {
-			return (
-				<SimpleAnimation direction="up" delay={delay}>
-					<Carousel
-						opts={{
-							align: "start",
-							dragFree: true,
-						}}
-						className="w-full"
-					>
-						<CarouselContent>
-							{items.map((item) => (
-								<CarouselItem key={item.id} className="basis-auto">
-									<LazyRender minHeight={320}>{() => <MetadataCard size="lg" metadata={item} />}</LazyRender>
-								</CarouselItem>
-							))}
-						</CarouselContent>
-					</Carousel>
-				</SimpleAnimation>
-			);
-		}
-
-		return <AppEmptyState title={emptyTitle} description={emptyDescription} />;
-	};
 
 	return (
 		<div ref={ref} className="flex flex-col gap-6">
@@ -87,7 +47,14 @@ function RecentlyAddedSection({
 				</Button>
 			</div>
 
-			{renderCarouselArea()}
+			<DashboardCarousel
+				items={query.data?.data ?? []}
+				query={query}
+				errorTitle={errorTitle}
+				emptyTitle={emptyTitle}
+				emptyDescription={emptyDescription}
+				delay={delay}
+			/>
 
 			<div className="pt-2 sm:hidden">
 				<Button variant="outline" nativeButton={false} render={<Link to={actionHref} />} className="w-full">

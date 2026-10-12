@@ -38,5 +38,3 @@ export function RouteErrorScreen({ error, reset }: ErrorComponentProps) {
 		</main>
 	);
 }
-
-export default RouteErrorScreen;

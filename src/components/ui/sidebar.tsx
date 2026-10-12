@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useIsNarrowLayout } from "@/hooks/use-mobile";
 import { m } from "@/paraglide/messages";
@@ -296,19 +295,6 @@ function SidebarRail({ className, ...props }: ComponentProps<"button">) {
 	);
 }
 
-function SidebarInset({ className, ...props }: ComponentProps<"main">) {
-	return (
-		<main
-			data-slot="sidebar-inset"
-			className={cn(
-				"relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm",
-				className,
-			)}
-			{...props}
-		/>
-	);
-}
-
 function SidebarInput({ className, ...props }: ComponentProps<typeof Input>) {
 	return (
 		<Input
@@ -395,26 +381,6 @@ function SidebarGroupLabel({ className, render, ...props }: useRender.ComponentP
 	});
 }
 
-function SidebarGroupAction({ className, render, ...props }: useRender.ComponentProps<"button"> & ComponentProps<"button">) {
-	return useRender({
-		defaultTagName: "button",
-		props: mergeProps<"button">(
-			{
-				className: cn(
-					"absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-hidden ring-sidebar-ring transition-transform after:absolute after:-inset-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 group-data-[collapsible=icon]:hidden md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
-					className,
-				),
-			},
-			props,
-		),
-		render,
-		state: {
-			slot: "sidebar-group-action",
-			sidebar: "group-action",
-		},
-	});
-}
-
 function SidebarGroupContent({ className, ...props }: ComponentProps<"div">) {
 	return <div data-slot="sidebar-group-content" data-sidebar="group-content" className={cn("w-full text-sm", className)} {...props} />;
 }
@@ -494,36 +460,6 @@ function SidebarMenuButton({
 	);
 }
 
-function SidebarMenuAction({
-	className,
-	render,
-	showOnHover = false,
-	...props
-}: useRender.ComponentProps<"button"> &
-	ComponentProps<"button"> & {
-		showOnHover?: boolean;
-	}) {
-	return useRender({
-		defaultTagName: "button",
-		props: mergeProps<"button">(
-			{
-				className: cn(
-					"absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-hidden ring-sidebar-ring transition-transform after:absolute after:-inset-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
-					showOnHover &&
-						"group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 aria-expanded:opacity-100 peer-data-active/menu-button:text-sidebar-accent-foreground md:opacity-0",
-					className,
-				),
-			},
-			props,
-		),
-		render,
-		state: {
-			slot: "sidebar-menu-action",
-			sidebar: "menu-action",
-		},
-	});
-}
-
 function SidebarMenuBadge({ className, ...props }: ComponentProps<"div">) {
 	return (
 		<div
@@ -535,33 +471,6 @@ function SidebarMenuBadge({ className, ...props }: ComponentProps<"div">) {
 			)}
 			{...props}
 		/>
-	);
-}
-
-function SidebarMenuSkeleton({
-	className,
-	showIcon = false,
-	...props
-}: ComponentProps<"div"> & {
-	showIcon?: boolean;
-}) {
-	// Random width between 50 to 90%.
-	const [width] = useState(() => {
-		return `${Math.floor(Math.random() * 40) + 50}%`;
-	});
-
-	const skeletonStyle: SidebarCSSProperties = { "--skeleton-width": width };
-
-	return (
-		<div
-			data-slot="sidebar-menu-skeleton"
-			data-sidebar="menu-skeleton"
-			className={cn("flex h-8 items-center gap-2 rounded-md px-2", className)}
-			{...props}
-		>
-			{showIcon && <Skeleton className="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />}
-			<Skeleton className="h-4 max-w-(--skeleton-width) flex-1" data-sidebar="menu-skeleton-text" style={skeletonStyle} />
-		</div>
 	);
 }
 
@@ -627,18 +536,14 @@ export {
 	SidebarContent,
 	SidebarFooter,
 	SidebarGroup,
-	SidebarGroupAction,
 	SidebarGroupContent,
 	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarInput,
-	SidebarInset,
 	SidebarMenu,
-	SidebarMenuAction,
 	SidebarMenuBadge,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarMenuSkeleton,
 	SidebarMenuSub,
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,

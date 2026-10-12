@@ -15,10 +15,10 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { formatDuration } from "@/utils/duration-utils";
 import { usePlayerActions, usePlayerEpisodes, usePlayerInfo, usePlayerNextEpisode } from "../player-context";
-import { detach } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 
 const SKELETON_ITEMS = ["drawer-sk-1", "drawer-sk-2", "drawer-sk-3", "drawer-sk-4", "drawer-sk-5", "drawer-sk-6"];

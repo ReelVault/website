@@ -60,8 +60,6 @@ describe("query key factories", () => {
 		expect(episodeKeys.all).toEqual(["episodes"]);
 		expect(episodeKeys.bySeason("s1")).toEqual(["episodes", "s1"]);
 		expect(episodeKeys.bySeason("s1", { page: 2, limit: 20 })).toEqual(["episodes", "s1", { page: 2, limit: 20 }]);
-		expect(episodeKeys.infinite("s1")).toEqual(["episodes", "infinite", "s1"]);
-		expect(episodeKeys.infinite("s1", 20)).toEqual(["episodes", "infinite", "s1", 20]);
 		expect(episodeKeys.byMetadata("m1")).toEqual(["episodes", "metadata", "m1"]);
 		expect(episodeKeys.byMetadata("m1", 50)).toEqual(["episodes", "metadata", "m1", 50]);
 	});

@@ -3,7 +3,6 @@ import { cn } from "cn";
 import type { ComponentProps, MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 function InputGroup({ className, ...props }: ComponentProps<"div">) {
 	return (
@@ -89,18 +88,6 @@ function InputGroupButton({
 	return <Button type={type} data-size={size} variant={variant} className={cn(inputGroupButtonVariants({ size }), className)} {...props} />;
 }
 
-function InputGroupText({ className, ...props }: ComponentProps<"span">) {
-	return (
-		<span
-			className={cn(
-				"flex items-center gap-2 text-muted-foreground text-sm [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none",
-				className,
-			)}
-			{...props}
-		/>
-	);
-}
-
 function InputGroupInput({ className, font = "sans", ...props }: ComponentProps<"input"> & { font?: "sans" | "mono" }) {
 	return (
 		<Input
@@ -115,17 +102,4 @@ function InputGroupInput({ className, font = "sans", ...props }: ComponentProps<
 	);
 }
 
-function InputGroupTextarea({ className, ...props }: ComponentProps<"textarea">) {
-	return (
-		<Textarea
-			data-slot="input-group-control"
-			className={cn(
-				"flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
-				className,
-			)}
-			{...props}
-		/>
-	);
-}
-
-export { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText, InputGroupTextarea };
+export { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput };

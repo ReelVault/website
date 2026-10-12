@@ -54,7 +54,12 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 				<div className="flex flex-wrap gap-2">
 					{twoFactorEnabled ? (
 						<>
-							<Button variant="outline" render={<Link to="/two-factor" search={{ mode: "regenerate" }} />} className="min-h-10">
+							<Button
+								variant="outline"
+								nativeButton={false}
+								render={<Link to="/two-factor" search={{ mode: "regenerate" }} />}
+								className="min-h-10"
+							>
 								{m.user_regenerate_backup_codes()}
 							</Button>
 							<Button variant="destructive-outline" onClick={() => setIsDisableOpen(true)} className="min-h-10">
@@ -62,7 +67,7 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 							</Button>
 						</>
 					) : (
-						<Button render={<Link to="/two-factor" search={{ mode: "enable" }} />} className="min-h-10">
+						<Button nativeButton={false} render={<Link to="/two-factor" search={{ mode: "enable" }} />} className="min-h-10">
 							<KeyRound className="size-4" />
 							{m.user_enable_2fa()}
 						</Button>

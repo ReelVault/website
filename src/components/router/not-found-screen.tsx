@@ -34,5 +34,3 @@ export function NotFoundScreen() {
 		</main>
 	);
 }
-
-export default NotFoundScreen;

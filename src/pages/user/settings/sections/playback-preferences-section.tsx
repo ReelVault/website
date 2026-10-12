@@ -3,49 +3,14 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useProfilePreferences, useResetProfilePreferences } from "@/client/hooks/use-profiles";
 import { AsyncButton } from "@/components/async-button";
-import { PreferenceSelect } from "@/components/preference-controls";
+import { ProfilePreferenceFields } from "@/components/profile-preferences/profile-preference-fields";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { diffPreferences, EMPTY_PREFERENCES, type ProfilePreferencesState } from "@/types/profile-preferences";
-import { LanguageSelectionPreferences } from "../components/language-selection-preferences";
-import { PlaybackAutomationToggles } from "../components/playback-automation-toggles";
-import { SettingsCategory } from "../components/settings-category";
-import { SubtitleStylePreferences } from "../components/subtitle-style-preferences";
+import { diffPreferences, EMPTY_PREFERENCES, type ProfilePreferencesState, toPreferencesState } from "@/types/profile-preferences";
 
 interface PlaybackPreferencesSectionProps {
 	profileId: string;
 }
-
-type ServerPreferences = NonNullable<ReturnType<typeof useProfilePreferences>["preferences"]>;
-
-// Maps server preferences (nullable extras) onto the editable preferences state.
-const toPreferencesState = (value: ServerPreferences): ProfilePreferencesState => ({
-	language: value.language,
-	theme: value.theme,
-	autoplay: value.autoplay,
-	autoSkipIntro: value.autoSkipIntro,
-	autoSkipCredits: value.autoSkipCredits,
-	autoSkipRecap: value.autoSkipRecap,
-	audioLanguage: value.audioLanguage ?? "",
-	subtitleLanguage: value.subtitleLanguage ?? "",
-	subtitleFallbackLanguages: value.subtitleFallbackLanguages ?? "",
-	subtitlesEnabled: value.subtitlesEnabled,
-	forcedSubtitlesOnly: value.forcedSubtitlesOnly,
-	autoForcedSubtitles: value.autoForcedSubtitles,
-	preferHearingImpaired: value.preferHearingImpaired,
-	continueWatchingMinutes: value.continueWatchingMinutes,
-	resumeRewindSeconds: value.resumeRewindSeconds,
-	watchlistAutoRemoveWatched: value.watchlistAutoRemoveWatched,
-	hideRatingOverlay: value.hideRatingOverlay,
-	hdrMode: value.hdrMode,
-	maxStreamingBitrateKbps: value.maxStreamingBitrateKbps,
-	mutedNotificationTypes: value.mutedNotificationTypes,
-	hiddenPages: value.hiddenPages,
-	subtitleSize: value.subtitleSize,
-	subtitlePosition: value.subtitlePosition,
-	subtitleColor: value.subtitleColor,
-	subtitleBackground: value.subtitleBackground,
-});
 
 export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSectionProps) {
 	const { setTheme } = useTheme();
@@ -135,53 +100,7 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 				<h2 className="font-bold text-xl">{m.admin_users_playback_prefs()}</h2>
 			</div>
 
-			<SettingsCategory title={m.settings_languages_title()}>
-				<LanguageSelectionPreferences preferences={preferences} onChange={updatePreferencesPatch} />
-			</SettingsCategory>
-
-			<SettingsCategory title={m.user_subtitle_look_position()}>
-				<SubtitleStylePreferences
-					size={preferences.subtitleSize}
-					position={preferences.subtitlePosition}
-					color={preferences.subtitleColor}
-					background={preferences.subtitleBackground}
-					onChangeSize={(subtitleSize) => updatePreferencesPatch({ subtitleSize })}
-					onChangePosition={(subtitlePosition) => updatePreferencesPatch({ subtitlePosition })}
-					onChangeColor={(subtitleColor) => updatePreferencesPatch({ subtitleColor })}
-					onChangeBackground={(subtitleBackground) => updatePreferencesPatch({ subtitleBackground })}
-				/>
-			</SettingsCategory>
-
-			<SettingsCategory title={m.user_video_quality_title()}>
-				<div className="grid gap-3 sm:grid-cols-2">
-					<PreferenceSelect
-						label={m.user_hdr_playback_label()}
-						description={m.user_hdr_playback_desc()}
-						value={preferences.hdrMode}
-						onChange={(hdrMode) => updatePreferencesPatch({ hdrMode: hdrMode === "toneMapToSdr" ? "toneMapToSdr" : "auto" })}
-						options={[
-							["auto", m.user_hdr_mode_auto()],
-							["toneMapToSdr", m.user_hdr_mode_tone_map()],
-						]}
-					/>
-					<PreferenceSelect
-						label={m.user_stream_limit_label()}
-						description={m.user_stream_limit_desc()}
-						value={String(preferences.maxStreamingBitrateKbps)}
-						onChange={(value) => updatePreferencesPatch({ maxStreamingBitrateKbps: Number(value) })}
-						options={[
-							["0", m.user_stream_limit_unlimited()],
-							["1500", m.user_stream_limit_mbps({ mbps: "1.5" })],
-							["4000", m.user_stream_limit_mbps({ mbps: "4" })],
-							["8000", m.user_stream_limit_mbps({ mbps: "8" })],
-						]}
-					/>
-				</div>
-			</SettingsCategory>
-
-			<SettingsCategory title={m.settings_automations_title()}>
-				<PlaybackAutomationToggles preferences={preferences} onChange={updatePreferencesPatch} />
-			</SettingsCategory>
+			<ProfilePreferenceFields preferences={preferences} onChange={updatePreferencesPatch} />
 
 			<div className="flex flex-col gap-3 sm:flex-row">
 				<AsyncButton

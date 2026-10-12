@@ -196,7 +196,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 		<RequireAdmin>
 			<SidebarProvider>
 				<AdminSidebar />
-				<main className="min-h-svh w-full bg-background">
+				<main className="min-h-svh w-full min-w-0 bg-background">
 					<AdminHeader />
 					<PageContainer className="py-6 sm:py-8">{children}</PageContainer>
 				</main>

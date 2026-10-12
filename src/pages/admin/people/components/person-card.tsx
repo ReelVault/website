@@ -1,20 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Copy, ImageDown, RefreshCw, Shield, User } from "lucide-react";
+import { User } from "lucide-react";
 import type { useAdminPeople } from "@/client/hooks/use-admin-people";
+import { PersonContextMenuContent } from "@/components/cards/person-card";
 import { ApiImage } from "@/components/ui/api-image";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-	ContextMenu,
-	ContextMenuContent,
-	ContextMenuGroup,
-	ContextMenuItem,
-	ContextMenuLabel,
-	ContextMenuSeparator,
-	ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { detach } from "@/lib/detach";
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
-import { copyToClipboard } from "@/utils/clipboard-utils";
 
 type PersonItem = ReturnType<typeof useAdminPeople>["people"][number];
 
@@ -69,51 +60,13 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 					</Link>
 				</div>
 			</ContextMenuTrigger>
-			<ContextMenuContent className="w-64">
-				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate">{person.name}</ContextMenuLabel>
-				</ContextMenuGroup>
-				<ContextMenuSeparator />
-				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/person/$id" params={{ id: person.id }} />} className="cursor-pointer">
-						<User className="size-4 text-muted-foreground" />
-						<span>{m.components_person_view_profile()}</span>
-					</ContextMenuItem>
-					<ContextMenuItem
-						onClick={() => {
-							detach(copyToClipboard(`${window.location.origin}/person/${person.id}`, m.components_profile_link_word()));
-						}}
-						className="cursor-pointer"
-					>
-						<Copy className="size-4 text-muted-foreground" />
-						<span>{m.components_copy_profile_link()}</span>
-					</ContextMenuItem>
-				</ContextMenuGroup>
-				<ContextMenuSeparator />
-				<ContextMenuGroup>
-					<ContextMenuLabel className="flex items-center">
-						<Shield className="size-3" />
-						{m.common_admin_tools()}
-					</ContextMenuLabel>
-					<ContextMenuItem onClick={() => onRefresh(person.id)} className="cursor-pointer">
-						<RefreshCw className="size-4 text-primary" />
-						<span>{m.components_person_refresh_data()}</span>
-					</ContextMenuItem>
-					<ContextMenuItem onClick={() => onRefreshImage(person.id)} className="cursor-pointer">
-						<ImageDown className="size-4 text-primary" />
-						<span>{m.components_person_force_photo()}</span>
-					</ContextMenuItem>
-					<ContextMenuItem
-						onClick={() => {
-							detach(copyToClipboard(person.id, m.components_person_id()));
-						}}
-						className="cursor-pointer"
-					>
-						<Copy className="size-4 text-muted-foreground" />
-						<span>{m.components_copy_person_id()}</span>
-					</ContextMenuItem>
-				</ContextMenuGroup>
-			</ContextMenuContent>
+			<PersonContextMenuContent
+				personId={person.id}
+				personName={person.name}
+				isAdmin
+				onRefresh={onRefresh}
+				onRefreshImage={onRefreshImage}
+			/>
 		</ContextMenu>
 	);
 }

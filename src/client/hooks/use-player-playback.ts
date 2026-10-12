@@ -6,14 +6,6 @@ import { toast } from "@/utils/toast-facade";
 import { reelvault } from "../client";
 import { playbackSessionKeys, subtitleKeys } from "../utils/query-keys";
 
-export function usePlayerSubtitles(mediaFileId: string) {
-	return useQuery({
-		queryKey: subtitleKeys.list(mediaFileId),
-		queryFn: () => reelvault.subtitles.getAll({ mediaFileId, limit: 100 }),
-		enabled: Boolean(mediaFileId),
-	});
-}
-
 export function useSubtitleContent(subtitleId: string | undefined) {
 	return useQuery({
 		queryKey: subtitleKeys.content(subtitleId),

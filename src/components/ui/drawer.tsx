@@ -54,10 +54,6 @@ function DrawerPortal({ container, ...props }: DrawerPrimitive.Portal.Props) {
 	return <DrawerPrimitive.Portal data-slot="drawer-portal" container={portalContainer} {...props} />;
 }
 
-function DrawerClose({ ...props }: DrawerPrimitive.Close.Props) {
-	return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
-}
-
 function DrawerOverlay({ className, ...props }: DrawerPrimitive.Backdrop.Props) {
 	return (
 		<DrawerPrimitive.Backdrop
@@ -165,10 +161,6 @@ function DrawerHeader({ className, ...props }: ComponentProps<"div">) {
 	);
 }
 
-function DrawerFooter({ className, ...props }: ComponentProps<"div">) {
-	return <div data-slot="drawer-footer" className={cn("mt-auto flex shrink-0 flex-col gap-2 p-4 pt-0", className)} {...props} />;
-}
-
 function DrawerTitle({ className, ...props }: DrawerPrimitive.Title.Props) {
 	return (
 		<DrawerPrimitive.Title
@@ -191,10 +183,8 @@ function DrawerDescription({ className, ...props }: DrawerPrimitive.Description.
 
 export {
 	Drawer,
-	DrawerClose,
 	DrawerContent,
 	DrawerDescription,
-	DrawerFooter,
 	DrawerHeader,
 	DrawerOverlay,
 	DrawerPortal,

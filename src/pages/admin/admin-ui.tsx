@@ -203,21 +203,6 @@ export function AdminStatCard({
 	);
 }
 
-/** Legacy alias for backward compatibility across existing callsites */
-export function AdminStat({
-	label,
-	value,
-	icon: Icon,
-	tone = "default",
-}: {
-	label: string;
-	value: ReactNode;
-	icon?: ComponentType<{ className?: string }>;
-	tone?: "default" | "success" | "warning" | "destructive";
-}) {
-	return <AdminStatCard label={label} value={value} icon={Icon} tone={tone} />;
-}
-
 export function EditorMessage({ message }: { message: string }) {
 	return (
 		<div className="flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-5 text-destructive text-sm">

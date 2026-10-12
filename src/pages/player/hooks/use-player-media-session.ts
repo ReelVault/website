@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
+import { detach, noopCleanup } from "@/lib/detach";
 import type { CurrentEpisodeInfo, NextEpisodeInfo } from "../utils/player.types";
-import { detach, noopCleanup } from "../utils/player-utils";
 
 interface UsePlayerMediaSessionProps {
 	videoRef: React.RefObject<HTMLVideoElement | null>;

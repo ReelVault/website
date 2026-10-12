@@ -1,6 +1,6 @@
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu";
 import { cn } from "cn";
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
 import { usePortalContainer } from "@/components/portal-container";
 
@@ -135,68 +135,6 @@ function ContextMenuSubContent({ ...props }: React.ComponentProps<typeof Context
 	return <ContextMenuContent data-slot="context-menu-sub-content" className="shadow-lg" side="right" {...props} />;
 }
 
-function ContextMenuCheckboxItem({
-	className,
-	children,
-	checked,
-	inset,
-	...props
-}: ContextMenuPrimitive.CheckboxItem.Props & {
-	inset?: boolean;
-}) {
-	return (
-		<ContextMenuPrimitive.CheckboxItem
-			data-slot="context-menu-checkbox-item"
-			data-inset={inset}
-			className={cn(
-				"relative flex cursor-default select-none items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-inset:pl-7 data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
-			checked={checked}
-			{...props}
-		>
-			<span className="pointer-events-none absolute right-2">
-				<ContextMenuPrimitive.CheckboxItemIndicator>
-					<CheckIcon />
-				</ContextMenuPrimitive.CheckboxItemIndicator>
-			</span>
-			{children}
-		</ContextMenuPrimitive.CheckboxItem>
-	);
-}
-
-function ContextMenuRadioGroup({ ...props }: ContextMenuPrimitive.RadioGroup.Props) {
-	return <ContextMenuPrimitive.RadioGroup data-slot="context-menu-radio-group" {...props} />;
-}
-
-function ContextMenuRadioItem({
-	className,
-	children,
-	inset,
-	...props
-}: ContextMenuPrimitive.RadioItem.Props & {
-	inset?: boolean;
-}) {
-	return (
-		<ContextMenuPrimitive.RadioItem
-			data-slot="context-menu-radio-item"
-			data-inset={inset}
-			className={cn(
-				"relative flex cursor-default select-none items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-inset:pl-7 data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
-			{...props}
-		>
-			<span className="pointer-events-none absolute right-2">
-				<ContextMenuPrimitive.RadioItemIndicator>
-					<CheckIcon />
-				</ContextMenuPrimitive.RadioItemIndicator>
-			</span>
-			{children}
-		</ContextMenuPrimitive.RadioItem>
-	);
-}
-
 function ContextMenuSeparator({ className, ...props }: ContextMenuPrimitive.Separator.Props) {
 	return (
 		<ContextMenuPrimitive.Separator data-slot="context-menu-separator" className={cn("-mx-1 my-1 h-px bg-border", className)} {...props} />
@@ -218,14 +156,11 @@ function ContextMenuShortcut({ className, ...props }: React.ComponentProps<"span
 
 export {
 	ContextMenu,
-	ContextMenuCheckboxItem,
 	ContextMenuContent,
 	ContextMenuGroup,
 	ContextMenuItem,
 	ContextMenuLabel,
 	ContextMenuPortal,
-	ContextMenuRadioGroup,
-	ContextMenuRadioItem,
 	ContextMenuSeparator,
 	ContextMenuShortcut,
 	ContextMenuSub,

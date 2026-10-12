@@ -1,5 +1,4 @@
 import { ReelVaultClient, ReelVaultError, ReelVaultValidationError } from "@reelvault/sdk/client";
-import { isNativeShell } from "@/lib/capacitor-native";
 import { queryClient } from "@/lib/query-client";
 import { translateByKey, translateError } from "@/utils/translate-error";
 import { authKeys } from "./utils/query-keys";
@@ -39,9 +38,8 @@ function getEnvApiUrl(): string | undefined {
 const STORED_SERVER_URL_KEY = "reelvault.serverUrl";
 
 /**
- * Server address persisted by native shells (Capacitor mobile, Tauri desktop) on
- * their login screen, where `localhost`-based heuristics cannot work. Never set
- * by the plain web app.
+ * Server address persisted by the Tauri desktop shell on its login screen, where
+ * `localhost`-based heuristics cannot work. Never set by the plain web app.
  */
 export function getStoredServerUrl(): string | undefined {
 	try {
@@ -102,7 +100,7 @@ export function getReelVaultApiUrl(): string {
 			return "http://localhost:3030";
 		}
 
-		// Native shells (Capacitor): the login screen persists the server address.
+		// Native shells: the login screen persists the server address.
 		const storedServerUrl = getStoredServerUrl();
 		if (storedServerUrl && !storedServerUrl.startsWith("/")) return storedServerUrl;
 
@@ -234,9 +232,9 @@ export const reelvault = new ReelVaultClient({
 	// query-level predicate below keeps the total bounded while preserving the
 	// transient-recovery behavior.
 	maxRetries: 1,
-	// Native shells need the JSON bearer token from quick-connect; browsers rely on
-	// the HttpOnly session cookie and must not receive it.
-	headers: isNativeShell() ? { "x-client-shell": "native" } : {},
+	// The Tauri shell needs the JSON bearer token from quick-connect; browsers rely
+	// on the HttpOnly session cookie and must not receive it.
+	headers: isTauriShell() ? { "x-client-shell": "native" } : {},
 	fetcher: async (url, init) => {
 		const response = await fetch(url, {
 			...init,

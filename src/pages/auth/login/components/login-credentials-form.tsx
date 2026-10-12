@@ -1,13 +1,12 @@
 import { ArrowRight, Lock, QrCode as QrCodeIcon, Server, User } from "lucide-react";
 import { useState } from "react";
-import { getStoredServerUrl, setStoredServerUrl } from "@/client/client";
+import { getStoredServerUrl, isTauriShell, setStoredServerUrl } from "@/client/client";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
-import { isNativeShell } from "@/lib/capacitor-native";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { getFormValue } from "@/utils/form-utils";
@@ -26,9 +25,9 @@ export function LoginCredentialsForm({
 	onSubmit: (values: { email: string; password: string }) => Promise<void>;
 	onQuickConnect: () => void;
 }) {
-	// Native shells (Capacitor WebView, Tauri desktop) do not share the browser's
-	// URL heuristics in client.ts — the user has to point at the media server.
-	const isNative = isNativeShell();
+	// The Tauri desktop shell does not share the browser's URL heuristics in
+	// client.ts — the user has to point at the media server.
+	const isNative = isTauriShell();
 	const storedServerUrl = isNative ? getStoredServerUrl() : undefined;
 	// Native validation blocks submit silently; surface a localized hint instead
 	// of the browser's own bubble. A typeMismatch means the email format (not a

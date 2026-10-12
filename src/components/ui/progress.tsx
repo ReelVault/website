@@ -47,18 +47,4 @@ function ProgressIndicator({ className, ...props }: ProgressPrimitive.Indicator.
 	);
 }
 
-function ProgressLabel({ className, ...props }: ProgressPrimitive.Label.Props) {
-	return <ProgressPrimitive.Label className={cn("font-medium text-sm", className)} data-slot="progress-label" {...props} />;
-}
-
-function ProgressValue({ className, ...props }: ProgressPrimitive.Value.Props) {
-	return (
-		<ProgressPrimitive.Value
-			className={cn("ml-auto text-muted-foreground text-sm tabular-nums", className)}
-			data-slot="progress-value"
-			{...props}
-		/>
-	);
-}
-
-export { Progress, ProgressIndicator, ProgressLabel, ProgressTrack, ProgressValue };
+export { Progress, ProgressIndicator, ProgressTrack };

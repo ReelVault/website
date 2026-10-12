@@ -326,8 +326,13 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **One visual language for the shared UI components** — the shared components (buttons, badges, cards, dialogs, inputs, labels, tables, tabs, menus, selects, sidebars and the other primitives in `components/ui`) own their look through variants and sizes, so the same control looks the same on every page. Pages pass only meaning (a `variant` such as `warning` or `success`, a `size`, `selected`, `font="mono"`, a `Card` `variant="interactive"`) and layout (width, grid placement, margins). Visual classes on a shared component at a call site dropped from 1,470 usages to 352 (188 of the rest are Skeleton placeholder sizes and container gaps, kept on purpose), and dynamic class strings with visual tokens from 71 to 24. A static test (`tests/ui-classname-guard.test.ts`) fails when a page adds a new visual override to a shared component. Measured: 207 tests pass, react-doctor 71.
 - **Preparation finished notice** — the player says "Preparation finished successfully" when the server finishes preparing a title that was still being prepared while it was open, including after a seek. A title that was already prepared when the player opened stays silent.
 - **Localized plugin settings** — the labels and descriptions of plugin settings follow the active language, and fall back to the first available translation.
+- **Admin profile editor matches user settings** — the profile editor on an admin user's page shows the same preference groups as the user's own settings, with their descriptions, the subtitle look preview and the resume rewind setting.
+- **Phone copy label for the account ID** — the copy action on a user card reads "Copy full account ID", the same label as the desktop table (it read "Copy ID").
+- **Native keep-awake and landscape lock removed** — the player's Capacitor hooks are gone. They ran only when a Capacitor runtime was present (`window.Capacitor`), which the web, PWA and Tauri shells do not provide, so playback on those shells is unchanged.
 
 ### Fixes
+
+- **Translated fallback name for unnamed cast and crew** — the metadata page showed the Polish text "Nieznana osoba" for a cast or crew member without a name in every language. It now uses the translated "Unknown person"; the Polish text is unchanged.
 
 - **Continue-watching actions on touch screens** — the mark-watched, reset-progress and dismiss buttons on a continue-watching card stay visible on touch screens instead of appearing only on hover.
 - **Unsaved plugin settings ask before leaving** — leaving a plugin's configuration page with edited fields asks Stay or Leave, the same as the settings page, and closing the tab asks the browser to confirm.
@@ -386,3 +391,25 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Worker tabs sit inside their bar on desktop** — the Scheduled jobs, Activity and History tab bar was 32 px tall, so the 33 px tabs stuck out past its edges. The shared tab bar's 32 px desktop height overrode the page's 48 px, which was never applied. The bar is 48 px again, 56 px on phones. Measured at 1440 px: bar 32 → 48 px, tabs 29 → 33 px, tabs outside the bar 3 → 0.
 - **Dashboard rows truncate long names** — job names in the job queue and the source of an error-log line pushed their status or time out of the card at narrow desktop widths. They truncate now, and the status and time keep their width. Measured at 1024 px: rows spilling out of their cards 11 → 1 (the last is a date label 4 px past its box).
 - **Worker allocation cards on narrow desktops** — the three-column grid started at 1024 px, where the column is 287 px wide, so each card was 88 px and its name was cut off. Three columns start at 1280 px now; at 1024 px the cards are two columns, 88 → 138 px wide.
+- **Watchlist stats panel pushed the page sideways at 1024–1279 px** — the filter bar could not wrap, so the list column's minimum width kept the 320 px stats panel 98 px past the viewport. The list column can now shrink and the filter bar wraps onto two rows. Measured at 1024 px: scroll width 1112 → 1014 px (equal to the viewport); at 1280 px the filter bar stays on one row and the page does not scroll.
+- **Admin pages scrolled sideways at 1024 px** — the admin content column had no `min-width: 0`, so its widest child set the column width and pushed the page past the viewport. The column now shrinks to the space beside the sidebar and wide content scrolls inside its own container. Measured at 1024 px: `/admin/users` scroll width 1249 → 1014 px, `/admin/analytics` 1135 → 1014 px.
+- **Base UI `nativeButton` console error on settings and in the mobile menu** — the enable and regenerate 2FA buttons and the mobile menu links rendered a link through a `Button` or `SheetClose` without `nativeButton={false}`, which logged a console error. They now declare `nativeButton={false}`; the settings page and the opened mobile menu log no such error.
+
+### Performance
+
+- **Unused code removed from the bundle** — the Capacitor shim, an unused player subtitles hook, an unused episodes infinite query and 41 unused shadcn declarations and exports are gone. The admin and user preference forms, the navbar and plugin-slot link lists, and the details and dashboard rails each have one implementation now. Emitted JavaScript is 19,766 bytes smaller (see the table below).
+
+### Performance benchmarks
+
+Production build with `bun run build`, measured on the tree before and after this cleanup. Sizes are the bytes emitted to `dist/`, not gzipped.
+
+| Area | Benchmark | Before | After | Change |
+| --- | --- | ---: | ---: | ---: |
+| Bundle | JS bytes in `dist/` | 4,965,838 | 4,946,072 | **-0.4%** |
+| Bundle | JS files in `dist/` (chunks and PWA worker files) | 385 | 387 | **+2 files (+0.5%)** |
+
+The two extra files are the new shared modules `details-rail` and `provider-candidate-card`, which are now emitted as their own chunks. That is a regression in chunk count; the emitted bytes went down.
+
+### Additional measurements
+
+- react-doctor score 70 → 71 (`npx react-doctor@latest -y --score`, threshold 70).

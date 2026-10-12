@@ -10,12 +10,12 @@ import { useProfilePreferences } from "@/client/hooks/use-profiles";
 import { AppErrorState, AppLoadingState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { usePageTitle } from "@/hooks/use-page-title";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { AppPlayer } from "./app-player";
 import { CinemaPreRollOverlay } from "./components/cinema-pre-roll-overlay";
 import { useClientCapabilities } from "./hooks/use-client-capabilities";
 import type { PendingChange } from "./player-context";
-import { detach } from "./utils/player-utils";
 
 const getStoredBitrate = (): number | undefined => {
 	if (typeof window === "undefined") return undefined;

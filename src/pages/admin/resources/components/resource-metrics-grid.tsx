@@ -10,18 +10,6 @@ import { shortTimeFormatter } from "@/utils/format-utils";
 
 type ResourceCurrent = NonNullable<NonNullable<ReturnType<typeof useAdminResources>["data"]>["current"]>;
 
-export function getPressureColor(pressure: string) {
-	switch (pressure) {
-		case "critical":
-			return "bg-destructive/10 text-destructive border-destructive/30";
-		case "high":
-		case "medium":
-			return "bg-warning/10 text-warning border-warning/30";
-		default:
-			return "bg-success/10 text-success border-success/30";
-	}
-}
-
 export function getPressureLabel(pressure: string) {
 	switch (pressure) {
 		case "critical":

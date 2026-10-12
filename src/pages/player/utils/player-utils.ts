@@ -1,12 +1,5 @@
-import { setNativeLandscapeLock } from "@/lib/capacitor-native";
-import { detach as detachTask, noopCleanup as noopCleanupTask } from "@/lib/detach";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-
-// Shared fire-and-forget helpers live in @/lib/detach; re-exported here for
-// the player module's local convenience imports.
-export const detach = detachTask;
-
-export const noopCleanup = noopCleanupTask;
 
 /**
  * Format seconds into mm:ss or hh:mm:ss string.
@@ -55,7 +48,6 @@ function isWebkitVideo(video: HTMLVideoElement): video is WebkitVideoElement {
 export function toggleFullscreen(_container?: HTMLElement | null, video?: HTMLVideoElement | null): void {
 	if (document.fullscreenElement) {
 		detach(() => document.exitFullscreen());
-		detach(() => setNativeLandscapeLock(false));
 
 		return;
 	}
@@ -64,13 +56,11 @@ export function toggleFullscreen(_container?: HTMLElement | null, video?: HTMLVi
 	// WebKit proprietary native-video fullscreen instead.
 	if (!document.fullscreenEnabled && video && isWebkitVideo(video) && typeof video.webkitEnterFullscreen === "function") {
 		video.webkitEnterFullscreen();
-		detach(() => setNativeLandscapeLock(true));
 
 		return;
 	}
 
 	detach(() => document.documentElement.requestFullscreen());
-	detach(() => setNativeLandscapeLock(true));
 }
 
 /** Toggle picture-in-picture on a video element. */

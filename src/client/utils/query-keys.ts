@@ -298,10 +298,6 @@ export const episodeKeys = {
 	all: ["episodes"] as const,
 	bySeason: (seasonId: string | null, params?: { page?: number; limit?: number }) =>
 		params ? ([...episodeKeys.all, seasonId, params] as const) : ([...episodeKeys.all, seasonId] as const),
-	infinite: (seasonId: string | null, limit?: number) =>
-		limit !== undefined
-			? ([...episodeKeys.all, "infinite", seasonId, limit] as const)
-			: ([...episodeKeys.all, "infinite", seasonId] as const),
 	byMetadata: (metadataId: string, limit?: number) =>
 		limit !== undefined
 			? ([...episodeKeys.all, "metadata", metadataId, limit] as const)

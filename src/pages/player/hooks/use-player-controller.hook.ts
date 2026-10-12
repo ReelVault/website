@@ -22,6 +22,7 @@ import { realtimeConnection, useRealtimeEvent } from "@/client/hooks/use-realtim
 import { useSeasons } from "@/client/hooks/use-seasons";
 import { mePlaybackKeys, playbackSessionKeys, profileKeys, watchedHistoryKeys } from "@/client/utils/query-keys";
 import { useInterval } from "@/hooks/use-interval";
+import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import type { PlaybackSettings, PlayerMediaFile, PlayerSession, SubtitlePreferences } from "../utils/player.types";
@@ -43,7 +44,7 @@ import {
 } from "../utils/player-preferences.storage";
 import { consumeSleepAfterEpisode } from "../utils/player-sleep-timer";
 import type { PlayerTimeStore } from "../utils/player-time-store";
-import { detach, hasBufferAt, isSafeSeek, noopCleanup } from "../utils/player-utils";
+import { hasBufferAt, isSafeSeek } from "../utils/player-utils";
 
 // Same for "no markers" — applyTime/markersValue must not get fresh identities
 // on every controller render.

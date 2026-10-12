@@ -1,12 +1,12 @@
-import { Search } from "lucide-react";
+import { Check, Search } from "lucide-react";
 import { type ReactNode, startTransition, useState } from "react";
 import { useAdminReassignMediaFile } from "@/client/hooks/use-admin-media";
 import { flattenProviderSearchResults, useProviderSearch } from "@/client/hooks/use-providers";
 import { AppEmptyState } from "@/components/app-states";
 import { CandidateSkeletonList } from "@/components/candidate-skeleton";
+import { ProviderCandidateCard } from "@/components/provider-candidate-card";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
-import { ReassignTmdbCandidateCard } from "./reassign-tmdb-candidate-card";
 import { ReassignTmdbSearchForm, type TmdbSearchParams } from "./reassign-tmdb-search-form";
 
 interface ReassignTmdbTabProps {
@@ -96,10 +96,16 @@ export function ReassignTmdbTab({ mediaFileId, mediaType, initialTitle, initialY
 		tmdbContent = (
 			<div className="grid gap-3 sm:grid-cols-2">
 				{tmdbCandidates.map((candidate) => (
-					<ReassignTmdbCandidateCard
+					<ProviderCandidateCard
 						key={`${candidate.providerId}-${candidate.externalId}`}
 						candidate={candidate}
-						isReassigning={isReassigning}
+						disabled={isReassigning}
+						action={
+							<>
+								<Check className="size-3.5" />
+								{m.common_assign_this_title()}
+							</>
+						}
 						onApply={handleApplyTmdb}
 					/>
 				))}

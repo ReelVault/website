@@ -91,31 +91,32 @@ export function PluginSlotHost({ name, variant, buttonClassName, playerContext, 
 		}
 	};
 
+	const entries = contributions.map((contribution, index) => ({
+		key: `${contribution.pluginId}:${index}`,
+		contribution,
+		label: resolvePluginText(contribution.label, contribution.defaultLocale),
+		Icon: getPluginIcon(contribution.icon),
+	}));
+
+	const surface = (pluginId: string, tag: string, className?: string) => (
+		<PluginSurface pluginId={pluginId} tag={tag} player={playerContext} params={params} className={className} />
+	);
+
 	if (resolvedVariant === "menu-items") {
 		return (
 			<>
-				{contributions.map((contribution, index) => {
-					const key = `${contribution.pluginId}:${index}`;
-					const label = resolvePluginText(contribution.label, contribution.defaultLocale);
-					if (contribution.element) {
-						return (
-							<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
-								<PluginSurface pluginId={contribution.pluginId} tag={contribution.element.tag} player={playerContext} params={params} />
-							</PluginSlotBoundary>
-						);
-					}
-
-					const Icon = getPluginIcon(contribution.icon);
-
-					return (
-						<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
+				{entries.map(({ key, contribution, label, Icon }) => (
+					<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
+						{contribution.element ? (
+							surface(contribution.pluginId, contribution.element.tag)
+						) : (
 							<DropdownMenuItem onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}>
 								<Icon className="size-4 text-muted-foreground" />
 								<span>{label}</span>
 							</DropdownMenuItem>
-						</PluginSlotBoundary>
-					);
-				})}
+						)}
+					</PluginSlotBoundary>
+				))}
 			</>
 		);
 	}
@@ -123,59 +124,47 @@ export function PluginSlotHost({ name, variant, buttonClassName, playerContext, 
 	if (resolvedVariant === "admin-sidebar-links") {
 		return (
 			<>
-				{contributions.map((contribution, index) => {
-					const key = `${contribution.pluginId}:${index}`;
-					const label = resolvePluginText(contribution.label, contribution.defaultLocale);
-					if (contribution.element) {
-						return (
-							<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
-								<SidebarMenuSubItem>
-									<PluginSurface pluginId={contribution.pluginId} tag={contribution.element.tag} player={playerContext} params={params} />
-								</SidebarMenuSubItem>
-							</PluginSlotBoundary>
-						);
-					}
-
-					const Icon = getPluginIcon(contribution.icon);
-
-					return (
-						<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
-							<SidebarMenuSubItem>
+				{entries.map(({ key, contribution, label, Icon }) => (
+					<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
+						<SidebarMenuSubItem>
+							{contribution.element ? (
+								surface(contribution.pluginId, contribution.element.tag)
+							) : (
 								<SidebarMenuSubButton onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}>
 									<Icon className="size-3.5 shrink-0 text-muted-foreground" />
 									<span className="truncate">{label}</span>
 								</SidebarMenuSubButton>
-							</SidebarMenuSubItem>
-						</PluginSlotBoundary>
-					);
-				})}
+							)}
+						</SidebarMenuSubItem>
+					</PluginSlotBoundary>
+				))}
 			</>
+		);
+	}
+
+	// Full-width inline sections (e.g. dashboard rows) — element contributions
+	// stack vertically; button contributions make no sense here and are skipped.
+	if (resolvedVariant === "sections") {
+		return (
+			<div className="flex flex-col gap-10">
+				{entries.map(({ key, contribution }) =>
+					contribution.element ? (
+						<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
+							{surface(contribution.pluginId, contribution.element.tag)}
+						</PluginSlotBoundary>
+					) : null,
+				)}
+			</div>
 		);
 	}
 
 	const items = (
 		<>
-			{contributions.map((contribution, index) => {
-				const key = `${contribution.pluginId}:${index}`;
-				const label = resolvePluginText(contribution.label, contribution.defaultLocale);
-				if (contribution.element) {
-					return (
-						<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
-							<PluginSurface
-								pluginId={contribution.pluginId}
-								tag={contribution.element.tag}
-								player={playerContext}
-								params={params}
-								className={buttonClassName}
-							/>
-						</PluginSlotBoundary>
-					);
-				}
-
-				const Icon = getPluginIcon(contribution.icon);
-
-				return (
-					<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
+			{entries.map(({ key, contribution, label, Icon }) => (
+				<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
+					{contribution.element ? (
+						surface(contribution.pluginId, contribution.element.tag, buttonClassName)
+					) : (
 						<Button
 							variant="outline"
 							size={contribution.iconOnly ? "icon" : "default"}
@@ -186,34 +175,14 @@ export function PluginSlotHost({ name, variant, buttonClassName, playerContext, 
 							<Icon className="size-5" aria-hidden="true" />
 							{contribution.iconOnly ? null : label}
 						</Button>
-					</PluginSlotBoundary>
-				);
-			})}
+					)}
+				</PluginSlotBoundary>
+			))}
 		</>
 	);
 
 	if (resolvedVariant === "floating") {
 		return <div className="fixed right-4 bottom-24 z-40 flex flex-col items-end gap-2 sm:right-6 xl:bottom-6">{items}</div>;
-	}
-
-	// Full-width inline sections (e.g. dashboard rows) — element contributions
-	// stack vertically; button contributions make no sense here and are skipped.
-	if (resolvedVariant === "sections") {
-		return (
-			<div className="flex flex-col gap-10">
-				{contributions.map((contribution, index) => {
-					if (!contribution.element) return null;
-
-					const key = `${contribution.pluginId}:${index}`;
-
-					return (
-						<PluginSlotBoundary key={key} pluginId={contribution.pluginId}>
-							<PluginSurface pluginId={contribution.pluginId} tag={contribution.element.tag} player={playerContext} params={params} />
-						</PluginSlotBoundary>
-					);
-				})}
-			</div>
-		);
 	}
 
 	return items;

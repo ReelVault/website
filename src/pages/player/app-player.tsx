@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { getPlaybackPlaylistUrl } from "@/client/hooks/use-playback-session";
 import { PortalContainerProvider } from "@/components/portal-container";
-import { setNativeKeepAwake, setNativeLandscapeLock } from "@/lib/capacitor-native";
+import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { PlayerChrome } from "./components/player-chrome";
@@ -25,7 +25,7 @@ import {
 } from "./player-context";
 import type { PlaybackSettings, PlaybackSettingsActions, PlayerMediaFile, PlayerSession } from "./utils/player.types";
 import { toPlaybackError } from "./utils/player-preferences.storage";
-import { detach, noopCleanup, toggleFullscreen } from "./utils/player-utils";
+import { toggleFullscreen } from "./utils/player-utils";
 import { getShortcutsDisabledCookie, setShortcutsDisabledCookie } from "./utils/shortcuts-cookie";
 
 export function AppPlayer({
@@ -372,14 +372,12 @@ function AppPlayerSurface() {
 		const onPlaying = () => {
 			actionsRef.current.setIsBuffering(false);
 			actionsRef.current.setIsPaused(false);
-			detach(() => setNativeKeepAwake(true));
 		};
 
 		const onWaiting = () => actionsRef.current.setIsBuffering(true);
 		const onStalled = () => actionsRef.current.setIsBuffering(true);
 		const onPause = () => {
 			actionsRef.current.setIsPaused(true);
-			detach(() => setNativeKeepAwake(false));
 			detach(() => actionsRef.current.syncPlaybackProgress(true));
 		};
 		const onPlay = () => actionsRef.current.setIsPaused(false);
@@ -464,8 +462,6 @@ function AppPlayerSurface() {
 			video.removeEventListener("ended", onEnded);
 			video.removeEventListener("volumechange", onVolumeChange);
 			video.removeEventListener("ratechange", onRateChange);
-			detach(() => setNativeKeepAwake(false));
-			detach(() => setNativeLandscapeLock(false));
 		};
 	}, []);
 

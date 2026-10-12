@@ -1,8 +1,8 @@
 import { useParams } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { RequireAuth } from "@/components/auth/require-auth";
+import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
-import { detach } from "./utils/player-utils";
 
 const PlayerPage = lazyRouteComponent(() => import("./player-page"));
 

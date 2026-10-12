@@ -33,11 +33,6 @@ declare module "@tanstack/react-router" {
 	}
 }
 
-if (import.meta.env.DEV) {
-	const { scan } = await import("react-scan");
-	scan({ enabled: true });
-}
-
 const rootElement = document.getElementById("root");
 if (rootElement && !rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);

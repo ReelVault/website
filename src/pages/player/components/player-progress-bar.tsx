@@ -1,9 +1,10 @@
 import { cn } from "cn";
 import { useState } from "react";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { usePlayerTrickplay } from "../hooks/use-player-trickplay";
 import { usePlayerActions, usePlayerInfo, usePlayerMarkers, usePlayerProgressRanges, usePlayerTime } from "../player-context";
-import { detach, formatTime } from "../utils/player-utils";
+import { formatTime } from "../utils/player-utils";
 
 const SEGMENT_COLORS: Record<string, { bg: string; title: string }> = {
 	intro: {

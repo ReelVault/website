@@ -1,22 +1,28 @@
-import { Calendar, Check, Film } from "lucide-react";
+import { Calendar, Film } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import { m } from "@/paraglide/messages";
 
-interface ReassignTmdbCandidateCardProps {
-	candidate: {
-		providerId: string;
-		externalId: string;
-		title: string;
-		releaseDate?: string | null;
-		posterPath?: string | null;
-	};
-	isReassigning: boolean;
+interface ProviderCandidate {
+	providerId: string;
+	externalId: string;
+	title: string;
+	posterPath?: string | null;
+	releaseDate?: string | null;
+}
+
+interface ProviderCandidateCardProps {
+	candidate: ProviderCandidate;
+	disabled: boolean;
+	/** Content of the apply button: its label, optionally with an icon. */
+	action: ReactNode;
 	onApply: (providerId: string, externalId: string) => void;
 }
 
-export function ReassignTmdbCandidateCard({ candidate, isReassigning, onApply }: ReassignTmdbCandidateCardProps) {
+/** One metadata search result with its poster and an apply button. */
+export function ProviderCandidateCard({ candidate, disabled, action, onApply }: ProviderCandidateCardProps) {
 	const releaseYear = candidate.releaseDate ? candidate.releaseDate.slice(0, 4) : null;
 
 	return (
@@ -50,12 +56,11 @@ export function ReassignTmdbCandidateCard({ candidate, isReassigning, onApply }:
 					<Button
 						type="button"
 						size="sm"
-						disabled={isReassigning}
+						disabled={disabled}
 						onClick={() => onApply(candidate.providerId, candidate.externalId)}
 						className="w-full"
 					>
-						<Check className="size-3.5" />
-						{m.common_assign_this_title()}
+						{action}
 					</Button>
 				</div>
 			</div>

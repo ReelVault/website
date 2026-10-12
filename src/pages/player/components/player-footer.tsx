@@ -13,10 +13,11 @@ import {
 	VolumeX,
 } from "lucide-react";
 import { type ReactNode, useSyncExternalStore } from "react";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { usePlayerActions, usePlayerNextEpisode, usePlayerStatus, usePlayerVolume } from "../player-context";
 import { MAX_PLAYER_VOLUME } from "../utils/player-audio-boost";
-import { detach, toggleFullscreen, togglePiP, togglePlayPause } from "../utils/player-utils";
+import { toggleFullscreen, togglePiP, togglePlayPause } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 import { PlayerProgressBar } from "./player-progress-bar";
 

@@ -47,8 +47,4 @@ function AlertDescription({ className, ...props }: ComponentProps<"div">) {
 	);
 }
 
-function AlertAction({ className, ...props }: ComponentProps<"div">) {
-	return <div data-slot="alert-action" className={cn("absolute top-2 right-2", className)} {...props} />;
-}
-
-export { Alert, AlertAction, AlertDescription, AlertTitle };
+export { Alert, AlertDescription, AlertTitle };

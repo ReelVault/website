@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
+import { detach } from "@/lib/detach";
 import { showPlayerFeedback } from "../components/player-feedback-hud";
 import { usePlayerActions } from "../player-context";
 import { MAX_PLAYER_VOLUME } from "../utils/player-audio-boost";
-import { detach } from "../utils/player-utils";
 
 /**
  * Touch gestures on the playback surface (mobile shells):

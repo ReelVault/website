@@ -5,7 +5,6 @@ import { cn } from "cn";
 import { CheckIcon, SearchIcon } from "lucide-react";
 import type * as React from "react";
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
@@ -15,33 +14,6 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
 			className={cn("flex size-full flex-col overflow-hidden rounded-xl! bg-popover p-1 text-popover-foreground", className)}
 			{...props}
 		/>
-	);
-}
-
-function CommandDialog({
-	title = "Command Palette",
-	description = "Search for a command to run...",
-	children,
-	className,
-	showCloseButton = false,
-	...props
-}: Omit<React.ComponentProps<typeof Dialog>, "children"> & {
-	title?: string;
-	description?: string;
-	className?: string;
-	showCloseButton?: boolean;
-	children: React.ReactNode;
-}) {
-	return (
-		<Dialog {...props}>
-			<DialogHeader className="sr-only">
-				<DialogTitle>{title}</DialogTitle>
-				<DialogDescription>{description}</DialogDescription>
-			</DialogHeader>
-			<DialogContent className={cn("top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0", className)} showCloseButton={showCloseButton}>
-				{children}
-			</DialogContent>
-		</Dialog>
 	);
 }
 
@@ -72,10 +44,6 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
 	);
 }
 
-function CommandEmpty({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
-	return <CommandPrimitive.Empty data-slot="command-empty" className={cn("py-6 text-center text-sm", className)} {...props} />;
-}
-
 function CommandGroup({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Group>) {
 	return (
 		<CommandPrimitive.Group
@@ -87,10 +55,6 @@ function CommandGroup({ className, ...props }: React.ComponentProps<typeof Comma
 			{...props}
 		/>
 	);
-}
-
-function CommandSeparator({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Separator>) {
-	return <CommandPrimitive.Separator data-slot="command-separator" className={cn("-mx-1 h-px bg-border", className)} {...props} />;
 }
 
 function CommandItem({ className, children, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
@@ -109,14 +73,4 @@ function CommandItem({ className, children, ...props }: React.ComponentProps<typ
 	);
 }
 
-function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) {
-	return (
-		<span
-			data-slot="command-shortcut"
-			className={cn("ml-auto text-muted-foreground text-xs tracking-widest group-data-selected/command-item:text-foreground", className)}
-			{...props}
-		/>
-	);
-}
-
-export { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut };
+export { Command, CommandGroup, CommandInput, CommandItem, CommandList };

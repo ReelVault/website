@@ -75,12 +75,6 @@ function CardDescription({
 	);
 }
 
-function CardAction({ className, ...props }: ComponentProps<"div">) {
-	return (
-		<div data-slot="card-action" className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)} {...props} />
-	);
-}
-
 const CARD_CONTENT_PADDING = {
 	default: "px-(--card-spacing)",
 	comfortable: "p-5",
@@ -91,14 +85,4 @@ function CardContent({ className, size = "default", ...props }: ComponentProps<"
 	return <div data-slot="card-content" data-size={size} className={cn(CARD_CONTENT_PADDING[size], className)} {...props} />;
 }
 
-function CardFooter({ className, ...props }: ComponentProps<"div">) {
-	return (
-		<div
-			data-slot="card-footer"
-			className={cn("flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)", className)}
-			{...props}
-		/>
-	);
-}
-
-export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+export { Card, CardContent, CardDescription, CardHeader, CardTitle };

@@ -133,16 +133,6 @@ function SelectContent({
 	);
 }
 
-function SelectLabel({ className, ...props }: SelectPrimitive.GroupLabel.Props) {
-	return (
-		<SelectPrimitive.GroupLabel
-			data-slot="select-label"
-			className={cn("px-1.5 py-1 text-muted-foreground text-xs", className)}
-			{...props}
-		/>
-	);
-}
-
 interface SelectItemProps extends Omit<SelectPrimitive.Item.Props, "label"> {
 	label?: React.ReactNode;
 	textValue?: string;
@@ -165,16 +155,6 @@ function SelectItem({ className, children, label, textValue, ...props }: SelectI
 				<CheckIcon className="pointer-events-none" />
 			</SelectPrimitive.ItemIndicator>
 		</SelectPrimitive.Item>
-	);
-}
-
-function SelectSeparator({ className, ...props }: SelectPrimitive.Separator.Props) {
-	return (
-		<SelectPrimitive.Separator
-			data-slot="select-separator"
-			className={cn("pointer-events-none -mx-1 my-1 h-px bg-border", className)}
-			{...props}
-		/>
 	);
 }
 
@@ -208,15 +188,4 @@ function SelectScrollDownButton({ className, ...props }: ComponentProps<typeof S
 	);
 }
 
-export {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectScrollDownButton,
-	SelectScrollUpButton,
-	SelectSeparator,
-	SelectTrigger,
-	SelectValue,
-};
+export { Select, SelectContent, SelectGroup, SelectItem, SelectScrollDownButton, SelectScrollUpButton, SelectTrigger, SelectValue };

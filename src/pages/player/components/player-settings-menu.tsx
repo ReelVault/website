@@ -19,10 +19,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { usePlayerActions, usePlayerInfo, usePlayerSettings, usePlayerVolume } from "../player-context";
 import { PLAYBACK_SPEED_STEPS } from "../utils/player-speed";
-import { detach, getVersionLabel } from "../utils/player-utils";
+import { getVersionLabel } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 import { PlayerShortcutsDialog } from "./player-shortcuts-dialog";
 

@@ -2,10 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { AlertTriangle, Copy, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { usePlayerActions, usePlayerInfo, usePlayerStatus } from "../player-context";
-import { detach } from "../utils/player-utils";
 
 export function PlayerLoadingOverlay() {
 	const { canPlay, isBuffering, pendingChange, playerError } = usePlayerStatus();

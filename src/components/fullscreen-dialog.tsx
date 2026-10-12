@@ -2,41 +2,12 @@ import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { cn } from "cn";
 import { XIcon } from "lucide-react";
 import type { ComponentProps } from "react";
-import { usePortalContainer } from "@/components/portal-container";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogOverlay, DialogPortal, DialogTrigger } from "@/components/ui/dialog";
 import { m } from "@/paraglide/messages";
 
-function FullscreenDialog({ ...props }: DialogPrimitive.Root.Props) {
-	return <DialogPrimitive.Root data-slot="dialog" {...props} />;
-}
-
-function FullscreenDialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
-	return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
-}
-
-function FullscreenDialogPortal({ container, ...props }: DialogPrimitive.Portal.Props) {
-	const portalContainer = usePortalContainer(container);
-
-	return <DialogPrimitive.Portal data-slot="dialog-portal" container={portalContainer} {...props} />;
-}
-
-function FullscreenDialogClose({ ...props }: DialogPrimitive.Close.Props) {
-	return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
-}
-
-function FullscreenDialogOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) {
-	return (
-		<DialogPrimitive.Backdrop
-			data-slot="dialog-overlay"
-			className={cn(
-				"data-open:fade-in-0 data-closed:fade-out-0 fixed inset-0 isolate z-50 bg-black/70 duration-100 data-closed:animate-out data-open:animate-in",
-				className,
-			)}
-			{...props}
-		/>
-	);
-}
-
+// Same root, trigger, portal and overlay as the shadcn dialog. The content stays a centered panel on
+// mobile (no bottom sheet) and takes its size from the caller, so it keeps its own layout.
 function FullscreenDialogContent({
 	className,
 	children,
@@ -48,8 +19,8 @@ function FullscreenDialogContent({
 	container?: DialogPrimitive.Portal.Props["container"];
 }) {
 	return (
-		<FullscreenDialogPortal container={container}>
-			<FullscreenDialogOverlay />
+		<DialogPortal container={container}>
+			<DialogOverlay />
 			<DialogPrimitive.Popup
 				data-slot="dialog-content"
 				className={cn(
@@ -69,7 +40,7 @@ function FullscreenDialogContent({
 					</DialogPrimitive.Close>
 				)}
 			</DialogPrimitive.Popup>
-		</FullscreenDialogPortal>
+		</DialogPortal>
 	);
 }
 
@@ -118,14 +89,11 @@ function FullscreenDialogDescription({ className, ...props }: DialogPrimitive.De
 }
 
 export {
-	FullscreenDialog,
-	FullscreenDialogClose,
+	Dialog as FullscreenDialog,
+	DialogTrigger as FullscreenDialogTrigger,
 	FullscreenDialogContent,
 	FullscreenDialogDescription,
 	FullscreenDialogFooter,
 	FullscreenDialogHeader,
-	FullscreenDialogOverlay,
-	FullscreenDialogPortal,
 	FullscreenDialogTitle,
-	FullscreenDialogTrigger,
 };

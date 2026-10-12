@@ -1,13 +1,13 @@
-import { Search } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { flattenProviderSearchResults } from "@/client/hooks/use-providers";
 import { useRematchMetadata } from "@/client/hooks/use-rematch-metadata";
 import { AppEmptyState } from "@/components/app-states";
 import { CandidateSkeletonList } from "@/components/candidate-skeleton";
 import { PreferenceToggle } from "@/components/preference-controls";
+import { ProviderCandidateCard } from "@/components/provider-candidate-card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { m } from "@/paraglide/messages";
-import { IdentifyCandidateCard } from "./identify-candidate-card";
 import { IdentifySearchForm } from "./identify-search-form";
 
 interface IdentifyPanelProps {
@@ -39,6 +39,7 @@ export function IdentifyPanel({ metadataId, mediaType, initialTitle, initialYear
 		});
 
 	const isApplying = isRematching || isLinking;
+	const applyLabel = actionMode === "supplement" ? m.components_identify_fill_gaps() : m.components_apply_match();
 
 	const handleApply = (providerId: string, externalId: string) => {
 		setSelectedCandidate({ providerId, externalId });
@@ -77,12 +78,20 @@ export function IdentifyPanel({ metadataId, mediaType, initialTitle, initialYear
 						isApplying && selectedCandidate?.providerId === candidate.providerId && selectedCandidate.externalId === candidate.externalId;
 
 					return (
-						<IdentifyCandidateCard
+						<ProviderCandidateCard
 							key={`${candidate.providerId}-${candidate.externalId}`}
 							candidate={candidate}
-							isCurrentSelecting={isCurrentSelecting}
-							isApplying={isApplying}
-							actionMode={actionMode}
+							disabled={isApplying}
+							action={
+								isCurrentSelecting ? (
+									<>
+										<RefreshCw className="size-3.5 animate-spin" />
+										{m.common_processing()}
+									</>
+								) : (
+									applyLabel
+								)
+							}
 							onApply={handleApply}
 						/>
 					);

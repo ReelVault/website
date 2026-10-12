@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { getLocaleTag } from "@/utils/format-utils";
 import { useClientCapabilities } from "../hooks/use-client-capabilities";
@@ -24,7 +25,6 @@ import {
 	type SubtitlePosition,
 	type SubtitleSize,
 } from "../utils/player.types";
-import { detach } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 import { PlayerSubtitleSearchPanel } from "./player-subtitle-search-panel";
 

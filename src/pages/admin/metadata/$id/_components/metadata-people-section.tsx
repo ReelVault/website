@@ -44,7 +44,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 							{visibleCast.map((actor) => (
 								<PersonCard
 									key={actor.data?.id ? `cast-${actor.data.id}` : `cast-${actor.character ?? "actor"}-${actor.data?.name ?? "unknown"}`}
-									name={actor.data?.name ?? "Nieznana osoba"}
+									name={actor.data?.name ?? m.components_unknown_person()}
 									detail={actor.character ?? m.admin_metadata_role_unknown()}
 									imageId={actor.data?.imageId}
 									imageUpdatedAt={actor.data?.updatedAt}
@@ -84,7 +84,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 											? `crew-${member.data.id}-${member.job}`
 											: `crew-${member.data?.name ?? "unknown"}-${member.job}-${member.department}`
 									}
-									name={member.data?.name ?? "Nieznana osoba"}
+									name={member.data?.name ?? m.components_unknown_person()}
 									detail={`${member.job}${member.department ? ` (${member.department})` : ""}`}
 									imageId={member.data?.imageId}
 									imageUpdatedAt={member.data?.updatedAt}

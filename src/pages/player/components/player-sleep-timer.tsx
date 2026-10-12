@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import { noopCleanup } from "@/lib/detach";
 import { usePlayerActions } from "../player-context";
 import { setSleepTimer, useSleepTimer } from "../utils/player-sleep-timer";
-import { noopCleanup } from "../utils/player-utils";
 
 /** Headless: pauses playback when a minute-based sleep timer expires and clears the timer when the player closes. */
 export function PlayerSleepTimerController() {

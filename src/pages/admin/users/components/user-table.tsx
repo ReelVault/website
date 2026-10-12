@@ -28,6 +28,45 @@ interface UserTableProps {
 	onToggleSelectAll: (ids: string[]) => void;
 }
 
+type UserRowHandlers = Pick<UserTableProps, "onToggleBan" | "onToggleRole" | "onDelete" | "onCopy">;
+
+/** Right-click (or long-press) menu shared by the table row and the phone card. */
+function UserContextMenuContent({ user, onToggleBan, onToggleRole, onDelete, onCopy }: UserRowHandlers & { user: AdminUser }) {
+	return (
+		<ContextMenuContent className="w-64">
+			<ContextMenuGroup>
+				<ContextMenuLabel className="truncate">{user.name}</ContextMenuLabel>
+			</ContextMenuGroup>
+			<ContextMenuSeparator />
+			<ContextMenuGroup>
+				<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer">
+					<Shield className="size-4 text-primary" />
+					<span>{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}</span>
+				</ContextMenuItem>
+				<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer">
+					{user.banned ? <UserCheck className="size-4 text-success" /> : <UserRoundX className="size-4 text-warning" />}
+					<span>{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}</span>
+				</ContextMenuItem>
+				<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer">
+					<Copy className="size-4 text-muted-foreground" />
+					<span>{m.common_copy_email()}</span>
+				</ContextMenuItem>
+				<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer">
+					<Copy className="size-4 text-muted-foreground" />
+					<span>{m.admin_users_copy_account_id()}</span>
+				</ContextMenuItem>
+			</ContextMenuGroup>
+			<ContextMenuSeparator />
+			<ContextMenuGroup>
+				<ContextMenuItem onClick={() => detach(() => onDelete(user.id, user.name))} variant="destructive" className="cursor-pointer">
+					<Trash2 className="size-4" />
+					<span>{m.admin_users_delete_account()}</span>
+				</ContextMenuItem>
+			</ContextMenuGroup>
+		</ContextMenuContent>
+	);
+}
+
 export function UserTable({
 	users,
 	updatingId,
@@ -39,6 +78,8 @@ export function UserTable({
 	onToggleSelect,
 	onToggleSelectAll,
 }: UserTableProps) {
+	const handlers: UserRowHandlers = { onToggleBan, onToggleRole, onDelete, onCopy };
+
 	return (
 		<ResponsiveDataList
 			items={users}
@@ -115,49 +156,14 @@ export function UserTable({
 										/>
 									</TableCell>
 								</ContextMenuTrigger>
-
-								<ContextMenuContent className="w-64">
-									<ContextMenuGroup>
-										<ContextMenuLabel className="truncate">{user.name}</ContextMenuLabel>
-									</ContextMenuGroup>
-									<ContextMenuSeparator />
-									<ContextMenuGroup>
-										<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer">
-											<Shield className="size-4 text-primary" />
-											<span>{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}</span>
-										</ContextMenuItem>
-										<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer">
-											{user.banned ? <UserCheck className="size-4 text-success" /> : <UserRoundX className="size-4 text-warning" />}
-											<span>{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}</span>
-										</ContextMenuItem>
-										<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer">
-											<Copy className="size-4 text-muted-foreground" />
-											<span>{m.common_copy_email()}</span>
-										</ContextMenuItem>
-										<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer">
-											<Copy className="size-4 text-muted-foreground" />
-											<span>{m.admin_users_copy_account_id()}</span>
-										</ContextMenuItem>
-									</ContextMenuGroup>
-									<ContextMenuSeparator />
-									<ContextMenuGroup>
-										<ContextMenuItem
-											onClick={() => detach(() => onDelete(user.id, user.name))}
-											variant="destructive"
-											className="cursor-pointer"
-										>
-											<Trash2 className="size-4" />
-											<span>{m.admin_users_delete_account()}</span>
-										</ContextMenuItem>
-									</ContextMenuGroup>
-								</ContextMenuContent>
+								<UserContextMenuContent user={user} {...handlers} />
 							</ContextMenu>
 						))}
 					</TableBody>
 				</Table>
 			)}
 			renderCard={(user) => (
-				<ContextMenu key={user.id}>
+				<ContextMenu>
 					<ContextMenuTrigger render={<Card />}>
 						<CardContent className="flex flex-col gap-4">
 							<label className="flex items-center gap-2 text-xs">
@@ -199,38 +205,7 @@ export function UserTable({
 							/>
 						</CardContent>
 					</ContextMenuTrigger>
-
-					<ContextMenuContent className="w-64">
-						<ContextMenuGroup>
-							<ContextMenuLabel className="truncate">{user.name}</ContextMenuLabel>
-						</ContextMenuGroup>
-						<ContextMenuSeparator />
-						<ContextMenuGroup>
-							<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer">
-								<Shield className="size-4 text-primary" />
-								<span>{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}</span>
-							</ContextMenuItem>
-							<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer">
-								{user.banned ? <UserCheck className="size-4 text-success" /> : <UserRoundX className="size-4 text-warning" />}
-								<span>{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}</span>
-							</ContextMenuItem>
-							<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer">
-								<Copy className="size-4 text-muted-foreground" />
-								<span>{m.common_copy_email()}</span>
-							</ContextMenuItem>
-							<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer">
-								<Copy className="size-4 text-muted-foreground" />
-								<span>{m.common_copy_id()}</span>
-							</ContextMenuItem>
-						</ContextMenuGroup>
-						<ContextMenuSeparator />
-						<ContextMenuGroup>
-							<ContextMenuItem onClick={() => detach(() => onDelete(user.id, user.name))} variant="destructive" className="cursor-pointer">
-								<Trash2 className="size-4" />
-								<span>{m.admin_users_delete_account()}</span>
-							</ContextMenuItem>
-						</ContextMenuGroup>
-					</ContextMenuContent>
+					<UserContextMenuContent user={user} {...handlers} />
 				</ContextMenu>
 			)}
 		/>

@@ -9,9 +9,6 @@ import { PathPickerBreadcrumbs } from "./path-picker/path-picker-breadcrumbs";
 import { PathPickerDirectoryList } from "./path-picker/path-picker-directory-list";
 import { PathPickerFooter } from "./path-picker/path-picker-footer";
 import { PathPickerSearchForm } from "./path-picker/path-picker-search-form";
-import type { AdminFilesystemBrowse, AdminFilesystemDirectory } from "./path-picker/path-picker-types";
-
-export type { AdminFilesystemBrowse, AdminFilesystemDirectory };
 
 interface PathPickerDialogProps {
 	open: boolean;

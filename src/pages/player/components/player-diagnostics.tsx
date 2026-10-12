@@ -3,13 +3,13 @@ import { Activity, Cpu, Film, Layers, Monitor, X } from "lucide-react";
 import { CopyIcon } from "@/components/copy-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { formatTimestamp } from "@/utils/format-utils";
 import { toast } from "@/utils/toast-facade";
 import { usePlayerDiagnosticsData, usePlayerDiagnosticsToggle } from "../player-context";
 import { formatTranscodeReasons } from "../utils/player-transcode-reason";
-import { detach } from "../utils/player-utils";
 
 function formatBytes(bytes?: number | null): string {
 	if (!bytes || bytes <= 0) return m.player_no_data();

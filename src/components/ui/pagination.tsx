@@ -1,8 +1,7 @@
 import { cn } from "cn";
-import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Button } from "@/components/ui/button";
-import { m } from "@/paraglide/messages";
 
 function Pagination({ className, ...props }: ComponentProps<"nav">) {
 	return <nav aria-label="pagination" data-slot="pagination" className={cn("mx-auto flex w-full justify-center", className)} {...props} />;
@@ -51,18 +50,4 @@ function PaginationNext({ className, text = "Next", ...props }: ComponentProps<t
 	);
 }
 
-function PaginationEllipsis({ className, ...props }: ComponentProps<"span">) {
-	return (
-		<span
-			aria-hidden
-			data-slot="pagination-ellipsis"
-			className={cn("flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4", className)}
-			{...props}
-		>
-			<MoreHorizontalIcon />
-			<span className="sr-only">{m.common_more_pages()}</span>
-		</span>
-	);
-}
-
-export { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious };
+export { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious };

@@ -3,16 +3,16 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useProfilePreferences } from "@/client/hooks/use-profiles";
 import { AsyncButton } from "@/components/async-button";
+import { GeneralPreferencesGrid } from "@/components/profile-preferences/general-preferences-grid";
+import { SettingsCategory } from "@/components/profile-preferences/settings-category";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { isLocale } from "@/paraglide/runtime";
 import { getAppLocale, setAppLocale } from "@/utils/locale";
 import { CopyPreferencesDialog } from "../components/copy-preferences-dialog";
-import { GeneralPreferencesGrid } from "../components/general-preferences-grid";
 import { HiddenPages } from "../components/hidden-pages";
 import { MutedNotificationTypes } from "../components/muted-notification-types";
-import { SettingsCategory } from "../components/settings-category";
 
 interface GeneralPreferences {
 	language: string;

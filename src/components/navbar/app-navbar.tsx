@@ -1,28 +1,21 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { cn } from "cn";
-import { resolvePluginText, usePluginNavPages } from "@/client/hooks/use-plugin-ui";
-import { useHiddenPages } from "@/client/hooks/use-profiles";
 import { RealtimeStatusIndicator } from "@/components/realtime-status-indicator";
 import { m } from "@/paraglide/messages";
-import { getPluginIcon } from "@/plugin-host/icons";
-import { filterHiddenPages } from "@/utils/hidden-pages";
 import { Logo } from "../logo";
 import { NavbarBottomBar } from "./navbar-bottom-bar";
 import { NavbarDownloadsIndicator } from "./navbar-downloads-indicator";
-import { NAVBAR_LINKS, PRIMARY_MOBILE_LINK_COUNT } from "./navbar-links";
+import { PRIMARY_MOBILE_LINK_COUNT } from "./navbar-links";
 import { NavbarLocaleSwitcher } from "./navbar-locale-switcher";
 import { NavbarMobileSheet } from "./navbar-mobile-sheet";
 import { NavbarNotifications } from "./navbar-notifications";
 import { NavbarProfile } from "./navbar-profile";
 import { NavbarSearchGroup } from "./navbar-search-group";
+import { useNavbarEntries } from "./use-navbar-entries";
 
 export function AppNavbar() {
 	const { pathname } = useLocation();
-	const { pages: pluginNavPages } = usePluginNavPages("user");
-	const hiddenPages = useHiddenPages();
-	const navbarLinks = filterHiddenPages(NAVBAR_LINKS, hiddenPages);
-
-	const isLinkActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+	const { core, plugins } = useNavbarEntries();
 
 	return (
 		<nav
@@ -36,75 +29,43 @@ export function AppNavbar() {
 				</Link>
 
 				<div className="ml-8 hidden w-full items-center justify-center gap-1 md:flex xl:hidden">
-					{navbarLinks.slice(0, PRIMARY_MOBILE_LINK_COUNT).map(({ label, href, icon: Icon }) => {
-						const isActive = isLinkActive(href);
-
-						return (
-							<Link
-								key={href}
-								to={href}
-								aria-current={isActive ? "page" : undefined}
-								className={cn(
-									"flex min-h-12 max-w-24 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-xs transition-colors",
-									{
-										"bg-muted text-primary": isActive,
-										"text-muted-foreground hover:bg-muted/40 hover:text-foreground": !isActive,
-									},
-								)}
-							>
-								<Icon className="size-5" aria-hidden="true" />
-								<span>{label}</span>
-							</Link>
-						);
-					})}
+					{core.slice(0, PRIMARY_MOBILE_LINK_COUNT).map(({ href, label, Icon, isActive }) => (
+						<Link
+							key={href}
+							to={href}
+							aria-current={isActive ? "page" : undefined}
+							className={cn(
+								"flex min-h-12 max-w-24 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-xs transition-colors",
+								{
+									"bg-muted text-primary": isActive,
+									"text-muted-foreground hover:bg-muted/40 hover:text-foreground": !isActive,
+								},
+							)}
+						>
+							<Icon className="size-5" aria-hidden="true" />
+							<span>{label}</span>
+						</Link>
+					))}
 				</div>
 
 				<div className="ml-8 hidden items-center gap-1 xl:flex">
-					{navbarLinks.map(({ label, href, icon: Icon }) => {
-						const isActive = isLinkActive(href);
-
-						return (
-							<Link
-								key={href}
-								to={href}
-								aria-current={isActive ? "page" : undefined}
-								className={cn(
-									"flex min-h-11 items-center gap-2 whitespace-nowrap rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
-									{
-										"border-primary bg-muted text-foreground": isActive,
-										"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,
-									},
-								)}
-							>
-								<Icon aria-hidden="true" />
-								{label}
-							</Link>
-						);
-					})}
-					{/* PLUGIN LINKS (nav:"user") — render nothing when no plugin advertises a page */}
-					{pluginNavPages.map((page) => {
-						const href = `/plugins/${page.pluginId}/page/${page.path}`;
-						const Icon = getPluginIcon(page.icon);
-						const isActive = isLinkActive(href);
-
-						return (
-							<Link
-								key={href}
-								to={href}
-								aria-current={isActive ? "page" : undefined}
-								className={cn(
-									"flex min-h-11 items-center gap-2 whitespace-nowrap rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
-									{
-										"border-primary bg-muted text-foreground": isActive,
-										"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,
-									},
-								)}
-							>
-								<Icon aria-hidden="true" />
-								{resolvePluginText(page.name, page.defaultLocale)}
-							</Link>
-						);
-					})}
+					{[...core, ...plugins].map(({ href, label, Icon, isActive }) => (
+						<Link
+							key={href}
+							to={href}
+							aria-current={isActive ? "page" : undefined}
+							className={cn(
+								"flex min-h-11 items-center gap-2 whitespace-nowrap rounded-lg border-l-2 px-2.5 font-medium text-sm transition-[background-color,color,border-color] 2xl:px-3",
+								{
+									"border-primary bg-muted text-foreground": isActive,
+									"border-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground": !isActive,
+								},
+							)}
+						>
+							<Icon aria-hidden="true" />
+							{label}
+						</Link>
+					))}
 				</div>
 
 				<div className="ml-auto flex items-center gap-2">
@@ -122,7 +83,7 @@ export function AppNavbar() {
 						<NavbarProfile />
 					</div>
 
-					<NavbarMobileSheet pathname={pathname} />
+					<NavbarMobileSheet />
 				</div>
 			</div>
 

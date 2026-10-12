@@ -2,18 +2,26 @@ import { cn } from "cn";
 import { PreferenceSelect } from "@/components/preference-controls";
 import { m } from "@/paraglide/messages";
 import type { ProfilePreferencesState } from "@/types/profile-preferences";
-import { BG_PREVIEW_CLASSES, COLOR_PREVIEW_CLASSES, SIZE_PREVIEW_CLASSES } from "./preferences-utils";
 
-interface SubtitleStylePreferencesProps {
-	size: ProfilePreferencesState["subtitleSize"];
-	position: ProfilePreferencesState["subtitlePosition"];
-	color: ProfilePreferencesState["subtitleColor"];
-	background: ProfilePreferencesState["subtitleBackground"];
-	onChangeSize: (size: ProfilePreferencesState["subtitleSize"]) => void;
-	onChangePosition: (position: ProfilePreferencesState["subtitlePosition"]) => void;
-	onChangeColor: (color: ProfilePreferencesState["subtitleColor"]) => void;
-	onChangeBackground: (background: ProfilePreferencesState["subtitleBackground"]) => void;
-}
+const SIZE_PREVIEW_CLASSES = {
+	small: "text-sm",
+	normal: "text-base",
+	large: "text-xl",
+	"extra-large": "text-2xl",
+} as const;
+
+const COLOR_PREVIEW_CLASSES = {
+	white: "text-white",
+	yellow: "text-yellow-300",
+	cyan: "text-cyan-300",
+	green: "text-green-300",
+} as const;
+
+const BG_PREVIEW_CLASSES = {
+	none: "bg-transparent",
+	semi: "bg-black/60",
+	solid: "bg-black",
+} as const;
 
 const isSubtitleSize = (value: string): value is ProfilePreferencesState["subtitleSize"] =>
 	value === "small" || value === "normal" || value === "large" || value === "extra-large";
@@ -27,26 +35,23 @@ const isSubtitleColor = (value: string): value is ProfilePreferencesState["subti
 const isSubtitleBackground = (value: string): value is ProfilePreferencesState["subtitleBackground"] =>
 	value === "semi" || value === "none" || value === "solid";
 
-export function SubtitleStylePreferences({
-	size,
-	position,
-	color,
-	background,
-	onChangeSize,
-	onChangePosition,
-	onChangeColor,
-	onChangeBackground,
-}: SubtitleStylePreferencesProps) {
+interface SubtitleStylePreferencesProps {
+	preferences: ProfilePreferencesState;
+	onChange: (patch: Partial<ProfilePreferencesState>) => void;
+}
+
+/** Subtitle size, position, colour and background, with a live preview of the chosen look. */
+export function SubtitleStylePreferences({ preferences, onChange }: SubtitleStylePreferencesProps) {
+	const { subtitleSize: size, subtitlePosition: position, subtitleColor: color, subtitleBackground: background } = preferences;
+
 	return (
 		<>
 			<div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
 				<PreferenceSelect
 					label={m.admin_users_subtitle_size()}
 					value={size}
-					onChange={(val) => {
-						if (isSubtitleSize(val)) {
-							onChangeSize(val);
-						}
+					onChange={(value) => {
+						if (isSubtitleSize(value)) onChange({ subtitleSize: value });
 					}}
 					options={[
 						["small", m.admin_users_size_small()],
@@ -58,10 +63,8 @@ export function SubtitleStylePreferences({
 				<PreferenceSelect
 					label={m.user_vertical_position()}
 					value={position}
-					onChange={(val) => {
-						if (isSubtitlePosition(val)) {
-							onChangePosition(val);
-						}
+					onChange={(value) => {
+						if (isSubtitlePosition(value)) onChange({ subtitlePosition: value });
 					}}
 					options={[
 						["bottom", m.admin_users_position_bottom()],
@@ -72,10 +75,8 @@ export function SubtitleStylePreferences({
 				<PreferenceSelect
 					label={m.player_text_color()}
 					value={color}
-					onChange={(val) => {
-						if (isSubtitleColor(val)) {
-							onChangeColor(val);
-						}
+					onChange={(value) => {
+						if (isSubtitleColor(value)) onChange({ subtitleColor: value });
 					}}
 					options={[
 						["white", m.admin_users_color_white()],
@@ -87,10 +88,8 @@ export function SubtitleStylePreferences({
 				<PreferenceSelect
 					label={m.user_background_style()}
 					value={background}
-					onChange={(val) => {
-						if (isSubtitleBackground(val)) {
-							onChangeBackground(val);
-						}
+					onChange={(value) => {
+						if (isSubtitleBackground(value)) onChange({ subtitleBackground: value });
 					}}
 					options={[
 						["semi", m.user_bg_semi_transparent_default()],

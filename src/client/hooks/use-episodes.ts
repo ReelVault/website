@@ -1,4 +1,4 @@
-import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { reelvault } from "../client";
 import { episodeFields } from "../utils/fields";
@@ -36,35 +36,6 @@ export function useEpisodes(seasonId: string | null, options?: UseEpisodesOption
 		},
 		enabled: seasonId !== null,
 		placeholderData: keepPreviousData,
-		staleTime: 1000 * 60 * 60 * 24,
-	});
-}
-
-export interface UseEpisodesInfiniteOptions {
-	limit?: number;
-}
-
-export function useEpisodesInfinite(seasonId: string | null, options: UseEpisodesInfiniteOptions = {}) {
-	const { limit = 20 } = options;
-
-	return useInfiniteQuery({
-		queryKey: episodeKeys.infinite(seasonId, limit),
-		queryFn: async ({ pageParam }) => {
-			if (!seasonId) return { data: [], total: 0, page: 1, limit, totalPages: 0 };
-
-			const res = await reelvault.episodes.getAll({
-				seasonId,
-				fields: episodeFields,
-				page: pageParam,
-				limit,
-			});
-
-			return res;
-		},
-		initialPageParam: 1,
-		getNextPageParam: (lastPage) => (lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined),
-		maxPages: 5,
-		enabled: seasonId !== null,
 		staleTime: 1000 * 60 * 60 * 24,
 	});
 }

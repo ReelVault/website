@@ -1,7 +1,6 @@
 import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { Copy, ImageDown, RefreshCw, Shield, User } from "lucide-react";
-import { startTransition } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRefreshPerson, useRefreshPersonImage } from "@/client/hooks/use-person-data";
 import { defineFields } from "@/client/utils/fields";
@@ -16,6 +15,7 @@ import {
 	ContextMenuSeparator,
 	ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { copyEntityLink, copyToClipboard } from "@/utils/clipboard-utils";
 import { ApiImage } from "../ui/api-image";
@@ -24,9 +24,69 @@ type Cast = MetadataWithRelation["cast"][number];
 
 export const personCardFields = defineFields<Cast>()("character", "data.id", "data.imageId", "data.name", "data.updatedAt");
 
+/** Person context menu shared by the details cast and the admin people grid; admin tools render only when `isAdmin`. */
+export function PersonContextMenuContent({
+	personId,
+	personName,
+	isAdmin,
+	onRefresh,
+	onRefreshImage,
+}: {
+	personId: string;
+	personName: string;
+	isAdmin: boolean;
+	onRefresh: (id: string) => void;
+	onRefreshImage: (id: string) => void;
+}) {
+	return (
+		<ContextMenuContent className="w-64">
+			<ContextMenuGroup>
+				<ContextMenuLabel className="truncate">{personName}</ContextMenuLabel>
+			</ContextMenuGroup>
+			<ContextMenuSeparator />
+			<ContextMenuGroup>
+				<ContextMenuItem render={<Link to="/person/$id" params={{ id: personId }} />} className="cursor-pointer">
+					<User className="size-4 text-muted-foreground" />
+					<span>{m.components_person_view_profile()}</span>
+				</ContextMenuItem>
+				<ContextMenuItem
+					onClick={() => detach(copyEntityLink(`/person/${personId}`, m.components_profile_link_word()))}
+					className="cursor-pointer"
+				>
+					<Copy className="size-4 text-muted-foreground" />
+					<span>{m.components_copy_profile_link()}</span>
+				</ContextMenuItem>
+			</ContextMenuGroup>
+
+			{isAdmin && (
+				<>
+					<ContextMenuSeparator />
+					<ContextMenuGroup>
+						<ContextMenuLabel className="flex items-center">
+							<Shield className="size-3" />
+							{m.common_admin_tools()}
+						</ContextMenuLabel>
+						<ContextMenuItem onClick={() => onRefresh(personId)} className="cursor-pointer">
+							<RefreshCw className="size-4 text-primary" />
+							<span>{m.components_person_refresh_data()}</span>
+						</ContextMenuItem>
+						<ContextMenuItem onClick={() => onRefreshImage(personId)} className="cursor-pointer">
+							<ImageDown className="size-4 text-primary" />
+							<span>{m.components_person_force_photo()}</span>
+						</ContextMenuItem>
+						<ContextMenuItem onClick={() => detach(copyToClipboard(personId, m.components_person_id()))} className="cursor-pointer">
+							<Copy className="size-4 text-muted-foreground" />
+							<span>{m.components_copy_person_id()}</span>
+						</ContextMenuItem>
+					</ContextMenuGroup>
+				</>
+			)}
+		</ContextMenuContent>
+	);
+}
+
 export function PersonCard({ person }: { person: RequireFields<Cast, typeof personCardFields> }) {
 	const { user } = useCurrentUser();
-	const isAdmin = isAdminUser(user);
 	const refreshPersonMutation = useRefreshPerson();
 	const refreshPersonImageMutation = useRefreshPersonImage();
 
@@ -34,14 +94,6 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 
 	const personId = person.data.id;
 	const personName = person.data.name || m.components_unknown_person();
-
-	const handleCopyLink = (): void => {
-		startTransition(() => copyEntityLink(`/person/${personId}`, m.components_profile_link_word()));
-	};
-
-	const handleCopyId = (): void => {
-		startTransition(() => copyToClipboard(personId, m.components_person_id()));
-	};
 
 	return (
 		<ContextMenu>
@@ -78,46 +130,13 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 				</Link>
 			</ContextMenuTrigger>
 
-			<ContextMenuContent className="w-64">
-				<ContextMenuGroup>
-					<ContextMenuLabel className="truncate">{personName}</ContextMenuLabel>
-				</ContextMenuGroup>
-				<ContextMenuSeparator />
-				<ContextMenuGroup>
-					<ContextMenuItem render={<Link to="/person/$id" params={{ id: personId }} />} className="cursor-pointer">
-						<User className="size-4 text-muted-foreground" />
-						<span>{m.components_person_view_profile()}</span>
-					</ContextMenuItem>
-					<ContextMenuItem onClick={handleCopyLink} className="cursor-pointer">
-						<Copy className="size-4 text-muted-foreground" />
-						<span>{m.components_copy_profile_link()}</span>
-					</ContextMenuItem>
-				</ContextMenuGroup>
-
-				{isAdmin && (
-					<>
-						<ContextMenuSeparator />
-						<ContextMenuGroup>
-							<ContextMenuLabel className="flex items-center">
-								<Shield className="size-3" />
-								{m.common_admin_tools()}
-							</ContextMenuLabel>
-							<ContextMenuItem onClick={() => refreshPersonMutation.mutate(personId)} className="cursor-pointer">
-								<RefreshCw className="size-4 text-primary" />
-								<span>{m.components_person_refresh_data()}</span>
-							</ContextMenuItem>
-							<ContextMenuItem onClick={() => refreshPersonImageMutation.mutate(personId)} className="cursor-pointer">
-								<ImageDown className="size-4 text-primary" />
-								<span>{m.components_person_force_photo()}</span>
-							</ContextMenuItem>
-							<ContextMenuItem onClick={handleCopyId} className="cursor-pointer">
-								<Copy className="size-4 text-muted-foreground" />
-								<span>{m.components_copy_person_id()}</span>
-							</ContextMenuItem>
-						</ContextMenuGroup>
-					</>
-				)}
-			</ContextMenuContent>
+			<PersonContextMenuContent
+				personId={personId}
+				personName={personName}
+				isAdmin={isAdminUser(user)}
+				onRefresh={(id) => refreshPersonMutation.mutate(id)}
+				onRefreshImage={(id) => refreshPersonImageMutation.mutate(id)}
+			/>
 		</ContextMenu>
 	);
 }

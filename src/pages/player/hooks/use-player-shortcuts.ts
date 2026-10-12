@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { detach } from "@/lib/detach";
 import { moveFocus, type SpatialDirection } from "@/lib/spatial-navigation";
 import { m } from "@/paraglide/messages";
 import { isTvDevice } from "@/utils/tv-device";
@@ -7,7 +8,7 @@ import type { PlayerActionsValue } from "../player-context";
 import { isBitmapSubtitle } from "../utils/player.types";
 import { MAX_PLAYER_VOLUME } from "../utils/player-audio-boost";
 import { nextPlaybackRate } from "../utils/player-speed";
-import { detach, toggleFullscreen, togglePiP, togglePlayPause } from "../utils/player-utils";
+import { toggleFullscreen, togglePiP, togglePlayPause } from "../utils/player-utils";
 
 interface UsePlayerShortcutsProps {
 	revealControls?: () => void;

@@ -98,6 +98,37 @@ export function normalizedPreferenceValue(
 	return value;
 }
 
+/** Maps server preferences (nullable extras) onto the editable preferences state. */
+export function toPreferencesState(value: ProfilePreferences): ProfilePreferencesState {
+	return {
+		language: value.language,
+		theme: value.theme,
+		autoplay: value.autoplay,
+		autoSkipIntro: value.autoSkipIntro,
+		autoSkipCredits: value.autoSkipCredits,
+		autoSkipRecap: value.autoSkipRecap,
+		audioLanguage: value.audioLanguage ?? "",
+		subtitleLanguage: value.subtitleLanguage ?? "",
+		subtitleFallbackLanguages: value.subtitleFallbackLanguages ?? "",
+		subtitlesEnabled: value.subtitlesEnabled,
+		forcedSubtitlesOnly: value.forcedSubtitlesOnly,
+		autoForcedSubtitles: value.autoForcedSubtitles,
+		preferHearingImpaired: value.preferHearingImpaired,
+		continueWatchingMinutes: value.continueWatchingMinutes,
+		resumeRewindSeconds: value.resumeRewindSeconds,
+		watchlistAutoRemoveWatched: value.watchlistAutoRemoveWatched,
+		hideRatingOverlay: value.hideRatingOverlay,
+		hdrMode: value.hdrMode,
+		maxStreamingBitrateKbps: value.maxStreamingBitrateKbps,
+		mutedNotificationTypes: value.mutedNotificationTypes,
+		hiddenPages: value.hiddenPages,
+		subtitleSize: value.subtitleSize,
+		subtitlePosition: value.subtitlePosition,
+		subtitleColor: value.subtitleColor,
+		subtitleBackground: value.subtitleBackground,
+	};
+}
+
 export function diffPreferences(next: ProfilePreferencesState, synced: ProfilePreferences): UpdateProfilePreferences {
 	const delta: Record<string, unknown> = {};
 	for (const key of PREFERENCE_STATE_KEYS) {

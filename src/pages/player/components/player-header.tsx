@@ -1,8 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, BarChart2 } from "lucide-react";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { usePlayerActions, usePlayerDiagnosticsToggle, usePlayerInfo, usePlayerNextEpisode } from "../player-context";
-import { detach } from "../utils/player-utils";
 import { PlayerControlButton } from "./player-control-button";
 
 export function PlayerHeader() {

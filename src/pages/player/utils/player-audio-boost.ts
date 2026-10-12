@@ -1,5 +1,5 @@
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { detach } from "./player-utils";
 
 export const MAX_PLAYER_VOLUME = 2;
 
