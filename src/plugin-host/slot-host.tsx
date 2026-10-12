@@ -33,6 +33,8 @@ interface PluginSlotHostProps {
 	variant?: PluginSlotVariant;
 	/** Extra classes for the buttons variant (each slot has different sizing needs). */
 	buttonClassName?: string;
+	/** Row size for the menu-items variant; the profile menu matches the size of its built-in rows. */
+	menuItemSize?: "default" | "lg";
 	/** Live player values — passed by slots mounted inside the player. */
 	playerContext?: PluginUiPlayerContext;
 	/** Ambient values of the mount point (e.g. metadataId) forwarded to actions and surfaces. */
@@ -46,7 +48,7 @@ interface PluginSlotHostProps {
  * nothing about specific plugins — contribution shape comes entirely from the
  * aggregated ui.json manifest.
  */
-export function PluginSlotHost({ name, variant, buttonClassName, playerContext, params, excludePaths }: PluginSlotHostProps) {
+export function PluginSlotHost({ name, variant, buttonClassName, menuItemSize, playerContext, params, excludePaths }: PluginSlotHostProps) {
 	const resolvedVariant = variant ?? SLOT_VARIANTS[name];
 	const { contributions } = usePluginSlots(name);
 	const { data: manifest } = usePluginUiManifest();
@@ -110,7 +112,10 @@ export function PluginSlotHost({ name, variant, buttonClassName, playerContext, 
 						{contribution.element ? (
 							surface(contribution.pluginId, contribution.element.tag)
 						) : (
-							<DropdownMenuItem onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}>
+							<DropdownMenuItem
+								size={menuItemSize}
+								onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}
+							>
 								<Icon className="size-4 text-muted-foreground" />
 								<span>{label}</span>
 							</DropdownMenuItem>

@@ -107,7 +107,7 @@ export function LibraryFilterSection(props: {
 						<p className="text-muted-foreground text-sm">{m.web_results_auto_update()}</p>
 					</div>
 
-					<Collapsible open={showAdvanced}>
+					<Collapsible open={showAdvanced} className={showAdvanced ? "hidden lg:block" : "hidden"}>
 						<CollapsibleContent className="hidden overflow-hidden lg:block">{filterContent}</CollapsibleContent>
 					</Collapsible>
 				</div>

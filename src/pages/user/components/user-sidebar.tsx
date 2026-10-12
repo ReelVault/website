@@ -28,7 +28,7 @@ export function UserSidebar() {
 
 	return (
 		<aside className="fixed inset-x-0 bottom-0 z-40 border-border/70 border-t bg-background/95 lg:inset-y-0 lg:right-auto lg:z-auto lg:w-64 lg:border-t-0 lg:border-r">
-			<div className="mx-auto flex h-16 max-w-xl items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] lg:flex lg:h-full lg:max-w-none lg:flex-col lg:items-stretch lg:justify-start lg:gap-8 lg:px-5 lg:py-6 lg:pb-0">
+			<div className="mx-auto flex h-16 max-w-xl items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] lg:flex lg:h-full lg:max-w-none lg:flex-col lg:items-stretch lg:justify-start lg:gap-8 lg:px-5 lg:py-6">
 				<Link
 					to="/"
 					className="mx-auto hidden items-center gap-3 px-2 lg:flex lg:items-center lg:justify-center"

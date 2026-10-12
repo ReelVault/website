@@ -23,7 +23,7 @@ import { toast } from "@/utils/toast-facade";
 export function NavbarProfile() {
 	const navigate = useNavigate();
 	const router = useTanStackRouter();
-	const { profile, user, isLoading } = useCurrentUser();
+	const { profile, user } = useCurrentUser();
 	const logoutMutation = useLogout();
 
 	const handleLogout = (): void => {
@@ -43,15 +43,8 @@ export function NavbarProfile() {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger render={<Button variant="ghost" size="lg" className="gap-3" />}>
-				<div className="hidden flex-col items-end text-left 2xl:flex">
-					<span className="font-semibold text-foreground text-sm">
-						{isLoading && m.common_loading_dots()}
-						{!isLoading && profileName}
-					</span>
-				</div>
-
-				<Avatar className="size-9 group-hover:ring-primary/50">
+			<DropdownMenuTrigger render={<Button variant="ghost" size="icon-lg" aria-label={profileName} />}>
+				<Avatar className="size-7 group-hover:ring-primary/50">
 					<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt={profileName} />
 					<AvatarFallback>
 						<User className="size-5" />
@@ -81,7 +74,7 @@ export function NavbarProfile() {
 
 				<DropdownMenuGroup>
 					{/* Plugin profile-menu slot — contributions from ui.json (no per-plugin code). */}
-					<PluginSlotHost name="navbar-profile-menu" />
+					<PluginSlotHost name="navbar-profile-menu" menuItemSize="lg" />
 
 					<Link to={"/remote"}>
 						<DropdownMenuItem size="lg">

@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Bell, Clock3, Monitor, MonitorSmartphone, Settings2, Sparkles } from "lucide-react";
+import { Bell, Clock3, Monitor, MonitorSmartphone, Settings2, ShieldCheck, Sparkles } from "lucide-react";
 import { m } from "@/paraglide/messages";
 import type { OptionalPageId } from "@/utils/hidden-pages";
 
@@ -48,6 +48,13 @@ export const USER_NAV_ITEMS: UserNavItem[] = [
 		href: "/remote",
 		icon: MonitorSmartphone,
 		pageId: "remote",
+	},
+	{
+		get label() {
+			return m.user_security();
+		},
+		href: "/security",
+		icon: ShieldCheck,
 	},
 	{
 		get label() {

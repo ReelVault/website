@@ -43,48 +43,50 @@ export function LibraryHeroNavigationButton({
 			aria-label={`${mainLabel}${subLabel ? `: ${subLabel}` : ""}`}
 			className={cn("group min-h-11 min-w-11 flex-1 items-center", isLeft ? "justify-end" : "justify-start")}
 		>
-			{isLeft ? (
-				<>
-					<div className="hidden flex-col items-end md:flex">
-						<span className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary">{mainLabel}</span>
-						<span
-							key={isGenreMode ? `genre-${mainLabel}` : subLabel}
-							// initial={{ y: 10, opacity: 0 }}
-							// animate={{ y: 0, opacity: 1 }}
-							// exit={{ y: -10, opacity: 0 }}
-							className="max-w-50 truncate font-bold text-muted-foreground text-xl transition-colors group-hover:text-foreground"
-						>
-							{subLabel}
-						</span>
-					</div>
-					<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card transition-[background-color,border-color] group-hover:border-primary/40 group-hover:bg-primary/10">
-						<Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
-					</div>
-				</>
-			) : (
-				<>
-					<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card transition-[background-color,border-color] group-hover:border-primary/40 group-hover:bg-primary/10">
-						<Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
-					</div>
-					<div className="hidden flex-col items-start md:flex">
-						<span
-							// layout
-							className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary"
-						>
-							{mainLabel}
-						</span>
-						<span
-							key={isGenreMode ? `genre-${mainLabel}` : subLabel}
-							// initial={{ y: 10, opacity: 0 }}
-							// animate={{ y: 0, opacity: 1 }}
-							// exit={{ y: -10, opacity: 0 }}
-							className="max-w-50 truncate font-bold text-muted-foreground text-xl transition-colors group-hover:text-foreground"
-						>
-							{subLabel}
-						</span>
-					</div>
-				</>
-			)}
+			<span className="flex items-center gap-3">
+				{isLeft ? (
+					<>
+						<div className="hidden flex-col items-end md:flex">
+							<span className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary">{mainLabel}</span>
+							<span
+								key={isGenreMode ? `genre-${mainLabel}` : subLabel}
+								// initial={{ y: 10, opacity: 0 }}
+								// animate={{ y: 0, opacity: 1 }}
+								// exit={{ y: -10, opacity: 0 }}
+								className="max-w-50 truncate font-bold text-muted-foreground text-xl transition-colors group-hover:text-foreground"
+							>
+								{subLabel}
+							</span>
+						</div>
+						<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card transition-[background-color,border-color] group-hover:border-primary/40 group-hover:bg-primary/10">
+							<Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+						</div>
+					</>
+				) : (
+					<>
+						<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card transition-[background-color,border-color] group-hover:border-primary/40 group-hover:bg-primary/10">
+							<Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+						</div>
+						<div className="hidden flex-col items-start md:flex">
+							<span
+								// layout
+								className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary"
+							>
+								{mainLabel}
+							</span>
+							<span
+								key={isGenreMode ? `genre-${mainLabel}` : subLabel}
+								// initial={{ y: 10, opacity: 0 }}
+								// animate={{ y: 0, opacity: 1 }}
+								// exit={{ y: -10, opacity: 0 }}
+								className="max-w-50 truncate font-bold text-muted-foreground text-xl transition-colors group-hover:text-foreground"
+							>
+								{subLabel}
+							</span>
+						</div>
+					</>
+				)}
+			</span>
 		</Button>
 	);
 }

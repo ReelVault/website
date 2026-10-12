@@ -3,7 +3,7 @@ import type { useSessions } from "@/client/hooks/use-sessions";
 import { ConfirmAction } from "@/components/confirm-action";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -45,42 +45,41 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 	return (
 		<SimpleAnimation direction="up" delay={Math.min(index * 35, 240)} duration={240}>
 			<ContextMenu>
-				<ContextMenuTrigger
-					render={<Card variant="interactive" />}
-					className="flex flex-col sm:flex-row sm:items-center sm:justify-between"
-				>
-					<div className="flex min-w-0 items-center gap-4">
-						<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-							{isMobile ? <Smartphone className="size-5" aria-hidden="true" /> : <Laptop className="size-5" aria-hidden="true" />}
-						</div>
-						<div className="min-w-0">
-							<div className="flex items-center gap-3">
-								<h2 className="truncate font-bold">{deviceTitle}</h2>
-								{session.isCurrent && (
-									<span className="rounded-full bg-primary/10 px-2 py-1 font-bold text-primary text-xs">{m.user_this_device()}</span>
-								)}
+				<ContextMenuTrigger render={<Card variant="interactive" />}>
+					<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+						<div className="flex min-w-0 items-center gap-4">
+							<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+								{isMobile ? <Smartphone className="size-5" aria-hidden="true" /> : <Laptop className="size-5" aria-hidden="true" />}
 							</div>
-							<p className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
-								<Clock className="size-3.5" aria-hidden="true" />{" "}
-								{m.user_devices_last_activity({ time: formatDateTime(session.updatedAt) })}
-								{session.ipAddress ? ` · ${session.ipAddress}` : ""}
-							</p>
+							<div className="min-w-0">
+								<div className="flex items-center gap-3">
+									<h2 className="truncate font-bold">{deviceTitle}</h2>
+									{session.isCurrent && (
+										<span className="rounded-full bg-primary/10 px-2 py-1 font-bold text-primary text-xs">{m.user_this_device()}</span>
+									)}
+								</div>
+								<p className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
+									<Clock className="size-3.5" aria-hidden="true" />{" "}
+									{m.user_devices_last_activity({ time: formatDateTime(session.updatedAt) })}
+									{session.ipAddress ? ` · ${session.ipAddress}` : ""}
+								</p>
+							</div>
 						</div>
-					</div>
-					{!session.isCurrent && (
-						<ConfirmAction
-							trigger={
-								<Button variant="destructive-ghost" className="min-h-11" disabled={isRevoking}>
-									{m.auth_logout()}
-								</Button>
-							}
-							title={m.user_log_out_device()}
-							description={m.user_terminate_session_immediately()}
-							confirmLabel={m.auth_logout()}
-							onConfirm={() => onRevoke(session.id)}
-							onError={(error) => toastError(m.user_session_terminate_failed(), error)}
-						/>
-					)}
+						{!session.isCurrent && (
+							<ConfirmAction
+								trigger={
+									<Button variant="destructive-ghost" className="min-h-11" disabled={isRevoking}>
+										{m.auth_logout()}
+									</Button>
+								}
+								title={m.user_log_out_device()}
+								description={m.user_terminate_session_immediately()}
+								confirmLabel={m.auth_logout()}
+								onConfirm={() => onRevoke(session.id)}
+								onError={(error) => toastError(m.user_session_terminate_failed(), error)}
+							/>
+						)}
+					</CardContent>
 				</ContextMenuTrigger>
 
 				<ContextMenuContent className="w-64">

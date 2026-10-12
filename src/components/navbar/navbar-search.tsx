@@ -450,7 +450,7 @@ export function NavbarSearch({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen
 
 			<DialogContent showCloseButton={false} size="3xl" className="max-h-[85vh] w-[95vw] overflow-hidden p-0 sm:max-w-4xl lg:max-w-5xl">
 				<DialogHeader className="border-b">
-					<div className="flex items-center justify-between gap-4">
+					<div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
 						<div>
 							<DialogTitle>{m.components_navbar_search_heading()}</DialogTitle>
 							<DialogDescription className="mt-0.5">{m.components_navbar_search_catalog_hint()}</DialogDescription>

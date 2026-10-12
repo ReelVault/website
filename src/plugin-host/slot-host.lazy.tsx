@@ -19,6 +19,7 @@ export function PluginSlotHost(props: {
 	name: PluginSlotName;
 	variant?: Parameters<typeof LazyPluginSlotHost>[0]["variant"];
 	buttonClassName?: string;
+	menuItemSize?: "default" | "lg";
 	playerContext?: PluginUiPlayerContext;
 	params?: Record<string, string>;
 	excludePaths?: string[];

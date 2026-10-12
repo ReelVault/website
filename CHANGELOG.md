@@ -256,8 +256,6 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **Improved profile and account labels** — Standardized profile names, account-ID copy labels and sign-in password visibility controls.
 - **Admin detail navigation** — Increased the touch area of back links and copy-ID actions without enlarging their icons.
 
-### Fixes
-
 #### Playback & streaming
 
 - **Transcode progress** — Made the preparation-progress overlay more visible, added a percentage tooltip and fixed polling stopping after a seek.
@@ -319,3 +317,35 @@ Production build using `bun run build`. Bundle sizes are the emitted bytes in `d
 | `react-doctor` score | 70 | 71 | +1 |
 
 The two additional emitted files are the `details-rail` and `provider-candidate-card` shared modules, now produced as separate chunks. The bundle is smaller overall, but the number of emitted files increased.
+
+# v1.3.1
+
+## Features
+
+#### Account & security
+
+- **Security page** — Password and two-factor authentication moved from profile settings to a dedicated Security page, linked from the user navigation.
+
+## UI
+
+#### Plugin management
+
+- **Account menu button** — The profile trigger is now an avatar-only button the same size as the notification and language buttons; the profile name stays in the menu header.
+- **Plugin entries in the profile menu** — Rows contributed by plugins now use the same size as the built-in rows, so the menu reads as one list.
+- **Plugin version history** — Revision rows have more padding, larger version and date text, and the expand arrow sits at the trailing edge so each row is readable at a glance.
+- **Installed plugin cards** — Redesigned around a larger name and version, counters shown as tiles, capabilities as chips and a compact action footer. Less frequent actions (pin version, CSP, details, reload) moved into a ⋮ menu.
+
+#### Spacing & alignment
+
+- **Search dialog header** — The header now uses the same horizontal padding as the search field and footer.
+- **Library navigation buttons** — Added spacing between the previous/next library name and its arrow button.
+- **Library filters** — The empty gap below the closed advanced filters is gone, so the filter panel has equal top and bottom padding.
+- **Device sessions** — Session cards have horizontal padding, so icons, names and log-out buttons no longer touch the card edge.
+- **Admin media files** — File cards have inner padding around the checkbox, title, badges and stats row.
+- **User sidebar** — The log-out row has bottom padding on desktop.
+
+### Fixes
+
+#### Administration & layout
+
+- **Admin sidebar search** — The search icon overlapped the placeholder on desktop: the input's responsive horizontal padding overrode the left padding. The field now uses the input's leading-icon padding.

@@ -64,12 +64,7 @@ export function AdminSidebarBody() {
 					<Logo className="h-7 w-auto" />
 				</Link>
 				<div className="relative group-data-[collapsible=icon]:hidden">
-					<SidebarInput
-						placeholder={m.admin_sidebar_search_placeholder()}
-						value={searchQuery}
-						onChange={handleSearchChange}
-						className="pl-8"
-					/>
+					<SidebarInput placeholder={m.admin_sidebar_search_placeholder()} value={searchQuery} onChange={handleSearchChange} leadingIcon />
 					<Search className="pointer-events-none absolute top-2.5 left-2.5 size-4 text-muted-foreground" />
 					<button
 						type="button"

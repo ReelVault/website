@@ -30,14 +30,9 @@ function PluginVersionRow({ version, isLatest, isInstalled, isBusy, onInstall }:
 
 	return (
 		<Collapsible open={expanded}>
-			<CollapsibleTrigger
-				type="button"
-				onClick={() => setExpanded((value) => !value)}
-				className="flex w-full flex-wrap items-center text-left"
-			>
-				<ChevronDown className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", !expanded && "-rotate-90")} />
-				<span className="font-mono text-xs">{m.common_version_badge({ version: version.version })}</span>
-				{version.date && <span className="text-muted-foreground text-xs">{formatDateTime(version.date)}</span>}
+			<CollapsibleTrigger type="button" variant="row" onClick={() => setExpanded((value) => !value)}>
+				<span className="font-mono font-semibold text-sm">{m.common_version_badge({ version: version.version })}</span>
+				{version.date && <span className="text-muted-foreground text-sm">{formatDateTime(version.date)}</span>}
 				{isLatest && (
 					<Badge variant="secondary" size="count">
 						{m.admin_plugins_catalog_version_latest()}
@@ -48,9 +43,10 @@ function PluginVersionRow({ version, isLatest, isInstalled, isBusy, onInstall }:
 						{m.admin_plugins_catalog_version_installed()}
 					</Badge>
 				)}
+				<ChevronDown className={cn("ml-auto size-4 shrink-0 text-muted-foreground transition-transform", !expanded && "-rotate-90")} />
 			</CollapsibleTrigger>
 			<CollapsibleContent>
-				<div className="flex flex-col gap-2 px-3 pb-3 pl-8">
+				<div className="flex flex-col gap-3 px-4 pb-4">
 					{version.changelog && <p className="wrap-break-word whitespace-pre-line text-muted-foreground text-sm">{version.changelog}</p>}
 					{!isInstalled && (
 						<Button variant="outline" size="sm" disabled={isBusy} onClick={() => onInstall(version.version)} className="self-start">
@@ -115,7 +111,7 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 			{(entry.versions?.length ?? 0) > 0 && (
 				<section className="flex flex-col gap-2">
 					<h2 className="font-semibold text-sm">{m.admin_plugins_catalog_revision_history()}</h2>
-					<div className="divide-y divide-border/60 rounded-xl border bg-muted/20">
+					<div className="divide-y divide-border/60 overflow-hidden rounded-xl border bg-muted/20">
 						{entry.versions?.map((version) => (
 							<PluginVersionRow
 								key={version.version}
