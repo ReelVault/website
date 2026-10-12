@@ -1,76 +1,97 @@
-# ReelVault — Web & Desktop
+# ReelVault Web & Desktop
 
-ReelVault frontend: an SPA (Vite + React 19 + TanStack Router + TanStack Query) and a desktop shell (Tauri v2) built from the same code. Requires [reelvault](https://github.com/ReelVault/reelvault).
+The web app for [ReelVault](https://github.com/ReelVault/reelvault), built as a single-page app. The same code also runs as a desktop app with [Tauri v2](https://v2.tauri.app).
 
 ## Stack
 
-- **Vite 8** (rolldown), React 19.3, **React Compiler** enabled
-- TanStack Router (type-safe routing, `lazyRouteComponent`), TanStack Query
-- Tailwind v4 + shadcn (Base UI); forms via TanStack Form, URL state via route-level `validateSearch` validators (no `zod`)
-- Bun (package manager + runtime for `server.ts`)
-- Desktop: **Tauri v2** (`src-tauri/`) — same `dist/` build, zero Tauri runtime APIs in frontend code
+- **Vite 8** and **React 19**, with the React Compiler enabled
+- **TanStack Router** (type-safe routes) and **TanStack Query**
+- **Tailwind CSS v4** and shadcn/ui (Base UI)
+- TanStack Form for forms; URL state through route `validateSearch`
+- Bun for packages, scripts and the production server
+- Desktop: Tauri v2 in `src-tauri/`. The frontend uses no Tauri-specific APIs.
 
 ## Requirements
 
-- Bun
-- SDK client: `reelvault-sdk` — published on npm, or `bun link` the local build: run `bun link` in `reelvault/sdk`, then `bun link reelvault-sdk` here
+- [Bun](https://bun.sh) 1.4.2 or newer
+- A running ReelVault server (see the [server README](https://github.com/ReelVault/reelvault))
+- For desktop builds only: the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/), which include Rust
 
-## Commands
+The SDK comes from npm as `@reelvault/sdk`. To develop against a local copy, see [Development](#development).
+
+## Quick start
 
 ```bash
 bun install
-
-bun run dev            # Vite dev server :3000 (proxies /v1 + /api to the server)
-bun run build          # production build → dist/ (+ precompressed .br/.gz)
-bun run start          # Bun static server for dist/ (LAN/WAN, br/gz + SPA fallback)
-
-bun run desktop:dev    # Tauri dev (starts vite + desktop window)
-bun run desktop:build  # Tauri production bundle
-
-bun run lint           # Biome + oxlint
-bun run format
-bun run check-types
-bun run deadcode       # Knip
-bun run test
-bun run doctor         # react-doctor (React best practices)
+bun run dev        # http://localhost:3000, proxies /v1 and /api to the server on port 3030
 ```
+
+Open http://localhost:3000 and sign in to your local server.
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `bun run dev` | Vite dev server with hot reload |
+| `bun run build` | Production build in `dist/`, with precompressed `.br` and `.gz` files |
+| `bun run start` | Static server for `dist/`, with Brotli and gzip and SPA fallback |
+| `bun run desktop:dev` | Desktop app in development mode |
+| `bun run desktop:build` | Desktop app bundle |
+| `bun run check-types` | Generate routes and translations, then type-check |
+| `bun run lint` | Biome and oxlint |
+| `bun run format` | Format with Biome |
+| `bun run deadcode` | Find unused code with Knip |
+| `bun run test` | Unit tests |
+| `bun run doctor` | React best-practice scan (react-doctor) |
+| `bun run i18n:unused` | Find translation keys that nothing uses |
 
 ## Configuration
 
-`.env` (see `.env.example`):
+Copy `.env.example` to `.env`:
 
-- `VITE_REELVAULT_API_URL` — server address for the frontend. In dev, Vite proxies `/v1` and `/api`; a browser on the LAN automatically targets the same host on the backend port.
-- `REELVAULT_API_URL` — used only by `server.ts` (production proxy).
+- `VITE_REELVAULT_API_URL`: the server address for the frontend. In development, Vite proxies `/v1` and `/api`, so you can usually leave it empty. A browser on your LAN uses the server on the same host automatically.
+- `REELVAULT_API_URL`: used only by `server.ts`, the production proxy.
 
-### Desktop mode (Tauri)
+### Desktop
 
-The webview loads the build from `dist/`; API calls go **directly** to the server address (no proxy). Priority in `src/client/client.ts`:
+The desktop app loads the same `dist/` build and calls the server directly. It picks the server address in this order:
 
-1. `VITE_REELVAULT_API_URL` (if set and absolute — baked at build time),
-2. the address entered on the login screen (field visible only in the native shell — Tauri),
-3. fallback `http://localhost:3030`.
+1. `VITE_REELVAULT_API_URL`, if it is an absolute URL at build time.
+2. The address you enter on the login screen, which appears only in the desktop app.
+3. `http://localhost:3030` as a fallback.
 
-The server allowlists the `tauri://localhost` / `http://tauri.localhost` origins (CORS with credentials).
+The server accepts the `tauri://localhost` and `http://tauri.localhost` origins.
 
 ## Adding a language
 
-English is the base locale; other languages are translations. To add one:
+English is the base language. To add one, for example German (`de`):
 
-1. **Register the locale** — add its code to `locales` in `project.inlang/settings.json` (and set `baseLocale` to `en` if it is not already).
-2. **Add the strings** — create `messages/<code>.json` with the same keys as `messages/en.json` (copy it and translate the values).
-3. **Add its label + flag** — in `src/utils/locales.ts`, extend `LOCALE_META`. It is typed as `Record<Locale, …>`, so the compiler will refuse to build until you do.
-4. **Recompile Paraglide** — `bun run i18n` (or just `bun run dev` / `bun run build`).
+1. Add `de` to `locales` in `project.inlang/settings.json`.
+2. Create `messages/de.json` with the same keys as `messages/en.json`, translated.
+3. Add a label and flag for `de` in `LOCALE_META` in `src/utils/locales.ts`. The build fails until you do.
+4. Run `bun run i18n`. `bun run dev` and `bun run build` also run it.
 
-That is everything for the interface: the locale switcher and the **Interface language** dropdown both read `SUPPORTED_LOCALES` from `src/utils/locales.ts`, so no component needs editing.
+The locale switcher and the interface language setting read `SUPPORTED_LOCALES` automatically. Audio and subtitle languages come from a separate list, `CONTENT_LANGUAGES`, in the same file.
 
-Two lists are intentionally separate:
+## Development
 
-- `SUPPORTED_LOCALES` — interface languages (Paraglide).
-- `CONTENT_LANGUAGES` in the same file — audio/subtitle languages. Add an entry here when a language should be selectable for playback even if the interface is not translated into it.
+To use a local SDK instead of the npm package, link it:
 
-To check for untranslated, hardcoded strings, run `bun run i18n:unused`.
+```bash
+# in the sdk repository
+bun link
+
+# in this repository
+bun link @reelvault/sdk
+```
+
+When the server contract changes, rebuild the SDK and refresh the local copy. [AGENTS.md](AGENTS.md) has the exact steps.
 
 ## CI
 
-- `ci.yaml` — quality job (types/lint/knip/tests) + desktop job (`cargo check` on the shell)
-- `react-doctor.yml` — advisory scan on PRs/pushes to main
+- `ci.yaml`: type-check, lint, Knip, tests, and `cargo check` for the desktop shell.
+- `react-doctor.yml`: advisory React scan on pull requests and on pushes to `main`.
+
+## License
+
+GPL-3.0-only. See [LICENSE](LICENSE).
