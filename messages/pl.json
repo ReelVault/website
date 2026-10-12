@@ -2649,7 +2649,6 @@
 	"auth_scan_qr_step": "1. Zeskanuj powyższy kod QR aparatem telefonu lub zaloguj się na innym urządzeniu.",
 	"auth_second_device_notice": "Ekran na drugim urządzeniu za chwilę automatycznie się zaloguje.",
 	"auth_select_profile_to_continue": "Wybierz profil, aby kontynuować.",
-	"auth_server_address": "Adres serwera",
 	"auth_show": "Pokaż",
 	"auth_show_password": "Pokaż hasło",
 	"auth_show_qr_pairing_tv": "Wyświetl kod QR i parowanie (tryb TV)",

@@ -2637,7 +2637,6 @@
 	"auth_scan_qr_step": "1. Scan the QR code above with your phone camera or log in on another device.",
 	"auth_second_device_notice": "The screen on the second device will log in automatically in a moment.",
 	"auth_select_profile_to_continue": "Select a profile to continue.",
-	"auth_server_address": "Server address",
 	"auth_show": "Show",
 	"auth_show_password": "Show password",
 	"auth_show_qr_pairing_tv": "Show the QR code and pairing (TV mode)",

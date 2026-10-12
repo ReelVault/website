@@ -35,39 +35,6 @@ function getEnvApiUrl(): string | undefined {
 	return undefined;
 }
 
-const STORED_SERVER_URL_KEY = "reelvault.serverUrl";
-
-/**
- * Server address persisted by the Tauri desktop shell on its login screen, where
- * `localhost`-based heuristics cannot work. Never set by the plain web app.
- */
-export function getStoredServerUrl(): string | undefined {
-	try {
-		return localStorage.getItem(STORED_SERVER_URL_KEY) ?? undefined;
-	} catch {
-		// Storage access can fail in private modes — behave as if nothing is stored.
-	}
-
-	return undefined;
-}
-
-export function setStoredServerUrl(url: string | null): void {
-	try {
-		if (url) localStorage.setItem(STORED_SERVER_URL_KEY, url);
-		else localStorage.removeItem(STORED_SERVER_URL_KEY);
-	} catch {
-		// Persisting the server address is best-effort; ignore quota/security errors.
-	}
-}
-
-/**
- * True when the web build runs inside a Tauri desktop shell
- * (window.__TAURI_INTERNALS__ is injected by Tauri at document start).
- */
-export function isTauriShell(): boolean {
-	return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
-}
-
 /**
  * True when this page was served by the ReelVault server itself (the server
  * injects the marker into index.html). The API then lives on the same origin —
@@ -80,29 +47,10 @@ function isSameOriginHosting(): boolean {
 	return document.querySelector<HTMLMetaElement>('meta[name="reelvault-api-origin"]')?.content === "same-origin";
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: origin resolution orders deployment modes explicitly (same-origin marker, Tauri shell, env bake-in, login-screen address, subdomain heuristic)
 export function getReelVaultApiUrl(): string {
 	if (typeof window !== "undefined") {
 		// Single-port hosting: the server served this page, so it also serves /v1 here.
 		if (isSameOriginHosting()) return window.location.origin;
-
-		// Tauri desktop: page origin is tauri://localhost (macOS) or http://tauri.localhost
-		// (Windows/Linux), so the api.*-subdomain and port-derivation heuristics below make
-		// no sense. The login-screen address wins over a baked-in build env — a shipped
-		// desktop build must stay repointable by the user; env is only the pre-login default.
-		if (isTauriShell()) {
-			const storedServerUrl = getStoredServerUrl();
-			if (storedServerUrl && !storedServerUrl.startsWith("/")) return storedServerUrl;
-
-			const tauriEnvUrl = getEnvApiUrl();
-			if (tauriEnvUrl && !tauriEnvUrl.startsWith("/")) return tauriEnvUrl;
-
-			return "http://localhost:3030";
-		}
-
-		// Native shells: the login screen persists the server address.
-		const storedServerUrl = getStoredServerUrl();
-		if (storedServerUrl && !storedServerUrl.startsWith("/")) return storedServerUrl;
 
 		const envUrl = getEnvApiUrl();
 		if (envUrl) {
@@ -232,9 +180,6 @@ export const reelvault = new ReelVaultClient({
 	// query-level predicate below keeps the total bounded while preserving the
 	// transient-recovery behavior.
 	maxRetries: 1,
-	// The Tauri shell needs the JSON bearer token from quick-connect; browsers rely
-	// on the HttpOnly session cookie and must not receive it.
-	headers: isTauriShell() ? { "x-client-shell": "native" } : {},
 	fetcher: async (url, init) => {
 		const response = await fetch(url, {
 			...init,

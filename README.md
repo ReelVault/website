@@ -1,6 +1,6 @@
-# ReelVault Web & Desktop
+# ReelVault Web
 
-The web app for [ReelVault](https://github.com/ReelVault/reelvault), built as a single-page app. The same code also runs as a desktop app with [Tauri v2](https://v2.tauri.app).
+The web app for [ReelVault](https://github.com/ReelVault/reelvault), built as a single-page app.
 
 ## Stack
 
@@ -9,13 +9,11 @@ The web app for [ReelVault](https://github.com/ReelVault/reelvault), built as a 
 - **Tailwind CSS v4** and shadcn/ui (Base UI)
 - TanStack Form for forms; URL state through route `validateSearch`
 - Bun for packages, scripts and the production server
-- Desktop: Tauri v2 in `src-tauri/`. The frontend uses no Tauri-specific APIs.
 
 ## Requirements
 
 - [Bun](https://bun.sh) 1.4.2 or newer
 - A running ReelVault server (see the [server README](https://github.com/ReelVault/reelvault))
-- For desktop builds only: the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/), which include Rust
 
 The SDK comes from npm as `@reelvault/sdk`. To develop against a local copy, see [Development](#development).
 
@@ -35,8 +33,6 @@ Open http://localhost:3000 and sign in to your local server.
 | `bun run dev` | Vite dev server with hot reload |
 | `bun run build` | Production build in `dist/`, with precompressed `.br` and `.gz` files |
 | `bun run start` | Static server for `dist/`, with Brotli and gzip and SPA fallback |
-| `bun run desktop:dev` | Desktop app in development mode |
-| `bun run desktop:build` | Desktop app bundle |
 | `bun run check-types` | Generate routes and translations, then type-check |
 | `bun run lint` | Biome and oxlint |
 | `bun run format` | Format with Biome |
@@ -51,16 +47,6 @@ Copy `.env.example` to `.env`:
 
 - `VITE_REELVAULT_API_URL`: the server address for the frontend. In development, Vite proxies `/v1` and `/api`, so you can usually leave it empty. A browser on your LAN uses the server on the same host automatically.
 - `REELVAULT_API_URL`: used only by `server.ts`, the production proxy.
-
-### Desktop
-
-The desktop app loads the same `dist/` build and calls the server directly. It picks the server address in this order:
-
-1. `VITE_REELVAULT_API_URL`, if it is an absolute URL at build time.
-2. The address you enter on the login screen, which appears only in the desktop app.
-3. `http://localhost:3030` as a fallback.
-
-The server accepts the `tauri://localhost` and `http://tauri.localhost` origins.
 
 ## Adding a language
 
@@ -89,7 +75,7 @@ When the server contract changes, rebuild the SDK and refresh the local copy. [A
 
 ## CI
 
-- `ci.yaml`: type-check, lint, Knip, tests, and `cargo check` for the desktop shell.
+- `ci.yaml`: type-check, lint, Knip and tests.
 - `react-doctor.yml`: advisory React scan on pull requests and on pushes to `main`.
 
 ## License

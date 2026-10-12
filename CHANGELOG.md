@@ -302,7 +302,7 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 - **PIN attempt feedback** — Failed profile PIN attempts show the remaining attempts; locked profiles show the remaining wait time.
 - **Stored secrets** — Empty plugin secret fields no longer imply that a stored value will be cleared.
 - **Download cancellation and updates** — Cancelled update runs are identified in history, and update/restore failures blocked by active streams report the stream count.
-- **Native player hooks** — Removed unused Capacitor keep-awake and landscape-lock hooks; web, PWA and Tauri playback behavior remains unchanged.
+- **Native player hooks** — Removed unused Capacitor keep-awake and landscape-lock hooks; web and PWA playback behavior remains unchanged.
 
 ### Performance
 

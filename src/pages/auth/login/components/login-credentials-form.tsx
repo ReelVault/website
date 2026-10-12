@@ -1,6 +1,5 @@
-import { ArrowRight, Lock, QrCode as QrCodeIcon, Server, User } from "lucide-react";
+import { ArrowRight, Lock, QrCode as QrCodeIcon, User } from "lucide-react";
 import { useState } from "react";
-import { getStoredServerUrl, isTauriShell, setStoredServerUrl } from "@/client/client";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Button } from "@/components/ui/button";
@@ -10,8 +9,6 @@ import { Label } from "@/components/ui/label";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { getFormValue } from "@/utils/form-utils";
-
-const TRAILING_SLASHES = /\/+$/;
 
 /** "credentials" step: email + password + switch to quick-connect. */
 export function LoginCredentialsForm({
@@ -25,10 +22,6 @@ export function LoginCredentialsForm({
 	onSubmit: (values: { email: string; password: string }) => Promise<void>;
 	onQuickConnect: () => void;
 }) {
-	// The Tauri desktop shell does not share the browser's URL heuristics in
-	// client.ts — the user has to point at the media server.
-	const isNative = isTauriShell();
-	const storedServerUrl = isNative ? getStoredServerUrl() : undefined;
 	// Native validation blocks submit silently; surface a localized hint instead
 	// of the browser's own bubble. A typeMismatch means the email format (not a
 	// missing field) is the problem, so the hint names it.
@@ -40,10 +33,6 @@ export function LoginCredentialsForm({
 		if (isPending) return;
 
 		const formData = new FormData(event.currentTarget);
-		if (isNative) {
-			const serverUrl = getFormValue(formData, "serverUrl").trim().replace(TRAILING_SLASHES, "");
-			setStoredServerUrl(serverUrl || null);
-		}
 
 		detach(
 			onSubmit({
@@ -74,26 +63,6 @@ export function LoginCredentialsForm({
 				</p>
 			)}
 			<FieldGroup>
-				{isNative && (
-					<Field>
-						<Label htmlFor="login-server">{m.auth_server_address()}</Label>
-						<InputGroup>
-							<InputGroupAddon>
-								<Server className="size-4" aria-hidden="true" />
-							</InputGroupAddon>
-							<InputGroupInput
-								id="login-server"
-								name="serverUrl"
-								type="url"
-								inputMode="url"
-								autoComplete="url"
-								defaultValue={storedServerUrl ?? ""}
-								placeholder="http://192.168.1.10:3030"
-								autoFocus={isNative}
-							/>
-						</InputGroup>
-					</Field>
-				)}
 				<Field>
 					<Label htmlFor="login-email">{m.auth_email_address()}</Label>
 					<InputGroup>
@@ -107,7 +76,7 @@ export function LoginCredentialsForm({
 							autoComplete="username"
 							required
 							placeholder={m.auth_email_address()}
-							autoFocus={!isNative}
+							autoFocus
 						/>
 					</InputGroup>
 				</Field>
