@@ -72,7 +72,7 @@ Some formatters intentionally differ in edge-case output across call sites — v
 
 ## Bundle, SDK & routing
 - Heavy deps (`hls.js` etc.) → dynamic import at point of use. Routes via `lazyRouteComponent`; interaction-only components via `React.lazy` + `Suspense`.
-- Never import value symbols from the `reelvault-sdk` root barrel — use `reelvault-sdk/client` (type-only imports are fine). Import SDK contract types, don't hand-write duplicates; use SDK union types, not loose `string`.
+- Never import value symbols from the `@reelvault/sdk` root barrel — use `@reelvault/sdk/client` (type-only imports are fine). Import SDK contract types, don't hand-write duplicates; use SDK union types, not loose `string`.
 - New dependency → check bundle impact (`bun run build`, `dist/index.html`). No unreferenced assets in `public/`.
 - URL state: TanStack Router `validateSearch` + sync hand-rolled validators (`src/types/search-params.ts`; no zod — route modules are in the eager graph). No manual `window.location`/`history`.
 - `Route.useSearch()` / `useSearch({ from })` and `useParams({ from: "/route/$id" })` — never `strict: false` + cast.
