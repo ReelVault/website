@@ -344,6 +344,11 @@ The two additional emitted files are the `details-rail` and `provider-candidate-
 - **Admin media files** — File cards have inner padding around the checkbox, title, badges and stats row.
 - **User sidebar** — The log-out row has bottom padding on desktop.
 
+#### Profile creation
+
+- **Avatar picker redesign** — The avatar grid shows four columns on phones and five from `sm`. Each avatar fills a square tile, the selected one has a border and a check badge, and the grid no longer scrolls inside a fixed-height box.
+- **Avatar style tabs** — Style tiles are 96 × 80 px cards with the icon and the translated style name, so the selected state no longer clips the label.
+
 ### Fixes
 
 #### Administration & layout
@@ -355,3 +360,38 @@ The two additional emitted files are the `details-rail` and `provider-candidate-
 - **Stale data after a realtime drop** — When the realtime socket re-opens after a drop (server restart, backup restore, network loss), the queries on screen are refetched. Events sent while the socket was down are not replayed, so lists and counters could keep showing old values until the next event or a manual reload.
 - **Subtitles rendered without `innerHTML`** — Cue markup is parsed into text runs and rendered as React nodes. The sanitizer stays the first guard, and the subtitle styling is unchanged.
 - **Caption track text** — The `<track>` used for assistive technology showed raw entities (`&amp;`) and merged lines of a multi-line cue, because the tag stripping dropped `<br />` without a line break. It now decodes entities and keeps line breaks.
+
+#### Profile creation
+
+- **Avatar thumbnails at 10 px** — The grid tiles were `Button`s with the default height class and an inline `<picture>` wrapper, so the `<img>` had no block to fill and rendered at 10 × 10 px inside 32 × 32 px buttons. Tiles now use explicit classes and fill their square cell.
+- **Style tab labels clipped** — The style tabs combined a fixed size with the default button height, so the height class won and the label spilled out of the selected box. The tabs now set their height explicitly, including from `sm`.
+- **Polish name of the "Thumbs" style** — `auth_style_thumbs` in `messages/pl.json` was "Tamby"; it is now "Kciuki".
+
+### Performance
+
+- **Message catalog split per key** — Paraglide now emits one module per message key (`outputStructure: "message-modules"`) instead of a single `locale-modules` barrel. The barrel exported all 4,501 keys, so any lazy page that used one key pulled the catalog for both locales into a shared chunk that the entry preloaded on every visit. Each key now lives in the chunks that use it: the critical path (entry + modulepreload) falls from 364,881 B to 213,896 B gzipped, and the modulepreload list from 16 files to 12. The entry grows by 53,534 B raw because the keys the shell uses moved into it.
+- **Lighter player HLS build** — the player loads `hls.js/light`, which drops alternate audio, subtitle tracks, EME, CMCD and interstitials. The server streams single-variant fMP4 HLS and subtitles render in the app, so none of those are used. The player chunk falls from 575,491 B to 360,178 B raw (−37%) and from 177,014 B to 113,266 B gzipped (−36%).
+- **Trade-off of the key split** — the build emits 172 more JS files (386 → 558). Brotli bytes across all JS grow by 23,135 B (+1.7%) because smaller chunks compress less well together, while total raw JS falls by 261,511 B (−5.3%).
+
+### Performance benchmarks
+
+Production build served by `server.ts` (precompressed `.br`/`.gz`), headless Chrome in mobile emulation (390 × 844), cold cache, service worker blocked, median of 5 runs. Fast 4G: 150 ms RTT, 1.6 Mbps. Slow 4G + CPU 4×: 400 ms RTT, 400 kbps, 4× CPU slowdown. Baseline: the tree before this change.
+
+| Area | Benchmark | Before | After | Change |
+| --- | --- | ---: | ---: | ---: |
+| Bundle | Critical path JS, gzip (entry + modulepreload) | 364,881 B | 213,896 B | **−41%** |
+| Bundle | Player HLS chunk, gzip | 177,014 B | 113,266 B | **−36%** |
+| Network | `/auth/login` JS transferred, Fast 4G | 479,402 B | 379,091 B | **−21%** |
+| Paint | `/auth/login` FCP, Fast 4G | 3,400 ms | 2,936 ms | **−14%** |
+| Paint | `/auth/login` LCP, Fast 4G | 3,812 ms | 3,368 ms | **−12%** |
+| Paint | `/auth/login` FCP, Slow 4G + CPU 4× | 11,540 ms | 9,700 ms | **−16%** |
+| Paint | `/auth/login` load event, Slow 4G + CPU 4× | 7,597 ms | 5,334 ms | **−30%** |
+
+### Additional measurements
+
+- `/quick-connect` (lazy route), Fast 4G: FCP 3,388 → 2,880 ms (−15%), LCP 3,800 → 3,324 ms (−13%), load event 1,989 → 1,419 ms (−29%), JS transferred 479,206 → 378,687 B (−21%).
+- `/quick-connect`, Slow 4G + CPU 4×: FCP 11,448 → 9,524 ms (−17%), LCP 12,824 → 11,152 ms (−13%), load event 7,599 → 5,334 ms (−30%).
+- Modulepreload bytes: 1,131,905 → 476,781 B raw (−58%), 316,703 → 146,647 B gzip (−54%).
+- Total JS: 4,955,841 → 4,694,330 B raw (−5.3%), 1,627,048 → 1,619,191 B gzip (−0.5%).
+- Regression: JS requests per cold load rise from 110 to 113 on `/auth/login` and from 109 to 111 on `/quick-connect`, because the split chunks are statically imported and fetched in parallel from the modulepreload list.
+- `react-doctor` score: 81 (threshold 70).

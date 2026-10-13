@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
@@ -24,17 +25,19 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 				<ScrollArea className="w-full max-w-[calc(100vw-6rem)] whitespace-nowrap md:max-w-xl">
 					<div className="flex gap-2 overflow-x-auto pb-2">
 						{AVATAR_STYLES.map((style) => (
-							<Button
-								key={style.id}
-								type="button"
-								variant="ghost"
-								onClick={() => onSelectStyle(style.id)}
-								className="flex size-18 shrink-0 flex-col items-center gap-1"
-								selected={activeStyle === style.id}
-							>
-								<span className="text-xl">{style.icon}</span>
-								<span className="font-bold text-xs">{style.name}</span>
-							</Button>
+							<div key={style.id} className="flex h-20 w-24 shrink-0">
+								<Button
+									type="button"
+									variant="ghost"
+									size="inline"
+									onClick={() => onSelectStyle(style.id)}
+									className="w-full flex-col justify-center self-stretch"
+									selected={activeStyle === style.id}
+								>
+									<span className="text-xl">{style.icon}</span>
+									<span className="font-bold text-xs">{style.name}</span>
+								</Button>
+							</div>
 						))}
 					</div>
 					<ScrollBar orientation="horizontal" />
@@ -46,38 +49,39 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 				<Label tone="muted" size="xs">
 					{m.auth_choose_character()}
 				</Label>
-				<ScrollArea className="h-72 w-full p-4">
-					<div className="grid h-fit grid-cols-3 gap-2 overflow-y-auto rounded-2xl border border-border p-2 sm:grid-cols-4">
-						{AVATAR_SEEDS.map((seed) => (
-							<Button
+				<div className="grid grid-cols-4 gap-2 rounded-2xl border border-border bg-muted/20 p-3 sm:grid-cols-5">
+					{AVATAR_SEEDS.map((seed) => {
+						const isSelected = activeSeed === seed;
+
+						return (
+							<div
 								key={seed}
-								type="button"
-								variant="ghost"
-								onClick={() => onSelectSeed(seed)}
-								className="group relative m-1 aspect-square overflow-hidden"
-								selected={activeSeed === seed}
-							>
-								<picture>
-									<Image
-										src={buildDicebearAvatarUrl(activeStyle, seed)}
-										alt={seed}
-										width={96}
-										height={96}
-										unoptimized
-										loading="lazy"
-										zoom
-										className="h-full w-full group-hover:scale-110"
-									/>
-								</picture>
-								{activeSeed === seed && (
-									<div className="absolute inset-0 flex items-center justify-center bg-accent/80">
-										<Check className="size-12 text-primary" />
-									</div>
+								className={cn(
+									"relative flex aspect-square overflow-hidden rounded-xl border-2",
+									isSelected ? "border-primary bg-primary/10" : "border-transparent bg-muted/40 hover:border-border",
 								)}
-							</Button>
-						))}
-					</div>
-				</ScrollArea>
+							>
+								<Button
+									type="button"
+									variant="ghost"
+									size="inline"
+									aria-pressed={isSelected}
+									onClick={() => onSelectSeed(seed)}
+									className="w-full self-stretch"
+								>
+									<span className="block size-full p-1.5 transition-transform duration-200 group-hover/button:scale-105">
+										<Image src={buildDicebearAvatarUrl(activeStyle, seed)} alt={seed} width={96} height={96} unoptimized loading="lazy" />
+									</span>
+								</Button>
+								{isSelected && (
+									<span className="pointer-events-none absolute top-1 right-1 flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground shadow">
+										<Check className="size-3" aria-hidden="true" />
+									</span>
+								)}
+							</div>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);

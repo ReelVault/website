@@ -116,10 +116,12 @@ export default defineConfig(({ mode }) => {
 			paraglideVitePlugin({
 				project: "./project.inlang",
 				outdir: "./src/paraglide",
-				// locale-modules also for production: message-modules emit one JS chunk
-				// per translated message (3300+ keys), which pages then pull through a
-				// 100+ request dynamic-import waterfall.
-				outputStructure: "locale-modules",
+				// message-modules (one module per key): the locale-modules barrel is a single
+				// module exporting every key, so any lazy page using any key pulls the whole
+				// catalog (both locales) into one shared chunk that the entry preloads.
+				// Per-key modules let the bundler place each key with its users. Static
+				// imports only, so there is no dynamic-import waterfall.
+				outputStructure: "message-modules",
 			}),
 			// Offline / repeat-load app shell. Precache only the HTML and static icons;
 			// the content-hashed JS/CSS chunks are cached at runtime as they are

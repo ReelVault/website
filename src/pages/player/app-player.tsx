@@ -37,10 +37,14 @@ interface HlsErrorData {
 	context?: { url?: string };
 }
 
-/** hls.js is large and only HLS playback needs it, so it loads on first player mount. */
+/**
+ * hls.js is large and only HLS playback needs it, so it loads on first player mount. The light build
+ * drops alternate audio, subtitle tracks, EME, CMCD and interstitials: the server streams single-variant
+ * fMP4 HLS and the app renders its own subtitles, so none of them are used.
+ */
 async function loadHlsClass(): Promise<typeof Hls | null> {
 	try {
-		const mod = await import("hls.js");
+		const mod = await import("hls.js/light");
 
 		return mod.default;
 	} catch (error: unknown) {
