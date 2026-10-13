@@ -61,9 +61,11 @@ export default function AdminMediaFilesPage() {
 		}
 	}, [debouncedSearch, navigate, search.q]);
 
-	useEffect(() => {
+	const [syncedSearch, setSyncedSearch] = useState(search.q);
+	if (search.q !== syncedSearch) {
+		setSyncedSearch(search.q);
 		setSearchQuery(search.q ?? "");
-	}, [search.q]);
+	}
 	const { refreshAllMediaFiles, isRefreshingAll } = useAdminRefreshAllMediaFiles();
 	const audit = useAdminMediaFileAudit({ enabled: viewMode === "audit" });
 	const { suspectCount } = audit;

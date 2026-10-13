@@ -1,7 +1,7 @@
 import { cn } from "cn";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { usePlayerSubtitles, usePlayerTime } from "../player-context";
-import { sanitizeSubtitleMarkup } from "../utils/subtitle-markup.utils";
+import { parseSubtitleMarkup, sanitizeSubtitleMarkup } from "../utils/subtitle-markup.utils";
 
 export type SubtitleVerticalAlign = "top" | "middle" | "bottom";
 
@@ -60,7 +60,41 @@ const CR_REGEX = /\r/g;
 const DOUBLE_NEWLINE_SPLIT_REGEX = /\n\n+/;
 const CUE_SETTINGS_SPLIT_REGEX = /\s{2,}|(?<=[^\s])\s+(?=[a-zA-Z]+:)/;
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: cue-setting grammar is parsed token by token; splitting it would scatter one grammar across helpers
+/** `align:` — an unrecognised value leaves the current alignment unchanged (undefined). */
+function horizontalFromAlign(value: string): SubtitleHorizontalAlign | undefined {
+	if (value === "start" || value === "left") return "left";
+	if (value === "end" || value === "right") return "right";
+	if (value === "center" || value === "middle") return "center";
+
+	return undefined;
+}
+
+/** `line:` — a percentage of the frame, or a line number where negative values count from the bottom. */
+function verticalFromLine(value: string): SubtitleVerticalAlign | undefined {
+	if (value.endsWith("%")) {
+		const percent = Number.parseFloat(value);
+		if (Number.isNaN(percent)) return undefined;
+		if (percent < 33) return "top";
+
+		return percent < 66 ? "middle" : "bottom";
+	}
+
+	const line = Number.parseFloat(value);
+	if (Number.isNaN(line)) return undefined;
+	if (line >= 0 && line <= 3) return "top";
+
+	return line < 0 ? "bottom" : undefined;
+}
+
+/** `position:` — a percentage across the frame. */
+function horizontalFromPosition(value: string): SubtitleHorizontalAlign | undefined {
+	const position = Number.parseFloat(value);
+	if (Number.isNaN(position)) return undefined;
+	if (position < 35) return "left";
+
+	return position > 65 ? "right" : "center";
+}
+
 function parseCueSettings(settingsStr: string): {
 	vAlign: SubtitleVerticalAlign;
 	hAlign: SubtitleHorizontalAlign;
@@ -75,33 +109,9 @@ function parseCueSettings(settingsStr: string): {
 		const [key, val] = part.split(":");
 		if (!(key && val)) continue;
 
-		if (key === "align") {
-			if (val === "start" || val === "left") hAlign = "left";
-			else if (val === "end" || val === "right") hAlign = "right";
-			else if (val === "center" || val === "middle") hAlign = "center";
-		} else if (key === "line") {
-			if (val.endsWith("%")) {
-				const num = Number.parseFloat(val);
-				if (!Number.isNaN(num)) {
-					if (num < 33) vAlign = "top";
-					else if (num < 66) vAlign = "middle";
-					else vAlign = "bottom";
-				}
-			} else {
-				const lineNum = Number.parseFloat(val);
-				if (!Number.isNaN(lineNum)) {
-					if (lineNum >= 0 && lineNum <= 3) vAlign = "top";
-					else if (lineNum < 0) vAlign = "bottom";
-				}
-			}
-		} else if (key === "position") {
-			const posNum = Number.parseFloat(val);
-			if (!Number.isNaN(posNum)) {
-				if (posNum < 35) hAlign = "left";
-				else if (posNum > 65) hAlign = "right";
-				else hAlign = "center";
-			}
-		}
+		if (key === "align") hAlign = horizontalFromAlign(val) ?? hAlign;
+		else if (key === "line") vAlign = verticalFromLine(val) ?? vAlign;
+		else if (key === "position") hAlign = horizontalFromPosition(val) ?? hAlign;
 	}
 
 	return { vAlign, hAlign };
@@ -275,6 +285,10 @@ interface CueStyling {
 	bgClass: string;
 }
 
+function cuesActiveAt(cues: readonly SubtitleCue[], time: number): SubtitleCue[] {
+	return cues.filter((cue) => time >= cue.startTime && time <= cue.endTime);
+}
+
 /**
  * Returns the active cues keeping a stable reference as long as the set
  * of actually visible cues does not change. That lets `usePlayerTime` tick
@@ -282,22 +296,14 @@ interface CueStyling {
  * are not re-rendered when nothing changed on screen anyway.
  */
 function useActiveCues(cues: readonly SubtitleCue[], effectiveTime: number): SubtitleCue[] {
-	const [activeCues, setActiveCues] = useState<SubtitleCue[]>(() =>
-		cues.filter((cue) => effectiveTime >= cue.startTime && effectiveTime <= cue.endTime),
-	);
-	const lastKeyRef = useRef<string>(activeCues.length === 0 ? "" : activeCues.map((cue) => cue.id).join("|"));
+	const [activeCues, setActiveCues] = useState<SubtitleCue[]>(() => cuesActiveAt(cues, effectiveTime));
+	const next = cuesActiveAt(cues, effectiveTime);
+	const unchanged = next.length === activeCues.length && next.every((cue, index) => cue === activeCues[index]);
 
-	useEffect(() => {
-		const next = cues.filter((cue) => effectiveTime >= cue.startTime && effectiveTime <= cue.endTime);
-		const nextKey = next.length === 0 ? "" : next.map((cue) => cue.id).join("|");
+	// Adjusting state during render (not in an effect) keeps the cues on the same frame as the playhead.
+	if (!unchanged) setActiveCues(next);
 
-		if (nextKey !== lastKeyRef.current) {
-			lastKeyRef.current = nextKey;
-			setActiveCues(next);
-		}
-	}, [cues, effectiveTime]);
-
-	return activeCues;
+	return unchanged ? activeCues : next;
 }
 
 interface CueBuckets {
@@ -325,18 +331,38 @@ const SubtitleCueItem = memo(function SubtitleCueItem({ cue, styling }: { cue: S
 	if (cue.hAlign === "left") alignClass = "text-left self-start";
 	else if (cue.hAlign === "right") alignClass = "text-right self-end";
 
+	const segments = parseSubtitleMarkup(cue.html);
+
 	return (
 		<div
 			className={cn(
-				"w-fit rounded-md px-24 py-1.5 font-medium font-sans tracking-wide [text-shadow:0_1px_4px_rgb(0_0_0/90%),0_2px_10px_rgb(0_0_0/80%)] [&_b]:font-bold [&_em]:italic [&_i]:italic [&_s]:line-through [&_u]:underline",
+				"w-fit rounded-md px-24 py-1.5 font-medium font-sans tracking-wide [text-shadow:0_1px_4px_rgb(0_0_0/90%),0_2px_10px_rgb(0_0_0/80%)]",
 				styling.colorClass,
 				styling.bgClass,
 				alignClass,
 			)}
 			style={{ fontSize: styling.sizeStyle }}
-			// react-doctor-disable-next-line react-doctor/dangerous-html-sink
-			/* biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized subtitle markup */ dangerouslySetInnerHTML={{ __html: cue.html }}
-		/>
+		>
+			{segments.map((segment) =>
+				segment.kind === "break" ? (
+					<br key={segment.id} />
+				) : (
+					<span
+						key={segment.id}
+						className={cn(
+							segment.italic && "italic",
+							segment.bold && "font-bold",
+							segment.underline && "underline",
+							segment.strike && "line-through",
+							segment.dim && "opacity-75",
+						)}
+						style={segment.color ? { color: segment.color } : undefined}
+					>
+						{segment.text}
+					</span>
+				),
+			)}
+		</div>
 	);
 });
 

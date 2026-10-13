@@ -32,6 +32,7 @@ export function PluginSurface({ pluginId, tag, schema, page, dialog, params, pla
 			// isolate their own errors) — a throw here must not blank the whole page.
 			<PluginSlotBoundary pluginId={pluginId}>
 				<PluginSchemaSurface
+					key={pluginId}
 					pluginId={pluginId}
 					schema={schema}
 					context={{ ...context, ...(pluginManifest?.defaultLocale ? { defaultLocale: pluginManifest.defaultLocale } : {}) }}

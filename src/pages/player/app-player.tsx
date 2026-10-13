@@ -28,6 +28,28 @@ import { toPlaybackError } from "./utils/player-preferences.storage";
 import { toggleFullscreen } from "./utils/player-utils";
 import { getShortcutsDisabledCookie, setShortcutsDisabledCookie } from "./utils/shortcuts-cookie";
 
+/** The fields of an hls.js error payload that the recovery code reads. */
+interface HlsErrorData {
+	fatal?: boolean;
+	details?: string;
+	response?: { code?: number };
+	type?: string;
+	context?: { url?: string };
+}
+
+/** hls.js is large and only HLS playback needs it, so it loads on first player mount. */
+async function loadHlsClass(): Promise<typeof Hls | null> {
+	try {
+		const mod = await import("hls.js");
+
+		return mod.default;
+	} catch (error: unknown) {
+		console.error(error);
+
+		return null;
+	}
+}
+
 export function AppPlayer({
 	mediaFileId,
 	mediaFile,
@@ -107,12 +129,8 @@ function AppPlayerSurface() {
 	useEffect(() => {
 		let cancelled = false;
 		detach(async () => {
-			try {
-				const mod = await import("hls.js");
-				if (!cancelled) setHlsModule({ cls: mod.default });
-			} catch (error: unknown) {
-				console.error(error);
-			}
+			const cls = await loadHlsClass();
+			if (!cancelled && cls) setHlsModule({ cls });
 		});
 
 		return () => {
@@ -180,29 +198,27 @@ function AppPlayerSurface() {
 		let hls = actionsRef.current.hlsRef.current;
 		const { hlsRef } = actionsRef.current;
 
-		const onError = (
-			_event: unknown,
-			data: { fatal?: boolean; details?: string; response?: { code?: number }; type?: string; context?: { url?: string } },
-			// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: hls.js recovery ladder (fatal vs stall vs bandwidth degradation) must run in order; splitting reshuffles recovery priority
-		) => {
+		// "Auto" quality + a stall caused by low bandwidth — degrade once instead
+		// of stuttering until the user finds the quality menu themselves.
+		const degradeOnStall = (data: HlsErrorData) => {
+			if (data.details !== HlsClass.ErrorDetails.BUFFER_STALLED_ERROR || autoDegradeUsedRef.current) return;
+
+			if (playerSettingsRef.current.maxBitrate) return;
+
+			autoDegradeUsedRef.current = true;
+
+			const estimateKbps = Math.round((hls?.bandwidthEstimate ?? 0) / 1000);
+			if (estimateKbps <= 0 || estimateKbps >= 4800) return;
+
+			const target = estimateKbps >= 2500 ? 2500 : 1200;
+			playerSettingsRef.current.onQualityChange(target);
+
+			toast.info(m.player_slow_connection_quality({ target: target === 2500 ? m.player_quality_hd() : m.player_quality_saver_genitive() }));
+		};
+
+		const onError = (_event: unknown, data: HlsErrorData) => {
 			if (!data.fatal) {
-				// "Auto" quality + a stall caused by low bandwidth — degrade once instead
-				// of stuttering until the user finds the quality menu themselves.
-				if (data.details !== HlsClass.ErrorDetails.BUFFER_STALLED_ERROR || autoDegradeUsedRef.current) return;
-
-				if (playerSettingsRef.current.maxBitrate) return;
-
-				autoDegradeUsedRef.current = true;
-
-				const estimateKbps = Math.round((hls?.bandwidthEstimate ?? 0) / 1000);
-				if (estimateKbps <= 0 || estimateKbps >= 4800) return;
-
-				const target = estimateKbps >= 2500 ? 2500 : 1200;
-				playerSettingsRef.current.onQualityChange(target);
-
-				toast.info(
-					m.player_slow_connection_quality({ target: target === 2500 ? m.player_quality_hd() : m.player_quality_saver_genitive() }),
-				);
+				degradeOnStall(data);
 
 				return;
 			}

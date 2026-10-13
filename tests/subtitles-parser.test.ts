@@ -52,4 +52,24 @@ Left top speaker text`;
 		expect(cues[0]?.vAlign).toBe("top");
 		expect(cues[0]?.hAlign).toBe("left");
 	});
+
+	it("maps every cue setting value to its alignment and ignores unknown ones", () => {
+		const alignmentOf = (settings: string) => {
+			const [cue] = parseSubtitles(`WEBVTT\n\n00:00:01.000 --> 00:00:02.000 ${settings}\nText`);
+
+			return { v: cue?.vAlign, h: cue?.hAlign };
+		};
+
+		expect(alignmentOf("align:end")).toEqual({ v: "bottom", h: "right" });
+		expect(alignmentOf("align:middle")).toEqual({ v: "bottom", h: "center" });
+		expect(alignmentOf("align:sideways")).toEqual({ v: "bottom", h: "center" });
+		expect(alignmentOf("line:50%")).toEqual({ v: "middle", h: "center" });
+		expect(alignmentOf("line:80%")).toEqual({ v: "bottom", h: "center" });
+		expect(alignmentOf("line:2")).toEqual({ v: "top", h: "center" });
+		expect(alignmentOf("line:-1")).toEqual({ v: "bottom", h: "center" });
+		expect(alignmentOf("line:wide")).toEqual({ v: "bottom", h: "center" });
+		expect(alignmentOf("position:20%")).toEqual({ v: "bottom", h: "left" });
+		expect(alignmentOf("position:50%")).toEqual({ v: "bottom", h: "center" });
+		expect(alignmentOf("position:90%")).toEqual({ v: "bottom", h: "right" });
+	});
 });

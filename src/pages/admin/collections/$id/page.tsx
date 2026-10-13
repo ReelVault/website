@@ -2,7 +2,7 @@ import type { CollectionSortMode } from "@reelvault/sdk";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import type { ChangeEvent, MouseEvent } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { reelvault } from "@/client/client";
 import { useAdminCollection, useAdminCollections } from "@/client/hooks/use-admin-collections";
 import { collectionOrderItemFields } from "@/client/utils/fields";
@@ -78,16 +78,20 @@ export default function AdminCollectionEditorPage() {
 		staleTime: 1000 * 60 * 5,
 	});
 
-	useEffect(() => {
+	const [syncedCollection, setSyncedCollection] = useState<typeof collectionQuery.data>();
+	if (collectionQuery.data !== syncedCollection) {
+		setSyncedCollection(collectionQuery.data);
 		if (collectionQuery.data) {
 			setName(collectionQuery.data.name);
 			setSortMode(collectionQuery.data.sortMode);
 		}
 
 		setOrderDirty(false);
-	}, [collectionQuery.data]);
+	}
 
-	useEffect(() => {
+	const [syncedItems, setSyncedItems] = useState<typeof itemsQuery.data>();
+	if (itemsQuery.data !== syncedItems) {
+		setSyncedItems(itemsQuery.data);
 		if (itemsQuery.data) {
 			setOrderItems(
 				itemsQuery.data.data.map((item) => ({
@@ -103,7 +107,7 @@ export default function AdminCollectionEditorPage() {
 			);
 			setOrderDirty(false);
 		}
-	}, [itemsQuery.data]);
+	}
 
 	const collection = collectionQuery.data;
 	if (!collectionId) {

@@ -2,7 +2,7 @@ import { move } from "@dnd-kit/helpers";
 import { DragDropProvider, type DragEndEvent } from "@dnd-kit/react";
 import type { MetadataProviderConfiguration } from "@reelvault/sdk";
 import { ServerCog } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAdminMetadataProviders, useReorderMetadataProviders, useUpdateMetadataProvider } from "@/client/hooks/use-admin-providers";
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { detach } from "@/lib/detach";
@@ -15,11 +15,13 @@ export default function AdminProvidersPage() {
 	const updateProvider = useUpdateMetadataProvider();
 	const reorderProviders = useReorderMetadataProviders();
 
-	const [items, setItems] = useState<MetadataProviderConfiguration[]>([]);
 	const providers = providersQuery.data;
-	useEffect(() => {
+	const [items, setItems] = useState<MetadataProviderConfiguration[]>(providers ?? []);
+	const [syncedProviders, setSyncedProviders] = useState<typeof providers>();
+	if (providers !== syncedProviders) {
+		setSyncedProviders(providers);
 		if (providers) setItems(providers);
-	}, [providers]);
+	}
 
 	const handleDragEnd = (event: DragEndEvent) => {
 		if (event.canceled) return;

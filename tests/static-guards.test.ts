@@ -11,8 +11,8 @@ import { join, relative } from "node:path";
 
 const SRC = join(import.meta.dir, "..", "src");
 
-/** Files allowed to set raw HTML, each reviewed: the subtitle cue renderer sanitizes its input first. */
-const RAW_HTML_ALLOWLIST = new Set(["pages/player/components/player-subtitle-overlay.tsx"]);
+/** Files allowed to set raw HTML, each reviewed. Empty: subtitle cues render as React nodes, never as HTML. */
+const RAW_HTML_ALLOWLIST = new Set<string>();
 
 const RAW_HTML_SINK = /dangerouslySetInnerHTML|\.innerHTML\s*=|insertAdjacentHTML\(/;
 const DYNAMIC_CODE = /(^|[^\w.])eval\s*\(|new Function\s*\(|setTimeout\(\s*["'`]/;

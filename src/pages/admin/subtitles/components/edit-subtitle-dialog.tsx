@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useAdminSubtitle, useAdminUpdateSubtitle } from "@/client/hooks/use-admin-subtitles";
 import { AppLoadingState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
@@ -27,14 +27,16 @@ export function EditSubtitleDialog({
 	const [isDefault, setIsDefault] = useState(false);
 	const [isForced, setIsForced] = useState(false);
 
-	useEffect(() => {
+	const [syncedSubtitle, setSyncedSubtitle] = useState<typeof subtitle>();
+	if (subtitle !== syncedSubtitle) {
+		setSyncedSubtitle(subtitle);
 		if (subtitle) {
 			setLabel(subtitle.label ?? "");
 			setLanguage(subtitle.language);
 			setIsDefault(subtitle.isDefault);
 			setIsForced(subtitle.isForced);
 		}
-	}, [subtitle]);
+	}
 
 	const handleSave = () => {
 		if (!subtitleId) return;

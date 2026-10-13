@@ -1,5 +1,5 @@
 import { useParams } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAdminMediaFile, useAdminRefreshMediaFile, useAdminUpdateMediaFile } from "@/client/hooks/use-admin-media";
 import { AppErrorState } from "@/components/app-states";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,24 +31,26 @@ export default function MediaFileEditor() {
 	const { updateMediaFile, isUpdating } = useAdminUpdateMediaFile();
 	const { refreshMediaFile, isRefreshing, refreshStatus } = useAdminRefreshMediaFile();
 
-	useEffect(() => {
-		const file = mediaQuery.data;
-		if (!file) return;
-
-		setForm({
-			edition: file.edition ?? "",
-			qualityTag: file.qualityTag ?? "",
-			source: file.source ?? "",
-			fileName: file.fileName,
-			filePath: file.filePath,
-			formatName: file.formatName ?? "",
-			duration: file.duration?.toString() ?? "",
-			size: file.size?.toString() ?? "",
-			bitRate: file.bitRate?.toString() ?? "",
-			isEnabled: file.isEnabled,
-			isDefault: file.isDefault,
-		});
-	}, [mediaQuery.data]);
+	const mediaFile = mediaQuery.data;
+	const [syncedMediaFile, setSyncedMediaFile] = useState<typeof mediaFile>();
+	if (mediaFile !== syncedMediaFile) {
+		setSyncedMediaFile(mediaFile);
+		if (mediaFile) {
+			setForm({
+				edition: mediaFile.edition ?? "",
+				qualityTag: mediaFile.qualityTag ?? "",
+				source: mediaFile.source ?? "",
+				fileName: mediaFile.fileName,
+				filePath: mediaFile.filePath,
+				formatName: mediaFile.formatName ?? "",
+				duration: mediaFile.duration?.toString() ?? "",
+				size: mediaFile.size?.toString() ?? "",
+				bitRate: mediaFile.bitRate?.toString() ?? "",
+				isEnabled: mediaFile.isEnabled,
+				isDefault: mediaFile.isDefault,
+			});
+		}
+	}
 
 	if (!mediaFileId) return <AppErrorState title={m.admin_media_no_identifier_back_to_list()} />;
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAdminUserProfilePreferences } from "@/client/hooks/use-admin-user-profiles";
 import { AsyncButton } from "@/components/async-button";
 import { GeneralPreferencesGrid } from "@/components/profile-preferences/general-preferences-grid";
@@ -14,11 +14,11 @@ export function ProfilePreferencesEditor({ userId, profileId }: { userId: string
 	);
 	const [state, setState] = useState<ProfilePreferencesState>(EMPTY_PREFERENCES);
 
-	useEffect(() => {
-		if (!preferences) return;
-
-		setState(toPreferencesState(preferences));
-	}, [preferences]);
+	const [syncedPreferences, setSyncedPreferences] = useState<typeof preferences>();
+	if (preferences !== syncedPreferences) {
+		setSyncedPreferences(preferences);
+		if (preferences) setState(toPreferencesState(preferences));
+	}
 
 	const updateState = (patch: Partial<ProfilePreferencesState>) => {
 		setState((current) => ({ ...current, ...patch }));

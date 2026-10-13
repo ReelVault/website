@@ -295,17 +295,10 @@
 				"src/pages/admin/users/$id/components/profile-preferences-editor.tsx",
 				"src/pages/admin/worker/components/task-triggers-dialog.tsx",
 				"src/pages/player/hooks/use-player-controller.hook.ts",
-				"src/pages/player/player-page.tsx",
 				"src/pages/web/_libraries/components/library-layout.tsx"
 			],
 			"rules": {
 				"react/set-state-in-effect": "off"
-			}
-		},
-		{
-			"files": ["src/pages/player/components/player-subtitle-overlay.tsx"],
-			"rules": {
-				"react/no-danger": "off"
 			}
 		},
 		{

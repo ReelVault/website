@@ -1,5 +1,3 @@
-/* oxlint-disable react/exhaustive-effect-dependencies, react/set-state-in-effect, react-hooks/exhaustive-deps -- mount-only schema initialization */
-
 import type { PluginLocalizedText, PluginSchemaAction, PluginSchemaCondition, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -52,7 +50,8 @@ export function useSchemaRuntime(
 	const emptyScope: SchemaScope = { form: {}, data: {}, context };
 	const [formValues, setFormValues] = useState<Record<string, unknown>>(() => collectSchemaDefaults(schema.body, emptyScope));
 	const [dataValues, setDataValues] = useState<Record<string, unknown>>({});
-	const [dataLoading, setDataLoading] = useState(false);
+	// The surface is keyed by plugin, so the mount-time load starts already in the loading state.
+	const [dataLoading, setDataLoading] = useState(() => Object.keys(schema.data ?? {}).length > 0);
 	const [dataErrors, setDataErrors] = useState<Record<string, string>>({});
 	const scopeRef = useRef<SchemaScope>({ form: formValues, data: dataValues, context });
 	const isMountedRef = useRef(true);
@@ -78,7 +77,6 @@ export function useSchemaRuntime(
 
 		const requestId = ++loadRequestIdRef.current;
 		const isLatest = (): boolean => isMountedRef.current && requestId === loadRequestIdRef.current;
-		setDataLoading(true);
 
 		await Promise.all(
 			names.map(async (name) => {
@@ -104,6 +102,14 @@ export function useSchemaRuntime(
 		});
 	};
 
+	/** Shows the loading state, then reloads; a surface without sources never shows it. */
+	const reloadSources = (names: string[], scope: SchemaScope): void => {
+		if (!schema.data || names.length === 0) return;
+
+		setDataLoading(true);
+		detach(loadSources(names, scope));
+	};
+
 	const setField = (name: string, value: unknown): void => {
 		touchedFieldsRef.current.add(name);
 		setFormValues((previous) => ({ ...previous, [name]: value }));
@@ -118,7 +124,7 @@ export function useSchemaRuntime(
 	}, [dataValues, schema.body, context]);
 
 	const refresh = (scope: SchemaScope, sources?: string[]): void => {
-		detach(loadSources(sources && sources.length > 0 ? sources : allSourceNames, scope));
+		reloadSources(sources && sources.length > 0 ? sources : allSourceNames, scope);
 	};
 
 	const runAction = (action: PluginSchemaAction, scope: SchemaScope): void => {
@@ -210,26 +216,34 @@ export function useSchemaRuntime(
 	};
 
 	const runActionRef = useRef(runAction);
-	useEffect(() => {
-		runActionRef.current = runAction;
-		scopeRef.current = { form: formValues, data: dataValues, context };
-	});
 
 	// Load data sources, run mount actions once, and refresh when a sibling
 	// surface mutates data (cross-surface consistency).
-	// biome-ignore lint/correctness/useExhaustiveDependencies: mount-only initialization
-	useEffect(() => {
+	const mountSchema = () => {
 		const scope: SchemaScope = { form: formValues, data: {}, context };
 		detach(loadSources(allSourceNames, scope));
 		// An action that asks for confirmation waits for the button; nothing runs it on mount.
 		for (const action of schema.onMount ?? []) {
 			if (actionConfirmation(action) === undefined) runActionRef.current(action, scope);
 		}
+	};
+	const refreshSources = () => {
+		reloadSources(allSourceNames, scopeRef.current);
+	};
 
-		return subscribeSchemaRefresh(() => {
-			detach(loadSources(allSourceNames, scopeRef.current));
-		});
-	}, [pluginId]);
+	// The mount-only effect below reaches the latest handlers through this ref, so it runs once per mount.
+	const handlersRef = useRef<{ mount: () => void; refresh: () => void } | null>(null);
+	useEffect(() => {
+		runActionRef.current = runAction;
+		scopeRef.current = { form: formValues, data: dataValues, context };
+		handlersRef.current = { mount: mountSchema, refresh: refreshSources };
+	});
+
+	useEffect(() => {
+		handlersRef.current?.mount();
+
+		return subscribeSchemaRefresh(() => handlersRef.current?.refresh());
+	}, []);
 
 	return {
 		scope: { form: formValues, data: dataValues, context },

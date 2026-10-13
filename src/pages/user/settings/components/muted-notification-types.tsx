@@ -11,6 +11,7 @@ export function MutedNotificationTypes({ profileId }: { profileId: string }) {
 		.split(",")
 		.map((type) => type.trim())
 		.filter((type) => type.length > 0);
+	const mutedTypes = new Set(muted);
 
 	const toggle = (type: string, checked: boolean) => {
 		const next = checked ? [...muted, type] : muted.filter((item) => item !== type);
@@ -30,7 +31,7 @@ export function MutedNotificationTypes({ profileId }: { profileId: string }) {
 					<input
 						type="checkbox"
 						className="size-4 accent-primary"
-						checked={muted.includes(type)}
+						checked={mutedTypes.has(type)}
 						disabled={isSaving}
 						onChange={(event) => toggle(type, event.currentTarget.checked)}
 					/>

@@ -8,6 +8,32 @@ const API_CONTRACT_VERSION = import.meta.env.VITE_API_CONTRACT_VERSION ?? "playb
 const FRONTEND_BUILD_ID = import.meta.env.VITE_FRONTEND_BUILD_ID ?? "development";
 const WAKE_DEBOUNCE_MS = 250;
 
+/** Compares the server's API contract with this build: reloads once, then blocks on a persistent mismatch. */
+async function checkApiContract(inFlight: { current: boolean }, setBlocked: (blocked: boolean) => void): Promise<void> {
+	try {
+		const health = await reelvault.health.check();
+		if (!health.apiContractVersion || health.apiContractVersion === API_CONTRACT_VERSION) {
+			setBlocked(false);
+
+			return;
+		}
+
+		const reloadKey = `reelvault:api-contract-reload:${FRONTEND_BUILD_ID}:${health.apiContractVersion}`;
+		if (!sessionStorage.getItem(reloadKey)) {
+			sessionStorage.setItem(reloadKey, "1");
+			window.location.reload();
+
+			return;
+		}
+
+		setBlocked(true);
+	} catch {
+		// A transient offline state must not block an already compatible player.
+	} finally {
+		inFlight.current = false;
+	}
+}
+
 export function ApiContractProvider({ children }: { children: ReactNode }) {
 	const [isBlocked, setIsBlocked] = useState(false);
 	const inFlightRef = useRef(false);
@@ -19,32 +45,7 @@ export function ApiContractProvider({ children }: { children: ReactNode }) {
 			if (inFlightRef.current) return;
 
 			inFlightRef.current = true;
-			detach(
-				(async () => {
-					try {
-						const health = await reelvault.health.check();
-						if (!health.apiContractVersion || health.apiContractVersion === API_CONTRACT_VERSION) {
-							setIsBlocked(false);
-
-							return;
-						}
-
-						const reloadKey = `reelvault:api-contract-reload:${FRONTEND_BUILD_ID}:${health.apiContractVersion}`;
-						if (!sessionStorage.getItem(reloadKey)) {
-							sessionStorage.setItem(reloadKey, "1");
-							window.location.reload();
-
-							return;
-						}
-
-						setIsBlocked(true);
-					} catch {
-						// A transient offline state must not block an already compatible player.
-					} finally {
-						inFlightRef.current = false;
-					}
-				})(),
-			);
+			detach(checkApiContract(inFlightRef, setIsBlocked));
 		};
 
 		checkContract();

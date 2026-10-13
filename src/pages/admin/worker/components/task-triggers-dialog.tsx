@@ -1,6 +1,6 @@
 import type { TaskTrigger, WorkerSummary } from "@reelvault/sdk";
 import { Clock, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { detach } from "@/lib/detach";
@@ -21,14 +21,16 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 	const [triggers, setTriggers] = useState<TaskTrigger[]>([]);
 	const [isAdding, setIsAdding] = useState(false);
 
-	useEffect(() => {
+	const [syncedTask, setSyncedTask] = useState<WorkerSummary | null | undefined>();
+	const [syncedOpen, setSyncedOpen] = useState<boolean | undefined>();
+	if (task !== syncedTask || isOpen !== syncedOpen) {
+		setSyncedTask(task);
+		setSyncedOpen(isOpen);
 		if (task && isOpen) {
-			// react-doctor-disable-next-line react-doctor/no-adjust-state-on-prop-change
 			setTriggers([...task.triggers]);
-			// react-doctor-disable-next-line react-doctor/no-adjust-state-on-prop-change
 			setIsAdding(false);
 		}
-	}, [task, isOpen]);
+	}
 
 	if (!task) return null;
 

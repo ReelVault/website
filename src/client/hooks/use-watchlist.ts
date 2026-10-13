@@ -13,11 +13,12 @@ const WATCHLIST_PAGE_LIMIT = 500;
 /** The endpoint paginates (default 20/page); the page shows the whole list, so every page is fetched and merged. */
 async function fetchFullWatchlist() {
 	const first = await reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT });
-	const data = [...first.data];
-	for (let page = 2; page <= first.totalPages; page++) {
-		const next = await reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page });
-		data.push(...next.data);
-	}
+	const rest = await Promise.all(
+		Array.from({ length: Math.max(first.totalPages - 1, 0) }, (_, index) =>
+			reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page: index + 2 }),
+		),
+	);
+	const data = [...first.data, ...rest.flatMap((next) => next.data)];
 
 	return { ...first, data };
 }
@@ -77,9 +78,13 @@ async function fetchStatusBatch(ids: string[]): Promise<Map<string, boolean>> {
 
 /** Chunk oversized batches instead of silently dropping the overflow (cards defaulted to false). */
 async function fetchStatusBatches(ids: string[]): Promise<Map<string, boolean>> {
+	const parts = await Promise.all(
+		Array.from({ length: Math.ceil(ids.length / BATCH_MAX_IDS) }, (_, index) =>
+			fetchStatusBatch(ids.slice(index * BATCH_MAX_IDS, (index + 1) * BATCH_MAX_IDS)),
+		),
+	);
 	const merged = new Map<string, boolean>();
-	for (let index = 0; index < ids.length; index += BATCH_MAX_IDS) {
-		const part = await fetchStatusBatch(ids.slice(index, index + BATCH_MAX_IDS));
+	for (const part of parts) {
 		for (const [metadataId, inWatchlist] of part) merged.set(metadataId, inWatchlist);
 	}
 

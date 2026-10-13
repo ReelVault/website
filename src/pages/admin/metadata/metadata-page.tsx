@@ -105,9 +105,11 @@ export default function AdminMetadataPage() {
 		}
 	}, [debouncedSearch, navigate, search.q]);
 
-	useEffect(() => {
+	const [syncedSearch, setSyncedSearch] = useState(search.q);
+	if (search.q !== syncedSearch) {
+		setSyncedSearch(search.q);
 		setSearchQuery(search.q ?? "");
-	}, [search.q]);
+	}
 
 	let hasMediaFiles: boolean | undefined;
 	if (mediaFilter === "with_media") hasMediaFiles = true;

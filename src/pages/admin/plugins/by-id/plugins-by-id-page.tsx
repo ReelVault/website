@@ -2,7 +2,7 @@ import type { PluginConfigExport } from "@reelvault/sdk";
 import { Link, useParams } from "@tanstack/react-router";
 import { cn } from "cn";
 import { ArrowLeft, Download, RefreshCw, RotateCcw, Save, Sliders, Upload } from "lucide-react";
-import { type ChangeEvent, lazy, Suspense, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, lazy, Suspense, useRef, useState } from "react";
 import { getSdkErrorMessage } from "@/client/client";
 import { useAdminPluginConfig } from "@/client/hooks/use-admin-plugin-config";
 import { useAdminPlugins } from "@/client/hooks/use-admin-plugins";
@@ -91,7 +91,9 @@ export default function AdminPluginSettingsPage() {
 	const [showSecrets, setShowSecrets] = useState<Record<string, boolean>>({});
 	const [fieldErrors, setFieldErrors] = useState<Record<string, string | undefined>>({});
 
-	useEffect(() => {
+	const [syncedConfigDetails, setSyncedConfigDetails] = useState<typeof configDetails>();
+	if (configDetails !== syncedConfigDetails) {
+		setSyncedConfigDetails(configDetails);
 		if (configDetails?.config) {
 			const initial: Record<string, unknown> = { ...configDetails.config };
 			for (const field of configDetails.fields) {
@@ -103,7 +105,7 @@ export default function AdminPluginSettingsPage() {
 			setFormValues(initial);
 			setSavedValues(initial);
 		}
-	}, [configDetails]);
+	}
 
 	const hasChanges = JSON.stringify(formValues) !== JSON.stringify(savedValues);
 	const { leaveRequested, answerLeave } = useUnsavedChangesGuard(hasChanges);

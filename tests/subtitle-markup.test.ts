@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { sanitizeSubtitleMarkup } from "@/pages/player/utils/subtitle-markup.utils";
+import { parseSubtitleMarkup, type SubtitleTextRun, sanitizeSubtitleMarkup } from "@/pages/player/utils/subtitle-markup.utils";
 
 /**
- * Subtitle cues are rendered with innerHTML, so the sanitizer is the only thing between a
- * subtitle file and the page. Every attack below must come out as inert text, and whatever
- * markup survives must be one of the fixed tags the sanitizer itself allows.
+ * The sanitizer is the first guard between a subtitle file and the page: cue markup is read back
+ * by parseSubtitleMarkup and rendered as React nodes. Every attack below must come out as inert
+ * text, and whatever markup survives must be one of the fixed tags the sanitizer itself allows.
  */
 
 const ALLOWED_TAG =
@@ -106,5 +106,65 @@ describe("sanitizer edge cases", () => {
 	test("empty and whitespace-only cues come out empty", () => {
 		expect(sanitizeSubtitleMarkup("")).toBe("");
 		expect(sanitizeSubtitleMarkup("   ")).toBe("   ");
+	});
+});
+
+describe("subtitle markup parser", () => {
+	const textRuns = (markup: string): SubtitleTextRun[] =>
+		parseSubtitleMarkup(markup).filter((segment): segment is SubtitleTextRun => segment.kind === "text");
+
+	test("formatting tags set flat style flags", () => {
+		const runs = textRuns("<i>one</i> <b>two</b> <u>three</u> <s>four</s>");
+
+		expect(runs.map((run) => [run.text, run.italic, run.bold, run.underline, run.strike])).toEqual([
+			["one", true, false, false, false],
+			[" ", false, false, false, false],
+			["two", false, true, false, false],
+			[" ", false, false, false, false],
+			["three", false, false, true, false],
+			[" ", false, false, false, false],
+			["four", false, false, false, true],
+		]);
+	});
+
+	test("misnested formatting styles the text the way the browser does", () => {
+		// After </i> the browser keeps "c" bold but no longer italic.
+		expect(textRuns("<i>a<b>b</i>c</b>").map((run) => [run.text, run.italic, run.bold])).toEqual([
+			["a", true, false],
+			["b", true, true],
+			["c", false, true],
+		]);
+	});
+
+	test("line breaks become break segments with sequential ids", () => {
+		const segments = parseSubtitleMarkup("a<br />b<br/>c");
+
+		expect(segments.map((segment) => segment.kind)).toEqual(["text", "break", "text", "break", "text"]);
+		expect(segments.map((segment) => segment.id)).toEqual([0, 1, 2, 3, 4]);
+	});
+
+	test("escaped text reads back to the original characters", () => {
+		const source = `Tom & "Jerry" <3 'x' &lt;`;
+
+		expect(
+			textRuns(sanitizeSubtitleMarkup(source))
+				.map((run) => run.text)
+				.join(""),
+		).toBe(source);
+	});
+
+	test("colour spans carry the colour and voice spans are dimmed and italic", () => {
+		const runs = textRuns('<span class="opacity-75 italic">Narrator: </span>hi <span style="color: #ff0000">red</span>');
+
+		expect(runs[0]).toMatchObject({ text: "Narrator: ", dim: true, italic: true });
+		expect(runs[1]).toMatchObject({ text: "hi ", dim: false, italic: false, color: undefined });
+		expect(runs[2]).toMatchObject({ text: "red", color: "#ff0000" });
+	});
+
+	test("unmatched closing tags change nothing", () => {
+		expect(textRuns("</b>x</span>y").map((run) => [run.text, run.bold])).toEqual([
+			["x", false],
+			["y", false],
+		]);
 	});
 });

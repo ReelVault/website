@@ -349,3 +349,9 @@ The two additional emitted files are the `details-rail` and `provider-candidate-
 #### Administration & layout
 
 - **Admin sidebar search** — The search icon overlapped the placeholder on desktop: the input's responsive horizontal padding overrode the left padding. The field now uses the input's leading-icon padding.
+
+#### Realtime & playback
+
+- **Stale data after a realtime drop** — When the realtime socket re-opens after a drop (server restart, backup restore, network loss), the queries on screen are refetched. Events sent while the socket was down are not replayed, so lists and counters could keep showing old values until the next event or a manual reload.
+- **Subtitles rendered without `innerHTML`** — Cue markup is parsed into text runs and rendered as React nodes. The sanitizer stays the first guard, and the subtitle styling is unchanged.
+- **Caption track text** — The `<track>` used for assistive technology showed raw entities (`&amp;`) and merged lines of a multi-line cue, because the tag stripping dropped `<br />` without a line break. It now decodes entities and keeps line breaks.

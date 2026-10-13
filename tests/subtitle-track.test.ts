@@ -24,6 +24,14 @@ describe("buildWebVtt", () => {
 		expect(vtt).not.toContain("<i>");
 	});
 
+	it("decodes entities and keeps line breaks, so the track reads as the subtitle does", () => {
+		const cues = parseSubtitles("WEBVTT\n\n00:00:01.000 --> 00:00:02.000\nTom & Jerry <3\nSecond line");
+		const vtt = buildWebVtt(cues);
+
+		expect(vtt).toContain("00:00:01.000 --> 00:00:02.000\nTom & Jerry <3\nSecond line");
+		expect(vtt).not.toContain("&amp;");
+	});
+
 	it("converts SRT cues, which browsers cannot load as a track directly", () => {
 		const srt = "1\n00:00:01,000 --> 00:00:02,500\nFirst line\n\n2\n00:00:03,000 --> 00:00:04,000\nSecond line\n";
 		const vtt = buildWebVtt(parseSubtitles(srt));

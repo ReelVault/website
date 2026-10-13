@@ -2,7 +2,13 @@ import { type QueryKey, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "@tanstack/react-router";
 import { type ReactNode, startTransition, useEffect, useRef } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
-import { realtimeConnection, setRealtimeConnectionAllowed, useRealtimeEvent } from "@/client/hooks/use-realtime";
+import {
+	getRealtimeStatus,
+	realtimeConnection,
+	setRealtimeConnectionAllowed,
+	subscribeRealtimeStatus,
+	useRealtimeEvent,
+} from "@/client/hooks/use-realtime";
 import {
 	adminKeys,
 	adminSettingsKeys,
@@ -14,6 +20,7 @@ import {
 	notificationKeys,
 	seasonKeys,
 } from "@/client/utils/query-keys";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { isPublicNoSessionPath } from "@/utils/public-paths";
 import { toast } from "@/utils/toast-facade";
@@ -59,6 +66,26 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 			});
 		}, INVALIDATION_COALESCE_MS);
 	};
+
+	// The server may come back changed after a drop (restore, update, restart) and events sent
+	// meanwhile are lost: once the socket re-opens, refetch the queries on screen.
+	useEffect(() => {
+		let dropped = false;
+
+		return subscribeRealtimeStatus(() => {
+			const status = getRealtimeStatus();
+			if (status === "reconnecting") {
+				dropped = true;
+
+				return;
+			}
+
+			if (status === "open" && dropped) {
+				dropped = false;
+				detach(queryClient.invalidateQueries());
+			}
+		});
+	}, [queryClient]);
 
 	useEffect(() => {
 		if (isLoading) return;

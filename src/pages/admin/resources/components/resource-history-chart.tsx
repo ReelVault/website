@@ -59,6 +59,8 @@ function readSeries(entry: HistoryEntry, key: (typeof SERIES)[number]["key"]): n
 
 const CHART_HEIGHT = 176;
 
+const formatTime = (entry: HistoryEntry) => (entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString(getLocaleTag()) : "");
+
 /**
  * 24h CPU/RAM/disk history as a hand-rolled SVG area chart — one shared 0-100%
  * scale, hover guide with exact sample values (incl. active worker count from
@@ -83,8 +85,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 				return `${x},${100 - Math.max(0, Math.min(100, value))}`;
 			})
 			.join(" ");
-
-	const formatTime = (entry: HistoryEntry) => (entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString(getLocaleTag()) : "");
 
 	const handleMove = (event: React.MouseEvent<SVGElement>) => {
 		if (samples.length === 0) return;

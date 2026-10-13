@@ -30,6 +30,20 @@ interface PluginRepositoriesDialogProps {
 	onRefresh: (repositoryId: string) => Promise<unknown>;
 }
 
+/** Runs the create request, then resets the form; the submitting flag clears either way. */
+async function submitRepository(
+	create: () => Promise<unknown>,
+	onCreated: () => void,
+	setSubmitting: (submitting: boolean) => void,
+): Promise<void> {
+	try {
+		await create();
+		onCreated();
+	} finally {
+		setSubmitting(false);
+	}
+}
+
 export function PluginRepositoriesDialog({
 	open,
 	onOpenChange,
@@ -52,16 +66,15 @@ export function PluginRepositoriesDialog({
 
 		setIsSubmitting(true);
 		detach(
-			(async () => {
-				try {
-					await onCreate({ name: name.trim(), url: url.trim(), ...(token.trim() ? { token: token.trim() } : {}) });
+			submitRepository(
+				() => onCreate({ name: name.trim(), url: url.trim(), ...(token.trim() ? { token: token.trim() } : {}) }),
+				() => {
 					setName("");
 					setUrl("");
 					setToken("");
-				} finally {
-					setIsSubmitting(false);
-				}
-			})(),
+				},
+				setIsSubmitting,
+			),
 		);
 	};
 

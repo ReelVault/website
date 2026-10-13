@@ -1,4 +1,5 @@
 import { parseSubtitles, type SubtitleCue } from "../components/player-subtitle-overlay";
+import { parseSubtitleMarkup } from "./subtitle-markup.utils";
 
 const pad = (value: number, width = 2) => String(value).padStart(width, "0");
 
@@ -11,10 +12,11 @@ export function formatVttTimestamp(seconds: number): string {
 	return `${pad(hours)}:${pad(minutes)}:${pad(secs)}.${pad(totalMs % 1000, 3)}`;
 }
 
-/** The overlay keeps sanitized markup; a caption track only needs the text. */
+/** The overlay keeps sanitized markup; a caption track needs the plain text: entities decoded, line breaks kept. */
 function cueText(html: string): string {
-	return html
-		.replace(/<[^>]*>/g, "")
+	return parseSubtitleMarkup(html)
+		.map((segment) => (segment.kind === "break" ? "\n" : segment.text))
+		.join("")
 		.replace(/\r?\n\s*\n/g, "\n")
 		.trim();
 }

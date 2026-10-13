@@ -677,9 +677,9 @@ export function usePlayerController({
 			} else {
 				surfaceRecoveryFailure();
 			}
-		} finally {
-			isRecoveringSessionRef.current = false;
 		}
+
+		isRecoveringSessionRef.current = false;
 	}, [handleSessionTerminated, mediaFileId, surfaceRecoveryFailure]);
 
 	// -------------------------------------------------------------------------

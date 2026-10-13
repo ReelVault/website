@@ -2,7 +2,7 @@ import { ReelVaultError } from "@reelvault/sdk/client";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { playbackViewQueryOptions, usePlaybackSession } from "@/client/hooks/use-playback-session";
 import { usePlaybackPreRoll } from "@/client/hooks/use-plugin-ui";
@@ -64,12 +64,9 @@ export default function PlayerByIdPage() {
 	// The playback view carries the FULL media-file row — no separate getById.
 
 	const isInitialDataLoading = isProfileLoading || profilePreferencesQuery.isLoading || viewQuery.isPending;
-
-	useEffect(() => {
-		if (hasInitializedState || isInitialDataLoading) return;
-
-		setHasInitializedState(true);
-	}, [hasInitializedState, isInitialDataLoading]);
+	// Latches once the initial data is in, so session creation stays enabled from then on.
+	// Adjusting state during render makes the flag true on the same render, not one commit later.
+	if (!(hasInitializedState || isInitialDataLoading)) setHasInitializedState(true);
 
 	// Cinema mode: a plugin declaring playbackPreRoll (e.g. Cinemamode) supplies
 	// trailers shown before the title starts. While they play, session creation
