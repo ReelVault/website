@@ -39,7 +39,7 @@ bun run test
 ## Forbidden: silencing tools
 Never suppress a problem instead of fixing it. No linter blocks these, so YOU must not:
 - Suppression comments: `// biome-ignore`, `// oxlint-disable`, `@ts-ignore`, `@ts-expect-error`, `@ts-nocheck`.
-- Config weakening: turning a rule off or downgrading it in `biome.json`, `.oxlintrc.json` or `tsconfig.json`; adding paths to `ignores`/`ignorePatterns` or to the per-file `overrides` in `.oxlintrc.json` (`react/set-state-in-effect`, `react/no-danger`, ...). Existing entries are legacy debt, not precedent.
+- Config weakening: turning a rule off or downgrading it in `biome.jsonc`, `.oxlintrc.json` or `tsconfig.json`; adding paths to `ignores`/`ignorePatterns` or to the per-file `overrides` in `.oxlintrc.json` (`react/set-state-in-effect`, `react/no-danger`, ...). Existing entries are legacy debt, not precedent.
 - Dead-code hiding: `knip.json` ignore entries. Delete the code.
 - Test evasion: `test.skip`, `test.todo`, loosened assertions, deleting a failing test to get green.
 - Bypassing git hooks (`--no-verify`).

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { writeDocumentCookie } from "@/lib/document-cookie";
 import { m } from "@/paraglide/messages";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
@@ -9,16 +10,10 @@ import { resetWatchlistBatch } from "./use-watchlist";
 function clearSessionCookies(): void {
 	if (typeof document === "undefined") return;
 
-	// react-doctor-disable-next-line react-doctor/insecure-session-cookie
-	/* biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async) */
-	document.cookie = "better-auth.session_token=; Max-Age=0; path=/;";
-	// react-doctor-disable-next-line react-doctor/insecure-session-cookie
-	/* biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async) */
-	document.cookie = "__Secure-better-auth.session_token=; Max-Age=0; path=/;";
-	// biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async)
-	document.cookie = "current_profile_id=; Max-Age=0; path=/;";
-	// biome-ignore lint/suspicious/noDocumentCookie: sync cookie clearing has no platform alternative (cookieStore is async)
-	document.cookie = "profile_unlock=; Max-Age=0; path=/;";
+	writeDocumentCookie("better-auth.session_token=; Max-Age=0; path=/;");
+	writeDocumentCookie("__Secure-better-auth.session_token=; Max-Age=0; path=/;");
+	writeDocumentCookie("current_profile_id=; Max-Age=0; path=/;");
+	writeDocumentCookie("profile_unlock=; Max-Age=0; path=/;");
 }
 
 export function useLogin() {

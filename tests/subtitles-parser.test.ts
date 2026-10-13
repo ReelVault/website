@@ -1,6 +1,12 @@
 import { describe, expect, it } from "bun:test";
 import { parseSubtitles } from "@/pages/player/components/player-subtitle-overlay";
 
+const alignmentOf = (settings: string) => {
+	const [cue] = parseSubtitles(`WEBVTT\n\n00:00:01.000 --> 00:00:02.000 ${settings}\nText`);
+
+	return { v: cue?.vAlign, h: cue?.hAlign };
+};
+
 describe("parseSubtitles", () => {
 	it("parses WebVTT timestamps and simple text", () => {
 		const vtt = `WEBVTT
@@ -54,12 +60,6 @@ Left top speaker text`;
 	});
 
 	it("maps every cue setting value to its alignment and ignores unknown ones", () => {
-		const alignmentOf = (settings: string) => {
-			const [cue] = parseSubtitles(`WEBVTT\n\n00:00:01.000 --> 00:00:02.000 ${settings}\nText`);
-
-			return { v: cue?.vAlign, h: cue?.hAlign };
-		};
-
 		expect(alignmentOf("align:end")).toEqual({ v: "bottom", h: "right" });
 		expect(alignmentOf("align:middle")).toEqual({ v: "bottom", h: "center" });
 		expect(alignmentOf("align:sideways")).toEqual({ v: "bottom", h: "center" });

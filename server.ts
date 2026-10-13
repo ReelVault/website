@@ -90,43 +90,100 @@ function resolveDistPath(pathname: string): string | undefined {
 	return resolved === DIST_DIR || resolved.startsWith(DIST_DIR + path.sep) ? resolved : undefined;
 }
 
+type CacheControl = "no-cache" | "public, max-age=31536000, immutable" | "public, max-age=3600";
+
+/** Cache policy for a served file: update-check files are never cached, hashed assets are immutable, the rest is short-lived. */
+function cacheControlFor(fileName: string, pathname: string): CacheControl {
+	// version.json is polled for update checks; an hour of caching
+	// would keep showing the previous version after a deploy.
+	if (NO_CACHE_FILES.has(fileName) || NO_CACHE_PREFIXES.some((prefix) => fileName.startsWith(prefix))) return "no-cache";
+
+	if (pathname.startsWith("/assets/")) return "public, max-age=31536000, immutable";
+
+	return "public, max-age=3600";
+}
+
+/** Forwards an API request to the backend, passing the original host and client address along. */
+function proxyToApi(req: Request, url: URL, clientIp: string | undefined): Promise<Response> {
+	const targetUrl = new URL(url.pathname + url.search, API_PROXY_TARGET);
+	// Ask the backend for an uncompressed body: Bun's fetch already decodes
+	// the upstream encoding, so forwarding the original `content-encoding`
+	// made the browser try to decode an already-decoded body
+	// (ERR_CONTENT_DECODING_FAILED).
+	const proxyHeaders = new Headers(req.headers);
+	proxyHeaders.set("accept-encoding", "identity");
+
+	// let the backend see the original client instead of this server.
+	// `host` is dropped so fetch sets it for the target; the original goes
+	// into x-forwarded-host.
+	const originalHost = proxyHeaders.get("host");
+	proxyHeaders.delete("host");
+	if (originalHost) proxyHeaders.set("x-forwarded-host", originalHost);
+
+	proxyHeaders.set("x-forwarded-proto", url.protocol.replace(":", ""));
+
+	if (clientIp) {
+		const previous = proxyHeaders.get("x-forwarded-for");
+		proxyHeaders.set("x-forwarded-for", previous ? `${previous}, ${clientIp}` : clientIp);
+	}
+
+	return fetch(targetUrl.toString(), {
+		method: req.method,
+		headers: proxyHeaders,
+		body: req.body,
+		redirect: "manual",
+	});
+}
+
+/**
+ * Serves a regular file from DIST_DIR. Resolves to undefined when the path is missing or is a directory.
+ * The precompressed .br/.gz sibling is used when the client accepts it.
+ */
+async function serveDistFile(req: Request, pathname: string, filePath: string): Promise<Response | undefined> {
+	const file = Bun.file(filePath);
+	if (!(await file.exists())) return undefined;
+
+	const stat = await file.stat();
+	if (stat.isDirectory()) return undefined;
+
+	const fileName = path.basename(filePath);
+	// Every HTML entry goes through the injected body so the marker is
+	// always present (the precompressed .br/.gz siblings lack it).
+	if (fileName === "index.html") return htmlResponse(await getIndexBody());
+
+	const headers: Record<string, string> = {
+		"Cache-Control": cacheControlFor(fileName, pathname),
+		Vary: "Accept-Encoding",
+	};
+
+	// Serve the precompressed sibling produced by vite-plugin-compression2
+	// (.br/.gz) when the client advertises support. Bun.file(.type) keeps the
+	// MIME of the *original* asset, not of the .br/.gz suffix.
+	const acceptEncoding = req.headers.get("accept-encoding") ?? "";
+	const brFile = acceptsEncoding(acceptEncoding, "br") ? Bun.file(`${filePath}.br`) : undefined;
+	const gzFile = !brFile && acceptsEncoding(acceptEncoding, "gzip") ? Bun.file(`${filePath}.gz`) : undefined;
+	const compressed = brFile ?? gzFile;
+	if (compressed && (await compressed.exists())) {
+		return new Response(compressed, {
+			headers: {
+				...headers,
+				"Content-Type": file.type,
+				"Content-Encoding": brFile ? "br" : "gzip",
+			},
+		});
+	}
+
+	return new Response(file, { headers });
+}
+
 Bun.serve({
 	port: PORT,
 	hostname: HOST,
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <TODO>
 	async fetch(req, server) {
 		const url = new URL(req.url);
 
 		if (API_PROXY_TARGET && (url.pathname.startsWith("/api") || url.pathname.startsWith("/v1"))) {
-			const targetUrl = new URL(url.pathname + url.search, API_PROXY_TARGET);
-			// Ask the backend for an uncompressed body: Bun's fetch already decodes
-			// the upstream encoding, so forwarding the original `content-encoding`
-			// made the browser try to decode an already-decoded body
-			// (ERR_CONTENT_DECODING_FAILED).
-			const proxyHeaders = new Headers(req.headers);
-			proxyHeaders.set("accept-encoding", "identity");
-
-			// let the backend see the original client instead of this server.
-			// `host` is dropped so fetch sets it for the target; the original goes
-			// into x-forwarded-host.
-			const originalHost = proxyHeaders.get("host");
-			proxyHeaders.delete("host");
-			if (originalHost) proxyHeaders.set("x-forwarded-host", originalHost);
-
-			proxyHeaders.set("x-forwarded-proto", url.protocol.replace(":", ""));
-
-			const clientIp = server.requestIP(req)?.address;
-			if (clientIp) {
-				const previous = proxyHeaders.get("x-forwarded-for");
-				proxyHeaders.set("x-forwarded-for", previous ? `${previous}, ${clientIp}` : clientIp);
-			}
-
-			return fetch(targetUrl.toString(), {
-				method: req.method,
-				headers: proxyHeaders,
-				body: req.body,
-				redirect: "manual",
-			});
+			return proxyToApi(req, url, server.requestIP(req)?.address);
 		}
 
 		const filePath = resolveDistPath(url.pathname);
@@ -134,53 +191,8 @@ Bun.serve({
 			return new Response("Forbidden", { status: 403, headers: { "Content-Type": "text/plain; charset=utf-8" } });
 		}
 
-		const fileName = path.basename(filePath);
-
-		const file = Bun.file(filePath);
-		if (await file.exists()) {
-			const stat = await file.stat();
-			if (!stat.isDirectory()) {
-				// Every HTML entry goes through the injected body so the marker is
-				// always present (the precompressed .br/.gz siblings lack it).
-				if (fileName === "index.html") return htmlResponse(await getIndexBody());
-
-				const isHashedAsset = url.pathname.startsWith("/assets/");
-				// version.json is polled for update checks; an hour of caching
-				// would keep showing the previous version after a deploy.
-				let cacheControl: string;
-				if (NO_CACHE_FILES.has(fileName) || NO_CACHE_PREFIXES.some((prefix) => fileName.startsWith(prefix))) {
-					cacheControl = "no-cache";
-				} else if (isHashedAsset) {
-					cacheControl = "public, max-age=31536000, immutable";
-				} else {
-					cacheControl = "public, max-age=3600";
-				}
-
-				const headers: Record<string, string> = {
-					"Cache-Control": cacheControl,
-					Vary: "Accept-Encoding",
-				};
-
-				// Serve the precompressed sibling produced by vite-plugin-compression2
-				// (.br/.gz) when the client advertises support. Bun.file(.type) keeps the
-				// MIME of the *original* asset, not of the .br/.gz suffix.
-				const acceptEncoding = req.headers.get("accept-encoding") ?? "";
-				const brFile = acceptsEncoding(acceptEncoding, "br") ? Bun.file(`${filePath}.br`) : undefined;
-				const gzFile = !brFile && acceptsEncoding(acceptEncoding, "gzip") ? Bun.file(`${filePath}.gz`) : undefined;
-				const compressed = brFile ?? gzFile;
-				if (compressed && (await compressed.exists())) {
-					return new Response(compressed, {
-						headers: {
-							...headers,
-							"Content-Type": file.type,
-							"Content-Encoding": brFile ? "br" : "gzip",
-						},
-					});
-				}
-
-				return new Response(file, { headers });
-			}
-		}
+		const served = await serveDistFile(req, url.pathname, filePath);
+		if (served) return served;
 
 		// A missing hashed asset must 404, not fall back to index.html — returning
 		// HTML for a .js/.css request breaks caching and hides deploy mistakes.

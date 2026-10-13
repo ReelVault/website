@@ -647,7 +647,6 @@ function AppPlayerSurface() {
 
 	return (
 		<PortalContainerProvider container={portalContainer}>
-			{/* biome-ignore lint/a11y/noStaticElementInteractions: this is the video player container — mouse events are intentional for controls show/hide */}
 			<div
 				ref={containerRef}
 				className={cn(

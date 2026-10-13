@@ -21,7 +21,6 @@ export function PluginDialogProvider({ children }: { children: ReactNode }) {
 
 	return (
 		// React Compiler memoizes this value; the explicit useMemo rule does not apply.
-		// oxlint-disable-next-line react/jsx-no-constructed-context-values
 		<PluginDialogContext.Provider value={{ openDialog: setRequest, closeDialog: () => setRequest(null) }}>
 			{children}
 			{request ? (

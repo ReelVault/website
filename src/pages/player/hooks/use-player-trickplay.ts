@@ -49,83 +49,62 @@ const CR_REGEX = /\r/g;
 const DOUBLE_NEWLINE_SPLIT_REGEX = /\n\n+/;
 const TRAILING_SLASH_REGEX = /\/$/;
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: VTT cue parsing is a single grammar pass; the tokenizer and its state belong together
+/** Parses one WebVTT block into a cue; returns null for blocks that are not cues (header, notes, malformed timing). */
+function parseCueBlock(block: string, baseApiUrl: string): TrickplayCue | null {
+	const trimmed = block.trim();
+	if (!trimmed || trimmed.startsWith("WEBVTT")) return null;
+
+	const lines = trimmed.split("\n");
+	const timeLineIndex = lines.findIndex((line) => line.includes("-->"));
+	const timeLine = timeLineIndex === -1 ? undefined : lines[timeLineIndex];
+	if (!timeLine) return null;
+
+	const [startStr, endStr] = timeLine.split("-->").map((s) => s.trim().split(" ")[0]);
+	if (!(startStr && endStr)) return null;
+
+	const startTime = parseVttTimestamp(startStr);
+	const endTime = parseVttTimestamp(endStr);
+	if (startTime === null || endTime === null) return null;
+
+	// Payload line: e.g. /v1/media-files/xyz/artifacts/abc#xywh=0,0,160,90
+	const payloadLine = lines
+		.slice(timeLineIndex + 1)
+		.join(" ")
+		.trim();
+	if (!payloadLine) return null;
+
+	const hashIndex = payloadLine.indexOf("#xywh=");
+	const rawUrl = hashIndex === -1 ? payloadLine : payloadLine.slice(0, hashIndex);
+	const url =
+		rawUrl.startsWith("http://") || rawUrl.startsWith("https://") ? rawUrl : `${baseApiUrl}${rawUrl.startsWith("/") ? "" : "/"}${rawUrl}`;
+
+	// Without #xywh the cue is a single frame image, so it gets the default thumbnail rectangle.
+	if (hashIndex === -1) return { startTime, endTime, url, x: 0, y: 0, width: 160, height: 90 };
+
+	const [xStr, yStr, wStr, hStr] = payloadLine.slice(hashIndex + 6).split(",");
+
+	return {
+		startTime,
+		endTime,
+		url,
+		x: Number.parseInt(xStr ?? "0", 10) || 0,
+		y: Number.parseInt(yStr ?? "0", 10) || 0,
+		width: Number.parseInt(wStr ?? "160", 10) || 160,
+		height: Number.parseInt(hStr ?? "90", 10) || 90,
+	};
+}
+
 export function parseTrickplayVtt(vttContent: string): TrickplayCue[] {
 	if (!vttContent || typeof vttContent !== "string") return [];
 
-	const cues: TrickplayCue[] = [];
 	const normalized = vttContent.replace(CRLF_REGEX, "\n").replace(CR_REGEX, "\n");
 	const blocks = normalized.split(DOUBLE_NEWLINE_SPLIT_REGEX);
 	const baseApiUrl = getReelVaultApiUrl().replace(TRAILING_SLASH_REGEX, "");
 
+	const cues: TrickplayCue[] = [];
 	for (const block of blocks) {
-		const trimmed = block.trim();
-		if (!trimmed || trimmed.startsWith("WEBVTT")) continue;
-
-		const lines = trimmed.split("\n");
-		let timeLineIndex = -1;
-		for (let i = 0; i < lines.length; i++) {
-			if (lines[i]?.includes("-->")) {
-				timeLineIndex = i;
-				break;
-			}
-		}
-
-		if (timeLineIndex === -1) continue;
-
-		const timeLine = lines[timeLineIndex];
-		if (!timeLine) continue;
-
-		const [startStr, endStr] = timeLine.split("-->").map((s) => s.trim().split(" ")[0]);
-		if (!(startStr && endStr)) continue;
-
-		const startTime = parseVttTimestamp(startStr);
-		const endTime = parseVttTimestamp(endStr);
-		if (startTime === null || endTime === null) continue;
-
-		// Payload line: e.g. /v1/media-files/xyz/artifacts/abc#xywh=0,0,160,90
-		const payloadLine = lines
-			.slice(timeLineIndex + 1)
-			.join(" ")
-			.trim();
-		if (!payloadLine) continue;
-
-		const hashIndex = payloadLine.indexOf("#xywh=");
-		const rawUrl = hashIndex === -1 ? payloadLine : payloadLine.slice(0, hashIndex);
-		const resolvedUrl =
-			rawUrl.startsWith("http://") || rawUrl.startsWith("https://") ? rawUrl : `${baseApiUrl}${rawUrl.startsWith("/") ? "" : "/"}${rawUrl}`;
-
-		if (hashIndex === -1) {
-			// Single frame image URL
-			cues.push({
-				startTime,
-				endTime,
-				url: resolvedUrl,
-				x: 0,
-				y: 0,
-				width: 160,
-				height: 90,
-			});
-			continue;
-		}
-
-		const xywhStr = payloadLine.slice(hashIndex + 6);
-		const [xStr, yStr, wStr, hStr] = xywhStr.split(",");
-
-		const x = Number.parseInt(xStr ?? "0", 10) || 0;
-		const y = Number.parseInt(yStr ?? "0", 10) || 0;
-		const width = Number.parseInt(wStr ?? "160", 10) || 160;
-		const height = Number.parseInt(hStr ?? "90", 10) || 90;
-
-		cues.push({
-			startTime,
-			endTime,
-			url: resolvedUrl,
-			x,
-			y,
-			width,
-			height,
-		});
+		const cue = parseCueBlock(block, baseApiUrl);
+		if (cue) cues.push(cue);
 	}
 
 	return cues;

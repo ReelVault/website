@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useDeleteProfile } from "@/client/hooks/use-profiles";
 import { AppEmptyState, AppLoadingState } from "@/components/app-states";
+import { writeDocumentCookie } from "@/lib/document-cookie";
 import { m } from "@/paraglide/messages";
 import { UserPageHeader } from "../components/user-ui";
 import { DangerZoneSection } from "./sections/danger-zone-section";
@@ -19,8 +20,7 @@ export default function UserSettingsPage() {
 
 		await deleteProfile.mutateAsync(profile.id);
 		if (typeof document !== "undefined") {
-			// biome-ignore lint/suspicious/noDocumentCookie: synchronous cookie clearing has no platform alternative (cookieStore is async); best-effort profile switch cleanup
-			document.cookie = "current_profile_id=; Max-Age=0; path=/;";
+			writeDocumentCookie("current_profile_id=; Max-Age=0; path=/;");
 		}
 
 		await navigate({ to: "/auth/profiles" });

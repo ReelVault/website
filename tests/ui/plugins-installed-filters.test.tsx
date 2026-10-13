@@ -64,7 +64,7 @@ await mock.module("@/pages/admin/admin-ui", () => ({
 	),
 }));
 
-const noop = async () => undefined;
+const noop = () => Promise.resolve();
 
 await mock.module("@/client/hooks/use-admin-plugins", () => ({
 	useAdminPlugins: () => ({
@@ -139,7 +139,7 @@ function renderPage(search: { view: string; category?: string }) {
 }
 
 function installedNames(view: ReturnType<typeof renderPage>): string[] {
-	return [...view.container.querySelectorAll('[data-testid="installed-card"]')].map((card) => card.textContent ?? "");
+	return [...view.container.querySelectorAll('[data-testid="installed-card"]')].map((card) => card.textContent);
 }
 
 afterEach(() => {

@@ -20,6 +20,12 @@ interface PluginFieldRendererProps {
 	onChange: (val: unknown) => void;
 }
 
+interface FieldRendererProps {
+	field: PluginConfigField;
+	value: unknown;
+	onChange: (val: unknown) => void;
+}
+
 /** Renders a plugin default value as text; objects are JSON-stringified. */
 function defaultToText(value: unknown): string {
 	if (value === null || value === undefined) return "";
@@ -33,21 +39,45 @@ function defaultToText(value: unknown): string {
 	return "";
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: one renderer dispatching every plugin field type
-export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, onChange }: PluginFieldRendererProps) {
-	// 1. BOOLEAN FIELD (Switch)
-	if (field.type === "boolean") {
-		const fallbackDefault = field.default === true;
-		const isChecked = typeof value === "boolean" ? value : fallbackDefault;
+/** Boolean fields render as a switch row. */
+function BooleanFieldRenderer({ field, value, onChange }: FieldRendererProps) {
+	const fallbackDefault = field.default === true;
+	const isChecked = typeof value === "boolean" ? value : fallbackDefault;
 
-		return (
-			<Card variant="subtle">
-				<CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-					<div className="flex flex-col gap-1">
+	return (
+		<Card variant="subtle">
+			<CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<div className="flex flex-col gap-1">
+					<div className="flex items-center gap-2">
+						<Label weight="semibold" className="cursor-pointer">
+							{resolvePluginText(field.label)}
+						</Label>
+						{field.required && (
+							<Badge tone="destructive" variant="outline">
+								{m.common_required()}
+							</Badge>
+						)}
+					</div>
+					{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
+				</div>
+				<Switch checked={isChecked} onCheckedChange={onChange} />
+			</CardContent>
+		</Card>
+	);
+}
+
+/** Number fields render a numeric input with the default shown beside the label. */
+function NumberFieldRenderer({ field, value, onChange }: FieldRendererProps) {
+	const numericDefault = typeof field.default === "number" ? field.default : 0;
+	const numValue = typeof value === "number" ? value : numericDefault;
+
+	return (
+		<Card variant="subtle">
+			<CardContent className="flex flex-col gap-3">
+				<div className="flex items-center justify-between">
+					<div className="flex flex-col gap-0.5">
 						<div className="flex items-center gap-2">
-							<Label weight="semibold" className="cursor-pointer">
-								{resolvePluginText(field.label)}
-							</Label>
+							<Label weight="semibold">{resolvePluginText(field.label)}</Label>
 							{field.required && (
 								<Badge tone="destructive" variant="outline">
 									{m.common_required()}
@@ -56,98 +86,82 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 						</div>
 						{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
 					</div>
-					<Switch checked={isChecked} onCheckedChange={onChange} />
-				</CardContent>
-			</Card>
-		);
-	}
+					{field.default !== undefined && (
+						<span className="text-muted-foreground text-xs">
+							{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
+						</span>
+					)}
+				</div>
+				<Input
+					type="number"
+					value={numValue}
+					min={field.min}
+					max={field.max}
+					step={field.step ?? 1}
+					onChange={(e) => onChange(Number(e.target.value))}
+					placeholder={field.default !== undefined ? defaultToText(field.default) : ""}
+					font="mono"
+					className="max-w-xs"
+				/>
+			</CardContent>
+		</Card>
+	);
+}
 
-	// 2. NUMBER FIELD
-	if (field.type === "number") {
-		const numericDefault = typeof field.default === "number" ? field.default : 0;
-		const numValue = typeof value === "number" ? value : numericDefault;
+interface SelectFieldRendererProps extends FieldRendererProps {
+	options: NonNullable<PluginConfigField["options"]>;
+}
 
-		return (
-			<Card variant="subtle">
-				<CardContent className="flex flex-col gap-3">
-					<div className="flex items-center justify-between">
-						<div className="flex flex-col gap-0.5">
-							<div className="flex items-center gap-2">
-								<Label weight="semibold">{resolvePluginText(field.label)}</Label>
-								{field.required && (
-									<Badge tone="destructive" variant="outline">
-										{m.common_required()}
-									</Badge>
-								)}
-							</div>
-							{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
+/** Select fields render a dropdown over the declared options. */
+function SelectFieldRenderer({ field, options, value, onChange }: SelectFieldRendererProps) {
+	const stringDefault = typeof field.default === "string" ? field.default : "";
+	const strValue = typeof value === "string" ? value : stringDefault;
+
+	return (
+		<Card variant="subtle">
+			<CardContent className="flex flex-col gap-3">
+				<div className="flex items-center justify-between">
+					<div className="flex flex-col gap-0.5">
+						<div className="flex items-center gap-2">
+							<Label weight="semibold">{resolvePluginText(field.label)}</Label>
+							{field.required && (
+								<Badge tone="destructive" variant="outline">
+									{m.common_required()}
+								</Badge>
+							)}
 						</div>
-						{field.default !== undefined && (
-							<span className="text-muted-foreground text-xs">
-								{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
-							</span>
-						)}
+						{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
 					</div>
-					<Input
-						type="number"
-						value={numValue}
-						min={field.min}
-						max={field.max}
-						step={field.step ?? 1}
-						onChange={(e) => onChange(Number(e.target.value))}
-						placeholder={field.default !== undefined ? defaultToText(field.default) : ""}
-						font="mono"
-						className="max-w-xs"
-					/>
-				</CardContent>
-			</Card>
-		);
-	}
+					{field.default !== undefined && (
+						<span className="text-muted-foreground text-xs">
+							{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
+						</span>
+					)}
+				</div>
+				<Select value={strValue} onValueChange={(val) => onChange(val)}>
+					<SelectTrigger className="max-w-xs">
+						<SelectValue placeholder={m.admin_settings_select_option()} />
+					</SelectTrigger>
+					<SelectContent>
+						{options.map((opt) => (
+							<SelectItem key={String(opt.value)} value={String(opt.value)}>
+								{resolvePluginText(opt.label)}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
+			</CardContent>
+		</Card>
+	);
+}
 
-	// 3. SELECT FIELD
-	if (field.type === "select" && field.options) {
-		const stringDefault = typeof field.default === "string" ? field.default : "";
-		const strValue = typeof value === "string" ? value : stringDefault;
+interface TextFieldRendererProps extends FieldRendererProps {
+	showSecret: boolean;
+	onToggleSecret: () => void;
+}
 
-		return (
-			<Card variant="subtle">
-				<CardContent className="flex flex-col gap-3">
-					<div className="flex items-center justify-between">
-						<div className="flex flex-col gap-0.5">
-							<div className="flex items-center gap-2">
-								<Label weight="semibold">{resolvePluginText(field.label)}</Label>
-								{field.required && (
-									<Badge tone="destructive" variant="outline">
-										{m.common_required()}
-									</Badge>
-								)}
-							</div>
-							{field.description && <p className="text-muted-foreground text-xs">{resolvePluginText(field.description)}</p>}
-						</div>
-						{field.default !== undefined && (
-							<span className="text-muted-foreground text-xs">
-								{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
-							</span>
-						)}
-					</div>
-					<Select value={strValue} onValueChange={(val) => onChange(val)}>
-						<SelectTrigger className="max-w-xs">
-							<SelectValue placeholder={m.admin_settings_select_option()} />
-						</SelectTrigger>
-						<SelectContent>
-							{field.options.map((opt) => (
-								<SelectItem key={String(opt.value)} value={String(opt.value)}>
-									{resolvePluginText(opt.label)}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				</CardContent>
-			</Card>
-		);
-	}
-
-	// 4. STRING / SECRET FIELD
+/** String and secret fields render a text input; secrets are masked and get a reveal toggle. */
+function TextFieldRenderer({ field, value, showSecret, onToggleSecret, onChange }: TextFieldRendererProps) {
 	const stringDefault = typeof field.default === "string" ? field.default : "";
 	const strValue = typeof value === "string" ? value : stringDefault;
 	const isSecret = field.type === "secret";
@@ -204,4 +218,17 @@ export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, 
 			</CardContent>
 		</Card>
 	);
+}
+
+/** Picks the renderer for one plugin config field; a select without options falls back to the text input. */
+export function PluginFieldRenderer({ field, value, showSecret, onToggleSecret, onChange }: PluginFieldRendererProps) {
+	if (field.type === "boolean") return <BooleanFieldRenderer field={field} value={value} onChange={onChange} />;
+
+	if (field.type === "number") return <NumberFieldRenderer field={field} value={value} onChange={onChange} />;
+
+	if (field.type === "select" && field.options) {
+		return <SelectFieldRenderer field={field} options={field.options} value={value} onChange={onChange} />;
+	}
+
+	return <TextFieldRenderer field={field} value={value} showSecret={showSecret} onToggleSecret={onToggleSecret} onChange={onChange} />;
 }

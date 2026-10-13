@@ -1,12 +1,17 @@
 import { describe, expect, it, mock } from "bun:test";
+import type { ReactElement } from "react";
 import { ContextMenuItem } from "../src/components/ui/context-menu";
 import { DropdownMenuItem } from "../src/components/ui/dropdown-menu";
+
+interface MenuItemProps {
+	onClick?: (event: object) => void;
+}
 
 describe("DropdownMenuItem and ContextMenuItem onSelect forwarding", () => {
 	it("forwards onSelect and executes onClick on DropdownMenuItem", () => {
 		const onSelect = mock();
 		const onClick = mock();
-		const element = DropdownMenuItem({
+		const element: ReactElement<MenuItemProps> = DropdownMenuItem({
 			children: "Test",
 			onClick,
 			onSelect,
@@ -19,7 +24,7 @@ describe("DropdownMenuItem and ContextMenuItem onSelect forwarding", () => {
 
 	it("forwards onSelect when onClick is omitted on ContextMenuItem", () => {
 		const onSelect = mock();
-		const element = ContextMenuItem({
+		const element: ReactElement<MenuItemProps> = ContextMenuItem({
 			children: "Test",
 			onSelect,
 		});

@@ -17,6 +17,9 @@ function tagsIn(html: string): string[] {
 	return html.match(TAG) ?? [];
 }
 
+const textRuns = (markup: string): SubtitleTextRun[] =>
+	parseSubtitleMarkup(markup).filter((segment): segment is SubtitleTextRun => segment.kind === "text");
+
 describe("subtitle markup sanitizer", () => {
 	test("script elements are escaped into visible text", () => {
 		const html = sanitizeSubtitleMarkup('<script>alert("x")</script>');
@@ -110,9 +113,6 @@ describe("sanitizer edge cases", () => {
 });
 
 describe("subtitle markup parser", () => {
-	const textRuns = (markup: string): SubtitleTextRun[] =>
-		parseSubtitleMarkup(markup).filter((segment): segment is SubtitleTextRun => segment.kind === "text");
-
 	test("formatting tags set flat style flags", () => {
 		const runs = textRuns("<i>one</i> <b>two</b> <u>three</u> <s>four</s>");
 

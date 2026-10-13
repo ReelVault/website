@@ -1,3 +1,4 @@
+import type { PlaybackDiagnostics } from "@reelvault/sdk";
 import { cn } from "cn";
 import { Activity, Cpu, Film, Layers, Monitor, X } from "lucide-react";
 import { CopyIcon } from "@/components/copy-icon";
@@ -10,6 +11,10 @@ import { formatTimestamp } from "@/utils/format-utils";
 import { toast } from "@/utils/toast-facade";
 import { usePlayerDiagnosticsData, usePlayerDiagnosticsToggle } from "../player-context";
 import { formatTranscodeReasons } from "../utils/player-transcode-reason";
+
+type DiagnosticsData = ReturnType<typeof usePlayerDiagnosticsData>;
+type PlayerSessionState = DiagnosticsData["session"];
+type ClientMetrics = DiagnosticsData["clientMetrics"];
 
 function formatBytes(bytes?: number | null): string {
 	if (!bytes || bytes <= 0) return m.player_no_data();
@@ -42,7 +47,228 @@ function formatDuration(seconds?: number | null): string {
 	return formatTimestamp(seconds);
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: branches mirror the diagnostics sections shown in the panel, one per metric group
+/** Media source: the file as the server read it. */
+function SourceSection({ source }: { source: PlaybackDiagnostics["source"] }) {
+	return (
+		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
+			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
+				<Film className="size-3.5 text-primary" aria-hidden="true" />
+				<span>{m.player_file_source_server()}</span>
+			</div>
+			<div className="grid gap-1 text-xs">
+				<div className="flex justify-between gap-2">
+					<span>{m.player_format_and_size()}</span>
+					<span className="font-medium text-foreground">
+						{m.player_source_summary({
+							container: source.container?.toUpperCase() ?? m.player_no_data(),
+							size: formatBytes(source.sizeBytes),
+							duration: formatDuration(source.duration),
+						})}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.player_total_source_bitrate()}</span>
+					<span className="font-medium text-foreground">
+						{source.bitrateKbps ? `${source.bitrateKbps.toLocaleString()} kbps` : m.player_no_data()}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.admin_source_video()}</span>
+					<span className="font-medium text-foreground">
+						{source.videoCodec ? source.videoCodec.toUpperCase() : m.player_none_word()}
+						{source.videoProfile ? ` (${source.videoProfile})` : ""}
+						{m.common_dot_separator()}
+						{source.width && source.height ? `${source.width}×${source.height}` : m.player_no_data()}{" "}
+						{source.frameRate ? `· ${source.frameRate} fps` : ""} {source.pixelFormat ? `· ${source.pixelFormat}` : ""}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.admin_source_audio()}</span>
+					<span className="truncate font-medium text-foreground">
+						{source.audioStreamIndex !== null ? `#${source.audioStreamIndex} ` : ""}
+						{source.audioCodec ? source.audioCodec.toUpperCase() : m.player_none_word()}
+						{audioLayoutLabel(source.audioChannelLayout, source.audioChannels)}{" "}
+						{source.audioLanguage ? `(${source.audioLanguage.toUpperCase()})` : ""}
+						{source.audioTitle ? ` · ${source.audioTitle}` : ""}
+					</span>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+interface PipelineSectionProps {
+	playback: PlaybackDiagnostics["session"];
+	session: PlayerSessionState;
+	isTranscode: boolean;
+	videoTranscode: boolean;
+	audioTranscode: boolean;
+}
+
+/** Server pipeline: the transcode decision, its reasons and the ffmpeg process behind it. */
+function PipelineSection({ playback, session, isTranscode, videoTranscode, audioTranscode }: PipelineSectionProps) {
+	return (
+		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
+			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
+				<Cpu className="size-3.5 text-primary" aria-hidden="true" />
+				<span>{m.player_stream_pipeline_heading()}</span>
+			</div>
+			<div className="grid gap-1 text-xs">
+				<div className="flex justify-between gap-2">
+					<span>{m.player_server_decision()}</span>
+					<span className="text-right font-medium text-foreground">
+						{isTranscode ? m.player_transcoding_on_the_fly() : m.player_direct_transfer_direct_stream()}
+					</span>
+				</div>
+				{playback?.tonemapped && (
+					<div className="flex justify-between gap-2">
+						<span>{m.player_tonemapping_label()}</span>
+						<span className="text-right font-medium text-foreground">
+							{m.player_tonemapping_yes_method({ method: playback.toneMapMethod ?? "auto" })}
+						</span>
+					</div>
+				)}
+				<div className="flex justify-between gap-2">
+					<span>{m.player_reason_label()}</span>
+					<span className="text-right text-foreground">{formatTranscodeReasons(session.reasons)}</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.admin_stream_video()}</span>
+					<span
+						className={cn("font-medium", {
+							"text-warning dark:text-warning": videoTranscode,
+							"text-success dark:text-success": !videoTranscode,
+						})}
+					>
+						{videoTranscode
+							? m.player_video_transcode_named({
+									encoder: playback?.videoEncoder ?? "libx264",
+									limit: playback?.targetVideoBitrateKbps
+										? m.player_video_transcode_bitrate_limit({ value: String(playback.targetVideoBitrateKbps) })
+										: "",
+								})
+							: m.player_lossless_copy()}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.admin_stream_audio()}</span>
+					<span
+						className={cn("font-medium", {
+							"text-warning dark:text-warning": audioTranscode,
+							"text-success dark:text-success": !audioTranscode,
+						})}
+					>
+						{audioTranscode ? m.player_audio_transcode_stereo({ encoder: playback?.audioEncoder ?? "aac" }) : m.player_lossless_copy()}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.admin_hwaccel_label()}</span>
+					<span className="font-medium text-foreground">
+						{playback?.hwaccel && playback.hwaccel !== "none"
+							? m.player_gpu_label({ hwaccel: playback.hwaccel.toUpperCase() })
+							: m.player_software_cpu()}
+					</span>
+				</div>
+				{playback && (
+					<div className="flex justify-between gap-2">
+						<span>{m.player_ffmpeg_process_label()}</span>
+						<span className="font-medium text-foreground">
+							{m.player_ffmpeg_process_info({
+								pid: playback.processId ?? "n/a",
+								start: Math.round(playback.startTime),
+							})}
+							{playback.processExitCode !== null ? m.player_exit_code_short({ code: playback.processExitCode }) : ""}
+						</span>
+					</div>
+				)}
+			</div>
+		</div>
+	);
+}
+
+/** Buffering and bandwidth, from the server's buffer and from this client. */
+function BufferSection({ buffer, clientMetrics }: { buffer: PlaybackDiagnostics["buffer"]; clientMetrics: ClientMetrics }) {
+	return (
+		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
+			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
+				<Layers className="size-3.5 text-primary" aria-hidden="true" />
+				<span>{m.player_buffer_network()}</span>
+			</div>
+			<div className="grid gap-1 text-xs">
+				{buffer ? (
+					<>
+						<div className="flex justify-between gap-2">
+							<span>{m.player_server_buffer_state()}</span>
+							<span className="font-medium text-foreground">{bufferStateLabel(buffer.state)}</span>
+						</div>
+						<div className="flex justify-between gap-2">
+							<span>{m.admin_server_buffered_seconds_label()}</span>
+							<span className="font-medium text-foreground">
+								{m.player_buffered_seconds_segments({
+									seconds: buffer.bufferedSeconds,
+									segments: m.player_buffer_segments_count({
+										count: buffer.segments,
+										duration: buffer.segmentDuration,
+									}),
+									progress: buffer.progressPercent !== null ? ` · ${buffer.progressPercent}%` : "",
+								})}
+							</span>
+						</div>
+					</>
+				) : null}
+				<div className="flex justify-between gap-2">
+					<span>{m.player_client_buffer_label()}</span>
+					<span className="font-medium text-foreground">{m.player_buffered_seconds({ seconds: clientMetrics?.bufferedSeconds ?? 0 })}</span>
+				</div>
+				{clientMetrics?.bandwidthEstimate ? (
+					<div className="flex justify-between gap-2">
+						<span>{m.player_estimated_bandwidth()}</span>
+						<span className="font-medium text-foreground">
+							{m.player_bandwidth_mbps({ value: (clientMetrics.bandwidthEstimate / 1_000_000).toFixed(1) })}
+						</span>
+					</div>
+				) : null}
+			</div>
+		</div>
+	);
+}
+
+/** The HTML5 player on this device: rendered resolution, frame counts and the session id. */
+function Html5Section({ session, clientMetrics }: { session: PlayerSessionState; clientMetrics: ClientMetrics }) {
+	return (
+		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
+			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
+				<Monitor className="size-3.5 text-primary" aria-hidden="true" />
+				<span>{m.player_html5_player()}</span>
+			</div>
+			<div className="grid gap-1 text-xs">
+				<div className="flex justify-between gap-2">
+					<span>{m.player_rendered_resolution()}</span>
+					<span className="font-medium text-foreground">
+						{clientMetrics?.videoWidth && clientMetrics.videoHeight
+							? `${clientMetrics.videoWidth}×${clientMetrics.videoHeight} px`
+							: m.common_not_applicable_short()}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.player_video_frames()}</span>
+					<span className="font-medium text-foreground">
+						{m.player_rendered_frames_stats({ rendered: clientMetrics?.totalFrames.toLocaleString() ?? "0" })}
+						<span className={clientMetrics?.droppedFrames ? "text-destructive" : "text-success"}>{clientMetrics?.droppedFrames ?? 0}</span>
+						{clientMetrics?.totalFrames ? ` (${((clientMetrics.droppedFrames / clientMetrics.totalFrames) * 100).toFixed(2)}%)` : ""}
+					</span>
+				</div>
+				<div className="flex justify-between gap-2">
+					<span>{m.player_session_id()}</span>
+					<span className="truncate font-mono text-foreground text-xs" title={session.sessionId}>
+						{session.sessionId}
+					</span>
+				</div>
+			</div>
+		</div>
+	);
+}
+
 export function PlayerDiagnostics() {
 	const { isOpen, close } = usePlayerDiagnosticsToggle();
 	const { diagnostics, isPending, isError, session, clientMetrics } = usePlayerDiagnosticsData();
@@ -103,214 +329,16 @@ export function PlayerDiagnostics() {
 
 			{diagnostics && (
 				<div className="grid gap-2.5 text-muted-foreground">
-					{/* 1. Media source */}
-					<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-						<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-							<Film className="size-3.5 text-primary" aria-hidden="true" />
-							<span>{m.player_file_source_server()}</span>
-						</div>
-						<div className="grid gap-1 text-xs">
-							<div className="flex justify-between gap-2">
-								<span>{m.player_format_and_size()}</span>
-								<span className="font-medium text-foreground">
-									{m.player_source_summary({
-										container: diagnostics.source.container?.toUpperCase() ?? m.player_no_data(),
-										size: formatBytes(diagnostics.source.sizeBytes),
-										duration: formatDuration(diagnostics.source.duration),
-									})}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.player_total_source_bitrate()}</span>
-								<span className="font-medium text-foreground">
-									{diagnostics.source.bitrateKbps ? `${diagnostics.source.bitrateKbps.toLocaleString()} kbps` : m.player_no_data()}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.admin_source_video()}</span>
-								<span className="font-medium text-foreground">
-									{diagnostics.source.videoCodec ? diagnostics.source.videoCodec.toUpperCase() : m.player_none_word()}
-									{diagnostics.source.videoProfile ? ` (${diagnostics.source.videoProfile})` : ""}
-									{m.common_dot_separator()}
-									{diagnostics.source.width && diagnostics.source.height
-										? `${diagnostics.source.width}×${diagnostics.source.height}`
-										: m.player_no_data()}{" "}
-									{diagnostics.source.frameRate ? `· ${diagnostics.source.frameRate} fps` : ""}{" "}
-									{diagnostics.source.pixelFormat ? `· ${diagnostics.source.pixelFormat}` : ""}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.admin_source_audio()}</span>
-								<span className="truncate font-medium text-foreground">
-									{diagnostics.source.audioStreamIndex !== null ? `#${diagnostics.source.audioStreamIndex} ` : ""}
-									{diagnostics.source.audioCodec ? diagnostics.source.audioCodec.toUpperCase() : m.player_none_word()}
-									{audioLayoutLabel(diagnostics.source.audioChannelLayout, diagnostics.source.audioChannels)}{" "}
-									{diagnostics.source.audioLanguage ? `(${diagnostics.source.audioLanguage.toUpperCase()})` : ""}
-									{diagnostics.source.audioTitle ? ` · ${diagnostics.source.audioTitle}` : ""}
-								</span>
-							</div>
-						</div>
-					</div>
-
-					{/* 2. Przetwarzanie i Transkodowanie */}
-					<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-						<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-							<Cpu className="size-3.5 text-primary" aria-hidden="true" />
-							<span>{m.player_stream_pipeline_heading()}</span>
-						</div>
-						<div className="grid gap-1 text-xs">
-							<div className="flex justify-between gap-2">
-								<span>{m.player_server_decision()}</span>
-								<span className="text-right font-medium text-foreground">
-									{isTranscode ? m.player_transcoding_on_the_fly() : m.player_direct_transfer_direct_stream()}
-								</span>
-							</div>
-							{diagnostics.session?.tonemapped && (
-								<div className="flex justify-between gap-2">
-									<span>{m.player_tonemapping_label()}</span>
-									<span className="text-right font-medium text-foreground">
-										{m.player_tonemapping_yes_method({ method: diagnostics.session.toneMapMethod ?? "auto" })}
-									</span>
-								</div>
-							)}
-							<div className="flex justify-between gap-2">
-								<span>{m.player_reason_label()}</span>
-								<span className="text-right text-foreground">{formatTranscodeReasons(session.reasons)}</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.admin_stream_video()}</span>
-								<span
-									className={cn("font-medium", {
-										"text-warning dark:text-warning": videoTranscode,
-										"text-success dark:text-success": !videoTranscode,
-									})}
-								>
-									{videoTranscode
-										? m.player_video_transcode_named({
-												encoder: diagnostics.session?.videoEncoder ?? "libx264",
-												limit: diagnostics.session?.targetVideoBitrateKbps
-													? m.player_video_transcode_bitrate_limit({ value: String(diagnostics.session.targetVideoBitrateKbps) })
-													: "",
-											})
-										: m.player_lossless_copy()}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.admin_stream_audio()}</span>
-								<span
-									className={cn("font-medium", {
-										"text-warning dark:text-warning": audioTranscode,
-										"text-success dark:text-success": !audioTranscode,
-									})}
-								>
-									{audioTranscode
-										? m.player_audio_transcode_stereo({ encoder: diagnostics.session?.audioEncoder ?? "aac" })
-										: m.player_lossless_copy()}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.admin_hwaccel_label()}</span>
-								<span className="font-medium text-foreground">
-									{diagnostics.session?.hwaccel && diagnostics.session.hwaccel !== "none"
-										? m.player_gpu_label({ hwaccel: diagnostics.session.hwaccel.toUpperCase() })
-										: m.player_software_cpu()}
-								</span>
-							</div>
-							{diagnostics.session && (
-								<div className="flex justify-between gap-2">
-									<span>{m.player_ffmpeg_process_label()}</span>
-									<span className="font-medium text-foreground">
-										{m.player_ffmpeg_process_info({
-											pid: diagnostics.session.processId ?? "n/a",
-											start: Math.round(diagnostics.session.startTime),
-										})}
-										{diagnostics.session.processExitCode !== null
-											? m.player_exit_code_short({ code: diagnostics.session.processExitCode })
-											: ""}
-									</span>
-								</div>
-							)}
-						</div>
-					</div>
-
-					{/* 3. Buforowanie i Pasmo */}
-					<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-						<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-							<Layers className="size-3.5 text-primary" aria-hidden="true" />
-							<span>{m.player_buffer_network()}</span>
-						</div>
-						<div className="grid gap-1 text-xs">
-							{diagnostics.buffer ? (
-								<>
-									<div className="flex justify-between gap-2">
-										<span>{m.player_server_buffer_state()}</span>
-										<span className="font-medium text-foreground">{bufferStateLabel(diagnostics.buffer.state)}</span>
-									</div>
-									<div className="flex justify-between gap-2">
-										<span>{m.admin_server_buffered_seconds_label()}</span>
-										<span className="font-medium text-foreground">
-											{m.player_buffered_seconds_segments({
-												seconds: diagnostics.buffer.bufferedSeconds,
-												segments: m.player_buffer_segments_count({
-													count: diagnostics.buffer.segments,
-													duration: diagnostics.buffer.segmentDuration,
-												}),
-												progress: diagnostics.buffer.progressPercent !== null ? ` · ${diagnostics.buffer.progressPercent}%` : "",
-											})}
-										</span>
-									</div>
-								</>
-							) : null}
-							<div className="flex justify-between gap-2">
-								<span>{m.player_client_buffer_label()}</span>
-								<span className="font-medium text-foreground">
-									{m.player_buffered_seconds({ seconds: clientMetrics?.bufferedSeconds ?? 0 })}
-								</span>
-							</div>
-							{clientMetrics?.bandwidthEstimate ? (
-								<div className="flex justify-between gap-2">
-									<span>{m.player_estimated_bandwidth()}</span>
-									<span className="font-medium text-foreground">
-										{m.player_bandwidth_mbps({ value: (clientMetrics.bandwidthEstimate / 1_000_000).toFixed(1) })}
-									</span>
-								</div>
-							) : null}
-						</div>
-					</div>
-
-					{/* 4. Odtwarzacz HTML5 (Klient) */}
-					<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-						<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-							<Monitor className="size-3.5 text-primary" aria-hidden="true" />
-							<span>{m.player_html5_player()}</span>
-						</div>
-						<div className="grid gap-1 text-xs">
-							<div className="flex justify-between gap-2">
-								<span>{m.player_rendered_resolution()}</span>
-								<span className="font-medium text-foreground">
-									{clientMetrics?.videoWidth && clientMetrics.videoHeight
-										? `${clientMetrics.videoWidth}×${clientMetrics.videoHeight} px`
-										: m.common_not_applicable_short()}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.player_video_frames()}</span>
-								<span className="font-medium text-foreground">
-									{m.player_rendered_frames_stats({ rendered: clientMetrics?.totalFrames.toLocaleString() ?? "0" })}
-									<span className={clientMetrics?.droppedFrames ? "text-destructive" : "text-success"}>
-										{clientMetrics?.droppedFrames ?? 0}
-									</span>
-									{clientMetrics?.totalFrames ? ` (${((clientMetrics.droppedFrames / clientMetrics.totalFrames) * 100).toFixed(2)}%)` : ""}
-								</span>
-							</div>
-							<div className="flex justify-between gap-2">
-								<span>{m.player_session_id()}</span>
-								<span className="truncate font-mono text-foreground text-xs" title={session.sessionId}>
-									{session.sessionId}
-								</span>
-							</div>
-						</div>
-					</div>
+					<SourceSection source={diagnostics.source} />
+					<PipelineSection
+						playback={diagnostics.session}
+						session={session}
+						isTranscode={isTranscode}
+						videoTranscode={videoTranscode}
+						audioTranscode={audioTranscode}
+					/>
+					<BufferSection buffer={diagnostics.buffer} clientMetrics={clientMetrics} />
+					<Html5Section session={session} clientMetrics={clientMetrics} />
 				</div>
 			)}
 		</aside>

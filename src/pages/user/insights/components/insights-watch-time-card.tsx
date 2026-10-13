@@ -59,7 +59,7 @@ export function InsightsWatchTimeCard({ totalWatchTime, monthlyIncrease, dailyAv
 			</div>
 
 			<div className="pointer-events-none absolute inset-0 z-10 opacity-30">
-				<svg className="h-full w-full" viewBox="0 0 800 200" preserveAspectRatio="none">
+				<svg className="h-full w-full" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
 					<defs>
 						<linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
 							<stop offset="0%" style={{ stopColor: "var(--primary)", stopOpacity: 0.2 }} />

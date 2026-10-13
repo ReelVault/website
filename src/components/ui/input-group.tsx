@@ -48,8 +48,6 @@ function InputGroupAddon({
 	...props
 }: ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
 	return (
-		// biome-ignore lint/a11y/useKeyWithClickEvents: addon forwards pointer clicks to the input; keyboard users focus the input directly, so a key handler would be redundant
-		// biome-ignore lint/a11y/useSemanticElements: role="group" is the correct ARIA role for a non-form addon container; no native element maps to it
 		<div
 			role="group"
 			data-slot="input-group-addon"

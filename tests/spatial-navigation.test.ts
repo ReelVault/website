@@ -15,6 +15,15 @@ function makeRect(x: number, y: number, width: number, height: number): DOMRect 
 	};
 }
 
+// Minimal DOM stand-in: isFormElement reads the effective input type via the
+// type *attribute* (getAttribute), which is how the DOM reflects it.
+const makeElement = (tagName: string, attributes: Record<string, string> = {}): HTMLElement =>
+	({
+		tagName,
+		isContentEditable: false,
+		getAttribute: (name: string) => attributes[name] ?? null,
+	}) as unknown as HTMLElement;
+
 describe("spatial navigation scoring", () => {
 	it("prefers adjacent element in the same horizontal row when moving right", () => {
 		const current = makeRect(100, 200, 150, 220);
@@ -67,15 +76,6 @@ describe("spatial navigation scoring", () => {
 });
 
 describe("isFormElement", () => {
-	// Minimal DOM stand-in: isFormElement reads the effective input type via the
-	// type *attribute* (getAttribute), which is how the DOM reflects it.
-	const makeElement = (tagName: string, attributes: Record<string, string> = {}): HTMLElement =>
-		({
-			tagName,
-			isContentEditable: false,
-			getAttribute: (name: string) => attributes[name] ?? null,
-		}) as unknown as HTMLElement;
-
 	it("identifies native form inputs that need native arrow navigation", () => {
 		const textInput = makeElement("INPUT", { type: "text" });
 		const searchInput = makeElement("INPUT", { type: "search" });

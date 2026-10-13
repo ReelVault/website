@@ -91,7 +91,6 @@ export function PlayerChrome({
 			<PlayerFeedbackHud />
 
 			{/* Controls chrome — pointer-events-none on container so clicks outside header/footer pass through to playback surface */}
-			{/* biome-ignore lint/a11y/noStaticElementInteractions: controls overlay receives mouse events to pause auto-hide timer */}
 			<div
 				data-player-chrome
 				className={cn(

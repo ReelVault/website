@@ -1,4 +1,5 @@
 import { reelvault } from "@/client/client";
+import { writeDocumentCookie } from "@/lib/document-cookie";
 
 export interface CookieJar {
 	has(name: string): boolean;
@@ -38,8 +39,7 @@ export function getBrowserCookies(): CookieJar {
 		},
 		delete(name: string): void {
 			if (typeof document !== "undefined") {
-				// biome-ignore lint/suspicious/noDocumentCookie: synchronous cookie clearing has no platform alternative (cookieStore is async); best-effort logout cleanup
-				document.cookie = `${name}=; Max-Age=0; path=/;`;
+				writeDocumentCookie(`${name}=; Max-Age=0; path=/;`);
 			}
 		},
 	};

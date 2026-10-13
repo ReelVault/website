@@ -181,7 +181,9 @@ describe("UI className guard", () => {
 	});
 
 	test("no new visual className overrides on components/ui elements", () => {
-		const baseline = new Set<string>(JSON.parse(readFileSync(BASELINE_PATH, "utf8")) as string[]);
+		const parsed: unknown = JSON.parse(readFileSync(BASELINE_PATH, "utf8"));
+		if (!Array.isArray(parsed)) throw new Error("ui-classname-baseline.json must hold a JSON array");
+		const baseline = new Set<string>(parsed.filter((entry): entry is string => typeof entry === "string"));
 		const added = current.filter((entry) => !baseline.has(entry));
 		expect(added).toEqual([]);
 	});

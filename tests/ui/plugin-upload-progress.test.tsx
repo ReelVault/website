@@ -60,7 +60,7 @@ describe("plugin upload queue", () => {
 
 		const closeButton = view
 			.getAllByRole("button")
-			.find((button) => CLOSE_LABEL.test(button.getAttribute("aria-label") ?? button.textContent ?? ""));
+			.find((button) => CLOSE_LABEL.test(button.getAttribute("aria-label") ?? button.textContent));
 		expect(closeButton).toBeDefined();
 		if (closeButton) fireEvent.click(closeButton);
 

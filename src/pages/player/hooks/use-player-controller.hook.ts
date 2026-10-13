@@ -500,13 +500,7 @@ export function usePlayerController({
 			setPlayerError(false);
 			hasStartedInitialResumeRef.current = false;
 		}
-	}, [
-		applyTime,
-		playbackConfigKey,
-		// oxlint-disable-next-line react/memo-dependencies react-hooks/exhaustive-deps react-hooks/memo-dependencies -- setState identity is stable by definition; oxlint flags it as extra while its exhaustive-deps demands it and biome agrees
-		setBufferedRanges,
-		videoRef,
-	]);
+	}, [applyTime, playbackConfigKey, setBufferedRanges, videoRef]);
 
 	// -------------------------------------------------------------------------
 	// Restore playback position (after playlist reload or seek)

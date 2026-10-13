@@ -33,7 +33,7 @@ function createCookieJar(cookies: Record<string, string> = {}) {
 describe("admin authorization", () => {
 	beforeEach(() => {
 		resetSetupStatusForTesting();
-		globalThis.fetch = (async () => Response.json({ required: false })) as unknown as typeof fetch;
+		globalThis.fetch = (() => Promise.resolve(Response.json({ required: false }))) as unknown as typeof fetch;
 	});
 
 	it("redirects every admin route to login without a session", async () => {

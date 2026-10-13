@@ -111,7 +111,6 @@ export function PinVerificationModal({
 						>
 							{Array.from({ length: Math.min(Math.max(pin.length, 4), 8) }, (_unused, slot) => (
 								<span
-									// biome-ignore lint/suspicious/noArrayIndexKey: static decorative PIN slots
 									key={slot}
 									className={cn(
 										"flex size-8 items-center justify-center rounded-xl border-2 transition-[background-color,border-color,transform] duration-300 sm:size-14 sm:rounded-2xl",

@@ -26,7 +26,7 @@ interface ProfileFixture {
 let profiles: ProfileFixture[] = [];
 const searchState: { redirect?: string } = {};
 const push = mock((_path: string) => undefined);
-const switchProfile = mock(async (_input: { profileId: string; pin?: string }) => undefined);
+const switchProfile = mock((_input: { profileId: string; pin?: string }) => Promise.resolve());
 
 const router = await import("@tanstack/react-router");
 
@@ -37,11 +37,11 @@ await mock.module("@tanstack/react-router", () => ({
 		return <a href={query ? `${to}?${query}` : to} {...rest} />;
 	},
 	useSearch: () => ({ ...searchState }),
-	useRouter: () => ({ history: { push }, invalidate: async () => undefined }),
+	useRouter: () => ({ history: { push }, invalidate: () => Promise.resolve() }),
 }));
 
 await mock.module("@/client/hooks/use-profiles", () => ({
-	useProfiles: () => ({ profiles, isLoading: false, error: null, refetch: async () => undefined }),
+	useProfiles: () => ({ profiles, isLoading: false, error: null, refetch: () => Promise.resolve() }),
 	useSwitchProfile: () => ({
 		mutateAsync: switchProfile,
 		isPending: false,

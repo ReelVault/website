@@ -14,7 +14,6 @@ function Label({
 	weight?: "medium" | "semibold";
 }) {
 	return (
-		// biome-ignore lint/a11y/noLabelWithoutControl: reusable primitive — callers pass htmlFor (or nest a control as children); the rule cannot verify either through the props spread.
 		<label
 			data-slot="label"
 			htmlFor={htmlFor}

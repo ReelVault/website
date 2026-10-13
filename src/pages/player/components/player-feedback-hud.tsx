@@ -25,6 +25,38 @@ export function showPlayerFeedback(event: Omit<FeedbackEvent, "id">) {
 	}
 }
 
+/** Volume feedback: the level as a percentage with a bar; a level above 100% is the audio boost. */
+function VolumeFeedback({ event }: { event: FeedbackEvent }) {
+	const vol = typeof event.value === "number" ? event.value : 0;
+	const isMuted = event.value === 0 || event.label === "muted";
+	const percent = Math.round((isMuted ? 0 : vol) * 100);
+	const isBoosted = !isMuted && percent > 100;
+	let VolIcon = Volume2;
+	if (isMuted) VolIcon = VolumeX;
+	else if (vol < 0.5) VolIcon = Volume1;
+
+	let volumeText: string;
+	if (isMuted) volumeText = m.player_muted_word();
+	else if (isBoosted) volumeText = m.player_volume_boost({ percent });
+	else volumeText = m.player_volume_percent({ percent });
+
+	return (
+		<div className="flex min-w-48 flex-col items-center gap-2 rounded-2xl bg-black/75 px-5 py-3.5 text-white shadow-2xl ring-1 ring-white/10">
+			<div className="flex items-center gap-2.5">
+				<VolIcon className={cn("size-5", isBoosted ? "text-warning" : "text-primary")} />
+				<span className="font-semibold text-sm">{volumeText}</span>
+			</div>
+			<div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+				<div className="pointer-events-none absolute top-0 bottom-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-white/40" />
+				<div
+					className={cn("h-full transition-[width] duration-75", isBoosted ? "bg-warning" : "bg-primary")}
+					style={{ width: `${Math.min(100, (percent / (MAX_PLAYER_VOLUME * 100)) * 100)}%` }}
+				/>
+			</div>
+		</div>
+	);
+}
+
 export function PlayerFeedbackHud() {
 	const [activeEvent, setActiveEvent] = useState<FeedbackEvent | null>(null);
 	const [isVisible, setIsVisible] = useState(false);
@@ -53,7 +85,6 @@ export function PlayerFeedbackHud() {
 
 	if (!(activeEvent && isVisible)) return null;
 
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: one render branch per feedback event type, mapping 1:1 to the event union
 	const renderContent = () => {
 		switch (activeEvent.type) {
 			case "play":
@@ -68,36 +99,8 @@ export function PlayerFeedbackHud() {
 						<Pause className="size-10 fill-current" />
 					</div>
 				);
-			case "volume": {
-				const vol = typeof activeEvent.value === "number" ? activeEvent.value : 0;
-				const isMuted = activeEvent.value === 0 || activeEvent.label === "muted";
-				const percent = Math.round((isMuted ? 0 : vol) * 100);
-				const isBoosted = !isMuted && percent > 100;
-				let VolIcon = Volume2;
-				if (isMuted) VolIcon = VolumeX;
-				else if (vol < 0.5) VolIcon = Volume1;
-
-				let volumeText: string;
-				if (isMuted) volumeText = m.player_muted_word();
-				else if (isBoosted) volumeText = m.player_volume_boost({ percent });
-				else volumeText = m.player_volume_percent({ percent });
-
-				return (
-					<div className="flex min-w-48 flex-col items-center gap-2 rounded-2xl bg-black/75 px-5 py-3.5 text-white shadow-2xl ring-1 ring-white/10">
-						<div className="flex items-center gap-2.5">
-							<VolIcon className={cn("size-5", isBoosted ? "text-warning" : "text-primary")} />
-							<span className="font-semibold text-sm">{volumeText}</span>
-						</div>
-						<div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/20">
-							<div className="pointer-events-none absolute top-0 bottom-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-white/40" />
-							<div
-								className={cn("h-full transition-[width] duration-75", isBoosted ? "bg-warning" : "bg-primary")}
-								style={{ width: `${Math.min(100, (percent / (MAX_PLAYER_VOLUME * 100)) * 100)}%` }}
-							/>
-						</div>
-					</div>
-				);
-			}
+			case "volume":
+				return <VolumeFeedback event={activeEvent} />;
 			case "seek": {
 				const delta = activeEvent.delta ?? 0;
 				const isForward = delta >= 0;

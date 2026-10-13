@@ -1,6 +1,6 @@
 import type { Library, MetadataType, RequireFields } from "@reelvault/sdk";
 import type { InfiniteData } from "@tanstack/react-query";
-import { addTransitionType, startTransition, useEffect, useRef, useState, ViewTransition } from "react";
+import { addTransitionType, startTransition, useEffect, useState, ViewTransition } from "react";
 import {
 	type LibraryMetadataResponse,
 	type UseLibraryMetadataInfiniteFilters,
@@ -54,32 +54,28 @@ function LibraryInfiniteContent({
 	// commitowany w Transition z typem "filter" — ViewTransition robi cross-fade.
 	// Appending a page (infinite scroll) goes in directly, without animation.
 	// We keep the response object in state (react-query preserves reference identity
-	// via structural sharing) so the effect compares references, not flattened
+	// via structural sharing) so the sync compares references, not flattened
 	// arrays (each flatMap is a new array = infinite setState loop).
 	const [displayData, setDisplayData] = useState<InfiniteData<LibraryMetadataResponse> | undefined>(queryResult.data);
+	const [pendingFilterCommit, setPendingFilterCommit] = useState(false);
 	const displayMetadata = displayData?.pages.flatMap((page) => page.data) ?? [];
-	const pendingFilterCommit = useRef(false);
+	const fresh = queryResult.data;
+
+	// State follows the query during render (React's "adjusting state when a prop changes" pattern), so the
+	// grid never paints a frame behind the query: a filter change arms the transition commit below, and
+	// without a pending filter fresh data is adopted straight away.
+	if (!fresh && displayData && !pendingFilterCommit) setPendingFilterCommit(true);
+	if (fresh && !pendingFilterCommit && fresh !== displayData) setDisplayData(fresh);
 
 	useEffect(() => {
-		const fresh = queryResult.data;
-		if (!fresh) {
-			if (displayData) pendingFilterCommit.current = true;
+		if (!(fresh && pendingFilterCommit)) return;
 
-			return;
-		}
-
-		if (pendingFilterCommit.current) {
-			pendingFilterCommit.current = false;
-			startTransition(() => {
-				addTransitionType("filter");
-				setDisplayData(fresh);
-			});
-
-			return;
-		}
-
-		if (fresh !== displayData) setDisplayData(fresh);
-	}, [queryResult.data, displayData]);
+		startTransition(() => {
+			addTransitionType("filter");
+			setDisplayData(fresh);
+			setPendingFilterCommit(false);
+		});
+	}, [fresh, pendingFilterCommit]);
 
 	useEffect(() => {
 		onTotalItemsChange?.(totalCount);

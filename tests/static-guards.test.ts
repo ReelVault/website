@@ -58,13 +58,13 @@ describe("source guards", () => {
 	});
 
 	test("no interface label is hardcoded in Polish (clipboard toasts use the catalogue)", () => {
-		const offenders = FILES.filter((file) => HARDCODED_POLISH_LABEL.test(read(file))).map(rel);
+		const offenders = FILES.filter((file) => HARDCODED_POLISH_LABEL.test(read(file))).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
 	});
 
 	test("no source opens the browser's confirmation box; every confirmation is the app's dialog", () => {
-		const offenders = FILES.filter((file) => BROWSER_DIALOG_CALL.test(read(file))).map(rel);
+		const offenders = FILES.filter((file) => BROWSER_DIALOG_CALL.test(read(file))).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
 	});
@@ -77,14 +77,14 @@ describe("source guards", () => {
 
 	test("raw HTML sinks appear only in the reviewed allowlist", () => {
 		const offenders = FILES.filter((file) => RAW_HTML_SINK.test(read(file)))
-			.map(rel)
+			.map((file) => rel(file))
 			.filter((file) => !RAW_HTML_ALLOWLIST.has(file));
 
 		expect(offenders).toEqual([]);
 	});
 
 	test("no dynamic code evaluation", () => {
-		const offenders = FILES.filter((file) => DYNAMIC_CODE.test(read(file))).map(rel);
+		const offenders = FILES.filter((file) => DYNAMIC_CODE.test(read(file))).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
 	});
@@ -93,18 +93,18 @@ describe("source guards", () => {
 		const offenders: string[] = [];
 		for (const file of FILES.filter((path) => path.endsWith(".tsx"))) {
 			const lines = read(file).split("\n");
-			lines.forEach((line, index) => {
-				if (!line.includes(BLANK_TARGET)) return;
+			for (const [index, line] of lines.entries()) {
+				if (!line.includes(BLANK_TARGET)) continue;
 				const element = lines.slice(index, index + 6).join(" ");
 				if (!SAFE_REL.test(element)) offenders.push(`${rel(file)}:${index + 1}`);
-			});
+			}
 		}
 
 		expect(offenders).toEqual([]);
 	});
 
 	test("no credential-shaped strings are committed to the sources", () => {
-		const offenders = FILES.filter((file) => CREDENTIAL_PATTERNS.some((pattern) => pattern.test(read(file)))).map(rel);
+		const offenders = FILES.filter((file) => CREDENTIAL_PATTERNS.some((pattern) => pattern.test(read(file)))).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
 	});

@@ -34,7 +34,7 @@ function task(id: string, options: { scheduled?: boolean; active?: number }): Wo
 
 const tasks = [task("nightly", { scheduled: true }), task("rescan", { active: 1 }), task("idle", {})];
 
-const noop = async () => undefined;
+const noop = () => Promise.resolve();
 
 const SCHEDULED_CHIP = /^Scheduled/;
 const ACTIVE_CHIP = /^Active now/;

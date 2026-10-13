@@ -1,10 +1,26 @@
 import type { PluginSchemaNode } from "@reelvault/sdk/plugin";
 import { resolveTemplate, type SchemaScope } from "./binding";
 
+/** The child node lists a container holds; fields and leaf nodes hold none. */
+function childLists(node: PluginSchemaNode): PluginSchemaNode[][] {
+	if (node.type === "stack" || node.type === "row" || node.type === "grid" || node.type === "card" || node.type === "section") {
+		return [node.children];
+	}
+
+	if (node.type === "tabs") return node.tabs.map((tab) => tab.children);
+
+	if (node.type === "list" || node.type === "foreach") return [node.item];
+
+	if (node.type === "table") return node.rowActions ? [node.rowActions] : [];
+
+	if (node.type === "if") return node.otherwise ? [node.content, node.otherwise] : [node.content];
+
+	return [];
+}
+
 /** Collects default form values from every `field` node (defaults are interpolated). */
 export function collectSchemaDefaults(nodes: PluginSchemaNode[], scope: SchemaScope): Record<string, unknown> {
 	const values: Record<string, unknown> = {};
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: walks every container node type
 	const walk = (list: PluginSchemaNode[]): void => {
 		for (const node of list) {
 			if (node.type === "field") {
@@ -13,18 +29,7 @@ export function collectSchemaDefaults(nodes: PluginSchemaNode[], scope: SchemaSc
 				continue;
 			}
 
-			if (node.type === "stack" || node.type === "row" || node.type === "grid" || node.type === "card" || node.type === "section") {
-				walk(node.children);
-			} else if (node.type === "tabs") {
-				for (const tab of node.tabs) walk(tab.children);
-			} else if (node.type === "list" || node.type === "foreach") {
-				walk(node.item);
-			} else if (node.type === "table" && node.rowActions) {
-				walk(node.rowActions);
-			} else if (node.type === "if") {
-				walk(node.content);
-				if (node.otherwise) walk(node.otherwise);
-			}
+			for (const children of childLists(node)) walk(children);
 		}
 	};
 	walk(nodes);

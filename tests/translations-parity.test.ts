@@ -9,8 +9,20 @@ import { join } from "node:path";
  */
 
 const MESSAGES = join(import.meta.dir, "..", "messages");
-const en = JSON.parse(readFileSync(join(MESSAGES, "en.json"), "utf8")) as Record<string, unknown>;
-const pl = JSON.parse(readFileSync(join(MESSAGES, "pl.json"), "utf8")) as Record<string, unknown>;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === "object" && value !== null;
+}
+
+function readCatalogue(locale: string): Record<string, unknown> {
+	const parsed: unknown = JSON.parse(readFileSync(join(MESSAGES, `${locale}.json`), "utf8"));
+	if (!isRecord(parsed)) throw new Error(`${locale}.json must hold a JSON object`);
+
+	return parsed;
+}
+
+const en = readCatalogue("en");
+const pl = readCatalogue("pl");
 
 const placeholders = (value: unknown): string[] =>
 	[...new Set([...JSON.stringify(value).matchAll(/\{(\w+)\}/g)].map((match) => match[1] ?? ""))].toSorted();

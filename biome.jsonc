@@ -66,20 +66,20 @@
 				"useMediaCaption": "warn",
 				"useValidAriaProps": "error",
 				"useValidAriaRole": "error",
-				"noSvgWithoutTitle": "off"
+				"noSvgWithoutTitle": "error"
 			},
 			"complexity": {
 				"noUselessStringConcat": "error",
 				"noUselessUndefinedInitialization": "error",
 				"noVoid": "error",
 				"useDateNow": "error",
-				"noImportantStyles": "off",
+				"noImportantStyles": "error",
 				"noExcessiveCognitiveComplexity": {
 					"level": "warn",
 					"options": { "maxAllowedComplexity": 35 }
 				},
 				"noExcessiveNestedTestSuites": "warn",
-				"noForEach": "off",
+				"noForEach": "error",
 				"useSimplifiedLogicExpression": "error",
 				"noUselessTernary": "error",
 				"noUselessTypeConstraint": "error",
@@ -135,6 +135,7 @@
 				"noNamespaceImport": "warn",
 				"useTopLevelRegex": "error",
 				"noDelete": "error",
+				// Next.js-only guidance (next/image). This app is a Vite SPA with no image optimizer.
 				"noImgElement": "off"
 			},
 			"style": {
@@ -161,8 +162,11 @@
 					"level": "error",
 					"options": { "style": "interface" }
 				},
+				// Page modules are consumed through React.lazy and lazyRouteComponent, which take default exports.
 				"noDefaultExport": "off",
+				// Layout sizes and timeouts stay inline where they are used; a named constant per value would hide them.
 				"noMagicNumbers": "off",
+				// API payloads and plugin schema keys keep the server wire casing; one convention would rename them at the boundary.
 				"useNamingConvention": "off",
 				"useSelfClosingElements": "error",
 				"useSingleVarDeclarator": "error",
@@ -188,6 +192,7 @@
 				"useAwait": "error",
 				"noEvolvingTypes": "error",
 				"noDeprecatedImports": "error",
+				// Enforced by oxlint typescript/no-explicit-any (error); each rule has one source.
 				"noExplicitAny": "off",
 				"noConsole": {
 					"level": "warn",
@@ -244,6 +249,8 @@
 						"functions": ["clsx", "cva", "cn", "tw"]
 					}
 				},
+				// Type-aware rules run once, in oxlint, which has the type information: no-floating-promises, no-misused-promises,
+				// await-thenable, no-unsafe-type-assertion, no-unsafe-plus-operands and no-base-to-string.
 				"noFloatingPromises": "off",
 				"noMisusedPromises": "off",
 				"useAwaitThenable": "off",
@@ -273,71 +280,51 @@
 	},
 	"overrides": [
 		{
-			"includes": ["sdk/**"],
-			"linter": {
-				"rules": {
-					"performance": {
-						"noReExportAll": "off",
-						"noBarrelFile": "off"
-					}
-				}
-			}
+			// TanStack file routes encode params and layouts in file names ($id.tsx, _web.tsx) and use a leading "-" for
+			// colocated helpers (-auth-guard.ts); kebab-case cannot express them.
+			"includes": ["src/routes/**"],
+			"linter": { "rules": { "style": { "useFilenamingConvention": "off" } } }
 		},
 		{
-			"includes": ["src/routes/**", "**/routes/**"],
-			"linter": {
-				"rules": {
-					"style": {
-						"useFilenamingConvention": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "tests/**"],
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noExplicitAny": "off"
-					},
-					"style": {
-						"noNonNullAssertion": "off"
-					},
-					"nursery": {
-						"noUnsafeTypeAssertion": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/*.config.ts", "**/*.config.js"],
-			"linter": {
-				"rules": {
-					"style": {
-						"noDefaultExport": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["src/database/schema.ts"],
-			"linter": {
-				"rules": {
-					"performance": {
-						"noNamespaceImport": "off"
-					}
-				}
-			}
-		},
-		{
+			// CLI tools in scripts/ report their results on stdout; console output is their interface.
 			"includes": ["scripts/**"],
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noConsole": "off"
-					}
-				}
-			}
+			"linter": { "rules": { "suspicious": { "noConsole": "off" } } }
+		},
+		{
+			// The prefers-reduced-motion resets must beat animation timings set elsewhere, which only !important can do.
+			"includes": ["src/styles/globals.css", "src/styles/simple-animation.css"],
+			"linter": { "rules": { "complexity": { "noImportantStyles": "off" } } }
+		},
+		{
+			// The single module allowed to write document.cookie. The write is synchronous by design (see its header).
+			"includes": ["src/lib/document-cookie.ts"],
+			"linter": { "rules": { "suspicious": { "noDocumentCookie": "off" } } }
+		},
+		{
+			// Shadcn Label: callers pass htmlFor or nest a control, but the props spread hides both from the rule.
+			"includes": ["src/components/ui/label.tsx"],
+			"linter": { "rules": { "a11y": { "noLabelWithoutControl": "off" } } }
+		},
+		{
+			// The addon forwards pointer clicks to its input (keyboard users focus the input), and role="group" is the
+			// correct ARIA role for this non-form container.
+			"includes": ["src/components/ui/input-group.tsx"],
+			"linter": { "rules": { "a11y": { "useKeyWithClickEvents": "off", "useSemanticElements": "off" } } }
+		},
+		{
+			// The player container and the controls overlay take pointer events on purpose (controls show/hide, auto-hide).
+			"includes": ["src/pages/player/app-player.tsx", "src/pages/player/components/player-chrome.tsx"],
+			"linter": { "rules": { "a11y": { "noStaticElementInteractions": "off" } } }
+		},
+		{
+			// These lists are positional and never reorder: slider thumbs keep their identity by index, and the PIN slots
+			// are decorative. The schema renderer's lists are static per plugin surface, and each key includes the node type.
+			"includes": [
+				"src/components/ui/slider.tsx",
+				"src/pages/auth/profiles/components/pin-verification.modal.tsx",
+				"src/plugin-host/schema/renderer.tsx"
+			],
+			"linter": { "rules": { "suspicious": { "noArrayIndexKey": "off" } } }
 		}
 	]
 }
