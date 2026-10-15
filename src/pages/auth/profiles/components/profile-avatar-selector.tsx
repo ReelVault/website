@@ -22,10 +22,10 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 				<Label tone="muted" size="xs">
 					{m.auth_avatar_style()}
 				</Label>
-				<ScrollArea className="w-full max-w-[calc(100vw-6rem)] whitespace-nowrap md:max-w-xl">
-					<div className="flex gap-2 overflow-x-auto pb-2">
+				<ScrollArea className="w-full max-w-[calc(100vw-6rem)] whitespace-nowrap md:max-w-none">
+					<div className="flex gap-2 overflow-x-auto pb-2 md:grid md:grid-cols-5 md:overflow-visible">
 						{AVATAR_STYLES.map((style) => (
-							<div key={style.id} className="flex h-20 w-24 shrink-0">
+							<div key={style.id} className="flex h-20 w-24 shrink-0 md:w-auto">
 								<Button
 									type="button"
 									variant="ghost"

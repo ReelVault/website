@@ -5,6 +5,7 @@ import { getSdkErrorMessage } from "@/client/client";
 import { useCreateProfile, useProfiles } from "@/client/hooks/use-profiles";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
@@ -108,35 +109,40 @@ export default function CreateProfilePage() {
 					/>
 				</div>
 
-				{profiles.length > 0 && (
-					<div className="flex flex-col gap-2">
-						<span className="font-semibold text-muted-foreground text-sm">{m.profile_copy_from_profile()}</span>
-						<Select value={copyFromProfileId} onValueChange={(value) => setCopyFromProfileId(value)}>
-							<SelectTrigger aria-label={m.profile_copy_from_profile()} className="w-full sm:w-72">
-								<SelectValue placeholder={m.profile_copy_none()} />
-							</SelectTrigger>
-							<SelectContent>
-								{profiles.map((profile) => (
-									<SelectItem key={profile.id} value={profile.id}>
-										{profile.name}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
-				)}
-
 				{error && <AppErrorState title={m.auth_failed_to_create_profile_short()} description={error} />}
 
-				<AsyncButton
-					type="submit"
-					isPending={createProfileMutation.isPending}
-					pendingLabel={m.admin_users_creating_profile()}
-					disabled={!name.trim()}
-					className="h-12 w-full rounded-xl font-semibold text-base sm:w-auto sm:self-end sm:px-8"
-				>
-					{m.admin_users_save_profile()}
-				</AsyncButton>
+				{/* Footer: copy-from on the left, save on the right; stacked on phones */}
+				<div className="flex flex-col gap-6 border-border border-t pt-8 sm:flex-row sm:items-end sm:justify-between">
+					{profiles.length > 0 && (
+						<div className="flex flex-col gap-2 sm:w-72">
+							<Label tone="muted" size="xs">
+								{m.profile_copy_from_profile()}
+							</Label>
+							<Select value={copyFromProfileId} onValueChange={(value) => setCopyFromProfileId(value)}>
+								<SelectTrigger aria-label={m.profile_copy_from_profile()} className="w-full">
+									<SelectValue placeholder={m.profile_copy_none()} />
+								</SelectTrigger>
+								<SelectContent>
+									{profiles.map((profile) => (
+										<SelectItem key={profile.id} value={profile.id}>
+											{profile.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+					)}
+
+					<AsyncButton
+						type="submit"
+						isPending={createProfileMutation.isPending}
+						pendingLabel={m.admin_users_creating_profile()}
+						disabled={!name.trim()}
+						className="h-12 w-full rounded-xl font-semibold text-base sm:ml-auto sm:w-auto sm:px-8"
+					>
+						{m.admin_users_save_profile()}
+					</AsyncButton>
+				</div>
 			</form>
 		</main>
 	);

@@ -9,7 +9,7 @@ import { LazyReassignMediaFileDialog } from "@/components/lazy-dialogs";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AdminBackLink } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
@@ -38,7 +38,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 			<AdminBackLink to="/admin/media" label={m.admin_nav_media_files()} />
 
 			<Card variant="subtle">
-				<div className="flex flex-col gap-4">
+				<CardContent className="flex flex-col gap-4">
 					<div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
 						<div className="flex flex-col gap-1.5">
 							<div className="flex flex-wrap items-center gap-2">
@@ -144,7 +144,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 							</Button>
 						</div>
 					)}
-				</div>
+				</CardContent>
 
 				<MediaFileScanDialog
 					open={isScanDialogOpen}

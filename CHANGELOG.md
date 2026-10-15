@@ -343,11 +343,17 @@ The two additional emitted files are the `details-rail` and `provider-candidate-
 - **Device sessions** — Session cards have horizontal padding, so icons, names and log-out buttons no longer touch the card edge.
 - **Admin media files** — File cards have inner padding around the checkbox, title, badges and stats row.
 - **User sidebar** — The log-out row has bottom padding on desktop.
+- **Library floating panel** — The panel has horizontal padding, so its icon and back-to-top button no longer touch the card edges, and the divider between them is vertical.
+- **Admin marker cards** — The mobile marker cards have horizontal padding, so the marker type, time, file link and buttons no longer touch the card edges.
+- **Admin media file header** — The file title, badges and action buttons have horizontal padding inside the header card.
+- **Media file versions on the details page** — Each version card has horizontal padding, so the title, badges and Play button no longer touch the card edge.
 
 #### Profile creation
 
 - **Avatar picker redesign** — The avatar grid shows four columns on phones and five from `sm`. Each avatar fills a square tile, the selected one has a border and a check badge, and the grid no longer scrolls inside a fixed-height box.
-- **Avatar style tabs** — Style tiles are 96 × 80 px cards with the icon and the translated style name, so the selected state no longer clips the label.
+- **Avatar style tabs** — Style tiles are 96 × 80 px cards with the icon and the translated style name, so the selected state no longer clips the label. From `md` the styles form a five-column grid instead of a horizontal scroller with a clipped last tab.
+- **Copy-from-profile footer** — On desktop the copy-from picker sits on the left of the footer and the save button on the right. On phones they stack as before.
+- **Profile picker tiles are squares** — Profiles on the "Who's watching" screen use the same rounded square as the Add profile tile, so the grid no longer mixes circles and squares.
 
 ### Fixes
 

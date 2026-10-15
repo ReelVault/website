@@ -59,7 +59,9 @@ export default function ProfilesSelectionPage() {
 				<div className="grid w-full max-w-xl grid-cols-2 gap-8 sm:grid-cols-3">
 					{["one", "two", "three"].map((key) => (
 						<div key={key} className="flex flex-col items-center gap-5">
-							<Skeleton className="size-32 sm:size-44" />
+							<div className="size-32 overflow-hidden rounded-3xl sm:size-44">
+								<Skeleton className="size-full" />
+							</div>
 							<Skeleton className="h-5 w-24" />
 						</div>
 					))}
@@ -114,6 +116,7 @@ export default function ProfilesSelectionPage() {
 								<div className="relative">
 									<Avatar
 										size="default"
+										shape="square"
 										className="size-32 after:hidden group-hover:scale-110 group-hover:shadow-xl group-hover:ring-2 group-hover:ring-primary sm:size-44"
 									>
 										{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" />}

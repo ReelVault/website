@@ -4,7 +4,7 @@ import { Clock, Play, Trash2 } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { m } from "@/paraglide/messages";
 import { formatDateTime, formatTimestamp } from "@/utils/format-utils";
 import { TYPE_CONFIG } from "./marker-types";
@@ -21,7 +21,7 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 
 	return (
 		<Card key={marker.id}>
-			<div className="flex flex-col gap-3">
+			<CardContent className="flex flex-col gap-3">
 				<div className="flex items-start justify-between gap-2">
 					<div className="flex flex-col gap-1">
 						<Badge variant={config.badgeVariant}>{config.label}</Badge>
@@ -89,7 +89,7 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 						/>
 					</div>
 				</div>
-			</div>
+			</CardContent>
 		</Card>
 	);
 }
