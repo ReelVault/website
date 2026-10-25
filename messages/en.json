@@ -4676,5 +4676,8 @@
 	"stream_id_invalid": "The identifier is invalid.",
 	"stream_session_expired": "The playback session has expired or is invalid.",
 	"stream_session_not_owned": "This playback session belongs to another profile.",
-	"admin_plugins_upload_failed": "The plugin could not be installed."
+	"admin_plugins_upload_failed": "The plugin could not be installed.",
+	"notification_resource_memory_high": "Memory usage is high ({percent}%)",
+	"notification_resource_memory_critical": "Memory usage is critical ({percent}%)",
+	"notification_resource_disk_low": "Low disk space ({percent}% used)"
 }

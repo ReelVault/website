@@ -415,6 +415,7 @@ Production build served by `server.ts` (precompressed `.br`/`.gz`), headless Chr
 ### Fixes
 
 - **Chromium search result navigation** — search results are real links now. The old dialog mixed `cmdk` selection, a synthetic history entry and programmatic navigation, which could swallow the click in Chromium-based browsers while working in Firefox.
+- **Resource alerts in the notification list** — memory and disk alerts are stored with the server's message key in `title` (`system.memory_high`) plus the reading in `data.percent`, but the client had no branch for them, so the list and the notification card showed the raw key. They now render a translated title with the rounded reading ("Memory usage is high (87%)"); unknown resource codes still show their raw key instead of disappearing.
 
 ### Performance
 

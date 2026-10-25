@@ -55,7 +55,31 @@ export function getNotificationText(notification: Notification): { title: string
 		return { title: m.notifications_title_update_failed(), body: m.notification_update_failed({ component }) };
 	}
 
+	if (notification.type === "resource_alert") {
+		const title = resourceAlertText(notification);
+
+		if (title !== null) return { title, body: null };
+	}
+
 	return { title: notification.title, body: notification.message ?? null };
+}
+
+/**
+ * Memory/disk alerts arrive with the server's message key in `title`
+ * (`system.memory_high`) and the reading in `data.percent`, not with display
+ * text. Anything else falls through to the raw `title`.
+ */
+function resourceAlertText(notification: Notification): string | null {
+	const percent = Number(notification.data.percent);
+	const percentText = Number.isFinite(percent) ? String(Math.round(percent)) : "";
+
+	if (notification.title === "system.memory_critical") return m.notification_resource_memory_critical({ percent: percentText });
+
+	if (notification.title === "system.memory_high") return m.notification_resource_memory_high({ percent: percentText });
+
+	if (notification.title === "system.disk_low") return m.notification_resource_disk_low({ percent: percentText });
+
+	return null;
 }
 
 export function getNotificationIcon(type: string): LucideIcon {

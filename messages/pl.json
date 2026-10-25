@@ -4715,5 +4715,8 @@
 	"stream_id_invalid": "Nieprawidłowy identyfikator.",
 	"stream_session_expired": "Sesja odtwarzania wygasła albo jest nieprawidłowa.",
 	"stream_session_not_owned": "Ta sesja odtwarzania należy do innego profilu.",
-	"admin_plugins_upload_failed": "Nie udało się zainstalować wtyczki."
+	"admin_plugins_upload_failed": "Nie udało się zainstalować wtyczki.",
+	"notification_resource_memory_high": "Wysokie zużycie pamięci ({percent}%)",
+	"notification_resource_memory_critical": "Krytyczne zużycie pamięci ({percent}%)",
+	"notification_resource_disk_low": "Mało wolnego miejsca na dysku ({percent}% zajęte)"
 }
