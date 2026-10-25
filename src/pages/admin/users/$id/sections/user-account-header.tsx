@@ -41,7 +41,7 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 							<button
 								type="button"
 								onClick={() => detach(copy(user.id, m.admin_users_copy_account_id()))}
-								className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
+								className="text-muted-foreground hover:text-foreground -m-3.5 p-3.5 sm:m-0 sm:p-0"
 								aria-label={m.admin_users_copy_account_id()}
 							>
 								<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
@@ -52,7 +52,7 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 				description={
 					user && (
 						<div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-							<span className="font-medium text-foreground">{user.email}</span>
+							<span className="text-foreground font-medium">{user.email}</span>
 							<StatusBadge
 								status={user.banned ? "error" : "success"}
 								label={user.banned ? m.admin_users_blocked_status() : m.common_active()}
@@ -64,12 +64,12 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 							<Badge variant={user.twoFactorEnabled ? "outline" : "secondary"} size="sm">
 								{user.twoFactorEnabled ? (
 									<>
-										<ShieldCheck className="size-3 text-success" />
+										<ShieldCheck className="text-success size-3" />
 										<span className="text-success">{m.admin_users_2fa_active()}</span>
 									</>
 								) : (
 									<>
-										<ShieldAlert className="size-3 text-muted-foreground" />
+										<ShieldAlert className="text-muted-foreground size-3" />
 										<span>{m.admin_users_no_2fa()}</span>
 									</>
 								)}
@@ -82,11 +82,11 @@ export function UserAccountHeader({ user }: UserAccountHeaderProps) {
 			/>
 
 			{user?.banned && (
-				<div className="flex items-start gap-2.5 rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-destructive text-xs">
+				<div className="border-destructive/40 bg-destructive/10 text-destructive flex items-start gap-2.5 rounded-xl border p-3 text-xs">
 					<ShieldAlert className="mt-0.5 size-4 shrink-0" />
 					<div>
 						<p className="font-semibold">{m.admin_users_account_blocked()}</p>
-						<p className="mt-0.5 text-muted-foreground">
+						<p className="text-muted-foreground mt-0.5">
 							{m.admin_users_ban_reason_label({ reason: user.banReason ?? m.admin_users_no_ban_reason() })}
 							{user.banExpires
 								? m.admin_users_ban_expires({ date: formatDateTime(user.banExpires) })

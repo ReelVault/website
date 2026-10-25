@@ -18,9 +18,9 @@ export function SubtitleProvidersSection({ providers }: SubtitleProvidersSection
 		<AdminSection title={m.admin_subtitles_providers()} description={m.admin_subtitles_provider_plugins()}>
 			<div className="flex flex-wrap gap-2.5">
 				{providers.map((provider) => (
-					<div key={provider.id} className="flex items-center gap-2.5 rounded-xl border border-border/80 bg-muted/20 px-3.5 py-2.5">
-						<ExternalLink className="size-3.5 text-primary" />
-						<span className="font-semibold text-foreground text-sm">{provider.name}</span>
+					<div key={provider.id} className="border-border/80 bg-muted/20 flex items-center gap-2.5 rounded-xl border px-3.5 py-2.5">
+						<ExternalLink className="text-primary size-3.5" />
+						<span className="text-foreground text-sm font-semibold">{provider.name}</span>
 						<Badge variant="outline" size="sm">
 							{m.common_version_badge({ version: provider.version })}
 						</Badge>

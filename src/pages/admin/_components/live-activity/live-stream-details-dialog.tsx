@@ -39,7 +39,7 @@ export function LiveStreamDetailsDialog({
 				<DialogHeader>
 					<div className="flex flex-wrap items-center justify-between gap-2 pr-6">
 						<div className="flex items-center gap-2">
-							<Activity className="size-4.5 text-primary" />
+							<Activity className="text-primary size-4.5" />
 							<DialogTitle>{m.admin_session_details({ streamTitle: stream.title })}</DialogTitle>
 						</div>
 						<Badge variant={isDirect ? "success" : "secondary"} font="mono">
@@ -55,7 +55,7 @@ export function LiveStreamDetailsDialog({
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className="grid gap-3 pt-2 text-muted-foreground">
+				<div className="text-muted-foreground grid gap-3 pt-2">
 					<LiveStreamDetailsSource stream={stream} formattedDuration={formattedDuration} />
 					<LiveStreamDetailsPipeline stream={stream} isDirect={isDirect} formattedCurrent={formattedCurrent} />
 					<LiveStreamDetailsClient stream={stream} />

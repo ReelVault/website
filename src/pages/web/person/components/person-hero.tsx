@@ -44,7 +44,7 @@ export function PersonHero({ personId, name }: { personId: string; name: string 
 					</div>
 				)}
 			</SimpleAnimation>
-			<span className="pointer-events-none absolute -top-10 -left-4 select-none font-black text-[15rem] text-foreground/2 leading-none">
+			<span className="text-foreground/2 pointer-events-none absolute -top-10 -left-4 text-[15rem] leading-none font-black select-none">
 				{m.web_person_profile_watermark()}
 			</span>
 		</section>

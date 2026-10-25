@@ -82,8 +82,8 @@ export function CinemaPreRollOverlay({ entries, featureTitle, onDone }: CinemaPr
 			<div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6">
 				<div className="flex items-end justify-between gap-4">
 					<div className="flex flex-col gap-1">
-						<span className="font-bold text-[10px] text-white/60 uppercase tracking-widest">{m.player_cinema_trailers_label()}</span>
-						{current && <span className="font-semibold text-lg leading-tight">{current.title}</span>}
+						<span className="text-[10px] font-bold tracking-widest text-white/60 uppercase">{m.player_cinema_trailers_label()}</span>
+						{current && <span className="text-lg leading-tight font-semibold">{current.title}</span>}
 						{featureTitle && <span className="text-sm text-white/70">{m.player_cinema_up_next({ title: featureTitle })}</span>}
 					</div>
 					<div className="pointer-events-auto flex items-center gap-2">
@@ -105,7 +105,7 @@ export function CinemaPreRollOverlay({ entries, featureTitle, onDone }: CinemaPr
 							type="button"
 							tabIndex={-1}
 							aria-label={entry.title}
-							className={cn("h-1 rounded-full transition-all", dotIndex === index ? "w-8 bg-primary" : "w-4 bg-white/30 hover:bg-white/50")}
+							className={cn("h-1 rounded-full transition-all", dotIndex === index ? "bg-primary w-8" : "w-4 bg-white/30 hover:bg-white/50")}
 							onClick={() => setIndex(dotIndex)}
 						/>
 					))}

@@ -50,15 +50,15 @@ function formatDuration(seconds?: number | null): string {
 /** Media source: the file as the server read it. */
 function SourceSection({ source }: { source: PlaybackDiagnostics["source"] }) {
 	return (
-		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-				<Film className="size-3.5 text-primary" aria-hidden="true" />
+		<div className="border-border/50 bg-background/60 space-y-1.5 rounded-lg border p-2.5">
+			<div className="text-foreground flex items-center gap-1.5 text-xs font-semibold">
+				<Film className="text-primary size-3.5" aria-hidden="true" />
 				<span>{m.player_file_source_server()}</span>
 			</div>
 			<div className="grid gap-1 text-xs">
 				<div className="flex justify-between gap-2">
 					<span>{m.player_format_and_size()}</span>
-					<span className="font-medium text-foreground">
+					<span className="text-foreground font-medium">
 						{m.player_source_summary({
 							container: source.container?.toUpperCase() ?? m.player_no_data(),
 							size: formatBytes(source.sizeBytes),
@@ -68,13 +68,13 @@ function SourceSection({ source }: { source: PlaybackDiagnostics["source"] }) {
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.player_total_source_bitrate()}</span>
-					<span className="font-medium text-foreground">
+					<span className="text-foreground font-medium">
 						{source.bitrateKbps ? `${source.bitrateKbps.toLocaleString()} kbps` : m.player_no_data()}
 					</span>
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.admin_source_video()}</span>
-					<span className="font-medium text-foreground">
+					<span className="text-foreground font-medium">
 						{source.videoCodec ? source.videoCodec.toUpperCase() : m.player_none_word()}
 						{source.videoProfile ? ` (${source.videoProfile})` : ""}
 						{m.common_dot_separator()}
@@ -84,7 +84,7 @@ function SourceSection({ source }: { source: PlaybackDiagnostics["source"] }) {
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.admin_source_audio()}</span>
-					<span className="truncate font-medium text-foreground">
+					<span className="text-foreground truncate font-medium">
 						{source.audioStreamIndex !== null ? `#${source.audioStreamIndex} ` : ""}
 						{source.audioCodec ? source.audioCodec.toUpperCase() : m.player_none_word()}
 						{audioLayoutLabel(source.audioChannelLayout, source.audioChannels)}{" "}
@@ -108,29 +108,29 @@ interface PipelineSectionProps {
 /** Server pipeline: the transcode decision, its reasons and the ffmpeg process behind it. */
 function PipelineSection({ playback, session, isTranscode, videoTranscode, audioTranscode }: PipelineSectionProps) {
 	return (
-		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-				<Cpu className="size-3.5 text-primary" aria-hidden="true" />
+		<div className="border-border/50 bg-background/60 space-y-1.5 rounded-lg border p-2.5">
+			<div className="text-foreground flex items-center gap-1.5 text-xs font-semibold">
+				<Cpu className="text-primary size-3.5" aria-hidden="true" />
 				<span>{m.player_stream_pipeline_heading()}</span>
 			</div>
 			<div className="grid gap-1 text-xs">
 				<div className="flex justify-between gap-2">
 					<span>{m.player_server_decision()}</span>
-					<span className="text-right font-medium text-foreground">
+					<span className="text-foreground text-right font-medium">
 						{isTranscode ? m.player_transcoding_on_the_fly() : m.player_direct_transfer_direct_stream()}
 					</span>
 				</div>
 				{playback?.tonemapped && (
 					<div className="flex justify-between gap-2">
 						<span>{m.player_tonemapping_label()}</span>
-						<span className="text-right font-medium text-foreground">
+						<span className="text-foreground text-right font-medium">
 							{m.player_tonemapping_yes_method({ method: playback.toneMapMethod ?? "auto" })}
 						</span>
 					</div>
 				)}
 				<div className="flex justify-between gap-2">
 					<span>{m.player_reason_label()}</span>
-					<span className="text-right text-foreground">{formatTranscodeReasons(session.reasons)}</span>
+					<span className="text-foreground text-right">{formatTranscodeReasons(session.reasons)}</span>
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.admin_stream_video()}</span>
@@ -163,7 +163,7 @@ function PipelineSection({ playback, session, isTranscode, videoTranscode, audio
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.admin_hwaccel_label()}</span>
-					<span className="font-medium text-foreground">
+					<span className="text-foreground font-medium">
 						{playback?.hwaccel && playback.hwaccel !== "none"
 							? m.player_gpu_label({ hwaccel: playback.hwaccel.toUpperCase() })
 							: m.player_software_cpu()}
@@ -172,7 +172,7 @@ function PipelineSection({ playback, session, isTranscode, videoTranscode, audio
 				{playback && (
 					<div className="flex justify-between gap-2">
 						<span>{m.player_ffmpeg_process_label()}</span>
-						<span className="font-medium text-foreground">
+						<span className="text-foreground font-medium">
 							{m.player_ffmpeg_process_info({
 								pid: playback.processId ?? "n/a",
 								start: Math.round(playback.startTime),
@@ -189,9 +189,9 @@ function PipelineSection({ playback, session, isTranscode, videoTranscode, audio
 /** Buffering and bandwidth, from the server's buffer and from this client. */
 function BufferSection({ buffer, clientMetrics }: { buffer: PlaybackDiagnostics["buffer"]; clientMetrics: ClientMetrics }) {
 	return (
-		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-				<Layers className="size-3.5 text-primary" aria-hidden="true" />
+		<div className="border-border/50 bg-background/60 space-y-1.5 rounded-lg border p-2.5">
+			<div className="text-foreground flex items-center gap-1.5 text-xs font-semibold">
+				<Layers className="text-primary size-3.5" aria-hidden="true" />
 				<span>{m.player_buffer_network()}</span>
 			</div>
 			<div className="grid gap-1 text-xs">
@@ -199,11 +199,11 @@ function BufferSection({ buffer, clientMetrics }: { buffer: PlaybackDiagnostics[
 					<>
 						<div className="flex justify-between gap-2">
 							<span>{m.player_server_buffer_state()}</span>
-							<span className="font-medium text-foreground">{bufferStateLabel(buffer.state)}</span>
+							<span className="text-foreground font-medium">{bufferStateLabel(buffer.state)}</span>
 						</div>
 						<div className="flex justify-between gap-2">
 							<span>{m.admin_server_buffered_seconds_label()}</span>
-							<span className="font-medium text-foreground">
+							<span className="text-foreground font-medium">
 								{m.player_buffered_seconds_segments({
 									seconds: buffer.bufferedSeconds,
 									segments: m.player_buffer_segments_count({
@@ -218,12 +218,12 @@ function BufferSection({ buffer, clientMetrics }: { buffer: PlaybackDiagnostics[
 				) : null}
 				<div className="flex justify-between gap-2">
 					<span>{m.player_client_buffer_label()}</span>
-					<span className="font-medium text-foreground">{m.player_buffered_seconds({ seconds: clientMetrics?.bufferedSeconds ?? 0 })}</span>
+					<span className="text-foreground font-medium">{m.player_buffered_seconds({ seconds: clientMetrics?.bufferedSeconds ?? 0 })}</span>
 				</div>
 				{clientMetrics?.bandwidthEstimate ? (
 					<div className="flex justify-between gap-2">
 						<span>{m.player_estimated_bandwidth()}</span>
-						<span className="font-medium text-foreground">
+						<span className="text-foreground font-medium">
 							{m.player_bandwidth_mbps({ value: (clientMetrics.bandwidthEstimate / 1_000_000).toFixed(1) })}
 						</span>
 					</div>
@@ -236,15 +236,15 @@ function BufferSection({ buffer, clientMetrics }: { buffer: PlaybackDiagnostics[
 /** The HTML5 player on this device: rendered resolution, frame counts and the session id. */
 function Html5Section({ session, clientMetrics }: { session: PlayerSessionState; clientMetrics: ClientMetrics }) {
 	return (
-		<div className="space-y-1.5 rounded-lg border border-border/50 bg-background/60 p-2.5">
-			<div className="flex items-center gap-1.5 font-semibold text-foreground text-xs">
-				<Monitor className="size-3.5 text-primary" aria-hidden="true" />
+		<div className="border-border/50 bg-background/60 space-y-1.5 rounded-lg border p-2.5">
+			<div className="text-foreground flex items-center gap-1.5 text-xs font-semibold">
+				<Monitor className="text-primary size-3.5" aria-hidden="true" />
 				<span>{m.player_html5_player()}</span>
 			</div>
 			<div className="grid gap-1 text-xs">
 				<div className="flex justify-between gap-2">
 					<span>{m.player_rendered_resolution()}</span>
-					<span className="font-medium text-foreground">
+					<span className="text-foreground font-medium">
 						{clientMetrics?.videoWidth && clientMetrics.videoHeight
 							? `${clientMetrics.videoWidth}×${clientMetrics.videoHeight} px`
 							: m.common_not_applicable_short()}
@@ -252,7 +252,7 @@ function Html5Section({ session, clientMetrics }: { session: PlayerSessionState;
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.player_video_frames()}</span>
-					<span className="font-medium text-foreground">
+					<span className="text-foreground font-medium">
 						{m.player_rendered_frames_stats({ rendered: clientMetrics?.totalFrames.toLocaleString() ?? "0" })}
 						<span className={clientMetrics?.droppedFrames ? "text-destructive" : "text-success"}>{clientMetrics?.droppedFrames ?? 0}</span>
 						{clientMetrics?.totalFrames ? ` (${((clientMetrics.droppedFrames / clientMetrics.totalFrames) * 100).toFixed(2)}%)` : ""}
@@ -260,7 +260,7 @@ function Html5Section({ session, clientMetrics }: { session: PlayerSessionState;
 				</div>
 				<div className="flex justify-between gap-2">
 					<span>{m.player_session_id()}</span>
-					<span className="truncate font-mono text-foreground text-xs" title={session.sessionId}>
+					<span className="text-foreground truncate font-mono text-xs" title={session.sessionId}>
 						{session.sessionId}
 					</span>
 				</div>
@@ -299,14 +299,14 @@ export function PlayerDiagnostics() {
 	return (
 		<aside
 			aria-label={m.player_diagnostics_label()}
-			className="absolute top-14 left-3 z-40 max-h-[85vh] w-[min(36rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border border-border/80 bg-popover/95 p-3.5 font-mono text-popover-foreground text-xs shadow-2xl md:top-16 md:left-8 md:p-4"
+			className="border-border/80 bg-popover/95 text-popover-foreground absolute top-14 left-3 z-40 max-h-[85vh] w-[min(36rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border p-3.5 font-mono text-xs shadow-2xl md:top-16 md:left-8 md:p-4"
 		>
 			{/* Header */}
-			<div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-border/40 border-b pb-2.5 font-sans">
+			<div className="border-border/40 mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5 font-sans">
 				<div className="flex flex-wrap items-center gap-2">
 					<div className="flex items-center gap-1.5">
-						<Activity className="size-4 text-primary" aria-hidden="true" />
-						<p className="font-bold text-foreground text-sm">{m.player_diagnostics_heading()}</p>
+						<Activity className="text-primary size-4" aria-hidden="true" />
+						<p className="text-foreground text-sm font-bold">{m.player_diagnostics_heading()}</p>
 					</div>
 					<Badge variant={isTranscode ? "secondary" : "success"} size="sm" font="mono" transform="uppercase">
 						{isTranscode ? m.admin_workers_category_streaming() : m.common_direct_stream()}
@@ -328,7 +328,7 @@ export function PlayerDiagnostics() {
 			{isError && <p className="text-destructive">{m.player_diagnostics_fetch_failed()}</p>}
 
 			{diagnostics && (
-				<div className="grid gap-2.5 text-muted-foreground">
+				<div className="text-muted-foreground grid gap-2.5">
 					<SourceSection source={diagnostics.source} />
 					<PipelineSection
 						playback={diagnostics.session}

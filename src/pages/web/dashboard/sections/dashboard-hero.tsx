@@ -80,7 +80,7 @@ export default function DashboardHero() {
 	const nextIndex = items.length > 1 ? (current + 1) % items.length : current;
 
 	return (
-		<section className="relative h-[82svh] min-h-120 overflow-hidden bg-background lg:h-screen lg:min-h-150">
+		<section className="bg-background relative h-[82svh] min-h-120 overflow-hidden lg:h-screen lg:min-h-150">
 			{/* Backdrops: crossfade, no remount. The rotator steps forward, so only
 			the active and next slides stay mounted — the remaining backdrops are
 			near-viewport-width downloads that first paint would never show. */}
@@ -104,8 +104,8 @@ export default function DashboardHero() {
 			</div>
 
 			{/* Overlays: rendered once, independent of the slide */}
-			<div className="absolute inset-0 bg-linear-to-r from-background via-background/80 to-background/20" />
-			<div className="absolute inset-0 bg-linear-to-t from-background via-background/20 to-transparent max-lg:via-background/75" />
+			<div className="from-background via-background/80 to-background/20 absolute inset-0 bg-linear-to-r" />
+			<div className="from-background via-background/20 max-lg:via-background/75 absolute inset-0 bg-linear-to-t to-transparent" />
 
 			{/* Info: active item only */}
 			{/* Phones: content sits at the bottom (near the thumb and the slide dots); desktop centres it. */}
@@ -168,11 +168,11 @@ export default function DashboardHero() {
 				<button
 					type="button"
 					onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
-					className="cursor-pointer rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-primary"
+					className="focus-visible:ring-primary cursor-pointer rounded-md px-3 py-2 focus-visible:ring-2"
 				>
 					<div className="flex flex-col items-center gap-2">
-						<span className="font-semibold text-muted-foreground text-xs">{m.web_discover_more()}</span>
-						<ChevronDown className="size-5 animate-bounce text-muted-foreground" />
+						<span className="text-muted-foreground text-xs font-semibold">{m.web_discover_more()}</span>
+						<ChevronDown className="text-muted-foreground size-5 animate-bounce" />
 					</div>
 				</button>
 			</SimpleAnimation>

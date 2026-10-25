@@ -20,7 +20,7 @@ export function SetupProgress({ labels, current, isSuccess }: SetupProgressProps
 				return (
 					<li key={label} className="flex min-w-0 flex-col gap-2 text-xs" aria-current={index === current ? "step" : undefined}>
 						<div className={cn("h-1 rounded-full", completed || index === current ? "bg-primary" : "bg-muted")} />
-						<span className={index === current ? "font-medium text-foreground" : "truncate text-muted-foreground"}>{label}</span>
+						<span className={index === current ? "text-foreground font-medium" : "text-muted-foreground truncate"}>{label}</span>
 					</li>
 				);
 			})}

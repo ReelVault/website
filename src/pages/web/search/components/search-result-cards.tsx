@@ -12,9 +12,9 @@ export interface SearchResultItem {
 }
 
 function TitleFallbackIcon({ type }: { type: string | undefined }) {
-	if (type === "tv_show") return <Tv aria-hidden="true" className="size-8 text-muted-foreground" />;
+	if (type === "tv_show") return <Tv aria-hidden="true" className="text-muted-foreground size-8" />;
 
-	return <Film aria-hidden="true" className="size-8 text-muted-foreground" />;
+	return <Film aria-hidden="true" className="text-muted-foreground size-8" />;
 }
 
 export function TitleSearchCard({ item }: { item: SearchResultItem }) {
@@ -22,9 +22,9 @@ export function TitleSearchCard({ item }: { item: SearchResultItem }) {
 		<Link
 			to="/details/$id"
 			params={{ id: item.id }}
-			className="group flex min-w-0 flex-col gap-2 rounded-xl p-1.5 transition-colors hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50"
+			className="group hover:bg-muted/50 focus-visible:ring-ring/50 flex min-w-0 flex-col gap-2 rounded-xl p-1.5 transition-colors focus-visible:ring-3"
 		>
-			<div className="aspect-2/3 w-full overflow-hidden rounded-lg bg-primary/10">
+			<div className="bg-primary/10 aspect-2/3 w-full overflow-hidden rounded-lg">
 				{item.imageId ? (
 					<ApiImage
 						fileId={item.imageId}
@@ -41,7 +41,7 @@ export function TitleSearchCard({ item }: { item: SearchResultItem }) {
 					</span>
 				)}
 			</div>
-			<span className="line-clamp-2 font-semibold text-foreground text-sm leading-snug" title={item.title}>
+			<span className="text-foreground line-clamp-2 text-sm leading-snug font-semibold" title={item.title}>
 				{item.title}
 			</span>
 			{item.type !== undefined && (
@@ -56,9 +56,9 @@ export function PersonSearchCard({ item }: { item: SearchResultItem }) {
 		<Link
 			to="/person/$id"
 			params={{ id: item.id }}
-			className="group flex min-w-0 flex-col items-center gap-2 rounded-xl p-1.5 text-center transition-colors hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50"
+			className="group hover:bg-muted/50 focus-visible:ring-ring/50 flex min-w-0 flex-col items-center gap-2 rounded-xl p-1.5 text-center transition-colors focus-visible:ring-3"
 		>
-			<div className="aspect-square w-full max-w-40 overflow-hidden rounded-full bg-primary/10">
+			<div className="bg-primary/10 aspect-square w-full max-w-40 overflow-hidden rounded-full">
 				{item.imageId ? (
 					<ApiImage
 						fileId={item.imageId}
@@ -71,11 +71,11 @@ export function PersonSearchCard({ item }: { item: SearchResultItem }) {
 					/>
 				) : (
 					<span className="flex size-full items-center justify-center">
-						<User aria-hidden="true" className="size-8 text-muted-foreground" />
+						<User aria-hidden="true" className="text-muted-foreground size-8" />
 					</span>
 				)}
 			</div>
-			<span className="line-clamp-2 font-semibold text-foreground text-sm leading-snug" title={item.title}>
+			<span className="text-foreground line-clamp-2 text-sm leading-snug font-semibold" title={item.title}>
 				{item.title}
 			</span>
 		</Link>
@@ -87,9 +87,9 @@ export function CollectionSearchCard({ item }: { item: SearchResultItem }) {
 		<Link
 			to="/collections/$id"
 			params={{ id: item.id }}
-			className="group flex min-w-0 items-center gap-3 rounded-xl border border-border/70 bg-card/50 p-2.5 transition-colors hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50"
+			className="group border-border/70 bg-card/50 hover:bg-muted/50 focus-visible:ring-ring/50 flex min-w-0 items-center gap-3 rounded-xl border p-2.5 transition-colors focus-visible:ring-3"
 		>
-			<div className="aspect-video w-24 shrink-0 overflow-hidden rounded-lg bg-primary/10">
+			<div className="bg-primary/10 aspect-video w-24 shrink-0 overflow-hidden rounded-lg">
 				{item.imageId ? (
 					<ApiImage
 						fileId={item.imageId}
@@ -102,11 +102,11 @@ export function CollectionSearchCard({ item }: { item: SearchResultItem }) {
 					/>
 				) : (
 					<span className="flex size-full items-center justify-center">
-						<Layers aria-hidden="true" className="size-6 text-muted-foreground" />
+						<Layers aria-hidden="true" className="text-muted-foreground size-6" />
 					</span>
 				)}
 			</div>
-			<span className="min-w-0 flex-1 truncate font-semibold text-foreground text-sm" title={item.title}>
+			<span className="text-foreground min-w-0 flex-1 truncate text-sm font-semibold" title={item.title}>
 				{item.title}
 			</span>
 		</Link>
@@ -118,9 +118,9 @@ export function GenreSearchCard({ item }: { item: SearchResultItem }) {
 		<Link
 			to="/genres/$id"
 			params={{ id: item.id }}
-			className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border/70 bg-card/50 px-4 font-medium text-sm transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+			className="border-border/70 bg-card/50 hover:border-primary/40 hover:bg-primary/10 hover:text-primary focus-visible:ring-ring/50 inline-flex min-h-10 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-colors focus-visible:ring-3"
 		>
-			<Compass aria-hidden="true" className="size-4 text-primary" />
+			<Compass aria-hidden="true" className="text-primary size-4" />
 			{item.title}
 		</Link>
 	);

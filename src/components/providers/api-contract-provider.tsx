@@ -76,8 +76,8 @@ export function ApiContractProvider({ children }: { children: ReactNode }) {
 
 	if (isBlocked) {
 		return (
-			<main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-6 text-center">
-				<p className="max-w-md text-muted-foreground text-sm leading-relaxed">{m.components_realtime_contract_mismatch()}</p>
+			<main className="bg-background flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
+				<p className="text-muted-foreground max-w-md text-sm leading-relaxed">{m.components_realtime_contract_mismatch()}</p>
 				<Button onClick={() => window.location.reload()}>{m.common_try_again()}</Button>
 			</main>
 		);

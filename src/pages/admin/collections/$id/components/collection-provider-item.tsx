@@ -21,20 +21,20 @@ export function CollectionProviderItem({ provider }: { provider: CollectionProvi
 	};
 
 	return (
-		<div className="flex items-center justify-between gap-3 rounded-xl border border-border/80 bg-muted/20 p-3.5 transition-colors hover:border-border hover:bg-muted/30">
+		<div className="border-border/80 bg-muted/20 hover:border-border hover:bg-muted/30 flex items-center justify-between gap-3 rounded-xl border p-3.5 transition-colors">
 			<div className="flex min-w-0 items-center gap-3">
-				<div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 font-bold text-primary text-xs tracking-wider">
+				<div className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-lg text-xs font-bold tracking-wider">
 					{provider.name.toUpperCase().slice(0, 4)}
 				</div>
 				<div className="flex min-w-0 flex-col">
 					<div className="flex items-center gap-2">
-						<span className="font-semibold text-foreground text-sm">{provider.name.toUpperCase()}</span>
+						<span className="text-foreground text-sm font-semibold">{provider.name.toUpperCase()}</span>
 						<Badge tone="muted" variant="outline" size="sm" font="mono">
 							{provider.externalId}
 						</Badge>
 					</div>
 					{provider.id && (
-						<span className="truncate font-mono text-muted-foreground text-xs">
+						<span className="text-muted-foreground truncate font-mono text-xs">
 							{m.admin_collections_link_id({ providerId: provider.id })}
 						</span>
 					)}
@@ -48,7 +48,7 @@ export function CollectionProviderItem({ provider }: { provider: CollectionProvi
 					onClick={handleCopy}
 					aria-label={m.admin_collections_copy_id({ name: provider.name })}
 				>
-					{hasCopied ? <Check className="size-3.5 text-primary" /> : <Copy className="size-3.5 text-muted-foreground" />}
+					{hasCopied ? <Check className="text-primary size-3.5" /> : <Copy className="text-muted-foreground size-3.5" />}
 				</Button>
 				{externalUrl && (
 					<Button
@@ -65,7 +65,7 @@ export function CollectionProviderItem({ provider }: { provider: CollectionProvi
 							/>
 						}
 					>
-						<ExternalLink className="size-3.5 text-muted-foreground hover:text-foreground" />
+						<ExternalLink className="text-muted-foreground hover:text-foreground size-3.5" />
 					</Button>
 				)}
 			</div>

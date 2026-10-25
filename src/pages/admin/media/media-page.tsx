@@ -188,7 +188,7 @@ export default function AdminMediaFilesPage() {
 						<label className="flex cursor-pointer items-center gap-2 text-sm">
 							<input
 								type="checkbox"
-								className="size-4 accent-primary"
+								className="accent-primary size-4"
 								checked={mediaFiles.every((file) => selection.has(file.id))}
 								onChange={() => toggleAllOnPage()}
 							/>
@@ -196,7 +196,7 @@ export default function AdminMediaFilesPage() {
 						</label>
 					)}
 					{selection.size > 0 && (
-						<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card p-3">
+						<div className="border-border/80 bg-card flex flex-wrap items-center gap-2 rounded-xl border p-3">
 							<span className="text-sm">{m.admin_media_selected_count({ count: selection.size })}</span>
 							<Button size="sm" variant="outline" disabled={bulkRefreshFiles.isPending} onClick={() => detach(refreshSelectedFiles())}>
 								{m.admin_media_refresh_selected()}

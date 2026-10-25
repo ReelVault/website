@@ -195,11 +195,11 @@ export default function AdminPluginsPage() {
 				>
 					<ToggleGroupItem value="available">
 						<span>{m.admin_plugins_view_available()}</span>
-						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{availableCount}</span>
+						<span className="bg-muted py-0.2 text-muted-foreground rounded-full px-1.5 font-mono text-xs">{availableCount}</span>
 					</ToggleGroupItem>
 					<ToggleGroupItem value="installed">
 						<span>{m.admin_plugins_view_installed()}</span>
-						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{plugins.length}</span>
+						<span className="bg-muted py-0.2 text-muted-foreground rounded-full px-1.5 font-mono text-xs">{plugins.length}</span>
 					</ToggleGroupItem>
 				</ToggleGroup>
 
@@ -226,7 +226,7 @@ export default function AdminPluginsPage() {
 				{categoriesWithCounts.map((entry) => (
 					<ToggleGroupItem key={entry.value} value={entry.value}>
 						<span>{entry.label}</span>
-						<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{entry.count}</span>
+						<span className="bg-muted py-0.2 text-muted-foreground rounded-full px-1.5 font-mono text-xs">{entry.count}</span>
 					</ToggleGroupItem>
 				))}
 			</ToggleGroup>
@@ -253,7 +253,7 @@ export default function AdminPluginsPage() {
 					{!(pluginsQuery.isLoading || pluginsQuery.isError) && installedPlugins.length > 0 && (
 						<>
 							{selectedIds.size > 0 && (
-								<div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/80 bg-card p-3 text-xs">
+								<div className="border-border/80 bg-card flex flex-wrap items-center gap-2 rounded-lg border p-3 text-xs">
 									<span className="font-medium">{m.admin_plugins_bulk_selected({ count: selectedIds.size })}</span>
 									<Button size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(true)}>
 										{m.admin_plugins_bulk_enable()}
@@ -295,7 +295,7 @@ export default function AdminPluginsPage() {
 				<AdminSection title={m.admin_plugins_catalog_section()} description={m.admin_plugins_catalog_section_description()}>
 					{catalogQuery.isLoading && <AppLoadingState label={m.admin_plugins_loading()} className="min-h-40" />}
 					{!catalogQuery.isLoading && unavailableRepositories.length > 0 && (
-						<div role="alert" className="rounded-lg border border-warning/30 bg-warning/10 p-3 text-warning text-xs">
+						<div role="alert" className="border-warning/30 bg-warning/10 text-warning rounded-lg border p-3 text-xs">
 							{m.admin_plugins_repositories_unavailable({
 								names: unavailableRepositories.map((repository) => repository.repositoryName).join(", "),
 							})}

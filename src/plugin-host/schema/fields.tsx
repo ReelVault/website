@@ -42,7 +42,7 @@ export function SchemaField({ node, scope, value, onChange }: SchemaFieldProps) 
 
 	if (node.input === "switch" || node.input === "checkbox") {
 		return (
-			<div className="flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-card p-3">
+			<div className="border-border/70 bg-card flex items-center justify-between gap-3 rounded-lg border p-3">
 				<div className="space-y-0.5">
 					<Label>
 						{label}

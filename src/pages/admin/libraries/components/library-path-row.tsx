@@ -24,16 +24,16 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 	const pathMode = formatStorageMode(path.metadataStorageMode);
 
 	return (
-		<div className="flex flex-col gap-2 rounded-lg border border-border/70 bg-muted/20 p-3 transition-colors hover:bg-muted/40 sm:flex-row sm:items-center sm:justify-between">
+		<div className="border-border/70 bg-muted/20 hover:bg-muted/40 flex flex-col gap-2 rounded-lg border p-3 transition-colors sm:flex-row sm:items-center sm:justify-between">
 			<div className="min-w-0 flex-1">
 				<div className="flex flex-wrap items-center gap-2">
-					<p className="truncate font-medium font-mono text-foreground text-xs sm:text-[13px]" title={path.path}>
+					<p className="text-foreground truncate font-mono text-xs font-medium sm:text-[13px]" title={path.path}>
 						{path.path}
 					</p>
 					<button
 						type="button"
 						onClick={() => detach(copyPath(path.path, m.components_media_file_path_word()))}
-						className="-m-2 inline-flex size-10 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:m-0 sm:size-6"
+						className="text-muted-foreground hover:bg-muted hover:text-foreground -m-2 inline-flex size-10 shrink-0 items-center justify-center rounded-sm transition-colors sm:m-0 sm:size-6"
 						title={m.admin_libraries_copy_path()}
 						aria-label={m.admin_libraries_copy_path_named({ path: path.path })}
 					>
@@ -47,8 +47,8 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					)}
 				</div>
 
-				<div className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
-					<span className="font-medium text-foreground/90 tabular-nums">{m.common_files_count({ count: stats.count })}</span>
+				<div className="text-muted-foreground mt-1 flex flex-wrap items-center gap-2 text-xs">
+					<span className="text-foreground/90 font-medium tabular-nums">{m.common_files_count({ count: stats.count })}</span>
 					<span>{m.common_dot_separator()}</span>
 					<span className="tabular-nums">{formatFileSize(stats.size)}</span>
 					{pathMode && (
@@ -62,7 +62,7 @@ export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathSca
 					{path.stableKey && (
 						<>
 							<span>{m.common_dot_separator()}</span>
-							<span className="flex items-center gap-1 font-mono text-muted-foreground/80 text-xs">
+							<span className="text-muted-foreground/80 flex items-center gap-1 font-mono text-xs">
 								<span>{m.admin_libraries_stable_key_preview({ key: path.stableKey.slice(0, 12) })}</span>
 								<button
 									type="button"

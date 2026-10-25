@@ -84,7 +84,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 	return (
 		<article
 			className={cn("group relative rounded-xl border p-4 transition-[border-color,background-color,color,box-shadow] duration-200", {
-				"border-primary/40 bg-primary/3 shadow-xs ring-1 ring-primary/20": isRunning,
+				"border-primary/40 bg-primary/3 ring-primary/20 shadow-xs ring-1": isRunning,
 				"border-border/50 bg-card/40 hover:border-border/80 hover:bg-card/70": !isRunning,
 			})}
 		>
@@ -93,7 +93,7 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 				<div className="flex min-w-0 flex-1 items-start gap-3.5">
 					<div
 						className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl border shadow-xs transition-colors", {
-							"animate-pulse border-primary/40 bg-primary/10 text-primary": isRunning,
+							"border-primary/40 bg-primary/10 text-primary animate-pulse": isRunning,
 							"border-success/30 bg-success/10 text-success": isCompleted,
 							"border-destructive/30 bg-destructive/10 text-destructive": isFailed,
 							"border-border/60 bg-muted/40 text-muted-foreground group-hover:text-foreground": !(isRunning || isCompleted || isFailed),
@@ -104,8 +104,8 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 
 					<div className="flex min-w-0 flex-1 flex-col gap-1.5">
 						<div className="flex flex-wrap items-center gap-2">
-							<h4 className="font-semibold text-foreground text-sm tracking-tight">{meta.title}</h4>
-							<span className="rounded border border-border/40 bg-muted/40 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
+							<h4 className="text-foreground text-sm font-semibold tracking-tight">{meta.title}</h4>
+							<span className="border-border/40 bg-muted/40 text-muted-foreground rounded border px-1.5 py-0.5 font-mono text-xs">
 								{operation.type}
 							</span>
 							<Badge tone="muted" variant="outline" font="mono" size="sm">
@@ -133,30 +133,30 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 						{isActive && (
 							<div className="flex flex-col gap-1.5 pt-1">
 								<div className="flex items-center justify-between font-mono text-xs">
-									<span className="flex items-center gap-1.5 font-medium text-primary">
-										<span className="size-1.5 animate-ping rounded-full bg-primary" />
+									<span className="text-primary flex items-center gap-1.5 font-medium">
+										<span className="bg-primary size-1.5 animate-ping rounded-full" />
 										{m.admin_worker_progress_line({ completed: operation.completedItems, total: operation.totalItems })}
 									</span>
-									<span className="font-semibold text-foreground">{m.common_percent_value({ value: Math.round(progress) })}</span>
+									<span className="text-foreground font-semibold">{m.common_percent_value({ value: Math.round(progress) })}</span>
 								</div>
 								<Progress value={Math.min(100, Math.max(0, progress))} className="w-full" />
 							</div>
 						)}
 
 						{/* Meta details bar */}
-						<div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-0.5 font-mono text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 pt-0.5 font-mono text-xs">
 							<span>{m.admin_worker_total_jobs({ totalItems: operation.totalItems })}</span>
 							<span>{m.admin_worker_completed_count({ completedItems: operation.completedItems })}</span>
 							{operation.pendingItems > 0 && <span>{m.admin_worker_pending_count({ count: operation.pendingItems })}</span>}
 							{operation.runningItems > 0 && <span>{m.admin_worker_running_count({ count: operation.runningItems })}</span>}
 							{operation.cancelledItems > 0 && <span>{m.admin_worker_cancelled_count({ count: operation.cancelledItems })}</span>}
 							{operation.failedItems > 0 && (
-								<span className="font-semibold text-destructive">
+								<span className="text-destructive font-semibold">
 									{m.admin_worker_errors_count({ failedItems: operation.failedItems })}
 								</span>
 							)}
 							{operation.etaMs !== null && operation.etaMs > 0 && (
-								<span className="font-medium text-primary">{m.admin_worker_eta_value({ eta: formatMsDuration(operation.etaMs) })}</span>
+								<span className="text-primary font-medium">{m.admin_worker_eta_value({ eta: formatMsDuration(operation.etaMs) })}</span>
 							)}
 							<span>{m.admin_worker_created_at({ date: formatDate(operation.createdAt) })}</span>
 							{operation.startedAt && <span>{m.admin_worker_started_at({ date: formatDate(operation.startedAt) })}</span>}
@@ -164,9 +164,9 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 						</div>
 
 						{operation.error && (
-							<div className="mt-2 flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 p-2.5 text-destructive text-xs">
+							<div className="border-destructive/30 bg-destructive/10 text-destructive mt-2 flex items-start gap-2 rounded-lg border p-2.5 text-xs">
 								<AlertCircle className="mt-0.5 size-4 shrink-0" />
-								<p className="break-all font-mono leading-relaxed">{operation.error}</p>
+								<p className="font-mono leading-relaxed break-all">{operation.error}</p>
 							</div>
 						)}
 					</div>

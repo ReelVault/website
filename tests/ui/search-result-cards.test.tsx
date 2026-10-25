@@ -18,12 +18,16 @@ interface MockLinkProps {
 	children: ReactNode;
 }
 
-await mock.module("@tanstack/react-router", () => ({
-	Link: ({ to, params, children, ...props }: MockLinkProps) => (
+function MockLink({ to, params, children, ...props }: MockLinkProps) {
+	return (
 		<a href={params?.id ? to.replace("$id", params.id) : to} {...props}>
 			{children}
 		</a>
-	),
+	);
+}
+
+await mock.module("@tanstack/react-router", () => ({
+	Link: MockLink,
 }));
 
 const { CollectionSearchCard, GenreSearchCard, PersonSearchCard, TitleSearchCard } = await import(

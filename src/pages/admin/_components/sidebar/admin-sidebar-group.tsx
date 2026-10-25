@@ -31,7 +31,7 @@ export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupP
 						let badge: ReactNode = null;
 						if (item.href === "/admin/worker" && (stats?.workers?.active ?? 0) > 0) {
 							badge = (
-								<SidebarMenuBadge className="ml-auto text-sidebar-primary group-data-[collapsible=icon]:hidden">
+								<SidebarMenuBadge className="text-sidebar-primary ml-auto group-data-[collapsible=icon]:hidden">
 									{stats?.workers?.active}
 								</SidebarMenuBadge>
 							);
@@ -51,7 +51,7 @@ export function AdminSidebarGroup({ group, pathname, stats }: AdminSidebarGroupP
 									tooltip={item.name}
 									className="relative"
 								>
-									{isActive && <div className="absolute inset-y-0 left-0 w-1 rounded-r-md bg-sidebar-primary" />}
+									{isActive && <div className="bg-sidebar-primary absolute inset-y-0 left-0 w-1 rounded-r-md" />}
 									<Icon className={cn("size-4 shrink-0 transition-colors", isActive ? "text-sidebar-primary" : "text-muted-foreground")} />
 									<span className="truncate">{item.name}</span>
 									{badge}

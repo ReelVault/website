@@ -13,11 +13,11 @@ const PROFILE_LABELS: Record<AdminSystemCpu["cpuProfile"], { label: string; badg
 
 function MetricItem({ label, value, unit }: { label: string; value: number; unit?: string }) {
 	return (
-		<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-			<p className="font-medium text-muted-foreground text-xs">{label}</p>
-			<p className="mt-1 font-bold font-mono text-foreground text-lg tabular-nums">
+		<div className="border-border/50 bg-background/50 rounded-xl border p-3.5">
+			<p className="text-muted-foreground text-xs font-medium">{label}</p>
+			<p className="text-foreground mt-1 font-mono text-lg font-bold tabular-nums">
 				{value}
-				{unit && <span className="ml-1 font-medium text-muted-foreground text-xs">{unit}</span>}
+				{unit && <span className="text-muted-foreground ml-1 text-xs font-medium">{unit}</span>}
 			</p>
 		</div>
 	);
@@ -41,9 +41,9 @@ export function SystemCpuInfo({ cpu }: { cpu?: AdminSystemCpu | null }) {
 		<AdminSection title={m.player_hwaccel_cpu()} description={m.admin_resources_hardware_params()}>
 			<div className="flex flex-col gap-5">
 				<div className="flex flex-wrap items-center gap-3">
-					<div className="flex items-center gap-2 text-muted-foreground">
-						<Cpu className="size-4 text-primary" aria-hidden="true" />
-						<p className="font-medium text-xs">{m.admin_resources_detected_cores()}</p>
+					<div className="text-muted-foreground flex items-center gap-2">
+						<Cpu className="text-primary size-4" aria-hidden="true" />
+						<p className="text-xs font-medium">{m.admin_resources_detected_cores()}</p>
 					</div>
 					<Badge variant={profile.badgeVariant}>{profile.label}</Badge>
 				</div>
@@ -61,9 +61,9 @@ export function SystemCpuInfo({ cpu }: { cpu?: AdminSystemCpu | null }) {
 					<MetricItem label={m.admin_resources_max_core()} value={cpu.configuredMaxCores} unit={m.admin_resources_cores_unit()} />
 				</div>
 
-				<div className="flex items-center gap-2 text-muted-foreground">
-					<Zap className="size-4 text-primary" aria-hidden="true" />
-					<p className="font-medium text-xs">{m.admin_resources_subprocess_budgets()}</p>
+				<div className="text-muted-foreground flex items-center gap-2">
+					<Zap className="text-primary size-4" aria-hidden="true" />
+					<p className="text-xs font-medium">{m.admin_resources_subprocess_budgets()}</p>
 				</div>
 
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -74,9 +74,9 @@ export function SystemCpuInfo({ cpu }: { cpu?: AdminSystemCpu | null }) {
 					<MetricItem label="FFprobe" value={cpu.ffprobeConcurrency} />
 				</div>
 
-				<div className="flex items-center gap-2 text-muted-foreground">
-					<Gauge className="size-4 text-primary" aria-hidden="true" />
-					<p className="font-medium text-xs">{m.admin_resources_speed_factor_meaning()}</p>
+				<div className="text-muted-foreground flex items-center gap-2">
+					<Gauge className="text-primary size-4" aria-hidden="true" />
+					<p className="text-xs font-medium">{m.admin_resources_speed_factor_meaning()}</p>
 				</div>
 				<p className="text-muted-foreground text-xs leading-relaxed">{speedFactorNotice}</p>
 			</div>

@@ -47,11 +47,11 @@ export function CollectionHero({
 	}
 
 	return (
-		<section className="relative min-h-[46svh] border-border border-b lg:min-h-[70vh]">
-			<div className="absolute inset-0 overflow-hidden bg-card">
+		<section className="border-border relative min-h-[46svh] border-b lg:min-h-[70vh]">
+			<div className="bg-card absolute inset-0 overflow-hidden">
 				<CollectionPosterCollage posterImages={posterImages} className="grayscale" />
-				<div className="absolute inset-0 bg-linear-to-t from-background via-background/65 to-background/10" />
-				<div className="absolute inset-0 bg-linear-to-r from-background via-background/40 to-transparent" />
+				<div className="from-background via-background/65 to-background/10 absolute inset-0 bg-linear-to-t" />
+				<div className="from-background via-background/40 absolute inset-0 bg-linear-to-r to-transparent" />
 			</div>
 			<div className="cinema-shell relative flex min-h-[46svh] flex-col justify-end py-10 lg:min-h-[70vh] lg:py-16">
 				<div className="max-w-3xl">

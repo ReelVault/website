@@ -47,10 +47,10 @@ export default function AdminGenresPage() {
 						{genres.map((genre) => (
 							<div
 								key={genre.id}
-								className="flex items-center gap-2 rounded-xl border border-border/80 bg-muted/20 px-3.5 py-2.5 transition-[border-color,background-color,color,box-shadow] duration-150 hover:border-primary/40 hover:bg-muted/40 hover:shadow-2xs"
+								className="border-border/80 bg-muted/20 hover:border-primary/40 hover:bg-muted/40 flex items-center gap-2 rounded-xl border px-3.5 py-2.5 transition-[border-color,background-color,color,box-shadow] duration-150 hover:shadow-2xs"
 							>
-								<Tag className="size-3.5 text-primary" />
-								<span className="font-semibold text-foreground text-sm tracking-tight">{genre.name}</span>
+								<Tag className="text-primary size-3.5" />
+								<span className="text-foreground text-sm font-semibold tracking-tight">{genre.name}</span>
 							</div>
 						))}
 

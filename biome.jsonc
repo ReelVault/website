@@ -86,7 +86,10 @@
 				"noUselessSwitchCase": "error",
 				"noUselessLoneBlockStatements": "error",
 				"noUselessFragments": "error",
-				"noAdjacentSpacesInRegex": "error"
+				"noAdjacentSpacesInRegex": "error",
+				"noUnnecessaryTemplateExpression": "error",
+				"useArraySome": "error",
+				"noExcessiveNestedCallbacks": "warn"
 			},
 			"correctness": {
 				"noConstantMathMinMaxClamp": "error",
@@ -238,17 +241,15 @@
 				"useNumberToFixedDigitsArgument": "error",
 				"noVar": "error",
 				"noWith": "error",
-				"noOctalEscape": "error"
+				"noOctalEscape": "error",
+				"noLoopFunc": "error",
+				"noDrizzleDeleteWithoutWhere": "error",
+				"noDrizzleUpdateWithoutWhere": "error",
+				"noJsxLeakedDollar": "error",
+				"noReactStringRefs": "error",
+				"noEmptyObjectKeys": "error"
 			},
 			"nursery": {
-				"useSortedClasses": {
-					"level": "warn",
-					"fix": "safe",
-					"options": {
-						"attributes": ["class", "className"],
-						"functions": ["clsx", "cva", "cn", "tw"]
-					}
-				},
 				// Type-aware rules run once, in oxlint, which has the type information: no-floating-promises, no-misused-promises,
 				// await-thenable, no-unsafe-type-assertion, no-unsafe-plus-operands and no-base-to-string.
 				"noFloatingPromises": "off",
@@ -256,25 +257,20 @@
 				"useAwaitThenable": "off",
 				"noUnsafeTypeAssertion": "off",
 				"noUselessTypeConversion": "error",
-				"noUnnecessaryTemplateExpression": "error",
 				"noUnsafePlusOperands": "off",
 				"noBaseToString": "off",
 				"noMisleadingReturnType": "error",
 				"noImpliedEval": "error",
 				"noExtendNative": "error",
-				"noLoopFunc": "error",
 				"noUnmodifiedLoopCondition": "error",
 				"useExhaustiveSwitchCases": "error",
-				"useArraySome": "error",
 				"useIncludes": "error",
-				"noDrizzleDeleteWithoutWhere": "error",
-				"noDrizzleUpdateWithoutWhere": "error",
 				"noThisOutsideOfClass": "error",
-				"noJsxLeakedDollar": "error",
-				"noReactStringRefs": "error",
 				"noNegationInEqualityCheck": "error",
-				"noEmptyObjectKeys": "error",
-				"noExcessiveNestedCallbacks": "warn"
+				"useTailwindSortedClasses": {
+					"level": "warn",
+					"fix": "safe"
+				}
 			}
 		}
 	},
@@ -309,12 +305,21 @@
 			// The addon forwards pointer clicks to its input (keyboard users focus the input), and role="group" is the
 			// correct ARIA role for this non-form container.
 			"includes": ["src/components/ui/input-group.tsx"],
-			"linter": { "rules": { "a11y": { "useKeyWithClickEvents": "off", "useSemanticElements": "off" } } }
+			"linter": {
+				"rules": {
+					"a11y": {
+						"useKeyWithClickEvents": "off",
+						"useSemanticElements": "off"
+					}
+				}
+			}
 		},
 		{
 			// The player container and the controls overlay take pointer events on purpose (controls show/hide, auto-hide).
 			"includes": ["src/pages/player/app-player.tsx", "src/pages/player/components/player-chrome.tsx"],
-			"linter": { "rules": { "a11y": { "noStaticElementInteractions": "off" } } }
+			"linter": {
+				"rules": { "a11y": { "noStaticElementInteractions": "off" } }
+			}
 		},
 		{
 			// These lists are positional and never reorder: slider thumbs keep their identity by index, and the PIN slots
@@ -326,5 +331,10 @@
 			],
 			"linter": { "rules": { "suspicious": { "noArrayIndexKey": "off" } } }
 		}
-	]
+	],
+	"tailwind": {
+		"attributes": ["class", "className"],
+		"mergeFunctions": ["clsx", "cn", "tw"],
+		"variantFunctions": ["cva"]
+	}
 }

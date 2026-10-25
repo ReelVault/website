@@ -86,16 +86,16 @@ export default function AdminApiKeysPage() {
 								</Button>
 							</div>
 							{visibleKeys.map((apiKey) => (
-								<div key={apiKey.id} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border p-4">
+								<div key={apiKey.id} className="border-border flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4">
 									<div className="flex min-w-0 flex-col gap-1">
 										<div className="flex items-center gap-2">
-											<span className="font-semibold text-sm">{apiKey.name}</span>
+											<span className="text-sm font-semibold">{apiKey.name}</span>
 											<Badge variant={apiKey.scope === "full" ? "destructive" : "secondary"} font="mono">
 												{apiKey.scope === "full" ? m.admin_api_keys_scope_full() : m.admin_api_keys_scope_read_only()}
 											</Badge>
 											{apiKey.expiresAt && isExpired(apiKey.expiresAt) && <Badge variant="destructive">{m.admin_api_keys_expired()}</Badge>}
 										</div>
-										<div className="flex flex-wrap gap-x-4 text-muted-foreground text-xs">
+										<div className="text-muted-foreground flex flex-wrap gap-x-4 text-xs">
 											<span className="font-mono">{`${apiKey.keyPrefix}…`}</span>
 											<span>{m.admin_api_keys_created_value({ date: formatDate(apiKey.createdAt) })}</span>
 											{apiKey.createdByName && <span>{m.admin_api_keys_created_by({ name: apiKey.createdByName })}</span>}
@@ -280,7 +280,7 @@ function EditKeyForm({
 				<label className="flex cursor-pointer items-center gap-2 text-sm">
 					<input
 						type="checkbox"
-						className="size-4 accent-primary"
+						className="accent-primary size-4"
 						checked={neverExpires}
 						onChange={(event) => setNeverExpires(event.target.checked)}
 					/>
@@ -370,7 +370,7 @@ function CreateKeyDialog({
 							</DialogTitle>
 							<DialogDescription>{m.admin_api_keys_created_warning()}</DialogDescription>
 						</DialogHeader>
-						<div className="break-all rounded-xl border border-border bg-muted/40 p-3 font-mono text-xs">{state.createdSecret}</div>
+						<div className="border-border bg-muted/40 rounded-xl border p-3 font-mono text-xs break-all">{state.createdSecret}</div>
 						<DialogFooter>
 							<Button
 								onClick={() => {

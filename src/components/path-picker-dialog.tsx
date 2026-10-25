@@ -65,7 +65,7 @@ export function PathPickerDialog({ open, onOpenChange, initialPath = "/", onSele
 				{/* HEADER */}
 				<DialogHeader className="shrink-0 border-b">
 					<div className="flex items-center gap-2.5">
-						<div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-xs">
+						<div className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-xl shadow-xs">
 							<Server className="size-5" />
 						</div>
 						<div className="flex flex-col gap-0.5">
@@ -76,7 +76,7 @@ export function PathPickerDialog({ open, onOpenChange, initialPath = "/", onSele
 				</DialogHeader>
 
 				{/* FORMULARZ WYSZUKIWANIA I NAWIGACJI */}
-				<div className="flex shrink-0 flex-col gap-3 border-border/60 border-b bg-background/50 p-4 sm:px-6">
+				<div className="border-border/60 bg-background/50 flex shrink-0 flex-col gap-3 border-b p-4 sm:px-6">
 					<PathPickerSearchForm key={activePath} activePath={activePath} onNavigate={handleNavigate} />
 					<PathPickerBreadcrumbs activePath={activePath} onNavigate={handleNavigate} />
 				</div>

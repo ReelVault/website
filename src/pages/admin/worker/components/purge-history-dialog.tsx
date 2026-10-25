@@ -54,7 +54,7 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 		<Dialog open={isOpen} onOpenChange={(open) => handleOpenChange(open, onClose)}>
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
-					<div className="flex items-center gap-2 text-destructive">
+					<div className="text-destructive flex items-center gap-2">
 						<Trash2 className="size-5" />
 						<DialogTitle>{m.admin_worker_history_cleanup()}</DialogTitle>
 					</div>
@@ -120,8 +120,8 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 					)}
 
 					{/* Warning Note */}
-					<div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-muted-foreground text-xs">
-						<AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+					<div className="border-destructive/30 bg-destructive/5 text-muted-foreground flex items-start gap-2.5 rounded-xl border p-3 text-xs">
+						<AlertTriangle className="text-destructive mt-0.5 size-4 shrink-0" />
 						<p>
 							<ParaglideMessage message={m.admin_worker_purge_irreversible_warning} markup={irreversibleWarningMarkup} />
 						</p>

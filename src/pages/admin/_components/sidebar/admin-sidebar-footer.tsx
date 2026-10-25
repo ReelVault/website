@@ -25,12 +25,12 @@ export function AdminSidebarFooter() {
 	return (
 		<SidebarFooter size="comfortable" className="gap-3 border-t">
 			<div className="flex items-center gap-3 px-2 py-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-				<div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary/15 font-bold text-sidebar-primary text-xs">
+				<div className="bg-sidebar-primary/15 text-sidebar-primary flex size-8 shrink-0 items-center justify-center rounded-md text-xs font-bold">
 					{m.admin_sidebar_user_initials()}
 				</div>
 				<div className="flex min-w-0 flex-1 flex-col group-data-[collapsible=icon]:hidden">
-					<span className="font-bold text-[12px] text-foreground">{m.admin_users_role_admin()}</span>
-					<span className="truncate font-medium text-muted-foreground text-xs">{m.admin_sidebar_system_role()}</span>
+					<span className="text-foreground text-[12px] font-bold">{m.admin_users_role_admin()}</span>
+					<span className="text-muted-foreground truncate text-xs font-medium">{m.admin_sidebar_system_role()}</span>
 				</div>
 			</div>
 

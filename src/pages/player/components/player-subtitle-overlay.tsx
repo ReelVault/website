@@ -336,7 +336,7 @@ const SubtitleCueItem = memo(function SubtitleCueItem({ cue, styling }: { cue: S
 	return (
 		<div
 			className={cn(
-				"w-fit rounded-md px-24 py-1.5 font-medium font-sans tracking-wide [text-shadow:0_1px_4px_rgb(0_0_0/90%),0_2px_10px_rgb(0_0_0/80%)]",
+				"w-fit rounded-md px-24 py-1.5 font-sans font-medium tracking-wide [text-shadow:0_1px_4px_rgb(0_0_0/90%),0_2px_10px_rgb(0_0_0/80%)]",
 				styling.colorClass,
 				styling.bgClass,
 				alignClass,

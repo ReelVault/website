@@ -57,7 +57,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 				{/* Search and Category Filter */}
 				<div className="flex flex-wrap items-center justify-end gap-2">
 					<div className="relative">
-						<Search className="absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+						<Search className="text-muted-foreground absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
 						<Input
 							leadingIcon
 							type="text"
@@ -69,12 +69,12 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 					</div>
 
 					{categories.length > 1 && (
-						<div className="flex items-center gap-1 rounded-lg border border-border/50 bg-card/40 p-0.5">
+						<div className="border-border/50 bg-card/40 flex items-center gap-1 rounded-lg border p-0.5">
 							<button
 								type="button"
 								onClick={() => setCategoryFilter("all")}
 								className={cn(
-									"rounded-md px-2 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
+									"rounded-md px-2 py-1 text-xs font-medium transition-[border-color,background-color,color,box-shadow]",
 									categoryFilter === "all" ? "bg-secondary text-foreground shadow-xs" : "text-muted-foreground hover:text-foreground",
 								)}
 							>
@@ -86,7 +86,7 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 									type="button"
 									onClick={() => setCategoryFilter(cat)}
 									className={cn(
-										"rounded-md px-2 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
+										"rounded-md px-2 py-1 text-xs font-medium transition-[border-color,background-color,color,box-shadow]",
 										categoryFilter === cat ? "bg-secondary text-foreground shadow-xs" : "text-muted-foreground hover:text-foreground",
 									)}
 								>
@@ -100,10 +100,10 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 				{isLoading && <SkeletonGrid count={6} className="gap-3 sm:grid-cols-2 lg:grid-cols-3" itemClassName="h-28 w-full rounded-xl" />}
 
 				{!(isLoading || isError) && filteredStats.length === 0 && (
-					<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-8 text-center">
-						<Cog className="mb-2 size-8 text-muted-foreground" />
-						<p className="font-medium text-foreground text-xs">{m.admin_worker_no_workers()}</p>
-						<p className="mt-0.5 text-muted-foreground text-xs">{m.admin_worker_change_search_hint()}</p>
+					<div className="border-border/70 bg-card/30 flex flex-col items-center justify-center rounded-xl border border-dashed p-8 text-center">
+						<Cog className="text-muted-foreground mb-2 size-8" />
+						<p className="text-foreground text-xs font-medium">{m.admin_worker_no_workers()}</p>
+						<p className="text-muted-foreground mt-0.5 text-xs">{m.admin_worker_change_search_hint()}</p>
 					</div>
 				)}
 

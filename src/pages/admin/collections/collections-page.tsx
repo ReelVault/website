@@ -84,7 +84,7 @@ export default function AdminCollectionsPage() {
 							<Card key={collection.id} className="group overflow-hidden">
 								<CardContent size="comfortable" className="flex flex-col gap-3.5">
 									<div className="flex items-start justify-between gap-3">
-										<div className="flex size-11 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary shadow-xs">
+										<div className="border-primary/20 bg-primary/10 text-primary flex size-11 items-center justify-center rounded-xl border shadow-xs">
 											<Layers className="size-5" />
 										</div>
 										<Button
@@ -101,11 +101,11 @@ export default function AdminCollectionsPage() {
 									</div>
 
 									<div className="flex flex-col gap-1">
-										<h3 className="truncate font-semibold text-base text-foreground tracking-tight" title={collection.name}>
+										<h3 className="text-foreground truncate text-base font-semibold tracking-tight" title={collection.name}>
 											{collection.name}
 										</h3>
-										<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
-											<Server className="size-3 text-primary" />
+										<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+											<Server className="text-primary size-3" />
 											<span>{m.admin_collections_providers_count({ providersCount: collection.providers.length })}</span>
 										</div>
 									</div>

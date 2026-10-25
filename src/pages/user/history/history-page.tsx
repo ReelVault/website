@@ -55,12 +55,12 @@ export default function HistoryPage() {
 
 			{history.length === 0 ? (
 				<UserSurface className="flex min-h-[40vh] flex-col items-center justify-center text-center">
-					<div className="rounded-full p-12 text-foreground/10">
-						<History className="size-20 text-muted-foreground/30" />
+					<div className="text-foreground/10 rounded-full p-12">
+						<History className="text-muted-foreground/30 size-20" />
 					</div>
 					<div className="flex flex-col gap-2">
-						<h2 className="font-bold text-2xl tracking-tight">{m.user_history_empty_heading()}</h2>
-						<p className="max-w-md text-muted-foreground text-sm leading-relaxed">{m.user_history_empty_desc()}</p>
+						<h2 className="text-2xl font-bold tracking-tight">{m.user_history_empty_heading()}</h2>
+						<p className="text-muted-foreground max-w-md text-sm leading-relaxed">{m.user_history_empty_desc()}</p>
 					</div>
 				</UserSurface>
 			) : (

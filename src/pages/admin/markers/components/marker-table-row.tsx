@@ -36,15 +36,15 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 					<div className="flex items-center gap-2">
 						<Badge variant={config.badgeVariant}>{config.label}</Badge>
 						{marker.label && (
-							<span className="font-medium text-foreground text-sm">{m.components_media_quoted_label({ label: marker.label })}</span>
+							<span className="text-foreground text-sm font-medium">{m.components_media_quoted_label({ label: marker.label })}</span>
 						)}
 					</div>
 				</TableCell>
 				<TableCell>
 					<div className="flex items-center gap-1.5 font-mono text-sm">
-						<Clock className="size-3.5 text-muted-foreground" />
+						<Clock className="text-muted-foreground size-3.5" />
 						{isPoint ? (
-							<span className="font-semibold text-destructive">{formatTimestamp(marker.startSeconds)}</span>
+							<span className="text-destructive font-semibold">{formatTimestamp(marker.startSeconds)}</span>
 						) : (
 							<>
 								<span>{formatTimestamp(marker.startSeconds)}</span>
@@ -64,7 +64,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 						<Link
 							to="/admin/media/$id"
 							params={{ id: marker.mediaFileId }}
-							className="font-mono text-primary text-xs hover:underline"
+							className="text-primary font-mono text-xs hover:underline"
 							title={m.admin_markers_open_in_media_panel()}
 						>
 							{m.admin_markers_truncated_file_id({ id: marker.mediaFileId.slice(0, 12) })}
@@ -75,7 +75,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 							onClick={() => onCopy(marker.mediaFileId, m.admin_media_video_id())}
 							title={m.admin_markers_copy_file_id()}
 						>
-							<Copy className="size-3 text-muted-foreground" />
+							<Copy className="text-muted-foreground size-3" />
 						</Button>
 					</div>
 				</TableCell>
@@ -88,7 +88,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 							<Link
 								to="/admin/plugins/$id"
 								params={{ id: marker.pluginId }}
-								className="truncate font-mono text-muted-foreground text-xs hover:text-primary hover:underline"
+								className="text-muted-foreground hover:text-primary truncate font-mono text-xs hover:underline"
 								title={m.admin_markers_view_plugin_config()}
 							>
 								{marker.pluginId}
@@ -97,7 +97,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 					</div>
 				</TableCell>
 				<TableCell>
-					<span className="whitespace-nowrap text-muted-foreground text-xs">{formatDateTime(marker.createdAt)}</span>
+					<span className="text-muted-foreground text-xs whitespace-nowrap">{formatDateTime(marker.createdAt)}</span>
 				</TableCell>
 				<TableCell className="text-right">
 					<div className="flex items-center justify-end gap-1.5">
@@ -113,7 +113,7 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 						</Button>
 
 						<Button size="sm" variant="ghost" onClick={() => onOpenEdit(marker)} className="w-10 sm:w-8" title={m.admin_markers_edit()}>
-							<Edit3 className="size-3.5 text-muted-foreground hover:text-foreground" />
+							<Edit3 className="text-muted-foreground hover:text-foreground size-3.5" />
 						</Button>
 
 						<ConfirmAction
@@ -140,11 +140,11 @@ export function MarkerTableRow({ marker, onOpenEdit, onDelete, onCopy }: MarkerT
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
 					<ContextMenuItem onClick={() => onOpenEdit(marker)} className="cursor-pointer">
-						<Edit3 className="size-4 text-primary" />
+						<Edit3 className="text-primary size-4" />
 						<span>{m.admin_markers_edit()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem onClick={() => onCopy(marker.mediaFileId, m.admin_media_video_id())} className="cursor-pointer">
-						<Copy className="size-4 text-muted-foreground" />
+						<Copy className="text-muted-foreground size-4" />
 						<span>{m.admin_markers_copy_file_id()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>

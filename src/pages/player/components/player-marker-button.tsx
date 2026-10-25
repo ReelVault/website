@@ -29,12 +29,12 @@ export function PlayerMarkerButton() {
 	return (
 		<div
 			className={cn(
-				"fade-in slide-in-from-bottom-2 absolute right-3 z-30 animate-in transition-[opacity] duration-200 sm:right-8",
+				"fade-in slide-in-from-bottom-2 animate-in absolute right-3 z-30 transition-[opacity] duration-200 sm:right-8",
 				isNextEpisodeOverlayShowing ? "bottom-64" : "bottom-28 sm:bottom-24",
 			)}
 		>
 			<Button shape="pill" variant="outline" onClick={skipActiveMarker} size="lg">
-				<FastForward className="size-4 text-primary" aria-hidden="true" />
+				<FastForward className="text-primary size-4" aria-hidden="true" />
 				<span>{label}</span>
 			</Button>
 		</div>

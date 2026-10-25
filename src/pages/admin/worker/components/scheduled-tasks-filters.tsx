@@ -29,9 +29,9 @@ export function ScheduledTasksFilters({
 	] as const;
 
 	return (
-		<div className="flex flex-col gap-3 rounded-2xl border border-border/50 bg-card/40 p-3.5 sm:flex-row sm:items-center sm:justify-between">
+		<div className="border-border/50 bg-card/40 flex flex-col gap-3 rounded-2xl border p-3.5 sm:flex-row sm:items-center sm:justify-between">
 			<div className="relative flex-1 sm:max-w-md">
-				<Search className="absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-muted-foreground" />
+				<Search className="text-muted-foreground absolute top-1/2 left-3 size-3.5 -translate-y-1/2" />
 				<Input
 					leadingIcon
 					type="text"
@@ -50,7 +50,7 @@ export function ScheduledTasksFilters({
 						type="button"
 						onClick={() => onCategoryFilterChange(f.id)}
 						className={cn(
-							"inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow] sm:min-h-0",
+							"inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-[border-color,background-color,color,box-shadow] sm:min-h-0",
 							categoryFilter === f.id
 								? "border-border bg-secondary text-foreground shadow-xs"
 								: "border-border/40 bg-muted/20 text-muted-foreground hover:bg-muted/40 hover:text-foreground",

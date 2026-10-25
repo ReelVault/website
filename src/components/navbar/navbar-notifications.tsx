@@ -34,16 +34,16 @@ export function NavbarNotifications() {
 						className="relative"
 					>
 						<Bell data-icon="inline-start" aria-hidden="true" />
-						{unreadCount > 0 && <span className="absolute top-2 right-2 size-1.5 rounded-full bg-primary" />}
+						{unreadCount > 0 && <span className="bg-primary absolute top-2 right-2 size-1.5 rounded-full" />}
 					</Button>
 				}
 			/>
 
 			<DropdownMenuContent align="end" sideOffset={8} className="w-[min(24rem,calc(100vw-2rem))] p-0">
 				{/* Header */}
-				<div className="flex items-center justify-between border-border/40 border-b px-4 py-3">
+				<div className="border-border/40 flex items-center justify-between border-b px-4 py-3">
 					<div className="flex items-center gap-2">
-						<span className="font-semibold text-foreground text-sm">{m.user_notifications_heading()}</span>
+						<span className="text-foreground text-sm font-semibold">{m.user_notifications_heading()}</span>
 						{unreadCount > 0 && (
 							<Badge weight="semibold" variant="secondary" size="compact">
 								{unreadCount}
@@ -73,7 +73,7 @@ export function NavbarNotifications() {
 				</div>
 
 				{/* Items List */}
-				<div className="max-h-88 divide-y divide-border/20 overflow-y-auto">
+				<div className="divide-border/20 max-h-88 divide-y overflow-y-auto">
 					{isLoading && (
 						<div className="flex flex-col gap-2 p-3">
 							<SkeletonList count={3} itemClassName="h-14" />
@@ -123,12 +123,12 @@ export function NavbarNotifications() {
 
 									<div className="min-w-0 flex-1">
 										<div className="flex items-center justify-between gap-1">
-											<span className={cn("truncate font-semibold text-xs", isRead ? "text-muted-foreground" : "text-foreground")}>
+											<span className={cn("truncate text-xs font-semibold", isRead ? "text-muted-foreground" : "text-foreground")}>
 												{title}
 											</span>
-											<span className="shrink-0 text-muted-foreground text-xs">{timeAgo}</span>
+											<span className="text-muted-foreground shrink-0 text-xs">{timeAgo}</span>
 										</div>
-										{body && <p className="mt-0.5 line-clamp-2 text-muted-foreground text-xs leading-relaxed">{body}</p>}
+										{body && <p className="text-muted-foreground mt-0.5 line-clamp-2 text-xs leading-relaxed">{body}</p>}
 									</div>
 
 									{!isRead && (

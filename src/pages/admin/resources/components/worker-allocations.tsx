@@ -35,8 +35,8 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 					>
 						<div className="flex items-start justify-between gap-2">
 							<div className="min-w-0">
-								<p className="truncate font-medium text-foreground text-sm">{WORKER_LABELS[alloc.workerId] ?? alloc.workerId}</p>
-								<p className="mt-1 text-muted-foreground text-xs">
+								<p className="text-foreground truncate text-sm font-medium">{WORKER_LABELS[alloc.workerId] ?? alloc.workerId}</p>
+								<p className="text-muted-foreground mt-1 text-xs">
 									{alloc.requested > 0 ? m.admin_resources_manual_allocation({ count: alloc.requested }) : m.common_auto_word()}
 								</p>
 							</div>
@@ -46,12 +46,12 @@ export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAl
 								</Badge>
 							)}
 						</div>
-						<div className="flex items-center justify-between border-border/60 border-t pt-2 text-xs">
+						<div className="border-border/60 flex items-center justify-between border-t pt-2 text-xs">
 							<span className="text-muted-foreground">
-								{m.admin_resources_allocation_label()} <span className="font-bold font-mono text-foreground">{alloc.allocated}</span>
+								{m.admin_resources_allocation_label()} <span className="text-foreground font-mono font-bold">{alloc.allocated}</span>
 							</span>
 							{alloc.reason && (
-								<span className="truncate text-warning text-xs" title={alloc.reason}>
+								<span className="text-warning truncate text-xs" title={alloc.reason}>
 									{REASON_LABELS[alloc.reason] ?? alloc.reason}
 								</span>
 							)}

@@ -25,7 +25,7 @@ export function DetailsCollections({
 	if (isError) {
 		return (
 			<DetailsSection title={m.web_series_collection_section()} icon={Layers}>
-				<div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-5">
+				<div className="border-destructive/30 bg-destructive/5 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-5">
 					<p className="text-destructive text-sm">{m.web_collection_fetch_failed()}</p>
 					<Button
 						type="button"
@@ -75,13 +75,13 @@ export function DetailsCollections({
 								</div>
 
 								<div className="flex flex-col items-center">
-									<div className={cn("h-2 w-2 rounded-full transition-colors", isCurrent ? "scale-150 bg-primary" : "bg-border")} />
+									<div className={cn("h-2 w-2 rounded-full transition-colors", isCurrent ? "bg-primary scale-150" : "bg-border")} />
 									<div
-										className={cn("h-8 w-px transition-colors", isCurrent ? "bg-linear-to-b from-primary to-transparent" : "bg-border")}
+										className={cn("h-8 w-px transition-colors", isCurrent ? "from-primary bg-linear-to-b to-transparent" : "bg-border")}
 									/>
 									<div
 										className={cn(
-											"mt-2 flex h-8 w-8 items-center justify-center rounded-lg font-medium text-sm transition-colors",
+											"mt-2 flex h-8 w-8 items-center justify-center rounded-lg text-sm font-medium transition-colors",
 											isCurrent ? "bg-primary text-primary-foreground" : "text-muted-foreground",
 										)}
 									>

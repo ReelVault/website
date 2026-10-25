@@ -64,7 +64,7 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 			<DialogContent size="xl">
 				<DialogHeader className="flex flex-col gap-1.5">
 					<div className="flex items-center gap-2.5">
-						<div className="flex size-9 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+						<div className="border-primary/20 bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg border">
 							<Clock className="size-4.5" />
 						</div>
 						<div>
@@ -75,9 +75,9 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4 py-2">
-					<div className="flex items-center justify-between border-border/40 border-b pb-2.5">
+					<div className="border-border/40 flex items-center justify-between border-b pb-2.5">
 						<div>
-							<h4 className="font-semibold text-foreground text-xs">
+							<h4 className="text-foreground text-xs font-semibold">
 								{m.admin_worker_configured_rules({ triggersCount: triggers.length })}
 							</h4>
 							<p className="text-muted-foreground text-xs">{m.admin_worker_triggers_description()}</p>
@@ -96,12 +96,12 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 					{/* Triggers list */}
 					<div className="flex max-h-75 flex-col gap-2 overflow-y-auto pr-1">
 						{triggers.length === 0 ? (
-							<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-6 text-center">
-								<div className="mb-2 flex size-9 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
+							<div className="border-border/70 bg-card/30 flex flex-col items-center justify-center rounded-xl border border-dashed p-6 text-center">
+								<div className="bg-muted/60 text-muted-foreground mb-2 flex size-9 items-center justify-center rounded-full">
 									<Clock className="size-4.5" />
 								</div>
-								<p className="font-medium text-foreground text-xs">{m.admin_workers_no_triggers()}</p>
-								<p className="mt-0.5 max-w-xs text-muted-foreground text-xs">{m.admin_workers_no_triggers_desc()}</p>
+								<p className="text-foreground text-xs font-medium">{m.admin_workers_no_triggers()}</p>
+								<p className="text-muted-foreground mt-0.5 max-w-xs text-xs">{m.admin_workers_no_triggers_desc()}</p>
 								{!isAdding && (
 									<Button type="button" size="sm" variant="outline" onClick={() => setIsAdding(true)} className="mt-3">
 										<Plus className="size-3" />

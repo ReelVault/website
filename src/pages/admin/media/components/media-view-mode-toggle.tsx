@@ -12,7 +12,7 @@ interface MediaViewModeToggleProps {
 
 export function MediaViewModeToggle({ viewMode, onViewModeChange, total, suspectCount }: MediaViewModeToggleProps) {
 	return (
-		<div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/70 bg-card p-2 shadow-2xs">
+		<div className="border-border/70 bg-card flex flex-wrap items-center justify-between gap-3 rounded-xl border p-2 shadow-2xs">
 			<ToggleGroup
 				value={[viewMode]}
 				onValueChange={(val) => {

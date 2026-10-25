@@ -19,7 +19,7 @@ interface DetailsHeaderMobileProps {
 export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpdatedAt, avgScore, year, genres }: DetailsHeaderMobileProps) {
 	return (
 		<div className="flex gap-4 lg:hidden">
-			<div className="relative w-28 shrink-0 overflow-hidden rounded-xl border border-border/80 bg-card shadow-lg">
+			<div className="border-border/80 bg-card relative w-28 shrink-0 overflow-hidden rounded-xl border shadow-lg">
 				<div className="aspect-2/3">
 					<ApiImage
 						fileId={posterId}
@@ -33,20 +33,20 @@ export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpda
 					/>
 				</div>
 				<Badge size="sm" className="absolute bottom-1.5 left-1.5">
-					<Star className="size-3 fill-warning text-warning" />
-					<span className="font-bold text-foreground text-xs">{formatRating(avgScore)}</span>
+					<Star className="fill-warning text-warning size-3" />
+					<span className="text-foreground text-xs font-bold">{formatRating(avgScore)}</span>
 				</Badge>
 			</div>
 			<div className="min-w-0 flex-1">
 				<div className="cinema-kicker mb-2">{m.web_title_details()}</div>
-				<h1 className="text-balance font-black text-3xl text-foreground tracking-tight">{title}</h1>
+				<h1 className="text-foreground text-3xl font-black tracking-tight text-balance">{title}</h1>
 				{originalTitle && originalTitle.trim() !== "" && originalTitle.toLowerCase() !== title.toLowerCase() && (
-					<p className="mt-1 font-medium text-muted-foreground/80 text-sm italic">{originalTitle}</p>
+					<p className="text-muted-foreground/80 mt-1 text-sm font-medium italic">{originalTitle}</p>
 				)}
 				<div className="mt-3 flex flex-wrap items-center gap-2">
 					{year && year !== "N/A" && (
 						<Badge key={`m-${year}`} size="lg" variant="outline">
-							<Calendar className="size-3.5 text-secondary" />
+							<Calendar className="text-secondary size-3.5" />
 							{year}
 						</Badge>
 					)}
@@ -55,7 +55,7 @@ export function DetailsHeaderMobile({ title, originalTitle, posterId, posterUpda
 
 						return (
 							<Badge key={`m-${genre.id}`} size="lg" variant="outline" render={<Link to="/genres/$id" params={{ id: genre.id }} />}>
-								<GenreIcon className="size-3.5 text-primary" />
+								<GenreIcon className="text-primary size-3.5" />
 								{genre.name}
 							</Badge>
 						);

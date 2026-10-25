@@ -78,12 +78,12 @@ export function LibraryGrid({
 		}
 
 		return (
-			<div className="flex flex-col items-center justify-center rounded-2xl border border-border/80 border-dashed bg-card/50 p-12 text-center">
-				<div className="flex size-14 items-center justify-center rounded-2xl border border-border bg-muted/40 text-muted-foreground shadow-xs">
-					<FolderOpen className="size-7 text-primary" />
+			<div className="border-border/80 bg-card/50 flex flex-col items-center justify-center rounded-2xl border border-dashed p-12 text-center">
+				<div className="border-border bg-muted/40 text-muted-foreground flex size-14 items-center justify-center rounded-2xl border shadow-xs">
+					<FolderOpen className="text-primary size-7" />
 				</div>
-				<h3 className="mt-4 font-semibold text-foreground text-lg">{m.admin_libraries_empty_heading()}</h3>
-				<p className="mt-1.5 max-w-md text-muted-foreground text-sm">{m.admin_libraries_empty_desc()}</p>
+				<h3 className="text-foreground mt-4 text-lg font-semibold">{m.admin_libraries_empty_heading()}</h3>
+				<p className="text-muted-foreground mt-1.5 max-w-md text-sm">{m.admin_libraries_empty_desc()}</p>
 				{onAddClick !== undefined && (
 					<Button type="button" size="default" onClick={onAddClick} className="mt-5">
 						<Plus className="size-4" />

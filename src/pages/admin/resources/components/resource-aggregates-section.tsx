@@ -15,17 +15,17 @@ export function ResourceAggregatesGrid({ aggregates }: { aggregates: ResourceAgg
 	];
 
 	return (
-		<div className="grid gap-4 border-border/60 border-t pt-4 sm:grid-cols-3">
+		<div className="border-border/60 grid gap-4 border-t pt-4 sm:grid-cols-3">
 			{rows.map((row) => (
 				<div key={row.label} className="flex flex-col gap-2">
-					<p className="font-semibold text-muted-foreground text-xs">{row.label}</p>
+					<p className="text-muted-foreground text-xs font-semibold">{row.label}</p>
 					<div className="flex items-center justify-between text-sm">
 						<span className="text-muted-foreground">{m.admin_resources_average_label()}</span>
 						<span className="font-mono font-semibold">{m.common_percent_value({ value: row.avg.toFixed(1) })}</span>
 					</div>
 					<div className="flex items-center justify-between text-sm">
 						<span className="text-muted-foreground">{m.admin_resources_max_label()}</span>
-						<span className="font-mono font-semibold text-primary">{m.common_percent_value({ value: row.max.toFixed(1) })}</span>
+						<span className="text-primary font-mono font-semibold">{m.common_percent_value({ value: row.max.toFixed(1) })}</span>
 					</div>
 				</div>
 			))}

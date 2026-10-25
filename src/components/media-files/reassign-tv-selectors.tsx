@@ -26,7 +26,7 @@ export function ReassignTvSelectors({
 	const localEpisodes = episodesQuery.data?.data ?? [];
 
 	return (
-		<div className="grid grid-cols-2 gap-3 rounded-lg border border-border/80 bg-muted/20 p-3">
+		<div className="border-border/80 bg-muted/20 grid grid-cols-2 gap-3 rounded-lg border p-3">
 			<div className="space-y-1.5">
 				<Label size="xs">{m.components_select_season_label()}</Label>
 				<Select value={selectedSeasonId ?? ""} onValueChange={onSeasonChange}>

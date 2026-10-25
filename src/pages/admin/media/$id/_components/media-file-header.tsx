@@ -42,7 +42,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 					<div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
 						<div className="flex flex-col gap-1.5">
 							<div className="flex flex-wrap items-center gap-2">
-								<h1 className="font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{file.fileName}</h1>
+								<h1 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{file.fileName}</h1>
 								<Badge variant={isMovie ? "default" : "secondary"}>
 									{isMovie ? <Clapperboard className="size-3" /> : <Tv className="size-3" />}
 									{isMovie ? m.plugins_movie_word() : m.admin_media_episode_of_series()}
@@ -53,7 +53,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 									{m.common_truncated_id({ id: mediaFileId.slice(0, 8) })}
 								</Badge>
 							</div>
-							<div className="flex flex-wrap items-center gap-4 text-muted-foreground text-xs">
+							<div className="text-muted-foreground flex flex-wrap items-center gap-4 text-xs">
 								{file.size !== null && file.size > 0 && (
 									<span className="flex items-center gap-1 font-mono">
 										<HardDrive className="size-3.5" />
@@ -77,24 +77,24 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 
 						<div className="flex flex-wrap items-center gap-2 self-start pt-1">
 							<Button variant="outline" size="sm" onClick={() => setIsReidentifyOpen(true)}>
-								<Search className="size-4 text-primary" />
+								<Search className="text-primary size-4" />
 								<span>{m.components_media_file_reidentify()}</span>
 							</Button>
 
 							<Button variant="outline" size="sm" onClick={() => setIsReassignDialogOpen(true)}>
-								<Layers className="size-4 text-primary" />
+								<Layers className="text-primary size-4" />
 								<span>{m.components_media_file_change_metadata_assignment()}</span>
 							</Button>
 
 							<Button variant="outline" size="sm" onClick={() => setIsScanDialogOpen(true)}>
-								<ShieldCheck className="size-4 text-success" />
+								<ShieldCheck className="text-success size-4" />
 								<span>{m.admin_media_scan_file()}</span>
 							</Button>
 
 							<ConfirmAction
 								trigger={
 									<Button variant="outline" size="sm" disabled={deleteTrickplay.isPending}>
-										<Trash2 className="size-4 text-destructive" />
+										<Trash2 className="text-destructive size-4" />
 										<span>{m.admin_media_remove_trickplay()}</span>
 									</Button>
 								}
@@ -134,7 +134,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 
 					{(refreshStatus === "pending" || refreshStatus === "running") && (
 						<div
-							className="mt-4 flex flex-wrap items-center gap-2.5 rounded-xl border border-primary/30 bg-primary/5 p-3 text-xs"
+							className="border-primary/30 bg-primary/5 mt-4 flex flex-wrap items-center gap-2.5 rounded-xl border p-3 text-xs"
 							aria-live="polite"
 						>
 							<StatusBadge status={refreshStatus === "pending" ? "pending" : "running"} label={m.admin_media_worker_in_progress()} />

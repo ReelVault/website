@@ -10,10 +10,10 @@ export function DashboardHeroEmpty({ onRetry }: { onRetry: () => Promise<unknown
 	const isAdmin = useIsAdmin();
 
 	return (
-		<section className="relative flex h-[88svh] items-center justify-center overflow-hidden bg-background px-6 lg:h-screen lg:min-h-150">
+		<section className="bg-background relative flex h-[88svh] items-center justify-center overflow-hidden px-6 lg:h-screen lg:min-h-150">
 			<div className="flex max-w-md flex-col items-center gap-4 text-center">
-				<Film className="size-10 text-primary" aria-hidden="true" />
-				<h2 className="font-black text-2xl tracking-tight">{m.web_dashboard_empty_title()}</h2>
+				<Film className="text-primary size-10" aria-hidden="true" />
+				<h2 className="text-2xl font-black tracking-tight">{m.web_dashboard_empty_title()}</h2>
 				<p className="text-muted-foreground text-sm">
 					{isAdmin ? m.web_dashboard_empty_admin_description() : m.web_dashboard_empty_description()}
 				</p>

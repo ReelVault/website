@@ -70,9 +70,9 @@ export function NavbarSearchGroup() {
 					nativeButton={false}
 					render={<Link to="/search" onClick={handleSearchLinkClick} {...activeProps} />}
 				>
-					<Search className="size-4 text-muted-foreground transition-colors group-hover:text-primary" />
+					<Search className="text-muted-foreground group-hover:text-primary size-4 transition-colors" />
 					<span className="font-medium">{m.components_navbar_search_catalog()}</span>
-					<kbd className="hidden items-center gap-0.5 rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-muted-foreground text-xs shadow-xs sm:inline-flex">
+					<kbd className="border-border bg-card text-muted-foreground hidden items-center gap-0.5 rounded-md border px-1.5 py-0.5 font-mono text-xs shadow-xs sm:inline-flex">
 						{m.common_shortcut_ctrl_k()}
 					</kbd>
 				</Button>

@@ -27,7 +27,7 @@ const joinBrandMarkup: { brand: InlineMarkupRenderer } = {
 const alreadyHaveAccountMarkup: { link: InlineMarkupRenderer } = {
 	link: ({ children }) => (
 		<Link
-			className="inline-flex min-h-10 items-center font-bold text-foreground underline decoration-primary/50 underline-offset-4 hover:text-primary sm:min-h-0"
+			className="text-foreground decoration-primary/50 hover:text-primary inline-flex min-h-10 items-center font-bold underline underline-offset-4 sm:min-h-0"
 			to="/auth/login"
 		>
 			{children}
@@ -63,7 +63,7 @@ export default function RegisterPage() {
 	};
 
 	return (
-		<div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-10">
+		<div className="bg-background relative flex min-h-svh w-full items-center justify-center overflow-hidden px-4 py-10">
 			<div className="pointer-events-none absolute inset-0 overflow-hidden">
 				<div className="absolute top-[20%] right-[-10%] size-125 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_12%,transparent)_0%,transparent_70%)]" />
 				<div className="absolute bottom-[-20%] left-[10%] size-100 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--secondary)_12%,transparent)_0%,transparent_70%)]" />
@@ -75,12 +75,12 @@ export default function RegisterPage() {
 
 			<main className="relative z-10 w-full max-w-xl">
 				<SimpleAnimation direction="up" duration={260}>
-					<section className="relative overflow-hidden rounded-3xl border border-border bg-card/75 p-8 shadow-2xl sm:p-12">
+					<section className="border-border bg-card/75 relative overflow-hidden rounded-3xl border p-8 shadow-2xl sm:p-12">
 						<header className="flex flex-col gap-3 text-center">
-							<h1 className="font-black text-4xl tracking-tight sm:text-5xl">
+							<h1 className="text-4xl font-black tracking-tight sm:text-5xl">
 								<ParaglideMessage message={m.auth_join_brand} markup={joinBrandMarkup} />
 							</h1>
-							<p className="font-semibold text-muted-foreground text-xs">{m.auth_create_system_profile()}</p>
+							<p className="text-muted-foreground text-xs font-semibold">{m.auth_create_system_profile()}</p>
 						</header>
 
 						<form onSubmit={handleRegister} className="mt-10 flex flex-col gap-6" name="register" autoComplete="on">
@@ -154,7 +154,7 @@ export default function RegisterPage() {
 
 							<AsyncButton
 								type="submit"
-								className="mt-2 w-full rounded-2xl py-5 font-black uppercase tracking-widest"
+								className="mt-2 w-full rounded-2xl py-5 font-black tracking-widest uppercase"
 								isPending={registerMutation.isPending}
 								pendingLabel={m.auth_register_pending()}
 							>
@@ -162,12 +162,12 @@ export default function RegisterPage() {
 								<ArrowRight data-icon="inline-end" className="size-4" aria-hidden="true" />
 							</AsyncButton>
 
-							<p className="text-center font-medium text-muted-foreground text-xs">
+							<p className="text-muted-foreground text-center text-xs font-medium">
 								<ParaglideMessage message={m.auth_already_have_account_login} markup={alreadyHaveAccountMarkup} />
 							</p>
 						</form>
 						<div className="pointer-events-none absolute top-0 left-0 -z-10 size-full overflow-hidden rounded-3xl">
-							<div className="absolute -top-10 -right-10 size-32 rounded-full bg-primary/5 blur-3xl" />
+							<div className="bg-primary/5 absolute -top-10 -right-10 size-32 rounded-full blur-3xl" />
 						</div>
 					</section>
 				</SimpleAnimation>

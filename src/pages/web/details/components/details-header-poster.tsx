@@ -31,7 +31,7 @@ export function DetailsHeaderPoster({ metadataId, title, posterId, posterUpdated
 	return (
 		<SimpleAnimation direction="up" className="hidden space-y-4 lg:sticky lg:top-28 lg:block lg:w-1/3">
 			<div className="group relative mx-auto max-w-sm lg:mx-0" style={{ viewTransitionName: `title-${metadataId}` }}>
-				<div className="relative overflow-hidden rounded-xl border border-border/80 bg-card shadow-2xl">
+				<div className="border-border/80 bg-card relative overflow-hidden rounded-xl border shadow-2xl">
 					<div className="aspect-2/3">
 						<ApiImage
 							fileId={posterId}
@@ -48,8 +48,8 @@ export function DetailsHeaderPoster({ metadataId, title, posterId, posterUpdated
 						<Tooltip>
 							<TooltipTrigger>
 								<div className="flex items-center gap-1.5 font-bold">
-									<Star className="size-4 fill-warning text-warning" />
-									<span className="text-base text-foreground">{formatRating(rating.avgScore)}</span>
+									<Star className="fill-warning text-warning size-4" />
+									<span className="text-foreground text-base">{formatRating(rating.avgScore)}</span>
 								</div>
 							</TooltipTrigger>
 							<TooltipContent className="flex flex-col items-start justify-center">
@@ -60,7 +60,7 @@ export function DetailsHeaderPoster({ metadataId, title, posterId, posterUpdated
 												href={r.url}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="underline decoration-dotted underline-offset-2 hover:text-foreground"
+												className="hover:text-foreground underline decoration-dotted underline-offset-2"
 											>
 												{r.label ?? r.source.toUpperCase()}
 											</a>

@@ -46,9 +46,9 @@ export function PluginUiSwitches({ pluginId }: { pluginId: string }) {
 			}
 		>
 			<div className="flex flex-col gap-5">
-				<div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-background/40 p-3">
+				<div className="border-border bg-background/40 flex items-center justify-between gap-4 rounded-xl border p-3">
 					<div>
-						<p className="font-medium text-sm">{m.admin_plugins_ui_master()}</p>
+						<p className="text-sm font-medium">{m.admin_plugins_ui_master()}</p>
 						<p className="text-muted-foreground text-xs">{m.admin_plugins_ui_master_desc()}</p>
 					</div>
 					<Switch
@@ -65,9 +65,9 @@ export function PluginUiSwitches({ pluginId }: { pluginId: string }) {
 
 					return (
 						<section key={surface} className="flex flex-col gap-1">
-							<h3 className="px-1 font-bold text-muted-foreground text-xs">{surfaceLabel(surface)}</h3>
+							<h3 className="text-muted-foreground px-1 text-xs font-bold">{surfaceLabel(surface)}</h3>
 							{items.map((item) => (
-								<div key={item.key} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2 hover:bg-accent/40">
+								<div key={item.key} className="hover:bg-accent/40 flex items-center justify-between gap-3 rounded-lg px-3 py-2">
 									<div className="flex min-w-0 items-center gap-2">
 										<span className="truncate text-sm">
 											{surface === "searchProvider" || surface === "playbackPreRoll" ? surfaceLabel(surface) : item.label}

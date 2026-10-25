@@ -58,7 +58,7 @@ export function LibraryContentGrid({
 			{hasNextPage && (
 				<div ref={loadMoreRef} className="mt-8 flex min-h-15 justify-center py-8">
 					{isLoadingMore && (
-						<div className="flex items-center gap-2 text-muted-foreground text-sm">
+						<div className="text-muted-foreground flex items-center gap-2 text-sm">
 							<Spinner />
 							<span>{m.web_loading_more_titles()}</span>
 						</div>

@@ -27,7 +27,7 @@ const LazyWorkerHistoryTab = lazy(async () => {
 	return { default: mod.WorkerHistoryTab };
 });
 
-const TAB_FALLBACK = <div className="h-40 animate-pulse rounded-xl bg-muted" />;
+const TAB_FALLBACK = <div className="bg-muted h-40 animate-pulse rounded-xl" />;
 
 /**
  * URL-driven top-level tabs (scheduled / activity / history). Owns the shared

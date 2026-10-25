@@ -53,15 +53,15 @@ export function PlayerNextEpisodeOverlay() {
 		<div
 			role="status"
 			aria-live="polite"
-			className="fade-in slide-in-from-bottom-4 pointer-events-auto absolute right-3 bottom-28 z-30 max-w-sm animate-in duration-300 sm:right-8 sm:bottom-24"
+			className="fade-in slide-in-from-bottom-4 animate-in pointer-events-auto absolute right-3 bottom-28 z-30 max-w-sm duration-300 sm:right-8 sm:bottom-24"
 		>
-			<div className="flex flex-col gap-3 rounded-2xl border border-border/80 bg-background/90 p-4 shadow-2xl">
+			<div className="border-border/80 bg-background/90 flex flex-col gap-3 rounded-2xl border p-4 shadow-2xl">
 				<div className="flex items-center justify-between gap-2">
-					<span className="font-black text-[10px] text-primary uppercase tracking-wider">{m.player_next_episode()}</span>
+					<span className="text-primary text-[10px] font-black tracking-wider uppercase">{m.player_next_episode()}</span>
 					<button
 						type="button"
 						onClick={() => setIsNextEpisodeDismissed(true)}
-						className="rounded-full p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+						className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-full p-1 transition-colors"
 						aria-label={m.player_close_notification()}
 					>
 						<X className="size-4" />
@@ -69,7 +69,7 @@ export function PlayerNextEpisodeOverlay() {
 				</div>
 
 				<div className="flex flex-col gap-0.5">
-					<p className="line-clamp-1 font-semibold text-foreground text-sm">{episodeTitle}</p>
+					<p className="text-foreground line-clamp-1 text-sm font-semibold">{episodeTitle}</p>
 					{isAutoplay && remainingTime > 0 && remainingTime <= 30 && (
 						<p className="text-muted-foreground text-xs">{m.player_autoplay_countdown({ seconds: Math.ceil(remainingTime) })}</p>
 					)}

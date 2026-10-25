@@ -32,7 +32,7 @@ export function CollectionItemsCard({
 	let itemsContent: ReactNode;
 	if (isError) {
 		itemsContent = (
-			<div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 text-destructive text-sm">
+			<div className="border-destructive/40 bg-destructive/5 text-destructive rounded-xl border p-4 text-sm">
 				{m.admin_collections_fetch_failed_retry()}
 			</div>
 		);
@@ -44,7 +44,7 @@ export function CollectionItemsCard({
 		);
 	} else if (orderItems.length === 0) {
 		itemsContent = (
-			<div className="rounded-xl border border-border p-6 text-center text-muted-foreground text-sm">
+			<div className="border-border text-muted-foreground rounded-xl border p-6 text-center text-sm">
 				{m.admin_collections_no_titles_yet()}
 			</div>
 		);
@@ -87,7 +87,7 @@ export function CollectionItemsCard({
 			</CardHeader>
 			<CardContent>
 				{itemsContent}
-				{sortMode === "manual" && orderDirty && <p className="mt-3 text-primary text-xs">{m.admin_collections_order_changed_save()}</p>}
+				{sortMode === "manual" && orderDirty && <p className="text-primary mt-3 text-xs">{m.admin_collections_order_changed_save()}</p>}
 			</CardContent>
 		</Card>
 	);

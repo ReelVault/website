@@ -12,7 +12,7 @@ export function LogCleanupDescription() {
 	return (
 		<span className="block">
 			{m.admin_logs_cleanup_confirm_description()}
-			<span className="mt-2 block font-medium text-foreground">
+			<span className="text-foreground mt-2 block font-medium">
 				{preview.data.deletedCount > 0
 					? m.admin_logs_cleanup_preview({ files: preview.data.deletedCount, megabytes })
 					: m.admin_logs_cleanup_preview_none()}

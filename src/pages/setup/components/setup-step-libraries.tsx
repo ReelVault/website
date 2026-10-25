@@ -19,7 +19,7 @@ export function SetupStepLibraries() {
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col gap-1">
-				<h2 className="font-semibold text-lg tracking-tight">{m.setup_libraries_title()}</h2>
+				<h2 className="text-lg font-semibold tracking-tight">{m.setup_libraries_title()}</h2>
 				<p className="text-muted-foreground text-sm">{m.setup_libraries_desc()}</p>
 			</div>
 
@@ -34,9 +34,9 @@ export function SetupStepLibraries() {
 			{!(isLoading || error) && libraries.length > 0 && (
 				<ul className="flex flex-col gap-2">
 					{libraries.map((library) => (
-						<li key={library.id} className="flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/20 px-4 py-3">
+						<li key={library.id} className="border-border bg-muted/20 flex items-center justify-between gap-3 rounded-lg border px-4 py-3">
 							<div className="flex min-w-0 flex-col">
-								<span className="truncate font-medium text-sm">{library.name}</span>
+								<span className="truncate text-sm font-medium">{library.name}</span>
 								<span className="text-muted-foreground text-xs">
 									{library.type === "movies" ? m.web_watchlist_stats_movies() : m.web_watchlist_stats_series()}
 								</span>

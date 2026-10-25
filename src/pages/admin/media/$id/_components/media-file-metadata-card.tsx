@@ -33,9 +33,9 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 		);
 	} else if (metadata) {
 		cardBody = (
-			<div className="flex flex-col gap-3 rounded-xl border border-border/80 bg-background p-3.5 shadow-xs">
+			<div className="border-border/80 bg-background flex flex-col gap-3 rounded-xl border p-3.5 shadow-xs">
 				<div className="flex items-start gap-3">
-					<div className="relative h-22 w-15 shrink-0 overflow-hidden rounded-lg border border-border/80 bg-muted/40 shadow-2xs">
+					<div className="border-border/80 bg-muted/40 relative h-22 w-15 shrink-0 overflow-hidden rounded-lg border shadow-2xs">
 						<ApiImage
 							fileId={poster?.id}
 							cacheKey={poster?.updatedAt}
@@ -59,22 +59,22 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 							)}
 						</div>
 
-						<h4 className="truncate font-bold text-foreground text-sm tracking-tight">{metadata.title}</h4>
+						<h4 className="text-foreground truncate text-sm font-bold tracking-tight">{metadata.title}</h4>
 
 						{metadata.originalTitle && metadata.originalTitle !== metadata.title && (
-							<p className="truncate text-muted-foreground text-xs italic">{metadata.originalTitle}</p>
+							<p className="text-muted-foreground truncate text-xs italic">{metadata.originalTitle}</p>
 						)}
 
 						{file.episodeId && (
-							<p className="font-medium text-primary text-xs">
+							<p className="text-primary text-xs font-medium">
 								{m.admin_media_linked_to_episode({ episodeId: file.episodeId.slice(0, 12) })}
 							</p>
 						)}
 					</div>
 				</div>
 
-				<div className="flex items-center justify-between border-border/40 border-t pt-2 text-xs">
-					<span className="font-mono text-muted-foreground text-xs">{m.common_short_id({ id: metadata.id.slice(0, 16) })}</span>
+				<div className="border-border/40 flex items-center justify-between border-t pt-2 text-xs">
+					<span className="text-muted-foreground font-mono text-xs">{m.common_short_id({ id: metadata.id.slice(0, 16) })}</span>
 					<Button
 						variant="primary-ghost"
 						size="sm"
@@ -89,8 +89,8 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 		);
 	} else {
 		cardBody = (
-			<div className="rounded-xl border border-border/80 border-dashed bg-muted/20 p-4 text-center">
-				<p className="font-medium text-foreground text-xs">{m.admin_media_no_metadata({ id: file.metadataId })}</p>
+			<div className="border-border/80 bg-muted/20 rounded-xl border border-dashed p-4 text-center">
+				<p className="text-foreground text-xs font-medium">{m.admin_media_no_metadata({ id: file.metadataId })}</p>
 				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign} className="mt-2">
 					<Layers className="size-3.5" />
 					<span>{m.admin_media_assign_to_metadata()}</span>
@@ -105,7 +105,7 @@ export function MediaFileMetadataCard({ file, onOpenReassign }: { file: MediaFil
 			description={m.admin_media_catalog_title_description()}
 			actions={
 				<Button type="button" variant="outline" size="sm" onClick={onOpenReassign}>
-					<Layers className="size-3.5 text-primary" />
+					<Layers className="text-primary size-3.5" />
 					<span>{m.admin_media_change_link()}</span>
 				</Button>
 			}

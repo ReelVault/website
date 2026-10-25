@@ -12,11 +12,11 @@ export function PluginEmptyConfig({ pluginName }: PluginEmptyConfigProps) {
 	return (
 		<Card variant="subtle">
 			<CardContent className="flex flex-col items-center justify-center text-center">
-				<div className="rounded-full bg-primary/10 p-3 text-primary">
+				<div className="bg-primary/10 text-primary rounded-full p-3">
 					<Info className="size-6" />
 				</div>
-				<h3 className="mt-4 font-bold text-base text-foreground">{m.admin_plugins_no_config_heading()}</h3>
-				<p className="mt-1 max-w-md text-muted-foreground text-xs">
+				<h3 className="text-foreground mt-4 text-base font-bold">{m.admin_plugins_no_config_heading()}</h3>
+				<p className="text-muted-foreground mt-1 max-w-md text-xs">
 					{m.admin_plugins_no_config_desc_1()} <strong className="text-foreground">{pluginName}</strong>{" "}
 					{m.admin_plugins_no_config_desc_2()}
 				</p>

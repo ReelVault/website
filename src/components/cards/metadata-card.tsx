@@ -102,14 +102,14 @@ export function MetadataCard({
 
 					{/* TEXT INFO */}
 					<div className="flex flex-col gap-0.5 px-1">
-						<h3 className="line-clamp-1 font-semibold text-foreground text-sm tracking-tight transition-colors group-hover:text-primary">
+						<h3 className="text-foreground group-hover:text-primary line-clamp-1 text-sm font-semibold tracking-tight transition-colors">
 							{metadata.title}
 						</h3>
 						<div className="flex items-center gap-2">
-							<span className="font-bold text-muted-foreground text-xs">{year}</span>
+							<span className="text-muted-foreground text-xs font-bold">{year}</span>
 							{!hideRatingOverlay && metadata.rating.avgScore > 0 && (
 								<>
-									<div className="h-1 w-1 rounded-full bg-border" />
+									<div className="bg-border h-1 w-1 rounded-full" />
 									<Badge variant="warning" size="sm">
 										<Star className="size-3 fill-current" aria-hidden="true" />
 										{formatRating(metadata.rating.avgScore)}

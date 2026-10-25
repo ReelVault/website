@@ -47,13 +47,13 @@ function StepIndicator({ steps, current }: { steps: SetupStep[]; current: SetupS
 						key={step}
 						aria-current={isCurrent ? "step" : undefined}
 						className={cn("flex flex-1 items-center gap-3 rounded-xl border px-4 py-3 text-sm", {
-							"border-primary bg-primary/10 font-semibold text-foreground": isCurrent,
+							"border-primary bg-primary/10 text-foreground font-semibold": isCurrent,
 							"border-success/40 text-muted-foreground": isDone,
 							"border-border text-muted-foreground": !(isCurrent || isDone),
 						})}
 					>
 						<span
-							className={cn("flex size-6 shrink-0 items-center justify-center rounded-full font-semibold text-xs", {
+							className={cn("flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold", {
 								"bg-primary text-primary-foreground": isCurrent,
 								"bg-success/15 text-success": isDone,
 								"bg-muted": !(isCurrent || isDone),
@@ -121,7 +121,7 @@ export default function TwoFactorPage() {
 		<main className="mx-auto flex w-full max-w-2xl flex-col gap-8 pb-10">
 			<Link
 				to="/settings"
-				className="inline-flex min-h-11 w-fit items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex min-h-11 w-fit items-center gap-2 text-sm transition-colors"
 			>
 				<ArrowLeft className="size-4" aria-hidden="true" />
 				{m.user_2fa_back_to_settings()}

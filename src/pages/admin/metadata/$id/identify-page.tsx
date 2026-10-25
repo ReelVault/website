@@ -46,8 +46,8 @@ export default function MetadataIdentifyPage() {
 			</Button>
 
 			<header className="flex flex-col gap-2">
-				<h1 className="flex items-center gap-2 font-bold text-2xl tracking-tight">
-					<TypeIcon className="size-5 text-primary" aria-hidden="true" />
+				<h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
+					<TypeIcon className="text-primary size-5" aria-hidden="true" />
 					{m.identify_dialog_change_match()}
 				</h1>
 				<p className="text-muted-foreground text-sm">{year ? `${metadata.title} · ${year}` : metadata.title}</p>

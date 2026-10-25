@@ -43,7 +43,7 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 	const remove = () => onDelete(profile.id);
 
 	return (
-		<section className="flex flex-col gap-5 rounded-lg border border-border bg-card p-4 sm:p-6">
+		<section className="border-border bg-card flex flex-col gap-5 rounded-lg border p-4 sm:p-6">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 				<div className="flex items-center gap-3.5">
 					<Avatar className="size-11">
@@ -52,24 +52,24 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 					</Avatar>
 					<div className="flex flex-col gap-1">
 						<div className="flex flex-wrap items-center gap-2">
-							<h2 className="font-bold text-xl">{profile.name}</h2>
+							<h2 className="text-xl font-bold">{profile.name}</h2>
 							<Badge tone="muted" variant="outline" font="mono">
 								<span>{m.common_short_id({ id: profile.id.slice(0, 8) })}</span>
 								<button
 									type="button"
 									onClick={() => detach(() => copy(profile.id, m.admin_users_copy_profile_id()))}
-									className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
+									className="text-muted-foreground hover:text-foreground -m-3.5 p-3.5 sm:m-0 sm:p-0"
 									aria-label={m.admin_users_copy_profile_id()}
 								>
 									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</Badge>
 							<Badge variant={profile.hasPin ? "secondary" : "outline"} size="sm">
-								{profile.hasPin ? <Lock className="size-3 text-warning" /> : <Unlock className="size-3 text-muted-foreground" />}
+								{profile.hasPin ? <Lock className="text-warning size-3" /> : <Unlock className="text-muted-foreground size-3" />}
 								<span>{profile.hasPin ? m.admin_users_profile_has_pin() : m.admin_users_no_pin()}</span>
 							</Badge>
 						</div>
-						<div className="flex flex-wrap items-center gap-x-2 text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-xs">
 							{profile.createdAt && (
 								<span>
 									{m.common_created_label()} {formatDateTime(profile.createdAt)}
@@ -139,8 +139,8 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 				{m.admin_users_save_profile()}
 			</AsyncButton>
 			{preferencesOpen && (
-				<div className="flex flex-col gap-3 rounded-lg border border-border bg-muted/20 p-4">
-					<h3 className="font-semibold text-sm">{m.admin_users_playback_prefs()}</h3>
+				<div className="border-border bg-muted/20 flex flex-col gap-3 rounded-lg border p-4">
+					<h3 className="text-sm font-semibold">{m.admin_users_playback_prefs()}</h3>
 					<ProfilePreferencesEditor userId={userId} profileId={profile.id} />
 				</div>
 			)}

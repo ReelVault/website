@@ -11,7 +11,7 @@ export function DatabaseMigrationsSection() {
 	return (
 		<AdminSection title={m.admin_database_migrations_title()} description={m.admin_database_migrations_description()}>
 			<p className="text-muted-foreground text-sm">{m.admin_database_migrations_summary({ applied: data.applied, total: data.total })}</p>
-			{data.pending > 0 && <p className="text-sm text-warning">{m.admin_database_migrations_pending({ pending: data.pending })}</p>}
+			{data.pending > 0 && <p className="text-warning text-sm">{m.admin_database_migrations_pending({ pending: data.pending })}</p>}
 		</AdminSection>
 	);
 }

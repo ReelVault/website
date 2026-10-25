@@ -226,7 +226,7 @@ export default function AdminSubtitlesPage() {
 							type="button"
 							onClick={() => setType(filter.value)}
 							className={cn(
-								"inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow] sm:min-h-0",
+								"inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-[border-color,background-color,color,box-shadow] sm:min-h-0",
 								(type ?? "all") === filter.value
 									? "border-border bg-secondary text-foreground shadow-xs"
 									: "border-border/40 bg-card/40 text-muted-foreground hover:bg-muted/40 hover:text-foreground",
@@ -271,7 +271,7 @@ export default function AdminSubtitlesPage() {
 					<label className="flex cursor-pointer items-center gap-2 text-sm">
 						<input
 							type="checkbox"
-							className="size-4 accent-primary"
+							className="accent-primary size-4"
 							checked={subtitles.every((subtitle) => selectedIds.has(subtitle.id))}
 							onChange={() => toggleAllOnPage()}
 						/>
@@ -279,7 +279,7 @@ export default function AdminSubtitlesPage() {
 					</label>
 				)}
 				{selectedIds.size > 0 && (
-					<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-card p-3 text-sm">
+					<div className="border-border bg-card flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3 text-sm">
 						<span>{m.admin_subtitles_selected({ count: selectedIds.size })}</span>
 						<div className="flex flex-wrap items-center gap-2">
 							<Button size="sm" variant="ghost" onClick={clearSelection}>

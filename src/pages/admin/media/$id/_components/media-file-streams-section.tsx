@@ -18,11 +18,11 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 				{videoStreams && videoStreams.length > 0 ? (
 					<div className="flex flex-col gap-2.5">
 						{videoStreams.map((stream) => (
-							<div key={stream.index} className="flex flex-col gap-2 rounded-xl border border-border/80 bg-muted/20 p-3.5 text-xs">
+							<div key={stream.index} className="border-border/80 bg-muted/20 flex flex-col gap-2 rounded-xl border p-3.5 text-xs">
 								<div className="flex items-center justify-between">
 									<div className="flex flex-wrap items-center gap-2">
-										<Video className="size-3.5 text-primary" />
-										<span className="font-semibold text-foreground">{stream.codecName.toUpperCase()}</span>
+										<Video className="text-primary size-3.5" />
+										<span className="text-foreground font-semibold">{stream.codecName.toUpperCase()}</span>
 										{stream.profile && (
 											<span className="text-muted-foreground">{m.admin_media_codec_profile({ profile: stream.profile })}</span>
 										)}
@@ -43,11 +43,11 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 								</div>
 
 								{stream.codecLongName && stream.codecLongName !== stream.codecName && (
-									<p className="line-clamp-1 text-muted-foreground text-xs">{stream.codecLongName}</p>
+									<p className="text-muted-foreground line-clamp-1 text-xs">{stream.codecLongName}</p>
 								)}
 
-								<div className="flex flex-wrap items-center gap-2 font-mono text-muted-foreground text-xs">
-									<span className="font-medium text-foreground">
+								<div className="text-muted-foreground flex flex-wrap items-center gap-2 font-mono text-xs">
+									<span className="text-foreground font-medium">
 										{m.admin_media_resolution({ width: stream.width, height: stream.height })}
 									</span>
 									{stream.pixelFormat && <span>{m.common_dot_pixel_format({ format: stream.pixelFormat })}</span>}
@@ -69,7 +69,7 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 								</div>
 
 								{stream.title && (
-									<p className="font-medium text-foreground text-xs italic">{m.admin_media_stream_title_quoted({ title: stream.title })}</p>
+									<p className="text-foreground text-xs font-medium italic">{m.admin_media_stream_title_quoted({ title: stream.title })}</p>
 								)}
 							</div>
 						))}
@@ -84,11 +84,11 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 				{audioStreams && audioStreams.length > 0 ? (
 					<div className="flex flex-col gap-2.5">
 						{audioStreams.map((stream) => (
-							<div key={stream.index} className="flex flex-col gap-2 rounded-xl border border-border/80 bg-muted/20 p-3.5 text-xs">
+							<div key={stream.index} className="border-border/80 bg-muted/20 flex flex-col gap-2 rounded-xl border p-3.5 text-xs">
 								<div className="flex items-center justify-between">
 									<div className="flex flex-wrap items-center gap-2">
-										<AudioLines className="size-3.5 text-primary" />
-										<span className="font-semibold text-foreground">{stream.codecName.toUpperCase()}</span>
+										<AudioLines className="text-primary size-3.5" />
+										<span className="text-foreground font-semibold">{stream.codecName.toUpperCase()}</span>
 										{stream.language && (
 											<Badge weight="bold" variant="outline" size="sm">
 												{stream.language}
@@ -111,11 +111,11 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 								</div>
 
 								{stream.codecLongName && stream.codecLongName !== stream.codecName && (
-									<p className="line-clamp-1 text-muted-foreground text-xs">{stream.codecLongName}</p>
+									<p className="text-muted-foreground line-clamp-1 text-xs">{stream.codecLongName}</p>
 								)}
 
-								<div className="flex flex-wrap items-center gap-2 font-mono text-muted-foreground text-xs">
-									<span className="font-medium text-foreground">
+								<div className="text-muted-foreground flex flex-wrap items-center gap-2 font-mono text-xs">
+									<span className="text-foreground font-medium">
 										{m.admin_media_channels_layout({
 											channels: stream.channels,
 											layout: stream.channelLayout ? `(${stream.channelLayout})` : "",
@@ -126,7 +126,7 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 								</div>
 
 								{stream.title && (
-									<p className="font-medium text-foreground text-xs italic">{m.admin_media_stream_title_quoted({ title: stream.title })}</p>
+									<p className="text-foreground text-xs font-medium italic">{m.admin_media_stream_title_quoted({ title: stream.title })}</p>
 								)}
 							</div>
 						))}

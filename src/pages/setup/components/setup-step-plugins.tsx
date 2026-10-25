@@ -89,14 +89,14 @@ export function SetupStepPlugins() {
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col gap-1">
-				<h2 className="font-semibold text-lg tracking-tight">{m.setup_plugins_title()}</h2>
+				<h2 className="text-lg font-semibold tracking-tight">{m.setup_plugins_title()}</h2>
 				<p className="text-muted-foreground text-sm">{m.setup_plugins_desc()}</p>
 			</div>
 
 			{plugins.length > 0 && (
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1">
-						<h3 className="font-semibold text-sm">{m.setup_plugins_installed_title()}</h3>
+						<h3 className="text-sm font-semibold">{m.setup_plugins_installed_title()}</h3>
 						<p className="text-muted-foreground text-xs">{m.setup_plugins_installed_desc()}</p>
 					</div>
 					<ul className="flex flex-col gap-2">
@@ -104,11 +104,11 @@ export function SetupStepPlugins() {
 							const badge = pluginStateBadge(plugin);
 
 							return (
-								<li key={plugin.id} className="flex flex-col gap-2 rounded-lg border border-border bg-muted/20 px-4 py-3">
+								<li key={plugin.id} className="border-border bg-muted/20 flex flex-col gap-2 rounded-lg border px-4 py-3">
 									<div className="flex items-center justify-between gap-3">
 										<div className="flex min-w-0 flex-col">
-											<span className="truncate font-medium text-sm">{plugin.name}</span>
-											<span className="font-mono text-muted-foreground text-xs">{m.common_version_badge({ version: plugin.version })}</span>
+											<span className="truncate text-sm font-medium">{plugin.name}</span>
+											<span className="text-muted-foreground font-mono text-xs">{m.common_version_badge({ version: plugin.version })}</span>
 										</div>
 										<div className="flex items-center gap-2">
 											<StatusBadge status={badge.status} label={badge.label} />
@@ -124,7 +124,7 @@ export function SetupStepPlugins() {
 										</div>
 									</div>
 									{plugin.errorCode && (
-										<p className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 font-mono text-destructive text-xs">
+										<p className="bg-destructive/10 text-destructive rounded-md px-2 py-1 font-mono text-xs wrap-break-word">
 											{translateCode(plugin.errorCode, m.plugin_load_failed())}
 										</p>
 									)}
@@ -162,11 +162,11 @@ export function SetupStepPlugins() {
 										className={cn(
 											"flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-[border-color,background-color,box-shadow]",
 											isSelected
-												? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary"
+												? "border-primary bg-primary/10 ring-primary shadow-xs ring-1"
 												: "border-border bg-card/60 hover:border-border/80 hover:bg-muted/40",
 										)}
 									>
-										<span className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-primary">
+										<span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg">
 											{entry.iconUrl ? (
 												<img src={entry.iconUrl} alt="" className="size-full object-contain p-1.5" loading="lazy" />
 											) : (
@@ -175,7 +175,7 @@ export function SetupStepPlugins() {
 										</span>
 										<span className="flex min-w-0 flex-1 flex-col gap-1">
 											<span className="flex flex-wrap items-center gap-2">
-												<span className="font-semibold text-sm">{entry.name}</span>
+												<span className="text-sm font-semibold">{entry.name}</span>
 												<Badge variant="outline" font="mono">
 													{m.common_version_badge({ version: entry.version })}
 												</Badge>
@@ -183,7 +183,7 @@ export function SetupStepPlugins() {
 													{pluginCatalogCategoryLabel(entry.category)}
 												</Badge>
 											</span>
-											{entry.description && <span className="line-clamp-2 text-muted-foreground text-xs">{entry.description}</span>}
+											{entry.description && <span className="text-muted-foreground line-clamp-2 text-xs">{entry.description}</span>}
 										</span>
 									</button>
 								</li>

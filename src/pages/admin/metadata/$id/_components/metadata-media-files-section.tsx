@@ -65,14 +65,14 @@ export function MetadataMediaFilesSection({ metadataId }: { metadataId: string }
 	} else {
 		sectionBody = (
 			<div className="flex flex-col gap-3">
-				<div className="flex flex-col divide-y divide-border/60 overflow-hidden rounded-xl border border-border/60">
+				<div className="divide-border/60 border-border/60 flex flex-col divide-y overflow-hidden rounded-xl border">
 					{files.map((file) => (
 						<MediaFileRow key={file.id} file={file} />
 					))}
 				</div>
 
 				{hasMore && (
-					<p className="text-center text-muted-foreground text-xs">{m.admin_metadata_showing_files({ shown: PAGE_LIMIT, total })}</p>
+					<p className="text-muted-foreground text-center text-xs">{m.admin_metadata_showing_files({ shown: PAGE_LIMIT, total })}</p>
 				)}
 			</div>
 		);
@@ -115,22 +115,22 @@ function MediaFileRow({ file }: { file: MediaFileWithRelation }) {
 	};
 
 	return (
-		<div className="group flex items-center gap-3 bg-background px-4 py-3 transition-colors hover:bg-muted/40">
-			<div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted/50 text-muted-foreground">
-				<FileVideo className="size-4 text-primary" />
+		<div className="group bg-background hover:bg-muted/40 flex items-center gap-3 px-4 py-3 transition-colors">
+			<div className="bg-muted/50 text-muted-foreground flex size-9 shrink-0 items-center justify-center rounded-lg">
+				<FileVideo className="text-primary size-4" />
 			</div>
 
 			<div className="min-w-0 flex-1">
 				<div className="flex items-center gap-2">
-					<p className="truncate font-medium text-foreground text-sm">{file.fileName}</p>
+					<p className="text-foreground truncate text-sm font-medium">{file.fileName}</p>
 					{file.isDefault && (
 						<Badge variant="secondary" size="sm" className="shrink-0">
 							{m.common_default_badge()}
 						</Badge>
 					)}
-					{file.source && <span className="shrink-0 text-muted-foreground text-xs">{file.source}</span>}
+					{file.source && <span className="text-muted-foreground shrink-0 text-xs">{file.source}</span>}
 				</div>
-				<p className="truncate text-muted-foreground text-xs">{meta.length > 0 ? meta.join(" · ") : file.filePath}</p>
+				<p className="text-muted-foreground truncate text-xs">{meta.length > 0 ? meta.join(" · ") : file.filePath}</p>
 			</div>
 
 			<div className="flex shrink-0 items-center gap-1 opacity-70 transition-opacity group-hover:opacity-100">

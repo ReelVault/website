@@ -44,7 +44,7 @@ function VolumeFeedback({ event }: { event: FeedbackEvent }) {
 		<div className="flex min-w-48 flex-col items-center gap-2 rounded-2xl bg-black/75 px-5 py-3.5 text-white shadow-2xl ring-1 ring-white/10">
 			<div className="flex items-center gap-2.5">
 				<VolIcon className={cn("size-5", isBoosted ? "text-warning" : "text-primary")} />
-				<span className="font-semibold text-sm">{volumeText}</span>
+				<span className="text-sm font-semibold">{volumeText}</span>
 			</div>
 			<div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/20">
 				<div className="pointer-events-none absolute top-0 bottom-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-white/40" />
@@ -109,30 +109,30 @@ export function PlayerFeedbackHud() {
 
 				return (
 					<div className="flex items-center gap-2.5 rounded-2xl bg-black/75 px-5 py-3 text-white shadow-2xl ring-1 ring-white/10">
-						<Icon className="size-5 text-primary" />
-						<span className="font-bold font-mono text-base">{text}</span>
+						<Icon className="text-primary size-5" />
+						<span className="font-mono text-base font-bold">{text}</span>
 					</div>
 				);
 			}
 			case "speed":
 				return (
 					<div className="flex items-center gap-2.5 rounded-2xl bg-black/75 px-5 py-3 text-white shadow-2xl ring-1 ring-white/10">
-						<Gauge className="size-5 text-primary" />
-						<span className="font-semibold text-sm">{m.player_speed_activeevent_value({ speed: String(activeEvent.value) })}</span>
+						<Gauge className="text-primary size-5" />
+						<span className="text-sm font-semibold">{m.player_speed_activeevent_value({ speed: String(activeEvent.value) })}</span>
 					</div>
 				);
 			case "subtitles":
 				return (
 					<div className="flex max-w-sm items-center gap-2.5 rounded-2xl bg-black/75 px-5 py-3 text-white shadow-2xl ring-1 ring-white/10">
-						<Subtitles className="size-5 shrink-0 text-primary" />
-						<span className="truncate font-semibold text-sm">{activeEvent.label ?? m.player_subtitles_word()}</span>
+						<Subtitles className="text-primary size-5 shrink-0" />
+						<span className="truncate text-sm font-semibold">{activeEvent.label ?? m.player_subtitles_word()}</span>
 					</div>
 				);
 			case "fullscreen":
 				return (
 					<div className="flex items-center gap-2.5 rounded-2xl bg-black/75 px-5 py-3 text-white shadow-2xl ring-1 ring-white/10">
-						{activeEvent.value ? <Maximize className="size-5 text-primary" /> : <Minimize className="size-5 text-primary" />}
-						<span className="font-semibold text-sm">
+						{activeEvent.value ? <Maximize className="text-primary size-5" /> : <Minimize className="text-primary size-5" />}
+						<span className="text-sm font-semibold">
 							{activeEvent.value ? m.player_fullscreen_entered() : m.player_fullscreen_exited()}
 						</span>
 					</div>

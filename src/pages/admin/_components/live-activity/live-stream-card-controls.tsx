@@ -34,7 +34,7 @@ export function LiveStreamCardControls({
 				className="cursor-pointer"
 				title={m.admin_live_remote_pause_hint()}
 			>
-				<Pause className="size-3 fill-current text-warning" />
+				<Pause className="text-warning size-3 fill-current" />
 				<span className="hidden sm:inline">{m.admin_logs_paused()}</span>
 			</Button>
 
@@ -47,7 +47,7 @@ export function LiveStreamCardControls({
 				className="cursor-pointer"
 				title={m.admin_resume_remote_playback()}
 			>
-				<Play className="size-3 fill-current text-primary" />
+				<Play className="text-primary size-3 fill-current" />
 				<span className="hidden sm:inline">{m.admin_resume()}</span>
 			</Button>
 
@@ -59,7 +59,7 @@ export function LiveStreamCardControls({
 				className="cursor-pointer"
 				title={m.admin_open_stream_diagnostics()}
 			>
-				<Info className="size-3 text-primary" />
+				<Info className="text-primary size-3" />
 				<span>{m.common_details()}</span>
 			</Button>
 
@@ -71,7 +71,7 @@ export function LiveStreamCardControls({
 				className="cursor-pointer"
 				title={m.admin_live_download_log_hint()}
 			>
-				<Download className="size-3 text-primary" />
+				<Download className="text-primary size-3" />
 				<span className="hidden sm:inline">{m.admin_live_download_log()}</span>
 			</Button>
 

@@ -14,37 +14,37 @@ export function WrappedGenresActorsSlide({ data }: WrappedGenresActorsSlideProps
 				<Badge weight="bold" variant="primary" className="mb-2">
 					{m.user_prefs_and_stars()}
 				</Badge>
-				<h3 className="font-black text-2xl text-foreground sm:text-4xl">{m.user_genres_and_actors()}</h3>
-				<p className="mt-1 text-muted-foreground text-sm">{m.user_who_and_vibes()}</p>
+				<h3 className="text-foreground text-2xl font-black sm:text-4xl">{m.user_genres_and_actors()}</h3>
+				<p className="text-muted-foreground mt-1 text-sm">{m.user_who_and_vibes()}</p>
 			</div>
 
 			<div className="grid grid-cols-1 gap-6 pt-2 sm:grid-cols-2">
-				<div className="rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
+				<div className="border-border/70 bg-card/60 rounded-2xl border p-6 shadow-sm">
 					<div className="mb-4 flex items-center justify-between">
-						<p className="font-bold text-muted-foreground text-xs">{m.admin_top_movie_genres()}</p>
-						<Clapperboard className="size-4 text-primary" />
+						<p className="text-muted-foreground text-xs font-bold">{m.admin_top_movie_genres()}</p>
+						<Clapperboard className="text-primary size-4" />
 					</div>
 					<div className="space-y-3">
 						{data.topGenres.slice(0, 4).map((g, i) => (
 							<div key={g.name} className="space-y-1">
-								<div className="flex items-center justify-between font-semibold text-xs">
+								<div className="flex items-center justify-between text-xs font-semibold">
 									<div className="flex items-center gap-2">
-										<span className="font-mono text-primary">{m.common_rank_number({ index: i + 1 })}</span>
+										<span className="text-primary font-mono">{m.common_rank_number({ index: i + 1 })}</span>
 										<span>{g.name}</span>
 									</div>
-									<span className="font-bold text-primary">{m.common_percent_value({ value: g.percentage })}</span>
+									<span className="text-primary font-bold">{m.common_percent_value({ value: g.percentage })}</span>
 								</div>
-								<div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-									<div className="h-full rounded-full bg-primary" style={{ width: `${g.percentage}%` }} />
+								<div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
+									<div className="bg-primary h-full rounded-full" style={{ width: `${g.percentage}%` }} />
 								</div>
 							</div>
 						))}
 					</div>
 				</div>
 
-				<div className="rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
+				<div className="border-border/70 bg-card/60 rounded-2xl border p-6 shadow-sm">
 					<div className="mb-4 flex items-center justify-between">
-						<p className="font-bold text-muted-foreground text-xs">{m.user_most_on_screen()}</p>
+						<p className="text-muted-foreground text-xs font-bold">{m.user_most_on_screen()}</p>
 						<User className="size-4 text-amber-400" />
 					</div>
 					<div className="space-y-3.5">
@@ -54,7 +54,7 @@ export function WrappedGenresActorsSlide({ data }: WrappedGenresActorsSlideProps
 									<span className="font-mono text-amber-400">{m.common_rank_number({ index: i + 1 })}</span>
 									<span>{a.name}</span>
 								</div>
-								<span className="font-bold font-mono text-muted-foreground">
+								<span className="text-muted-foreground font-mono font-bold">
 									{m.common_duration_hours_minutes({ hours: Math.floor(a.minutes / 60), minutes: a.minutes % 60 })}
 								</span>
 							</div>

@@ -12,12 +12,12 @@ function CopyBlock({ label, text }: { label: string; text: string }) {
 	return (
 		<div className="space-y-1.5">
 			<div className="flex items-center justify-between">
-				<p className="font-medium text-xs">{label}</p>
+				<p className="text-xs font-medium">{label}</p>
 				<Button variant="ghost" size="sm" onClick={() => detach(copyToClipboard(text, label))}>
 					<Copy className="size-3.5" aria-hidden="true" /> {m.common_copy()}
 				</Button>
 			</div>
-			<pre className="max-h-48 overflow-auto rounded-lg border border-border bg-background p-3 font-mono text-xs leading-relaxed">
+			<pre className="border-border bg-background max-h-48 overflow-auto rounded-lg border p-3 font-mono text-xs leading-relaxed">
 				{text}
 			</pre>
 		</div>
@@ -25,11 +25,11 @@ function CopyBlock({ label, text }: { label: string; text: string }) {
 }
 
 function CheckIcon({ ok }: { ok: boolean | null }) {
-	if (ok === true) return <CheckCircle2 className="size-4 shrink-0 text-success" aria-hidden="true" />;
+	if (ok === true) return <CheckCircle2 className="text-success size-4 shrink-0" aria-hidden="true" />;
 
-	if (ok === false) return <XCircle className="size-4 shrink-0 text-destructive" aria-hidden="true" />;
+	if (ok === false) return <XCircle className="text-destructive size-4 shrink-0" aria-hidden="true" />;
 
-	return <TriangleAlert className="size-4 shrink-0 text-warning" aria-hidden="true" />;
+	return <TriangleAlert className="text-warning size-4 shrink-0" aria-hidden="true" />;
 }
 
 /** Remote-access wizard: checks + ready-to-paste reverse-proxy configs. */
@@ -42,7 +42,7 @@ export function RemoteAccessCard() {
 
 	if (diagnosticsQuery.isPending) {
 		return (
-			<div className="rounded-xl border border-border bg-card p-4 text-muted-foreground text-sm" aria-busy="true">
+			<div className="border-border bg-card text-muted-foreground rounded-xl border p-4 text-sm" aria-busy="true">
 				{m.admin_settings_checking_remote_config()}
 			</div>
 		);
@@ -50,7 +50,7 @@ export function RemoteAccessCard() {
 
 	if (diagnosticsQuery.isError) {
 		return (
-			<div className="rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-sm">
+			<div className="border-destructive/30 bg-destructive/10 rounded-xl border p-4 text-sm">
 				{m.admin_settings_remote_diagnostics_failed()}
 				<Button variant="ghost" size="sm" onClick={() => detach(diagnosticsQuery.refetch())}>
 					{m.common_try_again()}
@@ -62,28 +62,28 @@ export function RemoteAccessCard() {
 	const { checks, generated, publicUrl, bindHost } = diagnosticsQuery.data;
 
 	return (
-		<div className="space-y-4 rounded-xl border border-border bg-card p-4">
+		<div className="border-border bg-card space-y-4 rounded-xl border p-4">
 			<div className="space-y-2">
 				{checks.map((check) => (
 					<div key={check.id} className="flex items-start gap-2.5">
 						<CheckIcon ok={check.ok} />
-						<p className="min-w-0 font-medium text-foreground text-sm">{translateByKey(check.code, check.params)}</p>
+						<p className="text-foreground min-w-0 text-sm font-medium">{translateByKey(check.code, check.params)}</p>
 					</div>
 				))}
 			</div>
 
-			<div className="space-y-1 rounded-lg border border-border/60 bg-background/60 p-3 text-xs">
+			<div className="border-border/60 bg-background/60 space-y-1 rounded-lg border p-3 text-xs">
 				<div className="flex justify-between gap-2">
 					<span className="text-muted-foreground">{m.admin_settings_remote_public_url()}</span>
-					<span className="truncate font-mono text-foreground">{publicUrl ?? "—"}</span>
+					<span className="text-foreground truncate font-mono">{publicUrl ?? "—"}</span>
 				</div>
 				<div className="flex justify-between gap-2">
 					<span className="text-muted-foreground">{m.admin_settings_remote_bind_host()}</span>
-					<span className="truncate font-mono text-foreground">{bindHost}</span>
+					<span className="text-foreground truncate font-mono">{bindHost}</span>
 				</div>
 			</div>
 
-			<div className="space-y-3 border-border/60 border-t pt-3">
+			<div className="border-border/60 space-y-3 border-t pt-3">
 				<CopyBlock label={m.admin_settings_caddy_recommended()} text={generated.caddy} />
 				<CopyBlock label="nginx" text={generated.nginx} />
 				<CopyBlock label=".env" text={generated.env} />

@@ -50,22 +50,22 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							<div className="flex min-w-0 items-center gap-3">
 								<input
 									type="checkbox"
-									className="size-4 shrink-0 accent-primary"
+									className="accent-primary size-4 shrink-0"
 									checked={selected}
 									onChange={() => onToggleSelect(file.id)}
 									aria-label={m.admin_media_select_file()}
 								/>
-								<div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-muted/40 text-primary shadow-2xs">
+								<div className="border-border/80 bg-muted/40 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl border shadow-2xs">
 									<FileVideo className="size-5" />
 								</div>
 								<div className="min-w-0">
-									<p className="truncate font-semibold text-foreground text-sm tracking-tight">{file.fileName}</p>
-									<p className="mt-0.5 truncate font-mono text-muted-foreground text-xs">{file.filePath}</p>
+									<p className="text-foreground truncate text-sm font-semibold tracking-tight">{file.fileName}</p>
+									<p className="text-muted-foreground mt-0.5 truncate font-mono text-xs">{file.filePath}</p>
 								</div>
 							</div>
 
 							{/* Touch and TV input has no hover: actions stay visible on coarse pointers, and keyboard focus reveals them. */}
-							<div className="flex shrink-0 items-center gap-1 pointer-coarse:opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
+							<div className="flex shrink-0 items-center gap-1 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100 pointer-coarse:opacity-100">
 								<Button
 									variant="ghost"
 									size="icon"
@@ -74,7 +74,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 									title={m.admin_metadata_open_in_player()}
 									aria-label={m.admin_media_open_in_player_named({ fileName: file.fileName })}
 								>
-									<Play className="size-3.5 text-muted-foreground" />
+									<Play className="text-muted-foreground size-3.5" />
 								</Button>
 								<Button
 									variant="ghost"
@@ -84,7 +84,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 									title={m.admin_media_edit_file()}
 									aria-label={m.admin_media_edit_file_named({ fileName: file.fileName })}
 								>
-									<Pencil className="size-3.5 text-muted-foreground" />
+									<Pencil className="text-muted-foreground size-3.5" />
 								</Button>
 								<ConfirmAction
 									trigger={
@@ -123,7 +123,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 								</Badge>
 							)}
 							{file.formatName && (
-								<span className="rounded-md border border-border/70 bg-muted/20 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
+								<span className="border-border/70 bg-muted/20 text-muted-foreground rounded-md border px-1.5 py-0.5 font-mono text-xs">
 									{file.formatName}
 								</span>
 							)}
@@ -134,11 +134,11 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 							)}
 						</div>
 
-						<div className="flex items-center justify-between border-border/50 border-t pt-3 font-mono text-muted-foreground text-xs">
+						<div className="border-border/50 text-muted-foreground flex items-center justify-between border-t pt-3 font-mono text-xs">
 							<div className="flex items-center gap-3">
 								{file.size !== null && file.size > 0 ? (
 									<span className="flex items-center gap-1">
-										<HardDrive className="size-3 text-primary" />
+										<HardDrive className="text-primary size-3" />
 										<span className="tabular-nums">{formatFileSize(file.size)}</span>
 									</span>
 								) : null}
@@ -154,7 +154,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 										className="flex items-center gap-1 text-xs"
 										title={m.admin_media_audio_tracks_count_title({ count: file.audioStreams.length })}
 									>
-										<AudioLines className="size-3 text-primary" />
+										<AudioLines className="text-primary size-3" />
 										<span>{file.audioStreams.length}</span>
 									</span>
 								)}
@@ -163,7 +163,7 @@ export function MediaFileListCard({ file, isDeleting, onDelete, selected, onTogg
 										className="flex items-center gap-1 text-xs"
 										title={m.admin_media_subtitle_tracks_count_title({ count: file.subtitles.length })}
 									>
-										<Subtitles className="size-3 text-primary" />
+										<Subtitles className="text-primary size-3" />
 										<span>{file.subtitles.length}</span>
 									</span>
 								)}

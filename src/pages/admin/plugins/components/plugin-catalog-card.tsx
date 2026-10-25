@@ -38,10 +38,10 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 	}
 
 	return (
-		<article className="group flex flex-col justify-between rounded-xl border border-border/80 bg-card p-5 shadow-xs transition-[border-color,background-color,color,box-shadow] hover:border-primary/40 hover:shadow-md">
+		<article className="group border-border/80 bg-card hover:border-primary/40 flex flex-col justify-between rounded-xl border p-5 shadow-xs transition-[border-color,background-color,color,box-shadow] hover:shadow-md">
 			<div>
 				<div className="mb-4 flex items-start justify-between gap-3">
-					<div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-primary">
+					<div className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg">
 						{entry.iconUrl ? (
 							<img src={entry.iconUrl} alt="" className="size-full object-contain p-1.5" loading="lazy" />
 						) : (
@@ -55,15 +55,15 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 
 				<div className="flex flex-col gap-1">
 					<div className="flex flex-wrap items-center gap-2">
-						<h3 className="font-bold text-base text-foreground tracking-tight">{entry.name}</h3>
+						<h3 className="text-foreground text-base font-bold tracking-tight">{entry.name}</h3>
 						<Badge variant="outline" font="mono">
 							{m.common_version_badge({ version: entry.version })}
 						</Badge>
 					</div>
-					<p className="font-mono text-muted-foreground text-xs">{entry.repositoryName}</p>
+					<p className="text-muted-foreground font-mono text-xs">{entry.repositoryName}</p>
 				</div>
 
-				{entry.description && <p className="mt-3 line-clamp-2 min-h-8 text-muted-foreground text-xs">{entry.description}</p>}
+				{entry.description && <p className="text-muted-foreground mt-3 line-clamp-2 min-h-8 text-xs">{entry.description}</p>}
 
 				<div className="mt-4 flex flex-wrap gap-2 text-xs">
 					<Badge weight="normal" variant="secondary">
@@ -82,7 +82,7 @@ export function PluginCatalogCard({ entry, isBusy, onOpenDetails }: PluginCatalo
 				</div>
 			</div>
 
-			<div className="mt-6 flex items-center justify-between border-border/60 border-t pt-4">
+			<div className="border-border/60 mt-6 flex items-center justify-between border-t pt-4">
 				<Button tone="muted" variant="ghost" size="sm" onClick={() => onOpenDetails(entry)}>
 					{m.admin_plugins_catalog_details()}
 				</Button>

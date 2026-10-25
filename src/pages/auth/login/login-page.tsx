@@ -115,28 +115,28 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background">
+		<div className="bg-background relative flex min-h-svh w-full items-center justify-center overflow-hidden">
 			<LoginBackdrop />
 
 			<main className="relative z-10 w-full max-w-md px-6">
 				<SimpleAnimation direction="up" duration={260}>
-					<section className="relative overflow-hidden rounded-3xl border border-border bg-card/75 p-8 shadow-2xl sm:p-10">
+					<section className="border-border bg-card/75 relative overflow-hidden rounded-3xl border p-8 shadow-2xl sm:p-10">
 						<header className="flex flex-col gap-4 text-center">
-							<div className="mx-auto flex size-16 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
+							<div className="border-primary/20 bg-primary/10 text-primary mx-auto flex size-16 items-center justify-center rounded-2xl border">
 								{renderHeaderIcon()}
 							</div>
 							<div>
-								<h1 className="font-black text-4xl tracking-tight sm:text-5xl">
+								<h1 className="text-4xl font-black tracking-tight sm:text-5xl">
 									<ParaglideMessage message={m.auth_welcome_title} markup={welcomeTitleMarkup} />
 								</h1>
-								<p className="mt-2 font-semibold text-muted-foreground text-xs">{getStepLabel()}</p>
+								<p className="text-muted-foreground mt-2 text-xs font-semibold">{getStepLabel()}</p>
 							</div>
 						</header>
 
 						{renderStepContent()}
 
-						<p className="mt-6 text-center font-medium text-muted-foreground text-xs">{m.auth_private_archive_tagline()}</p>
-						<div className="pointer-events-none absolute -top-24 -left-24 size-48 rounded-full bg-primary/10 blur-[80px]" />
+						<p className="text-muted-foreground mt-6 text-center text-xs font-medium">{m.auth_private_archive_tagline()}</p>
+						<div className="bg-primary/10 pointer-events-none absolute -top-24 -left-24 size-48 rounded-full blur-[80px]" />
 					</section>
 				</SimpleAnimation>
 			</main>

@@ -108,7 +108,7 @@ describe("player audio boost & equalizer", () => {
 
 		// Constructed with `new` by the audio pipeline, so a plain function
 		// is enough — instances carry no state this test needs to inspect.
-		function MockAudioContext(): void {
+		function mockAudioContext(): void {
 			contextCreated = true;
 		}
 
@@ -116,12 +116,12 @@ describe("player audio boost & equalizer", () => {
 		const originalAudioContext = globalThis.AudioContext;
 
 		globalThis.window = {
-			AudioContext: MockAudioContext as unknown as typeof AudioContext,
+			AudioContext: mockAudioContext as unknown as typeof AudioContext,
 			addEventListener: noop,
 			removeEventListener: noop,
 			localStorage: { getItem: () => null, setItem: noop },
 		} as unknown as Window & typeof globalThis;
-		globalThis.AudioContext = MockAudioContext as unknown as typeof AudioContext;
+		globalThis.AudioContext = mockAudioContext as unknown as typeof AudioContext;
 
 		try {
 			const fakeVideo = {

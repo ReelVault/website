@@ -56,7 +56,7 @@ export function MetadataHero({
 			<div className="flex flex-col gap-5 p-6 sm:p-7">
 				{/* Poster & title details */}
 				<div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-					<div className="group relative h-36 w-24 shrink-0 overflow-hidden rounded-xl border border-border/80 bg-muted/40 shadow-sm sm:h-44 sm:w-30">
+					<div className="group border-border/80 bg-muted/40 relative h-36 w-24 shrink-0 overflow-hidden rounded-xl border shadow-sm sm:h-44 sm:w-30">
 						<ApiImage
 							fileId={poster?.id}
 							cacheKey={poster?.updatedAt}
@@ -72,7 +72,7 @@ export function MetadataHero({
 							className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
 							title={m.admin_metadata_change_poster()}
 						>
-							<div className="flex size-9 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm">
+							<div className="bg-background/90 text-foreground flex size-9 items-center justify-center rounded-full shadow-sm">
 								<Pencil className="size-4" />
 							</div>
 						</button>
@@ -83,19 +83,19 @@ export function MetadataHero({
 						<MetadataHeroBadges metadata={metadata} releaseYear={releaseYear} rating={rating} lockedCount={lockedCount} />
 
 						<div>
-							<h1 className="wrap-break-word font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{metadata.title}</h1>
+							<h1 className="text-foreground text-2xl font-bold tracking-tight wrap-break-word sm:text-3xl">{metadata.title}</h1>
 							{metadata.originalTitle && metadata.originalTitle !== metadata.title && (
-								<p className="mt-1 text-muted-foreground text-sm italic">{metadata.originalTitle}</p>
+								<p className="text-muted-foreground mt-1 text-sm italic">{metadata.originalTitle}</p>
 							)}
 						</div>
 
 						{metadata.tagline !== null && (
-							<p className="max-w-2xl text-muted-foreground text-sm leading-relaxed">
+							<p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
 								{m.admin_metadata_quoted_tagline({ tagline: metadata.tagline })}
 							</p>
 						)}
 
-						<div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs">
 							<span>{m.common_id_label({ id: metadata.id })}</span>
 							{metadata.stableKey && <span>{m.admin_metadata_stable_key_value({ key: metadata.stableKey })}</span>}
 							{metadata.originCountry && <span>{m.admin_metadata_country_label({ country: metadata.originCountry })}</span>}

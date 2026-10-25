@@ -25,7 +25,7 @@ export function ProviderRow({ provider, index, disabled, onToggle }: ProviderRow
 		<li
 			ref={ref}
 			className={cn(
-				"flex items-center gap-3 rounded-xl border border-border/80 bg-card p-4 shadow-xs transition-[border-color,background-color,color,box-shadow] hover:border-primary/40",
+				"border-border/80 bg-card hover:border-primary/40 flex items-center gap-3 rounded-xl border p-4 shadow-xs transition-[border-color,background-color,color,box-shadow]",
 				isDragging && "border-primary/60 opacity-70 shadow-lg",
 				!provider.enabled && "opacity-60",
 			)}
@@ -34,16 +34,16 @@ export function ProviderRow({ provider, index, disabled, onToggle }: ProviderRow
 				ref={handleRef}
 				type="button"
 				aria-label={m.admin_providers_move()}
-				className="cursor-grab touch-none text-muted-foreground transition-colors hover:text-foreground active:cursor-grabbing"
+				className="text-muted-foreground hover:text-foreground cursor-grab touch-none transition-colors active:cursor-grabbing"
 			>
 				<GripVertical className="size-4" />
 			</button>
-			<span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 font-bold text-primary text-xs">
+			<span className="bg-primary/10 text-primary flex size-7 shrink-0 items-center justify-center rounded-md text-xs font-bold">
 				{index + 1}
 			</span>
 			<div className="min-w-0 flex-1">
 				<div className="flex flex-wrap items-center gap-2">
-					<span className="font-semibold text-foreground text-sm">{provider.name}</span>
+					<span className="text-foreground text-sm font-semibold">{provider.name}</span>
 					<Badge tone="muted" variant="outline" font="mono">
 						<span>{provider.id}</span>
 						<button
@@ -60,7 +60,7 @@ export function ProviderRow({ provider, index, disabled, onToggle }: ProviderRow
 						{m.common_version_badge({ version: provider.version })}
 					</Badge>
 				</div>
-				<p className="mt-0.5 flex items-center gap-1 font-mono text-muted-foreground text-xs">
+				<p className="text-muted-foreground mt-0.5 flex items-center gap-1 font-mono text-xs">
 					<span>{m.plugins_requests_plugin_word()}</span>
 					<Link
 						to="/admin/plugins/$id"

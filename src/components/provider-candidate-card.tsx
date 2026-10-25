@@ -26,12 +26,12 @@ export function ProviderCandidateCard({ candidate, disabled, action, onApply }: 
 	const releaseYear = candidate.releaseDate ? candidate.releaseDate.slice(0, 4) : null;
 
 	return (
-		<div className="group relative flex gap-3.5 rounded-xl border border-border bg-card p-3 shadow-xs transition-[border-color,background-color,color,box-shadow] hover:border-primary/50 hover:shadow-md">
-			<div className="relative aspect-2/3 w-16 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-muted">
+		<div className="group border-border bg-card hover:border-primary/50 relative flex gap-3.5 rounded-xl border p-3 shadow-xs transition-[border-color,background-color,color,box-shadow] hover:shadow-md">
+			<div className="border-border/60 bg-muted relative aspect-2/3 w-16 shrink-0 overflow-hidden rounded-lg border">
 				{candidate.posterPath ? (
 					<Image src={candidate.posterPath} alt={candidate.title} fill unoptimized className="object-cover" loading="lazy" />
 				) : (
-					<div className="flex size-full items-center justify-center text-muted-foreground">
+					<div className="text-muted-foreground flex size-full items-center justify-center">
 						<Film className="size-6" />
 					</div>
 				)}
@@ -42,14 +42,14 @@ export function ProviderCandidateCard({ candidate, disabled, action, onApply }: 
 					<div className="flex items-center gap-2">
 						<Badge variant="outline">{candidate.providerId}</Badge>
 						{releaseYear !== null && (
-							<span className="flex items-center gap-1 font-medium text-muted-foreground text-xs">
+							<span className="text-muted-foreground flex items-center gap-1 text-xs font-medium">
 								<Calendar className="size-3" />
 								{releaseYear}
 							</span>
 						)}
 					</div>
-					<h4 className="line-clamp-2 font-semibold text-foreground text-sm leading-snug">{candidate.title}</h4>
-					<p className="font-mono text-muted-foreground/80 text-xs">{m.common_id_label({ id: candidate.externalId })}</p>
+					<h4 className="text-foreground line-clamp-2 text-sm leading-snug font-semibold">{candidate.title}</h4>
+					<p className="text-muted-foreground/80 font-mono text-xs">{m.common_id_label({ id: candidate.externalId })}</p>
 				</div>
 
 				<div className="pt-2">

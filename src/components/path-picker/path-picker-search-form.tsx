@@ -26,7 +26,7 @@ export function PathPickerSearchForm({ activePath, onNavigate }: PathPickerSearc
 	return (
 		<form onSubmit={handleInputSubmit} className="flex gap-2">
 			<div className="relative flex-1">
-				<FolderOpen className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+				<FolderOpen className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
 				<Input
 					leadingIcon
 					type="text"

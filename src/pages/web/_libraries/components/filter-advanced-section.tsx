@@ -50,8 +50,8 @@ export function FilterAdvancedSection({
 		<div className="border-border border-t pt-5">
 			<div className="mb-5 flex items-center justify-between gap-4">
 				<div className="flex items-center gap-2">
-					<CalendarRange className="size-4 shrink-0 text-primary" aria-hidden="true" />
-					<p className="font-semibold text-sm">{m.web_advanced_filters()}</p>
+					<CalendarRange className="text-primary size-4 shrink-0" aria-hidden="true" />
+					<p className="text-sm font-semibold">{m.web_advanced_filters()}</p>
 				</div>
 				<Button type="button" variant="ghost" size="sm" className="shrink-0" onClick={handleReset}>
 					<RotateCcw data-icon="inline-start" aria-hidden="true" />

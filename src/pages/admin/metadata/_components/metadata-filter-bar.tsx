@@ -111,19 +111,19 @@ export function MetadataFilterBar({
 						{m.common_all()}
 					</ToggleGroupItem>
 					<ToggleGroupItem value="low_confidence" size="sm">
-						<AlertTriangle className="size-3 text-warning" />
+						<AlertTriangle className="text-warning size-3" />
 						{m.admin_metadata_low_recognition()}
 					</ToggleGroupItem>
 					<ToggleGroupItem value="missing_translation" size="sm">
-						<AlertTriangle className="size-3 text-warning" />
+						<AlertTriangle className="text-warning size-3" />
 						{m.admin_metadata_fallback_chip()}
 					</ToggleGroupItem>
 					<ToggleGroupItem value="with_media" size="sm">
-						<CheckCircle2 className="size-3 text-success" />
+						<CheckCircle2 className="text-success size-3" />
 						{m.admin_metadata_with_files_chip()}
 					</ToggleGroupItem>
 					<ToggleGroupItem value="without_media" size="sm">
-						<AlertTriangle className="size-3 text-destructive" />
+						<AlertTriangle className="text-destructive size-3" />
 						{m.admin_metadata_orphan_chip()}
 					</ToggleGroupItem>
 				</ToggleGroup>

@@ -29,9 +29,9 @@ export function DashboardWorkerQueue() {
 	} else if (operations.length === 0) {
 		queueContent = (
 			<div className="flex flex-col items-center justify-center py-10 text-center">
-				<CheckCircle2 className="size-8 text-success/70" />
-				<p className="mt-3 font-semibold text-foreground text-sm">{m.admin_dashboard_all_jobs_done()}</p>
-				<p className="mt-1 text-muted-foreground text-xs">{m.admin_dashboard_queue_empty()}</p>
+				<CheckCircle2 className="text-success/70 size-8" />
+				<p className="text-foreground mt-3 text-sm font-semibold">{m.admin_dashboard_all_jobs_done()}</p>
+				<p className="text-muted-foreground mt-1 text-xs">{m.admin_dashboard_queue_empty()}</p>
 			</div>
 		);
 	} else {
@@ -44,21 +44,21 @@ export function DashboardWorkerQueue() {
 					const progress = op.progressPercent ?? 0;
 					let statusIcon: ReactNode;
 					if (isProcessing) {
-						statusIcon = <RefreshCw className="size-3.5 animate-spin text-primary" />;
+						statusIcon = <RefreshCw className="text-primary size-3.5 animate-spin" />;
 					} else if (isCompleted) {
-						statusIcon = <CheckCircle2 className="size-3.5 text-success" />;
+						statusIcon = <CheckCircle2 className="text-success size-3.5" />;
 					} else if (isFailed) {
-						statusIcon = <XCircle className="size-3.5 text-destructive" />;
+						statusIcon = <XCircle className="text-destructive size-3.5" />;
 					} else {
-						statusIcon = <Clock className="size-3.5 text-muted-foreground" />;
+						statusIcon = <Clock className="text-muted-foreground size-3.5" />;
 					}
 
 					return (
-						<div key={op.id} className="flex flex-col gap-2 rounded-xl border border-border/60 bg-card/60 p-3 text-xs">
+						<div key={op.id} className="border-border/60 bg-card/60 flex flex-col gap-2 rounded-xl border p-3 text-xs">
 							<div className="flex items-center justify-between">
 								<div className="flex min-w-0 items-center gap-2">
 									{statusIcon}
-									<span className="truncate font-semibold text-foreground capitalize">{op.type.replace(/_/g, " ")}</span>
+									<span className="text-foreground truncate font-semibold capitalize">{op.type.replace(/_/g, " ")}</span>
 								</div>
 								<Badge variant={queueBadgeVariant(isFailed, isCompleted, isProcessing)} transform="capitalize">
 									{op.status}
@@ -67,7 +67,7 @@ export function DashboardWorkerQueue() {
 							{op.totalItems > 0 && (
 								<div className="flex flex-col gap-1">
 									<Progress value={Math.min(100, Math.max(0, progress))} />
-									<div className="flex justify-between text-muted-foreground text-xs">
+									<div className="text-muted-foreground flex justify-between text-xs">
 										<span>{m.admin_dashboard_job_progress_ratio({ completed: op.completedItems, total: op.totalItems })}</span>
 										<span>{m.common_percent_value({ value: Math.round(progress) })}</span>
 									</div>

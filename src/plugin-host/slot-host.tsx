@@ -116,7 +116,7 @@ export function PluginSlotHost({ name, variant, buttonClassName, menuItemSize, p
 								size={menuItemSize}
 								onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}
 							>
-								<Icon className="size-4 text-muted-foreground" />
+								<Icon className="text-muted-foreground size-4" />
 								<span>{label}</span>
 							</DropdownMenuItem>
 						)}
@@ -136,7 +136,7 @@ export function PluginSlotHost({ name, variant, buttonClassName, menuItemSize, p
 								surface(contribution.pluginId, contribution.element.tag)
 							) : (
 								<SidebarMenuSubButton onClick={() => contribution.action && runAction(contribution.pluginId, contribution.action)}>
-									<Icon className="size-3.5 shrink-0 text-muted-foreground" />
+									<Icon className="text-muted-foreground size-3.5 shrink-0" />
 									<span className="truncate">{label}</span>
 								</SidebarMenuSubButton>
 							)}

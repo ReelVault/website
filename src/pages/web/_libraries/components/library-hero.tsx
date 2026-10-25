@@ -42,9 +42,9 @@ export function LibraryHero({
 	};
 
 	return (
-		<header className="relative flex min-h-95 flex-col items-center justify-center overflow-hidden border-border border-b px-4 pt-24 pb-14 md:min-h-110 md:px-6 md:pt-28 md:pb-16">
+		<header className="border-border relative flex min-h-95 flex-col items-center justify-center overflow-hidden border-b px-4 pt-24 pb-14 md:min-h-110 md:px-6 md:pt-28 md:pb-16">
 			{/* Background effects - using translate3d for GPU acceleration */}
-			<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
+			<div className="from-primary/5 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent to-transparent" />
 			<div className="pointer-events-none absolute top-1/2 left-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_8%,transparent)_0%,transparent_70%)]" />
 
 			<div className="relative flex w-full max-w-7xl items-center justify-between gap-4 md:gap-8">
@@ -63,16 +63,16 @@ export function LibraryHero({
 				{/* Main Title - flex-[2] (valid Tailwind) */}
 				<div className="flex flex-2 flex-col items-center px-4 md:px-8">
 					<div className="mb-4 flex items-center gap-3">
-						<div className="h-px w-12 bg-linear-to-r from-transparent to-primary" />
-						<div className="flex items-center gap-2 font-semibold text-primary text-sm">
+						<div className="to-primary h-px w-12 bg-linear-to-r from-transparent" />
+						<div className="text-primary flex items-center gap-2 text-sm font-semibold">
 							<Zap className="h-3.5 w-3.5" />
 							{isGenreMode ? m.web_genre_filter() : collectionLabelForType(currentLibrary.type)}
 						</div>
-						<div className="h-px w-12 bg-linear-to-l from-transparent to-primary" />
+						<div className="to-primary h-px w-12 bg-linear-to-l from-transparent" />
 					</div>
 
 					{isGenreMode && (
-						<SimpleAnimation key="lib-name" direction="up" className="mb-2 font-semibold text-muted-foreground text-sm tracking-wide">
+						<SimpleAnimation key="lib-name" direction="up" className="text-muted-foreground mb-2 text-sm font-semibold tracking-wide">
 							{currentLibrary.name}
 						</SimpleAnimation>
 					)}
@@ -85,11 +85,11 @@ export function LibraryHero({
 									type="button"
 									variant="ghost"
 									onClick={handleTitleClick}
-									className="max-w-full cursor-pointer select-none whitespace-normal"
+									className="max-w-full cursor-pointer whitespace-normal select-none"
 								>
 									<span
 										className={cn(
-											"inline-block max-w-full bg-linear-to-b from-foreground via-foreground to-foreground/80 bg-clip-text px-4 pt-2 pb-5 font-bold text-transparent leading-[1.2] tracking-tight",
+											"from-foreground via-foreground to-foreground/80 inline-block max-w-full bg-linear-to-b bg-clip-text px-4 pt-2 pb-5 leading-[1.2] font-bold tracking-tight text-transparent",
 											isGenreMode ? "text-4xl sm:text-6xl md:text-7xl lg:text-8xl" : "text-5xl sm:text-7xl md:text-8xl lg:text-9xl",
 										)}
 									>
@@ -97,10 +97,10 @@ export function LibraryHero({
 									</span>
 								</Button>
 							) : (
-								<h1 className="select-none p-0">
+								<h1 className="p-0 select-none">
 									<span
 										className={cn(
-											"inline-block max-w-full bg-linear-to-b from-foreground via-foreground to-foreground/80 bg-clip-text px-4 pt-2 pb-5 font-bold text-transparent leading-[1.2] tracking-tight",
+											"from-foreground via-foreground to-foreground/80 inline-block max-w-full bg-linear-to-b bg-clip-text px-4 pt-2 pb-5 leading-[1.2] font-bold tracking-tight text-transparent",
 											"text-5xl sm:text-7xl md:text-8xl lg:text-9xl",
 										)}
 									>
@@ -121,10 +121,10 @@ export function LibraryHero({
 
 					<div className="mt-6 flex items-center gap-8 md:mt-8">
 						<div className="flex flex-col items-center">
-							<SimpleAnimation key={validMetadataLength} from={{ transform: "scale(1.2)" }} className="font-bold text-2xl text-primary">
+							<SimpleAnimation key={validMetadataLength} from={{ transform: "scale(1.2)" }} className="text-primary text-2xl font-bold">
 								{validMetadataLength}
 							</SimpleAnimation>
-							<span className="font-semibold text-muted-foreground text-xs">{m.web_library_items_count()}</span>
+							<span className="text-muted-foreground text-xs font-semibold">{m.web_library_items_count()}</span>
 						</div>
 					</div>
 				</div>

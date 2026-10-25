@@ -82,7 +82,7 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 		<DetailsSection
 			title={m.player_seasons_and_episodes_caps()}
 			action={
-				<h2 className="font-bold text-base text-foreground/45 sm:text-xl">
+				<h2 className="text-foreground/45 text-base font-bold sm:text-xl">
 					{playback?.totalEpisodes ? `${playback.completedEpisodes}/${playback.totalEpisodes}` : undefined}
 				</h2>
 			}

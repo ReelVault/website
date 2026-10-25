@@ -207,7 +207,7 @@ function splitByCompatibility<T>(items: T[], isCompatible: (item: T) => boolean)
 }
 
 function Kbd({ children }: { children: string }) {
-	return <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono font-semibold text-[11px] text-foreground">{children}</kbd>;
+	return <kbd className="bg-muted text-foreground rounded px-1.5 py-0.5 font-mono text-[11px] font-semibold">{children}</kbd>;
 }
 
 function CompatibilityToggleButton({
@@ -319,7 +319,7 @@ export function PlayerAudioSubtitlesDialog() {
 						<TabsTrigger value="sync">
 							{m.player_sync_heading()}
 							{subtitleOffset !== 0 && (
-								<span className="ml-1.5 rounded bg-primary/20 px-1 py-0.2 font-mono text-[10px] text-primary">
+								<span className="bg-primary/20 py-0.2 text-primary ml-1.5 rounded px-1 font-mono text-[10px]">
 									{subtitleOffset > 0 ? `+${subtitleOffset.toFixed(1)}s` : `${subtitleOffset.toFixed(1)}s`}
 								</span>
 							)}
@@ -334,7 +334,7 @@ export function PlayerAudioSubtitlesDialog() {
 							{/* Left column: audio */}
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between gap-2">
-									<div className="flex-1 rounded-md bg-muted/80 px-4 py-2 text-center font-semibold text-foreground text-sm tracking-wide shadow-xs">
+									<div className="bg-muted/80 text-foreground flex-1 rounded-md px-4 py-2 text-center text-sm font-semibold tracking-wide shadow-xs">
 										{m.player_audio_col()}
 									</div>
 									{hasHiddenAudio && (
@@ -346,9 +346,9 @@ export function PlayerAudioSubtitlesDialog() {
 										/>
 									)}
 								</div>
-								<div className="custom-scrollbar mt-3 max-h-[48vh] divide-y divide-border/15 overflow-y-auto pr-1">
+								<div className="custom-scrollbar divide-border/15 mt-3 max-h-[48vh] divide-y overflow-y-auto pr-1">
 									{visibleAudioStreams.length === 0 ? (
-										<div className="py-8 text-center text-muted-foreground text-sm">{m.player_no_alternative_audio()}</div>
+										<div className="text-muted-foreground py-8 text-center text-sm">{m.player_no_alternative_audio()}</div>
 									) : (
 										visibleAudioStreams.map((stream) => {
 											const isSelected = selectedAudioStream?.index === stream.index;
@@ -360,12 +360,12 @@ export function PlayerAudioSubtitlesDialog() {
 													type="button"
 													onClick={() => onAudioStreamChange(stream.index)}
 													className={cn(
-														"group flex w-full items-center gap-3 px-3 py-3 text-left text-sm transition-colors hover:bg-muted/40",
-														isSelected ? "font-semibold text-foreground" : "text-muted-foreground hover:text-foreground",
+														"group hover:bg-muted/40 flex w-full items-center gap-3 px-3 py-3 text-left text-sm transition-colors",
+														isSelected ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground",
 													)}
 												>
 													<div className="flex size-4 shrink-0 items-center justify-center">
-														{isSelected ? <Check className="size-4 text-primary" /> : null}
+														{isSelected ? <Check className="text-primary size-4" /> : null}
 													</div>
 													<div className="flex min-w-0 flex-1 items-center justify-between gap-2">
 														<div className="flex min-w-0 items-center gap-1.5">
@@ -381,7 +381,7 @@ export function PlayerAudioSubtitlesDialog() {
 															)}
 														</div>
 														{(stream.codecName || (stream.channelLayout ?? stream.channels)) && (
-															<span className="shrink-0 font-mono text-muted-foreground/70 text-xs">
+															<span className="text-muted-foreground/70 shrink-0 font-mono text-xs">
 																{stream.codecName.toUpperCase()} {stream.channelLayout ?? (stream.channels ? `${stream.channels}ch` : "")}
 															</span>
 														)}
@@ -396,7 +396,7 @@ export function PlayerAudioSubtitlesDialog() {
 							{/* Right column: subtitles */}
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between gap-2">
-									<div className="flex-1 rounded-md bg-muted/80 px-4 py-2 text-center font-semibold text-foreground text-sm tracking-wide shadow-xs">
+									<div className="bg-muted/80 text-foreground flex-1 rounded-md px-4 py-2 text-center text-sm font-semibold tracking-wide shadow-xs">
 										{m.admin_nav_subtitles()}
 									</div>
 									{hasHiddenSubtitles && (
@@ -421,18 +421,18 @@ export function PlayerAudioSubtitlesDialog() {
 										{m.player_subtitles_preferred_only()}
 									</button>
 								)}
-								<div className="custom-scrollbar mt-3 max-h-[48vh] divide-y divide-border/15 overflow-y-auto pr-1">
+								<div className="custom-scrollbar divide-border/15 mt-3 max-h-[48vh] divide-y overflow-y-auto pr-1">
 									{/* Disabled */}
 									<button
 										type="button"
 										onClick={() => setSelectedSubtitleId(undefined)}
 										className={cn(
-											"group flex w-full items-center gap-3 px-3 py-3 text-left text-sm transition-colors hover:bg-muted/40",
-											!selectedSubtitleId ? "font-semibold text-foreground" : "text-muted-foreground hover:text-foreground",
+											"group hover:bg-muted/40 flex w-full items-center gap-3 px-3 py-3 text-left text-sm transition-colors",
+											!selectedSubtitleId ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground",
 										)}
 									>
 										<div className="flex size-4 shrink-0 items-center justify-center">
-											{!selectedSubtitleId ? <Check className="size-4 text-primary" /> : null}
+											{!selectedSubtitleId ? <Check className="text-primary size-4" /> : null}
 										</div>
 										<span>{m.common_disabled()}</span>
 									</button>
@@ -449,14 +449,14 @@ export function PlayerAudioSubtitlesDialog() {
 												disabled={isBitmap}
 												onClick={() => setSelectedSubtitleId(subtitle.id)}
 												className={cn(
-													"group flex w-full items-center gap-3 px-3 py-3 text-left text-sm transition-colors hover:bg-muted/40",
-													isSelected ? "font-semibold text-foreground" : "text-muted-foreground hover:text-foreground",
-													isBitmap && "cursor-not-allowed opacity-50 hover:bg-transparent hover:text-muted-foreground",
+													"group hover:bg-muted/40 flex w-full items-center gap-3 px-3 py-3 text-left text-sm transition-colors",
+													isSelected ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground",
+													isBitmap && "hover:text-muted-foreground cursor-not-allowed opacity-50 hover:bg-transparent",
 												)}
 												title={isBitmap ? m.player_pgs_vobsub_unsupported() : undefined}
 											>
 												<div className="flex size-4 shrink-0 items-center justify-center">
-													{isSelected ? <Check className="size-4 text-primary" /> : null}
+													{isSelected ? <Check className="text-primary size-4" /> : null}
 												</div>
 												<div className="flex min-w-0 flex-1 items-center justify-between gap-2">
 													<span className="min-w-0 break-words">{formatSubtitleLabel(subtitle)}</span>
@@ -467,7 +467,7 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 
 								{/* Szybkie akcje pod napisami */}
-								<div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-border/30 border-t pt-3">
+								<div className="border-border/30 mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
 									<Button tone="muted" type="button" variant="ghost" size="sm" onClick={() => setActiveTab("styling")}>
 										<SlidersHorizontal className="mr-1.5 size-3.5" />
 										{m.player_sub_style_position()}
@@ -486,7 +486,7 @@ export function PlayerAudioSubtitlesDialog() {
 						<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 							{/* Size */}
 							<div className="space-y-2">
-								<h4 className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_size()}</h4>
+								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_size()}</h4>
 								<div className="flex flex-col gap-1.5">
 									{SUBTITLE_SIZES.map((option) => (
 										<Button
@@ -506,7 +506,7 @@ export function PlayerAudioSubtitlesDialog() {
 
 							{/* Pozycja */}
 							<div className="space-y-2">
-								<h4 className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_position_heading()}</h4>
+								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_position_heading()}</h4>
 								<div className="flex flex-col gap-1.5">
 									{SUBTITLE_POSITIONS.map((option) => (
 										<Button
@@ -526,7 +526,7 @@ export function PlayerAudioSubtitlesDialog() {
 
 							{/* Text color */}
 							<div className="space-y-2">
-								<h4 className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_text_color()}</h4>
+								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_text_color()}</h4>
 								<div className="flex flex-col gap-1.5">
 									{SUBTITLE_COLORS.map((option) => (
 										<Button
@@ -547,7 +547,7 @@ export function PlayerAudioSubtitlesDialog() {
 
 							{/* Background style */}
 							<div className="space-y-2">
-								<h4 className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.user_background_style()}</h4>
+								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.user_background_style()}</h4>
 								<div className="flex flex-col gap-1.5">
 									{SUBTITLE_BACKGROUNDS.map((option) => (
 										<Button
@@ -567,8 +567,8 @@ export function PlayerAudioSubtitlesDialog() {
 						</div>
 
 						{/* Live preview */}
-						<div className="relative flex h-28 w-full items-center justify-center rounded-xl border border-border/50 bg-black/90 p-4 shadow-inner">
-							<span className="absolute top-2.5 left-3 font-mono text-[10px] text-muted-foreground/60 uppercase tracking-wider">
+						<div className="border-border/50 relative flex h-28 w-full items-center justify-center rounded-xl border bg-black/90 p-4 shadow-inner">
+							<span className="text-muted-foreground/60 absolute top-2.5 left-3 font-mono text-[10px] tracking-wider uppercase">
 								{m.player_live_preview()}
 							</span>
 							<span
@@ -593,22 +593,22 @@ export function PlayerAudioSubtitlesDialog() {
 					<TabsContent value="sync" className="mt-0 space-y-6 py-2">
 						<div className="flex flex-col gap-6">
 							{/* Current offset preview */}
-							<div className="flex flex-col items-center justify-center rounded-2xl border border-border/60 bg-muted/40 p-6 text-center shadow-xs">
-								<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+							<div className="border-border/60 bg-muted/40 flex flex-col items-center justify-center rounded-2xl border p-6 text-center shadow-xs">
+								<span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
 									{m.player_subtitle_offset_field()}
 								</span>
 								<div className="mt-2 flex items-baseline gap-1">
-									<span className="font-black font-mono text-4xl text-primary tracking-tight">
+									<span className="text-primary font-mono text-4xl font-black tracking-tight">
 										{subtitleOffset > 0 ? `+${subtitleOffset.toFixed(1)}` : subtitleOffset.toFixed(1)}
 									</span>
-									<span className="font-semibold text-lg text-muted-foreground">{m.player_seconds_word()}</span>
+									<span className="text-muted-foreground text-lg font-semibold">{m.player_seconds_word()}</span>
 								</div>
-								<p className="mt-2 max-w-md text-muted-foreground text-xs">{offsetStatus}</p>
+								<p className="text-muted-foreground mt-2 max-w-md text-xs">{offsetStatus}</p>
 							</div>
 
 							{/* Quick adjustment buttons */}
 							<div className="space-y-2">
-								<h4 className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_quick_fix()}</h4>
+								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_quick_fix()}</h4>
 								<div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
 									<Button
 										type="button"
@@ -617,7 +617,7 @@ export function PlayerAudioSubtitlesDialog() {
 										onClick={() => adjustSubtitleOffset(-1.0)}
 										aria-label={m.player_delay_minus_1()}
 									>
-										<Minus className="size-3 text-destructive" /> {m.player_delay_1_second()}
+										<Minus className="text-destructive size-3" /> {m.player_delay_1_second()}
 									</Button>
 									<Button
 										type="button"
@@ -626,7 +626,7 @@ export function PlayerAudioSubtitlesDialog() {
 										onClick={() => adjustSubtitleOffset(-0.1)}
 										aria-label={m.player_delay_minus_point1()}
 									>
-										<Minus className="size-3 text-destructive" /> {m.player_delay_point_1_second()}
+										<Minus className="text-destructive size-3" /> {m.player_delay_point_1_second()}
 									</Button>
 									<Button
 										type="button"
@@ -645,7 +645,7 @@ export function PlayerAudioSubtitlesDialog() {
 										onClick={() => adjustSubtitleOffset(0.1)}
 										aria-label={m.player_delay_plus_point1()}
 									>
-										<Plus className="size-3 text-success" /> {m.player_delay_point_1_second()}
+										<Plus className="text-success size-3" /> {m.player_delay_point_1_second()}
 									</Button>
 									<Button
 										type="button"
@@ -654,14 +654,14 @@ export function PlayerAudioSubtitlesDialog() {
 										onClick={() => adjustSubtitleOffset(1.0)}
 										aria-label={m.player_delay_plus_1()}
 									>
-										<Plus className="size-3 text-success" /> {m.player_delay_1_second()}
+										<Plus className="text-success size-3" /> {m.player_delay_1_second()}
 									</Button>
 								</div>
 							</div>
 
 							{/* Smooth slider */}
 							<div className="space-y-3 pt-2">
-								<div className="flex justify-between text-muted-foreground text-xs">
+								<div className="text-muted-foreground flex justify-between text-xs">
 									<span>{m.player_seek_earlier_10s()}</span>
 									<span>{m.player_offset_zero()}</span>
 									<span>{m.player_seek_later_10s()}</span>
@@ -682,9 +682,9 @@ export function PlayerAudioSubtitlesDialog() {
 							</div>
 
 							{/* Keyboard shortcut hint */}
-							<div className="rounded-xl border border-border/40 bg-card/40 p-4 text-muted-foreground text-xs">
-								<div className="flex items-center gap-2 font-medium text-foreground">
-									<Timer className="size-4 text-primary" />
+							<div className="border-border/40 bg-card/40 text-muted-foreground rounded-xl border p-4 text-xs">
+								<div className="text-foreground flex items-center gap-2 font-medium">
+									<Timer className="text-primary size-4" />
 									<span>{m.player_shortcuts_on_the_fly()}</span>
 								</div>
 								<p className="mt-1 leading-relaxed">

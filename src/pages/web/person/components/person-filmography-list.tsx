@@ -9,7 +9,7 @@ type PersonMetadataItem = SelectFields<MetadataWithRelation, typeof metadataCard
 
 export function PersonFilmographyList({ metadataList }: { metadataList: PersonMetadataItem[] }) {
 	if (metadataList.length === 0) {
-		return <div className="cinema-surface p-8 text-center text-muted-foreground">{m.web_no_related_titles()}</div>;
+		return <div className="cinema-surface text-muted-foreground p-8 text-center">{m.web_no_related_titles()}</div>;
 	}
 
 	return (

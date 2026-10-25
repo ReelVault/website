@@ -31,7 +31,7 @@ export function OperationFilterBar({ searchQuery, onSearchChange, statusFilter, 
 	return (
 		<div className="flex flex-wrap items-center justify-between gap-2.5 pt-3">
 			<div className="relative flex-1 sm:max-w-xs">
-				<Search className="absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+				<Search className="text-muted-foreground absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
 				<Input
 					leadingIcon
 					type="text"
@@ -49,7 +49,7 @@ export function OperationFilterBar({ searchQuery, onSearchChange, statusFilter, 
 						type="button"
 						onClick={() => onStatusFilterChange(f.value)}
 						className={cn(
-							"inline-flex items-center gap-1 rounded-md px-2 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
+							"inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition-[border-color,background-color,color,box-shadow]",
 							statusFilter === f.value
 								? "bg-secondary text-foreground shadow-xs"
 								: "text-muted-foreground hover:bg-muted/40 hover:text-foreground",

@@ -116,11 +116,11 @@ export function LibraryCard({
 									render={
 										<button
 											type="button"
-											className="flex items-center gap-2 font-medium text-muted-foreground text-xs transition-colors hover:text-foreground"
+											className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-xs font-medium transition-colors"
 										/>
 									}
 								>
-									<FolderOpen className="size-3.5 text-primary" />
+									<FolderOpen className="text-primary size-3.5" />
 									<span>{m.admin_libraries_source_directories_count({ pathsCount: paths.length })}</span>
 								</CollapsibleTrigger>
 								{paths.length > 1 && (
@@ -152,7 +152,7 @@ export function LibraryCard({
 										/>
 									))
 								) : (
-									<div className="rounded-lg border border-border/80 border-dashed p-4 text-center">
+									<div className="border-border/80 rounded-lg border border-dashed p-4 text-center">
 										<p className="text-muted-foreground text-xs">{m.admin_libraries_no_paths()}</p>
 										<Button variant="primary-ghost" size="sm" className="mt-1.5" onClick={() => onEdit(lib)}>
 											{m.admin_libraries_add_path()}
@@ -164,18 +164,18 @@ export function LibraryCard({
 					</CardContent>
 
 					{/* Timestamps Row */}
-					<div className="flex flex-wrap items-center justify-between gap-2 border-border/50 border-t bg-muted/5 px-5 py-2 font-mono text-muted-foreground text-xs">
+					<div className="border-border/50 bg-muted/5 text-muted-foreground flex flex-wrap items-center justify-between gap-2 border-t px-5 py-2 font-mono text-xs">
 						<span>{m.common_created_at_value({ date: formatDateTime(lib.createdAt) })}</span>
 						<span>{m.admin_libraries_updated_at({ date: formatTimeAgo(lib.updatedAt) })}</span>
 					</div>
 				</div>
 
 				{/* Card Footer */}
-				<div className="flex items-center gap-2.5 border-border/60 border-t bg-muted/10 p-4">
+				<div className="border-border/60 bg-muted/10 flex items-center gap-2.5 border-t p-4">
 					<AsyncButton
 						variant="default"
 						size="default"
-						className="h-10 flex-1 gap-2 font-medium text-sm shadow-xs sm:h-9"
+						className="h-10 flex-1 gap-2 text-sm font-medium shadow-xs sm:h-9"
 						onClick={() => onScan(lib.id)}
 						isPending={isScanning || scanProgress !== undefined}
 						pendingLabel={scanProgressLabel(scanProgress)}

@@ -13,7 +13,7 @@ export function HistoryCard({ item }: { item: HistoryItem }) {
 		<Link
 			to="/details/$id"
 			params={{ id: item.metadata.id }}
-			className="group relative flex min-h-44 overflow-hidden rounded-2xl border border-border/70 bg-card transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/50"
+			className="group border-border/70 bg-card hover:border-primary/50 relative flex min-h-44 overflow-hidden rounded-2xl border transition-[border-color,transform] hover:-translate-y-0.5"
 		>
 			<div className="absolute inset-0">
 				<ApiImage
@@ -31,16 +31,16 @@ export function HistoryCard({ item }: { item: HistoryItem }) {
 			</div>
 
 			<div className="absolute inset-x-0 bottom-0 p-5">
-				<h3 className="truncate font-bold text-foreground text-lg tracking-tight">{title}</h3>
+				<h3 className="text-foreground truncate text-lg font-bold tracking-tight">{title}</h3>
 				<div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-					<span className="font-medium text-primary text-xs">{formatDate(item.watchedAt)}</span>
+					<span className="text-primary text-xs font-medium">{formatDate(item.watchedAt)}</span>
 					{item.episode && (
-						<span className="font-medium text-foreground/70 text-xs">
+						<span className="text-foreground/70 text-xs font-medium">
 							{m.user_history_season_episode({ season: item.season?.seasonNumber ?? "?", episode: item.episode.episodeNumber })}
 						</span>
 					)}
 					{item.durationWatched && (
-						<span className="font-medium text-muted-foreground text-xs">
+						<span className="text-muted-foreground text-xs font-medium">
 							{m.user_history_watched_minutes({ minutes: Math.floor(item.durationWatched / 60) })}
 						</span>
 					)}

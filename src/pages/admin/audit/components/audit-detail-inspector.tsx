@@ -19,7 +19,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 
 		if (entry.resourceType === "metadata") {
 			return (
-				<Link to="/admin/metadata/$id" params={{ id: entry.resourceId }} className="font-mono text-primary hover:underline">
+				<Link to="/admin/metadata/$id" params={{ id: entry.resourceId }} className="text-primary font-mono hover:underline">
 					{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}
 				</Link>
 			);
@@ -27,7 +27,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 
 		if (entry.resourceType === "media_file") {
 			return (
-				<Link to="/admin/media/$id" params={{ id: entry.resourceId }} className="font-mono text-primary hover:underline">
+				<Link to="/admin/media/$id" params={{ id: entry.resourceId }} className="text-primary font-mono hover:underline">
 					{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}
 				</Link>
 			);
@@ -35,7 +35,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 
 		if (entry.resourceType === "collection") {
 			return (
-				<Link to="/admin/collections/$id" params={{ id: entry.resourceId }} className="font-mono text-primary hover:underline">
+				<Link to="/admin/collections/$id" params={{ id: entry.resourceId }} className="text-primary font-mono hover:underline">
 					{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}
 				</Link>
 			);
@@ -43,7 +43,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 
 		if (entry.resourceType === "user") {
 			return (
-				<Link to="/admin/users/$id" params={{ id: entry.resourceId }} className="font-mono text-primary hover:underline">
+				<Link to="/admin/users/$id" params={{ id: entry.resourceId }} className="text-primary font-mono hover:underline">
 					{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}
 				</Link>
 			);
@@ -51,20 +51,20 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 
 		if (entry.resourceType === "library") {
 			return (
-				<Link to="/admin/libraries" className="font-mono text-primary hover:underline">
+				<Link to="/admin/libraries" className="text-primary font-mono hover:underline">
 					{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}
 				</Link>
 			);
 		}
 
-		return <span className="font-mono text-foreground">{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}</span>;
+		return <span className="text-foreground font-mono">{entry.resourceName ?? `${entry.resourceId.slice(0, 10)}…`}</span>;
 	};
 
 	return (
-		<div className="flex flex-col gap-4 border-border border-t bg-muted/15 p-4 text-xs">
+		<div className="border-border bg-muted/15 flex flex-col gap-4 border-t p-4 text-xs">
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_resource()}</span>
+				<div className="border-border/80 bg-background/60 flex flex-col gap-1 rounded-xl border p-3">
+					<span className="text-muted-foreground text-xs font-medium">{m.admin_audit_resource()}</span>
 					<div className="flex flex-wrap items-center gap-1.5">
 						<Badge variant="outline" font="mono">
 							{entry.resourceType}
@@ -72,7 +72,7 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 						{renderResourceLink()}
 					</div>
 					{entry.resourceId && (
-						<div className="flex items-center gap-1 font-mono text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex items-center gap-1 font-mono text-xs">
 							<span className="block truncate">{m.common_id_label({ id: entry.resourceId })}</span>
 							<button
 								type="button"
@@ -89,14 +89,14 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 					)}
 				</div>
 
-				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_actor_word()}</span>
+				<div className="border-border/80 bg-background/60 flex flex-col gap-1 rounded-xl border p-3">
+					<span className="text-muted-foreground text-xs font-medium">{m.admin_audit_actor_word()}</span>
 					{entry.actorUserId ? (
 						<div className="flex flex-col gap-0.5">
-							<Link to="/admin/users/$id" params={{ id: entry.actorUserId }} className="block font-semibold text-primary hover:underline">
+							<Link to="/admin/users/$id" params={{ id: entry.actorUserId }} className="text-primary block font-semibold hover:underline">
 								{m.admin_audit_actor_user_named({ id: entry.actorUserId.slice(0, 8) })}
 							</Link>
-							<div className="flex items-center gap-1 font-mono text-muted-foreground text-xs">
+							<div className="text-muted-foreground flex items-center gap-1 font-mono text-xs">
 								<span className="block truncate">{entry.actorUserId}</span>
 								<button
 									type="button"
@@ -112,15 +112,15 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 							</div>
 						</div>
 					) : (
-						<p className="font-medium text-muted-foreground">{m.admin_audit_system_job()}</p>
+						<p className="text-muted-foreground font-medium">{m.admin_audit_system_job()}</p>
 					)}
 				</div>
 
-				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_client_and_network()}</span>
+				<div className="border-border/80 bg-background/60 flex flex-col gap-1 rounded-xl border p-3">
+					<span className="text-muted-foreground text-xs font-medium">{m.admin_audit_client_and_network()}</span>
 					<div className="flex flex-col gap-0.5">
 						{entry.ipAddress ? (
-							<div className="flex items-center gap-1 font-mono text-foreground">
+							<div className="text-foreground flex items-center gap-1 font-mono">
 								<span>{m.admin_audit_ip_display({ ip: entry.ipAddress })}</span>
 								<button
 									type="button"
@@ -138,23 +138,23 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 							<span className="text-muted-foreground">{m.admin_audit_local_no_ip()}</span>
 						)}
 						{entry.requestId && (
-							<span className="block truncate font-mono text-muted-foreground text-xs" title={entry.requestId}>
+							<span className="text-muted-foreground block truncate font-mono text-xs" title={entry.requestId}>
 								{m.admin_audit_request_id_display({ id: entry.requestId.slice(0, 12) })}
 							</span>
 						)}
 					</div>
 				</div>
 
-				<div className="flex flex-col gap-1 rounded-xl border border-border/80 bg-background/60 p-3">
-					<span className="font-medium text-muted-foreground text-xs">{m.admin_audit_operation_time()}</span>
-					<p className="font-medium text-foreground">{formatFullDateTime(entry.createdAt)}</p>
+				<div className="border-border/80 bg-background/60 flex flex-col gap-1 rounded-xl border p-3">
+					<span className="text-muted-foreground text-xs font-medium">{m.admin_audit_operation_time()}</span>
+					<p className="text-foreground font-medium">{formatFullDateTime(entry.createdAt)}</p>
 					<p className="text-muted-foreground text-xs">{formatTimeAgo(entry.createdAt)}</p>
 				</div>
 			</div>
 
 			{entry.userAgent && (
-				<div className="rounded-lg border border-border/60 bg-background/40 px-3 py-2 text-muted-foreground text-xs">
-					<span className="font-semibold text-foreground">{m.admin_audit_user_agent_label()}</span> {entry.userAgent}
+				<div className="border-border/60 bg-background/40 text-muted-foreground rounded-lg border px-3 py-2 text-xs">
+					<span className="text-foreground font-semibold">{m.admin_audit_user_agent_label()}</span> {entry.userAgent}
 				</div>
 			)}
 
@@ -162,16 +162,16 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				<div className="grid gap-3 sm:grid-cols-2">
 					{beforeSnapshot && (
 						<div className="flex flex-col gap-1.5">
-							<span className="font-semibold text-muted-foreground text-xs">{m.admin_audit_state_before_change()}</span>
-							<pre className="max-h-60 overflow-auto rounded-lg border border-border/80 bg-background/80 p-3 font-mono text-muted-foreground text-xs leading-relaxed">
+							<span className="text-muted-foreground text-xs font-semibold">{m.admin_audit_state_before_change()}</span>
+							<pre className="border-border/80 bg-background/80 text-muted-foreground max-h-60 overflow-auto rounded-lg border p-3 font-mono text-xs leading-relaxed">
 								{beforeSnapshot}
 							</pre>
 						</div>
 					)}
 					{afterSnapshot && (
 						<div className="flex flex-col gap-1.5">
-							<span className="font-semibold text-muted-foreground text-xs">{m.admin_audit_state_after_change()}</span>
-							<pre className="max-h-60 overflow-auto rounded-lg border border-border/80 bg-background/80 p-3 font-mono text-success/90 text-xs leading-relaxed">
+							<span className="text-muted-foreground text-xs font-semibold">{m.admin_audit_state_after_change()}</span>
+							<pre className="border-border/80 bg-background/80 text-success/90 max-h-60 overflow-auto rounded-lg border p-3 font-mono text-xs leading-relaxed">
 								{afterSnapshot}
 							</pre>
 						</div>

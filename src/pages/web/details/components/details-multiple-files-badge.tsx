@@ -27,7 +27,7 @@ export function DetailsMultipleFilesBadge({ metadataId }: { metadataId: string }
 
 	return (
 		<Badge size="lg" variant="primary">
-			<Layers className="size-4 text-primary" />
+			<Layers className="text-primary size-4" />
 			{m.web_multiple_releases()}
 		</Badge>
 	);

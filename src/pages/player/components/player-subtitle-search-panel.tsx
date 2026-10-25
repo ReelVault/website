@@ -91,7 +91,7 @@ export function PlayerSubtitleSearchPanel() {
 					const isThisDownloading = downloadingCandidateId === candidateKey;
 
 					return (
-						<div key={candidateKey} className="flex items-center justify-between gap-3 rounded-md bg-muted p-2">
+						<div key={candidateKey} className="bg-muted flex items-center justify-between gap-3 rounded-md p-2">
 							<span className="min-w-0 truncate text-xs">
 								{m.player_subtitle_candidate_meta({ label: candidate.label ?? candidate.language, format: candidate.format })}
 							</span>

@@ -64,9 +64,9 @@ export function AdminLiveActivitySection() {
 
 	if (liveQuery.isLoading && !data) {
 		return (
-			<div className="flex h-40 items-center justify-center rounded-2xl border border-border/60 bg-card/40">
-				<div className="flex items-center gap-3 text-muted-foreground text-xs">
-					<RefreshCw className="size-4 animate-spin text-primary" />
+			<div className="border-border/60 bg-card/40 flex h-40 items-center justify-center rounded-2xl border">
+				<div className="text-muted-foreground flex items-center gap-3 text-xs">
+					<RefreshCw className="text-primary size-4 animate-spin" />
 					<span>{m.admin_checking_live_activity()}</span>
 				</div>
 			</div>
@@ -95,8 +95,8 @@ export function AdminLiveActivitySection() {
 			<div className="flex flex-col gap-3">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<Activity className="size-4.5 animate-pulse text-primary" />
-						<h4 className="font-bold text-foreground text-sm">{m.admin_live_active_streams_title({ count: activeStreams.length })}</h4>
+						<Activity className="text-primary size-4.5 animate-pulse" />
+						<h4 className="text-foreground text-sm font-bold">{m.admin_live_active_streams_title({ count: activeStreams.length })}</h4>
 					</div>
 
 					{data?.capacity && (
@@ -108,9 +108,9 @@ export function AdminLiveActivitySection() {
 				</div>
 
 				{activeStreams.length === 0 ? (
-					<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 border-dashed bg-card/30 py-10 text-center text-muted-foreground">
+					<div className="border-border/70 bg-card/30 text-muted-foreground flex flex-col items-center justify-center rounded-2xl border border-dashed py-10 text-center">
 						<Video className="mb-2 size-8 opacity-30" />
-						<p className="font-semibold text-foreground text-xs">{m.admin_no_active_playbacks()}</p>
+						<p className="text-foreground text-xs font-semibold">{m.admin_no_active_playbacks()}</p>
 						<p className="text-xs">{m.admin_nobody_watching()}</p>
 					</div>
 				) : (
@@ -119,7 +119,7 @@ export function AdminLiveActivitySection() {
 							<label className="flex cursor-pointer items-center gap-2 text-xs">
 								<input
 									type="checkbox"
-									className="size-4 accent-primary"
+									className="accent-primary size-4"
 									checked={selectedOnScreen.length === activeStreams.length}
 									onChange={() => {
 										setSelectedIds(selectedOnScreen.length === activeStreams.length ? new Set() : new Set(activeStreamIds));
@@ -150,10 +150,10 @@ export function AdminLiveActivitySection() {
 						<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 							{activeStreams.map((stream) => (
 								<div key={stream.sessionId} className="relative">
-									<label className="absolute top-3 left-3 z-10 flex size-6 cursor-pointer items-center justify-center rounded-md bg-background/80 shadow-sm">
+									<label className="bg-background/80 absolute top-3 left-3 z-10 flex size-6 cursor-pointer items-center justify-center rounded-md shadow-sm">
 										<input
 											type="checkbox"
-											className="size-4 accent-primary"
+											className="accent-primary size-4"
 											checked={selectedIds.has(stream.sessionId)}
 											onChange={() => toggleSelected(stream.sessionId)}
 											aria-label={m.admin_live_select_session()}
@@ -176,8 +176,8 @@ export function AdminLiveActivitySection() {
 			{activeDevices.length > 0 && (
 				<div className="flex flex-col gap-3 pt-2">
 					<div className="flex items-center gap-2">
-						<Wifi className="size-4 text-muted-foreground" />
-						<h4 className="font-bold text-foreground text-xs">{m.admin_live_connected_devices_title({ count: activeDevices.length })}</h4>
+						<Wifi className="text-muted-foreground size-4" />
+						<h4 className="text-foreground text-xs font-bold">{m.admin_live_connected_devices_title({ count: activeDevices.length })}</h4>
 					</div>
 
 					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">

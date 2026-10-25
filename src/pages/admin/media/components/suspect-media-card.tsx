@@ -15,17 +15,17 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 
 	return (
 		<>
-			<div className="flex flex-col justify-between gap-4 rounded-xl border border-destructive/30 bg-card p-5 shadow-2xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:border-destructive/60 hover:shadow-sm">
+			<div className="border-destructive/30 bg-card hover:border-destructive/60 flex flex-col justify-between gap-4 rounded-xl border p-5 shadow-2xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:shadow-sm">
 				{/* Top Header: Filename & Path */}
 				<div className="flex flex-col gap-2">
 					<div className="flex items-start justify-between gap-3">
 						<div className="flex min-w-0 items-center gap-3">
-							<div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-destructive/10 text-destructive shadow-2xs">
+							<div className="bg-destructive/10 text-destructive flex size-10 shrink-0 items-center justify-center rounded-xl shadow-2xs">
 								<FileVideo className="size-5" />
 							</div>
 							<div className="min-w-0">
-								<p className="truncate font-semibold text-foreground text-sm tracking-tight">{item.fileName}</p>
-								<p className="truncate font-mono text-muted-foreground text-xs">{item.filePath}</p>
+								<p className="text-foreground truncate text-sm font-semibold tracking-tight">{item.fileName}</p>
+								<p className="text-muted-foreground truncate font-mono text-xs">{item.filePath}</p>
 							</div>
 						</div>
 						{item.libraryName && (
@@ -68,7 +68,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 					</div>
 
 					{/* Detailed Messages */}
-					<div className="mt-1 flex flex-col gap-1 rounded-lg border border-border/50 bg-muted/30 p-2.5 text-xs">
+					<div className="border-border/50 bg-muted/30 mt-1 flex flex-col gap-1 rounded-lg border p-2.5 text-xs">
 						{item.reasons.map((r) => (
 							<p key={`msg-${r.code}-${r.params ? JSON.stringify(r.params) : ""}`} className="text-muted-foreground">
 								{m.admin_media_reason_bullet({ reason: translateByKey(r.code, r.params) })}
@@ -78,12 +78,12 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 				</div>
 
 				{/* Comparison Grid: Recognized vs Assigned */}
-				<div className="grid grid-cols-1 gap-2 rounded-xl border border-border/60 bg-muted/20 p-3 sm:grid-cols-2">
+				<div className="border-border/60 bg-muted/20 grid grid-cols-1 gap-2 rounded-xl border p-3 sm:grid-cols-2">
 					{/* Left: Recognized from file */}
-					<div className="flex flex-col gap-1 rounded-lg border border-border/40 bg-background/60 p-2.5">
-						<span className="font-semibold text-muted-foreground text-xs">{m.admin_media_recognized_from_file()}</span>
-						<p className="font-bold text-foreground text-sm">{item.recognized.title}</p>
-						<div className="flex flex-wrap gap-2 text-muted-foreground text-xs">
+					<div className="border-border/40 bg-background/60 flex flex-col gap-1 rounded-lg border p-2.5">
+						<span className="text-muted-foreground text-xs font-semibold">{m.admin_media_recognized_from_file()}</span>
+						<p className="text-foreground text-sm font-bold">{item.recognized.title}</p>
+						<div className="text-muted-foreground flex flex-wrap gap-2 text-xs">
 							{item.recognized.year && <span>{m.admin_media_year_label({ year: item.recognized.year })}</span>}
 							{!isMovie && item.recognized.season !== null && (
 								<span>
@@ -94,16 +94,16 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 					</div>
 
 					{/* Right: Currently assigned */}
-					<div className="flex flex-col gap-1 rounded-lg border border-border/40 bg-background/60 p-2.5">
-						<span className="font-semibold text-muted-foreground text-xs">{m.admin_media_current_metadata()}</span>
-						<p className="font-bold text-foreground text-sm">{item.currentMetadata.title}</p>
+					<div className="border-border/40 bg-background/60 flex flex-col gap-1 rounded-lg border p-2.5">
+						<span className="text-muted-foreground text-xs font-semibold">{m.admin_media_current_metadata()}</span>
+						<p className="text-foreground text-sm font-bold">{item.currentMetadata.title}</p>
 						{item.currentMetadata.originalTitle &&
 							item.currentMetadata.originalTitle.trim().toLowerCase() !== item.currentMetadata.title.trim().toLowerCase() && (
 								<p className="text-muted-foreground text-xs italic">
 									{m.admin_media_original_title_label({ title: item.currentMetadata.originalTitle })}
 								</p>
 							)}
-						<div className="flex flex-wrap gap-2 text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex flex-wrap gap-2 text-xs">
 							{item.currentMetadata.releaseDate && (
 								<span>{m.admin_media_premiere_date_label({ date: item.currentMetadata.releaseDate.slice(0, 10) })}</span>
 							)}
@@ -120,7 +120,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 				</div>
 
 				{/* Actions */}
-				<div className="flex flex-wrap items-center justify-between gap-2 border-border/50 border-t pt-3">
+				<div className="border-border/50 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
 					<div className="flex items-center gap-2">
 						<Link
 							to="/admin/media/$id"

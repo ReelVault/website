@@ -44,13 +44,13 @@ export function QuickConnectRedeemSection({
 	};
 
 	return (
-		<section className="relative overflow-hidden rounded-3xl border border-border bg-card/85 p-8 shadow-2xl sm:p-10">
+		<section className="border-border bg-card/85 relative overflow-hidden rounded-3xl border p-8 shadow-2xl sm:p-10">
 			<header className="flex flex-col gap-3 text-center">
-				<div className="mx-auto flex size-14 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
+				<div className="border-primary/20 bg-primary/10 text-primary mx-auto flex size-14 items-center justify-center rounded-2xl border">
 					<KeyRound className="size-7" />
 				</div>
-				<h1 className="font-black text-3xl tracking-tight sm:text-4xl">{m.auth_code_login_heading()}</h1>
-				<p className="font-medium text-muted-foreground text-xs">{m.auth_enter_one_time_code()}</p>
+				<h1 className="text-3xl font-black tracking-tight sm:text-4xl">{m.auth_code_login_heading()}</h1>
+				<p className="text-muted-foreground text-xs font-medium">{m.auth_enter_one_time_code()}</p>
 			</header>
 
 			<form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-6">
@@ -81,7 +81,7 @@ export function QuickConnectRedeemSection({
 
 				<AsyncButton
 					type="submit"
-					className="w-full rounded-2xl py-5 font-black uppercase tracking-widest"
+					className="w-full rounded-2xl py-5 font-black tracking-widest uppercase"
 					disabled={manualCode.replace(/[^0-9a-zA-Z]/g, "").length < 6}
 					isPending={isPending}
 					pendingLabel={m.common_signing_in()}

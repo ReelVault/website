@@ -26,7 +26,7 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 					<div className="flex flex-col gap-1">
 						<Badge variant={config.badgeVariant}>{config.label}</Badge>
 						{marker.label && (
-							<p className="font-medium text-foreground text-sm">{m.components_media_quoted_label({ label: marker.label })}</p>
+							<p className="text-foreground text-sm font-medium">{m.components_media_quoted_label({ label: marker.label })}</p>
 						)}
 					</div>
 					<Badge variant="secondary" font="mono">
@@ -34,10 +34,10 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 					</Badge>
 				</div>
 
-				<div className="flex items-center gap-2 font-mono text-muted-foreground text-xs">
+				<div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
 					<Clock className="size-3.5" />
 					{isPoint ? (
-						<span className="font-semibold text-destructive">{formatTimestamp(marker.startSeconds)}</span>
+						<span className="text-destructive font-semibold">{formatTimestamp(marker.startSeconds)}</span>
 					) : (
 						<span>
 							{m.admin_markers_time_range_with_duration({
@@ -49,7 +49,7 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 					)}
 				</div>
 
-				<div className="flex flex-wrap items-center justify-between gap-2 text-muted-foreground text-xs">
+				<div className="text-muted-foreground flex flex-wrap items-center justify-between gap-2 text-xs">
 					<div className="flex items-center gap-1.5 font-mono">
 						<span>{m.admin_markers_file_label()}</span>
 						<Link to="/admin/media/$id" params={{ id: marker.mediaFileId }} className="text-primary hover:underline">
@@ -59,7 +59,7 @@ export function MarkerMobileCard({ marker, onOpenEdit, onDelete }: MarkerMobileC
 					<span>{formatDateTime(marker.createdAt)}</span>
 				</div>
 
-				<div className="flex items-center justify-between border-border/80 border-t pt-3">
+				<div className="border-border/80 flex items-center justify-between border-t pt-3">
 					<Button
 						size="sm"
 						variant="ghost"

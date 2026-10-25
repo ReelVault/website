@@ -38,7 +38,7 @@ export function DetailsEpisodeThumbnail({
 }: DetailsEpisodeThumbnailProps) {
 	return (
 		<div className="relative shrink-0">
-			<div className="relative aspect-video w-full overflow-hidden rounded-lg border border-border shadow-md transition-[border-color,box-shadow] duration-300 group-hover:border-primary/30 group-hover:shadow-xl md:w-48 lg:w-56">
+			<div className="border-border group-hover:border-primary/30 relative aspect-video w-full overflow-hidden rounded-lg border shadow-md transition-[border-color,box-shadow] duration-300 group-hover:shadow-xl md:w-48 lg:w-56">
 				<ApiImage
 					fileId={imageId}
 					cacheKey={imageUpdatedAt ?? undefined}
@@ -53,10 +53,10 @@ export function DetailsEpisodeThumbnail({
 						to="/player/$id"
 						params={{ id: mediaFileId }}
 						aria-label={m.web_play_episodetitle({ episodeTitle })}
-						className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 focus-visible:opacity-100 group-hover:opacity-100"
+						className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-visible:opacity-100"
 					>
-						<div className="rounded-full bg-primary/90 p-3 shadow-lg">
-							<Play className="size-5 fill-current pl-0.5 text-primary-foreground" />
+						<div className="bg-primary/90 rounded-full p-3 shadow-lg">
+							<Play className="text-primary-foreground size-5 fill-current pl-0.5" />
 						</div>
 					</Link>
 				)}
@@ -70,7 +70,7 @@ export function DetailsEpisodeThumbnail({
 							type="button"
 							variant="outline"
 							size="icon"
-							className="opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+							className="opacity-100 md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100"
 							disabled={isEpisodePending}
 							onClick={(e) => {
 								e.preventDefault();
@@ -100,7 +100,7 @@ export function DetailsEpisodeThumbnail({
 										type="button"
 										variant="outline"
 										size="icon"
-										className="opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+										className="opacity-100 md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100"
 										disabled={isEpisodePending}
 										aria-label={m.web_reset_episode_progress({ episodeTitle })}
 										title={m.components_cw_reset_progress()}

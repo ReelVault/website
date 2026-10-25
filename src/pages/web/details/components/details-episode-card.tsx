@@ -120,7 +120,7 @@ export function DetailsEpisodeCard({
 									/>
 								</div>
 							</div>
-							<div className="absolute inset-y-0 left-0 w-1 bg-linear-to-b from-primary to-primary/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+							<div className="from-primary to-primary/50 absolute inset-y-0 left-0 w-1 bg-linear-to-b opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 						</CardContent>
 					</ContextMenuTrigger>
 

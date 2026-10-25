@@ -38,8 +38,8 @@ export function DashboardKpiStats({
 							<span>{activeSessions}</span>
 							{activeSessions > 0 ? (
 								<span className="relative flex size-2.5">
-									<span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-75" />
-									<span className="relative inline-flex size-2.5 rounded-full bg-success" />
+									<span className="bg-success absolute inline-flex size-full animate-ping rounded-full opacity-75" />
+									<span className="bg-success relative inline-flex size-2.5 rounded-full" />
 								</span>
 							) : null}
 						</div>
@@ -64,7 +64,7 @@ export function DashboardKpiStats({
 					label={m.admin_dashboard_worker_jobs_label()}
 					value={
 						<div className="flex items-baseline gap-1.5">
-							<span className="font-bold text-2xl tabular-nums sm:text-3xl">{activeJobs}</span>
+							<span className="text-2xl font-bold tabular-nums sm:text-3xl">{activeJobs}</span>
 							<span className="text-muted-foreground text-xs">{m.admin_dashboard_active_word()}</span>
 							{waitingJobs > 0 && (
 								<span className="text-muted-foreground text-xs">{m.admin_dashboard_queued_count({ count: waitingJobs })}</span>

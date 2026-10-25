@@ -48,18 +48,18 @@ export default function AdminCompaniesPage() {
 								<Link to="/companies/$id" params={{ id: company.id }} className="group block focus:outline-none">
 									<Card className="h-full overflow-hidden">
 										<CardContent className="flex items-center gap-3.5">
-											<div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary shadow-xs transition-colors group-hover:bg-primary/20">
+											<div className="border-primary/20 bg-primary/10 text-primary group-hover:bg-primary/20 flex size-11 shrink-0 items-center justify-center rounded-xl border shadow-xs transition-colors">
 												<Building2 className="size-5" />
 											</div>
 											<div className="min-w-0 flex-1">
 												<h3
-													className="truncate font-semibold text-foreground text-sm tracking-tight group-hover:text-primary"
+													className="text-foreground group-hover:text-primary truncate text-sm font-semibold tracking-tight"
 													title={company.name}
 												>
 													{company.name}
 												</h3>
 												{company.originalName && company.originalName !== company.name && (
-													<p className="truncate text-muted-foreground text-xs">{company.originalName}</p>
+													<p className="text-muted-foreground truncate text-xs">{company.originalName}</p>
 												)}
 											</div>
 										</CardContent>

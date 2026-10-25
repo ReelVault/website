@@ -35,7 +35,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 									selected={activeStyle === style.id}
 								>
 									<span className="text-xl">{style.icon}</span>
-									<span className="font-bold text-xs">{style.name}</span>
+									<span className="text-xs font-bold">{style.name}</span>
 								</Button>
 							</div>
 						))}
@@ -49,7 +49,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 				<Label tone="muted" size="xs">
 					{m.auth_choose_character()}
 				</Label>
-				<div className="grid grid-cols-4 gap-2 rounded-2xl border border-border bg-muted/20 p-3 sm:grid-cols-5">
+				<div className="border-border bg-muted/20 grid grid-cols-4 gap-2 rounded-2xl border p-3 sm:grid-cols-5">
 					{AVATAR_SEEDS.map((seed) => {
 						const isSelected = activeSeed === seed;
 
@@ -58,7 +58,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 								key={seed}
 								className={cn(
 									"relative flex aspect-square overflow-hidden rounded-xl border-2",
-									isSelected ? "border-primary bg-primary/10" : "border-transparent bg-muted/40 hover:border-border",
+									isSelected ? "border-primary bg-primary/10" : "bg-muted/40 hover:border-border border-transparent",
 								)}
 							>
 								<Button
@@ -74,7 +74,7 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 									</span>
 								</Button>
 								{isSelected && (
-									<span className="pointer-events-none absolute top-1 right-1 flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground shadow">
+									<span className="bg-primary text-primary-foreground pointer-events-none absolute top-1 right-1 flex size-5 items-center justify-center rounded-full shadow">
 										<Check className="size-3" aria-hidden="true" />
 									</span>
 								)}

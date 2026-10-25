@@ -6,7 +6,7 @@ const collapsibleTriggerVariants = cva("", {
 		// Full-width disclosure row for lists: padded, hoverable, and wrapping its content on narrow screens.
 		variant: {
 			default: "",
-			row: "flex w-full flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-3 text-left transition-colors hover:bg-muted/40",
+			row: "hover:bg-muted/40 flex w-full flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-3 text-left transition-colors",
 		},
 	},
 	defaultVariants: {

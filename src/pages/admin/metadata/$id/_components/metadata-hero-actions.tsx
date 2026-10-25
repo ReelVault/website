@@ -45,7 +45,7 @@ export function MetadataHeroActions({
 	onGeneratePreviews,
 }: MetadataHeroActionsProps) {
 	return (
-		<div className="flex flex-wrap items-center gap-2 border-border/60 border-t pt-4">
+		<div className="border-border/60 flex flex-wrap items-center gap-2 border-t pt-4">
 			<AsyncButton
 				variant="default"
 				size="default"
@@ -59,7 +59,7 @@ export function MetadataHeroActions({
 			</AsyncButton>
 
 			<Button variant="outline" size="default" onClick={onOpenIdentifyDialog}>
-				<Search className="size-4 text-primary" />
+				<Search className="text-primary size-4" />
 				<span>{m.admin_metadata_match_tmdb()}</span>
 			</Button>
 
@@ -75,7 +75,7 @@ export function MetadataHeroActions({
 				<DropdownMenuContent align="start" className="w-full">
 					{onLockAll !== undefined && (
 						<DropdownMenuItem onClick={onLockAll}>
-							<Lock className="size-4 text-warning" />
+							<Lock className="text-warning size-4" />
 							<span>{m.admin_metadata_lock_all_fields()}</span>
 						</DropdownMenuItem>
 					)}
@@ -87,7 +87,7 @@ export function MetadataHeroActions({
 					)}
 					{(onLockAll !== undefined || onUnlockAll !== undefined) && <DropdownMenuSeparator />}
 					<DropdownMenuItem onClick={onOpenMergeDialog}>
-						<Combine className="size-4 text-primary" />
+						<Combine className="text-primary size-4" />
 						<span>{m.admin_metadata_link_to_other()}</span>
 					</DropdownMenuItem>
 					<DropdownMenuItem onClick={onRefresh} disabled={isRefreshing}>
@@ -96,7 +96,7 @@ export function MetadataHeroActions({
 					</DropdownMenuItem>
 					{onGeneratePreviews !== undefined && (
 						<DropdownMenuItem onClick={onGeneratePreviews}>
-							<Wand2 className="size-4 text-primary" />
+							<Wand2 className="text-primary size-4" />
 							<span>{m.admin_metadata_generate_previews()}</span>
 						</DropdownMenuItem>
 					)}

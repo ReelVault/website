@@ -32,6 +32,32 @@ const neverSettles = <T>(): Promise<T> =>
 		// Intentionally left pending while the document reloads.
 	});
 
+interface LazyRouteViewProps<TProps extends object> {
+	load: () => Promise<FunctionComponent<TProps>>;
+	props: TProps;
+}
+
+function LazyRouteView<TProps extends object>({ load, props }: LazyRouteViewProps<TProps>): ReactNode {
+	const Component = use(load());
+
+	return createElement<TProps>(Component, props);
+}
+
+function withLazyRoute<TProps extends object>(
+	View: FunctionComponent<LazyRouteViewProps<TProps>>,
+	load: () => Promise<FunctionComponent<TProps>>,
+): AsyncRouteComponent<TProps> {
+	const preload = async (): Promise<void> => {
+		await load();
+	};
+
+	function Lazy(props: TProps): ReactNode {
+		return createElement(View, { load, props });
+	}
+
+	return Object.assign(Lazy, { preload });
+}
+
 /**
  * Local replacement for `@tanstack/react-router`'s `lazyRouteComponent`.
  *
@@ -68,15 +94,5 @@ export function lazyRouteComponent<TProps extends object = Record<string, unknow
 		return loadPromise;
 	};
 
-	const preload = async (): Promise<void> => {
-		await load();
-	};
-
-	const Lazy = (props: TProps): ReactNode => {
-		const Component = use(load());
-
-		return createElement<TProps>(Component, props);
-	};
-
-	return Object.assign(Lazy, { preload });
+	return withLazyRoute(LazyRouteView, load);
 }

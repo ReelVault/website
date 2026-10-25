@@ -34,14 +34,14 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 				<Tooltip>
 					<TooltipTrigger
 						render={
-							<span className="flex cursor-default items-center gap-1 rounded-full border border-warning/30 bg-warning/10 px-2 py-0.5 font-medium text-warning text-xs">
-								<Star className="size-3 fill-warning text-warning" />
+							<span className="border-warning/30 bg-warning/10 text-warning flex cursor-default items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium">
+								<Star className="fill-warning text-warning size-3" />
 								<span className="tabular-nums">{rating}</span>
 							</span>
 						}
 					/>
 					<TooltipContent side="top" className="flex flex-col">
-						<div className="border-border/50 border-b pb-1 font-semibold text-foreground">
+						<div className="border-border/50 text-foreground border-b pb-1 font-semibold">
 							{m.admin_metadata_average_rating({ rating })}
 						</div>
 						{metadata.rating.scores.length > 0 ? (
@@ -50,7 +50,7 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 									<span className="text-muted-foreground">
 										{m.admin_metadata_rating_source_label({ source: s.label ?? formatProviderShortName(s.source) })}
 									</span>
-									<span className="font-medium font-mono text-foreground">
+									<span className="text-foreground font-mono font-medium">
 										{m.admin_metadata_score_value({ value: formatRating(s.value), max: s.maxValue })}
 										{s.votes > 0 ? ` (${formatNumber(s.votes)})` : ""}
 									</span>
@@ -94,10 +94,10 @@ export function MetadataHeroBadges({ metadata, releaseYear, rating, lockedCount 
 										href={url}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="inline-flex min-h-10 items-center gap-1 rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 font-mono text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted sm:min-h-0"
+										className="border-border/70 bg-muted/40 text-foreground hover:border-primary/50 hover:bg-muted inline-flex min-h-10 items-center gap-1 rounded-md border px-2 py-0.5 font-mono text-xs transition-colors sm:min-h-0"
 									>
 										<span>{m.admin_metadata_provider_external_id({ provider: short, id: p.externalId })}</span>
-										<ExternalLink className="size-2.5 text-muted-foreground" />
+										<ExternalLink className="text-muted-foreground size-2.5" />
 									</a>
 								) : (
 									<Badge variant="outline" size="sm" font="mono">

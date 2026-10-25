@@ -27,24 +27,24 @@ export function MergeMetadataCandidateItem({ candidate, isSelected, onSelect }: 
 			)}
 		>
 			<div className="flex min-w-0 items-center gap-3">
-				<div className="relative aspect-2/3 w-10 shrink-0 overflow-hidden rounded-md border border-border/60 bg-muted/40 shadow-2xs">
+				<div className="border-border/60 bg-muted/40 relative aspect-2/3 w-10 shrink-0 overflow-hidden rounded-md border shadow-2xs">
 					<ApiImage fileId={poster?.id} cacheKey={poster?.updatedAt} alt={candidate.title} fill className="object-cover" sizes="40px" />
 				</div>
 				<div className="min-w-0 flex-1">
 					<div className="flex items-center gap-2">
-						<span className="truncate font-semibold text-foreground text-sm">{candidate.title}</span>
+						<span className="text-foreground truncate text-sm font-semibold">{candidate.title}</span>
 						<Badge variant="outline">{year}</Badge>
 					</div>
-					<p className="truncate font-mono text-muted-foreground text-xs">{m.common_id_label({ id: candidate.id })}</p>
+					<p className="text-muted-foreground truncate font-mono text-xs">{m.common_id_label({ id: candidate.id })}</p>
 					{candidate.originalTitle && candidate.originalTitle !== candidate.title && (
-						<p className="truncate text-muted-foreground text-xs italic">{candidate.originalTitle}</p>
+						<p className="text-muted-foreground truncate text-xs italic">{candidate.originalTitle}</p>
 					)}
 				</div>
 			</div>
 
 			<div className="flex shrink-0 items-center">
 				{isSelected && (
-					<div className="flex size-6 items-center justify-center rounded-full bg-primary text-primary-foreground">
+					<div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-full">
 						<Check className="size-3.5" />
 					</div>
 				)}

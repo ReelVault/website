@@ -96,13 +96,13 @@ export default function QuickConnectPage() {
 
 		if (user) {
 			return (
-				<section className="relative overflow-hidden rounded-3xl border border-border bg-card/85 p-6 shadow-2xl sm:p-8">
-					<div className="mb-6 flex items-center gap-3 border-border/60 border-b pb-4">
-						<div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+				<section className="border-border bg-card/85 relative overflow-hidden rounded-3xl border p-6 shadow-2xl sm:p-8">
+					<div className="border-border/60 mb-6 flex items-center gap-3 border-b pb-4">
+						<div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-xl">
 							<Tv className="size-5" />
 						</div>
 						<div>
-							<h1 className="font-bold text-lg">{m.auth_quick_connect_hub()}</h1>
+							<h1 className="text-lg font-bold">{m.auth_quick_connect_hub()}</h1>
 							<p className="text-muted-foreground text-xs">{m.auth_connect_tv_note()}</p>
 						</div>
 					</div>
@@ -139,7 +139,7 @@ export default function QuickConnectPage() {
 	};
 
 	return (
-		<div className="relative flex min-h-svh w-full flex-col items-center justify-center overflow-hidden bg-background p-4 sm:p-6">
+		<div className="bg-background relative flex min-h-svh w-full flex-col items-center justify-center overflow-hidden p-4 sm:p-6">
 			<AuthBackdrop />
 
 			<QuickConnectHeader hasUser={Boolean(user)} />

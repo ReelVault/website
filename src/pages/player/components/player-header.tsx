@@ -53,8 +53,8 @@ export function PlayerHeader() {
 			</div>
 
 			<div className="flex flex-col items-center text-center">
-				<span className="font-black text-[10px] text-primary/80 uppercase tracking-[0.3em]">{topLabel}</span>
-				<h1 className="line-clamp-1 font-semibold text-foreground text-xl tracking-tight">{displayTitle}</h1>
+				<span className="text-primary/80 text-[10px] font-black tracking-[0.3em] uppercase">{topLabel}</span>
+				<h1 className="text-foreground line-clamp-1 text-xl font-semibold tracking-tight">{displayTitle}</h1>
 			</div>
 
 			<div className="flex items-center justify-end">

@@ -9,7 +9,7 @@ interface SetupStepSummaryProps {
 
 export function SetupStepSummary({ showToken, setupToken, name, email }: SetupStepSummaryProps) {
 	return (
-		<div className="flex flex-col gap-3 rounded-md border border-border bg-muted/20 p-4 text-sm">
+		<div className="border-border bg-muted/20 flex flex-col gap-3 rounded-md border p-4 text-sm">
 			{showToken && (
 				<p>
 					<span className="text-muted-foreground">{m.setup_token_field_label()}</span>{" "}

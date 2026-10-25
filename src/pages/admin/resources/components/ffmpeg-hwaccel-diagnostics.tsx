@@ -22,8 +22,8 @@ const HWACCEL_LABELS: Record<AdminFfmpegCapabilities["effective"]["type"], strin
 function InfoRow({ label, children }: { label: string; children: ReactNode }) {
 	return (
 		<div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
-			<span className="min-w-56 shrink-0 text-muted-foreground text-sm">{label}</span>
-			<span className="wrap-break-word min-w-0 text-sm">{children}</span>
+			<span className="text-muted-foreground min-w-56 shrink-0 text-sm">{label}</span>
+			<span className="min-w-0 text-sm wrap-break-word">{children}</span>
 		</div>
 	);
 }
@@ -39,16 +39,16 @@ function getVerificationResultText(ok: boolean, code: string | null): string {
 function VerificationRow({ label, ok, code, detail }: { label: string; ok: boolean | null; code: string | null; detail: string | null }) {
 	return (
 		<div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
-			<span className="min-w-56 shrink-0 text-muted-foreground text-sm">{label}</span>
+			<span className="text-muted-foreground min-w-56 shrink-0 text-sm">{label}</span>
 			{ok === null ? (
 				<span className="text-muted-foreground text-sm">{m.common_no_value()}</span>
 			) : (
 				<span className="flex min-w-0 flex-col gap-0.5">
-					<span className={cn("flex items-center gap-1.5 text-sm", ok ? "text-success" : "font-medium text-destructive")}>
+					<span className={cn("flex items-center gap-1.5 text-sm", ok ? "text-success" : "text-destructive font-medium")}>
 						{ok ? <CheckCircle2 className="size-4" /> : <TriangleAlert className="size-4" />}
 						{getVerificationResultText(ok, code)}
 					</span>
-					{detail !== null && <span className="wrap-break-word font-mono text-muted-foreground text-xs">{detail}</span>}
+					{detail !== null && <span className="text-muted-foreground font-mono text-xs wrap-break-word">{detail}</span>}
 				</span>
 			)}
 		</div>
@@ -123,7 +123,7 @@ export function FfmpegHwaccelDiagnostics() {
 			<div className="flex flex-col gap-2.5">
 				<InfoRow label={m.admin_resources_ffmpeg_version()}>{capabilities.version}</InfoRow>
 				<InfoRow label={m.admin_resources_binary_path()}>
-					<code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{capabilities.binaryPath}</code>
+					<code className="bg-muted rounded px-1.5 py-0.5 font-mono text-xs">{capabilities.binaryPath}</code>
 				</InfoRow>
 				<InfoRow label={m.admin_resources_hwaccel_configured()}>{configuredLabel}</InfoRow>
 				<InfoRow label={m.admin_resources_hwaccel_effective()}>
@@ -140,12 +140,12 @@ export function FfmpegHwaccelDiagnostics() {
 				</InfoRow>
 				<InfoRow label={m.admin_resources_drm_device()}>
 					{capabilities.driDevice !== null ? (
-						<code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{capabilities.driDevice}</code>
+						<code className="bg-muted rounded px-1.5 py-0.5 font-mono text-xs">{capabilities.driDevice}</code>
 					) : (
 						<span className="text-muted-foreground">{m.admin_resources_not_detected()}</span>
 					)}
 					{effective.type === "nvenc" && (
-						<span className="block text-muted-foreground text-xs">{m.admin_resources_nvenc_dev_dri_note()}</span>
+						<span className="text-muted-foreground block text-xs">{m.admin_resources_nvenc_dev_dri_note()}</span>
 					)}
 				</InfoRow>
 				<VerificationRow
@@ -192,7 +192,7 @@ export function FfmpegHwaccelDiagnostics() {
 			</div>
 
 			{verification !== null && !verification.ok && (
-				<p className="rounded-lg border border-warning/30 bg-warning/10 p-3 text-muted-foreground text-xs">
+				<p className="border-warning/30 bg-warning/10 text-muted-foreground rounded-lg border p-3 text-xs">
 					{m.admin_resources_accel_failed_notice()}
 				</p>
 			)}

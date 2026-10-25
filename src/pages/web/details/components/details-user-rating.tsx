@@ -45,10 +45,10 @@ export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 
 	return (
 		<div
-			className="inline-flex flex-row items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-3.5 py-2 shadow-xs"
+			className="border-border/60 bg-card/40 inline-flex flex-row items-center gap-3 rounded-xl border px-3.5 py-2 shadow-xs"
 			aria-live="polite"
 		>
-			<span className="font-semibold text-muted-foreground text-xs">{m.web_your_rating_label()}</span>
+			<span className="text-muted-foreground text-xs font-semibold">{m.web_your_rating_label()}</span>
 
 			<fieldset className="flex items-center gap-1.5" disabled={isLoading || isSaving}>
 				<legend className="sr-only">{m.web_select_rating()}</legend>
@@ -82,7 +82,7 @@ export function DetailsUserRating({ metadataId }: { metadataId: string }) {
 					onClick={() => {
 						detach(removeRating());
 					}}
-					className="text-muted-foreground text-xs hover:text-destructive max-sm:min-h-10 max-sm:px-3"
+					className="text-muted-foreground hover:text-destructive text-xs max-sm:min-h-10 max-sm:px-3"
 				>
 					{m.common_delete()}
 				</AsyncButton>

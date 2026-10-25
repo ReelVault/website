@@ -16,7 +16,7 @@ interface MediaFileRelationsSectionProps {
 
 function InfoRow({ label, children }: { label: string; children: React.ReactNode }) {
 	return (
-		<div className="flex items-center justify-between gap-2 border-border/40 border-b pb-2 last:border-b-0 last:pb-0">
+		<div className="border-border/40 flex items-center justify-between gap-2 border-b pb-2 last:border-b-0 last:pb-0">
 			<span className="text-muted-foreground text-xs">{label}</span>
 			{children}
 		</div>
@@ -40,7 +40,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 				</InfoRow>
 
 				<InfoRow label={m.admin_media_video_id()}>
-					<div className="flex items-center gap-1.5 font-mono text-foreground text-xs">
+					<div className="text-foreground flex items-center gap-1.5 font-mono text-xs">
 						<span>{m.common_truncated_id({ id: file.id.slice(0, 16) })}</span>
 						<Button
 							tone="muted"
@@ -61,7 +61,7 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 						<Link
 							to="/admin/metadata/$id"
 							params={{ id: file.metadataId }}
-							className="flex flex-row items-center gap-1 font-mono text-muted-foreground text-xs hover:text-foreground"
+							className="text-muted-foreground hover:text-foreground flex flex-row items-center gap-1 font-mono text-xs"
 						>
 							<LucideLink className="size-3.5" />
 							{m.common_truncated_id({ id: file.metadataId.slice(0, 16) })}
@@ -75,13 +75,13 @@ export function MediaFileRelationsSection({ file, onOpenReassign }: MediaFileRel
 
 				{file.movieId && (
 					<InfoRow label={m.admin_media_movie_id()}>
-						<span className="font-mono text-muted-foreground text-xs">{m.common_truncated_id({ id: file.movieId.slice(0, 16) })}</span>
+						<span className="text-muted-foreground font-mono text-xs">{m.common_truncated_id({ id: file.movieId.slice(0, 16) })}</span>
 					</InfoRow>
 				)}
 
 				{file.episodeId && (
 					<InfoRow label={m.admin_media_episode_id_label()}>
-						<span className="font-mono text-muted-foreground text-xs">{m.common_truncated_id({ id: file.episodeId.slice(0, 16) })}</span>
+						<span className="text-muted-foreground font-mono text-xs">{m.common_truncated_id({ id: file.episodeId.slice(0, 16) })}</span>
 					</InfoRow>
 				)}
 			</div>

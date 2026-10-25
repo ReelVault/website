@@ -109,7 +109,7 @@ export function LoginCredentialsForm({
 
 			<AsyncButton
 				type="submit"
-				className="h-12 w-full rounded-xl font-semibold text-base"
+				className="h-12 w-full rounded-xl text-base font-semibold"
 				isPending={isPending}
 				pendingLabel={m.auth_login_pending()}
 			>
@@ -119,9 +119,9 @@ export function LoginCredentialsForm({
 
 			<div className="relative flex items-center justify-center py-1">
 				<div className="absolute inset-0 flex items-center">
-					<span className="w-full border-border/60 border-t" />
+					<span className="border-border/60 w-full border-t" />
 				</div>
-				<span className="relative bg-card/75 px-3 font-semibold text-muted-foreground text-xs">{m.auth_or_divider()}</span>
+				<span className="bg-card/75 text-muted-foreground relative px-3 text-xs font-semibold">{m.auth_or_divider()}</span>
 			</div>
 
 			<Button size="lg" type="button" variant="outline" className="w-full" onClick={onQuickConnect}>

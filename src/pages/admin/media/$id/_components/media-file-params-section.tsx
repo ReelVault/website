@@ -15,7 +15,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 		<AdminSection title={m.admin_media_edition_params_section()} description={m.admin_media_release_version_description()}>
 			<div className="grid gap-4 sm:grid-cols-2">
 				<div className="mb-2 flex flex-col gap-3 sm:col-span-2">
-					<div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-3.5">
+					<div className="border-border bg-muted/40 flex items-center justify-between gap-4 rounded-xl border p-3.5">
 						<div className="flex flex-col gap-0.5">
 							<Label weight="semibold" htmlFor="media-is-enabled" className="cursor-pointer">
 								{m.admin_media_enabled_active()}
@@ -25,7 +25,7 @@ export function MediaFileParamsSection({ form, onChange }: MediaFileParamsSectio
 						<Switch id="media-is-enabled" checked={form.isEnabled} onCheckedChange={(checked) => onChange("isEnabled", checked)} />
 					</div>
 
-					<div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-3.5">
+					<div className="border-border bg-muted/40 flex items-center justify-between gap-4 rounded-xl border p-3.5">
 						<div className="flex flex-col gap-0.5">
 							<Label weight="semibold" htmlFor="media-is-default" className="cursor-pointer">
 								{m.admin_media_default_playback()}

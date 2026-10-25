@@ -75,7 +75,7 @@ export function ReassignTmdbSearchForm({ initialTitle, initialYear, mediaType, i
 			</div>
 
 			{mediaType === "tv_show" && (
-				<div className="grid grid-cols-2 gap-3 rounded-lg border border-border/80 bg-muted/20 p-3">
+				<div className="border-border/80 bg-muted/20 grid grid-cols-2 gap-3 rounded-lg border p-3">
 					<div className="space-y-1.5">
 						<Label htmlFor="tmdb-season">{m.common_episode_number()}</Label>
 						<Input

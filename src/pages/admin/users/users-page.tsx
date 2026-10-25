@@ -225,7 +225,7 @@ export default function AdminUsersPage() {
 			)}
 			<AdminSection title={m.admin_users_list()}>
 				{selectedIds.size > 0 && (
-					<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-card p-3 text-sm">
+					<div className="border-border bg-card flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3 text-sm">
 						<span>{m.admin_users_selected({ count: selectedIds.size })}</span>
 						<ConfirmAction
 							trigger={

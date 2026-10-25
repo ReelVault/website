@@ -88,7 +88,7 @@ export function LogFilesSidebar({
 		);
 	} else if (searchedFiles.length === 0) {
 		filesContent = (
-			<div className="flex h-48 flex-col items-center justify-center text-center text-muted-foreground text-xs">
+			<div className="text-muted-foreground flex h-48 flex-col items-center justify-center text-center text-xs">
 				<HardDrive className="mb-2 size-8 opacity-40" />
 				{m.admin_logs_no_files_category()}
 			</div>

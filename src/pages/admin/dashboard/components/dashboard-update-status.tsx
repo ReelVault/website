@@ -32,8 +32,8 @@ export function DashboardUpdateStatus() {
 	} else if (status.job) {
 		content = (
 			<div className="flex items-center gap-2 text-sm">
-				<span className="size-2 animate-pulse rounded-full bg-primary" />
-				<span className="font-medium text-foreground">
+				<span className="bg-primary size-2 animate-pulse rounded-full" />
+				<span className="text-foreground font-medium">
 					{m.admin_updates_job_state_label({
 						component: status.job.target === "server" ? m.admin_updates_server_component() : m.admin_updates_web_component(),
 						state: UPDATE_JOB_STATE_LABELS[status.job.state]?.() ?? status.job.state,
@@ -46,8 +46,8 @@ export function DashboardUpdateStatus() {
 		content = (
 			<div className="flex flex-col gap-3">
 				<div className="flex items-center gap-2 text-sm">
-					<ArrowUpCircle className="size-4 text-warning" />
-					<span className="font-medium text-foreground">
+					<ArrowUpCircle className="text-warning size-4" />
+					<span className="text-foreground font-medium">
 						{m.admin_updates_update_available({ version: primary?.version ?? "" })}
 						{serverUpdate && webUpdate ? m.admin_updates_both_available() : ""}
 					</span>
@@ -78,7 +78,7 @@ export function DashboardUpdateStatus() {
 	} else {
 		content = (
 			<div className="flex items-center gap-2 text-sm">
-				<CheckCircle2 className="size-4 text-success" />
+				<CheckCircle2 className="text-success size-4" />
 				<span className="text-muted-foreground">{m.admin_updates_up_to_date()}</span>
 			</div>
 		);
@@ -91,7 +91,7 @@ export function DashboardUpdateStatus() {
 			actions={
 				<Link
 					to="/admin/updates"
-					className="inline-flex min-h-10 items-center text-muted-foreground text-xs hover:text-foreground hover:underline sm:min-h-0"
+					className="text-muted-foreground hover:text-foreground inline-flex min-h-10 items-center text-xs hover:underline sm:min-h-0"
 				>
 					{m.admin_updates_details()}
 				</Link>
@@ -106,7 +106,7 @@ export function DashboardUpdateStatus() {
 				/>
 				<div className="flex flex-col gap-2">
 					{content}
-					<div className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
+					<div className="text-muted-foreground mt-1 flex flex-wrap items-center gap-2 text-xs">
 						<span className="flex items-center gap-1.5">
 							<Server className="size-3.5" />
 							{status?.serverVersion ?? "—"}

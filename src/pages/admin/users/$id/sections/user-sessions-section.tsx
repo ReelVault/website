@@ -25,7 +25,7 @@ export function UserSessionsSection({ userId }: { userId: string }) {
 					<p className="text-muted-foreground text-sm">{m.admin_users_sessions_empty()}</p>
 				) : (
 					sessions.map((session) => (
-						<div key={session.id} className="flex items-center justify-between gap-3 rounded-md border border-border p-3 text-sm">
+						<div key={session.id} className="border-border flex items-center justify-between gap-3 rounded-md border p-3 text-sm">
 							<div className="min-w-0">
 								<p className="truncate">{session.userAgent ?? m.admin_users_session_unknown_device()}</p>
 								<p className="text-muted-foreground text-xs">

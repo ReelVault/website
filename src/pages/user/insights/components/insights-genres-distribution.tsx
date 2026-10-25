@@ -17,7 +17,7 @@ export function InsightsGenresDistribution({ genres }: InsightsGenresDistributio
 		<Card variant="subtle" className="col-span-1 md:col-span-3 lg:col-span-6">
 			<CardHeader>
 				<div className="flex items-center gap-2">
-					<PieChart className="size-4.5 text-primary" />
+					<PieChart className="text-primary size-4.5" />
 					<CardTitle>{m.user_genre_breakdown()}</CardTitle>
 				</div>
 				<CardDescription size="xs">{m.user_favorite_categories()}</CardDescription>
@@ -31,13 +31,13 @@ export function InsightsGenresDistribution({ genres }: InsightsGenresDistributio
 					return (
 						<div key={genre.name} className="space-y-1.5">
 							<div className="flex items-center justify-between text-xs">
-								<div className="flex items-center gap-1.5 font-semibold text-foreground">
-									{index === 0 && <Sparkles className="size-3 text-warning" />}
+								<div className="text-foreground flex items-center gap-1.5 font-semibold">
+									{index === 0 && <Sparkles className="text-warning size-3" />}
 									<span>{genre.name}</span>
 								</div>
 								<div className="flex items-center gap-2 font-mono">
 									<span className="text-muted-foreground">{formattedTime}</span>
-									<span className="font-bold text-primary">{m.common_percent_value({ value: genre.percentage })}</span>
+									<span className="text-primary font-bold">{m.common_percent_value({ value: genre.percentage })}</span>
 								</div>
 							</div>
 							<Progress value={genre.percentage} />

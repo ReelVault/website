@@ -28,7 +28,7 @@ export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 	else if (entry.action === "update") variant = "secondary";
 
 	return (
-		<div className="transition-colors hover:bg-muted/30">
+		<div className="hover:bg-muted/30 transition-colors">
 			<Button
 				size="inline"
 				variant="ghost"
@@ -37,14 +37,14 @@ export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 				onClick={() => setExpanded((prev) => !prev)}
 				className="w-full justify-start text-left sm:min-h-8"
 			>
-				<span className="shrink-0 text-muted-foreground">
+				<span className="text-muted-foreground shrink-0">
 					{expanded ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
 				</span>
 				<Badge variant={variant} className="shrink-0">
 					{entry.action}
 				</Badge>
 				<span className="min-w-0 flex-1 truncate">{auditEntryLabel(entry)}</span>
-				<time dateTime={entry.createdAt} className="shrink-0 text-muted-foreground text-xs tabular-nums">
+				<time dateTime={entry.createdAt} className="text-muted-foreground shrink-0 text-xs tabular-nums">
 					{shortDateFormatter.format(new Date(entry.createdAt))}
 				</time>
 			</Button>

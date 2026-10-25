@@ -69,10 +69,10 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 	return (
 		<section>
 			<UserSectionTitle title={m.user_remote_control_eyebrow()} description={session.title ?? undefined} />
-			<div className="flex flex-col gap-6 rounded-2xl border border-border/70 bg-card/70 p-6">
+			<div className="border-border/70 bg-card/70 flex flex-col gap-6 rounded-2xl border p-6">
 				{duration != null && duration > 0 ? (
 					<div className="mx-auto flex w-full max-w-sm flex-col gap-2">
-						<div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex items-center justify-between font-mono text-xs">
 							<span>{formatTimestamp(position ?? 0)}</span>
 							<span>{formatTimestamp(duration)}</span>
 						</div>
@@ -159,7 +159,7 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						title={volume === 0 ? m.user_remote_unmute() : m.user_remote_mute()}
 					>
 						{volume === 0 ? (
-							<VolumeX className="size-5 text-destructive" aria-hidden="true" />
+							<VolumeX className="text-destructive size-5" aria-hidden="true" />
 						) : (
 							<Volume2 className="size-5" aria-hidden="true" />
 						)}
@@ -176,12 +176,12 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						}}
 						aria-label={m.user_volume()}
 					/>
-					<span className="w-10 shrink-0 text-right font-mono text-muted-foreground text-xs">
+					<span className="text-muted-foreground w-10 shrink-0 text-right font-mono text-xs">
 						{m.common_percent_value({ value: volume })}
 					</span>
 				</div>
 
-				<p className="text-center text-muted-foreground text-xs">{m.user_commands_to_device_note()}</p>
+				<p className="text-muted-foreground text-center text-xs">{m.user_commands_to_device_note()}</p>
 			</div>
 		</section>
 	);

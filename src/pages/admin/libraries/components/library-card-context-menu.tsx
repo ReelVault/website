@@ -41,31 +41,31 @@ export function LibraryCardContextMenu({
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
 				<ContextMenuItem onClick={() => onScan(lib.id)} className="cursor-pointer">
-					<RefreshCw className="size-4 text-primary" />
+					<RefreshCw className="text-primary size-4" />
 					<span>{m.admin_libraries_scan_library()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onEdit(lib)} className="cursor-pointer">
-					<Pencil className="size-4 text-muted-foreground" />
+					<Pencil className="text-muted-foreground size-4" />
 					<span>{m.admin_libraries_edit_configuration()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onCopyId(lib.id, m.admin_libraries_library_id())} className="cursor-pointer">
-					<Copy className="size-4 text-muted-foreground" />
+					<Copy className="text-muted-foreground size-4" />
 					<span>{m.admin_libraries_copy_library_id()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onCheckErrors(lib.paths.map((p) => p.path))} className="cursor-pointer">
-					<ScanSearch className="size-4 text-primary" />
+					<ScanSearch className="text-primary size-4" />
 					<span>{m.admin_libraries_check_error()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onShowIgnoredAssets(lib.id)} className="cursor-pointer">
-					<AlertTriangle className="size-4 text-muted-foreground" />
+					<AlertTriangle className="text-muted-foreground size-4" />
 					<span>{m.admin_libraries_skipped_assets()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onCancelScans(lib.id)} className="cursor-pointer">
-					<XCircle className="size-4 text-muted-foreground" />
+					<XCircle className="text-muted-foreground size-4" />
 					<span>{m.admin_libraries_cancel_scans()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => onShowScanFindings(lib.id)} className="cursor-pointer">
-					<FileWarning className="size-4 text-muted-foreground" />
+					<FileWarning className="text-muted-foreground size-4" />
 					<span>{m.admin_libraries_needs_attention()}</span>
 				</ContextMenuItem>
 			</ContextMenuGroup>

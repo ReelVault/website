@@ -15,14 +15,14 @@ export function AnalyticsTopContent({ topContent }: AnalyticsTopContentProps) {
 		<Card variant="subtle" className="col-span-1 lg:col-span-5">
 			<CardHeader>
 				<div className="flex items-center gap-2">
-					<Flame className="size-5 text-primary" />
+					<Flame className="text-primary size-5" />
 					<CardTitle>{m.admin_analytics_top_productions()}</CardTitle>
 				</div>
 				<CardDescription size="xs">{m.admin_analytics_top_viewership_description()}</CardDescription>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-3">
 				{topContent.length === 0 ? (
-					<p className="py-8 text-center text-muted-foreground text-xs">{m.admin_analytics_no_data_dot()}</p>
+					<p className="text-muted-foreground py-8 text-center text-xs">{m.admin_analytics_no_data_dot()}</p>
 				) : (
 					topContent.slice(0, 5).map((item, index) => {
 						const h = Math.floor(item.minutes / 60);
@@ -32,13 +32,13 @@ export function AnalyticsTopContent({ topContent }: AnalyticsTopContentProps) {
 						return (
 							<div
 								key={item.id}
-								className="flex items-center gap-3 rounded-xl border border-border/40 bg-background/50 p-2.5 transition-[border-color,background-color,color,box-shadow] hover:border-border"
+								className="border-border/40 bg-background/50 hover:border-border flex items-center gap-3 rounded-xl border p-2.5 transition-[border-color,background-color,color,box-shadow]"
 							>
-								<span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-muted font-bold font-mono text-xs">
+								<span className="bg-muted flex size-6 shrink-0 items-center justify-center rounded-md font-mono text-xs font-bold">
 									{m.common_rank_number({ index: index + 1 })}
 								</span>
 
-								<div className="relative aspect-2/3 w-10 shrink-0 overflow-hidden rounded-md bg-muted">
+								<div className="bg-muted relative aspect-2/3 w-10 shrink-0 overflow-hidden rounded-md">
 									<ApiImage
 										fileId={extractFileIdFromUrl(item.posterUrl)}
 										cacheKey={item.posterUpdatedAt}
@@ -50,16 +50,16 @@ export function AnalyticsTopContent({ topContent }: AnalyticsTopContentProps) {
 								</div>
 
 								<div className="min-w-0 flex-1">
-									<p className="truncate font-semibold text-foreground text-xs" title={item.title}>
+									<p className="text-foreground truncate text-xs font-semibold" title={item.title}>
 										{item.title}
 									</p>
-									<div className="flex items-center gap-2 text-muted-foreground text-xs">
+									<div className="text-muted-foreground flex items-center gap-2 text-xs">
 										<Badge variant="outline">{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}</Badge>
 										<span>{m.admin_analytics_item_play_count({ watchCount: item.watchCount })}</span>
 									</div>
 								</div>
 
-								<div className="shrink-0 text-right font-bold font-mono text-primary text-xs">{timeStr}</div>
+								<div className="text-primary shrink-0 text-right font-mono text-xs font-bold">{timeStr}</div>
 							</div>
 						);
 					})

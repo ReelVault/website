@@ -125,7 +125,7 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 		<div className="flex flex-col gap-6 text-center">
 			{isError && <AppErrorState title={m.auth_initialization_error()} error={error} />}
 
-			<div className="flex flex-col items-center gap-4 rounded-2xl border border-primary/20 bg-primary/5 p-6">
+			<div className="border-primary/20 bg-primary/5 flex flex-col items-center gap-4 rounded-2xl border p-6">
 				{pairCode ? (
 					<div className="relative">
 						<QrCode value={`${typeof window !== "undefined" ? window.location.origin : ""}/quick-connect?code=${pairCode}`} size={160} />
@@ -133,34 +133,34 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 				) : null}
 
 				<div className="flex flex-col items-center gap-1">
-					<span className="font-semibold text-muted-foreground text-xs">{m.auth_pairing_code()}</span>
+					<span className="text-muted-foreground text-xs font-semibold">{m.auth_pairing_code()}</span>
 
 					{isPending ? (
-						<div className="animate-pulse py-3 font-medium text-muted-foreground text-sm">{m.auth_generating_code()}</div>
+						<div className="text-muted-foreground animate-pulse py-3 text-sm font-medium">{m.auth_generating_code()}</div>
 					) : (
-						<div className="font-black font-mono text-4xl text-primary tracking-widest sm:text-5xl">{pairCode || "--- ---"}</div>
+						<div className="text-primary font-mono text-4xl font-black tracking-widest sm:text-5xl">{pairCode || "--- ---"}</div>
 					)}
 				</div>
 
 				{isExpired ? (
-					<div className="rounded-full bg-warning/10 px-3 py-1 font-medium text-warning text-xs">{m.auth_code_expired()}</div>
+					<div className="bg-warning/10 text-warning rounded-full px-3 py-1 text-xs font-medium">{m.auth_code_expired()}</div>
 				) : (
 					<>
-						<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex items-center gap-2 text-xs font-medium">
 							<Clock className="size-3.5" aria-hidden="true" /> {m.auth_valid_for_label()}
-							<span className="font-bold text-foreground">{formatCountdown(pairRemainingSeconds)}</span>
+							<span className="text-foreground font-bold">{formatCountdown(pairRemainingSeconds)}</span>
 						</div>
 
-						<div className="mt-2 flex animate-pulse items-center gap-2 rounded-full bg-success/10 px-3 py-1 font-medium text-success text-xs">
-							<span className="size-2 rounded-full bg-success" />
+						<div className="bg-success/10 text-success mt-2 flex animate-pulse items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
+							<span className="bg-success size-2 rounded-full" />
 							{m.auth_waiting_for_authorization()}
 						</div>
 					</>
 				)}
 			</div>
 
-			<div className="space-y-1.5 rounded-xl border border-border/70 bg-card/40 p-4 text-left text-muted-foreground text-xs">
-				<p className="font-semibold text-foreground">{m.auth_how_to_connect()}</p>
+			<div className="border-border/70 bg-card/40 text-muted-foreground space-y-1.5 rounded-xl border p-4 text-left text-xs">
+				<p className="text-foreground font-semibold">{m.auth_how_to_connect()}</p>
 				<p>{m.auth_scan_qr_step()}</p>
 				<p>
 					<ParaglideMessage message={m.auth_confirm_code_instructions} markup={boldInstructionsMarkup} />

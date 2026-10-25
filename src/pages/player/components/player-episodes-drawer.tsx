@@ -27,12 +27,12 @@ function DrawerSkeletonList() {
 	return (
 		<div className="flex flex-col gap-2 pb-6">
 			{SKELETON_ITEMS.map((key) => (
-				<div key={key} className="flex gap-3 rounded-xl border border-border/40 p-3">
-					<div className="aspect-video w-32 shrink-0 animate-pulse rounded-lg bg-muted sm:w-40" />
+				<div key={key} className="border-border/40 flex gap-3 rounded-xl border p-3">
+					<div className="bg-muted aspect-video w-32 shrink-0 animate-pulse rounded-lg sm:w-40" />
 					<div className="flex-1 space-y-2 py-1">
-						<div className="h-3 w-10 animate-pulse rounded bg-muted" />
-						<div className="h-4 w-3/4 animate-pulse rounded bg-muted" />
-						<div className="mt-2 h-3 w-full animate-pulse rounded bg-muted" />
+						<div className="bg-muted h-3 w-10 animate-pulse rounded" />
+						<div className="bg-muted h-4 w-3/4 animate-pulse rounded" />
+						<div className="bg-muted mt-2 h-3 w-full animate-pulse rounded" />
 					</div>
 				</div>
 			))}
@@ -193,7 +193,7 @@ export function PlayerEpisodesDrawer() {
 		listContent = <DrawerSkeletonList />;
 	} else if (episodes.length === 0) {
 		listContent = (
-			<div className="flex h-48 flex-col items-center justify-center text-muted-foreground">
+			<div className="text-muted-foreground flex h-48 flex-col items-center justify-center">
 				<Tv className="mb-3 size-10 opacity-20" />
 				<p className="text-sm">{m.player_no_episodes_in_season()}</p>
 			</div>
@@ -256,7 +256,7 @@ export function PlayerEpisodesDrawer() {
 										{seasons.length > 0 && <span className="font-medium">{m.common_seasons_count({ count: seasons.length })}</span>}
 										{playback?.totalEpisodes ? (
 											<>
-												<span className="size-1 rounded-full bg-muted-foreground/50" />
+												<span className="bg-muted-foreground/50 size-1 rounded-full" />
 												<span>
 													{m.player_completed_of_total_episodes({
 														completed: playback.completedEpisodes ?? 0,
@@ -347,20 +347,20 @@ function DrawerItemRow({
 			disabled={isDisabled}
 			onClick={onSelect}
 			className={cn(
-				"group relative flex w-full cursor-pointer items-start gap-4 rounded-xl border p-3 text-left outline-none transition-[border-color,background-color,color,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+				"group focus-visible:ring-primary focus-visible:ring-offset-background relative flex w-full cursor-pointer items-start gap-4 rounded-xl border p-3 text-left transition-[border-color,background-color,color,box-shadow] duration-200 outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
 				isCurrent
-					? "border-primary/60 border-l-4 bg-primary/[0.07] shadow-sm"
-					: "border-transparent bg-muted/30 hover:border-border/60 hover:bg-muted/60",
+					? "border-primary/60 bg-primary/[0.07] border-l-4 shadow-sm"
+					: "bg-muted/30 hover:border-border/60 hover:bg-muted/60 border-transparent",
 				isDisabled && "cursor-not-allowed opacity-50 grayscale-50",
 			)}
 		>
 			{/* Number — readable, fixed slot independent of the thumbnail */}
 			<div className="flex w-7 shrink-0 items-center justify-center pt-1">
-				<span className={cn("font-bold text-base tabular-nums", isCurrent ? "text-primary" : "text-muted-foreground/70")}>{number}</span>
+				<span className={cn("text-base font-bold tabular-nums", isCurrent ? "text-primary" : "text-muted-foreground/70")}>{number}</span>
 			</div>
 
 			{/* Thumbnail */}
-			<div className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-md border border-border/40 shadow-sm sm:w-32">
+			<div className="border-border/40 relative aspect-video w-24 shrink-0 overflow-hidden rounded-md border shadow-sm sm:w-32">
 				<ApiImage fileId={imageFileId} cacheKey={imageCacheKey} alt={imageAlt} fill sizes="128px" zoom className="object-cover" />
 
 				<div
@@ -369,13 +369,13 @@ function DrawerItemRow({
 						isCurrent ? "opacity-100" : "opacity-0 group-hover:opacity-100",
 					)}
 				>
-					<div className="flex size-9 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-lg transition-transform group-hover:scale-110 sm:size-10">
+					<div className="bg-primary/90 text-primary-foreground flex size-9 items-center justify-center rounded-full shadow-lg transition-transform group-hover:scale-110 sm:size-10">
 						<Play className="ml-1 size-4 fill-current sm:size-5" />
 					</div>
 				</div>
 
 				{durationLabel && (
-					<span className="absolute right-1.5 bottom-1.5 rounded-md bg-black/80 px-1.5 py-0.5 font-medium text-[10px] text-white/90">
+					<span className="absolute right-1.5 bottom-1.5 rounded-md bg-black/80 px-1.5 py-0.5 text-[10px] font-medium text-white/90">
 						{durationLabel}
 					</span>
 				)}
@@ -390,7 +390,7 @@ function DrawerItemRow({
 						</Badge>
 					)}
 					{isWatched && (
-						<span className="flex items-center gap-1 font-medium text-[11px] text-success">
+						<span className="text-success flex items-center gap-1 text-[11px] font-medium">
 							<Check className="size-3.5" /> {m.player_watched_word()}
 						</span>
 					)}
@@ -398,19 +398,19 @@ function DrawerItemRow({
 
 				<h4
 					className={cn(
-						"line-clamp-1 font-semibold text-base transition-colors",
+						"line-clamp-1 text-base font-semibold transition-colors",
 						isCurrent ? "text-primary" : "text-foreground group-hover:text-foreground/90",
 					)}
 				>
 					{title}
 				</h4>
 
-				{overview && <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">{overview}</p>}
+				{overview && <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">{overview}</p>}
 
 				{progressPercent > 0 && progressPercent < 100 && (
 					<div className="flex items-center gap-2 pt-1">
 						<Progress value={progressPercent} size="sm" className="flex-1" />
-						<span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
+						<span className="text-muted-foreground shrink-0 text-[11px] tabular-nums">
 							{m.common_percent_value({ value: progressPercent })}
 						</span>
 					</div>

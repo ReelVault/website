@@ -64,7 +64,7 @@ export function LibraryPathsSection({ paths, onChange, idPrefix, showDashedAddBu
 					<p className="text-muted-foreground text-xs">{m.admin_libraries_point_to_folders()}</p>
 				</div>
 				<Button type="button" variant="outline" size="sm" onClick={addPathField}>
-					<Plus className="size-3.5 text-primary" />
+					<Plus className="text-primary size-3.5" />
 					<span>{m.admin_libraries_add_directory()}</span>
 				</Button>
 			</div>

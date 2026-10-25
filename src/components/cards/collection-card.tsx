@@ -60,7 +60,7 @@ export function CollectionCard({
 					className={cn(
 						"group relative block overflow-hidden rounded-xl border transition-[border-color,box-shadow,transform] duration-200 hover:scale-[1.01]",
 						highlight
-							? "border-primary shadow-md ring-2 ring-primary/30 ring-offset-2 ring-offset-background"
+							? "border-primary ring-primary/30 ring-offset-background shadow-md ring-2 ring-offset-2"
 							: "border-border/70 hover:border-primary/50 hover:shadow-lg",
 					)}
 				>
@@ -75,22 +75,22 @@ export function CollectionCard({
 						/>
 
 						{/* Gradient Overlay */}
-						<div className="absolute inset-0 bg-linear-to-t from-background/95 via-background/40 to-transparent" />
+						<div className="from-background/95 via-background/40 absolute inset-0 bg-linear-to-t to-transparent" />
 
 						{/* Content */}
 						<div className="absolute bottom-0 left-0 w-full p-4">
 							<div className="flex items-end justify-between gap-2">
 								<p
-									className={cn("line-clamp-2 font-bold leading-tight transition-colors duration-200", {
-										"text-lg text-primary": highlight,
-										"text-base text-foreground group-hover:text-primary": !highlight,
+									className={cn("line-clamp-2 leading-tight font-bold transition-colors duration-200", {
+										"text-primary text-lg": highlight,
+										"text-foreground group-hover:text-primary text-base": !highlight,
 									})}
 								>
 									{metadata.title}
 								</p>
 								<span
 									className={cn(
-										"shrink-0 rounded-md px-2 py-0.5 font-medium text-xs transition-colors",
+										"shrink-0 rounded-md px-2 py-0.5 text-xs font-medium transition-colors",
 										highlight
 											? "bg-primary text-primary-foreground"
 											: "bg-background/80 text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary",
@@ -103,8 +103,8 @@ export function CollectionCard({
 
 						{/* Now playing indicator if current */}
 						{highlight && (
-							<div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1 font-bold text-primary-foreground text-xs shadow-md">
-								<div className="size-1.5 animate-pulse rounded-full bg-primary-foreground" />
+							<div className="bg-primary text-primary-foreground absolute top-3 right-3 flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-bold shadow-md">
+								<div className="bg-primary-foreground size-1.5 animate-pulse rounded-full" />
 								<span className="text-xs tracking-wider">{m.components_now_playing_short()}</span>
 							</div>
 						)}
@@ -119,11 +119,11 @@ export function CollectionCard({
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
 					<ContextMenuItem render={<Link to="/details/$id" params={{ id: metadata.id }} />} className="cursor-pointer">
-						<Eye className="size-4 text-muted-foreground" />
+						<Eye className="text-muted-foreground size-4" />
 						<span>{m.common_details()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem onClick={handleCopyLink} className="cursor-pointer">
-						<Copy className="size-4 text-muted-foreground" />
+						<Copy className="text-muted-foreground size-4" />
 						<span>{m.common_copy_link()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>
@@ -137,7 +137,7 @@ export function CollectionCard({
 								{m.common_admin_tools()}
 							</ContextMenuLabel>
 							<ContextMenuItem onClick={handleCopyId} className="cursor-pointer">
-								<Copy className="size-4 text-muted-foreground" />
+								<Copy className="text-muted-foreground size-4" />
 								<span>{m.common_copy_id()}</span>
 							</ContextMenuItem>
 						</ContextMenuGroup>

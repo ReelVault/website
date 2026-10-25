@@ -71,13 +71,13 @@ export function DashboardServerResources({
 		resourcesContent = (
 			<div className="flex flex-col gap-4">
 				{/* Pasek sterty Heap — live objects vs limit sterty V8 */}
-				<div className="flex flex-col gap-2 rounded-xl border border-border/70 bg-card/60 p-4">
+				<div className="border-border/70 bg-card/60 flex flex-col gap-2 rounded-xl border p-4">
 					<div className="flex items-center justify-between text-xs">
-						<span className="font-medium text-foreground">{m.admin_resources_v8_heap_usage()}</span>
-						<span className="font-bold font-mono text-primary tabular-nums">{m.common_percent_value({ value: heapPercent })}</span>
+						<span className="text-foreground font-medium">{m.admin_resources_v8_heap_usage()}</span>
+						<span className="text-primary font-mono font-bold tabular-nums">{m.common_percent_value({ value: heapPercent })}</span>
 					</div>
 					<Progress value={heapPercent} />
-					<div className="flex items-center justify-between text-muted-foreground text-xs">
+					<div className="text-muted-foreground flex items-center justify-between text-xs">
 						<span>
 							{m.admin_dashboard_used_label()} {formatMemory(heapUsed)}
 						</span>
@@ -87,15 +87,15 @@ export function DashboardServerResources({
 
 				{/* Whole-machine RAM bar — from system resource monitoring */}
 				{systemMemory && (
-					<div className="flex flex-col gap-2 rounded-xl border border-border/70 bg-card/60 p-4">
+					<div className="border-border/70 bg-card/60 flex flex-col gap-2 rounded-xl border p-4">
 						<div className="flex items-center justify-between text-xs">
-							<span className="font-medium text-foreground">{m.admin_dashboard_system_ram()}</span>
-							<span className="font-bold font-mono text-primary tabular-nums">
+							<span className="text-foreground font-medium">{m.admin_dashboard_system_ram()}</span>
+							<span className="text-primary font-mono font-bold tabular-nums">
 								{m.common_percent_value({ value: systemMemory.percent })}
 							</span>
 						</div>
 						<Progress value={systemMemory.percent} />
-						<div className="flex items-center justify-between text-muted-foreground text-xs">
+						<div className="text-muted-foreground flex items-center justify-between text-xs">
 							<span>
 								{m.admin_dashboard_used_label_system()} {formatMemory(systemMemory.usedMb * 1024 * 1024)}
 							</span>
@@ -108,19 +108,19 @@ export function DashboardServerResources({
 
 				{/* Detailed measurements */}
 				<div className="grid grid-cols-2 gap-3">
-					<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-						<p className="font-medium text-muted-foreground text-xs">{m.admin_dashboard_rss_memory()}</p>
-						<p className="mt-1 font-bold text-foreground text-lg tabular-nums">{formatMemory(stats.memory.rss)}</p>
+					<div className="border-border/50 bg-background/50 rounded-xl border p-3.5">
+						<p className="text-muted-foreground text-xs font-medium">{m.admin_dashboard_rss_memory()}</p>
+						<p className="text-foreground mt-1 text-lg font-bold tabular-nums">{formatMemory(stats.memory.rss)}</p>
 					</div>
-					<div className="rounded-xl border border-border/50 bg-background/50 p-3.5">
-						<p className="font-medium text-muted-foreground text-xs">{m.admin_resources_array_buffers()}</p>
-						<p className="mt-1 font-bold text-foreground text-lg tabular-nums">{formatMemory(stats.memory.arrayBuffers)}</p>
+					<div className="border-border/50 bg-background/50 rounded-xl border p-3.5">
+						<p className="text-muted-foreground text-xs font-medium">{m.admin_resources_array_buffers()}</p>
+						<p className="text-foreground mt-1 text-lg font-bold tabular-nums">{formatMemory(stats.memory.arrayBuffers)}</p>
 					</div>
 				</div>
 
-				<div className="flex items-center justify-between rounded-xl border border-border/50 bg-muted/20 px-3.5 py-2.5 text-xs">
-					<span className="flex items-center gap-2 text-muted-foreground">
-						<Activity className={pressureState.active ? "size-3.5 text-success" : "size-3.5 text-warning"} />
+				<div className="border-border/50 bg-muted/20 flex items-center justify-between rounded-xl border px-3.5 py-2.5 text-xs">
+					<span className="text-muted-foreground flex items-center gap-2">
+						<Activity className={pressureState.active ? "text-success size-3.5" : "text-warning size-3.5"} />
 						{m.admin_dashboard_process_state()}
 					</span>
 					<Badge variant={pressureState.badgeVariant}>{pressureState.label}</Badge>

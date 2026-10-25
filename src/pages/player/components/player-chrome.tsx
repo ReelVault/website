@@ -94,7 +94,7 @@ export function PlayerChrome({
 			<div
 				data-player-chrome
 				className={cn(
-					"pointer-events-none absolute inset-0 z-20 flex flex-col justify-between bg-linear-to-t from-background/80 via-transparent to-background/60 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-opacity duration-300 sm:px-6 sm:pt-4 sm:pb-[max(1rem,env(safe-area-inset-bottom))] lg:px-12 lg:pt-6 lg:pb-[max(1.5rem,env(safe-area-inset-bottom))]",
+					"from-background/80 to-background/60 pointer-events-none absolute inset-0 z-20 flex flex-col justify-between bg-linear-to-t via-transparent px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-opacity duration-300 sm:px-6 sm:pt-4 sm:pb-[max(1rem,env(safe-area-inset-bottom))] lg:px-12 lg:pt-6 lg:pb-[max(1.5rem,env(safe-area-inset-bottom))]",
 					{
 						"opacity-100": controlsVisible,
 						"opacity-0": !controlsVisible,

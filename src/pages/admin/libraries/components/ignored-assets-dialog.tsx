@@ -34,11 +34,11 @@ export function IgnoredAssetsDialog({
 		assetsBody = (
 			<div className="flex flex-col gap-2">
 				{assets.map((asset) => (
-					<div key={`${asset.path}/${asset.fileName}`} className="flex flex-col gap-1 rounded-lg border border-border/60 bg-muted/20 p-3">
-						<p className="truncate font-mono text-foreground text-xs" title={asset.path}>
+					<div key={`${asset.path}/${asset.fileName}`} className="border-border/60 bg-muted/20 flex flex-col gap-1 rounded-lg border p-3">
+						<p className="text-foreground truncate font-mono text-xs" title={asset.path}>
 							{asset.path}
 						</p>
-						<p className="truncate text-muted-foreground text-xs" title={asset.fileName}>
+						<p className="text-muted-foreground truncate text-xs" title={asset.fileName}>
 							{asset.fileName}
 						</p>
 						<p className="text-muted-foreground text-xs">{asset.reason}</p>
@@ -53,7 +53,7 @@ export function IgnoredAssetsDialog({
 			<DialogContent size="lg">
 				<DialogHeader>
 					<DialogTitle>
-						<AlertTriangle className="size-5 text-muted-foreground" />
+						<AlertTriangle className="text-muted-foreground size-5" />
 						{m.admin_libraries_skipped_assets()}
 					</DialogTitle>
 					<DialogDescription>{m.admin_libraries_sidecar_skipped()}</DialogDescription>

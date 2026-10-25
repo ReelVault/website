@@ -62,10 +62,10 @@ function VersionCard({ icon, label, version, badge }: { icon: ReactNode; label: 
 	return (
 		<AdminSection contentClassName="flex items-center justify-between gap-4 p-5">
 			<div className="flex min-w-0 items-center gap-3">
-				<div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">{icon}</div>
+				<div className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-lg">{icon}</div>
 				<div className="min-w-0">
-					<p className="font-medium text-muted-foreground text-xs">{label}</p>
-					<p className="truncate font-semibold text-foreground text-xl tabular-nums">{version ?? m.admin_updates_version_unknown()}</p>
+					<p className="text-muted-foreground text-xs font-medium">{label}</p>
+					<p className="text-foreground truncate text-xl font-semibold tabular-nums">{version ?? m.admin_updates_version_unknown()}</p>
 				</div>
 			</div>
 			{badge}
@@ -101,7 +101,7 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 					onCancel={dismissStreamBlock}
 				/>
 				{incompatible && (
-					<div className="flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/10 p-3 text-sm text-warning">
+					<div className="border-warning/30 bg-warning/10 text-warning flex items-start gap-2 rounded-lg border p-3 text-sm">
 						<Info className="mt-0.5 size-4 shrink-0" />
 						<p>{m.admin_updates_web_requires_server({ version: latest.minServerVersion ?? "" })}</p>
 					</div>
@@ -154,7 +154,7 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 				</div>
 
 				{lastErrorCode && (
-					<div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-destructive text-sm">
+					<div className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-2 rounded-lg border p-3 text-sm">
 						<Info className="mt-0.5 size-4 shrink-0" />
 						<div>
 							<p className="font-medium">{m.admin_updates_check_failed()}</p>
@@ -167,17 +167,17 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 					<Collapsible>
 						<div className="flex items-center justify-between gap-3">
 							<CollapsibleTrigger className="flex min-w-0 items-center">
-								<span className="truncate font-medium text-foreground text-sm group-hover:underline">
+								<span className="text-foreground truncate text-sm font-medium group-hover:underline">
 									{m.admin_updates_release_notes({ version: latest.version })}
 								</span>
-								<ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 data-panel-open:rotate-180" />
+								<ChevronDown className="text-muted-foreground size-4 shrink-0 transition-transform duration-200 data-panel-open:rotate-180" />
 							</CollapsibleTrigger>
 							{latest.url ? (
 								<a
 									href={latest.url}
 									target="_blank"
 									rel="noreferrer"
-									className="flex shrink-0 items-center gap-1 text-primary text-xs hover:underline"
+									className="text-primary flex shrink-0 items-center gap-1 text-xs hover:underline"
 								>
 									<ExternalLink className="size-3.5" />
 									{m.admin_updates_github_link()}
@@ -185,7 +185,7 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 							) : null}
 						</div>
 						<CollapsibleContent>
-							<div className="mt-2 border-border/60 border-t pt-1">
+							<div className="border-border/60 mt-2 border-t pt-1">
 								{latest.notes ? (
 									<Suspense fallback={null}>
 										<MarkdownText>{latest.notes}</MarkdownText>
@@ -212,7 +212,7 @@ function JobCard({ status }: { status: AdminUpdateStatus }) {
 		<AdminSection className="border-primary/30 bg-primary/5" contentClassName="flex flex-col gap-2 p-5">
 			<div className="flex items-center justify-between text-sm">
 				<span className="flex items-center gap-2 font-medium">
-					<RefreshCw className="size-4 animate-spin text-primary" />
+					<RefreshCw className="text-primary size-4 animate-spin" />
 					{m.admin_updates_job_state_label({ component: targetLabel, state: UPDATE_JOB_STATE_LABELS[job.state]?.() ?? job.state })}
 					{job.message ? <span className="text-muted-foreground">{m.admin_updates_job_message({ message: job.message })}</span> : null}
 				</span>
@@ -244,15 +244,15 @@ function EnvironmentSection({ environment }: { environment: AdminUpdateEnvironme
 			<dl className="grid gap-4 p-4 sm:grid-cols-3">
 				<div>
 					<dt className="text-muted-foreground text-xs">{m.admin_updates_environment_container()}</dt>
-					<dd className="font-medium text-foreground text-sm">{environmentContainerLabel(environment.container)}</dd>
+					<dd className="text-foreground text-sm font-medium">{environmentContainerLabel(environment.container)}</dd>
 				</div>
 				<div>
 					<dt className="text-muted-foreground text-xs">{m.admin_updates_environment_rootless()}</dt>
-					<dd className="font-medium text-foreground text-sm">{environment.rootless ? m.common_yes() : m.common_no()}</dd>
+					<dd className="text-foreground text-sm font-medium">{environment.rootless ? m.common_yes() : m.common_no()}</dd>
 				</div>
 				<div>
 					<dt className="text-muted-foreground text-xs">{m.admin_updates_environment_systemd()}</dt>
-					<dd className="font-medium text-foreground text-sm">{environmentSystemdLabel(environment.systemd)}</dd>
+					<dd className="text-foreground text-sm font-medium">{environmentSystemdLabel(environment.systemd)}</dd>
 				</div>
 			</dl>
 		</AdminSection>
@@ -289,7 +289,7 @@ function HistoryRow({ entry }: { entry: AdminUpdateHistoryEntry }) {
 	return (
 		<li className="flex flex-col gap-1.5 p-4">
 			<div className="flex flex-wrap items-center justify-between gap-2">
-				<span className="font-medium text-foreground text-sm">
+				<span className="text-foreground text-sm font-medium">
 					{m.admin_updates_history_run({ action: actionLabel, component: targetLabel })}
 				</span>
 				<HistoryStatusBadge status={entry.status} />
@@ -312,9 +312,9 @@ function UpdateHistorySection() {
 	return (
 		<AdminSection title={m.admin_updates_history_title()} description={m.admin_updates_history_description()} contentClassName="p-0">
 			{!isLoading && entries.length === 0 ? (
-				<p className="p-4 text-muted-foreground text-sm">{m.admin_updates_history_empty()}</p>
+				<p className="text-muted-foreground p-4 text-sm">{m.admin_updates_history_empty()}</p>
 			) : (
-				<ul className="divide-y divide-border">
+				<ul className="divide-border divide-y">
 					{entries.map((entry) => (
 						<HistoryRow key={entry.id} entry={entry} />
 					))}
@@ -382,15 +382,15 @@ export default function AdminUpdatesPage() {
 				<UpdateHistorySection />
 
 				{status.installType === "docker" && (
-					<div className="flex items-start gap-2 rounded-lg border border-border/60 bg-card/60 p-3 text-sm">
-						<Info className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+					<div className="border-border/60 bg-card/60 flex items-start gap-2 rounded-lg border p-3 text-sm">
+						<Info className="text-muted-foreground mt-0.5 size-4 shrink-0" />
 						<p className="text-muted-foreground">{m.admin_updates_docker_hint()}</p>
 					</div>
 				)}
 
 				{status.installType === "dev" && (
-					<div className="flex items-start gap-2 rounded-lg border border-border/60 bg-card/60 p-3 text-sm">
-						<Info className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+					<div className="border-border/60 bg-card/60 flex items-start gap-2 rounded-lg border p-3 text-sm">
+						<Info className="text-muted-foreground mt-0.5 size-4 shrink-0" />
 						<p className="text-muted-foreground">{m.admin_updates_dev_hint()}</p>
 					</div>
 				)}

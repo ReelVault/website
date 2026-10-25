@@ -18,7 +18,7 @@ export default function PersonByIdPage({ id = "" }: { id?: string }) {
 			<div className="flex min-h-screen items-center justify-center p-6">
 				<div role="alert" className="cinema-surface max-w-xl p-6 text-center">
 					<p className="font-semibold">{m.web_person_fetch_failed()}</p>
-					<p className="mt-1 text-muted-foreground text-sm">{m.web_check_connection()}</p>
+					<p className="text-muted-foreground mt-1 text-sm">{m.web_check_connection()}</p>
 					<Button
 						type="button"
 						variant="outline"

@@ -283,7 +283,7 @@ export default function AdminPluginSettingsPage() {
 						</div>
 					</AdminSection>
 
-					<div className="flex items-center justify-between border-border/80 border-t pt-4">
+					<div className="border-border/80 flex items-center justify-between border-t pt-4">
 						<ConfirmAction
 							trigger={
 								<Button tone="muted" type="button" variant="ghost" size="sm" disabled={isResetting}>

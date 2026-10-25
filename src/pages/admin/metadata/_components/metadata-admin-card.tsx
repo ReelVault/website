@@ -47,10 +47,10 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 	return (
 		<ContextMenu>
 			<ContextMenuTrigger className="group relative flex cursor-pointer flex-col">
-				<label className="absolute top-2 right-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md bg-background/85 backdrop-blur-sm">
+				<label className="bg-background/85 absolute top-2 right-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md backdrop-blur-sm">
 					<input
 						type="checkbox"
-						className="size-4 accent-primary"
+						className="accent-primary size-4"
 						checked={selected}
 						onChange={() => onToggleSelect(item.id)}
 						aria-label={m.admin_metadata_select_title({ title: item.title })}
@@ -59,7 +59,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 				<Link
 					to="/admin/metadata/$id"
 					params={{ id: item.id }}
-					className="relative overflow-hidden rounded-xl bg-card ring-primary/0 ring-offset-4 ring-offset-background transition-shadow duration-200 group-hover:ring-2"
+					className="bg-card ring-primary/0 ring-offset-background relative overflow-hidden rounded-xl ring-offset-4 transition-shadow duration-200 group-hover:ring-2"
 				>
 					<AspectRatio ratio={2 / 3}>
 						<ApiImage
@@ -98,7 +98,7 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 				</Link>
 
 				<div className="flex flex-col gap-1 px-0.5">
-					<p className="line-clamp-1 font-bold text-foreground text-sm tracking-tight transition-colors group-hover:text-primary">
+					<p className="text-foreground group-hover:text-primary line-clamp-1 text-sm font-bold tracking-tight transition-colors">
 						{item.title}
 					</p>
 					<div className="flex flex-wrap items-center gap-1.5">
@@ -106,10 +106,10 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 							{isMovie ? <Clapperboard className="size-2.5" /> : <Tv className="size-2.5" />}
 							<span>{isMovie ? m.common_movie_word() : m.common_series_word()}</span>
 						</Badge>
-						<span className="font-bold text-muted-foreground text-xs tabular-nums">{year}</span>
+						<span className="text-muted-foreground text-xs font-bold tabular-nums">{year}</span>
 						{rating !== "—" && (
-							<span className="flex items-center gap-0.5 font-medium text-xs">
-								<Star className="size-3 fill-warning text-warning" />
+							<span className="flex items-center gap-0.5 text-xs font-medium">
+								<Star className="fill-warning text-warning size-3" />
 								<span className="tabular-nums">{rating}</span>
 							</span>
 						)}
@@ -124,19 +124,19 @@ export function MetadataAdminCard({ item, isOrphanView, isDeleting, onDelete, se
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
 					<ContextMenuItem render={<Link to="/admin/metadata/$id" params={{ id: item.id }} />}>
-						<Pencil className="size-3.5 text-muted-foreground" />
+						<Pencil className="text-muted-foreground size-3.5" />
 						<span>{m.admin_metadata_edit()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem onClick={() => refreshMetadataMutation.mutate(item.id)}>
-						<RefreshCw className="size-3.5 text-primary" />
+						<RefreshCw className="text-primary size-3.5" />
 						<span>{m.components_metadata_card_refresh_metadata()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem onClick={() => refreshImagesMutation.mutate(item.id)}>
-						<ImageDown className="size-3.5 text-primary" />
+						<ImageDown className="text-primary size-3.5" />
 						<span>{m.components_metadata_card_force_artwork()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem onClick={copyId}>
-						<Copy className="size-3.5 text-muted-foreground" />
+						<Copy className="text-muted-foreground size-3.5" />
 						<span>{m.common_copy_id()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>

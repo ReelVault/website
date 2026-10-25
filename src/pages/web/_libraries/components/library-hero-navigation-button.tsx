@@ -47,30 +47,30 @@ export function LibraryHeroNavigationButton({
 				{isLeft ? (
 					<>
 						<div className="hidden flex-col items-end md:flex">
-							<span className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary">{mainLabel}</span>
+							<span className="text-muted-foreground group-hover:text-primary text-xs font-semibold transition-colors">{mainLabel}</span>
 							<span
 								key={isGenreMode ? `genre-${mainLabel}` : subLabel}
 								// initial={{ y: 10, opacity: 0 }}
 								// animate={{ y: 0, opacity: 1 }}
 								// exit={{ y: -10, opacity: 0 }}
-								className="max-w-50 truncate font-bold text-muted-foreground text-xl transition-colors group-hover:text-foreground"
+								className="text-muted-foreground group-hover:text-foreground max-w-50 truncate text-xl font-bold transition-colors"
 							>
 								{subLabel}
 							</span>
 						</div>
-						<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card transition-[background-color,border-color] group-hover:border-primary/40 group-hover:bg-primary/10">
-							<Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+						<div className="border-border bg-card group-hover:border-primary/40 group-hover:bg-primary/10 flex size-11 items-center justify-center rounded-xl border transition-[background-color,border-color]">
+							<Icon className="text-muted-foreground group-hover:text-primary h-5 w-5 transition-colors" />
 						</div>
 					</>
 				) : (
 					<>
-						<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card transition-[background-color,border-color] group-hover:border-primary/40 group-hover:bg-primary/10">
-							<Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+						<div className="border-border bg-card group-hover:border-primary/40 group-hover:bg-primary/10 flex size-11 items-center justify-center rounded-xl border transition-[background-color,border-color]">
+							<Icon className="text-muted-foreground group-hover:text-primary h-5 w-5 transition-colors" />
 						</div>
 						<div className="hidden flex-col items-start md:flex">
 							<span
 								// layout
-								className="font-semibold text-muted-foreground text-xs transition-colors group-hover:text-primary"
+								className="text-muted-foreground group-hover:text-primary text-xs font-semibold transition-colors"
 							>
 								{mainLabel}
 							</span>
@@ -79,7 +79,7 @@ export function LibraryHeroNavigationButton({
 								// initial={{ y: 10, opacity: 0 }}
 								// animate={{ y: 0, opacity: 1 }}
 								// exit={{ y: -10, opacity: 0 }}
-								className="max-w-50 truncate font-bold text-muted-foreground text-xl transition-colors group-hover:text-foreground"
+								className="text-muted-foreground group-hover:text-foreground max-w-50 truncate text-xl font-bold transition-colors"
 							>
 								{subLabel}
 							</span>

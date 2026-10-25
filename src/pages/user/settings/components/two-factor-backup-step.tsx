@@ -14,15 +14,15 @@ export function TwoFactorBackupStep({ backupCodes, isNewlyEnabled, onFinish }: T
 	return (
 		<div className="flex flex-col gap-4 py-2">
 			{isNewlyEnabled && (
-				<div className="flex items-center gap-2 text-success">
+				<div className="text-success flex items-center gap-2">
 					<CheckCircle2 className="size-5" />
-					<span className="font-semibold text-sm">{m.user_2fa_activated()}</span>
+					<span className="text-sm font-semibold">{m.user_2fa_activated()}</span>
 				</div>
 			)}
 
 			<div className="flex flex-col gap-2">
-				<span className="font-semibold text-muted-foreground text-sm">{m.user_backup_codes_heading()}</span>
-				<div className="grid grid-cols-2 gap-2 rounded-xl border border-border bg-muted/40 p-3 font-mono text-sm sm:text-base">
+				<span className="text-muted-foreground text-sm font-semibold">{m.user_backup_codes_heading()}</span>
+				<div className="border-border bg-muted/40 grid grid-cols-2 gap-2 rounded-xl border p-3 font-mono text-sm sm:text-base">
 					{backupCodes.map((c) => (
 						<span key={c} className="text-foreground">
 							{c}

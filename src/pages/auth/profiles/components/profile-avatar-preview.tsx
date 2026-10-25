@@ -11,7 +11,7 @@ interface ProfileAvatarPreviewProps {
 export function ProfileAvatarPreview({ avatarUrl, onRandomize }: ProfileAvatarPreviewProps) {
 	return (
 		<div className="group relative">
-			<div className="size-40 overflow-hidden rounded-3xl border-4 border-primary shadow-xl transition-transform group-hover:scale-[1.02]">
+			<div className="border-primary size-40 overflow-hidden rounded-3xl border-4 shadow-xl transition-transform group-hover:scale-[1.02]">
 				<picture>
 					<Image src={avatarUrl} alt={m.auth_avatar_preview()} width={96} height={96} unoptimized className="h-full w-full" />
 				</picture>

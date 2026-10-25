@@ -17,13 +17,13 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 	const showDirecting = directors.length > 0;
 
 	return (
-		<div className="mt-8 flex flex-col gap-4 border-border/70 border-y py-5">
+		<div className="border-border/70 mt-8 flex flex-col gap-4 border-y py-5">
 			<div className="flex flex-col gap-6">
 				{/* Directing */}
 				{showDirecting ? (
 					<div className="flex flex-col gap-1.5">
-						<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs">
-							<Clapperboard className="size-3.5 text-primary" aria-hidden="true" />
+						<span className="text-muted-foreground flex items-center gap-2 text-xs font-semibold">
+							<Clapperboard className="text-primary size-3.5" aria-hidden="true" />
 							{m.web_directed_by()}
 						</span>
 						<div className="flex flex-wrap gap-x-3 gap-y-1">
@@ -32,7 +32,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									key={director.id}
 									to="/person/$id"
 									params={{ id: director.id }}
-									className="inline-flex min-h-10 items-center rounded-md border border-border/70 bg-card/60 px-2.5 py-1 font-medium text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
+									className="border-border/70 bg-card/60 text-foreground hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-primary inline-flex min-h-10 items-center rounded-md border px-2.5 py-1 text-xs font-medium transition-colors focus-visible:ring-2 sm:min-h-0"
 								>
 									{director.name}
 								</Link>
@@ -43,8 +43,8 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 
 				{/* Studios */}
 				<div className="flex flex-col gap-1.5">
-					<span className="flex items-center gap-2 font-semibold text-muted-foreground text-xs">
-						<Building2 className="size-3.5 text-primary" aria-hidden="true" /> {m.admin_companies_word()}
+					<span className="text-muted-foreground flex items-center gap-2 text-xs font-semibold">
+						<Building2 className="text-primary size-3.5" aria-hidden="true" /> {m.admin_companies_word()}
 					</span>
 					{studios.length > 0 ? (
 						<div className="flex flex-wrap gap-1.5">
@@ -53,21 +53,21 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									key={studio.id}
 									to="/companies/$id"
 									params={{ id: studio.id }}
-									className="inline-flex min-h-10 items-center rounded-md border border-border/70 bg-card/60 px-2.5 py-1 font-medium text-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
+									className="border-border/70 bg-card/60 text-foreground hover:border-primary/50 hover:bg-muted hover:text-primary focus-visible:ring-primary inline-flex min-h-10 items-center rounded-md border px-2.5 py-1 text-xs font-medium transition-colors focus-visible:ring-2 sm:min-h-0"
 								>
 									{studio.name}
 								</Link>
 							))}
 						</div>
 					) : (
-						<span className="font-medium text-muted-foreground text-sm">{m.common_no_data()}</span>
+						<span className="text-muted-foreground text-sm font-medium">{m.common_no_data()}</span>
 					)}
 				</div>
 
 				{keywords && keywords.length > 0 && (
 					<div className="flex flex-col gap-2">
-						<span className="flex items-center gap-1.5 font-semibold text-muted-foreground text-xs">
-							<Tag className="size-3.5 text-primary" aria-hidden="true" /> {m.admin_nav_keywords()}
+						<span className="text-muted-foreground flex items-center gap-1.5 text-xs font-semibold">
+							<Tag className="text-primary size-3.5" aria-hidden="true" /> {m.admin_nav_keywords()}
 						</span>
 						<div className="flex flex-wrap gap-1.5">
 							{keywords.map((keyword) => (
@@ -75,7 +75,7 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									key={keyword.id}
 									to="/keywords/$id"
 									params={{ id: keyword.id }}
-									className="inline-flex min-h-10 items-center rounded-md border border-border/50 bg-card/50 px-2.5 py-0.5 font-medium text-muted-foreground text-xs transition-colors hover:border-primary/40 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
+									className="border-border/50 bg-card/50 text-muted-foreground hover:border-primary/40 hover:bg-muted hover:text-foreground focus-visible:ring-primary inline-flex min-h-10 items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors focus-visible:ring-2 sm:min-h-0"
 								>
 									{m.web_keyword_hashtag({ name: keyword.name })}
 								</Link>
@@ -87,8 +87,8 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 
 			{/* Dostawcy */}
 			{providers && providers.length > 0 && (
-				<div className="flex flex-wrap items-center gap-2 border-border/40 border-t pt-3">
-					<span className="min-w-20 font-semibold text-muted-foreground text-xs">{m.web_providers_label()}</span>
+				<div className="border-border/40 flex flex-wrap items-center gap-2 border-t pt-3">
+					<span className="text-muted-foreground min-w-20 text-xs font-semibold">{m.web_providers_label()}</span>
 					<div className="flex flex-wrap gap-1.5">
 						{providers.map((p) => {
 							const url = getProviderUrl(p.name, p.externalId, mediaType);
@@ -100,9 +100,9 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 									to={url}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-flex min-h-10 items-center gap-1.5 rounded-md border border-border/80 bg-card/80 px-2.5 py-1 font-medium text-muted-foreground text-xs transition-colors hover:border-primary/50 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary sm:min-h-0"
+									className="border-border/80 bg-card/80 text-muted-foreground hover:border-primary/50 hover:bg-muted hover:text-foreground focus-visible:ring-primary inline-flex min-h-10 items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors focus-visible:ring-2 sm:min-h-0"
 								>
-									<ExternalLink className="size-3 text-primary" />
+									<ExternalLink className="text-primary size-3" />
 									<span>{formatProviderShortName(p.name)}</span>
 								</Link>
 							);

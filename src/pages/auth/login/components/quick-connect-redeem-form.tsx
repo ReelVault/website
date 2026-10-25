@@ -66,7 +66,7 @@ export function QuickConnectRedeemForm({ onSuccess, onSwitchToPair, isInitiating
 
 			<AsyncButton
 				type="submit"
-				className="w-full rounded-2xl py-5 font-black uppercase tracking-widest"
+				className="w-full rounded-2xl py-5 font-black tracking-widest uppercase"
 				isPending={quickConnectRedeemMutation.isPending}
 				disabled={qcCode.replace(/[^0-9a-zA-Z]/g, "").length < 8}
 				pendingLabel={m.common_signing_in()}

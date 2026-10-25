@@ -36,27 +36,27 @@ export function DashboardAuditFeed() {
 	} else if (entries.length === 0) {
 		feedContent = (
 			<div className="flex flex-col items-center justify-center py-10 text-center">
-				<Shield className="size-8 text-muted-foreground" />
-				<p className="mt-3 font-semibold text-foreground text-sm">{m.admin_audit_no_entries()}</p>
-				<p className="mt-1 text-muted-foreground text-xs">{m.admin_dashboard_new_operations_appear_here()}</p>
+				<Shield className="text-muted-foreground size-8" />
+				<p className="text-foreground mt-3 text-sm font-semibold">{m.admin_audit_no_entries()}</p>
+				<p className="text-muted-foreground mt-1 text-xs">{m.admin_dashboard_new_operations_appear_here()}</p>
 			</div>
 		);
 	} else {
 		feedContent = (
 			<div className="flex flex-col gap-3">
 				{entries.map((entry) => (
-					<div key={entry.id} className="flex items-start gap-3 rounded-xl border border-border/60 bg-card/60 p-3 text-xs">
-						<div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-							<Shield className="size-3.5 text-primary" />
+					<div key={entry.id} className="border-border/60 bg-card/60 flex items-start gap-3 rounded-xl border p-3 text-xs">
+						<div className="bg-muted text-muted-foreground mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg">
+							<Shield className="text-primary size-3.5" />
 						</div>
 						<div className="min-w-0 flex-1">
 							<div className="flex items-center justify-between gap-2">
-								<span className="truncate font-semibold text-foreground capitalize">
+								<span className="text-foreground truncate font-semibold capitalize">
 									{entry.action} {entry.resourceType}
 								</span>
-								<span className="shrink-0 text-muted-foreground text-xs">{auditDateFormatter.format(new Date(entry.createdAt))}</span>
+								<span className="text-muted-foreground shrink-0 text-xs">{auditDateFormatter.format(new Date(entry.createdAt))}</span>
 							</div>
-							<p className="mt-0.5 truncate text-muted-foreground text-xs">{auditEntryLabel(entry)}</p>
+							<p className="text-muted-foreground mt-0.5 truncate text-xs">{auditEntryLabel(entry)}</p>
 						</div>
 					</div>
 				))}

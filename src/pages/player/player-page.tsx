@@ -90,7 +90,7 @@ export default function PlayerByIdPage() {
 	}
 
 	if (isInitialDataLoading || sessionQuery.isPending || !viewQuery.data || !id) {
-		return <AppLoadingState label={m.player_preparing_playback()} className="min-h-screen bg-background" />;
+		return <AppLoadingState label={m.player_preparing_playback()} className="bg-background min-h-screen" />;
 	}
 
 	if (
@@ -105,7 +105,7 @@ export default function PlayerByIdPage() {
 		const description = isTerminatedError ? m.player_stopped_by_admin_notice() : m.user_check_server_connection();
 
 		return (
-			<main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background px-6 text-center">
+			<main className="bg-background flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
 				<AppErrorState
 					title={title}
 					description={description}

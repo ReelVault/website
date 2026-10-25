@@ -30,12 +30,19 @@ const switchProfile = mock((_input: { profileId: string; pin?: string }) => Prom
 
 const router = await import("@tanstack/react-router");
 
+function Link({ to, search, ...rest }: { to: string; search?: Record<string, string>; children?: ReactNode; className?: string }) {
+	const query = new URLSearchParams(search ?? {}).toString();
+
+	return <a href={query ? `${to}?${query}` : to} {...rest} />;
+}
+
+function SimpleAnimation({ children, className }: { children?: ReactNode; className?: string }) {
+	return <div className={className}>{children}</div>;
+}
+
 await mock.module("@tanstack/react-router", () => ({
 	...router,
-	Link: ({ to, search, ...rest }: { to: string; search?: Record<string, string>; children?: ReactNode; className?: string }) => {
-		const query = new URLSearchParams(search ?? {}).toString();
-		return <a href={query ? `${to}?${query}` : to} {...rest} />;
-	},
+	Link,
 	useSearch: () => ({ ...searchState }),
 	useRouter: () => ({ history: { push }, invalidate: () => Promise.resolve() }),
 }));
@@ -53,7 +60,7 @@ await mock.module("@/client/hooks/use-profiles", () => ({
 
 // The entrance animation waits for an intersection observer that this DOM environment does not run.
 await mock.module("@/components/simple-animation", () => ({
-	SimpleAnimation: ({ children, className }: { children?: ReactNode; className?: string }) => <div className={className}>{children}</div>,
+	SimpleAnimation,
 }));
 
 const { default: ProfilesSelectionPage } = await import("@/pages/auth/profiles/profiles-page");

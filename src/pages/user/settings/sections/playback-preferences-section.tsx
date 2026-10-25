@@ -97,7 +97,7 @@ export function PlaybackPreferencesSection({ profileId }: PlaybackPreferencesSec
 	return (
 		<form onSubmit={handleSubmit} className="cinema-surface flex flex-col gap-6 p-5 sm:p-8">
 			<div>
-				<h2 className="font-bold text-xl">{m.admin_users_playback_prefs()}</h2>
+				<h2 className="text-xl font-bold">{m.admin_users_playback_prefs()}</h2>
 			</div>
 
 			<ProfilePreferenceFields preferences={preferences} onChange={updatePreferencesPatch} />

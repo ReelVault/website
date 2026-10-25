@@ -153,7 +153,7 @@ export function LibraryLayout({
 	const availableGenreNames = data.availableGenres.map((g) => g.name);
 
 	return (
-		<div className="min-h-screen bg-background">
+		<div className="bg-background min-h-screen">
 			<LibraryHero
 				currentLibrary={currentLibrary}
 				isGenreMode={state.isGenreMode}

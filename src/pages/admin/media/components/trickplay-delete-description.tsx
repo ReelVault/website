@@ -10,7 +10,7 @@ export function TrickplayDeleteDescription({ mediaFileIds }: { mediaFileIds: str
 	return (
 		<span className="block">
 			{m.admin_media_remove_previews_confirm_description()}
-			<span className="mt-2 block font-medium text-foreground">
+			<span className="text-foreground mt-2 block font-medium">
 				{m.admin_media_remove_previews_preview({ artifacts: preview.data.artifacts, mediaFiles: preview.data.mediaFiles })}
 			</span>
 		</span>

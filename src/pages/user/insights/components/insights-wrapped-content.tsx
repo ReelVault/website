@@ -22,7 +22,7 @@ import { WrappedSummarySlide } from "./wrapped/wrapped-summary-slide";
 import { WrappedTopMediaSlide } from "./wrapped/wrapped-top-media-slide";
 
 // Module-level render prop keeps its identity stable across renders.
-const renderKeyboardKey = (chunks: string) => <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{chunks}</kbd>;
+const renderKeyboardKey = (chunks: string) => <kbd className="bg-muted rounded px-1.5 py-0.5 font-mono text-xs">{chunks}</kbd>;
 
 /**
  * Static map of the server's viewer personality codes (watched-history
@@ -107,9 +107,9 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 	const renderSlideArea = () => {
 		if (wrappedQuery.isLoading) {
 			return (
-				<div className="flex flex-col items-center justify-center gap-4 text-muted-foreground">
-					<Sparkles className="size-12 animate-spin text-primary" />
-					<p className="font-semibold text-base">{m.user_generating_yearly_summary()}</p>
+				<div className="text-muted-foreground flex flex-col items-center justify-center gap-4">
+					<Sparkles className="text-primary size-12 animate-spin" />
+					<p className="text-base font-semibold">{m.user_generating_yearly_summary()}</p>
 				</div>
 			);
 		}
@@ -120,9 +120,9 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 
 		if (!data || data.totalMinutes === 0) {
 			return (
-				<div className="flex flex-col items-center justify-center gap-4 text-center text-muted-foreground">
+				<div className="text-muted-foreground flex flex-col items-center justify-center gap-4 text-center">
 					<Film className="size-16 opacity-30" />
-					<h3 className="font-bold text-foreground text-xl">{m.user_no_activity_in_year({ year: resolvedYear })}</h3>
+					<h3 className="text-foreground text-xl font-bold">{m.user_no_activity_in_year({ year: resolvedYear })}</h3>
 					<p className="max-w-md text-sm">{m.user_watch_to_unlock()}</p>
 				</div>
 			);
@@ -179,13 +179,13 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 			</div>
 
 			{/* Bottom Navigation Controls */}
-			<div className="relative z-20 flex items-center justify-between border-border/60 border-t bg-card/60 px-8 py-4">
+			<div className="border-border/60 bg-card/60 relative z-20 flex items-center justify-between border-t px-8 py-4">
 				<Button type="button" variant="ghost" size="default" onClick={handlePrev} disabled={slideIndex === 0} className="cursor-pointer">
 					<ChevronLeft className="size-4" />
 					{m.components_simple_pagination_previous()}
 				</Button>
 
-				<div className="hidden text-muted-foreground text-xs sm:block">
+				<div className="text-muted-foreground hidden text-xs sm:block">
 					{m.user_insights_navigation_arrows_hint({
 						left: renderKeyboardKey,
 						right: renderKeyboardKey,

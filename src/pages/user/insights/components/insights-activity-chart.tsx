@@ -33,25 +33,25 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 	const isLongRange = weeklyActivity.length > 10;
 
 	return (
-		<section className="col-span-1 row-span-2 overflow-hidden rounded-2xl border border-border/70 bg-card/65 p-6 md:col-span-6 lg:col-span-12">
+		<section className="border-border/70 bg-card/65 col-span-1 row-span-2 overflow-hidden rounded-2xl border p-6 md:col-span-6 lg:col-span-12">
 			<div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
 				{/* Chart Header */}
 				<div className="flex shrink-0 flex-col gap-2">
 					<div className="flex items-center gap-2">
-						<div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+						<div className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg">
 							<BarChart2 className="size-4" />
 						</div>
-						<span className="font-bold text-muted-foreground text-xs">{m.user_daily_activity()}</span>
+						<span className="text-muted-foreground text-xs font-bold">{m.user_daily_activity()}</span>
 					</div>
 
-					<h2 className="font-black text-2xl text-foreground tracking-tight sm:text-3xl">
+					<h2 className="text-foreground text-2xl font-black tracking-tight sm:text-3xl">
 						{m.user_watch_history()}
-						<span className="ml-2 font-mono text-primary text-xs">{m.user_insights_selected_range({ range: selectedRange })}</span>
+						<span className="text-primary ml-2 font-mono text-xs">{m.user_insights_selected_range({ range: selectedRange })}</span>
 					</h2>
 
-					<p className="font-medium text-muted-foreground text-xs">
+					<p className="text-muted-foreground text-xs font-medium">
 						{m.user_insights_total_period()}{" "}
-						<span className="font-bold font-mono text-foreground">
+						<span className="text-foreground font-mono font-bold">
 							{m.common_duration_hours_minutes({ hours: totalHours, minutes: totalMinutes % 60 })}
 						</span>
 					</p>
@@ -59,7 +59,7 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 
 				{/* Bars Container */}
 				<TooltipProvider delay={50}>
-					<div className="scrollbar-thin w-full min-w-0 flex-1 overflow-x-auto pb-2">
+					<div className="w-full min-w-0 flex-1 scrollbar-thin overflow-x-auto pb-2">
 						<div className="flex h-44 min-w-[320px] items-end justify-end gap-1 pt-6 sm:gap-2">
 							{weeklyActivity.map(({ date, day, value }, index) => {
 								const height = maxActivity > 0 ? Math.round((value / maxActivity) * 100) : 0;
@@ -82,8 +82,8 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 									<Tooltip key={date}>
 										<TooltipTrigger
 											render={
-												<div className="group relative flex h-full min-w-2 max-w-9 flex-1 cursor-pointer flex-col items-center justify-end">
-													<div className="relative h-32 w-full overflow-hidden rounded-md bg-muted/40 transition-colors group-hover:bg-muted/80 sm:rounded-lg">
+												<div className="group relative flex h-full max-w-9 min-w-2 flex-1 cursor-pointer flex-col items-center justify-end">
+													<div className="bg-muted/40 group-hover:bg-muted/80 relative h-32 w-full overflow-hidden rounded-md transition-colors sm:rounded-lg">
 														<div
 															className={cn(
 																"absolute bottom-0 w-full rounded-md transition-[border-color,background-color,color,box-shadow] duration-300 group-hover:brightness-125",
@@ -97,7 +97,7 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 
 													<div className="flex h-5 items-center justify-center pt-1">
 														{showLabel ? (
-															<span className="truncate font-bold font-mono text-muted-foreground text-xs transition-colors group-hover:text-foreground">
+															<span className="text-muted-foreground group-hover:text-foreground truncate font-mono text-xs font-bold transition-colors">
 																{shortLabel}
 															</span>
 														) : (

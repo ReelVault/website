@@ -24,12 +24,12 @@ export function SubtitleDetailDialog({
 		dialogBody = (
 			<div className="flex flex-col gap-4">
 				<div className="flex items-center gap-3">
-					<div className="flex size-10 items-center justify-center rounded-xl border border-border/60 bg-muted/40">
-						<FileText className="size-5 text-muted-foreground" />
+					<div className="border-border/60 bg-muted/40 flex size-10 items-center justify-center rounded-xl border">
+						<FileText className="text-muted-foreground size-5" />
 					</div>
 					<div>
-						<p className="font-semibold text-foreground text-sm">{subtitle.label ?? subtitle.language}</p>
-						<p className="flex items-center gap-1.5 text-muted-foreground text-xs">
+						<p className="text-foreground text-sm font-semibold">{subtitle.label ?? subtitle.language}</p>
+						<p className="text-muted-foreground flex items-center gap-1.5 text-xs">
 							<Globe className="size-3" />
 							{subtitle.language}
 						</p>
@@ -37,22 +37,22 @@ export function SubtitleDetailDialog({
 				</div>
 
 				<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-					<div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+					<div className="border-border/60 bg-muted/20 rounded-lg border p-3">
 						<p className="text-muted-foreground text-xs">{m.media_format()}</p>
-						<p className="mt-0.5 font-medium text-foreground text-sm">{subtitle.format}</p>
+						<p className="text-foreground mt-0.5 text-sm font-medium">{subtitle.format}</p>
 					</div>
-					<div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+					<div className="border-border/60 bg-muted/20 rounded-lg border p-3">
 						<p className="text-muted-foreground text-xs">{m.admin_subtitles_type()}</p>
-						<p className="mt-0.5 font-medium text-foreground text-sm">
+						<p className="text-foreground mt-0.5 text-sm font-medium">
 							{subtitle.type === "embedded" ? m.admin_subtitles_embedded() : m.admin_subtitles_external()}
 						</p>
 					</div>
-					<div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+					<div className="border-border/60 bg-muted/20 rounded-lg border p-3">
 						<p className="text-muted-foreground text-xs">{m.admin_subtitles_default()}</p>
-						<p className="mt-0.5 flex items-center gap-1.5 font-medium text-foreground text-sm">
+						<p className="text-foreground mt-0.5 flex items-center gap-1.5 text-sm font-medium">
 							{subtitle.isDefault ? (
 								<>
-									<Check className="size-3.5 text-success" />
+									<Check className="text-success size-3.5" />
 									<span>{m.common_yes()}</span>
 								</>
 							) : (
@@ -60,25 +60,25 @@ export function SubtitleDetailDialog({
 							)}
 						</p>
 					</div>
-					<div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+					<div className="border-border/60 bg-muted/20 rounded-lg border p-3">
 						<p className="text-muted-foreground text-xs">{m.admin_media_forced_badge()}</p>
-						<p className="mt-0.5 font-medium text-foreground text-sm">{subtitle.isForced ? m.common_yes() : m.common_no()}</p>
+						<p className="text-foreground mt-0.5 text-sm font-medium">{subtitle.isForced ? m.common_yes() : m.common_no()}</p>
 					</div>
 				</div>
 
 				{subtitle.streamIndex !== null && (
-					<div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+					<div className="border-border/60 bg-muted/20 rounded-lg border p-3">
 						<p className="text-muted-foreground text-xs">{m.admin_subtitles_stream_index()}</p>
-						<p className="mt-0.5 font-medium font-mono text-foreground text-sm">{subtitle.streamIndex}</p>
+						<p className="text-foreground mt-0.5 font-mono text-sm font-medium">{subtitle.streamIndex}</p>
 					</div>
 				)}
 
-				<div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+				<div className="border-border/60 bg-muted/20 rounded-lg border p-3">
 					<p className="text-muted-foreground text-xs">{m.admin_subtitles_media_file_id()}</p>
-					<p className="mt-0.5 font-medium font-mono text-foreground text-xs">{subtitle.mediaFileId}</p>
+					<p className="text-foreground mt-0.5 font-mono text-xs font-medium">{subtitle.mediaFileId}</p>
 				</div>
 
-				<div className="flex gap-4 text-muted-foreground text-xs">
+				<div className="text-muted-foreground flex gap-4 text-xs">
 					<span>{m.common_created_at_value({ date: formatFullDateTime(subtitle.createdAt) })}</span>
 					<span>{m.admin_subtitles_modified_at({ date: formatFullDateTime(subtitle.updatedAt) })}</span>
 				</div>
@@ -91,7 +91,7 @@ export function SubtitleDetailDialog({
 			<DialogContent size="md">
 				<DialogHeader>
 					<DialogTitle>
-						<Info className="size-5 text-muted-foreground" />
+						<Info className="text-muted-foreground size-5" />
 						{m.admin_subtitles_details()}
 					</DialogTitle>
 					<DialogDescription>{m.admin_subtitles_info_dialog_desc()}</DialogDescription>

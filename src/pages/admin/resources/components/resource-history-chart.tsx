@@ -169,14 +169,14 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 				{/* Hover tooltip */}
 				{hovered && (
 					<div
-						className="pointer-events-none absolute -top-1 z-10 min-w-44 -translate-x-1/2 rounded-lg border border-border/70 bg-popover p-2.5 text-popover-foreground shadow-md"
+						className="border-border/70 bg-popover text-popover-foreground pointer-events-none absolute -top-1 z-10 min-w-44 -translate-x-1/2 rounded-lg border p-2.5 shadow-md"
 						style={{ left: `${Math.min(88, Math.max(12, hoverX))}%` }}
 					>
-						<p className="font-medium font-mono text-muted-foreground text-xs">{formatTime(hovered)}</p>
+						<p className="text-muted-foreground font-mono text-xs font-medium">{formatTime(hovered)}</p>
 						<div className="mt-1.5 flex flex-col gap-1 text-xs">
 							{SERIES.map((series) => (
 								<span key={series.key} className="flex items-center justify-between gap-3">
-									<span className="flex items-center gap-1.5 text-muted-foreground">
+									<span className="text-muted-foreground flex items-center gap-1.5">
 										<span className="inline-block size-1.5 rounded-full" style={{ backgroundColor: series.color }} />
 										{series.label}
 									</span>
@@ -186,7 +186,7 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 								</span>
 							))}
 							{workerTotals[hoverIndex ?? 0] !== undefined && (
-								<span className="flex items-center justify-between gap-3 border-border/60 border-t pt-1 text-muted-foreground">
+								<span className="border-border/60 text-muted-foreground flex items-center justify-between gap-3 border-t pt-1">
 									<span>{m.admin_resources_active_workers()}</span>
 									<span className="font-mono font-semibold tabular-nums">{workerTotals[hoverIndex ?? 0]}</span>
 								</span>
@@ -198,7 +198,7 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 
 			{/* X labels: first / middle / last */}
 			{samples.length > 0 && (
-				<div className="flex justify-between text-muted-foreground text-xs">
+				<div className="text-muted-foreground flex justify-between text-xs">
 					{(samples.length >= 3 ? [0, Math.floor((samples.length - 1) / 2), samples.length - 1] : [0]).map((index) => {
 						const entry = samples[index];
 						if (!entry) return null;

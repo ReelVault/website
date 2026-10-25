@@ -19,7 +19,7 @@ export function SearchInput({
 	return (
 		<InputGroup>
 			<InputGroupAddon>
-				<Search className="size-4 text-primary" aria-hidden="true" />
+				<Search className="text-primary size-4" aria-hidden="true" />
 			</InputGroupAddon>
 			<InputGroupInput
 				name="library-search"

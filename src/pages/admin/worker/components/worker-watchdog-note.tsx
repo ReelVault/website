@@ -9,7 +9,7 @@ export function WorkerWatchdogNote() {
 	if (!data || data.recoveredJobs === 0) return null;
 
 	return (
-		<p role="status" className="flex items-center gap-2 text-warning text-xs">
+		<p role="status" className="text-warning flex items-center gap-2 text-xs">
 			<AlertCircle className="size-3.5 shrink-0" />
 			{m.admin_workers_watchdog_recovered({ count: data.recoveredJobs, time: formatDateTime(data.lastRecoveredAt) })}
 		</p>

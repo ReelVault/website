@@ -1,6 +1,16 @@
 import type { MediaMarker, PlaybackDiagnostics } from "@reelvault/sdk";
 import type Hls from "hls.js";
-import { createContext, type ReactNode, type RefObject, useContext, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+	type Context,
+	createContext,
+	type ReactNode,
+	type RefObject,
+	useContext,
+	useMemo,
+	useRef,
+	useState,
+	useSyncExternalStore,
+} from "react";
 import { type PlayerVolumeState, usePlayerController, usePlayerVolumeState } from "./hooks/use-player-controller.hook";
 import type {
 	AudioStream,
@@ -26,18 +36,18 @@ import type { BufferedRange } from "./utils/player-utils";
 // Helper: creates a typed context + hook with a built-in guard.
 // ---------------------------------------------------------------------------
 
-function createContextHook<T>(displayName: string) {
-	const ctx = createContext<T | null>(null);
-	ctx.displayName = displayName;
+function createPlayerContext<T>(displayName: string) {
+	const context = createContext<T | null>(null);
+	context.displayName = displayName;
 
-	function useHook() {
-		const value = useContext(ctx);
-		if (!value) throw new Error(`${displayName} must be used within a PlayerProvider`);
+	return context;
+}
 
-		return value;
-	}
+function useRequiredPlayerContext<T>(context: Context<T | null>, displayName: string): T {
+	const value = useContext(context);
+	if (!value) throw new Error(`${displayName} must be used within a PlayerProvider`);
 
-	return [ctx, useHook] as const;
+	return value;
 }
 
 // ---------------------------------------------------------------------------
@@ -54,7 +64,11 @@ interface PlayerTimeValue {
 	finishTime: string;
 }
 
-const [PlayerTimeStoreContext, usePlayerTimeStore] = createContextHook<PlayerTimeStore>("PlayerTimeStore");
+const PlayerTimeStoreContext = createPlayerContext<PlayerTimeStore>("PlayerTimeStore");
+
+export function usePlayerTimeStore(): PlayerTimeStore {
+	return useRequiredPlayerContext(PlayerTimeStoreContext, "PlayerTimeStore");
+}
 
 export function usePlayerTime(): PlayerTimeValue {
 	const store = usePlayerTimeStore();
@@ -86,13 +100,17 @@ interface PlayerVolumeValue {
 	playbackRate: number;
 }
 
-const [PlayerVolumeContext, usePlayerVolumeRaw] = createContextHook<PlayerVolumeValue>("usePlayerVolume");
+const PlayerVolumeContext = createPlayerContext<PlayerVolumeValue>("usePlayerVolume");
 
-export { usePlayerVolumeRaw as usePlayerVolume };
+export function usePlayerVolume(): PlayerVolumeValue {
+	return useRequiredPlayerContext(PlayerVolumeContext, "usePlayerVolume");
+}
 
-const [PlayerStatusContext, usePlayerStatusRaw] = createContextHook<PlayerStatusValue>("usePlayerStatus");
+const PlayerStatusContext = createPlayerContext<PlayerStatusValue>("usePlayerStatus");
 
-export { usePlayerStatusRaw as usePlayerStatus };
+export function usePlayerStatus(): PlayerStatusValue {
+	return useRequiredPlayerContext(PlayerStatusContext, "usePlayerStatus");
+}
 
 // ---------------------------------------------------------------------------
 // Progress ranges: transcoded (server poll) + buffered (video "progress" events).
@@ -107,9 +125,11 @@ interface PlayerProgressRangesValue {
 	bufferedRanges: BufferedRange[];
 }
 
-const [PlayerProgressRangesContext, usePlayerProgressRangesRaw] = createContextHook<PlayerProgressRangesValue>("usePlayerProgressRanges");
+const PlayerProgressRangesContext = createPlayerContext<PlayerProgressRangesValue>("usePlayerProgressRanges");
 
-export { usePlayerProgressRangesRaw as usePlayerProgressRanges };
+export function usePlayerProgressRanges(): PlayerProgressRangesValue {
+	return useRequiredPlayerContext(PlayerProgressRangesContext, "usePlayerProgressRanges");
+}
 
 // ---------------------------------------------------------------------------
 // Actions: refs and callbacks used to drive the underlying <video>.
@@ -140,9 +160,11 @@ export interface PlayerActionsValue {
 	handleSessionTerminated: (reason?: string) => void;
 }
 
-const [PlayerActionsContext, usePlayerActionsRaw] = createContextHook<PlayerActionsValue>("usePlayerActions");
+const PlayerActionsContext = createPlayerContext<PlayerActionsValue>("usePlayerActions");
 
-export { usePlayerActionsRaw as usePlayerActions };
+export function usePlayerActions(): PlayerActionsValue {
+	return useRequiredPlayerContext(PlayerActionsContext, "usePlayerActions");
+}
 
 // ---------------------------------------------------------------------------
 // Subtitles: selection, search and download — owned by the subtitle menu.
@@ -177,9 +199,11 @@ interface PlayerSubtitlesValue {
 	adjustSubtitleOffset: (delta: number) => void;
 }
 
-const [PlayerSubtitlesContext, usePlayerSubtitlesRaw] = createContextHook<PlayerSubtitlesValue>("usePlayerSubtitles");
+const PlayerSubtitlesContext = createPlayerContext<PlayerSubtitlesValue>("usePlayerSubtitles");
 
-export { usePlayerSubtitlesRaw as usePlayerSubtitles };
+export function usePlayerSubtitles(): PlayerSubtitlesValue {
+	return useRequiredPlayerContext(PlayerSubtitlesContext, "usePlayerSubtitles");
+}
 
 // ---------------------------------------------------------------------------
 // Diagnostics: merged toggle + data.
@@ -204,16 +228,20 @@ interface PlayerDiagnosticsValue {
 	} | null;
 }
 
-const [PlayerDiagnosticsContext, usePlayerDiagnosticsRaw] = createContextHook<PlayerDiagnosticsValue>("usePlayerDiagnostics");
+const PlayerDiagnosticsContext = createPlayerContext<PlayerDiagnosticsValue>("usePlayerDiagnostics");
+
+function usePlayerDiagnostics(): PlayerDiagnosticsValue {
+	return useRequiredPlayerContext(PlayerDiagnosticsContext, "usePlayerDiagnostics");
+}
 
 export function usePlayerDiagnosticsToggle() {
-	const value = usePlayerDiagnosticsRaw();
+	const value = usePlayerDiagnostics();
 
 	return { isOpen: value.isOpen, toggle: value.toggle, close: value.close };
 }
 
 export function usePlayerDiagnosticsData() {
-	const value = usePlayerDiagnosticsRaw();
+	const value = usePlayerDiagnostics();
 
 	return {
 		diagnostics: value.diagnostics,
@@ -240,9 +268,11 @@ interface PlayerInfoValue {
 	mode: PlayerSession["mode"];
 }
 
-const [PlayerInfoContext, usePlayerInfoRaw] = createContextHook<PlayerInfoValue>("usePlayerInfo");
+const PlayerInfoContext = createPlayerContext<PlayerInfoValue>("usePlayerInfo");
 
-export { usePlayerInfoRaw as usePlayerInfo };
+export function usePlayerInfo(): PlayerInfoValue {
+	return useRequiredPlayerContext(PlayerInfoContext, "usePlayerInfo");
+}
 
 // ---------------------------------------------------------------------------
 // Settings: audio/quality settings.
@@ -253,9 +283,11 @@ interface PlayerSettingsValue extends PlaybackSettings, PlaybackSettingsActions 
 	selectedAudioStream: AudioStream | undefined;
 }
 
-const [PlayerSettingsContext, usePlayerSettingsRaw] = createContextHook<PlayerSettingsValue>("usePlayerSettings");
+const PlayerSettingsContext = createPlayerContext<PlayerSettingsValue>("usePlayerSettings");
 
-export { usePlayerSettingsRaw as usePlayerSettings };
+export function usePlayerSettings(): PlayerSettingsValue {
+	return useRequiredPlayerContext(PlayerSettingsContext, "usePlayerSettings");
+}
 
 // ---------------------------------------------------------------------------
 // Next Episode
@@ -271,9 +303,11 @@ interface PlayerNextEpisodeValue {
 	autoplay: boolean;
 }
 
-const [PlayerNextEpisodeContext, usePlayerNextEpisodeRaw] = createContextHook<PlayerNextEpisodeValue>("usePlayerNextEpisode");
+const PlayerNextEpisodeContext = createPlayerContext<PlayerNextEpisodeValue>("usePlayerNextEpisode");
 
-export { usePlayerNextEpisodeRaw as usePlayerNextEpisode };
+export function usePlayerNextEpisode(): PlayerNextEpisodeValue {
+	return useRequiredPlayerContext(PlayerNextEpisodeContext, "usePlayerNextEpisode");
+}
 
 // ---------------------------------------------------------------------------
 // Markers
@@ -285,9 +319,11 @@ interface PlayerMarkersValue {
 	skipActiveMarker: () => void;
 }
 
-const [PlayerMarkersContext, usePlayerMarkersRaw] = createContextHook<PlayerMarkersValue>("usePlayerMarkers");
+const PlayerMarkersContext = createPlayerContext<PlayerMarkersValue>("usePlayerMarkers");
 
-export { usePlayerMarkersRaw as usePlayerMarkers };
+export function usePlayerMarkers(): PlayerMarkersValue {
+	return useRequiredPlayerContext(PlayerMarkersContext, "usePlayerMarkers");
+}
 
 // ---------------------------------------------------------------------------
 // Episodes: seasons + playback progress — used by episodes drawer.
@@ -297,9 +333,11 @@ interface PlayerEpisodesValue {
 	seasons: Array<{ id: string; seasonNumber: number }>;
 }
 
-const [PlayerEpisodesContext, usePlayerEpisodesRaw] = createContextHook<PlayerEpisodesValue>("usePlayerEpisodes");
+const PlayerEpisodesContext = createPlayerContext<PlayerEpisodesValue>("usePlayerEpisodes");
 
-export { usePlayerEpisodesRaw as usePlayerEpisodes };
+export function usePlayerEpisodes(): PlayerEpisodesValue {
+	return useRequiredPlayerContext(PlayerEpisodesContext, "usePlayerEpisodes");
+}
 
 // ---------------------------------------------------------------------------
 // Provider

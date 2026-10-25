@@ -11,11 +11,11 @@ function SearchSection({ icon: Icon, title, count, children }: { icon: LucideIco
 			<header className="flex items-end justify-between gap-4">
 				<div className="cinema-section-heading">
 					<h2 className="flex items-center gap-2">
-						<Icon aria-hidden="true" className="size-5 text-primary" />
+						<Icon aria-hidden="true" className="text-primary size-5" />
 						{title}
 					</h2>
 				</div>
-				<span className="font-mono text-muted-foreground text-xs tabular-nums">{count.toString().padStart(2, "0")}</span>
+				<span className="text-muted-foreground font-mono text-xs tabular-nums">{count.toString().padStart(2, "0")}</span>
 			</header>
 			<div className="mt-6">{children}</div>
 		</section>

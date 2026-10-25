@@ -24,7 +24,7 @@ function FullscreenDialogContent({
 			<DialogPrimitive.Popup
 				data-slot="dialog-content"
 				className={cn(
-					"data-open:fade-in-0 data-open:zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-popover-foreground text-sm outline-none ring-1 ring-foreground/10 duration-100 data-closed:animate-out data-open:animate-in",
+					"data-open:fade-in-0 data-open:zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 bg-popover text-popover-foreground ring-foreground/10 data-closed:animate-out data-open:animate-in fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl p-4 text-sm ring-1 duration-100 outline-none",
 					className,
 				)}
 				{...props}
@@ -59,7 +59,7 @@ function FullscreenDialogFooter({
 	return (
 		<div
 			data-slot="dialog-footer"
-			className={cn("-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end", className)}
+			className={cn("bg-muted/50 -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t p-4 sm:flex-row sm:justify-end", className)}
 			{...props}
 		>
 			{children}
@@ -72,7 +72,7 @@ function FullscreenDialogTitle({ className, ...props }: DialogPrimitive.Title.Pr
 	return (
 		<DialogPrimitive.Title
 			data-slot="dialog-title"
-			className={cn("font-heading font-medium text-base leading-none", className)}
+			className={cn("font-heading text-base leading-none font-medium", className)}
 			{...props}
 		/>
 	);
@@ -82,7 +82,7 @@ function FullscreenDialogDescription({ className, ...props }: DialogPrimitive.De
 	return (
 		<DialogPrimitive.Description
 			data-slot="dialog-description"
-			className={cn("text-muted-foreground text-sm *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground", className)}
+			className={cn("text-muted-foreground *:[a]:hover:text-foreground text-sm *:[a]:underline *:[a]:underline-offset-3", className)}
 			{...props}
 		/>
 	);

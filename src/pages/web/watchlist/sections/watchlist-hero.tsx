@@ -10,7 +10,7 @@ import { getMetadataBackdrop } from "@/utils/metadata-utils";
 export function WatchlistHero({ featuredItem }: { featuredItem: WatchlistItem }) {
 	return (
 		<SimpleAnimation direction="none" duration={300}>
-			<section className="relative mx-auto mb-12 h-[min(34rem,46vh)] w-[calc(100%-2rem)] overflow-hidden rounded-xl border border-border sm:w-[calc(100%-3rem)] sm:rounded-2xl">
+			<section className="border-border relative mx-auto mb-12 h-[min(34rem,46vh)] w-[calc(100%-2rem)] overflow-hidden rounded-xl border sm:w-[calc(100%-3rem)] sm:rounded-2xl">
 				<ApiImage
 					fileId={getMetadataBackdrop(featuredItem)?.id}
 					cacheKey={getMetadataBackdrop(featuredItem)?.updatedAt}
@@ -20,7 +20,7 @@ export function WatchlistHero({ featuredItem }: { featuredItem: WatchlistItem })
 					dim={50}
 					className="object-cover"
 				/>
-				<div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent" />
+				<div className="from-background via-background/60 absolute inset-0 bg-linear-to-t to-transparent" />
 
 				<div className="cinema-shell relative flex h-full flex-col justify-end pb-12">
 					<p className="cinema-kicker">

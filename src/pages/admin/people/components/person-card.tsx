@@ -23,10 +23,10 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 			<ContextMenuTrigger>
 				{/* The checkbox sits outside the link, so selecting a person does not open the profile. */}
 				<div className="relative">
-					<label className="absolute top-2 left-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md bg-background/85 shadow-xs">
+					<label className="bg-background/85 absolute top-2 left-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md shadow-xs">
 						<input
 							type="checkbox"
-							className="size-4 accent-primary"
+							className="accent-primary size-4"
 							checked={selected}
 							onChange={() => onToggleSelect(person.id)}
 							aria-label={m.admin_people_select_person()}
@@ -34,7 +34,7 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 					</label>
 					<Link to="/person/$id" params={{ id: person.id }} className="group block focus:outline-none">
 						<Card className="h-full overflow-hidden">
-							<div className="relative aspect-2/3 w-full overflow-hidden border-border/60 border-b bg-muted/40">
+							<div className="border-border/60 bg-muted/40 relative aspect-2/3 w-full overflow-hidden border-b">
 								{person.imageId ? (
 									<ApiImage
 										fileId={person.imageId}
@@ -46,13 +46,13 @@ export function PersonCard({ person, selected, onToggleSelect, onRefresh, onRefr
 										className="w-full object-cover"
 									/>
 								) : (
-									<div className="flex h-full w-full items-center justify-center text-muted-foreground/50">
+									<div className="text-muted-foreground/50 flex h-full w-full items-center justify-center">
 										<User className="size-12" />
 									</div>
 								)}
 							</div>
 							<CardContent className="text-center">
-								<h3 className="truncate font-semibold text-foreground text-sm tracking-tight group-hover:text-primary" title={person.name}>
+								<h3 className="text-foreground group-hover:text-primary truncate text-sm font-semibold tracking-tight" title={person.name}>
 									{person.name}
 								</h3>
 							</CardContent>

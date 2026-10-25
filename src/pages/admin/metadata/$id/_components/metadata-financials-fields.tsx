@@ -23,7 +23,7 @@ export function MetadataFinancialsFields({ budget, revenue, isLocked, onChange, 
 				</div>
 				<InputGroup>
 					<InputGroupAddon>
-						<DollarSign className="size-4 text-muted-foreground" />
+						<DollarSign className="text-muted-foreground size-4" />
 					</InputGroupAddon>
 					<InputGroupInput
 						id="metadata-budget"
@@ -43,7 +43,7 @@ export function MetadataFinancialsFields({ budget, revenue, isLocked, onChange, 
 				</div>
 				<InputGroup>
 					<InputGroupAddon>
-						<DollarSign className="size-4 text-muted-foreground" />
+						<DollarSign className="text-muted-foreground size-4" />
 					</InputGroupAddon>
 					<InputGroupInput
 						id="metadata-revenue"

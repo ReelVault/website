@@ -135,8 +135,8 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 		<FullscreenDialogContent className="flex max-h-[85vh] max-w-2xl flex-col">
 			<FullscreenDialogHeader className="shrink-0">
 				<div className="mb-2 flex items-center gap-2">
-					<div className="h-px w-4 bg-primary" />
-					<span className="font-black text-primary text-xs">{m.user_identity()}</span>
+					<div className="bg-primary h-px w-4" />
+					<span className="text-primary text-xs font-black">{m.user_identity()}</span>
 				</div>
 				<FullscreenDialogTitle>
 					{m.user_choose_avatar_cap()}
@@ -165,9 +165,9 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 
 					{(selectedAvatar || previewImage) && (
 						<div className="flex flex-col gap-3">
-							<h4 className="ml-2 font-black text-muted-foreground text-xs">{m.user_selected_avatar_label()}</h4>
+							<h4 className="text-muted-foreground ml-2 text-xs font-black">{m.user_selected_avatar_label()}</h4>
 							<div className="flex items-center justify-center">
-								<div className="relative size-32 overflow-hidden rounded-3xl border-2 border-primary/20">
+								<div className="border-primary/20 relative size-32 overflow-hidden rounded-3xl border-2">
 									<img
 										src={resolveApiAssetUrl(previewImage ?? selectedAvatar)}
 										alt={m.user_selected_avatar()}
@@ -203,7 +203,7 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 			</div>
 
 			{/* Footer outside the scroll area — always visible */}
-			<div className="flex shrink-0 flex-col gap-4 border-border border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+			<div className="border-border flex shrink-0 flex-col gap-4 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
 				<AsyncButton
 					type="button"
 					variant="ghost"
@@ -212,7 +212,7 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 					disabled={!currentAvatar}
 					isPending={isRemoving}
 					pendingLabel={m.user_avatar_removing()}
-					className="self-start font-bold text-destructive text-xs tracking-wider"
+					className="text-destructive self-start text-xs font-bold tracking-wider"
 				>
 					<Trash2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
 					{m.user_remove_current()}
@@ -224,7 +224,7 @@ export function AvatarPickerDialogContent({ currentAvatar, onClose, onSave, onUp
 					</Button>
 					<AsyncButton
 						type="button"
-						className="min-h-11 px-6 font-black text-xs"
+						className="min-h-11 px-6 text-xs font-black"
 						onClick={handleConfirm}
 						disabled={!hasPendingChange}
 						isPending={isSaving}

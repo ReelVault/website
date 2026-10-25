@@ -182,11 +182,11 @@ export default function AdminDatabasePage() {
 
 			{integrityMutation.data ? (
 				<AdminSection title={m.admin_database_integrity_title()}>
-					<p className={integrityMutation.data.ok ? "text-sm text-success" : "text-destructive text-sm"}>
+					<p className={integrityMutation.data.ok ? "text-success text-sm" : "text-destructive text-sm"}>
 						{integrityMutation.data.ok ? m.admin_database_integrity_ok() : m.admin_database_integrity_problems()}
 					</p>
 					{integrityMutation.data.ok ? null : (
-						<ul className="mt-2 list-disc pl-5 font-mono text-muted-foreground text-xs">
+						<ul className="text-muted-foreground mt-2 list-disc pl-5 font-mono text-xs">
 							{integrityMutation.data.messages.map((message) => (
 								<li key={message}>{message}</li>
 							))}

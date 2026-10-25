@@ -28,21 +28,21 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 			description={m.admin_metadata_sources_description()}
 			actions={
 				<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify}>
-					<Link2 className="size-3.5 text-primary" />
+					<Link2 className="text-primary size-3.5" />
 					<span>{m.admin_metadata_match_link_provider()}</span>
 				</Button>
 			}
 		>
 			<div className="flex flex-col gap-4">
 				{/* Primary Provider Highlight Banner */}
-				<div className="flex flex-col gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+				<div className="border-primary/20 bg-primary/5 flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between">
 					<div className="flex items-start gap-3">
-						<div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+						<div className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-lg">
 							<Radio className="size-4" />
 						</div>
 						<div className="flex flex-col gap-0.5">
 							<div className="flex flex-wrap items-center gap-2">
-								<span className="font-semibold text-muted-foreground text-xs">{m.admin_metadata_primary_data_provider()}</span>
+								<span className="text-muted-foreground text-xs font-semibold">{m.admin_metadata_primary_data_provider()}</span>
 								{primaryId ? (
 									<Badge weight="semibold" variant="default" size="sm">
 										{formatProviderName(primaryId)}
@@ -62,7 +62,7 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 					</div>
 
 					<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="shrink-0">
-						<Search className="size-3.5 text-primary" />
+						<Search className="text-primary size-3.5" />
 						<span>{m.admin_metadata_change_match()}</span>
 					</Button>
 				</div>
@@ -75,16 +75,16 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 						))}
 					</div>
 				) : (
-					<div className="flex flex-col items-center justify-center gap-2.5 rounded-xl border border-border/80 border-dashed bg-muted/20 p-6 text-center">
-						<div className="flex size-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground">
-							<Database className="size-5 text-primary" />
+					<div className="border-border/80 bg-muted/20 flex flex-col items-center justify-center gap-2.5 rounded-xl border border-dashed p-6 text-center">
+						<div className="border-border bg-background text-muted-foreground flex size-10 items-center justify-center rounded-lg border">
+							<Database className="text-primary size-5" />
 						</div>
 						<div className="flex flex-col gap-1">
-							<p className="font-medium text-foreground text-sm">{m.admin_metadata_no_external_ids()}</p>
-							<p className="max-w-md text-muted-foreground text-xs">{m.admin_metadata_no_external_ids_hint()}</p>
+							<p className="text-foreground text-sm font-medium">{m.admin_metadata_no_external_ids()}</p>
+							<p className="text-muted-foreground max-w-md text-xs">{m.admin_metadata_no_external_ids_hint()}</p>
 						</div>
 						<Button type="button" variant="outline" size="sm" onClick={onOpenIdentify} className="mt-1">
-							<Search className="size-3.5 text-primary" />
+							<Search className="text-primary size-3.5" />
 							<span>{m.admin_metadata_search_link_tmdb()}</span>
 						</Button>
 					</div>
@@ -105,14 +105,14 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 	};
 
 	return (
-		<div className="flex flex-col justify-between gap-3 rounded-xl border border-border/80 bg-background p-4 shadow-xs transition-colors hover:border-border">
+		<div className="border-border/80 bg-background hover:border-border flex flex-col justify-between gap-3 rounded-xl border p-4 shadow-xs transition-colors">
 			<div className="flex items-start justify-between gap-2">
 				<div className="flex items-center gap-2">
-					<div className="flex h-8 w-12 shrink-0 items-center justify-center rounded-lg bg-muted font-bold text-foreground text-xs">
+					<div className="bg-muted text-foreground flex h-8 w-12 shrink-0 items-center justify-center rounded-lg text-xs font-bold">
 						{shortName.slice(0, 4)}
 					</div>
 					<div>
-						<h4 className="font-semibold text-foreground text-sm">{formatProviderName(provider.name)}</h4>
+						<h4 className="text-foreground text-sm font-semibold">{formatProviderName(provider.name)}</h4>
 						<span className="text-muted-foreground text-xs">
 							{m.admin_metadata_type_label({ type: getEntityTypeLabel(provider.entityType) })}
 						</span>
@@ -125,10 +125,10 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 				)}
 			</div>
 
-			<div className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/30 px-3 py-2">
+			<div className="border-border/60 bg-muted/30 flex items-center justify-between gap-2 rounded-lg border px-3 py-2">
 				<div className="flex min-w-0 items-center gap-1.5 text-xs">
-					<span className="shrink-0 text-muted-foreground">{m.admin_metadata_provider_id_label()}</span>
-					<code className="truncate font-mono font-semibold text-foreground text-xs">{provider.externalId}</code>
+					<span className="text-muted-foreground shrink-0">{m.admin_metadata_provider_id_label()}</span>
+					<code className="text-foreground truncate font-mono text-xs font-semibold">{provider.externalId}</code>
 				</div>
 
 				<Button
@@ -145,7 +145,7 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 				</Button>
 			</div>
 
-			<div className="flex items-center justify-between gap-2 border-border/40 border-t pt-1">
+			<div className="border-border/40 flex items-center justify-between gap-2 border-t pt-1">
 				<span className="text-muted-foreground text-xs">{m.metadata_provider_added_at({ date: formatDate(provider.createdAt) })}</span>
 
 				{externalUrl && (

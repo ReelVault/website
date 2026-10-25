@@ -35,14 +35,14 @@ export function WorkerPageHeader({
 						<span
 							className={cn(
 								"size-1.5 rounded-full transition-[border-color,background-color,color,box-shadow]",
-								autoRefresh ? "animate-pulse bg-primary" : "bg-muted-foreground/60",
+								autoRefresh ? "bg-primary animate-pulse" : "bg-muted-foreground/60",
 							)}
 						/>
 						<span>{autoRefresh ? m.admin_workers_autorefresh_on() : m.admin_workers_autorefresh_off()}</span>
 					</Button>
 
 					<Button tone="muted" variant="outline" size="sm" type="button" onClick={onRefreshAll} disabled={isAnyRefetching}>
-						<RefreshCw className={cn("size-3.5", isAnyRefetching && "animate-spin text-primary")} />
+						<RefreshCw className={cn("size-3.5", isAnyRefetching && "text-primary animate-spin")} />
 						<span>{m.common_refresh()}</span>
 					</Button>
 

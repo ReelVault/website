@@ -44,7 +44,7 @@ export default function PluginCatalogPage() {
 		<main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12">
 			<Link
 				to="/admin/plugins"
-				className="inline-flex min-h-11 w-fit items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex min-h-11 w-fit items-center gap-2 text-sm transition-colors"
 			>
 				<ArrowLeft className="size-4" aria-hidden="true" />
 				{m.common_back()}

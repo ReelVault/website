@@ -38,7 +38,7 @@ function formatWatchTime(totalMinutes: number) {
 
 function LeaderboardCard({ user, index }: RankedEntry) {
 	return (
-		<div className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4">
+		<div className="border-border/50 bg-background/40 flex flex-col gap-3 rounded-xl border p-4">
 			<div className="flex items-center justify-between gap-3">
 				<div className="flex min-w-0 items-center gap-2.5">
 					<Avatar className="size-9">
@@ -46,11 +46,11 @@ function LeaderboardCard({ user, index }: RankedEntry) {
 						<AvatarFallback>{user.profileName.slice(0, 2)}</AvatarFallback>
 					</Avatar>
 					<div className="min-w-0">
-						<p className="truncate font-semibold text-foreground text-sm">{user.profileName}</p>
-						<p className="truncate text-muted-foreground text-xs">{user.userEmail}</p>
+						<p className="text-foreground truncate text-sm font-semibold">{user.profileName}</p>
+						<p className="text-muted-foreground truncate text-xs">{user.userEmail}</p>
 					</div>
 				</div>
-				<span className="shrink-0 font-bold font-mono text-xs">{getRankLabel(index)}</span>
+				<span className="shrink-0 font-mono text-xs font-bold">{getRankLabel(index)}</span>
 			</div>
 			<dl className="grid grid-cols-3 gap-x-3 gap-y-2 text-xs">
 				<div className="flex flex-col gap-0.5">
@@ -59,7 +59,7 @@ function LeaderboardCard({ user, index }: RankedEntry) {
 				</div>
 				<div className="flex flex-col gap-0.5">
 					<dt className="text-muted-foreground">{m.admin_analytics_watch_time()}</dt>
-					<dd className="font-bold font-mono text-primary">{formatWatchTime(user.totalMinutes)}</dd>
+					<dd className="text-primary font-mono font-bold">{formatWatchTime(user.totalMinutes)}</dd>
 				</div>
 				<div className="flex flex-col gap-0.5">
 					<dt className="text-muted-foreground">{m.admin_analytics_last_session()}</dt>
@@ -77,14 +77,14 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 		<Card variant="subtle" className="col-span-1 lg:col-span-7">
 			<CardHeader>
 				<div className="flex items-center gap-2">
-					<Award className="size-5 text-warning" />
+					<Award className="text-warning size-5" />
 					<CardTitle>{m.admin_analytics_viewer_activity_ranking()}</CardTitle>
 				</div>
 				<CardDescription size="xs">{m.admin_analytics_top_screen_time_profiles()}</CardDescription>
 			</CardHeader>
 			<CardContent>
 				{leaderboard.length === 0 ? (
-					<p className="py-8 text-center text-muted-foreground text-xs">{m.admin_analytics_no_activity_in_period()}</p>
+					<p className="text-muted-foreground py-8 text-center text-xs">{m.admin_analytics_no_activity_in_period()}</p>
 				) : (
 					<ResponsiveDataList
 						items={rankedEntries}
@@ -114,8 +114,8 @@ export function AnalyticsUserLeaderboard({ leaderboard }: AnalyticsUserLeaderboa
 															<AvatarFallback>{user.profileName.slice(0, 2)}</AvatarFallback>
 														</Avatar>
 														<div className="min-w-0">
-															<p className="truncate font-semibold text-foreground">{user.profileName}</p>
-															<p className="truncate text-muted-foreground text-xs">{user.userEmail}</p>
+															<p className="text-foreground truncate font-semibold">{user.profileName}</p>
+															<p className="text-muted-foreground truncate text-xs">{user.userEmail}</p>
 														</div>
 													</div>
 												</TableCell>

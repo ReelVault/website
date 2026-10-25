@@ -146,14 +146,14 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 			<CardHeader className="flex flex-row items-center justify-between">
 				<div>
 					<div className="flex items-center gap-2">
-						<Calendar className="size-4.5 text-primary" />
+						<Calendar className="text-primary size-4.5" />
 						<CardTitle>{m.user_watch_habits_hours()}</CardTitle>
 					</div>
 					<CardDescription size="xs">{m.user_activity_heatmap_description()}</CardDescription>
 				</div>
 
 				{maxSlot > 0 && (
-					<div className="flex items-center gap-1.5 rounded-lg border border-warning/30 bg-warning/10 px-2.5 py-1 text-warning text-xs">
+					<div className="border-warning/30 bg-warning/10 text-warning flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs">
 						<Flame className="size-3.5 fill-current" />
 						<span>{m.user_activity_peak({ day: peakDayName, hour: peakHour })}</span>
 					</div>
@@ -164,7 +164,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 					<div className="overflow-x-auto pb-2">
 						<div className="min-w-120">
 							{/* Hours Header */}
-							<div className="mb-1 grid grid-cols-[36px_repeat(24,1fr)] gap-1 text-center font-mono text-muted-foreground text-xs">
+							<div className="text-muted-foreground mb-1 grid grid-cols-[36px_repeat(24,1fr)] gap-1 text-center font-mono text-xs">
 								<div />
 								{HOURS.map((hour) => (
 									<div key={hour} className="text-center">
@@ -177,7 +177,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 							<div className="space-y-1">
 								{DAYS_ORDER.map((day) => (
 									<div key={day.index} className="grid grid-cols-[36px_repeat(24,1fr)] items-center gap-1">
-										<span className="font-bold text-muted-foreground text-xs">{day.label}</span>
+										<span className="text-muted-foreground text-xs font-bold">{day.label}</span>
 										{HOURS.map((hour) => {
 											const key = `${day.index}-${hour}`;
 											const minutes = dataMap.get(key) ?? 0;
@@ -193,7 +193,7 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 																type="button"
 																aria-label={`${day.fullName}, ${hour}:00–${hour}:59 — ${minutes > 0 ? timeStr : m.user_no_activity()}`}
 																className={cn(
-																	"aspect-square cursor-pointer rounded-xs p-0 transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1",
+																	"focus-visible:outline-primary aspect-square cursor-pointer rounded-xs p-0 transition-colors focus-visible:outline-2 focus-visible:outline-offset-1",
 																	getCellColor(minutes),
 																)}
 															/>
@@ -211,18 +211,18 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 							</div>
 
 							{/* Legend */}
-							<div className="mt-3 flex items-center justify-between border-border/40 border-t pt-3 text-muted-foreground text-xs">
+							<div className="border-border/40 text-muted-foreground mt-3 flex items-center justify-between border-t pt-3 text-xs">
 								<div className="flex items-center gap-1.5">
 									<Info className="size-3" />
 									<span>{m.user_hover_for_time()}</span>
 								</div>
 								<div className="flex items-center gap-1.5 font-mono text-xs">
 									<span>{m.common_less()}</span>
-									<div className="size-2.5 rounded-xs border border-border/30 bg-muted/30" />
-									<div className="size-2.5 rounded-xs bg-primary/25" />
-									<div className="size-2.5 rounded-xs bg-primary/50" />
-									<div className="size-2.5 rounded-xs bg-primary/80" />
-									<div className="size-2.5 rounded-xs bg-primary" />
+									<div className="border-border/30 bg-muted/30 size-2.5 rounded-xs border" />
+									<div className="bg-primary/25 size-2.5 rounded-xs" />
+									<div className="bg-primary/50 size-2.5 rounded-xs" />
+									<div className="bg-primary/80 size-2.5 rounded-xs" />
+									<div className="bg-primary size-2.5 rounded-xs" />
 									<span>{m.components_app_navbar_more()}</span>
 								</div>
 							</div>

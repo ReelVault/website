@@ -46,7 +46,7 @@ function PageJump({
 						commit();
 					}
 				}}
-				className="h-10 w-14 rounded-md border border-input bg-transparent px-2 text-center tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 sm:h-8"
+				className="border-input focus-visible:ring-ring h-10 w-14 rounded-md border bg-transparent px-2 text-center tabular-nums outline-none focus-visible:ring-2 disabled:opacity-50 sm:h-8"
 			/>
 			<span className="text-muted-foreground tabular-nums">{`/ ${totalPages}`}</span>
 		</div>
@@ -89,11 +89,11 @@ export function SimplePagination({
 		<Pagination
 			className={
 				variant === "admin"
-					? "sticky bottom-2 z-50 mt-8 rounded-lg border border-border bg-background/95 px-3 py-1.5"
+					? "border-border bg-background/95 sticky bottom-2 z-50 mt-8 rounded-lg border px-3 py-1.5"
 					: "mt-8 flex justify-center"
 			}
 		>
-			<PaginationContent className={variant === "admin" ? undefined : "rounded-lg border border-border bg-card/80 p-1"}>
+			<PaginationContent className={variant === "admin" ? undefined : "border-border bg-card/80 rounded-lg border p-1"}>
 				<PaginationItem>
 					<PaginationPrevious
 						href="#"

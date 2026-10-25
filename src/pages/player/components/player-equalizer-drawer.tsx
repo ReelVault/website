@@ -18,9 +18,9 @@ export function PlayerEqualizerDrawer({ open, onOpenChange }: PlayerEqualizerDra
 	return (
 		<Dialog.Root open={open} onOpenChange={onOpenChange} modal={false}>
 			<Dialog.Portal>
-				<Dialog.Popup className="fixed inset-x-0 top-0 z-50 flex max-h-[45svh] flex-col gap-3 overflow-y-auto border-border border-b bg-popover px-4 py-4 text-popover-foreground shadow-xl transition-transform duration-200 data-ending-style:-translate-y-full data-starting-style:-translate-y-full sm:px-8">
+				<Dialog.Popup className="border-border bg-popover text-popover-foreground fixed inset-x-0 top-0 z-50 flex max-h-[45svh] flex-col gap-3 overflow-y-auto border-b px-4 py-4 shadow-xl transition-transform duration-200 data-ending-style:-translate-y-full data-starting-style:-translate-y-full sm:px-8">
 					<div className="flex items-center justify-between gap-3">
-						<Dialog.Title className="font-semibold text-sm">{m.player_audio_equalizer()}</Dialog.Title>
+						<Dialog.Title className="text-sm font-semibold">{m.player_audio_equalizer()}</Dialog.Title>
 						<Dialog.Close render={<Button variant="ghost" size="icon-sm" aria-label={m.common_close()} />}>
 							<X className="size-4" aria-hidden="true" />
 						</Dialog.Close>

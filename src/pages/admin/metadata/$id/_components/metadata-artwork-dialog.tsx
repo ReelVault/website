@@ -69,10 +69,10 @@ export function MetadataArtworkDialog({
 					key={`${option.providerId}-${option.type}-${option.url}`}
 					disabled={selectMutation.isPending || uploadMutation.isPending}
 					onClick={() => selectMutation.mutate(option)}
-					className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-border/80 bg-muted/20 text-left transition-[border-color,background-color,color,box-shadow] hover:border-primary hover:shadow-xs disabled:opacity-60"
+					className="group border-border/80 bg-muted/20 hover:border-primary relative flex cursor-pointer flex-col overflow-hidden rounded-xl border text-left transition-[border-color,background-color,color,box-shadow] hover:shadow-xs disabled:opacity-60"
 					title={m.admin_metadata_choose_from({ provider: option.providerName + (option.language ? ` · ${option.language}` : "") })}
 				>
-					<div className={cn("relative w-full overflow-hidden bg-muted/40", isPoster ? "aspect-2/3" : "aspect-video")}>
+					<div className={cn("bg-muted/40 relative w-full overflow-hidden", isPoster ? "aspect-2/3" : "aspect-video")}>
 						<Image
 							src={option.url}
 							alt=""
@@ -85,14 +85,14 @@ export function MetadataArtworkDialog({
 						/>
 						<div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 						<div className="absolute inset-x-0 bottom-0 p-2.5 opacity-0 transition-opacity group-hover:opacity-100">
-							<span className="block truncate font-semibold text-white text-xs">{option.providerName}</span>
+							<span className="block truncate text-xs font-semibold text-white">{option.providerName}</span>
 							{option.language && (
-								<span className="font-mono text-white/80 text-xs">{m.admin_metadata_language_label({ language: option.language })}</span>
+								<span className="font-mono text-xs text-white/80">{m.admin_metadata_language_label({ language: option.language })}</span>
 							)}
 						</div>
 					</div>
 					{selectMutation.isSuccess && selectMutation.variables.url === option.url && (
-						<span className="absolute top-2 right-2 flex size-6 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm">
+						<span className="bg-primary text-primary-foreground absolute top-2 right-2 flex size-6 items-center justify-center rounded-full shadow-sm">
 							<Check className="size-3.5" />
 						</span>
 					)}
@@ -126,7 +126,7 @@ export function MetadataArtworkDialog({
 				</DialogHeader>
 
 				{/* Upload Bar */}
-				<div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/80 bg-muted/20 p-3.5">
+				<div className="border-border/80 bg-muted/20 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3.5">
 					<div className="flex items-center gap-3">
 						<input
 							ref={fileInputRef}

@@ -49,10 +49,10 @@ export function TaskTriggerForm({ onAdd, onCancel }: TaskTriggerFormProps) {
 				event.preventDefault();
 				submitTrigger();
 			}}
-			className="flex flex-col gap-3.5 rounded-xl border border-primary/25 bg-primary/3 p-4 shadow-sm"
+			className="border-primary/25 bg-primary/3 flex flex-col gap-3.5 rounded-xl border p-4 shadow-sm"
 		>
-			<div className="flex items-center justify-between border-border/30 border-b pb-2">
-				<h5 className="flex items-center gap-1.5 font-semibold text-primary text-xs">
+			<div className="border-border/30 flex items-center justify-between border-b pb-2">
+				<h5 className="text-primary flex items-center gap-1.5 text-xs font-semibold">
 					<Zap className="size-3.5" /> {m.admin_workers_new_trigger()}
 				</h5>
 				<Badge weight="normal" variant="primary-outline">
@@ -99,7 +99,7 @@ export function TaskTriggerForm({ onAdd, onCancel }: TaskTriggerFormProps) {
 										aria-pressed={newDayOfWeek === d.value}
 										onClick={() => setNewDayOfWeek(d.value)}
 										className={cn(
-											"h-10 rounded-md border font-medium text-xs transition-[border-color,background-color,color,box-shadow] sm:h-8",
+											"h-10 rounded-md border text-xs font-medium transition-[border-color,background-color,color,box-shadow] sm:h-8",
 											newDayOfWeek === d.value
 												? "border-primary bg-primary text-primary-foreground shadow-xs"
 												: "border-border/60 bg-background/60 text-muted-foreground hover:bg-muted hover:text-foreground",

@@ -32,7 +32,7 @@ export function LibraryHealthDialog({ libraryName, health, isOpen, isValidating,
 
 				<ul className="flex flex-col gap-2">
 					{(health?.paths ?? []).map((path) => (
-						<li key={path.pathId} className="flex flex-col gap-2 rounded-lg border border-border p-3">
+						<li key={path.pathId} className="border-border flex flex-col gap-2 rounded-lg border p-3">
 							<span className="truncate font-mono text-xs" title={path.path}>
 								{path.path}
 							</span>

@@ -40,14 +40,14 @@ export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: Quick
 	};
 
 	return (
-		<div className="flex flex-col justify-between rounded-2xl border border-border/70 bg-card/70 p-6 shadow-sm">
+		<div className="border-border/70 bg-card/70 flex flex-col justify-between rounded-2xl border p-6 shadow-sm">
 			<form onSubmit={handleAuthorize} className="flex flex-col gap-4">
 				<div className="flex items-center gap-3">
-					<div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+					<div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-xl">
 						<Tv className="size-5" aria-hidden="true" />
 					</div>
 					<div>
-						<h3 className="font-bold text-sm">{m.auth_authorize_device()}</h3>
+						<h3 className="text-sm font-bold">{m.auth_authorize_device()}</h3>
 						<p className="text-muted-foreground text-xs">{m.auth_enter_code_from_screen()}</p>
 					</div>
 				</div>

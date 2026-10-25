@@ -55,22 +55,22 @@ export function QuickConnectGenerateBox() {
 	};
 
 	return (
-		<div className="flex flex-col justify-between rounded-2xl border border-border/70 bg-card/70 p-6 shadow-sm">
+		<div className="border-border/70 bg-card/70 flex flex-col justify-between rounded-2xl border p-6 shadow-sm">
 			<div className="flex flex-col gap-4">
 				<div className="flex items-center gap-3">
-					<div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+					<div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-xl">
 						<KeyRound className="size-5" aria-hidden="true" />
 					</div>
 					<div>
-						<h3 className="font-bold text-sm">{m.auth_generate_login_code()}</h3>
+						<h3 className="text-sm font-bold">{m.auth_generate_login_code()}</h3>
 						<p className="text-muted-foreground text-xs">{m.auth_use_code_hint()}</p>
 					</div>
 				</div>
 
 				{generatedState ? (
-					<div className="flex flex-col items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 text-center">
-						<span className="font-semibold text-muted-foreground text-xs">{m.auth_code_valid_for()}</span>
-						<div className="flex items-center gap-2 font-black font-mono text-3xl text-primary tracking-widest sm:text-4xl">
+					<div className="border-primary/20 bg-primary/5 flex flex-col items-center gap-3 rounded-xl border p-4 text-center">
+						<span className="text-muted-foreground text-xs font-semibold">{m.auth_code_valid_for()}</span>
+						<div className="text-primary flex items-center gap-2 font-mono text-3xl font-black tracking-widest sm:text-4xl">
 							{generatedState.code}
 						</div>
 						<div className="my-1 flex justify-center">

@@ -24,7 +24,7 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 	return (
 		<AdminSection title={m.admin_metadata_cast_crew()} description={m.admin_metadata_cast_crew_description()}>
 			<Tabs defaultValue={cast.length > 0 ? "cast" : "crew"} className="w-full">
-				<div className="flex items-center justify-between gap-2 border-border/50 border-b pb-3">
+				<div className="border-border/50 flex items-center justify-between gap-2 border-b pb-3">
 					<TabsList>
 						<TabsTrigger value="cast" disabled={cast.length === 0}>
 							<Users className="size-3.5" />
@@ -130,8 +130,8 @@ function PersonCard({
 	badge?: string;
 }) {
 	return (
-		<div className="flex items-center gap-3 rounded-xl border border-border/70 bg-background p-2.5 shadow-xs transition-colors hover:border-border">
-			<div className="relative size-11 shrink-0 overflow-hidden rounded-lg border border-border/80 bg-muted/40">
+		<div className="border-border/70 bg-background hover:border-border flex items-center gap-3 rounded-xl border p-2.5 shadow-xs transition-colors">
+			<div className="border-border/80 bg-muted/40 relative size-11 shrink-0 overflow-hidden rounded-lg border">
 				{imageId ? (
 					<ApiImage
 						fileId={imageId}
@@ -142,7 +142,7 @@ function PersonCard({
 						className="object-cover"
 					/>
 				) : (
-					<div className="flex size-full items-center justify-center text-muted-foreground/60">
+					<div className="text-muted-foreground/60 flex size-full items-center justify-center">
 						<User className="size-5" />
 					</div>
 				)}
@@ -150,10 +150,10 @@ function PersonCard({
 
 			<div className="min-w-0 flex-1">
 				<div className="flex items-center gap-1.5">
-					<p className="truncate font-medium text-foreground text-sm">{name}</p>
-					{badge && <span className="shrink-0 font-mono text-muted-foreground text-xs">{badge}</span>}
+					<p className="text-foreground truncate text-sm font-medium">{name}</p>
+					{badge && <span className="text-muted-foreground shrink-0 font-mono text-xs">{badge}</span>}
 				</div>
-				<p className="truncate text-muted-foreground text-xs">{detail}</p>
+				<p className="text-muted-foreground truncate text-xs">{detail}</p>
 			</div>
 		</div>
 	);

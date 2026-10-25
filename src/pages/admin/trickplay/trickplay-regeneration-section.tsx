@@ -53,8 +53,8 @@ export function TrickplayRegenerationSection() {
 		<AdminSection title={m.admin_trickplay_regenerate_section()} description={m.admin_trickplay_regenerate_section_description()}>
 			<div className="flex flex-col gap-3">
 				{libraries.map((library) => (
-					<div key={library.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/60 p-3">
-						<span className="font-medium text-sm">{library.name}</span>
+					<div key={library.id} className="border-border/60 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3">
+						<span className="text-sm font-medium">{library.name}</span>
 						<div className="flex flex-wrap items-center gap-2">
 							<ConfirmAction
 								trigger={
@@ -86,12 +86,12 @@ export function TrickplayRegenerationSection() {
 			<TitleRegenerationBlock onQueue={queue} onQueueTitles={queueTitles} disabled={regenerate.isPending} />
 
 			{queued && (
-				<div className="mt-4 flex flex-col gap-3 border-border/60 border-t pt-4">
+				<div className="border-border/60 mt-4 flex flex-col gap-3 border-t pt-4">
 					<p className="text-muted-foreground text-sm">
 						{`${queued.label}: ${m.admin_trickplay_report_queued({ enqueued: queued.result.enqueued, matching: queued.result.matching })}`}
 					</p>
 					{queued.result.remaining > 0 && (
-						<p className="text-sm text-warning">{m.admin_trickplay_report_remaining({ remaining: queued.result.remaining })}</p>
+						<p className="text-warning text-sm">{m.admin_trickplay_report_remaining({ remaining: queued.result.remaining })}</p>
 					)}
 					{report.data && (
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -192,7 +192,7 @@ function TitleRegenerationBlock({
 	};
 
 	return (
-		<div className="mt-4 flex flex-col gap-3 border-border/60 border-t pt-4">
+		<div className="border-border/60 mt-4 flex flex-col gap-3 border-t pt-4">
 			<p className="text-muted-foreground text-sm">{m.admin_trickplay_regenerate_title_description()}</p>
 			<Input
 				value={search.query}
@@ -220,7 +220,7 @@ function TitleRegenerationBlock({
 				</div>
 			)}
 			{selectedTitles.length > 0 && (
-				<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/60 p-3">
+				<div className="border-border/60 flex flex-wrap items-center gap-2 rounded-xl border p-3">
 					<span className="text-sm">{m.admin_trickplay_bulk_selected({ count: selectedTitles.length })}</span>
 					<Button
 						variant="outline"

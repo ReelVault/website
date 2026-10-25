@@ -197,7 +197,7 @@ export default function AdminSettingsPage() {
 
 			{isLoading || !settings ? (
 				<div className="flex h-64 items-center justify-center">
-					<RefreshCw className="size-6 animate-spin text-muted-foreground" />
+					<RefreshCw className="text-muted-foreground size-6 animate-spin" />
 				</div>
 			) : (
 				<Tabs

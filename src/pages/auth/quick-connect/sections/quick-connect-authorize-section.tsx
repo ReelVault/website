@@ -22,22 +22,22 @@ export function QuickConnectAuthorizeSection({
 	onAuthorize,
 }: QuickConnectAuthorizeSectionProps) {
 	return (
-		<section className="relative overflow-hidden rounded-3xl border border-border bg-card/85 p-8 shadow-2xl sm:p-10">
+		<section className="border-border bg-card/85 relative overflow-hidden rounded-3xl border p-8 shadow-2xl sm:p-10">
 			<div className="flex flex-col items-center gap-6 text-center">
-				<div className="flex size-16 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
+				<div className="border-primary/20 bg-primary/10 text-primary flex size-16 items-center justify-center rounded-2xl border">
 					<Tv className="size-8" aria-hidden="true" />
 				</div>
 
 				<div>
-					<h1 className="font-black text-3xl tracking-tight sm:text-4xl">{m.auth_device_authorization()}</h1>
-					<p className="mt-2 text-muted-foreground text-sm">{m.auth_qr_scanned_from_device()}</p>
+					<h1 className="text-3xl font-black tracking-tight sm:text-4xl">{m.auth_device_authorization()}</h1>
+					<p className="text-muted-foreground mt-2 text-sm">{m.auth_qr_scanned_from_device()}</p>
 				</div>
 
 				{authorizedSuccess ? (
-					<div className="flex flex-col items-center gap-4 rounded-2xl border border-success/20 bg-success/10 p-6 text-success">
+					<div className="border-success/20 bg-success/10 text-success flex flex-col items-center gap-4 rounded-2xl border p-6">
 						<CheckCircle2 className="size-12" />
 						<div>
-							<p className="font-bold text-lg">{m.auth_device_linked()}</p>
+							<p className="text-lg font-bold">{m.auth_device_linked()}</p>
 							<p className="text-muted-foreground text-xs">{m.auth_second_device_notice()}</p>
 						</div>
 						<Link to="/" className="mt-2">
@@ -46,9 +46,9 @@ export function QuickConnectAuthorizeSection({
 					</div>
 				) : (
 					<div className="flex w-full flex-col gap-6">
-						<div className="flex flex-col items-center gap-2 rounded-2xl border border-primary/20 bg-primary/5 p-6">
-							<span className="font-semibold text-muted-foreground text-xs">{m.auth_detected_device_code()}</span>
-							<span className="font-black font-mono text-4xl text-primary tracking-widest sm:text-5xl">{urlCode}</span>
+						<div className="border-primary/20 bg-primary/5 flex flex-col items-center gap-2 rounded-2xl border p-6">
+							<span className="text-muted-foreground text-xs font-semibold">{m.auth_detected_device_code()}</span>
+							<span className="text-primary font-mono text-4xl font-black tracking-widest sm:text-5xl">{urlCode}</span>
 							<span className="text-muted-foreground text-xs">
 								{m.auth_device_logged_in_note()}
 								<strong>{user.name}</strong>
@@ -58,7 +58,7 @@ export function QuickConnectAuthorizeSection({
 
 						<AsyncButton
 							type="button"
-							className="w-full rounded-2xl py-6 font-black uppercase tracking-widest"
+							className="w-full rounded-2xl py-6 font-black tracking-widest uppercase"
 							onClick={onAuthorize}
 							isPending={isPending}
 							pendingLabel={m.auth_quick_connect_authorizing()}

@@ -28,7 +28,7 @@ export function LiveMaintenanceBanner({
 					<div
 						className={cn("flex size-11 shrink-0 items-center justify-center rounded-xl", {
 							"bg-success/10 text-success": canSafelyUpdate,
-							"animate-pulse bg-destructive/20 text-destructive": !canSafelyUpdate,
+							"bg-destructive/20 text-destructive animate-pulse": !canSafelyUpdate,
 						})}
 					>
 						{canSafelyUpdate ? <ShieldCheck className="size-6" /> : <ShieldAlert className="size-6" />}
@@ -39,10 +39,10 @@ export function LiveMaintenanceBanner({
 							<div
 								className={cn("size-2.5 rounded-full", {
 									"bg-success shadow-success shadow-xs": canSafelyUpdate,
-									"animate-ping bg-destructive": !canSafelyUpdate,
+									"bg-destructive animate-ping": !canSafelyUpdate,
 								})}
 							/>
-							<h3 className="font-bold text-base text-foreground">
+							<h3 className="text-foreground text-base font-bold">
 								{canSafelyUpdate
 									? m.admin_live_ready_for_update()
 									: m.admin_live_warning_active_streams_full({ count: activeStreamsCount })}

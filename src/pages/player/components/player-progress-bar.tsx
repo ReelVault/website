@@ -97,14 +97,14 @@ export function PlayerProgressBar() {
 	return (
 		<>
 			<div className="flex w-full items-center justify-between">
-				<div className="flex items-center gap-2 font-mono text-foreground/80 text-sm">
+				<div className="text-foreground/80 flex items-center gap-2 font-mono text-sm">
 					<span>{formatTime(displayedTime)}</span>
 					<span className="text-muted-foreground">{m.common_breadcrumb_separator()}</span>
 					<span>{formatTime(duration)}</span>
 				</div>
-				<div className="flex items-center gap-2 rounded-full bg-muted px-3 py-1">
-					<span className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">{m.player_finishing_at()}</span>
-					<span className="font-bold font-mono text-primary text-sm">{finishTime}</span>
+				<div className="bg-muted flex items-center gap-2 rounded-full px-3 py-1">
+					<span className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase">{m.player_finishing_at()}</span>
+					<span className="text-primary font-mono text-sm font-bold">{finishTime}</span>
 				</div>
 			</div>
 
@@ -117,7 +117,7 @@ export function PlayerProgressBar() {
 				{/* Seek hover & scrubbing tooltip with Trickplay preview */}
 				{(isHovering || isScrubbing) && activeTooltipTime !== null && activeTooltipPercent !== null && (
 					<div
-						className="pointer-events-none absolute bottom-8 z-40 flex -translate-x-1/2 select-none flex-col items-center gap-1 transition-[border-color,background-color,color,box-shadow] duration-75"
+						className="pointer-events-none absolute bottom-8 z-40 flex -translate-x-1/2 flex-col items-center gap-1 transition-[border-color,background-color,color,box-shadow] duration-75 select-none"
 						style={{
 							left: `clamp(${trickplayFrame.found ? "88px" : "36px"}, ${activeTooltipPercent}%, calc(100% - ${trickplayFrame.found ? "88px" : "36px"}))`,
 						}}
@@ -136,13 +136,13 @@ export function PlayerProgressBar() {
 								/>
 								<div className="flex flex-col items-center px-1 pb-0.5">
 									{hoveredMarker?.label && (
-										<span className="max-w-36 truncate font-medium text-[10px] text-white/70 leading-tight">{hoveredMarker.label}</span>
+										<span className="max-w-36 truncate text-[10px] leading-tight font-medium text-white/70">{hoveredMarker.label}</span>
 									)}
-									<span className="font-bold font-mono text-white text-xs leading-tight tracking-tight">
+									<span className="font-mono text-xs leading-tight font-bold tracking-tight text-white">
 										{formatTime(activeTooltipTime, duration)}
 									</span>
 									{preparedPercent !== null && (
-										<span className="text-[10px] text-white/60 leading-tight">
+										<span className="text-[10px] leading-tight text-white/60">
 											{m.player_transcode_prepared({ percent: preparedPercent })}
 										</span>
 									)}
@@ -151,13 +151,13 @@ export function PlayerProgressBar() {
 						) : (
 							<div className="flex flex-col items-center gap-0.5 rounded-md bg-black/90 px-2.5 py-1 text-white shadow-xl ring-1 ring-white/10">
 								{hoveredMarker?.label && (
-									<span className="max-w-50 truncate font-medium text-[10px] text-white/70 leading-tight">{hoveredMarker.label}</span>
+									<span className="max-w-50 truncate text-[10px] leading-tight font-medium text-white/70">{hoveredMarker.label}</span>
 								)}
-								<span className="font-mono font-semibold text-xs leading-tight tracking-tight">
+								<span className="font-mono text-xs leading-tight font-semibold tracking-tight">
 									{formatTime(activeTooltipTime, duration)}
 								</span>
 								{preparedPercent !== null && (
-									<span className="text-[10px] text-white/60 leading-tight">
+									<span className="text-[10px] leading-tight text-white/60">
 										{m.player_transcode_prepared({ percent: preparedPercent })}
 									</span>
 								)}
@@ -197,7 +197,7 @@ export function PlayerProgressBar() {
 					})}
 
 					{/* Played progress */}
-					<span className="absolute inset-y-0 left-0 rounded-full bg-primary shadow-xs" style={{ width: `${playedPercent}%` }} />
+					<span className="bg-primary absolute inset-y-0 left-0 rounded-full shadow-xs" style={{ width: `${playedPercent}%` }} />
 
 					{/* Media markers overlay */}
 					{markers.map((segment) => {
@@ -217,7 +217,7 @@ export function PlayerProgressBar() {
 									className="group/pin pointer-events-none absolute -top-1 z-25 flex -translate-x-1/2 flex-col items-center"
 									style={{ left: `${start}%` }}
 								>
-									<span className={cn("size-3 rounded-full border-2 border-background shadow-md", colorConfig.bg)} />
+									<span className={cn("border-background size-3 rounded-full border-2 shadow-md", colorConfig.bg)} />
 								</span>
 							);
 						}
@@ -244,7 +244,7 @@ export function PlayerProgressBar() {
 					value={displayedTime}
 					aria-label={m.player_playback_position_aria()}
 					aria-valuetext={m.player_progress_position({ position: formatTime(displayedTime), duration: formatTime(safeDuration) })}
-					className="absolute z-30 h-10 w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-primary [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:-mt-1 [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:shadow-md"
+					className="[&::-moz-range-thumb]:bg-primary [&::-webkit-slider-thumb]:bg-primary absolute z-30 h-10 w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:-mt-1 [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md"
 					onPointerDown={(event) => {
 						try {
 							event.currentTarget.setPointerCapture(event.pointerId);

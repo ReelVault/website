@@ -25,12 +25,12 @@ export function AvatarDisplay({ currentAvatar, size, editable }: AvatarDisplayPr
 		<>
 			<div
 				className={cn(
-					"overflow-hidden rounded-[2.5rem] border-2 border-border bg-muted/40 p-2 transition-[background-color,border-color]",
+					"border-border bg-muted/40 overflow-hidden rounded-[2.5rem] border-2 p-2 transition-[background-color,border-color]",
 					AVATAR_SIZE_CLASSES[size],
 					editable && "group-hover:border-primary/40",
 				)}
 			>
-				<div className="flex h-full w-full items-center justify-center overflow-hidden rounded-4xl bg-primary/10">
+				<div className="bg-primary/10 flex h-full w-full items-center justify-center overflow-hidden rounded-4xl">
 					{currentAvatar && !failed ? (
 						<img
 							src={resolveApiAssetUrl(currentAvatar)}
@@ -51,7 +51,7 @@ export function AvatarDisplay({ currentAvatar, size, editable }: AvatarDisplayPr
 			{editable && (
 				<div
 					className={cn(
-						"absolute flex items-center justify-center rounded-xl border-background bg-primary text-primary-foreground transition-transform hover:scale-110",
+						"border-background bg-primary text-primary-foreground absolute flex items-center justify-center rounded-xl transition-transform hover:scale-110",
 						editBadge.wrapper,
 					)}
 				>

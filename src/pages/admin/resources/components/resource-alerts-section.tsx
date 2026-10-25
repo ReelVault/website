@@ -25,8 +25,8 @@ export function ResourceAlertsSection({ alerts }: { alerts: ResourceAlert[] }) {
 					>
 						<AlertTriangle className={cn("mt-0.5 size-4 shrink-0", alert.severity === "critical" ? "text-destructive" : "text-warning")} />
 						<div className="flex-1">
-							<p className="font-medium text-foreground">{translateByKey(alert.code, alert.params)}</p>
-							<p className="mt-1 text-muted-foreground text-xs">
+							<p className="text-foreground font-medium">{translateByKey(alert.code, alert.params)}</p>
+							<p className="text-muted-foreground mt-1 text-xs">
 								{formatFullDateTime(alert.timestamp)}
 								{alert.workerId && (
 									<>
@@ -38,7 +38,7 @@ export function ResourceAlertsSection({ alerts }: { alerts: ResourceAlert[] }) {
 						</div>
 						<div className="flex shrink-0 flex-col items-end gap-1.5">
 							{alert.metric !== undefined && alert.threshold !== undefined && (
-								<span className="font-mono text-foreground text-xs tabular-nums">
+								<span className="text-foreground font-mono text-xs tabular-nums">
 									{m.admin_resources_alert_value_threshold({ metric: alert.metric.toFixed(1), threshold: alert.threshold })}
 								</span>
 							)}

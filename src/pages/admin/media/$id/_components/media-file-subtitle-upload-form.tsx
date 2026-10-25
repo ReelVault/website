@@ -23,7 +23,7 @@ export function MediaFileSubtitleUploadForm({ mediaFileId, onUploaded }: { media
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-xl border border-border/80 bg-background/60 p-3">
+		<form onSubmit={handleSubmit} className="border-border/80 bg-background/60 flex flex-col gap-3 rounded-xl border p-3">
 			<div className="grid gap-3 sm:grid-cols-2">
 				<label htmlFor={languageId} className="flex flex-col gap-1.5 text-xs">
 					<span className="text-muted-foreground">{m.admin_media_upload_subtitle_language()}</span>
@@ -39,7 +39,7 @@ export function MediaFileSubtitleUploadForm({ mediaFileId, onUploaded }: { media
 				<input
 					type="file"
 					accept=".srt,.vtt,.ass"
-					className="text-xs file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-1.5 file:text-foreground"
+					className="file:bg-muted file:text-foreground text-xs file:mr-3 file:rounded-md file:border-0 file:px-3 file:py-1.5"
 					onChange={(event) => setFile(event.currentTarget.files?.[0] ?? null)}
 				/>
 			</label>

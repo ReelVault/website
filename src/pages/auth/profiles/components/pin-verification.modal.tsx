@@ -78,7 +78,7 @@ export function PinVerificationModal({
 			<DialogContent size="md" className="overflow-hidden p-0">
 				<DialogHeader className="border-b">
 					<div className="flex items-center gap-3">
-						<div className="flex size-10 items-center justify-center rounded-xl bg-primary/20 text-primary">
+						<div className="bg-primary/20 text-primary flex size-10 items-center justify-center rounded-xl">
 							<Lock className="size-5" aria-hidden="true" />
 						</div>
 						<DialogTitle>{m.auth_profile_protected()}</DialogTitle>
@@ -90,12 +90,12 @@ export function PinVerificationModal({
 						<Avatar size="lg" className="size-24 after:hidden">
 							{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" />}
 							<AvatarFallback>
-								<User className="size-8 text-muted-foreground/40" />
+								<User className="text-muted-foreground/40 size-8" />
 							</AvatarFallback>
 						</Avatar>
 						<div>
-							<h3 className="font-bold text-lg">{profile.name}</h3>
-							<p className="font-medium text-muted-foreground text-xs">{m.auth_enter_pin()}</p>
+							<h3 className="text-lg font-bold">{profile.name}</h3>
+							<p className="text-muted-foreground text-xs font-medium">{m.auth_enter_pin()}</p>
 						</div>
 					</div>
 
@@ -116,12 +116,12 @@ export function PinVerificationModal({
 									className={cn(
 										"flex size-8 items-center justify-center rounded-xl border-2 transition-[background-color,border-color,transform] duration-300 sm:size-14 sm:rounded-2xl",
 										{
-											"border-primary bg-primary/10 shadow-lg shadow-primary/20": pin.length > slot,
+											"border-primary bg-primary/10 shadow-primary/20 shadow-lg": pin.length > slot,
 											"border-border": pin.length <= slot,
 										},
 									)}
 								>
-									{pin[slot] && <span className="size-3 rounded-full bg-primary" />}
+									{pin[slot] && <span className="bg-primary size-3 rounded-full" />}
 								</span>
 							))}
 						</Button>
@@ -146,7 +146,7 @@ export function PinVerificationModal({
 
 					<AsyncButton
 						type="submit"
-						className="w-full rounded-2xl py-5 font-black uppercase tracking-widest"
+						className="w-full rounded-2xl py-5 font-black tracking-widest uppercase"
 						isPending={switchProfileMutation.isPending}
 						pendingLabel={m.auth_verifying()}
 					>

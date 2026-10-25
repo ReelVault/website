@@ -39,8 +39,8 @@ export function LogViewerHeader({
 	return (
 		<CardHeader className="flex flex-col gap-2 border-b sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex min-w-0 items-center gap-2">
-				<Activity className="size-4 shrink-0 text-muted-foreground" />
-				<span className="truncate font-medium font-mono text-xs sm:max-w-md">{activeFile?.name ?? "reelvault.log"}</span>
+				<Activity className="text-muted-foreground size-4 shrink-0" />
+				<span className="truncate font-mono text-xs font-medium sm:max-w-md">{activeFile?.name ?? "reelvault.log"}</span>
 			</div>
 			<div className="flex items-center justify-between gap-2 sm:justify-end">
 				{viewMode === "raw" && (

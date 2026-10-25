@@ -13,7 +13,7 @@ interface SidecarFlavorSelectorProps {
 export function SidecarFlavorSelector({ value, onChange }: SidecarFlavorSelectorProps) {
 	return (
 		<div className="flex flex-col gap-1.5">
-			<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+			<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
 				<ScrollText className="size-3.5" />
 				<span>{m.admin_libraries_sidecar_flavor()}</span>
 			</div>
@@ -30,13 +30,13 @@ export function SidecarFlavorSelector({ value, onChange }: SidecarFlavorSelector
 					<SelectGroup>
 						<SelectItem value="reelvault" label={m.admin_libraries_flavor_reelvault()}>
 							<div className="flex flex-col py-0.5">
-								<span className="font-medium text-foreground text-xs">{m.admin_libraries_flavor_reelvault()}</span>
+								<span className="text-foreground text-xs font-medium">{m.admin_libraries_flavor_reelvault()}</span>
 								<span className="text-muted-foreground text-xs">{m.admin_libraries_flavor_reelvault_note()}</span>
 							</div>
 						</SelectItem>
 						<SelectItem value="kodi" label={m.admin_libraries_flavor_kodi()}>
 							<div className="flex flex-col py-0.5">
-								<span className="font-medium text-foreground text-xs">{m.admin_libraries_flavor_kodi()}</span>
+								<span className="text-foreground text-xs font-medium">{m.admin_libraries_flavor_kodi()}</span>
 								<span className="text-muted-foreground text-xs">{m.admin_libraries_flavor_kodi_note()}</span>
 							</div>
 						</SelectItem>

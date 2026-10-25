@@ -70,7 +70,7 @@ export function LiveStreamDetailsFooter({
 					disabled={isSendingCommand}
 					title={m.admin_live_remote_pause_aria()}
 				>
-					<Pause className="size-3.5 fill-current text-warning" />
+					<Pause className="text-warning size-3.5 fill-current" />
 					<span>{m.admin_logs_paused()}</span>
 				</Button>
 
@@ -84,7 +84,7 @@ export function LiveStreamDetailsFooter({
 					disabled={isSendingCommand}
 					title={m.admin_live_remote_resume_title()}
 				>
-					<Play className="size-3.5 fill-current text-primary" />
+					<Play className="text-primary size-3.5 fill-current" />
 					<span>{m.admin_resume()}</span>
 				</Button>
 

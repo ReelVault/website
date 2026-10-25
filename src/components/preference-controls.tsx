@@ -57,7 +57,7 @@ export function PreferenceToggle({
 }) {
 	return (
 		<div
-			className={className ?? "flex min-h-14 flex-col justify-center gap-1 rounded-xl border border-border bg-background/40 p-3 text-sm"}
+			className={className ?? "border-border bg-background/40 flex min-h-14 flex-col justify-center gap-1 rounded-xl border p-3 text-sm"}
 		>
 			<div className="flex items-center gap-3">
 				<Switch checked={checked} onCheckedChange={(value) => onChange(value)} aria-label={label} />
@@ -99,12 +99,12 @@ export function PreferenceLanguageList({
 					{selected.map((code, index) => (
 						<li key={code}>
 							<Badge variant="secondary">
-								<span className="font-mono text-muted-foreground text-xs">{index + 1}</span>
+								<span className="text-muted-foreground font-mono text-xs">{index + 1}</span>
 								{labelFor(code)}
 								{index > 0 && (
 									<button
 										type="button"
-										className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
+										className="text-muted-foreground hover:text-foreground -m-3.5 p-3.5 sm:m-0 sm:p-0"
 										aria-label={m.user_language_list_move_earlier({ language: labelFor(code) })}
 										onClick={() => commit([...selected.slice(0, index - 1), code, selected[index - 1] ?? "", ...selected.slice(index + 1)])}
 									>
@@ -113,7 +113,7 @@ export function PreferenceLanguageList({
 								)}
 								<button
 									type="button"
-									className="-m-3.5 p-3.5 text-muted-foreground hover:text-foreground sm:m-0 sm:p-0"
+									className="text-muted-foreground hover:text-foreground -m-3.5 p-3.5 sm:m-0 sm:p-0"
 									aria-label={m.user_language_list_remove({ language: labelFor(code) })}
 									onClick={() => commit(selected.filter((entry) => entry !== code))}
 								>

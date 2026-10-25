@@ -33,7 +33,7 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 
 	return (
 		<ScrollArea className="h-full">
-			<div className="divide-y divide-border font-mono text-xs">
+			<div className="divide-border divide-y font-mono text-xs">
 				{logs.map((log, idx) => {
 					const baseKey = `${log.timestamp}-${log.levelName}-${log.module ?? "Server"}`;
 					const occurrence = logKeyCounts.get(baseKey) ?? 0;
@@ -44,7 +44,7 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 					const errorStack = extractErrorStack(log.err);
 
 					return (
-						<div key={`${baseKey}-${occurrence}`} className="transition-colors hover:bg-muted/30">
+						<div key={`${baseKey}-${occurrence}`} className="hover:bg-muted/30 transition-colors">
 							<Button
 								variant="ghost"
 								onClick={handleToggleExpanded}
@@ -52,32 +52,32 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 								size="sm"
 								className="w-full justify-start text-left sm:min-h-8"
 							>
-								<span className="mr-1.5 shrink-0 text-muted-foreground">
+								<span className="text-muted-foreground mr-1.5 shrink-0">
 									{isExpanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
 								</span>
 								<Badge variant={LEVEL_VARIANT[level]}>{level}</Badge>
 								{log.module !== undefined && (
-									<span className="shrink-0 text-muted-foreground text-xs">{m.admin_logs_module_label({ module: log.module })}</span>
+									<span className="text-muted-foreground shrink-0 text-xs">{m.admin_logs_module_label({ module: log.module })}</span>
 								)}
-								<span className="min-w-0 flex-1 truncate text-foreground text-xs leading-relaxed">{message}</span>
-								<span className="shrink-0 pl-2 text-muted-foreground text-xs tabular-nums">
+								<span className="text-foreground min-w-0 flex-1 truncate text-xs leading-relaxed">{message}</span>
+								<span className="text-muted-foreground shrink-0 pl-2 text-xs tabular-nums">
 									{shortTimeFormatter.format(new Date(log.timestamp))}
 								</span>
 							</Button>
 
 							{isExpanded && (
-								<div className="border-border border-t bg-muted/20 p-4 text-xs">
+								<div className="border-border bg-muted/20 border-t p-4 text-xs">
 									{errorStack !== undefined && (
 										<div className="mb-3">
-											<p className="mb-1.5 font-medium text-destructive text-xs">{m.admin_logs_stack_trace()}</p>
-											<pre className="overflow-x-auto rounded-md border border-destructive/20 bg-destructive/5 p-3 font-mono text-destructive/80 text-xs leading-relaxed">
+											<p className="text-destructive mb-1.5 text-xs font-medium">{m.admin_logs_stack_trace()}</p>
+											<pre className="border-destructive/20 bg-destructive/5 text-destructive/80 overflow-x-auto rounded-md border p-3 font-mono text-xs leading-relaxed">
 												{errorStack}
 											</pre>
 										</div>
 									)}
 									<div>
-										<p className="mb-1.5 font-medium text-muted-foreground text-xs">{m.admin_logs_entry_details()}</p>
-										<pre className="overflow-x-auto rounded-md border border-border bg-muted/30 p-3 font-mono text-foreground/80 text-xs leading-relaxed">
+										<p className="text-muted-foreground mb-1.5 text-xs font-medium">{m.admin_logs_entry_details()}</p>
+										<pre className="border-border bg-muted/30 text-foreground/80 overflow-x-auto rounded-md border p-3 font-mono text-xs leading-relaxed">
 											{JSON.stringify(log, null, 2)}
 										</pre>
 									</div>

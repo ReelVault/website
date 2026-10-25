@@ -50,9 +50,8 @@ await mock.module("@tanstack/react-router", () => ({
 
 // The search box is replaced by two buttons: typed text reaches React through a change event that
 // this DOM environment does not deliver, so the page gets the same text from a click instead.
-await mock.module("@/pages/admin/admin-ui", () => ({
-	...adminUi,
-	AdminSearch: ({ onChange }: { onChange: (value: string) => void }) => (
+function AdminSearch({ onChange }: { onChange: (value: string) => void }) {
+	return (
 		<>
 			<button type="button" onClick={() => onChange("subtitle")}>
 				search subtitle
@@ -61,7 +60,12 @@ await mock.module("@/pages/admin/admin-ui", () => ({
 				clear search
 			</button>
 		</>
-	),
+	);
+}
+
+await mock.module("@/pages/admin/admin-ui", () => ({
+	...adminUi,
+	AdminSearch,
 }));
 
 const noop = () => Promise.resolve();
@@ -112,21 +116,37 @@ await mock.module("@/client/hooks/use-plugin-catalog", () => ({
 }));
 
 // The cards and dialogs have their own behaviour; the page's filtering is what this file checks.
+function PluginCard({ plugin }: { plugin: { name: string } }) {
+	return <div data-testid="installed-card">{plugin.name}</div>;
+}
+
+function PluginCatalogCard({ entry }: { entry: { name: string } }) {
+	return <div data-testid="catalog-card">{entry.name}</div>;
+}
+
+function PluginRepositoriesDialog() {
+	return null;
+}
+
+function PluginUploadDialog() {
+	return null;
+}
+
 await mock.module("@/pages/admin/plugins/components/plugin-card", () => ({
-	PluginCard: ({ plugin }: { plugin: { name: string } }) => <div data-testid="installed-card">{plugin.name}</div>,
+	PluginCard,
 }));
 
 await mock.module("@/pages/admin/plugins/components/plugin-catalog-card", () => ({
-	PluginCatalogCard: ({ entry }: { entry: { name: string } }) => <div data-testid="catalog-card">{entry.name}</div>,
+	PluginCatalogCard,
 	pluginCatalogCategoryLabel: (category: string) => category,
 }));
 
 await mock.module("@/pages/admin/plugins/components/plugin-repositories-dialog", () => ({
-	PluginRepositoriesDialog: () => null,
+	PluginRepositoriesDialog,
 }));
 
 await mock.module("@/pages/admin/plugins/components/plugin-upload-dialog", () => ({
-	PluginUploadDialog: () => null,
+	PluginUploadDialog,
 }));
 
 const { default: AdminPluginsPage } = await import("@/pages/admin/plugins/plugins-page");

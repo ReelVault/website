@@ -60,11 +60,11 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 							<div className="min-w-0 flex-1">
 								<div className="flex flex-wrap items-center justify-between gap-2">
 									<h2 className={cn("font-semibold", isRead ? "text-muted-foreground" : "text-foreground")}>{title}</h2>
-									<time dateTime={new Date(notification.createdAt).toISOString()} className="font-medium text-muted-foreground text-xs">
+									<time dateTime={new Date(notification.createdAt).toISOString()} className="text-muted-foreground text-xs font-medium">
 										{formatDateTime(notification.createdAt)}
 									</time>
 								</div>
-								{body && <p className="wrap-break-word mt-2 max-w-2xl text-muted-foreground text-sm leading-relaxed">{body}</p>}
+								{body && <p className="text-muted-foreground mt-2 max-w-2xl text-sm leading-relaxed wrap-break-word">{body}</p>}
 								<div className="mt-2 flex flex-wrap items-center gap-3">
 									<Button
 										tone="muted"
@@ -117,7 +117,7 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 								}}
 								className="cursor-pointer"
 							>
-								<Check className="size-4 text-primary" />
+								<Check className="text-primary size-4" />
 								<span>{m.components_navbar_mark_read()}</span>
 							</ContextMenuItem>
 						)}
@@ -128,7 +128,7 @@ export function NotificationCard({ notification, isMarkingRead, onMarkRead, isDi
 								}}
 								className="cursor-pointer"
 							>
-								<Copy className="size-4 text-muted-foreground" />
+								<Copy className="text-muted-foreground size-4" />
 								<span>{m.user_copy_message()}</span>
 							</ContextMenuItem>
 						)}

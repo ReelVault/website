@@ -39,16 +39,16 @@ export default function AdminDashboardPage() {
 	if (dashboardViewQuery.isPending) {
 		return (
 			<div className="flex flex-col gap-6" role="status" aria-label="Dashboard loading">
-				<div className="h-24 animate-pulse rounded-xl bg-muted/60" />
+				<div className="bg-muted/60 h-24 animate-pulse rounded-xl" />
 				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
-					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
-					<div className="h-40 animate-pulse rounded-xl bg-muted/60" />
+					<div className="bg-muted/60 h-40 animate-pulse rounded-xl" />
+					<div className="bg-muted/60 h-40 animate-pulse rounded-xl" />
+					<div className="bg-muted/60 h-40 animate-pulse rounded-xl" />
 				</div>
 				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
-					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
-					<div className="h-64 animate-pulse rounded-xl bg-muted/60" />
+					<div className="bg-muted/60 h-64 animate-pulse rounded-xl" />
+					<div className="bg-muted/60 h-64 animate-pulse rounded-xl" />
+					<div className="bg-muted/60 h-64 animate-pulse rounded-xl" />
 				</div>
 			</div>
 		);

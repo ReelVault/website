@@ -24,18 +24,18 @@ export function ReassignLocalCard({ item, isSelected, onSelect }: ReassignLocalC
 				},
 			)}
 		>
-			<div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted font-bold text-muted-foreground text-xs">
+			<div className="border-border/60 bg-muted text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-lg border text-xs font-bold">
 				{item.type === "movie" ? <Film className="size-5" /> : <Tv className="size-5" />}
 			</div>
 			<div className="flex-1 overflow-hidden">
-				<h4 className="truncate font-semibold text-foreground text-sm">{item.title}</h4>
-				<div className="flex items-center gap-2 font-mono text-muted-foreground text-xs">
+				<h4 className="text-foreground truncate text-sm font-semibold">{item.title}</h4>
+				<div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
 					{releaseYear !== null && <span>{releaseYear}</span>}
 					<span>{m.common_dot_separator()}</span>
 					<span>{m.components_reassign_short_id({ id: item.id.slice(0, 8) })}</span>
 				</div>
 			</div>
-			{isSelected && <Check className="size-4 shrink-0 text-primary" />}
+			{isSelected && <Check className="text-primary size-4 shrink-0" />}
 		</button>
 	);
 }

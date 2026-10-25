@@ -24,13 +24,13 @@ export function MutedNotificationTypes({ profileId }: { profileId: string }) {
 
 	return (
 		<fieldset className="flex flex-col gap-2">
-			<legend className="font-medium text-sm">{m.settings_muted_notifications()}</legend>
+			<legend className="text-sm font-medium">{m.settings_muted_notifications()}</legend>
 			<p className="text-muted-foreground text-xs">{m.settings_muted_notifications_hint()}</p>
 			{types.map((type) => (
 				<label key={type} className="flex min-h-10 cursor-pointer items-center gap-2 text-sm sm:min-h-0">
 					<input
 						type="checkbox"
-						className="size-4 accent-primary"
+						className="accent-primary size-4"
 						checked={mutedTypes.has(type)}
 						disabled={isSaving}
 						onChange={(event) => toggle(type, event.currentTarget.checked)}

@@ -26,7 +26,7 @@ function HitRateBadge({ hitRate }: { hitRate: number | null }) {
 	return (
 		<div className="flex min-w-20 flex-1 items-center gap-2">
 			<Progress value={percent} size="sm" className="min-w-0 flex-1" />
-			<span className="font-mono text-foreground text-xs tabular-nums">{m.common_percent_value({ value: percent })}</span>
+			<span className="text-foreground font-mono text-xs tabular-nums">{m.common_percent_value({ value: percent })}</span>
 		</div>
 	);
 }
@@ -45,9 +45,9 @@ export function ResourceCacheStats() {
 		statsBody = (
 			<div className="flex flex-col gap-7">
 				<div className="flex flex-col gap-3">
-					<div className="flex items-center gap-2 text-muted-foreground">
-						<HardDrive className="size-4 text-primary" aria-hidden="true" />
-						<p className="font-medium text-xs">{m.admin_resources_on_disk()}</p>
+					<div className="text-muted-foreground flex items-center gap-2">
+						<HardDrive className="text-primary size-4" aria-hidden="true" />
+						<p className="text-xs font-medium">{m.admin_resources_on_disk()}</p>
 					</div>
 					<div className="grid gap-3 sm:grid-cols-2">
 						{DISK_ROWS.map((row) => {
@@ -56,24 +56,24 @@ export function ResourceCacheStats() {
 							return (
 								<div
 									key={row.key}
-									className="flex min-h-28 flex-col justify-between gap-4 rounded-lg border border-border/70 bg-muted/20 p-4 transition-colors hover:bg-muted/35"
+									className="border-border/70 bg-muted/20 hover:bg-muted/35 flex min-h-28 flex-col justify-between gap-4 rounded-lg border p-4 transition-colors"
 								>
 									<div className="flex items-start justify-between gap-3">
 										<div className="min-w-0">
-											<p className="font-medium text-foreground text-sm">{row.label}</p>
-											<p className="mt-1 text-muted-foreground text-xs leading-relaxed">{row.description}</p>
+											<p className="text-foreground text-sm font-medium">{row.label}</p>
+											<p className="text-muted-foreground mt-1 text-xs leading-relaxed">{row.description}</p>
 										</div>
-										<span className="shrink-0 font-bold font-mono text-primary text-sm tabular-nums">{formatMemory(stats.bytes)}</span>
+										<span className="text-primary shrink-0 font-mono text-sm font-bold tabular-nums">{formatMemory(stats.bytes)}</span>
 									</div>
-									<p className="border-border/60 border-t pt-2 text-muted-foreground text-xs tabular-nums">
+									<p className="border-border/60 text-muted-foreground border-t pt-2 text-xs tabular-nums">
 										{m.admin_resources_files_label()} {stats.files}
 									</p>
 								</div>
 							);
 						})}
 					</div>
-					<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border/70 bg-muted/20 px-4 py-3">
-						<p className="max-w-md text-muted-foreground text-xs">{m.admin_resources_clear_image_cache_desc()}</p>
+					<div className="border-border/70 bg-muted/20 flex flex-wrap items-center justify-between gap-3 rounded-lg border px-4 py-3">
+						<p className="text-muted-foreground max-w-md text-xs">{m.admin_resources_clear_image_cache_desc()}</p>
 						<Button size="sm" variant="outline" disabled={purgeImageCache.isPending} onClick={() => purgeImageCache.mutate()}>
 							{m.admin_resources_clear_image_cache()}
 						</Button>
@@ -81,12 +81,12 @@ export function ResourceCacheStats() {
 				</div>
 
 				<div className="flex flex-col gap-3">
-					<div className="flex items-center gap-2 text-muted-foreground">
-						<MemoryStick className="size-4 text-primary" aria-hidden="true" />
-						<p className="font-medium text-xs">{m.admin_resources_in_memory()}</p>
+					<div className="text-muted-foreground flex items-center gap-2">
+						<MemoryStick className="text-primary size-4" aria-hidden="true" />
+						<p className="text-xs font-medium">{m.admin_resources_in_memory()}</p>
 					</div>
 					{memoryCaches.length === 0 ? (
-						<p className="rounded-lg border border-border/70 bg-muted/20 px-4 py-3 text-muted-foreground text-sm">
+						<p className="border-border/70 bg-muted/20 text-muted-foreground rounded-lg border px-4 py-3 text-sm">
 							{m.admin_resources_no_memory_caches()}
 						</p>
 					) : (
@@ -94,15 +94,15 @@ export function ResourceCacheStats() {
 							{memoryCaches.map((cache) => (
 								<div
 									key={cache.name}
-									className="flex min-h-20 items-center justify-between gap-4 rounded-lg border border-border/70 bg-muted/20 px-4 py-3 transition-colors hover:bg-muted/35"
+									className="border-border/70 bg-muted/20 hover:bg-muted/35 flex min-h-20 items-center justify-between gap-4 rounded-lg border px-4 py-3 transition-colors"
 								>
 									<div className="min-w-0">
-										<p className="truncate font-medium font-mono text-foreground text-xs">{cache.name}</p>
-										<p className="mt-1 text-muted-foreground text-xs tabular-nums">
+										<p className="text-foreground truncate font-mono text-xs font-medium">{cache.name}</p>
+										<p className="text-muted-foreground mt-1 text-xs tabular-nums">
 											{cache.entries}
 											{cache.maxSize !== null ? ` / ${cache.maxSize}` : ""} {m.admin_resources_cache_entries_word()}
 										</p>
-										<p className="mt-0.5 text-muted-foreground text-xs tabular-nums">
+										<p className="text-muted-foreground mt-0.5 text-xs tabular-nums">
 											{m.admin_resources_cache_hits_misses({ hits: cache.hits, misses: cache.misses })}
 										</p>
 									</div>

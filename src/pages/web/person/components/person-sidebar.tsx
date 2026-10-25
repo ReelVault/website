@@ -21,7 +21,7 @@ export function PersonSidebar({
 		<SimpleAnimation direction="none" className="flex h-fit shrink-0 flex-col gap-10 lg:sticky lg:top-32 lg:w-80">
 			{/* Profile photo */}
 			<div className="relative z-10 mx-auto w-full max-w-70 lg:max-w-none">
-				<div className="aspect-3/4 overflow-hidden rounded-xl border border-border bg-card/60 shadow-2xl transition-[border-color] duration-500 hover:border-primary/40">
+				<div className="border-border bg-card/60 hover:border-primary/40 aspect-3/4 overflow-hidden rounded-xl border shadow-2xl transition-[border-color] duration-500">
 					<ApiImage
 						fileId={personData.imageId}
 						cacheKey={personData.updatedAt}
@@ -57,19 +57,19 @@ export function PersonSidebar({
 							]
 						: []),
 				].map((stat) => (
-					<div key={stat.label} className="rounded-xl border border-border/50 bg-card/60 p-4">
-						<div className="flex items-center gap-2 font-black text-primary/80 text-xs">
+					<div key={stat.label} className="border-border/50 bg-card/60 rounded-xl border p-4">
+						<div className="text-primary/80 flex items-center gap-2 text-xs font-black">
 							{stat.icon} <span>{stat.label}</span>
 						</div>
-						<span className="font-bold text-foreground text-sm">{stat.value}</span>
+						<span className="text-foreground text-sm font-bold">{stat.value}</span>
 					</div>
 				))}
 			</div>
 
 			{/* Bio */}
-			<div className="relative space-y-4 rounded-xl border border-border/50 bg-card/60 p-6">
-				<Quote className="absolute top-4 right-4 size-8 text-primary/10" />
-				<h3 className="font-black text-primary/80 text-xs">{m.web_about_artist()}</h3>
+			<div className="border-border/50 bg-card/60 relative space-y-4 rounded-xl border p-6">
+				<Quote className="text-primary/10 absolute top-4 right-4 size-8" />
+				<h3 className="text-primary/80 text-xs font-black">{m.web_about_artist()}</h3>
 				<p className="text-foreground/70 text-sm leading-relaxed">
 					{personData.biography != null && personData.biography !== "" ? personData.biography : m.web_biography_unavailable()}
 				</p>
@@ -77,7 +77,7 @@ export function PersonSidebar({
 
 			{/* Filmografia (Timeline) */}
 			<section className="space-y-4">
-				<h2 className="px-1 font-black text-foreground/50 text-xs">{m.web_person_filmography()}</h2>
+				<h2 className="text-foreground/50 px-1 text-xs font-black">{m.web_person_filmography()}</h2>
 				<ScrollArea className="h-64 pr-4">
 					<div className="space-y-1">
 						{personMetadataList.map((item) => (
@@ -85,13 +85,13 @@ export function PersonSidebar({
 								to="/details/$id"
 								params={{ id: item.id }}
 								key={item.id}
-								className="group flex items-center gap-4 rounded-xl p-2 transition-colors hover:bg-foreground/5 focus-visible:ring-2 focus-visible:ring-primary"
+								className="group hover:bg-foreground/5 focus-visible:ring-primary flex items-center gap-4 rounded-xl p-2 transition-colors focus-visible:ring-2"
 							>
-								<span className="font-bold font-mono text-primary/40 text-sm transition-colors group-hover:text-primary">
+								<span className="text-primary/40 group-hover:text-primary font-mono text-sm font-bold transition-colors">
 									{getYearFromDate(item.releaseDate)}
 								</span>
 								<div className="flex flex-col">
-									<h4 className="line-clamp-1 font-medium text-foreground/80 text-sm transition-colors group-hover:text-foreground">
+									<h4 className="text-foreground/80 group-hover:text-foreground line-clamp-1 text-sm font-medium transition-colors">
 										{item.title}
 									</h4>
 									<p className="text-foreground/30 text-xs">{item.type === "movie" ? m.common_movie_word() : m.common_series_word()}</p>

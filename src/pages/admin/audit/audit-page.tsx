@@ -137,7 +137,7 @@ function AdminAuditContent() {
 		auditContent = <AppEmptyState icon={History} title={m.admin_audit_no_entries()} description={m.admin_audit_no_changes_for_filters()} />;
 	} else {
 		auditContent = (
-			<div className="divide-y divide-border">
+			<div className="divide-border divide-y">
 				{entries.map((entry) => (
 					<AuditEntryRow key={entry.id} entry={entry} />
 				))}

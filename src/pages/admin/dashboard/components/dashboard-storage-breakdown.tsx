@@ -30,9 +30,9 @@ export function DashboardStorageBreakdown({
 		>
 			{libraries.length === 0 ? (
 				<div className="flex flex-col items-center justify-center py-10 text-center">
-					<Database className="size-8 text-muted-foreground" />
-					<p className="mt-3 font-semibold text-foreground text-sm">{m.admin_dashboard_no_libraries()}</p>
-					<p className="mt-1 text-muted-foreground text-xs">{m.admin_dashboard_add_first_library()}</p>
+					<Database className="text-muted-foreground size-8" />
+					<p className="text-foreground mt-3 text-sm font-semibold">{m.admin_dashboard_no_libraries()}</p>
+					<p className="text-muted-foreground mt-1 text-xs">{m.admin_dashboard_add_first_library()}</p>
 				</div>
 			) : (
 				<div className="flex flex-col gap-3">
@@ -44,15 +44,15 @@ export function DashboardStorageBreakdown({
 						return (
 							<div
 								key={lib.id}
-								className="group flex flex-col gap-3 rounded-xl border border-border/70 bg-card/60 p-4 transition-colors hover:border-primary/40 hover:bg-card"
+								className="group border-border/70 bg-card/60 hover:border-primary/40 hover:bg-card flex flex-col gap-3 rounded-xl border p-4 transition-colors"
 							>
 								<div className="flex items-center justify-between">
 									<div className="flex items-center gap-3">
-										<div className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+										<div className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg">
 											<Layers className="size-4" />
 										</div>
 										<div>
-											<p className="font-bold text-foreground text-sm">{lib.name}</p>
+											<p className="text-foreground text-sm font-bold">{lib.name}</p>
 											<p className="text-muted-foreground text-xs">
 												{m.admin_libraries_type_summary({
 													type: lib.type === "movies" ? m.admin_libraries_type_movies() : m.admin_libraries_type_series(),
@@ -62,7 +62,7 @@ export function DashboardStorageBreakdown({
 										</div>
 									</div>
 									<div className="text-right">
-										<p className="font-semibold text-foreground text-sm tabular-nums">{formatFileSize(libSize)}</p>
+										<p className="text-foreground text-sm font-semibold tabular-nums">{formatFileSize(libSize)}</p>
 										<p className="text-muted-foreground text-xs">{m.admin_dashboard_percent_of_total({ percentage })}</p>
 									</div>
 								</div>

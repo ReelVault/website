@@ -17,14 +17,14 @@ export function TaskTriggerItem({ trigger, onDelete }: TaskTriggerItemProps) {
 	});
 
 	return (
-		<div className="group flex items-center justify-between gap-3 rounded-lg border border-border/50 bg-card/60 p-3 transition-[border-color,background-color,color,box-shadow] hover:border-border hover:bg-card">
+		<div className="group border-border/50 bg-card/60 hover:border-border hover:bg-card flex items-center justify-between gap-3 rounded-lg border p-3 transition-[border-color,background-color,color,box-shadow]">
 			<div className="flex min-w-0 items-center gap-3">
-				<div className="flex size-8 shrink-0 items-center justify-center rounded-md border border-border/50 bg-secondary/80 text-foreground">
+				<div className="border-border/50 bg-secondary/80 text-foreground flex size-8 shrink-0 items-center justify-center rounded-md border">
 					{icon}
 				</div>
 				<div className="min-w-0">
 					<div className="flex items-center gap-2">
-						<span className="font-medium text-foreground text-xs">{formatTriggerDescription(trigger)}</span>
+						<span className="text-foreground text-xs font-medium">{formatTriggerDescription(trigger)}</span>
 						<Badge tone="muted" variant="outline" font="mono">
 							{trigger.type}
 						</Badge>

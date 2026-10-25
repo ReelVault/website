@@ -35,7 +35,7 @@ export function AppErrorState({
 	return (
 		<Alert variant="destructive" className={cn("flex flex-col items-start gap-2", className)} aria-live="assertive">
 			<div className="flex w-full items-start gap-2.5">
-				<CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-destructive" />
+				<CircleAlert aria-hidden="true" className="text-destructive mt-0.5 size-4 shrink-0" />
 				<div className="min-w-0 flex-1 space-y-0.5">
 					<AlertTitle>{title}</AlertTitle>
 					<AlertDescription>

@@ -25,21 +25,21 @@ interface SubtitleItemRowProps {
 
 export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, onToggleSelect }: SubtitleItemRowProps) {
 	return (
-		<div className="flex items-center gap-4 rounded-lg border border-border/60 bg-muted/20 p-3 transition-colors hover:bg-muted/40">
+		<div className="border-border/60 bg-muted/20 hover:bg-muted/40 flex items-center gap-4 rounded-lg border p-3 transition-colors">
 			<input
 				type="checkbox"
-				className="size-4 shrink-0 accent-primary"
+				className="accent-primary size-4 shrink-0"
 				checked={selected}
 				onChange={() => onToggleSelect(subtitle.id)}
 				aria-label={m.admin_subtitles_select_one()}
 			/>
 			<div className="flex min-w-0 flex-1 items-center gap-3">
-				<div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted/40">
-					<FileText className="size-4 text-muted-foreground" />
+				<div className="border-border/60 bg-muted/40 flex size-9 shrink-0 items-center justify-center rounded-lg border">
+					<FileText className="text-muted-foreground size-4" />
 				</div>
 				<div className="min-w-0 flex-1">
 					<div className="flex flex-wrap items-center gap-2">
-						<p className="font-medium text-foreground text-sm">{subtitle.label ?? subtitle.language}</p>
+						<p className="text-foreground text-sm font-medium">{subtitle.label ?? subtitle.language}</p>
 						<Badge variant="outline" size="sm">
 							{subtitle.format}
 						</Badge>
@@ -63,7 +63,7 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, 
 						<Link
 							to="/admin/media/$id"
 							params={{ id: subtitle.mediaFileId }}
-							className="font-mono text-muted-foreground text-xs hover:text-primary hover:underline"
+							className="text-muted-foreground hover:text-primary font-mono text-xs hover:underline"
 							title={m.admin_subtitles_open_media_file()}
 						>
 							{subtitle.mediaFileId.slice(0, 8)}
@@ -75,19 +75,19 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, 
 			{/* Actions */}
 			<div className="flex items-center gap-1">
 				<Button variant="ghost" size="icon" aria-label={m.admin_subtitles_preview()} onClick={() => onView(subtitle.id)}>
-					<Eye className="size-4 text-muted-foreground" />
+					<Eye className="text-muted-foreground size-4" />
 				</Button>
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						render={
 							<Button variant="ghost" size="icon" aria-label={m.plugins_bugs_more_options()}>
-								<MoreVertical className="size-4 text-muted-foreground" />
+								<MoreVertical className="text-muted-foreground size-4" />
 							</Button>
 						}
 					/>
 					<DropdownMenuContent align="end" className="w-44">
 						<DropdownMenuItem onClick={() => onEdit(subtitle.id)}>
-							<Pencil className="size-3.5 text-muted-foreground" />
+							<Pencil className="text-muted-foreground size-3.5" />
 							<span>{m.common_edit()}</span>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />

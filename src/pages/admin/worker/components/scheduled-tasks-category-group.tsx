@@ -98,14 +98,14 @@ export function ScheduledTasksCategoryGroup({
 					<CollapsibleTrigger type="button" onClick={() => setExpanded((v) => !v)} className="min-w-0 flex-1 text-left">
 						<div className="flex items-center gap-2">
 							<ChevronDown
-								className={cn("size-4 shrink-0 text-muted-foreground transition-transform duration-200", !expanded && "-rotate-90")}
+								className={cn("text-muted-foreground size-4 shrink-0 transition-transform duration-200", !expanded && "-rotate-90")}
 							/>
-							<h3 className="font-bold text-foreground text-sm tracking-tight">{meta.title}</h3>
+							<h3 className="text-foreground text-sm font-bold tracking-tight">{meta.title}</h3>
 							<Badge variant="secondary" font="mono" size="count">
 								{tasks.length}
 							</Badge>
 						</div>
-						<p className="pl-6 text-muted-foreground text-xs">{meta.description}</p>
+						<p className="text-muted-foreground pl-6 text-xs">{meta.description}</p>
 					</CollapsibleTrigger>
 					<Button
 						tone="muted"

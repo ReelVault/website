@@ -51,15 +51,15 @@ export function ArtworkSlot({
 				type="button"
 				onClick={() => onOpenDialog(kind)}
 				className={cn(
-					"flex w-full cursor-pointer flex-col items-center justify-center gap-2.5 rounded-xl border border-border/80 border-dashed bg-muted/20 p-6 transition-[border-color,background-color,color,box-shadow] hover:border-primary/60 hover:bg-muted/40",
+					"border-border/80 bg-muted/20 hover:border-primary/60 hover:bg-muted/40 flex w-full cursor-pointer flex-col items-center justify-center gap-2.5 rounded-xl border border-dashed p-6 transition-[border-color,background-color,color,box-shadow]",
 					aspectClass,
 				)}
 			>
-				<div className="flex size-11 items-center justify-center rounded-xl border border-border bg-muted text-muted-foreground">
-					<ImageIcon className="size-5 text-primary" />
+				<div className="border-border bg-muted text-muted-foreground flex size-11 items-center justify-center rounded-xl border">
+					<ImageIcon className="text-primary size-5" />
 				</div>
 				<div className="text-center">
-					<p className="font-semibold text-foreground text-sm">{emptyTitle}</p>
+					<p className="text-foreground text-sm font-semibold">{emptyTitle}</p>
 					<p className="text-muted-foreground text-xs">{m.admin_metadata_artwork_slot_hint()}</p>
 				</div>
 			</button>
@@ -68,7 +68,7 @@ export function ArtworkSlot({
 
 	return (
 		<div className="flex flex-col gap-3">
-			<div className={cn("group relative w-full overflow-hidden rounded-xl border border-border/80 bg-muted/40 shadow-sm", aspectClass)}>
+			<div className={cn("group border-border/80 bg-muted/40 relative w-full overflow-hidden rounded-xl border shadow-sm", aspectClass)}>
 				<ApiImage
 					fileId={image.id}
 					cacheKey={image.updatedAt}
@@ -84,7 +84,7 @@ export function ArtworkSlot({
 					onClick={() => onOpenDialog(kind)}
 					className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
 				>
-					<div className="flex size-10 items-center justify-center rounded-full bg-background/95 text-foreground shadow-sm">
+					<div className="bg-background/95 text-foreground flex size-10 items-center justify-center rounded-full shadow-sm">
 						<Pencil className="size-4" />
 					</div>
 				</button>
@@ -92,7 +92,7 @@ export function ArtworkSlot({
 
 			<div className="flex items-center gap-2">
 				<Button type="button" variant="outline" size="sm" onClick={() => onOpenDialog(kind)} className="flex-1">
-					<ImageIcon className="size-3.5 text-primary" />
+					<ImageIcon className="text-primary size-3.5" />
 					<span>{changeLabel}</span>
 				</Button>
 

@@ -73,7 +73,7 @@ export function LibraryCardHeader({
 
 				<div className="min-w-0">
 					<div className="flex flex-wrap items-center gap-2">
-						<h2 className="truncate font-semibold text-foreground text-lg tracking-tight sm:text-xl">{lib.name}</h2>
+						<h2 className="text-foreground truncate text-lg font-semibold tracking-tight sm:text-xl">{lib.name}</h2>
 						<Badge variant={isMovie ? "default" : "secondary"} size="sm" transform="capitalize">
 							{isMovie ? m.admin_libraries_type_movies() : m.admin_libraries_type_series()}
 						</Badge>
@@ -83,14 +83,14 @@ export function LibraryCardHeader({
 							</Badge>
 						)}
 					</div>
-					<div className="mt-0.5 flex items-center gap-1.5 font-mono text-muted-foreground/80 text-xs">
+					<div className="text-muted-foreground/80 mt-0.5 flex items-center gap-1.5 font-mono text-xs">
 						<span>{m.common_short_id({ id: lib.id.slice(0, 16) })}</span>
 						<button
 							type="button"
 							onClick={() => {
 								detach(handleCopyId());
 							}}
-							className="-m-2.5 inline-flex size-10 items-center justify-center rounded-sm text-muted-foreground/60 hover:text-foreground sm:m-0 sm:size-5"
+							className="text-muted-foreground/60 hover:text-foreground -m-2.5 inline-flex size-10 items-center justify-center rounded-sm sm:m-0 sm:size-5"
 							title={m.admin_libraries_copy_full_id()}
 							aria-label={m.admin_libraries_copy_full_id()}
 						>
@@ -109,7 +109,7 @@ export function LibraryCardHeader({
 					render={<Link to="/admin/media" search={{ libraryId: lib.id }} />}
 					title={m.admin_libraries_show_files()}
 				>
-					<FileVideo className="size-3.5 text-primary" />
+					<FileVideo className="text-primary size-3.5" />
 					<span className="hidden sm:inline">{m.admin_libraries_files_word()}</span>
 				</Button>
 
@@ -120,7 +120,7 @@ export function LibraryCardHeader({
 					title={m.admin_libraries_edit_library()}
 					aria-label={m.admin_libraries_edit_named({ name: lib.name })}
 				>
-					<Pencil className="size-3.5 text-muted-foreground" />
+					<Pencil className="text-muted-foreground size-3.5" />
 					<span className="hidden sm:inline">{m.common_edit()}</span>
 				</Button>
 
@@ -128,7 +128,7 @@ export function LibraryCardHeader({
 					<DropdownMenuTrigger
 						render={
 							<Button variant="ghost" size="icon" aria-label={m.plugins_bugs_more_options()}>
-								<MoreVertical className="size-4 text-muted-foreground" />
+								<MoreVertical className="text-muted-foreground size-4" />
 							</Button>
 						}
 					/>
@@ -139,11 +139,11 @@ export function LibraryCardHeader({
 						</DropdownMenuGroup>
 						<DropdownMenuGroup>
 							<DropdownMenuItem onClick={() => onScan(lib.id)}>
-								<RefreshCw className="size-3.5 text-primary" />
+								<RefreshCw className="text-primary size-3.5" />
 								<span>{m.admin_libraries_scan_library()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => onEdit(lib)}>
-								<Pencil className="size-3.5 text-muted-foreground" />
+								<Pencil className="text-muted-foreground size-3.5" />
 								<span>{m.admin_libraries_edit_configuration()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem
@@ -151,19 +151,19 @@ export function LibraryCardHeader({
 									detach(handleCopyId());
 								}}
 							>
-								<Copy className="size-3.5 text-muted-foreground" />
+								<Copy className="text-muted-foreground size-3.5" />
 								<span>{m.common_copy_id()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => onCheckErrors(lib.paths.map((p) => p.path))}>
-								<ScanSearch className="size-3.5 text-primary" />
+								<ScanSearch className="text-primary size-3.5" />
 								<span>{m.admin_libraries_check_error()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => onShowIgnoredAssets(lib.id)}>
-								<AlertTriangle className="size-3.5 text-muted-foreground" />
+								<AlertTriangle className="text-muted-foreground size-3.5" />
 								<span>{m.admin_libraries_skipped_assets()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => onShowScanFindings(lib.id)}>
-								<FileWarning className="size-3.5 text-muted-foreground" />
+								<FileWarning className="text-muted-foreground size-3.5" />
 								<span>{m.admin_libraries_needs_attention()}</span>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>

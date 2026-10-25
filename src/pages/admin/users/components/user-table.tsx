@@ -40,19 +40,19 @@ function UserContextMenuContent({ user, onToggleBan, onToggleRole, onDelete, onC
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
 				<ContextMenuItem onClick={() => detach(() => onToggleRole(user))} className="cursor-pointer">
-					<Shield className="size-4 text-primary" />
+					<Shield className="text-primary size-4" />
 					<span>{user.role === "admin" ? m.admin_users_revoke_admin() : m.admin_users_grant_admin()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => detach(() => onToggleBan(user))} className="cursor-pointer">
-					{user.banned ? <UserCheck className="size-4 text-success" /> : <UserRoundX className="size-4 text-warning" />}
+					{user.banned ? <UserCheck className="text-success size-4" /> : <UserRoundX className="text-warning size-4" />}
 					<span>{user.banned ? m.admin_users_unblock_account() : m.admin_users_block_account()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => detach(() => onCopy(user.email, m.common_email()))} className="cursor-pointer">
-					<Copy className="size-4 text-muted-foreground" />
+					<Copy className="text-muted-foreground size-4" />
 					<span>{m.common_copy_email()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={() => detach(() => onCopy(user.id, m.admin_users_user_id()))} className="cursor-pointer">
-					<Copy className="size-4 text-muted-foreground" />
+					<Copy className="text-muted-foreground size-4" />
 					<span>{m.admin_users_copy_account_id()}</span>
 				</ContextMenuItem>
 			</ContextMenuGroup>
@@ -91,7 +91,7 @@ export function UserTable({
 							<TableHead className="w-8">
 								<input
 									type="checkbox"
-									className="size-4 accent-primary"
+									className="accent-primary size-4"
 									aria-label={m.admin_users_select_all()}
 									checked={items.length > 0 && items.every((user) => selectedIds.has(user.id))}
 									onChange={() => onToggleSelectAll(items.map((user) => user.id))}
@@ -113,7 +113,7 @@ export function UserTable({
 									<TableCell>
 										<input
 											type="checkbox"
-											className="size-4 accent-primary"
+											className="accent-primary size-4"
 											aria-label={m.admin_users_select_user()}
 											checked={selectedIds.has(user.id)}
 											onChange={() => onToggleSelect(user.id)}
@@ -125,11 +125,11 @@ export function UserTable({
 									<TableCell>
 										<div className="flex flex-col gap-0.5">
 											<div className="flex items-center gap-1.5 text-xs">
-												<Shield className="size-3.5 text-primary" aria-hidden="true" />
+												<Shield className="text-primary size-3.5" aria-hidden="true" />
 												<span>{user.role === "admin" ? m.admin_users_role_admin() : m.admin_users_role_user()}</span>
 											</div>
 											{user.twoFactorEnabled && (
-												<span className="flex items-center gap-1 font-medium text-success text-xs">
+												<span className="text-success flex items-center gap-1 text-xs font-medium">
 													<ShieldCheck className="size-3" />
 													{m.admin_users_2fa_active()}
 												</span>
@@ -169,7 +169,7 @@ export function UserTable({
 							<label className="flex items-center gap-2 text-xs">
 								<input
 									type="checkbox"
-									className="size-4 accent-primary"
+									className="accent-primary size-4"
 									checked={selectedIds.has(user.id)}
 									onChange={() => onToggleSelect(user.id)}
 								/>
@@ -179,13 +179,13 @@ export function UserTable({
 								<UserSummary user={user} />
 								<UserStatus user={user} />
 							</div>
-							<div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
+							<div className="text-muted-foreground flex flex-wrap items-center gap-2 text-xs">
 								<span className="flex items-center gap-1">
-									<Shield className="size-3.5 text-primary" />
+									<Shield className="text-primary size-3.5" />
 									{user.role === "admin" ? m.admin_users_role_admin() : m.admin_users_role_user()}
 								</span>
 								{user.twoFactorEnabled && (
-									<span className="flex items-center gap-1 font-medium text-success">
+									<span className="text-success flex items-center gap-1 font-medium">
 										<ShieldCheck className="size-3" /> {m.common_2fa_short()}
 									</span>
 								)}

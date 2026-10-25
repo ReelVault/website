@@ -42,9 +42,9 @@ export function MediaFilesList({
 		<>
 			{/* SEARCH BAR (when there are many files, e.g. in a series) */}
 			{files.length > 2 && (
-				<div className="shrink-0 border-border/60 border-b bg-background/50 px-6 py-3">
+				<div className="border-border/60 bg-background/50 shrink-0 border-b px-6 py-3">
 					<div className="relative">
-						<Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+						<Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
 						<Input
 							leadingIcon
 							type="text"
@@ -59,7 +59,7 @@ export function MediaFilesList({
 
 			<div className="min-h-0 flex-1 overflow-hidden p-6 pt-4">
 				{isPending && (
-					<AppLoadingState label={m.components_media_files_loading()} className="min-h-48 rounded-xl border border-border border-dashed" />
+					<AppLoadingState label={m.components_media_files_loading()} className="border-border min-h-48 rounded-xl border border-dashed" />
 				)}
 
 				{isError && (

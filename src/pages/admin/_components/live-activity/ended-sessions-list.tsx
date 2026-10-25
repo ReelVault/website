@@ -10,8 +10,8 @@ type EndedSession = NonNullable<ReturnType<typeof useAdminEndedLiveSessions>["da
 
 function EndedSessionCard({ session }: { session: EndedSession }) {
 	return (
-		<div className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4">
-			<p className="break-words font-semibold text-foreground text-sm">{session.title ?? m.admin_live_ended_untitled()}</p>
+		<div className="border-border/50 bg-background/40 flex flex-col gap-3 rounded-xl border p-4">
+			<p className="text-foreground text-sm font-semibold break-words">{session.title ?? m.admin_live_ended_untitled()}</p>
 			<dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
 				<div className="flex flex-col gap-0.5">
 					<dt className="text-muted-foreground">{m.admin_live_ended_col_profile()}</dt>
@@ -33,7 +33,7 @@ function EndedSessionCard({ session }: { session: EndedSession }) {
 			<a
 				href={reelvault.admin.getLiveSessionLogUrl(session.sessionId)}
 				download
-				className="inline-flex min-h-10 items-center text-primary text-sm underline-offset-4 hover:underline"
+				className="text-primary inline-flex min-h-10 items-center text-sm underline-offset-4 hover:underline"
 			>
 				{m.admin_live_ended_download_log()}
 			</a>
@@ -49,8 +49,8 @@ export function EndedSessionsList() {
 	return (
 		<section className="flex flex-col gap-3 pt-2">
 			<div className="flex items-center gap-2">
-				<History className="size-4 text-muted-foreground" />
-				<h4 className="font-bold text-foreground text-xs">{m.admin_live_ended_title()}</h4>
+				<History className="text-muted-foreground size-4" />
+				<h4 className="text-foreground text-xs font-bold">{m.admin_live_ended_title()}</h4>
 			</div>
 
 			{sessions.length === 0 ? (

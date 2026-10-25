@@ -32,15 +32,15 @@ function RecentPlayCard({ play }: { play: RecentPlay }) {
 	const durationLabel = play.durationWatched ? `${play.durationWatched} min` : "—";
 
 	return (
-		<div className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4">
+		<div className="border-border/50 bg-background/40 flex flex-col gap-3 rounded-xl border p-4">
 			<div className="flex items-start justify-between gap-3">
-				<p className="min-w-0 break-words font-semibold text-foreground text-sm">{play.title}</p>
+				<p className="text-foreground min-w-0 text-sm font-semibold break-words">{play.title}</p>
 				<Badge variant="outline" className="shrink-0">
 					{mediaTypeLabel}
 				</Badge>
 			</div>
 			<p className="text-xs">
-				<span className="font-medium text-foreground">{play.profileName}</span>{" "}
+				<span className="text-foreground font-medium">{play.profileName}</span>{" "}
 				<span className="text-muted-foreground">{m.admin_analytics_profile_user({ user: play.userName })}</span>
 			</p>
 			<dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
@@ -66,7 +66,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 			<Card variant="subtle">
 				<CardContent className="p-0">
 					{recentPlays.length === 0 ? (
-						<p className="py-8 text-center text-muted-foreground text-xs">{m.admin_analytics_no_plays()}</p>
+						<p className="text-muted-foreground py-8 text-center text-xs">{m.admin_analytics_no_plays()}</p>
 					) : (
 						<ResponsiveDataList
 							className="p-3 sm:p-0"
@@ -93,8 +93,8 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 														<Badge variant="outline">{play.mediaType === "movie" ? m.common_movie_word() : m.common_series_word()}</Badge>
 													</TableCell>
 													<TableCell>
-														<span className="font-medium text-foreground">{play.profileName}</span>
-														<span className="ml-1.5 text-muted-foreground text-xs">
+														<span className="text-foreground font-medium">{play.profileName}</span>
+														<span className="text-muted-foreground ml-1.5 text-xs">
 															{m.admin_analytics_profile_user({ user: play.userName })}
 														</span>
 													</TableCell>

@@ -3,12 +3,12 @@ import { m } from "@/paraglide/messages";
 
 export function CollectionByIdSkeleton() {
 	return (
-		<div className="min-h-screen overflow-x-hidden bg-background text-foreground" role="status" aria-label={m.web_loading_collection()}>
+		<div className="bg-background text-foreground min-h-screen overflow-x-hidden" role="status" aria-label={m.web_loading_collection()}>
 			{/* Hero Skeleton */}
-			<section className="relative min-h-[62vh] border-border border-b lg:min-h-[70vh]">
-				<div className="absolute inset-0 overflow-hidden bg-card">
-					<div className="absolute inset-0 bg-linear-to-t from-background via-background/65 to-background/10" />
-					<div className="absolute inset-0 bg-linear-to-r from-background via-background/40 to-transparent" />
+			<section className="border-border relative min-h-[62vh] border-b lg:min-h-[70vh]">
+				<div className="bg-card absolute inset-0 overflow-hidden">
+					<div className="from-background via-background/65 to-background/10 absolute inset-0 bg-linear-to-t" />
+					<div className="from-background via-background/40 absolute inset-0 bg-linear-to-r to-transparent" />
 				</div>
 
 				<div className="cinema-shell relative flex min-h-[62vh] flex-col justify-end py-16 lg:min-h-[70vh]">
@@ -36,7 +36,7 @@ export function CollectionByIdSkeleton() {
 
 				<div className="space-y-12">
 					{["item-1", "item-2", "item-3"].map((key) => (
-						<article key={key} className="grid gap-8 border-border/70 border-b pb-12 lg:grid-cols-[5rem_13rem_1fr] lg:gap-10">
+						<article key={key} className="border-border/70 grid gap-8 border-b pb-12 lg:grid-cols-[5rem_13rem_1fr] lg:gap-10">
 							{/* Index / Number */}
 							<div className="hidden pt-2 text-right lg:block">
 								<Skeleton className="ml-auto h-9 w-12" />

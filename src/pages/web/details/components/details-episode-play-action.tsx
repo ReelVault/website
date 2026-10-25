@@ -20,11 +20,11 @@ function EpisodeVersionMenuItem({ file, index }: { file: EpisodeVersionFile; ind
 
 	return (
 		<DropdownMenuItem render={<Link to="/player/$id" params={{ id: file.id }} />} className="cursor-pointer">
-			<div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+			<div className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-md">
 				<Play className="size-3.5 fill-current pl-0.5" />
 			</div>
 			<div className="flex min-w-0 flex-1 flex-col gap-0.5">
-				<div className="flex items-center gap-1.5 truncate font-medium text-foreground text-sm">
+				<div className="text-foreground flex items-center gap-1.5 truncate text-sm font-medium">
 					<span className="truncate">{title}</span>
 					{file.isDefault && (
 						<Badge variant="secondary" size="sm">
@@ -32,7 +32,7 @@ function EpisodeVersionMenuItem({ file, index }: { file: EpisodeVersionFile; ind
 						</Badge>
 					)}
 				</div>
-				{subtitle && <span className="truncate text-muted-foreground text-xs">{subtitle}</span>}
+				{subtitle && <span className="text-muted-foreground truncate text-xs">{subtitle}</span>}
 			</div>
 		</DropdownMenuItem>
 	);
@@ -91,7 +91,7 @@ export function DetailsEpisodePlayAction({
 						<DropdownMenuContent align="end" side="bottom" className="w-72 sm:w-80">
 							<DropdownMenuGroup>
 								<DropdownMenuLabel className="flex items-center">
-									<Layers className="size-3.5 text-primary" />
+									<Layers className="text-primary size-3.5" />
 									<span>{m.web_video_versions_count_label({ count: files.length })}</span>
 								</DropdownMenuLabel>
 							</DropdownMenuGroup>
@@ -143,7 +143,7 @@ export function DetailsEpisodePlayAction({
 					})
 				}
 			>
-				<Info className="size-4 text-muted-foreground" />
+				<Info className="text-muted-foreground size-4" />
 			</Button>
 		</div>
 	);

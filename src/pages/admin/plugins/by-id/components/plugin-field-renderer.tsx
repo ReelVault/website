@@ -88,7 +88,7 @@ function NumberFieldRenderer({ field, value, onChange }: FieldRendererProps) {
 					</div>
 					{field.default !== undefined && (
 						<span className="text-muted-foreground text-xs">
-							{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
+							{m.admin_plugins_default_value()} <span className="text-foreground font-mono">{defaultToText(field.default)}</span>
 						</span>
 					)}
 				</div>
@@ -134,7 +134,7 @@ function SelectFieldRenderer({ field, options, value, onChange }: SelectFieldRen
 					</div>
 					{field.default !== undefined && (
 						<span className="text-muted-foreground text-xs">
-							{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
+							{m.admin_plugins_default_value()} <span className="text-foreground font-mono">{defaultToText(field.default)}</span>
 						</span>
 					)}
 				</div>
@@ -173,7 +173,7 @@ function TextFieldRenderer({ field, value, showSecret, onToggleSecret, onChange 
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col gap-0.5">
 						<div className="flex items-center gap-2">
-							{isSecret && <KeyRound className="size-3.5 text-warning" />}
+							{isSecret && <KeyRound className="text-warning size-3.5" />}
 							<Label weight="semibold">{resolvePluginText(field.label)}</Label>
 							{field.required && (
 								<Badge tone="destructive" variant="outline">
@@ -187,7 +187,7 @@ function TextFieldRenderer({ field, value, showSecret, onToggleSecret, onChange 
 					</div>
 					{!isSecret && field.default !== undefined && (
 						<span className="text-muted-foreground text-xs">
-							{m.admin_plugins_default_value()} <span className="font-mono text-foreground">{defaultToText(field.default)}</span>
+							{m.admin_plugins_default_value()} <span className="text-foreground font-mono">{defaultToText(field.default)}</span>
 						</span>
 					)}
 				</div>

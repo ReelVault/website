@@ -70,8 +70,8 @@ export default function DetailsHeader({
 					dim={25}
 					className="object-cover"
 				/>
-				<div className="absolute inset-0 bg-linear-to-b from-background/90 via-background/70 to-background" />
-				<div className="absolute inset-0 bg-linear-to-r from-background via-transparent to-background/30" />
+				<div className="from-background/90 via-background/70 to-background absolute inset-0 bg-linear-to-b" />
+				<div className="from-background to-background/30 absolute inset-0 bg-linear-to-r via-transparent" />
 			</div>
 
 			{/* Main Content */}
@@ -154,7 +154,7 @@ export default function DetailsHeader({
 
 						{/* Overview */}
 						<div className="max-w-3xl">
-							<h2 className="mb-3 font-bold text-foreground text-lg">{m.admin_metadata_plot_description()}</h2>
+							<h2 className="text-foreground mb-3 text-lg font-bold">{m.admin_metadata_plot_description()}</h2>
 							<p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
 								{metadata.overview ?? m.web_metadata_overview_no_description()}
 							</p>

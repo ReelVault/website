@@ -72,15 +72,15 @@ export function PluginCard({
 	}
 
 	return (
-		<article className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-xs transition-[border-color,box-shadow] hover:border-primary/40 hover:shadow-md">
+		<article className="border-border bg-card hover:border-primary/40 flex flex-col gap-4 rounded-xl border p-5 shadow-xs transition-[border-color,box-shadow] hover:shadow-md">
 			{/* Identity: icon, name and the state the plugin is in */}
 			<div className="flex items-start gap-3">
-				<div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+				<div className="bg-primary/10 text-primary flex size-12 shrink-0 items-center justify-center rounded-xl">
 					<Puzzle className="size-6" />
 				</div>
 				<div className="min-w-0 flex-1">
-					<h3 className="truncate font-semibold text-foreground text-lg leading-tight">{plugin.name}</h3>
-					<p className="truncate font-mono text-muted-foreground text-xs">{m.common_id_label({ id: plugin.id })}</p>
+					<h3 className="text-foreground truncate text-lg leading-tight font-semibold">{plugin.name}</h3>
+					<p className="text-muted-foreground truncate font-mono text-xs">{m.common_id_label({ id: plugin.id })}</p>
 				</div>
 				<StatusBadge status={statusVariant} label={plugin.state} />
 			</div>
@@ -98,20 +98,20 @@ export function PluginCard({
 				)}
 			</div>
 
-			{plugin.description && <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">{plugin.description}</p>}
+			{plugin.description && <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">{plugin.description}</p>}
 
 			{/* Counters: what the plugin contributes */}
 			<dl className="grid grid-cols-3 gap-2 text-sm">
-				<div className="flex items-center justify-between gap-2 rounded-lg bg-muted/50 px-3 py-2">
-					<dt className="truncate text-muted-foreground text-xs">{m.common_providers_label()}</dt>
+				<div className="bg-muted/50 flex items-center justify-between gap-2 rounded-lg px-3 py-2">
+					<dt className="text-muted-foreground truncate text-xs">{m.common_providers_label()}</dt>
 					<dd className="font-semibold tabular-nums">{plugin.providers}</dd>
 				</div>
-				<div className="flex items-center justify-between gap-2 rounded-lg bg-muted/50 px-3 py-2">
-					<dt className="truncate text-muted-foreground text-xs">{m.common_subtitles()}</dt>
+				<div className="bg-muted/50 flex items-center justify-between gap-2 rounded-lg px-3 py-2">
+					<dt className="text-muted-foreground truncate text-xs">{m.common_subtitles()}</dt>
 					<dd className="font-semibold tabular-nums">{plugin.subtitleProviders}</dd>
 				</div>
-				<div className="flex items-center justify-between gap-2 rounded-lg bg-muted/50 px-3 py-2">
-					<dt className="truncate text-muted-foreground text-xs">{m.admin_plugins_jobs_label()}</dt>
+				<div className="bg-muted/50 flex items-center justify-between gap-2 rounded-lg px-3 py-2">
+					<dt className="text-muted-foreground truncate text-xs">{m.admin_plugins_jobs_label()}</dt>
 					<dd className="font-semibold tabular-nums">{plugin.jobs}</dd>
 				</div>
 			</dl>
@@ -130,14 +130,14 @@ export function PluginCard({
 			)}
 
 			{plugin.installedAt && plugin.source && (
-				<p className="wrap-break-word text-muted-foreground text-xs">
+				<p className="text-muted-foreground text-xs wrap-break-word">
 					{m.admin_plugins_installed_on({ date: formatDate(plugin.installedAt), source: plugin.source })}
 				</p>
 			)}
 
 			{/* Configuration read error */}
 			{plugin.configReadError && (
-				<div className="flex items-start gap-1.5 rounded-lg border border-warning/30 bg-warning/10 p-3 text-warning text-xs">
+				<div className="border-warning/30 bg-warning/10 text-warning flex items-start gap-1.5 rounded-lg border p-3 text-xs">
 					<AlertTriangle className="mt-px size-3.5 shrink-0" />
 					<span>{m.admin_plugins_config_unreadable()}</span>
 				</div>
@@ -145,17 +145,17 @@ export function PluginCard({
 
 			{/* Error Banner */}
 			{plugin.errorCode && (
-				<div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-destructive text-xs">
+				<div className="border-destructive/30 bg-destructive/10 text-destructive rounded-lg border p-3 text-xs">
 					<div className="flex items-center gap-1.5 font-bold">
 						<XCircle className="size-3.5 shrink-0" />
 						<span>{m.admin_plugins_loading_error({ failurePhase: plugin.failurePhase ?? "runtime" })}</span>
 					</div>
-					<p className="wrap-break-word mt-1 font-mono text-xs">{pluginErrorText(plugin)}</p>
+					<p className="mt-1 font-mono text-xs wrap-break-word">{pluginErrorText(plugin)}</p>
 				</div>
 			)}
 
 			{/* Actions: configuration and the state change stay in view, the rest sits in the menu */}
-			<div className="mt-auto flex flex-wrap items-center gap-2 border-border/60 border-t pt-4">
+			<div className="border-border/60 mt-auto flex flex-wrap items-center gap-2 border-t pt-4">
 				<Button
 					variant="outline"
 					size="sm"
@@ -190,7 +190,7 @@ export function PluginCard({
 				<div className="ml-auto flex items-center gap-2">
 					{onToggleSelect && (
 						<label className="flex cursor-pointer items-center gap-1.5 text-xs">
-							<input type="checkbox" checked={selected} onChange={onToggleSelect} className="size-4 accent-primary" />
+							<input type="checkbox" checked={selected} onChange={onToggleSelect} className="accent-primary size-4" />
 							{m.admin_plugins_select()}
 						</label>
 					)}

@@ -44,8 +44,8 @@ export function AvatarGalleryTab({ selectedStyleId, onSelectStyleId, selectedAva
 					>
 						<img src={avatar.url} alt="" width={96} height={96} loading="lazy" className="h-full w-full object-cover" />
 						{selectedAvatar === avatar.url && (
-							<div className="absolute inset-0 flex items-center justify-center bg-primary/20">
-								<Check className="size-6 text-primary" />
+							<div className="bg-primary/20 absolute inset-0 flex items-center justify-center">
+								<Check className="text-primary size-6" />
 							</div>
 						)}
 					</Button>

@@ -27,7 +27,7 @@ export function UserSidebar() {
 	};
 
 	return (
-		<aside className="fixed inset-x-0 bottom-0 z-40 border-border/70 border-t bg-background/95 lg:inset-y-0 lg:right-auto lg:z-auto lg:w-64 lg:border-t-0 lg:border-r">
+		<aside className="border-border/70 bg-background/95 fixed inset-x-0 bottom-0 z-40 border-t lg:inset-y-0 lg:right-auto lg:z-auto lg:w-64 lg:border-t-0 lg:border-r">
 			<div className="mx-auto flex h-16 max-w-xl items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] lg:flex lg:h-full lg:max-w-none lg:flex-col lg:items-stretch lg:justify-start lg:gap-8 lg:px-5 lg:py-6">
 				<Link
 					to="/"
@@ -37,7 +37,7 @@ export function UserSidebar() {
 					<Logo className="h-7 w-auto" />
 				</Link>
 
-				<div className="hidden border-border/60 border-y py-4 lg:block">
+				<div className="border-border/60 hidden border-y py-4 lg:block">
 					{isLoading ? <Skeleton className="h-11" /> : <SidebarProfileCard profile={profile} account={account} />}
 				</div>
 

@@ -13,8 +13,12 @@ overwriteGetLocale(() => "en");
 beforeAll(() => ensureDom());
 
 // The list renders each category group once it scrolls into view; the test renders them all at once.
+function LazyRender({ children }: { children: () => unknown }) {
+	return children();
+}
+
 await mock.module("@/components/lazy-render", () => ({
-	LazyRender: ({ children }: { children: () => unknown }) => children(),
+	LazyRender,
 }));
 
 const { ScheduledTasksList } = await import("@/pages/admin/worker/components/scheduled-tasks-list");

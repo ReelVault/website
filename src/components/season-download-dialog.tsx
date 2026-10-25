@@ -62,19 +62,19 @@ export function SeasonDownloadDialog({ open, onOpenChange, seasonId }: SeasonDow
 						<label
 							key={profile.id}
 							htmlFor={`season-quality-${profile.id}`}
-							className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3"
+							className="border-border flex cursor-pointer items-start gap-3 rounded-lg border p-3"
 						>
 							<RadioGroupItem value={profile.id} id={`season-quality-${profile.id}`} className="mt-1" />
 							<span className="min-w-0">
-								<span className="block font-medium text-sm">{profile.label}</span>
-								<span className="block text-muted-foreground text-xs">{profile.description}</span>
+								<span className="block text-sm font-medium">{profile.label}</span>
+								<span className="text-muted-foreground block text-xs">{profile.description}</span>
 							</span>
 						</label>
 					))}
 				</RadioGroup>
 
 				{warning && (
-					<p role="alert" className="rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm">
+					<p role="alert" className="border-warning/40 bg-warning/10 rounded-lg border p-3 text-sm">
 						{m.components_season_download_quota_warning({
 							needed: formatFileSize(warning.estimatedBytes),
 							free: formatFileSize(warning.freeBytes),

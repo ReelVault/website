@@ -86,7 +86,7 @@ export default function CollectionByIdPage({ id = "" }: { id?: string }) {
 	const posterImages = collectionDetailsQuery.data?.posterImages;
 
 	return (
-		<div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+		<div className="bg-background text-foreground min-h-screen overflow-x-hidden">
 			<CollectionHero
 				collectionName={collectionName}
 				posterImages={posterImages}

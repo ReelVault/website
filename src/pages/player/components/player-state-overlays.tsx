@@ -22,8 +22,8 @@ export function PlayerLoadingOverlay() {
 	else if (pendingChange === "quality") label = m.player_changing_quality();
 
 	return (
-		<div role="status" className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center bg-background/45">
-			<div className="flex items-center gap-3 rounded-full bg-popover/70 px-5 py-3 font-bold text-popover-foreground text-sm shadow-xl backdrop-blur">
+		<div role="status" className="bg-background/45 pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
+			<div className="bg-popover/70 text-popover-foreground flex items-center gap-3 rounded-full px-5 py-3 text-sm font-bold shadow-xl backdrop-blur">
 				<Spinner size="lg" aria-label={label ?? m.player_buffering()} />
 				{label && label}
 			</div>
@@ -56,10 +56,10 @@ export function PlayerErrorOverlay() {
 		);
 
 	return (
-		<div className="absolute inset-0 z-40 flex items-center justify-center bg-background/95 px-6 text-center">
+		<div className="bg-background/95 absolute inset-0 z-40 flex items-center justify-center px-6 text-center">
 			<div className="flex max-w-md flex-col items-center gap-3">
-				<AlertTriangle className="mx-auto size-10 text-destructive" aria-hidden="true" />
-				<h2 className="font-black text-2xl text-foreground">{m.player_playback_interrupted()}</h2>
+				<AlertTriangle className="text-destructive mx-auto size-10" aria-hidden="true" />
+				<h2 className="text-foreground text-2xl font-black">{m.player_playback_interrupted()}</h2>
 				<p className="text-muted-foreground text-sm">{m.player_error_back_to_details_desc()}</p>
 				<div className="mt-2 flex flex-col gap-2 sm:flex-row">
 					<Button

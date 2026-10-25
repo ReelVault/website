@@ -23,7 +23,7 @@ export function IdentifyDialog({
 			<DialogContent className="sm:max-w-3xl">
 				<DialogHeader>
 					<DialogTitle className="flex items-center">
-						{mediaType === "movie" ? <Film className="size-5 text-primary" /> : <Tv className="size-5 text-primary" />}
+						{mediaType === "movie" ? <Film className="text-primary size-5" /> : <Tv className="text-primary size-5" />}
 						{m.identify_dialog_change_match()}
 					</DialogTitle>
 				</DialogHeader>

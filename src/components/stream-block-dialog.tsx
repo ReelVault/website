@@ -27,7 +27,7 @@ export function StreamBlockDialog({ isOpen, title, description, confirmLabel, is
 		>
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
-					<div className="flex items-center gap-2 text-destructive">
+					<div className="text-destructive flex items-center gap-2">
 						<AlertTriangle className="size-5" />
 						<DialogTitle>{title}</DialogTitle>
 					</div>

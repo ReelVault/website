@@ -22,12 +22,12 @@ export function AuditActorSummary({ filters }: { filters: AdminAuditSummaryFilte
 		content = <p className="text-muted-foreground text-sm">{m.admin_audit_no_changes_for_filters()}</p>;
 	} else {
 		content = (
-			<div className="divide-y divide-border">
+			<div className="divide-border divide-y">
 				{actors.map((actor) => (
 					<div key={actor.actorUserId ?? "unattributed"} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2.5">
 						<div className="min-w-0">
 							{actor.name ? (
-								<p className="truncate font-medium text-sm">{actor.name}</p>
+								<p className="truncate text-sm font-medium">{actor.name}</p>
 							) : (
 								<p className="truncate font-mono text-xs">{actor.actorUserId ?? m.admin_audit_unattributed()}</p>
 							)}

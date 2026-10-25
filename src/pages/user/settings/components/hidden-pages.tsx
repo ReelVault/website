@@ -23,13 +23,13 @@ export function HiddenPages({ profileId }: { profileId: string }) {
 
 	return (
 		<fieldset className="flex flex-col gap-2">
-			<legend className="font-medium text-sm">{m.settings_hidden_pages()}</legend>
+			<legend className="text-sm font-medium">{m.settings_hidden_pages()}</legend>
 			<p className="text-muted-foreground text-xs">{m.settings_hidden_pages_hint()}</p>
 			{OPTIONAL_PAGE_IDS.map((pageId) => (
 				<label key={pageId} className="flex min-h-10 cursor-pointer items-center gap-2 text-sm sm:min-h-0">
 					<input
 						type="checkbox"
-						className="size-4 accent-primary"
+						className="accent-primary size-4"
 						checked={hidden.has(pageId)}
 						disabled={isSaving}
 						onChange={(event) => toggle(pageId, event.currentTarget.checked)}

@@ -10,17 +10,17 @@ interface UserSidebarDesktopFooterProps {
 
 export function UserSidebarDesktopFooter({ onLogout }: UserSidebarDesktopFooterProps) {
 	return (
-		<div className="hidden flex-col gap-1 border-border/60 border-t pt-4 lg:flex">
+		<div className="border-border/60 hidden flex-col gap-1 border-t pt-4 lg:flex">
 			<Link
 				to="/auth/profiles"
-				className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-muted-foreground text-sm transition-colors hover:bg-muted/60 hover:text-foreground"
+				className="text-muted-foreground hover:bg-muted/60 hover:text-foreground flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
 			>
 				<RotateCcw className="size-4.5" />
 				{m.user_switch_profile()}
 			</Link>
 			<Link
 				to="/"
-				className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-muted-foreground text-sm transition-colors hover:bg-muted/60 hover:text-foreground"
+				className="text-muted-foreground hover:bg-muted/60 hover:text-foreground flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
 			>
 				<House className="size-4.5" />
 				{m.user_back_to_service()}
@@ -31,7 +31,7 @@ export function UserSidebarDesktopFooter({ onLogout }: UserSidebarDesktopFooterP
 				confirmLabel={m.components_navbar_log_out()}
 				onConfirm={onLogout}
 				onError={() => toast.error(m.components_navbar_logout_failed())}
-				className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-muted-foreground text-sm transition-colors hover:bg-destructive/30 hover:text-destructive"
+				className="text-muted-foreground hover:bg-destructive/30 hover:text-destructive flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
 			>
 				<LogOut className="size-4.5" />
 				{m.components_navbar_log_out()}

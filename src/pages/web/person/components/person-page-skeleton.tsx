@@ -22,7 +22,7 @@ export function PersonPageSkeleton() {
 					</div>
 
 					{/* Bio Skeleton */}
-					<div className="space-y-3 rounded-xl border border-border/50 bg-card/60 p-6">
+					<div className="border-border/50 bg-card/60 space-y-3 rounded-xl border p-6">
 						<Skeleton className="h-4 w-24" />
 						<Skeleton className="h-4 w-full" />
 						<Skeleton className="h-4 w-5/6" />

@@ -26,22 +26,22 @@ export function ResourceConfigSection({ config }: { config: ResourceConfig }) {
 		{
 			label: m.admin_resources_memory_threshold(),
 			node: (
-				<span className="font-mono font-semibold text-foreground">{m.common_percent_value({ value: config.memoryThresholdPercent })}</span>
+				<span className="text-foreground font-mono font-semibold">{m.common_percent_value({ value: config.memoryThresholdPercent })}</span>
 			),
 		},
 		{
 			label: m.admin_resources_disk_threshold(),
 			node: (
-				<span className="font-mono font-semibold text-foreground">{m.common_percent_value({ value: config.diskThresholdPercent })}</span>
+				<span className="text-foreground font-mono font-semibold">{m.common_percent_value({ value: config.diskThresholdPercent })}</span>
 			),
 		},
 	];
 
 	return (
-		<div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-border/50 bg-muted/20 px-4 py-2.5">
-			<span className="font-medium text-muted-foreground text-xs">{m.admin_resources_monitoring_config()}</span>
+		<div className="border-border/50 bg-muted/20 flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border px-4 py-2.5">
+			<span className="text-muted-foreground text-xs font-medium">{m.admin_resources_monitoring_config()}</span>
 			{rows.map((row) => (
-				<span key={row.label} className="flex items-center gap-2 text-muted-foreground text-xs">
+				<span key={row.label} className="text-muted-foreground flex items-center gap-2 text-xs">
 					{row.label}
 					{row.node}
 				</span>

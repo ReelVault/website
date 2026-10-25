@@ -64,12 +64,12 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 								<CardContent className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
 									{/* Left side: resolution icon + title and tags */}
 									<div className="flex items-start gap-3.5 sm:items-center">
-										<div className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-border/55 bg-background shadow-xs">
-											<FileVideo className="size-5 text-primary" />
+										<div className="border-border/55 bg-background flex size-11 shrink-0 items-center justify-center rounded-lg border shadow-xs">
+											<FileVideo className="text-primary size-5" />
 										</div>
 										<div className="flex flex-col gap-1">
 											<div className="flex flex-wrap items-center gap-2">
-												<h4 className="font-semibold text-base text-foreground tracking-tight">{versionTitle}</h4>
+												<h4 className="text-foreground text-base font-semibold tracking-tight">{versionTitle}</h4>
 												{file.qualityTag && <Badge size="sm">{file.qualityTag}</Badge>}
 												{progress?.status === "watched" && <Badge variant="success">{m.common_watched_badge()}</Badge>}
 												{progress?.status === "in_progress" && (
@@ -82,33 +82,33 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 												)}
 											</div>
 											{progress?.status === "in_progress" && (
-												<div className="mt-2 h-1 overflow-hidden rounded-full bg-muted">
-													<div className="h-full bg-primary" style={{ width: `${progressPercent}%` }} />
+												<div className="bg-muted mt-2 h-1 overflow-hidden rounded-full">
+													<div className="bg-primary h-full" style={{ width: `${progressPercent}%` }} />
 												</div>
 											)}
 
 											{/* Inline parameters (time, size, bitrate, format) */}
-											<div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-xs">
+											<div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
 												{file.duration && (
 													<div className="flex items-center gap-1.5">
-														<Clock className="size-3.5 text-muted-foreground/75" />
+														<Clock className="text-muted-foreground/75 size-3.5" />
 														<span>{formatDuration(file.duration)}</span>
 													</div>
 												)}
 												{file.size != null && file.size > 0 && (
 													<div className="flex items-center gap-1.5">
-														<HardDrive className="size-3.5 text-muted-foreground/75" />
+														<HardDrive className="text-muted-foreground/75 size-3.5" />
 														<span>{formatFileSize(file.size)}</span>
 													</div>
 												)}
 												{file.bitRate && (
 													<div className="flex items-center gap-1.5">
-														<Layers className="size-3.5 text-muted-foreground/75" />
+														<Layers className="text-muted-foreground/75 size-3.5" />
 														<span>{formatBitrate(file.bitRate)}</span>
 													</div>
 												)}
 												{file.formatName && (
-													<span className="rounded bg-muted px-1.5 py-0.5 font-mono text-muted-foreground text-xs">{file.formatName}</span>
+													<span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-xs">{file.formatName}</span>
 												)}
 											</div>
 										</div>

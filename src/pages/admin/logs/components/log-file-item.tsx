@@ -30,14 +30,14 @@ export function LogFileItem({ file, isSelected, onSelect, onDelete, onDownload }
 						data-file-id={file.id}
 						className={cn(
 							"group flex w-full flex-col gap-1 rounded-lg p-2.5 text-left transition-[border-color,background-color,color,box-shadow]",
-							isSelected ? "bg-primary/10 text-primary ring-1 ring-primary/30" : "text-foreground hover:bg-muted/60",
+							isSelected ? "bg-primary/10 text-primary ring-primary/30 ring-1" : "text-foreground hover:bg-muted/60",
 						)}
 					/>
 				}
 			>
 				<div className="flex items-center gap-2">
 					{icon}
-					<span className="truncate font-medium font-mono text-xs leading-tight">{file.name}</span>
+					<span className="truncate font-mono text-xs leading-tight font-medium">{file.name}</span>
 				</div>
 				<div
 					className={cn("flex items-center justify-between text-xs tabular-nums", isSelected ? "text-primary/70" : "text-muted-foreground")}

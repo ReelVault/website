@@ -110,8 +110,8 @@ export function PluginUploadDialog({ open, onOpenChange, onInstall, isBusy }: Pl
 							if (event.dataTransfer.files.length > 0) addFiles(event.dataTransfer.files);
 						}}
 					>
-						<Upload className={cn("size-8 text-muted-foreground", { "text-primary": isDragging })} aria-hidden="true" />
-						<span className="font-medium text-foreground text-sm">{m.admin_plugins_upload_dropzone()}</span>
+						<Upload className={cn("text-muted-foreground size-8", { "text-primary": isDragging })} aria-hidden="true" />
+						<span className="text-foreground text-sm font-medium">{m.admin_plugins_upload_dropzone()}</span>
 						<span className="text-muted-foreground text-xs">{m.admin_plugins_upload_dropzone_or()}</span>
 					</button>
 					<input
@@ -135,15 +135,15 @@ export function PluginUploadDialog({ open, onOpenChange, onInstall, isBusy }: Pl
 
 				{selectedFiles.length > 0 && (
 					<div className="flex flex-col gap-2">
-						<span className="font-semibold text-foreground text-sm">
+						<span className="text-foreground text-sm font-semibold">
 							{m.admin_plugins_upload_selected_title({ count: selectedFiles.length })}
 						</span>
 						{selectedFiles.map((entry) => (
-							<div key={entry.id} className="flex items-center justify-between gap-3 rounded-lg border bg-muted/30 px-3 py-2">
+							<div key={entry.id} className="bg-muted/30 flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
 								<span className="min-w-0 flex-1 truncate text-sm" title={entry.file.name}>
 									{entry.file.name}
 								</span>
-								<span className="shrink-0 font-mono text-muted-foreground text-xs">{formatBytes(entry.file.size)}</span>
+								<span className="text-muted-foreground shrink-0 font-mono text-xs">{formatBytes(entry.file.size)}</span>
 								<Button type="button" variant="ghost" size="icon-sm" aria-label={m.common_delete()} onClick={() => removeFile(entry.id)}>
 									<X className="size-4" />
 								</Button>

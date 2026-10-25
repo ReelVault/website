@@ -39,8 +39,8 @@ export function NavbarMobileSheet() {
 						<SheetClose key={href} nativeButton={false} render={<Link to={href} aria-current={isActive ? "page" : undefined} />}>
 							<span
 								className={cn(
-									"flex min-h-11 items-center gap-3 rounded-lg border-l-2 px-3 font-medium text-sm",
-									isActive ? "border-primary bg-muted text-foreground" : "border-transparent text-muted-foreground",
+									"flex min-h-11 items-center gap-3 rounded-lg border-l-2 px-3 text-sm font-medium",
+									isActive ? "border-primary bg-muted text-foreground" : "text-muted-foreground border-transparent",
 								)}
 							>
 								<Icon aria-hidden="true" />
@@ -48,7 +48,7 @@ export function NavbarMobileSheet() {
 							</span>
 						</SheetClose>
 					))}
-					<div className="mt-2 rounded-lg border border-border p-2">
+					<div className="border-border mt-2 rounded-lg border p-2">
 						<NavbarProfile />
 					</div>
 				</div>

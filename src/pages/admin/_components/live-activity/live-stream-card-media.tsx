@@ -14,7 +14,7 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 	const isDirect = stream.mode === "direct-stream";
 
 	return (
-		<div className="relative aspect-video w-full overflow-hidden bg-muted">
+		<div className="bg-muted relative aspect-video w-full overflow-hidden">
 			<ApiImage
 				fileId={extractFileIdFromUrl(stream.posterUrl)}
 				cacheKey={stream.posterUpdatedAt}
@@ -24,15 +24,15 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 				zoom
 				className="object-cover"
 			/>
-			<div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-black/60" />
+			<div className="from-background via-background/70 absolute inset-0 bg-linear-to-t to-black/60" />
 
 			{/* Top Client Header */}
 			<div className="absolute top-3 right-3 left-3 flex items-center justify-between text-white shadow-md">
 				<div className="flex items-center gap-2">
 					<DeviceIcon name={stream.clientName ?? stream.browser ?? ""} />
 					<div className="min-w-0">
-						<p className="truncate font-bold text-xs">{browserLabel(stream.browser)}</p>
-						<p className="truncate text-white/90 text-xs">{clientLabel(stream.clientName)}</p>
+						<p className="truncate text-xs font-bold">{browserLabel(stream.browser)}</p>
+						<p className="truncate text-xs text-white/90">{clientLabel(stream.clientName)}</p>
 					</div>
 				</div>
 
@@ -41,11 +41,11 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 
 			{/* Title Overlay Info */}
 			<div className="absolute right-3 bottom-3 left-3 flex flex-col gap-1">
-				<h4 className="truncate font-black text-base text-foreground" title={stream.title}>
+				<h4 className="text-foreground truncate text-base font-black" title={stream.title}>
 					{stream.title}
 				</h4>
 
-				<div className="flex items-center gap-2 font-mono text-muted-foreground text-xs">
+				<div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
 					{stream.releaseYear && <span>{stream.releaseYear}</span>}
 					{stream.type === "tv_show" && stream.seasonNumber !== null && (
 						<span>

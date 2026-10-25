@@ -73,7 +73,7 @@ export function MergeMetadataDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-h-[90vh] w-full overflow-y-auto sm:max-w-2xl">
 				<DialogHeader className="border-b">
-					<div className="flex items-center gap-2 text-primary">
+					<div className="text-primary flex items-center gap-2">
 						<Combine className="size-5" />
 						<DialogTitle>{m.admin_metadata_link_metadata()}</DialogTitle>
 					</div>
@@ -85,7 +85,7 @@ export function MergeMetadataDialog({
 
 				{/* Search bar */}
 				<div className="relative">
-					<Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+					<Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
 					<Input
 						leadingIcon
 						value={searchQuery}
@@ -100,12 +100,12 @@ export function MergeMetadataDialog({
 					{candidatesQuery.isLoading && <SkeletonList count={3} itemClassName="h-16 w-full rounded-xl" />}
 
 					{candidatesQuery.isError && (
-						<div className="rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-center text-destructive text-sm">
+						<div className="border-destructive/30 bg-destructive/10 text-destructive rounded-xl border p-4 text-center text-sm">
 							{m.admin_metadata_search_error()}{" "}
 							<button
 								type="button"
 								onClick={() => detach(() => candidatesQuery.refetch())}
-								className="font-medium underline underline-offset-2 hover:text-destructive/80"
+								className="hover:text-destructive/80 font-medium underline underline-offset-2"
 							>
 								{m.common_try_again()}
 							</button>
@@ -113,7 +113,7 @@ export function MergeMetadataDialog({
 					)}
 
 					{!(candidatesQuery.isLoading || candidatesQuery.isError) && candidates.length === 0 && (
-						<div className="rounded-xl border border-border border-dashed p-6 text-center text-muted-foreground text-sm">
+						<div className="border-border text-muted-foreground rounded-xl border border-dashed p-6 text-center text-sm">
 							{searchQuery ? m.admin_metadata_no_same_type_matches() : m.admin_metadata_find_duplicate_hint()}
 						</div>
 					)}
@@ -129,7 +129,7 @@ export function MergeMetadataDialog({
 				</div>
 
 				{/* Warning banner */}
-				<div className="flex items-start gap-3 rounded-xl border border-warning/30 bg-warning/10 p-3.5 text-warning text-xs leading-relaxed">
+				<div className="border-warning/30 bg-warning/10 text-warning flex items-start gap-3 rounded-xl border p-3.5 text-xs leading-relaxed">
 					<AlertTriangle className="size-4 shrink-0" />
 					<span>
 						<strong>{m.admin_metadata_merge_warning_title()}</strong> {m.admin_metadata_merge_warning()}

@@ -11,7 +11,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
 
 	return (
 		<RequireAuth requireProfile>
-			<div className="min-h-screen bg-background">
+			<div className="bg-background min-h-screen">
 				<UserSidebar />
 				<div className="min-h-screen lg:pl-64">
 					<div className="cinema-page">

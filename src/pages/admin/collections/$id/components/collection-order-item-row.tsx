@@ -29,8 +29,8 @@ export function CollectionOrderItemRow({ item, index, totalCount, sortMode, isSu
 	const posterId = getMetadataPoster(item)?.id;
 
 	return (
-		<li className="flex items-center gap-3 rounded-xl border border-border/80 bg-muted/20 p-2 pr-3 transition-colors hover:border-border/90 hover:bg-muted/30">
-			<div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted/60">
+		<li className="border-border/80 bg-muted/20 hover:border-border/90 hover:bg-muted/30 flex items-center gap-3 rounded-xl border p-2 pr-3 transition-colors">
+			<div className="bg-muted/60 flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg">
 				{posterId ? (
 					<ApiImage
 						fileId={posterId}
@@ -41,14 +41,14 @@ export function CollectionOrderItemRow({ item, index, totalCount, sortMode, isSu
 						className="object-cover"
 					/>
 				) : (
-					<GripVertical className="size-4 text-muted-foreground" aria-hidden="true" />
+					<GripVertical className="text-muted-foreground size-4" aria-hidden="true" />
 				)}
 			</div>
 			<div className="min-w-0 flex-1">
 				<Link
 					to="/admin/metadata/$id"
 					params={{ id: item.id }}
-					className="block truncate font-semibold text-foreground text-sm hover:text-primary hover:underline"
+					className="text-foreground hover:text-primary block truncate text-sm font-semibold hover:underline"
 				>
 					{item.title}
 				</Link>

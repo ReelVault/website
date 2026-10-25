@@ -17,7 +17,7 @@ export function MetadataLanguageSelector({ value, onChange }: MetadataLanguageSe
 
 	return (
 		<div className="flex flex-col gap-1.5">
-			<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+			<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
 				<Languages className="size-3.5" />
 				<span>{m.admin_libraries_metadata_language()}</span>
 			</div>
@@ -29,7 +29,7 @@ export function MetadataLanguageSelector({ value, onChange }: MetadataLanguageSe
 					<SelectGroup>
 						{options.map(([code, label]) => (
 							<SelectItem key={code === "" ? DEFAULT_SENTINEL : code} value={code === "" ? DEFAULT_SENTINEL : code} label={label}>
-								<span className="font-medium text-foreground text-xs">{label}</span>
+								<span className="text-foreground text-xs font-medium">{label}</span>
 							</SelectItem>
 						))}
 					</SelectGroup>

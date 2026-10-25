@@ -31,7 +31,7 @@ export function CollectionProvidersCard({ providers }: CollectionProvidersCardPr
 						))}
 					</div>
 				) : (
-					<div className="rounded-xl border border-border/70 border-dashed bg-muted/20 p-4 text-center text-muted-foreground text-xs">
+					<div className="border-border/70 bg-muted/20 text-muted-foreground rounded-xl border border-dashed p-4 text-center text-xs">
 						{m.admin_collections_no_providers_desc()}
 					</div>
 				)}

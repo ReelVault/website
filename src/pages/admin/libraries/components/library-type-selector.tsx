@@ -20,7 +20,7 @@ export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProp
 					className={cn(
 						"relative flex cursor-pointer items-start gap-4 rounded-xl border p-4 text-left transition-[border-color,background-color,color,box-shadow]",
 						value === "movies"
-							? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary"
+							? "border-primary bg-primary/10 ring-primary shadow-xs ring-1"
 							: "border-border bg-card/60 hover:border-border/80 hover:bg-muted/40",
 					)}
 				>
@@ -34,7 +34,7 @@ export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProp
 					</div>
 					<div className="flex flex-1 flex-col gap-0.5">
 						<div className="flex items-center justify-between">
-							<span className="font-semibold text-base text-foreground">{m.web_watchlist_stats_movies()}</span>
+							<span className="text-foreground text-base font-semibold">{m.web_watchlist_stats_movies()}</span>
 							{value === "movies" && (
 								<Badge variant="default" size="compact">
 									<Check className="size-3" />
@@ -52,7 +52,7 @@ export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProp
 					className={cn(
 						"relative flex cursor-pointer items-start gap-4 rounded-xl border p-4 text-left transition-[border-color,background-color,color,box-shadow]",
 						value === "tv_shows"
-							? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary"
+							? "border-primary bg-primary/10 ring-primary shadow-xs ring-1"
 							: "border-border bg-card/60 hover:border-border/80 hover:bg-muted/40",
 					)}
 				>
@@ -66,7 +66,7 @@ export function LibraryTypeSelector({ value, onChange }: LibraryTypeSelectorProp
 					</div>
 					<div className="flex flex-1 flex-col gap-0.5">
 						<div className="flex items-center justify-between">
-							<span className="font-semibold text-base text-foreground">{m.web_watchlist_stats_series()}</span>
+							<span className="text-foreground text-base font-semibold">{m.web_watchlist_stats_series()}</span>
 							{value === "tv_shows" && (
 								<Badge variant="default" size="compact">
 									<Check className="size-3" />

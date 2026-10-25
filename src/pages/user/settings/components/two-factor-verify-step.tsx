@@ -35,9 +35,9 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 
 	return (
 		<form onSubmit={handleSubmit} className="flex flex-col gap-4 py-2">
-			<div className="flex flex-col items-center gap-3 rounded-xl border border-border/70 bg-card p-4">
-				<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs">
-					<QrCode className="size-4 text-primary" />
+			<div className="border-border/70 bg-card flex flex-col items-center gap-3 rounded-xl border p-4">
+				<div className="text-muted-foreground flex items-center gap-2 text-xs font-medium">
+					<QrCode className="text-primary size-4" />
 					<span>{m.user_scan_qr()}</span>
 				</div>
 
@@ -76,7 +76,7 @@ export function TwoFactorVerifyStep({ totpUri, isPending, onSubmit, onCancel }: 
 			</div>
 
 			<div className="flex flex-col gap-2">
-				<label htmlFor="2fa-verify-code" className="font-semibold text-muted-foreground text-sm">
+				<label htmlFor="2fa-verify-code" className="text-muted-foreground text-sm font-semibold">
 					{m.auth_two_factor_verify_code_label()}
 				</label>
 				<Input

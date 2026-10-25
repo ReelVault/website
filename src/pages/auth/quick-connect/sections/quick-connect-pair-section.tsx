@@ -28,20 +28,20 @@ export function QuickConnectPairSection({
 	onSwitchToRedeem,
 }: QuickConnectPairSectionProps) {
 	return (
-		<section className="relative overflow-hidden rounded-3xl border border-border bg-card/85 p-8 shadow-2xl sm:p-10">
+		<section className="border-border bg-card/85 relative overflow-hidden rounded-3xl border p-8 shadow-2xl sm:p-10">
 			<header className="flex flex-col gap-3 text-center">
-				<div className="mx-auto flex size-14 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
+				<div className="border-primary/20 bg-primary/10 text-primary mx-auto flex size-14 items-center justify-center rounded-2xl border">
 					<Tv className="size-7" />
 				</div>
-				<h1 className="font-black text-3xl tracking-tight sm:text-4xl">{m.auth_quick_login()}</h1>
-				<p className="font-medium text-muted-foreground text-xs">{m.auth_scan_qr_hint()}</p>
+				<h1 className="text-3xl font-black tracking-tight sm:text-4xl">{m.auth_quick_login()}</h1>
+				<p className="text-muted-foreground text-xs font-medium">{m.auth_scan_qr_hint()}</p>
 			</header>
 
 			<div className="mt-8 flex flex-col items-center gap-6">
 				{Boolean(error) && <AppErrorState title={m.auth_code_generation_error()} error={error} onRetry={onStartPairing} />}
 
 				{/* QR Code and Device Code Display */}
-				<div className="flex flex-col items-center gap-4 rounded-2xl border border-primary/20 bg-primary/5 p-6 text-center sm:p-8">
+				<div className="border-primary/20 bg-primary/5 flex flex-col items-center gap-4 rounded-2xl border p-6 text-center sm:p-8">
 					{qrUrl && (
 						<div className="relative">
 							<QrCode value={qrUrl} size={190} />
@@ -50,24 +50,24 @@ export function QuickConnectPairSection({
 					)}
 
 					<div className="flex flex-col items-center gap-1">
-						<span className="font-semibold text-muted-foreground text-xs">{m.auth_pairing_code_label()}</span>
+						<span className="text-muted-foreground text-xs font-semibold">{m.auth_pairing_code_label()}</span>
 						{isPending ? (
-							<div className="animate-pulse py-2 font-medium text-muted-foreground text-sm">{m.auth_generating_ellipsis()}</div>
+							<div className="text-muted-foreground animate-pulse py-2 text-sm font-medium">{m.auth_generating_ellipsis()}</div>
 						) : (
-							<span className="font-black font-mono text-4xl text-primary tracking-widest sm:text-5xl">
+							<span className="text-primary font-mono text-4xl font-black tracking-widest sm:text-5xl">
 								{pairCode || m.auth_pair_code_placeholder()}
 							</span>
 						)}
 					</div>
 
 					{isExpired ? (
-						<div className="rounded-full bg-warning/10 px-3 py-1 font-medium text-warning text-xs">{m.auth_code_expired()}</div>
+						<div className="bg-warning/10 text-warning rounded-full px-3 py-1 text-xs font-medium">{m.auth_code_expired()}</div>
 					) : (
 						<>
 							{pairExpiresAt > 0 && <QuickConnectCountdown expiresAt={pairExpiresAt} />}
 
-							<div className="flex animate-pulse items-center gap-2 rounded-full bg-success/10 px-3 py-1 font-medium text-success text-xs">
-								<span className="size-2 rounded-full bg-success" />
+							<div className="bg-success/10 text-success flex animate-pulse items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
+								<span className="bg-success size-2 rounded-full" />
 								{m.auth_waiting_for_authorization()}
 							</div>
 						</>
@@ -75,8 +75,8 @@ export function QuickConnectPairSection({
 				</div>
 
 				{/* Step-by-step guidance */}
-				<div className="w-full space-y-2 rounded-2xl border border-border/70 bg-card/40 p-4 text-left text-muted-foreground text-xs">
-					<p className="font-bold text-foreground">{m.auth_how_it_works()}</p>
+				<div className="border-border/70 bg-card/40 text-muted-foreground w-full space-y-2 rounded-2xl border p-4 text-left text-xs">
+					<p className="text-foreground font-bold">{m.auth_how_it_works()}</p>
 					<ol className="list-decimal space-y-1 pl-4">
 						<li>
 							<strong>{m.auth_option_a_fastest()}</strong> {m.auth_point_camera_hint()}

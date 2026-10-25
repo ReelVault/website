@@ -78,12 +78,12 @@ export function WorkerActivityTab({
 					)}
 
 					{!(activeStatus.isLoading || activeStatus.isError) && activeOperations.length === 0 && (
-						<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-10 text-center">
-							<div className="mb-2.5 flex size-10 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
-								<CheckCircle2 className="size-5 text-success" />
+						<div className="border-border/70 bg-card/30 flex flex-col items-center justify-center rounded-xl border border-dashed p-10 text-center">
+							<div className="bg-muted/60 text-muted-foreground mb-2.5 flex size-10 items-center justify-center rounded-full">
+								<CheckCircle2 className="text-success size-5" />
 							</div>
-							<p className="font-medium text-foreground text-xs">{m.admin_workers_no_active_ops_in_queue()}</p>
-							<p className="mt-0.5 max-w-sm text-muted-foreground text-xs">{m.admin_workers_queues_idle_desc()}</p>
+							<p className="text-foreground text-xs font-medium">{m.admin_workers_no_active_ops_in_queue()}</p>
+							<p className="text-muted-foreground mt-0.5 max-w-sm text-xs">{m.admin_workers_queues_idle_desc()}</p>
 						</div>
 					)}
 

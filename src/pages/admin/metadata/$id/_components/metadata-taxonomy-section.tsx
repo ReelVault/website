@@ -78,7 +78,7 @@ export function MetadataTaxonomySection({
 						{collections.map((col) => (
 							<Badge key={col.id} variant="secondary" size="sm">
 								<span>{col.name}</span>
-								<span className="font-normal text-xs opacity-70">{m.admin_metadata_collection_sort_mode({ mode: col.sortMode })}</span>
+								<span className="text-xs font-normal opacity-70">{m.admin_metadata_collection_sort_mode({ mode: col.sortMode })}</span>
 							</Badge>
 						))}
 					</TaxonomyGroup>
@@ -96,13 +96,13 @@ export function MetadataTaxonomySection({
 						{keywords.slice(0, MAX_VISIBLE_KEYWORDS).map((k) => (
 							<span
 								key={k.id}
-								className="rounded-md border border-border/70 bg-muted/20 px-2 py-0.5 font-mono text-muted-foreground text-xs"
+								className="border-border/70 bg-muted/20 text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs"
 							>
 								{m.common_hashtag_label({ name: k.name })}
 							</span>
 						))}
 						{keywords.length > MAX_VISIBLE_KEYWORDS && (
-							<span className="self-center text-muted-foreground text-xs">
+							<span className="text-muted-foreground self-center text-xs">
 								{m.admin_metadata_hidden_keywords({ hiddenCount: keywords.length - MAX_VISIBLE_KEYWORDS })}
 							</span>
 						)}
@@ -133,8 +133,8 @@ function TaxonomyGroup({
 	return (
 		<div className={cn("flex flex-col gap-2", !isFirst && "border-border/50 border-t pt-3")}>
 			<div className="flex items-center justify-between">
-				<div className="flex items-center gap-1.5 font-medium text-muted-foreground text-xs">
-					<Icon className="size-3.5 text-primary" />
+				<div className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium">
+					<Icon className="text-primary size-3.5" />
 					<span>{label}</span>
 				</div>
 				<MetadataLockToggle field={field} label={label} isLocked={isLocked} onToggle={onToggleLock} />

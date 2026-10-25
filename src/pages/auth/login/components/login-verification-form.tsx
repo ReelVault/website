@@ -99,7 +99,7 @@ export function LoginVerificationForm({
 
 			<AsyncButton
 				type="submit"
-				className="w-full rounded-2xl py-5 font-black uppercase tracking-widest"
+				className="w-full rounded-2xl py-5 font-black tracking-widest uppercase"
 				isPending={verifyMutation.isPending}
 				disabled={method === "totp" ? code.length !== 6 : code.length === 0}
 				pendingLabel={m.auth_verifying()}

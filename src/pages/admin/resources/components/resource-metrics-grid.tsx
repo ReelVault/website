@@ -99,7 +99,7 @@ export function ResourceMetricsGrid({ current }: { current: ResourceCurrent }) {
 						<div className="flex flex-col gap-1.5">
 							<span>
 								{m.admin_resources_active_streams()}
-								<span className="font-medium font-mono text-foreground">{current.activeStreams}</span>
+								<span className="text-foreground font-mono font-medium">{current.activeStreams}</span>
 							</span>
 							<span className="text-xs">{shortTimeFormatter.format(new Date(current.timestamp))}</span>
 						</div>
@@ -116,7 +116,7 @@ export function ResourceMetricsGrid({ current }: { current: ResourceCurrent }) {
 					<CardContent className="flex flex-wrap gap-2">
 						{activeWorkers.map(([workerId, count]) => (
 							<Badge key={workerId} variant="outline" font="mono">
-								{m.admin_resources_worker_label({ workerId })} <span className="ml-1 font-semibold text-foreground">{count}</span>
+								{m.admin_resources_worker_label({ workerId })} <span className="text-foreground ml-1 font-semibold">{count}</span>
 							</Badge>
 						))}
 					</CardContent>

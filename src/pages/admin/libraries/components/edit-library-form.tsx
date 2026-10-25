@@ -118,7 +118,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 
 			{/* Step 5: Metadata provider overrides (empty = global order) */}
 			{providers.length > 0 && (
-				<div className="flex flex-col gap-2 rounded-2xl border border-border p-4">
+				<div className="border-border flex flex-col gap-2 rounded-2xl border p-4">
 					<div className="flex items-center justify-between gap-2">
 						<Label>{m.admin_libraries_provider_overrides()}</Label>
 						{providerPriorities.length > 0 && (
@@ -158,7 +158,7 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 			)}
 
 			{/* Footer: on a page the save and cancel actions sit at the end of the form */}
-			<div className="flex flex-col-reverse gap-3 border-border/60 border-t pt-4 sm:flex-row sm:justify-end">
+			<div className="border-border/60 flex flex-col-reverse gap-3 border-t pt-4 sm:flex-row sm:justify-end">
 				<Button type="button" variant="outline" size="default" onClick={onClose}>
 					{m.common_cancel()}
 				</Button>

@@ -51,22 +51,22 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 
 	return (
 		<>
-			<div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/80 bg-card shadow-lg transition-[border-color,background-color,color,box-shadow] hover:border-primary/50">
+			<div className="group border-border/80 bg-card hover:border-primary/50 relative flex flex-col justify-between overflow-hidden rounded-2xl border shadow-lg transition-[border-color,background-color,color,box-shadow]">
 				<LiveStreamCardMedia stream={stream} />
 
 				{/* Progress Bar & Telemetry */}
 				<div className="flex flex-col gap-2.5 p-4 pt-3">
 					{/* Progress Line */}
 					<div className="flex flex-col gap-1">
-						<div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+						<div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
 							<div
-								className="h-full rounded-full bg-primary shadow-primary shadow-xs transition-[width] duration-300"
+								className="bg-primary shadow-primary h-full rounded-full shadow-xs transition-[width] duration-300"
 								style={{ width: `${stream.progressPercent}%` }}
 							/>
 						</div>
 
-						<div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
-							<span className="font-bold text-foreground">
+						<div className="text-muted-foreground flex items-center justify-between font-mono text-xs">
+							<span className="text-foreground font-bold">
 								{m.admin_live_playback_position({ current: formattedCurrent, duration: formattedDuration })}
 							</span>
 							<span>{m.common_percent_value({ value: stream.progressPercent })}</span>
@@ -98,7 +98,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						)}
 
 						{stream.width && stream.height && (
-							<span className="ml-auto text-muted-foreground text-xs">
+							<span className="text-muted-foreground ml-auto text-xs">
 								{m.components_media_file_resolution({ width: stream.width, height: stream.height })}
 								{stream.bitrateKbps ? ` · ${Math.round(stream.bitrateKbps / 1000)} Mbps` : ""}
 							</span>
@@ -108,28 +108,28 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 					{/* ffmpeg encode position — how far the server has processed the file (differs from the viewer's playback line above) */}
 					{stream.encodePercent != null && stream.encodePercent < 100 && (
 						<div className="flex flex-col gap-1">
-							<div className="h-1 w-full overflow-hidden rounded-full bg-muted">
+							<div className="bg-muted h-1 w-full overflow-hidden rounded-full">
 								<div
-									className="h-full rounded-full bg-chart-2 transition-[width] duration-500"
+									className="bg-chart-2 h-full rounded-full transition-[width] duration-500"
 									style={{ width: `${stream.encodePercent}%` }}
 								/>
 							</div>
-							<span className="font-mono text-muted-foreground text-xs">
+							<span className="text-muted-foreground font-mono text-xs">
 								{m.admin_live_encode_progress({ percent: stream.encodePercent, speed: stream.encodeSpeed ?? "—" })}
 							</span>
 						</div>
 					)}
 
 					{/* User Footer & Actions */}
-					<div className="flex items-center justify-between border-border/50 border-t pt-2.5">
+					<div className="border-border/50 flex items-center justify-between border-t pt-2.5">
 						<div className="flex min-w-0 items-center gap-2">
 							<Avatar className="size-6">
 								{stream.profileAvatar && <AvatarImage src={stream.profileAvatar} alt={stream.profileName} />}
 								<AvatarFallback>{stream.profileName.slice(0, 2)}</AvatarFallback>
 							</Avatar>
 							<div className="min-w-0">
-								<p className="truncate font-bold text-foreground text-xs">{stream.profileName}</p>
-								<p className="truncate text-muted-foreground text-xs">{m.admin_live_viewer_name({ name: stream.userName })}</p>
+								<p className="text-foreground truncate text-xs font-bold">{stream.profileName}</p>
+								<p className="text-muted-foreground truncate text-xs">{m.admin_live_viewer_name({ name: stream.userName })}</p>
 							</div>
 						</div>
 

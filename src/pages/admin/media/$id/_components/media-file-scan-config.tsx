@@ -73,14 +73,14 @@ export function MediaFileScanConfig({
 					)}
 				</div>
 				{durationPreset === "all" && (
-					<p className="flex items-center gap-1.5 rounded-lg border border-warning/20 bg-warning/10 p-2 font-medium text-warning text-xs">
+					<p className="border-warning/20 bg-warning/10 text-warning flex items-center gap-1.5 rounded-lg border p-2 text-xs font-medium">
 						<AlertCircle className="size-3.5 shrink-0" />
 						{m.admin_media_full_decode_warning()}
 					</p>
 				)}
 			</div>
 
-			<div className="rounded-xl border border-border bg-muted/20 p-4 text-muted-foreground text-xs leading-relaxed">
+			<div className="border-border bg-muted/20 text-muted-foreground rounded-xl border p-4 text-xs leading-relaxed">
 				{m.admin_media_scan_integrity_hint()}
 			</div>
 		</div>

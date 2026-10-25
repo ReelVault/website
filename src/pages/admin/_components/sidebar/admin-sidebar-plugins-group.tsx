@@ -57,7 +57,7 @@ export function AdminSidebarPluginsGroup({
 								tooltip={m.admin_plugin_management()}
 								className="relative"
 							>
-								{isPluginsMainActive && <div className="absolute inset-y-0 left-0 w-1 rounded-r-md bg-sidebar-primary" />}
+								{isPluginsMainActive && <div className="bg-sidebar-primary absolute inset-y-0 left-0 w-1 rounded-r-md" />}
 								<Puzzle
 									className={cn(
 										"size-4 shrink-0 transition-colors",
@@ -78,7 +78,7 @@ export function AdminSidebarPluginsGroup({
 										<SidebarMenuButton tooltip={m.admin_live_plugin_pages_tooltip()} isActive={isPluginPagesActive} className="relative" />
 									}
 								>
-									{isPluginPagesActive && <div className="absolute inset-y-0 left-0 w-1 rounded-r-md bg-sidebar-primary" />}
+									{isPluginPagesActive && <div className="bg-sidebar-primary absolute inset-y-0 left-0 w-1 rounded-r-md" />}
 									<AppWindow
 										className={cn(
 											"size-4 shrink-0 transition-colors",
@@ -86,10 +86,10 @@ export function AdminSidebarPluginsGroup({
 										)}
 									/>
 									<span className="truncate">{m.admin_live_plugin_pages_tooltip()}</span>
-									<SidebarMenuBadge className="ml-auto text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden">
+									<SidebarMenuBadge className="text-sidebar-accent-foreground ml-auto group-data-[collapsible=icon]:hidden">
 										{activePluginsWithViewsCount}
 									</SidebarMenuBadge>
-									<ChevronRight className="ml-1 size-4 shrink-0 transition-transform duration-200 data-panel-open:rotate-90 group-data-[collapsible=icon]:hidden group-data-open/collapsible:rotate-90" />
+									<ChevronRight className="ml-1 size-4 shrink-0 transition-transform duration-200 group-data-open/collapsible:rotate-90 group-data-[collapsible=icon]:hidden data-panel-open:rotate-90" />
 								</CollapsibleTrigger>
 								<CollapsibleContent>
 									<SidebarMenuSub>
@@ -100,7 +100,7 @@ export function AdminSidebarPluginsGroup({
 											return (
 												<SidebarMenuSubItem key={plugin.id}>
 													<SidebarMenuSubButton render={<Link to={href} />} isActive={isActive}>
-														<Puzzle className="size-3.5 shrink-0 text-muted-foreground" />
+														<Puzzle className="text-muted-foreground size-3.5 shrink-0" />
 														<span className="truncate">{plugin.name}</span>
 													</SidebarMenuSubButton>
 												</SidebarMenuSubItem>

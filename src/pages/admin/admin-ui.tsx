@@ -39,14 +39,14 @@ export function AdminPageHeader({
 	actions?: ReactNode;
 }) {
 	return (
-		<header className="flex flex-col gap-4 border-border border-b pb-6 lg:flex-row lg:items-end lg:justify-between">
+		<header className="border-border flex flex-col gap-4 border-b pb-6 lg:flex-row lg:items-end lg:justify-between">
 			<div className="flex min-w-0 flex-col gap-1.5">
-				<div className="flex items-center gap-2 font-medium text-muted-foreground text-xs">
-					{Icon !== undefined && <Icon className="size-4 text-primary" />}
+				<div className="text-muted-foreground flex items-center gap-2 text-xs font-medium">
+					{Icon !== undefined && <Icon className="text-primary size-4" />}
 					<span>{eyebrow}</span>
 				</div>
 				<div className="flex flex-wrap items-center gap-3">
-					<h1 className="font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{title}</h1>
+					<h1 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
 					{count !== undefined && (
 						<Badge variant="secondary" font="mono">
 							{count}
@@ -54,7 +54,7 @@ export function AdminPageHeader({
 					)}
 					{badge}
 				</div>
-				{description !== undefined && <div className="max-w-3xl text-muted-foreground text-sm leading-relaxed">{description}</div>}
+				{description !== undefined && <div className="text-muted-foreground max-w-3xl text-sm leading-relaxed">{description}</div>}
 			</div>
 			{actions !== undefined && <div className="flex flex-row flex-wrap items-center gap-2 pt-2 lg:pt-0">{actions}</div>}
 		</header>
@@ -120,7 +120,7 @@ export function AdminSearch({
 	return (
 		<InputGroup className={cn("w-full sm:max-w-xs", className)}>
 			<InputGroupAddon>
-				<Search className="size-4 text-muted-foreground" aria-hidden="true" />
+				<Search className="text-muted-foreground size-4" aria-hidden="true" />
 			</InputGroupAddon>
 			<InputGroupInput
 				name="search"
@@ -178,7 +178,7 @@ export function AdminStatCard({
 		<Card variant="subtle" className={className}>
 			<CardContent size="comfortable" className="flex flex-col gap-3">
 				<div className="flex items-center justify-between gap-2">
-					<span className="font-semibold text-muted-foreground text-xs">{label}</span>
+					<span className="text-muted-foreground text-xs font-semibold">{label}</span>
 					{Icon !== undefined && (
 						<div className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg border", toneClasses.iconWrapper)}>
 							<Icon className="size-4" />
@@ -187,9 +187,9 @@ export function AdminStatCard({
 				</div>
 
 				<div className="flex items-baseline justify-between gap-2">
-					<div className={cn("font-bold text-2xl tabular-nums tracking-tight sm:text-3xl", toneClasses.value)}>{value}</div>
+					<div className={cn("text-2xl font-bold tracking-tight tabular-nums sm:text-3xl", toneClasses.value)}>{value}</div>
 					{trend && (
-						<span className={cn("flex items-center gap-0.5 font-medium text-xs", trend.isPositive ? "text-success" : "text-destructive")}>
+						<span className={cn("flex items-center gap-0.5 text-xs font-medium", trend.isPositive ? "text-success" : "text-destructive")}>
 							{trend.isPositive ? <ArrowUpRight className="size-3.5" /> : <ArrowDownRight className="size-3.5" />}
 							{trend.value}
 							{trend.label && <span className="text-muted-foreground text-xs">{trend.label}</span>}
@@ -205,7 +205,7 @@ export function AdminStatCard({
 
 export function EditorMessage({ message }: { message: string }) {
 	return (
-		<div className="flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-5 text-destructive text-sm">
+		<div className="border-destructive/30 bg-destructive/10 text-destructive flex items-center gap-3 rounded-xl border p-5 text-sm">
 			{message}
 		</div>
 	);

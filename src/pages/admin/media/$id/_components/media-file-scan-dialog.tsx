@@ -58,9 +58,9 @@ export function MediaFileScanDialog({ open, onOpenChange, mediaFileId, fileName 
 
 				{isScanning && (
 					<div className="flex flex-col items-center justify-center gap-4 py-12">
-						<RefreshCw className="size-10 animate-spin text-primary" />
+						<RefreshCw className="text-primary size-10 animate-spin" />
 						<div className="flex flex-col gap-1 text-center">
-							<p className="font-semibold text-foreground text-sm">{m.admin_media_scan_in_progress()}</p>
+							<p className="text-foreground text-sm font-semibold">{m.admin_media_scan_in_progress()}</p>
 							<p className="text-muted-foreground text-xs">{m.admin_media_scan_may_take_time()}</p>
 						</div>
 					</div>

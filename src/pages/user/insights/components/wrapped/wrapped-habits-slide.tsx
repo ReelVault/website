@@ -15,41 +15,41 @@ export function WrappedHabitsSlide({ data }: WrappedHabitsSlideProps) {
 				<Badge weight="bold" variant="primary" className="mb-2">
 					{m.user_habits_and_records()}
 				</Badge>
-				<h3 className="font-black text-2xl text-foreground sm:text-4xl">{m.user_when_watch_most()}</h3>
-				<p className="mt-1 text-muted-foreground text-sm">{m.user_favorite_relax_hours()}</p>
+				<h3 className="text-foreground text-2xl font-black sm:text-4xl">{m.user_when_watch_most()}</h3>
+				<p className="text-muted-foreground mt-1 text-sm">{m.user_favorite_relax_hours()}</p>
 			</div>
 
 			<div className="grid grid-cols-1 gap-6 pt-4 sm:grid-cols-3">
-				<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
-					<Calendar className="mb-3 size-7 text-primary" />
-					<p className="font-bold text-muted-foreground text-xs">{m.user_best_month()}</p>
-					<p className="mt-2 font-black text-2xl text-primary">
+				<div className="border-border/70 bg-card/60 flex flex-col items-center justify-center rounded-2xl border p-6 shadow-sm">
+					<Calendar className="text-primary mb-3 size-7" />
+					<p className="text-muted-foreground text-xs font-bold">{m.user_best_month()}</p>
+					<p className="text-primary mt-2 text-2xl font-black">
 						{data.peakMonth ? formatMonthName(data.peakMonth.month) : m.common_no_value()}
 					</p>
-					<p className="mt-1 text-muted-foreground text-xs">
+					<p className="text-muted-foreground mt-1 text-xs">
 						{data.peakMonth ? m.user_minute_h_month({ minutes60: Math.floor(data.peakMonth.minutes / 60) }) : ""}
 					</p>
 				</div>
 
-				<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
+				<div className="border-border/70 bg-card/60 flex flex-col items-center justify-center rounded-2xl border p-6 shadow-sm">
 					<Flame className="mb-3 size-7 fill-current text-amber-400" />
-					<p className="font-bold text-muted-foreground text-xs">{m.user_favorite_day()}</p>
-					<p className="mt-2 font-black text-2xl text-amber-400">
+					<p className="text-muted-foreground text-xs font-bold">{m.user_favorite_day()}</p>
+					<p className="mt-2 text-2xl font-black text-amber-400">
 						{data.peakDayOfWeek ? formatWeekdayName(data.peakDayOfWeek.dayOfWeek) : m.common_no_value()}
 					</p>
-					<p className="mt-1 text-muted-foreground text-xs">{m.user_biggest_chill_day()}</p>
+					<p className="text-muted-foreground mt-1 text-xs">{m.user_biggest_chill_day()}</p>
 				</div>
 
-				<div className="flex flex-col items-center justify-center rounded-2xl border border-border/70 bg-card/60 p-6 shadow-sm">
+				<div className="border-border/70 bg-card/60 flex flex-col items-center justify-center rounded-2xl border p-6 shadow-sm">
 					<Zap className="mb-3 size-7 text-purple-400" />
-					<p className="font-bold text-muted-foreground text-xs">{m.user_longest_marathon()}</p>
-					<p className="mt-2 font-black text-2xl text-purple-400">
+					<p className="text-muted-foreground text-xs font-bold">{m.user_longest_marathon()}</p>
+					<p className="mt-2 text-2xl font-black text-purple-400">
 						{m.user_marathon_duration({
 							hours: Math.floor(data.longestMarathonMinutes / 60),
 							minutes: data.longestMarathonMinutes % 60,
 						})}
 					</p>
-					<p className="mt-1 text-muted-foreground text-xs">{m.user_in_single_day()}</p>
+					<p className="text-muted-foreground mt-1 text-xs">{m.user_in_single_day()}</p>
 				</div>
 			</div>
 		</div>

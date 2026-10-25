@@ -42,7 +42,7 @@ export default function WatchlistPage() {
 	};
 
 	return (
-		<div className="min-h-screen bg-background pt-16 lg:pt-20">
+		<div className="bg-background min-h-screen pt-16 lg:pt-20">
 			{featuredItem && <WatchlistHero featuredItem={featuredItem} />}
 
 			<div className="cinema-shell">

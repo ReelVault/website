@@ -31,15 +31,15 @@ export function MediaFileListContextMenu({ file, isDeleting, onDelete, onOpenRea
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
 				<ContextMenuItem render={<Link to="/admin/media/$id" params={{ id: file.id }} />}>
-					<Pencil className="size-3.5 text-muted-foreground" />
+					<Pencil className="text-muted-foreground size-3.5" />
 					<span>{m.admin_media_edit_file()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem onClick={onOpenReassign}>
-					<Layers className="size-3.5 text-primary" />
+					<Layers className="text-primary size-3.5" />
 					<span>{m.components_media_file_change_metadata_assignment()}</span>
 				</ContextMenuItem>
 				<ContextMenuItem render={<Link to="/player/$id" params={{ id: file.id }} target="_blank" rel="noopener noreferrer" />}>
-					<Play className="size-3.5 text-muted-foreground" />
+					<Play className="text-muted-foreground size-3.5" />
 					<span>{m.admin_markers_open_player()}</span>
 				</ContextMenuItem>
 			</ContextMenuGroup>

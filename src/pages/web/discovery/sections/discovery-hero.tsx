@@ -5,7 +5,7 @@ import { m } from "@/paraglide/messages";
 export function DiscoveryHero() {
 	return (
 		<SimpleAnimation direction="none" duration={260}>
-			<header className="max-w-3xl border-border/70 border-b pb-10 sm:pb-14">
+			<header className="border-border/70 max-w-3xl border-b pb-10 sm:pb-14">
 				<p className="cinema-kicker">
 					<Compass className="size-4" aria-hidden="true" />
 					{m.web_discovering_catalog()}

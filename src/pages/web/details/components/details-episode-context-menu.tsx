@@ -61,19 +61,19 @@ export function DetailsEpisodeContextMenu({
 				{hasMultipleVersions ? (
 					<ContextMenuSub>
 						<ContextMenuSubTrigger className="cursor-pointer">
-							<Layers className="size-4 text-primary" />
+							<Layers className="text-primary size-4" />
 							<span>{m.web_play_version_count({ filesCount: files.length })}</span>
 						</ContextMenuSubTrigger>
 						<ContextMenuSubContent className="w-72">
 							{files.map((file, idx) => (
 								<ContextMenuItem key={file.id} render={<Link to="/player/$id" params={{ id: file.id }} />} className="cursor-pointer">
-									<Play className="size-3.5 shrink-0 text-primary" />
+									<Play className="text-primary size-3.5 shrink-0" />
 									<div className="flex min-w-0 flex-1 flex-col gap-0.5">
-										<div className="flex items-center gap-1.5 truncate font-medium text-sm">
+										<div className="flex items-center gap-1.5 truncate text-sm font-medium">
 											<span className="truncate">{getVersionTitle(file, idx)}</span>
 											{file.isDefault && <span className="text-primary text-xs">{m.web_default()}</span>}
 										</div>
-										<span className="truncate text-muted-foreground text-xs">{getVersionSubtitle(file)}</span>
+										<span className="text-muted-foreground truncate text-xs">{getVersionSubtitle(file)}</span>
 									</div>
 								</ContextMenuItem>
 							))}
@@ -82,7 +82,7 @@ export function DetailsEpisodeContextMenu({
 				) : (
 					mediaFileId && (
 						<ContextMenuItem render={<Link to="/player/$id" params={{ id: mediaFileId }} />} className="cursor-pointer">
-							<Play className="size-4 fill-primary/20 text-primary" />
+							<Play className="fill-primary/20 text-primary size-4" />
 							<span>{m.web_play_episode()}</span>
 							<ContextMenuShortcut>{m.common_key_enter()}</ContextMenuShortcut>
 						</ContextMenuItem>
@@ -98,7 +98,7 @@ export function DetailsEpisodeContextMenu({
 					}
 					className="cursor-pointer"
 				>
-					<Info className="size-4 text-muted-foreground" />
+					<Info className="text-muted-foreground size-4" />
 					<span>{m.web_files_info_with_count({ count: files.length })}</span>
 				</ContextMenuItem>
 				<ContextMenuItem
@@ -107,7 +107,7 @@ export function DetailsEpisodeContextMenu({
 					}}
 					className="cursor-pointer"
 				>
-					<Copy className="size-4 text-muted-foreground" />
+					<Copy className="text-muted-foreground size-4" />
 					<span>{m.common_copy_link()}</span>
 				</ContextMenuItem>
 			</ContextMenuGroup>
@@ -122,7 +122,7 @@ export function DetailsEpisodeContextMenu({
 						</ContextMenuItem>
 						{(hasProgress || isWatched) && (
 							<ContextMenuItem disabled={isEpisodePending} onClick={onResetProgress} className="cursor-pointer">
-								<RotateCcw className="size-4 text-muted-foreground" />
+								<RotateCcw className="text-muted-foreground size-4" />
 								<span>{m.components_cw_reset_progress_button()}</span>
 							</ContextMenuItem>
 						)}
@@ -140,13 +140,13 @@ export function DetailsEpisodeContextMenu({
 						</ContextMenuLabel>
 						{onRefreshEpisode && (
 							<ContextMenuItem onClick={() => onRefreshEpisode(episodeId)} className="cursor-pointer">
-								<RefreshCw className="size-4 text-primary" />
+								<RefreshCw className="text-primary size-4" />
 								<span>{m.components_media_files_refresh_episode_metadata()}</span>
 							</ContextMenuItem>
 						)}
 						{onRefreshImage && (
 							<ContextMenuItem onClick={() => onRefreshImage(episodeId)} className="cursor-pointer">
-								<ImageDown className="size-4 text-primary" />
+								<ImageDown className="text-primary size-4" />
 								<span>{m.web_force_download_thumbnail()}</span>
 							</ContextMenuItem>
 						)}
@@ -156,7 +156,7 @@ export function DetailsEpisodeContextMenu({
 							}}
 							className="cursor-pointer"
 						>
-							<Copy className="size-4 text-muted-foreground" />
+							<Copy className="text-muted-foreground size-4" />
 							<span>{m.web_copy_episode_id()}</span>
 						</ContextMenuItem>
 					</ContextMenuGroup>

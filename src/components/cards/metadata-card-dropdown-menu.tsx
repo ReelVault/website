@@ -54,7 +54,7 @@ export function MetadataCardDropdownMenu(state: MetadataCardMenuState) {
 				render={<Button variant="outline" size="icon" />}
 				className="flex items-center justify-center"
 			>
-				<MoreVertical className="size-4 text-foreground" />
+				<MoreVertical className="text-foreground size-4" />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-64">
 				<DropdownMenuGroup>

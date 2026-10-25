@@ -57,7 +57,7 @@ export default function InsightsPage() {
 					<div className="flex flex-wrap items-center gap-3">
 						<InsightsWrappedModal />
 
-						<div className="flex gap-1 rounded-xl border border-border/70 bg-card/70 p-1">
+						<div className="border-border/70 bg-card/70 flex gap-1 rounded-xl border p-1">
 							{TIME_RANGES.map((range) => (
 								<Button
 									key={range.value}

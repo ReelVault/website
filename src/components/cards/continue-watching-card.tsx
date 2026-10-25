@@ -53,7 +53,7 @@ export function ContinueWatchingCard({
 		<ContextMenu>
 			<ContextMenuTrigger className="group relative w-80 shrink-0 md:w-96">
 				{/* CONTAINER - consistent with MetadataCard: rounded-xl + ring instead of border/shadow */}
-				<div className="relative overflow-hidden rounded-xl bg-card ring-primary/0 ring-offset-2 ring-offset-background transition-[box-shadow,transform] duration-200 group-hover:scale-[1.01] group-hover:ring-2">
+				<div className="bg-card ring-primary/0 ring-offset-background relative overflow-hidden rounded-xl ring-offset-2 transition-[box-shadow,transform] duration-200 group-hover:scale-[1.01] group-hover:ring-2">
 					<Link to="/player/$id" params={{ id: item.mediaFileId }} className="relative block aspect-video cursor-pointer overflow-hidden">
 						<ApiImage
 							fileId={item.backdropId}
@@ -64,11 +64,11 @@ export function ContinueWatchingCard({
 							className="object-cover group-hover:scale-[1.03]"
 						/>
 
-						<div className="absolute inset-0 z-10 bg-linear-to-t from-background via-background/40 to-transparent" />
+						<div className="from-background via-background/40 absolute inset-0 z-10 bg-linear-to-t to-transparent" />
 
 						{/* Ikona Play - taka sama waga jak w MetadataCard (size-14, ring-owy button) */}
-						<div className="absolute inset-0 z-20 flex items-center justify-center bg-background/20 opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
-							<div className="flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform duration-200 group-hover:scale-105">
+						<div className="bg-background/20 absolute inset-0 z-20 flex items-center justify-center opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
+							<div className="bg-primary text-primary-foreground flex size-14 items-center justify-center rounded-full shadow-2xl transition-transform duration-200 group-hover:scale-105">
 								<Play className="ml-0.5 size-6 fill-current" aria-hidden="true" />
 							</div>
 						</div>
@@ -79,16 +79,16 @@ export function ContinueWatchingCard({
 						</Badge>
 
 						<div className="absolute inset-x-4 bottom-4 z-20 space-y-2">
-							<p className="line-clamp-1 font-bold text-base text-foreground tracking-tight md:text-lg">{item.metadata.title}</p>
+							<p className="text-foreground line-clamp-1 text-base font-bold tracking-tight md:text-lg">{item.metadata.title}</p>
 
 							<Progress
 								value={item.progressPercent}
 								aria-label={m.components_watch_progress_aria({ percent: item.progressPercent })}
 								className="gap-1.5"
 							>
-								<div className="flex justify-between gap-1 font-medium text-muted-foreground text-xs">
+								<div className="text-muted-foreground flex justify-between gap-1 text-xs font-medium">
 									<span>{item.progressPercent === 0 && isEpisode ? m.player_next_episode() : m.common_progress()}</span>
-									<span className="font-bold text-primary">{m.common_percent_value({ value: item.progressPercent })}</span>
+									<span className="text-primary font-bold">{m.common_percent_value({ value: item.progressPercent })}</span>
 								</div>
 							</Progress>
 						</div>
@@ -102,7 +102,7 @@ export function ContinueWatchingCard({
 							type="button"
 							variant="outline"
 							size="icon"
-							className="opacity-0 pointer-coarse:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100"
+							className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100"
 							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
@@ -123,7 +123,7 @@ export function ContinueWatchingCard({
 									type="button"
 									variant="outline"
 									size="icon"
-									className="opacity-0 pointer-coarse:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100"
+									className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100"
 									disabled={isBusy}
 									aria-label={m.components_cw_reset_progress_named({ title: item.metadata.title })}
 									title={m.components_cw_reset_progress()}
@@ -143,7 +143,7 @@ export function ContinueWatchingCard({
 							type="button"
 							variant="outline"
 							size="icon"
-							className="opacity-0 pointer-coarse:opacity-100 group-focus-within:opacity-100 group-hover:opacity-100"
+							className="opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100"
 							disabled={isBusy}
 							onClick={(e) => {
 								e.preventDefault();
@@ -167,26 +167,26 @@ export function ContinueWatchingCard({
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
 					<ContextMenuItem render={<Link to="/player/$id" params={{ id: item.mediaFileId }} />} className="cursor-pointer">
-						<Play className="size-4 fill-primary/20 text-primary" />
+						<Play className="fill-primary/20 text-primary size-4" />
 						<span>{item.progressPercent === 0 ? m.components_episode_play() : m.components_resume_playback()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem render={<Link to="/details/$id" params={{ id: item.metadata.id }} />} className="cursor-pointer">
-						<Info className="size-4 text-muted-foreground" />
+						<Info className="text-muted-foreground size-4" />
 						<span>{m.components_cw_show_metadata()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuGroup>
 					<ContextMenuItem disabled={isBusy} onClick={handleMarkWatched} className="cursor-pointer">
-						<Check className="size-4 text-muted-foreground" />
+						<Check className="text-muted-foreground size-4" />
 						<span>{m.components_mark_watched()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem disabled={isBusy} onClick={handleDismiss} className="cursor-pointer">
-						<EyeOff className="size-4 text-muted-foreground" />
+						<EyeOff className="text-muted-foreground size-4" />
 						<span>{m.components_cw_dismiss()}</span>
 					</ContextMenuItem>
 					<ContextMenuItem disabled={isBusy} onClick={handleReset} className="cursor-pointer">
-						<RotateCcw className="size-4 text-muted-foreground" />
+						<RotateCcw className="text-muted-foreground size-4" />
 						<span>{m.components_cw_reset_progress_button()}</span>
 					</ContextMenuItem>
 				</ContextMenuGroup>

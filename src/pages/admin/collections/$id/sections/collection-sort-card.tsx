@@ -31,12 +31,12 @@ export function CollectionSortCard({ sortMode, onSortOptionClick }: CollectionSo
 								className={cn(
 									"relative flex cursor-pointer flex-col gap-1 rounded-xl border p-3 text-left transition-[border-color,background-color,color,box-shadow]",
 									selected
-										? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary"
+										? "border-primary bg-primary/10 ring-primary shadow-xs ring-1"
 										: "border-border bg-card/60 hover:border-border/80 hover:bg-muted/40",
 								)}
 								aria-pressed={selected}
 							>
-								<span className={cn("font-semibold text-sm", selected ? "text-primary" : "text-foreground")}>{option.label}</span>
+								<span className={cn("text-sm font-semibold", selected ? "text-primary" : "text-foreground")}>{option.label}</span>
 								<span className="text-muted-foreground text-xs leading-relaxed">{option.description}</span>
 							</button>
 						);

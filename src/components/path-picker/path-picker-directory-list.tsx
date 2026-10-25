@@ -25,7 +25,7 @@ export function PathPickerDirectoryList({ data, isPending, isError, error, onRet
 	return (
 		<div className="min-h-0 flex-1 overflow-hidden p-4 sm:p-6 sm:pt-4">
 			{isPending && (
-				<AppLoadingState label={m.components_path_picker_loading()} className="min-h-64 rounded-xl border border-border border-dashed" />
+				<AppLoadingState label={m.components_path_picker_loading()} className="border-border min-h-64 rounded-xl border border-dashed" />
 			)}
 
 			{isError && (
@@ -45,9 +45,9 @@ export function PathPickerDirectoryList({ data, isPending, isError, error, onRet
 							type="button"
 							data-path={data.parentPath}
 							onClick={handleNavigateClick}
-							className="flex w-full items-center gap-3 rounded-xl border border-border/60 bg-muted/40 p-3 font-semibold text-foreground text-xs transition-colors hover:bg-accent/60"
+							className="border-border/60 bg-muted/40 text-foreground hover:bg-accent/60 flex w-full items-center gap-3 rounded-xl border p-3 text-xs font-semibold transition-colors"
 						>
-							<CornerLeftUp className="size-4 shrink-0 text-primary" />
+							<CornerLeftUp className="text-primary size-4 shrink-0" />
 							<span>{m.components_path_picker_parent_directory()}</span>
 						</button>
 					)}
@@ -63,13 +63,13 @@ export function PathPickerDirectoryList({ data, isPending, isError, error, onRet
 										type="button"
 										data-path={dir.path}
 										onClick={handleNavigateClick}
-										className="group flex w-full items-center justify-between rounded-lg p-2.5 text-foreground text-xs transition-colors hover:bg-accent/70 hover:text-accent-foreground"
+										className="group text-foreground hover:bg-accent/70 hover:text-accent-foreground flex w-full items-center justify-between rounded-lg p-2.5 text-xs transition-colors"
 									>
 										<div className="flex min-w-0 flex-1 items-center gap-3">
-											<Folder className="size-4 shrink-0 text-primary/80 transition-transform group-hover:scale-110 group-hover:text-primary" />
-											<span className="truncate font-medium font-mono">{dir.name}</span>
+											<Folder className="text-primary/80 group-hover:text-primary size-4 shrink-0 transition-transform group-hover:scale-110" />
+											<span className="truncate font-mono font-medium">{dir.name}</span>
 										</div>
-										<ChevronRight className="size-4 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+										<ChevronRight className="text-muted-foreground/60 group-hover:text-foreground size-4 transition-transform group-hover:translate-x-0.5" />
 									</button>
 								))}
 							</div>

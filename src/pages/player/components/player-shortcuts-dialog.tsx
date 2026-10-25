@@ -132,7 +132,7 @@ export function PlayerShortcutsDialog({
 				<DialogHeader>
 					<div className="flex items-center justify-between gap-4">
 						<DialogTitle className="flex items-center">
-							<Keyboard className="size-5 text-primary" />
+							<Keyboard className="text-primary size-5" />
 							{m.player_shortcuts()}
 						</DialogTitle>
 						{onShortcutsDisabledChange && (
@@ -155,19 +155,19 @@ export function PlayerShortcutsDialog({
 					{SHORTCUTS.map(({ key, description }) => (
 						<div
 							key={key}
-							className="flex items-center justify-between gap-4 rounded-lg border border-border/50 bg-background/50 px-3 py-2 text-sm"
+							className="border-border/50 bg-background/50 flex items-center justify-between gap-4 rounded-lg border px-3 py-2 text-sm"
 						>
 							<span className="text-muted-foreground">{description}</span>
-							<kbd className="rounded-md border border-border bg-card px-2 py-1 font-mono text-[11px] text-foreground shadow-xs">{key}</kbd>
+							<kbd className="border-border bg-card text-foreground rounded-md border px-2 py-1 font-mono text-[11px] shadow-xs">{key}</kbd>
 						</div>
 					))}
 
 					{/* Gesty dotykowe (mobile) */}
-					<div className="mt-2 border-border/50 border-t pt-3">
-						<p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_touch_gestures_heading()}</p>
+					<div className="border-border/50 mt-2 border-t pt-3">
+						<p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">{m.player_touch_gestures_heading()}</p>
 						<div className="grid gap-2">
 							{TOUCH_GESTURES.map(({ key }) => (
-								<div key={key} className="flex items-center rounded-lg border border-border/50 bg-background/50 px-3 py-2 text-sm">
+								<div key={key} className="border-border/50 bg-background/50 flex items-center rounded-lg border px-3 py-2 text-sm">
 									{key}
 								</div>
 							))}

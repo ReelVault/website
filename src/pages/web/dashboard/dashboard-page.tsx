@@ -12,7 +12,7 @@ export default function DashboardPage() {
 	usePageTitle(m.navbar_dashboard());
 
 	return (
-		<div className="relative min-h-screen w-full overflow-x-hidden bg-background">
+		<div className="bg-background relative min-h-screen w-full overflow-x-hidden">
 			<DashboardHero />
 
 			<main className="relative space-y-16 px-6 pt-12 pb-24 sm:px-10 lg:space-y-24 lg:px-24">

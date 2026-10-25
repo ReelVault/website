@@ -4,13 +4,13 @@ import { m } from "@/paraglide/messages";
 
 export function DetailsPageSkeleton() {
 	return (
-		<div className="relative min-h-screen bg-background text-foreground" role="status" aria-label={m.web_loading_details()}>
+		<div className="bg-background text-foreground relative min-h-screen" role="status" aria-label={m.web_loading_details()}>
 			{/* Hero / Header Skeleton */}
-			<section className="relative min-h-[550px] w-full border-border border-b">
+			<section className="border-border relative min-h-[550px] w-full border-b">
 				{/* Backdrop Background */}
-				<div className="absolute inset-0 overflow-hidden bg-card">
-					<div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-background/20" />
-					<div className="absolute inset-0 bg-linear-to-r from-background via-background/50 to-transparent" />
+				<div className="bg-card absolute inset-0 overflow-hidden">
+					<div className="from-background via-background/70 to-background/20 absolute inset-0 bg-linear-to-t" />
+					<div className="from-background via-background/50 absolute inset-0 bg-linear-to-r to-transparent" />
 				</div>
 
 				<PageContainer className="relative flex min-h-[550px] flex-col justify-end py-10">

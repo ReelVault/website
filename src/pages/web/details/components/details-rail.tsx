@@ -26,7 +26,7 @@ export function DetailsRail({ title, icon, items, keyPrefix, isLoading, isError,
 	if (isError) {
 		return (
 			<DetailsSection title={title} icon={icon}>
-				<div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-5">
+				<div className="border-destructive/30 bg-destructive/5 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-5">
 					<p className="text-destructive text-sm">{errorMessage}</p>
 					<Button type="button" variant="outline" size="sm" onClick={onRetry}>
 						{m.common_try_again()}

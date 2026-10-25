@@ -20,11 +20,11 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 	const currentMode = path.metadataStorageMode ?? "default";
 
 	return (
-		<div className="flex flex-col gap-3.5 rounded-xl border border-border/80 bg-muted/20 p-4 transition-[border-color,background-color,color,box-shadow] duration-150 hover:border-border/90 hover:bg-muted/30">
+		<div className="border-border/80 bg-muted/20 hover:border-border/90 hover:bg-muted/30 flex flex-col gap-3.5 rounded-xl border p-4 transition-[border-color,background-color,color,box-shadow] duration-150">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<FolderOpen className="size-4 text-primary" />
-					<span className="font-semibold text-foreground text-xs">{m.admin_libraries_directory_number({ index: index + 1 })}</span>
+					<FolderOpen className="text-primary size-4" />
+					<span className="text-foreground text-xs font-semibold">{m.admin_libraries_directory_number({ index: index + 1 })}</span>
 				</div>
 				{canRemove && (
 					<Button type="button" variant="destructive-ghost" size="sm" onClick={() => onRemove(index)}>
@@ -59,15 +59,15 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 						aria-label={m.admin_libraries_browse_server_folders()}
 						className="shrink-0"
 					>
-						<FolderOpen className="size-4 text-primary" />
-						<span className="hidden font-medium text-xs sm:inline">{m.admin_libraries_browse()}</span>
+						<FolderOpen className="text-primary size-4" />
+						<span className="hidden text-xs font-medium sm:inline">{m.admin_libraries_browse()}</span>
 					</Button>
 				</div>
 			</div>
 
 			{/* Metadata mode selector */}
-			<div className="flex flex-col gap-1.5 border-border/50 border-t pt-2.5">
-				<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+			<div className="border-border/50 flex flex-col gap-1.5 border-t pt-2.5">
+				<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
 					<HardDrive className="size-3.5" />
 					<span>{m.admin_libraries_metadata_write_mode()}</span>
 				</div>
@@ -88,25 +88,25 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 						<SelectGroup>
 							<SelectItem value="default" label={STORAGE_MODE_LABELS.default}>
 								<div className="flex flex-col py-0.5">
-									<span className="font-medium text-foreground text-xs">{m.admin_libraries_default_server_mode()}</span>
+									<span className="text-foreground text-xs font-medium">{m.admin_libraries_default_server_mode()}</span>
 									<span className="text-muted-foreground text-xs">{m.admin_libraries_use_global_config()}</span>
 								</div>
 							</SelectItem>
 							<SelectItem value="database" label={STORAGE_MODE_LABELS.database}>
 								<div className="flex flex-col py-0.5">
-									<span className="font-medium text-foreground text-xs">{m.admin_libraries_mode_database()}</span>
+									<span className="text-foreground text-xs font-medium">{m.admin_libraries_mode_database()}</span>
 									<span className="text-muted-foreground text-xs">{m.admin_libraries_db_storage_note()}</span>
 								</div>
 							</SelectItem>
 							<SelectItem value="sidecar" label={STORAGE_MODE_LABELS.sidecar}>
 								<div className="flex flex-col py-0.5">
-									<span className="font-medium text-foreground text-xs">{m.admin_libraries_sidecar_mode_label()}</span>
+									<span className="text-foreground text-xs font-medium">{m.admin_libraries_sidecar_mode_label()}</span>
 									<span className="text-muted-foreground text-xs">{m.admin_libraries_write_nfo_thumbnails()}</span>
 								</div>
 							</SelectItem>
 							<SelectItem value="database_and_sidecar" label={STORAGE_MODE_LABELS.database_and_sidecar}>
 								<div className="flex flex-col py-0.5">
-									<span className="font-medium text-foreground text-xs">{m.admin_libraries_both_mode_label()}</span>
+									<span className="text-foreground text-xs font-medium">{m.admin_libraries_both_mode_label()}</span>
 									<span className="text-muted-foreground text-xs">{m.admin_libraries_dual_metadata_sync()}</span>
 								</div>
 							</SelectItem>

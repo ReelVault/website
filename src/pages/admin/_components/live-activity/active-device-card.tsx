@@ -5,21 +5,21 @@ import { clientLabel } from "./live-activity-utils";
 
 export function ActiveDeviceCard({ device }: { device: AdminActiveDeviceItem }) {
 	return (
-		<div className="flex items-center justify-between rounded-xl border border-border/60 bg-card/50 p-3 shadow-xs">
+		<div className="border-border/60 bg-card/50 flex items-center justify-between rounded-xl border p-3 shadow-xs">
 			<div className="flex min-w-0 items-center gap-3">
-				<div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+				<div className="bg-muted text-muted-foreground flex size-8 shrink-0 items-center justify-center rounded-lg">
 					<DeviceIcon name={device.clientName || device.os || ""} />
 				</div>
 
 				<div className="min-w-0">
-					<p className="truncate font-semibold text-foreground text-xs">{clientLabel(device.clientName)}</p>
-					<p className="truncate text-muted-foreground text-xs">
+					<p className="text-foreground truncate text-xs font-semibold">{clientLabel(device.clientName)}</p>
+					<p className="text-muted-foreground truncate text-xs">
 						{device.userName} {device.ipAddress ? `• ${device.ipAddress}` : ""}
 					</p>
 				</div>
 			</div>
 
-			<span className="shrink-0 text-right font-mono text-muted-foreground text-xs">{formatTimeAgo(device.lastSeenAt)}</span>
+			<span className="text-muted-foreground shrink-0 text-right font-mono text-xs">{formatTimeAgo(device.lastSeenAt)}</span>
 		</div>
 	);
 }

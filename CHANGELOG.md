@@ -108,25 +108,25 @@ This release is dominated by collapsing per-view request waterfalls into server 
 
 The table counts API requests fired by a cold open of each view (for the details page, requests beyond the composite it already calls). These are request-count and polling-frequency reductions, not timings.
 
-| Area | Benchmark | Before | After | Change |
-| --- | --- | ---: | ---: | ---: |
-| Network | Admin dashboard — requests on mount | 6 | 1 | **-83%** |
-| Network | Player open — extra session-init requests | 4 | 0 | **-100%** |
-| Network | Details page — extra seasons + episodes requests | 2+ | 0 | **-100%** |
-| Network | Watchlist page — requests | 2 | 1 | **-50%** |
-| Network | Collection drawer, 50 items — smart-play calls | 50 | 1 | **-98%** |
-| Network | Admin worker page — `getWorkers` pollers | 2 | 1 | **-50%** |
-| Polling | Worker processes — idle poll interval | 5 s | 30 s | **-83%** |
-| Polling | `admin/stats` — idle poll interval | 15 s | 60 s | **-75%** |
-| Network | Failing transient request — max attempts | 8 | 4 | **-50%** |
-| Network | Non-retryable 4xx request — attempts | 2 | 1 | **-50%** |
-| Build | Precompressed artifacts (`.br` + `.gz`) | 659 | 362 | **-45%** |
-| Bundle | `web-layout` chunk (every authenticated page) | 26.9 KB | 8.4 KB | **-69%** |
-| Bundle | Shell first-load graph (entry + layout, brotli) | 367,189 B | 347,632 B | **-5.3%** |
-| Bundle | Shell base-ui payload (brotli) | 76,690 B | 56,763 B | **-26%** |
-| Network | Player open — redundant metadata + media prefetches | 2 | 0 | **-100%** |
-| Network | Admin dashboard — unused `admin/stats` prefetch | 1 | 0 | **-100%** |
-| Polling | Remote sessions — idle poll interval | 15 s | 60 s | **-75%** |
+| Area    | Benchmark                                           |    Before |     After |    Change |
+| ------- | --------------------------------------------------- | --------: | --------: | --------: |
+| Network | Admin dashboard — requests on mount                 |         6 |         1 |  **-83%** |
+| Network | Player open — extra session-init requests           |         4 |         0 | **-100%** |
+| Network | Details page — extra seasons + episodes requests    |        2+ |         0 | **-100%** |
+| Network | Watchlist page — requests                           |         2 |         1 |  **-50%** |
+| Network | Collection drawer, 50 items — smart-play calls      |        50 |         1 |  **-98%** |
+| Network | Admin worker page — `getWorkers` pollers            |         2 |         1 |  **-50%** |
+| Polling | Worker processes — idle poll interval               |       5 s |      30 s |  **-83%** |
+| Polling | `admin/stats` — idle poll interval                  |      15 s |      60 s |  **-75%** |
+| Network | Failing transient request — max attempts            |         8 |         4 |  **-50%** |
+| Network | Non-retryable 4xx request — attempts                |         2 |         1 |  **-50%** |
+| Build   | Precompressed artifacts (`.br` + `.gz`)             |       659 |       362 |  **-45%** |
+| Bundle  | `web-layout` chunk (every authenticated page)       |   26.9 KB |    8.4 KB |  **-69%** |
+| Bundle  | Shell first-load graph (entry + layout, brotli)     | 367,189 B | 347,632 B | **-5.3%** |
+| Bundle  | Shell base-ui payload (brotli)                      |  76,690 B |  56,763 B |  **-26%** |
+| Network | Player open — redundant metadata + media prefetches |         2 |         0 | **-100%** |
+| Network | Admin dashboard — unused `admin/stats` prefetch     |         1 |         0 | **-100%** |
+| Polling | Remote sessions — idle poll interval                |      15 s |      60 s |  **-75%** |
 
 
 ## Additional measurements
@@ -310,11 +310,11 @@ Only smaller measurements without a complete Before/After pair are kept here, so
 
 Production build using `bun run build`. Bundle sizes are the emitted bytes in `dist/`, not gzipped.
 
-| Metric | Before | After | Change |
-| --- | ---: | ---: | ---: |
-| Emitted JavaScript | 4,965,838 B | 4,946,072 B | −19,766 B (−0.4%) |
-| Emitted JS files, including chunks and PWA workers | 385 | 387 | +2 (+0.5%) |
-| `react-doctor` score | 70 | 71 | +1 |
+| Metric                                             |      Before |       After |            Change |
+| -------------------------------------------------- | ----------: | ----------: | ----------------: |
+| Emitted JavaScript                                 | 4,965,838 B | 4,946,072 B | −19,766 B (−0.4%) |
+| Emitted JS files, including chunks and PWA workers |         385 |         387 |        +2 (+0.5%) |
+| `react-doctor` score                               |          70 |          71 |                +1 |
 
 The two additional emitted files are the `details-rail` and `provider-candidate-card` shared modules, now produced as separate chunks. The bundle is smaller overall, but the number of emitted files increased.
 
@@ -383,15 +383,15 @@ The two additional emitted files are the `details-rail` and `provider-candidate-
 
 Production build served by `server.ts` (precompressed `.br`/`.gz`), headless Chrome in mobile emulation (390 × 844), cold cache, service worker blocked, median of 5 runs. Fast 4G: 150 ms RTT, 1.6 Mbps. Slow 4G + CPU 4×: 400 ms RTT, 400 kbps, 4× CPU slowdown. Baseline: the tree before this change.
 
-| Area | Benchmark | Before | After | Change |
-| --- | --- | ---: | ---: | ---: |
-| Bundle | Critical path JS, gzip (entry + modulepreload) | 364,881 B | 213,896 B | **−41%** |
-| Bundle | Player HLS chunk, gzip | 177,014 B | 113,266 B | **−36%** |
-| Network | `/auth/login` JS transferred, Fast 4G | 479,402 B | 379,091 B | **−21%** |
-| Paint | `/auth/login` FCP, Fast 4G | 3,400 ms | 2,936 ms | **−14%** |
-| Paint | `/auth/login` LCP, Fast 4G | 3,812 ms | 3,368 ms | **−12%** |
-| Paint | `/auth/login` FCP, Slow 4G + CPU 4× | 11,540 ms | 9,700 ms | **−16%** |
-| Paint | `/auth/login` load event, Slow 4G + CPU 4× | 7,597 ms | 5,334 ms | **−30%** |
+| Area    | Benchmark                                      |    Before |     After |   Change |
+| ------- | ---------------------------------------------- | --------: | --------: | -------: |
+| Bundle  | Critical path JS, gzip (entry + modulepreload) | 364,881 B | 213,896 B | **−41%** |
+| Bundle  | Player HLS chunk, gzip                         | 177,014 B | 113,266 B | **−36%** |
+| Network | `/auth/login` JS transferred, Fast 4G          | 479,402 B | 379,091 B | **−21%** |
+| Paint   | `/auth/login` FCP, Fast 4G                     |  3,400 ms |  2,936 ms | **−14%** |
+| Paint   | `/auth/login` LCP, Fast 4G                     |  3,812 ms |  3,368 ms | **−12%** |
+| Paint   | `/auth/login` FCP, Slow 4G + CPU 4×            | 11,540 ms |  9,700 ms | **−16%** |
+| Paint   | `/auth/login` load event, Slow 4G + CPU 4×     |  7,597 ms |  5,334 ms | **−30%** |
 
 ### Additional measurements
 
@@ -427,17 +427,17 @@ Production build served by `server.ts` (precompressed `.br`/`.gz`), headless Chr
 
 Brotli sizes of the eager files plus the files a route adds on first navigation.
 
-| Area | Benchmark | Before | After | Change |
-| --- | --- | ---: | ---: | ---: |
-| Bundle | Eager JS | 180.4 KB | 146.7 KB | **−18.7%** |
-| Bundle | Eager JS files | 13 | 10 | −3 |
-| Route | `/dashboard` | 301.6 KB | 278.7 KB | −7.6% |
-| Route | `/auth/login` | 257.2 KB | 225.3 KB | −12.4% |
-| Route | `/search` | 245.3 KB | 212.0 KB | **−13.6%** |
-| Route | Library view | 319.4 KB | 298.7 KB | −6.5% |
-| Route | `/details/$id` | 283.1 KB | 256.5 KB | −9.4% |
-| Route | `/player/$id` | 282.0 KB | 259.3 KB | −8.1% |
-| Route | `/admin/updates` | 299.2 KB | 242.4 KB | **−19.0%** |
+| Area   | Benchmark        |   Before |    After |     Change |
+| ------ | ---------------- | -------: | -------: | ---------: |
+| Bundle | Eager JS         | 180.4 KB | 146.7 KB | **−18.7%** |
+| Bundle | Eager JS files   |       13 |       10 |         −3 |
+| Route  | `/dashboard`     | 301.6 KB | 278.7 KB |      −7.6% |
+| Route  | `/auth/login`    | 257.2 KB | 225.3 KB |     −12.4% |
+| Route  | `/search`        | 245.3 KB | 212.0 KB | **−13.6%** |
+| Route  | Library view     | 319.4 KB | 298.7 KB |      −6.5% |
+| Route  | `/details/$id`   | 283.1 KB | 256.5 KB |      −9.4% |
+| Route  | `/player/$id`    | 282.0 KB | 259.3 KB |      −8.1% |
+| Route  | `/admin/updates` | 299.2 KB | 242.4 KB | **−19.0%** |
 
 ### Additional measurements
 

@@ -162,9 +162,9 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 
 						{/* Volume slider */}
 						<div className="relative flex h-6 w-0 cursor-pointer items-center overflow-hidden transition-[width] duration-300 group-hover/volume:w-28">
-							<div className="relative h-1.25 w-full overflow-hidden rounded-sm bg-foreground/30">
+							<div className="bg-foreground/30 relative h-1.25 w-full overflow-hidden rounded-sm">
 								{/* 100% indicator notch */}
-								<div className="pointer-events-none absolute inset-y-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-foreground/40" />
+								<div className="bg-foreground/40 pointer-events-none absolute inset-y-0 left-1/2 z-10 w-0.5 -translate-x-1/2" />
 								{/* Filled track */}
 								<div
 									className={cn("h-full rounded-sm transition-[width] duration-75", isBoosted ? "bg-warning" : "bg-primary")}

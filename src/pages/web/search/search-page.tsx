@@ -31,8 +31,8 @@ function SearchLoading() {
 	return (
 		<div className="flex flex-col items-center justify-center py-14 text-center" aria-busy="true">
 			<Spinner size="xl" aria-hidden="true" />
-			<p className="mt-4 font-semibold text-foreground">{m.components_navbar_searching_catalog()}</p>
-			<p className="mt-1 text-muted-foreground text-sm">{m.components_search_matching()}</p>
+			<p className="text-foreground mt-4 font-semibold">{m.components_navbar_searching_catalog()}</p>
+			<p className="text-muted-foreground mt-1 text-sm">{m.components_search_matching()}</p>
 		</div>
 	);
 }
@@ -136,7 +136,7 @@ export default function SearchPage() {
 					<search aria-label={m.components_navbar_search_heading()} className="block">
 						<InputGroup size="lg">
 							<InputGroupAddon>
-								<Search aria-hidden="true" className="size-5 text-primary" />
+								<Search aria-hidden="true" className="text-primary size-5" />
 							</InputGroupAddon>
 							<InputGroupInput
 								id={GLOBAL_SEARCH_INPUT_ID}

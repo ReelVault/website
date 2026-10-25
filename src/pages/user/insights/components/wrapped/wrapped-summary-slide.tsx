@@ -12,20 +12,20 @@ interface WrappedSummarySlideProps {
 
 export function WrappedSummarySlide({ data, year, personalityTitle, onCopySummary }: WrappedSummarySlideProps) {
 	return (
-		<div className="fade-in zoom-in-95 flex animate-in flex-col items-center justify-center space-y-6 py-2 duration-300">
-			<div className="w-full max-w-lg rounded-3xl border border-primary/50 bg-linear-to-b from-card via-background to-card p-8 shadow-2xl">
-				<div className="flex items-center justify-between border-border/60 border-b pb-4">
+		<div className="fade-in zoom-in-95 animate-in flex flex-col items-center justify-center space-y-6 py-2 duration-300">
+			<div className="border-primary/50 from-card via-background to-card w-full max-w-lg rounded-3xl border bg-linear-to-b p-8 shadow-2xl">
+				<div className="border-border/60 flex items-center justify-between border-b pb-4">
 					<div className="flex items-center gap-2.5">
-						<Clapperboard className="size-6 text-primary" />
-						<span className="font-black text-base tracking-tight">{m.user_wrapped_title({ year })}</span>
+						<Clapperboard className="text-primary size-6" />
+						<span className="text-base font-black tracking-tight">{m.user_wrapped_title({ year })}</span>
 					</div>
 					<span className="text-3xl">{data.viewerPersonality.badge}</span>
 				</div>
 
 				<div className="my-6 space-y-3 text-center">
-					<h4 className="font-black text-2xl text-primary sm:text-3xl">{personalityTitle}</h4>
-					<p className="font-black font-mono text-4xl text-foreground">{m.user_total_days_watched({ totalDays: data.totalDays })}</p>
-					<p className="font-semibold text-muted-foreground text-sm">
+					<h4 className="text-primary text-2xl font-black sm:text-3xl">{personalityTitle}</h4>
+					<p className="text-foreground font-mono text-4xl font-black">{m.user_total_days_watched({ totalDays: data.totalDays })}</p>
+					<p className="text-muted-foreground text-sm font-semibold">
 						{m.wrapped_titles_and_sessions({
 							titles: data.titlesWatched,
 							sessions: data.moviesWatchedCount + data.episodesWatchedCount,
@@ -33,17 +33,17 @@ export function WrappedSummarySlide({ data, year, personalityTitle, onCopySummar
 					</p>
 				</div>
 
-				<div className="space-y-2 border-border/40 border-t pt-4 text-xs">
+				<div className="border-border/40 space-y-2 border-t pt-4 text-xs">
 					{data.topMovie && (
 						<div className="flex items-center justify-between py-1">
-							<span className="font-medium text-muted-foreground">{m.user_wrapped_top_movie()}</span>
-							<span className="font-bold text-foreground">{data.topMovie.title}</span>
+							<span className="text-muted-foreground font-medium">{m.user_wrapped_top_movie()}</span>
+							<span className="text-foreground font-bold">{data.topMovie.title}</span>
 						</div>
 					)}
 					{data.topShow && (
 						<div className="flex items-center justify-between py-1">
-							<span className="font-medium text-muted-foreground">{m.user_wrapped_top_series()}</span>
-							<span className="font-bold text-foreground">{data.topShow.title}</span>
+							<span className="text-muted-foreground font-medium">{m.user_wrapped_top_series()}</span>
+							<span className="text-foreground font-bold">{data.topShow.title}</span>
 						</div>
 					)}
 				</div>

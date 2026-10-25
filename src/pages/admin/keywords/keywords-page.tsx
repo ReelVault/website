@@ -49,9 +49,9 @@ export default function AdminKeywordsPage() {
 							{keywords.map((keyword) => (
 								<div
 									key={keyword.id}
-									className="flex items-center gap-1 rounded-lg border border-border/80 bg-muted/20 px-3 py-1.5 font-mono text-foreground text-xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:border-primary/40 hover:bg-muted/40 hover:text-primary hover:shadow-2xs sm:text-sm"
+									className="border-border/80 bg-muted/20 text-foreground hover:border-primary/40 hover:bg-muted/40 hover:text-primary flex items-center gap-1 rounded-lg border px-3 py-1.5 font-mono text-xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:shadow-2xs sm:text-sm"
 								>
-									<span className="font-bold text-primary/70">{m.admin_keywords_tag_prefix()}</span>
+									<span className="text-primary/70 font-bold">{m.admin_keywords_tag_prefix()}</span>
 									<span>{keyword.name}</span>
 								</div>
 							))}

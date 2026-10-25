@@ -82,7 +82,7 @@ export function WorkerProcessesCard({ autoRefresh }: { autoRefresh: boolean }) {
 				{counts && counts.total === 0 && <p className="text-muted-foreground text-xs">{m.admin_processes_empty()}</p>}
 
 				{expanded && processes.length > 0 && (
-					<div className="flex flex-col divide-y divide-border/40">
+					<div className="divide-border/40 flex flex-col divide-y">
 						{processes.map((proc) => (
 							<div
 								key={`${proc.purpose}-${proc.pid ?? "no-pid"}-${proc.startedAt}`}
@@ -90,9 +90,9 @@ export function WorkerProcessesCard({ autoRefresh }: { autoRefresh: boolean }) {
 							>
 								<div className="flex min-w-0 items-center gap-2">
 									<Badge variant={PURPOSE_BADGE_VARIANT[proc.purpose]}>{PURPOSE_LABELS[proc.purpose]}</Badge>
-									{proc.label && <span className="truncate text-muted-foreground text-xs">{proc.label}</span>}
+									{proc.label && <span className="text-muted-foreground truncate text-xs">{proc.label}</span>}
 								</div>
-								<div className="flex shrink-0 items-center gap-3 font-mono text-muted-foreground text-xs">
+								<div className="text-muted-foreground flex shrink-0 items-center gap-3 font-mono text-xs">
 									{proc.pid != null && <span>{m.admin_processes_pid({ pid: proc.pid })}</span>}
 									<span>{formatMsDuration(proc.runtimeMs)}</span>
 								</div>

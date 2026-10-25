@@ -26,16 +26,16 @@ export function MetadataCardGenreBadges({ genres }: MetadataCardGenreBadgesProps
 						params={{ id: genre.id }}
 						className={cn(
 							"pointer-events-auto flex h-8 min-w-8 items-center overflow-hidden",
-							"rounded-lg border border-border/70 bg-background/80",
-							"transition-[background-color,padding] duration-200 ease-out hover:bg-background/90 group-hover:px-2",
+							"border-border/70 bg-background/80 rounded-lg border",
+							"hover:bg-background/90 transition-[background-color,padding] duration-200 ease-out group-hover:px-2",
 							"w-fit",
 						)}
 					>
 						<div className="flex h-8 w-8 shrink-0 items-center justify-center">
-							<Icon className="size-4 text-primary" />
+							<Icon className="text-primary size-4" />
 						</div>
 						<span className="grid grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity,margin] duration-200 group-focus-within:ml-1 group-focus-within:grid-cols-[1fr] group-focus-within:opacity-100 group-hover:ml-1 group-hover:grid-cols-[1fr] group-hover:opacity-100">
-							<span className="overflow-hidden whitespace-nowrap font-bold text-foreground text-xs">{genre.name}</span>
+							<span className="text-foreground overflow-hidden text-xs font-bold whitespace-nowrap">{genre.name}</span>
 						</span>
 					</Link>
 				);

@@ -18,22 +18,22 @@ export function PersonStats({ metadata }: { metadata: Array<RequireFields<Metada
 	return (
 		<SimpleAnimation direction="up" delay={60} duration={260}>
 			<section className="grid grid-cols-2 gap-4 md:grid-cols-4">
-				<div className="col-span-2 flex flex-col justify-center rounded-xl border border-border/50 bg-linear-to-br from-primary/20 to-transparent p-8 md:col-span-2">
-					<Clapperboard className="mb-4 size-8 text-primary" />
-					<h4 className="font-black text-5xl text-foreground">{metadata.length}</h4>
-					<p className="font-bold text-foreground/40 text-xs">{m.web_body_of_work_titles()}</p>
+				<div className="border-border/50 from-primary/20 col-span-2 flex flex-col justify-center rounded-xl border bg-linear-to-br to-transparent p-8 md:col-span-2">
+					<Clapperboard className="text-primary mb-4 size-8" />
+					<h4 className="text-foreground text-5xl font-black">{metadata.length}</h4>
+					<p className="text-foreground/40 text-xs font-bold">{m.web_body_of_work_titles()}</p>
 				</div>
-				<div className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/60 p-8 text-center transition-transform hover:scale-[1.02]">
-					<Star className="mb-2 size-6 fill-warning/50 text-warning/50" />
-					<p className="font-black text-2xl text-foreground">
+				<div className="border-border/50 bg-card/60 flex flex-col items-center justify-center rounded-xl border p-8 text-center transition-transform hover:scale-[1.02]">
+					<Star className="fill-warning/50 text-warning/50 mb-2 size-6" />
+					<p className="text-foreground text-2xl font-black">
 						{averageRating == null ? m.common_not_available() : formatRating(averageRating)}
 					</p>
-					<p className="font-bold text-foreground/40 text-xs">{m.web_average_rating()}</p>
+					<p className="text-foreground/40 text-xs font-bold">{m.web_average_rating()}</p>
 				</div>
-				<div className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/60 p-8 text-center transition-transform hover:scale-[1.02]">
-					<Calendar className="mb-2 size-6 text-primary/40" />
-					<p className="font-black text-2xl text-foreground">{debutYear ?? m.common_not_available()}</p>
-					<p className="font-bold text-foreground/40 text-xs">{m.web_first_title()}</p>
+				<div className="border-border/50 bg-card/60 flex flex-col items-center justify-center rounded-xl border p-8 text-center transition-transform hover:scale-[1.02]">
+					<Calendar className="text-primary/40 mb-2 size-6" />
+					<p className="text-foreground text-2xl font-black">{debutYear ?? m.common_not_available()}</p>
+					<p className="text-foreground/40 text-xs font-bold">{m.web_first_title()}</p>
 				</div>
 			</section>
 		</SimpleAnimation>

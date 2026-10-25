@@ -28,9 +28,9 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 					</div>
 					<div>
 						<div className="flex items-center gap-3">
-							<h3 className="font-bold text-foreground text-sm">{twoFactorEnabled ? m.user_2fa_active() : m.user_2fa_disabled()}</h3>
+							<h3 className="text-foreground text-sm font-bold">{twoFactorEnabled ? m.user_2fa_active() : m.user_2fa_disabled()}</h3>
 							<span
-								className={cn("rounded-full px-2 py-0.5 font-bold text-xs", {
+								className={cn("rounded-full px-2 py-0.5 text-xs font-bold", {
 									"bg-success/10 text-success": twoFactorEnabled,
 									"bg-muted text-muted-foreground": !twoFactorEnabled,
 								})}
@@ -38,14 +38,14 @@ export function TwoFactorSection({ twoFactorEnabled }: { twoFactorEnabled: boole
 								{twoFactorEnabled ? m.user_2fa_status_active() : m.common_none()}
 							</span>
 						</div>
-						<p className="mt-1 text-muted-foreground text-xs">
+						<p className="text-muted-foreground mt-1 text-xs">
 							{twoFactorEnabled ? m.user_new_device_code_note() : m.user_protect_account_2fa()}
 						</p>
 					</div>
 				</div>
 
 				{twoFactorEnabled && backupCodesStatus.data && (
-					<p className="-mt-2 text-muted-foreground text-xs">
+					<p className="text-muted-foreground -mt-2 text-xs">
 						{backupCodesStatus.data.remaining === null
 							? m.user_backup_codes_unreadable()
 							: m.user_backup_codes_remaining({ count: backupCodesStatus.data.remaining })}

@@ -13,17 +13,17 @@ export default function DashboardContinueWatching() {
 		<section className="flex flex-col gap-4">
 			{/* Section header */}
 			<div className="flex items-center gap-4">
-				<div className="h-px flex-1 bg-linear-to-r from-border/0 via-border to-border/0" />
+				<div className="from-border/0 via-border to-border/0 h-px flex-1 bg-linear-to-r" />
 				<div className="flex items-center gap-3">
-					<div className="size-2 animate-pulse rounded-full bg-primary" />
-					<h2 className="font-bold text-foreground text-sm">{m.web_resume_session()}</h2>
+					<div className="bg-primary size-2 animate-pulse rounded-full" />
+					<h2 className="text-foreground text-sm font-bold">{m.web_resume_session()}</h2>
 				</div>
-				<div className="h-px flex-1 bg-linear-to-r from-border/0 via-border to-border/0" />
+				<div className="from-border/0 via-border to-border/0 h-px flex-1 bg-linear-to-r" />
 			</div>
 
 			{/* Horizontally scrolling video list */}
 			<div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
-				<div className="scrollbar-none flex gap-4 overflow-x-auto pb-2 md:gap-6">
+				<div className="flex scrollbar-none gap-4 overflow-x-auto pb-2 md:gap-6">
 					{items.map((item) => (
 						<ContinueWatchingCard
 							key={item.mediaFileId}
@@ -46,7 +46,7 @@ export default function DashboardContinueWatching() {
 			</div>
 
 			<div className="relative">
-				<div className="h-px flex-1 bg-linear-to-r from-border/0 via-border to-border/0" />
+				<div className="from-border/0 via-border to-border/0 h-px flex-1 bg-linear-to-r" />
 			</div>
 		</section>
 	);

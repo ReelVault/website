@@ -11,20 +11,20 @@ function itemKey(item: PluginSearchItem): string {
 
 function ExternalCardArtwork({ item, requested }: { item: PluginSearchItem; requested: boolean }) {
 	return (
-		<div className="relative aspect-2/3 w-full overflow-hidden rounded-lg bg-primary/10">
+		<div className="bg-primary/10 relative aspect-2/3 w-full overflow-hidden rounded-lg">
 			{item.imageUrl ? (
 				<img src={item.imageUrl} alt="" loading="lazy" referrerPolicy="no-referrer" className="size-full object-cover grayscale" />
 			) : (
 				<span className="flex size-full items-center justify-center">
 					{item.mediaType === "tv_show" ? (
-						<Tv aria-hidden="true" className="size-8 text-muted-foreground" />
+						<Tv aria-hidden="true" className="text-muted-foreground size-8" />
 					) : (
-						<Film aria-hidden="true" className="size-8 text-muted-foreground" />
+						<Film aria-hidden="true" className="text-muted-foreground size-8" />
 					)}
 				</span>
 			)}
 			{requested && (
-				<span className="absolute top-1.5 left-1.5 rounded-full bg-background/90 px-2 py-0.5 font-semibold text-foreground text-xs shadow-sm">
+				<span className="bg-background/90 text-foreground absolute top-1.5 left-1.5 rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm">
 					{m.components_search_plugin_requested()}
 				</span>
 			)}
@@ -35,10 +35,10 @@ function ExternalCardArtwork({ item, requested }: { item: PluginSearchItem; requ
 function ExternalCardText({ item }: { item: PluginSearchItem }) {
 	return (
 		<div className="min-w-0">
-			<span className="block truncate font-semibold text-foreground text-sm" title={item.title}>
+			<span className="text-foreground block truncate text-sm font-semibold" title={item.title}>
 				{item.title}
 			</span>
-			<span className="block text-muted-foreground text-xs">
+			<span className="text-muted-foreground block text-xs">
 				{item.mediaType === "movie" ? m.common_movie_word() : m.common_series_word()}
 				{item.year !== undefined ? ` · ${item.year}` : ""}
 			</span>
@@ -96,7 +96,7 @@ function ExternalCatalogCard({
 					to="/plugins/$pluginId/page/$pagePath"
 					params={{ pluginId: provider.pluginId, pagePath: provider.itemPagePath }}
 					search={{ providerId: item.providerId, externalId: item.externalId, mediaType: item.mediaType }}
-					className="group flex min-w-0 flex-col gap-2 rounded-xl p-1.5 transition-colors hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50"
+					className="group hover:bg-muted/50 focus-visible:ring-ring/50 flex min-w-0 flex-col gap-2 rounded-xl p-1.5 transition-colors focus-visible:ring-3"
 				>
 					{artwork}
 					{text}
@@ -120,11 +120,11 @@ function ExternalCatalogCard({
 				onClick={() => onRequest(item)}
 				disabled={isRequesting}
 				aria-label={`${m.components_search_plugin_request()}: ${item.title}`}
-				className="group relative flex min-w-0 flex-col gap-2 rounded-xl p-1.5 text-left transition-colors hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-60"
+				className="group hover:bg-muted/50 focus-visible:ring-ring/50 relative flex min-w-0 flex-col gap-2 rounded-xl p-1.5 text-left transition-colors focus-visible:ring-3 disabled:opacity-60"
 			>
 				{artwork}
 				{text}
-				<span className="absolute right-2 bottom-14 rounded-full bg-background/90 p-1.5 text-foreground shadow-sm">
+				<span className="bg-background/90 text-foreground absolute right-2 bottom-14 rounded-full p-1.5 shadow-sm">
 					{isRequesting ? <Spinner size="sm" aria-hidden="true" /> : <Send aria-hidden="true" className="size-3.5" />}
 				</span>
 			</button>
@@ -163,11 +163,11 @@ export function ExternalCatalogSection({
 			<header className="flex items-end justify-between gap-4">
 				<div className="cinema-section-heading">
 					<h2 className="flex items-center gap-2">
-						<Globe aria-hidden="true" className="size-5 text-primary" />
+						<Globe aria-hidden="true" className="text-primary size-5" />
 						{m.components_search_plugin_heading()}
 					</h2>
 				</div>
-				<span className="font-mono text-muted-foreground text-xs tabular-nums">{items.length.toString().padStart(2, "0")}</span>
+				<span className="text-muted-foreground font-mono text-xs tabular-nums">{items.length.toString().padStart(2, "0")}</span>
 			</header>
 			<div className="poster-shelf mt-6">
 				{items.map((item) => (

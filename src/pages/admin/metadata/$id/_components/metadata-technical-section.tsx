@@ -19,7 +19,7 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 				<IdRow label={m.admin_metadata_stable_key_label()} value={metadata.stableKey} />
 
 				{/* Key-Value Details */}
-				<div className="grid grid-cols-2 gap-2.5 border-border/50 border-t pt-2">
+				<div className="border-border/50 grid grid-cols-2 gap-2.5 border-t pt-2">
 					<DetailItem
 						icon={Sparkles}
 						label={m.admin_metadata_main_provider()}
@@ -35,7 +35,7 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 				</div>
 
 				{/* Translation status */}
-				<div className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 px-3 py-2 text-xs">
+				<div className="border-border/60 bg-muted/20 flex items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs">
 					<span className="text-muted-foreground">{m.admin_metadata_translation_state()}</span>
 					{metadata.hasMissingTranslation ? (
 						<Badge variant="warning" size="sm">
@@ -49,14 +49,14 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 				</div>
 
 				{/* Timestamps */}
-				<div className="flex flex-col gap-1 border-border/50 border-t pt-2 text-muted-foreground text-xs">
+				<div className="border-border/50 text-muted-foreground flex flex-col gap-1 border-t pt-2 text-xs">
 					<div className="flex justify-between">
 						<span>{m.admin_metadata_created_in_db()}</span>
-						<span className="font-mono text-foreground">{formatDateTime(metadata.createdAt)}</span>
+						<span className="text-foreground font-mono">{formatDateTime(metadata.createdAt)}</span>
 					</div>
 					<div className="flex justify-between">
 						<span>{m.admin_metadata_last_sync()}</span>
-						<span className="font-mono text-foreground" title={formatDateTime(metadata.updatedAt)}>
+						<span className="text-foreground font-mono" title={formatDateTime(metadata.updatedAt)}>
 							{formatTimeAgo(metadata.updatedAt)}
 						</span>
 					</div>
@@ -70,10 +70,10 @@ function IdRow({ label, value }: { label: string; value: string }) {
 	const { hasCopied, copy } = useCopyToClipboard();
 
 	return (
-		<div className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 px-3 py-1.5">
+		<div className="border-border/60 bg-muted/20 flex items-center justify-between gap-2 rounded-lg border px-3 py-1.5">
 			<div className="flex min-w-0 flex-col">
-				<span className="font-semibold text-muted-foreground text-xs">{label}</span>
-				<code className="truncate font-medium font-mono text-foreground text-xs">{value}</code>
+				<span className="text-muted-foreground text-xs font-semibold">{label}</span>
+				<code className="text-foreground truncate font-mono text-xs font-medium">{value}</code>
 			</div>
 			<Button
 				tone="muted"
@@ -93,12 +93,12 @@ function IdRow({ label, value }: { label: string; value: string }) {
 
 function DetailItem({ icon: Icon, label, value }: { icon: typeof Globe; label: string; value: string }) {
 	return (
-		<div className="flex flex-col gap-0.5 rounded-lg border border-border/50 bg-background/50 p-2.5">
-			<div className="flex items-center gap-1 font-semibold text-muted-foreground text-xs">
-				<Icon className="size-3 text-primary" />
+		<div className="border-border/50 bg-background/50 flex flex-col gap-0.5 rounded-lg border p-2.5">
+			<div className="text-muted-foreground flex items-center gap-1 text-xs font-semibold">
+				<Icon className="text-primary size-3" />
 				<span>{label}</span>
 			</div>
-			<span className="truncate font-medium text-foreground text-xs">{value}</span>
+			<span className="text-foreground truncate text-xs font-medium">{value}</span>
 		</div>
 	);
 }

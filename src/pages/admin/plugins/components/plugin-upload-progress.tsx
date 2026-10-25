@@ -40,13 +40,13 @@ function StatusIcon({ entry }: { entry: PluginArchiveEntry }) {
 		case "installing":
 			return <Spinner aria-hidden="true" />;
 		case "installed":
-			return <CheckCircle2 className="size-4 text-success" aria-hidden="true" />;
+			return <CheckCircle2 className="text-success size-4" aria-hidden="true" />;
 		case "queued":
-			return <Circle className="size-4 text-muted-foreground" aria-hidden="true" />;
+			return <Circle className="text-muted-foreground size-4" aria-hidden="true" />;
 		case "failed":
-			return <XCircle className="size-4 text-destructive" aria-hidden="true" />;
+			return <XCircle className="text-destructive size-4" aria-hidden="true" />;
 		default:
-			return <XCircle className="size-4 text-destructive" aria-hidden="true" />;
+			return <XCircle className="text-destructive size-4" aria-hidden="true" />;
 	}
 }
 
@@ -81,12 +81,12 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 	const isRunning = summary !== null && summary.doneCount < summary.total;
 
 	return (
-		<div className="fixed right-4 bottom-4 z-90 flex w-90 max-w-[calc(100vw-2rem)] flex-col gap-3 rounded-2xl border border-border bg-popover/95 p-4 shadow-2xl shadow-black/30 backdrop-blur">
+		<div className="border-border bg-popover/95 fixed right-4 bottom-4 z-90 flex w-90 max-w-[calc(100vw-2rem)] flex-col gap-3 rounded-2xl border p-4 shadow-2xl shadow-black/30 backdrop-blur">
 			<div className="flex items-center justify-between gap-2">
-				<span className="font-bold text-foreground text-sm">
+				<span className="text-foreground text-sm font-bold">
 					{m.admin_plugins_upload_panel_title()}
 					{summary && (
-						<span className="ml-2 font-mono text-muted-foreground">
+						<span className="text-muted-foreground ml-2 font-mono">
 							{m.admin_plugins_upload_files_counter({ done: summary.doneCount, total: summary.total })}
 						</span>
 					)}
@@ -100,7 +100,7 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 
 			{summary && (
 				<Progress value={summary.overallPercent} aria-label={m.common_progress()} className="w-full gap-1.5">
-					<div className="flex w-full justify-between gap-1 font-medium text-muted-foreground text-xs">
+					<div className="text-muted-foreground flex w-full justify-between gap-1 text-xs font-medium">
 						<span>
 							{m.admin_plugins_upload_overall_stats({
 								percent: summary.overallPercent,
@@ -109,7 +109,7 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 							})}
 						</span>
 						{summary.etaSeconds !== null && (
-							<span className="font-bold text-primary">{m.admin_plugins_upload_eta({ seconds: summary.etaSeconds })}</span>
+							<span className="text-primary font-bold">{m.admin_plugins_upload_eta({ seconds: summary.etaSeconds })}</span>
 						)}
 					</div>
 				</Progress>
@@ -123,23 +123,23 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 						<div key={entry.id} className="flex flex-col gap-1">
 							<div className="flex items-center gap-2">
 								<StatusIcon entry={entry} />
-								<span className="min-w-0 flex-1 truncate font-medium text-foreground text-xs" title={entry.file.name}>
+								<span className="text-foreground min-w-0 flex-1 truncate text-xs font-medium" title={entry.file.name}>
 									{entry.file.name}
 								</span>
-								<span className="shrink-0 font-mono text-muted-foreground text-xs">{formatBytes(entry.file.size)}</span>
+								<span className="text-muted-foreground shrink-0 font-mono text-xs">{formatBytes(entry.file.size)}</span>
 							</div>
 							<div className="flex items-center justify-between gap-2 pl-6">
 								<span className={entry.status === "failed" ? "text-destructive text-xs" : "text-muted-foreground text-xs"}>
 									{statusLabel(entry)}
 								</span>
 								{isCurrent && entry.totalBytes > 0 && entry.status === "uploading" && (
-									<span className="font-mono text-muted-foreground text-xs">
+									<span className="text-muted-foreground font-mono text-xs">
 										{m.common_percent_value({ value: Math.round((entry.uploadedBytes / entry.totalBytes) * 100) })}
 									</span>
 								)}
 							</div>
 							{entry.error && (
-								<span className="wrap-break-word rounded-md bg-destructive/10 px-2 py-1 text-destructive text-xs">{entry.error}</span>
+								<span className="bg-destructive/10 text-destructive rounded-md px-2 py-1 text-xs wrap-break-word">{entry.error}</span>
 							)}
 						</div>
 					);

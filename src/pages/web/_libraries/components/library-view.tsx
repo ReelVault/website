@@ -9,9 +9,9 @@ import { LibraryLayout } from "./library-layout";
 
 function LibraryViewSkeleton() {
 	return (
-		<div className="min-h-screen bg-background" role="status" aria-busy="true" aria-label={m.web_loading_libraries()}>
-			<header className="relative flex min-h-[34svh] flex-col items-center justify-center overflow-hidden border-border border-b px-6 pt-12">
-				<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
+		<div className="bg-background min-h-screen" role="status" aria-busy="true" aria-label={m.web_loading_libraries()}>
+			<header className="border-border relative flex min-h-[34svh] flex-col items-center justify-center overflow-hidden border-b px-6 pt-12">
+				<div className="from-primary/5 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent to-transparent" />
 				<div className="flex flex-col items-center gap-4 text-center">
 					<Skeleton className="h-4 w-32" />
 					<Skeleton className="h-16 w-72 sm:h-20 sm:w-96" />

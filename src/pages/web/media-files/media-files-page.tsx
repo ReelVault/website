@@ -32,7 +32,7 @@ export default function MediaFilesPage() {
 			<Link
 				to="/details/$id"
 				params={{ id }}
-				className="inline-flex min-h-11 w-fit items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex min-h-11 w-fit items-center gap-2 text-sm transition-colors"
 			>
 				<ArrowLeft className="size-4" aria-hidden="true" />
 				{m.common_back()}
@@ -40,8 +40,8 @@ export default function MediaFilesPage() {
 
 			<header className="flex flex-wrap items-end justify-between gap-4">
 				<div className="flex min-w-0 flex-col gap-2">
-					<h1 className="font-extrabold font-heading text-3xl tracking-tight sm:text-4xl">{m.components_media_files_data_heading()}</h1>
-					{label && <p className="font-semibold text-foreground text-lg">{label}</p>}
+					<h1 className="font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">{m.components_media_files_data_heading()}</h1>
+					{label && <p className="text-foreground text-lg font-semibold">{label}</p>}
 					<p className="text-muted-foreground text-sm">
 						{title ? m.components_media_files_params_for({ title }) : m.components_media_files_params_quality_heading()}
 					</p>

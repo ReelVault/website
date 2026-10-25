@@ -175,7 +175,7 @@ export function Image({
 			onLoad={handleLoad}
 			style={combinedStyle}
 			className={cn(
-				fill ? "absolute inset-0 size-full object-cover" : "pointer-events-none size-full select-none object-cover",
+				fill ? "absolute inset-0 size-full object-cover" : "pointer-events-none size-full object-cover select-none",
 				// Priority images keep the LQIP blur-up visible (it paints this
 				// element's background); lazy grids fade in over the parent surface.
 				!priority && (isLoaded ? "opacity-100 transition-opacity duration-300" : "opacity-0"),

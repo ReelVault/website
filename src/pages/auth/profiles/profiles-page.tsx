@@ -55,7 +55,7 @@ export default function ProfilesSelectionPage() {
 
 	if (isProfilesLoading) {
 		return (
-			<div className="flex min-h-svh items-center justify-center bg-background px-6">
+			<div className="bg-background flex min-h-svh items-center justify-center px-6">
 				<div className="grid w-full max-w-xl grid-cols-2 gap-8 sm:grid-cols-3">
 					{["one", "two", "three"].map((key) => (
 						<div key={key} className="flex flex-col items-center gap-5">
@@ -72,7 +72,7 @@ export default function ProfilesSelectionPage() {
 
 	if (profilesError) {
 		return (
-			<div className="flex min-h-svh items-center justify-center bg-background px-4">
+			<div className="bg-background flex min-h-svh items-center justify-center px-4">
 				<AppErrorState
 					title={m.auth_failed_to_fetch_profiles()}
 					error={profilesError}
@@ -84,7 +84,7 @@ export default function ProfilesSelectionPage() {
 	}
 
 	return (
-		<div className="relative flex min-h-svh w-full flex-col items-center justify-center overflow-hidden bg-background px-4 py-12">
+		<div className="bg-background relative flex min-h-svh w-full flex-col items-center justify-center overflow-hidden px-4 py-12">
 			<div className="pointer-events-none absolute inset-0 overflow-hidden">
 				<div className="absolute top-[-10%] right-[-10%] size-120 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_12%,transparent)_0%,transparent_70%)]" />
 				<div className="absolute bottom-[-10%] left-[-10%] size-120 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--secondary)_12%,transparent)_0%,transparent_70%)]" />
@@ -92,12 +92,12 @@ export default function ProfilesSelectionPage() {
 			</div>
 			<SimpleAnimation className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-16 px-2 sm:px-6">
 				<header className="flex flex-col gap-3 text-center">
-					<span className="font-bold text-primary text-xs">{m.auth_welcome_back()}</span>
-					<h1 className="font-bold text-4xl tracking-tight sm:text-6xl lg:text-7xl">
+					<span className="text-primary text-xs font-bold">{m.auth_welcome_back()}</span>
+					<h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
 						{m.auth_profiles_heading_prefix()}{" "}
-						<span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">{m.auth_watching_question()}</span>
+						<span className="from-primary to-secondary bg-linear-to-r bg-clip-text text-transparent">{m.auth_watching_question()}</span>
 					</h1>
-					<p className="font-medium text-muted-foreground text-sm">{m.auth_select_profile_to_continue()}</p>
+					<p className="text-muted-foreground text-sm font-medium">{m.auth_select_profile_to_continue()}</p>
 				</header>
 
 				{switchProfileMutation.isError && <AppErrorState title={m.auth_failed_to_open_profile()} error={switchProfileMutation.error} />}
@@ -117,11 +117,11 @@ export default function ProfilesSelectionPage() {
 									<Avatar
 										size="default"
 										shape="square"
-										className="size-32 after:hidden group-hover:scale-110 group-hover:shadow-xl group-hover:ring-2 group-hover:ring-primary sm:size-44"
+										className="group-hover:ring-primary size-32 group-hover:scale-110 group-hover:shadow-xl group-hover:ring-2 after:hidden sm:size-44"
 									>
 										{profile.avatarUrl && <AvatarImage src={resolveApiAssetUrl(profile.avatarUrl)} alt="" />}
 										<AvatarFallback>
-											<User className="size-10 text-muted-foreground/50" />
+											<User className="text-muted-foreground/50 size-10" />
 										</AvatarFallback>
 									</Avatar>
 									{profile.pin && (
@@ -130,7 +130,7 @@ export default function ProfilesSelectionPage() {
 										</Badge>
 									)}
 								</div>
-								<span className="max-w-full truncate font-semibold text-lg text-muted-foreground transition-colors group-hover:text-foreground">
+								<span className="text-muted-foreground group-hover:text-foreground max-w-full truncate text-lg font-semibold transition-colors">
 									{profile.name}
 								</span>
 							</AsyncButton>
@@ -145,10 +145,10 @@ export default function ProfilesSelectionPage() {
 						nativeButton={false}
 						render={<Link to="/auth/create-profile" search={redirect ? { redirect } : {}} />}
 					>
-						<div className="flex size-32 items-center justify-center rounded-3xl border-2 border-border border-dashed text-muted-foreground/40 transition-[background-color,border-color,transform,color] duration-500 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/5 group-hover:text-primary sm:size-44">
+						<div className="border-border text-muted-foreground/40 group-hover:border-primary group-hover:bg-primary/5 group-hover:text-primary flex size-32 items-center justify-center rounded-3xl border-2 border-dashed transition-[background-color,border-color,transform,color] duration-500 group-hover:scale-110 sm:size-44">
 							<Plus className="size-8" />
 						</div>
-						<span className="font-semibold text-lg text-muted-foreground transition-colors group-hover:text-primary">
+						<span className="text-muted-foreground group-hover:text-primary text-lg font-semibold transition-colors">
 							{m.auth_add_profile()}
 						</span>
 					</Button>

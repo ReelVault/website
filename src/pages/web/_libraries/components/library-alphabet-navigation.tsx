@@ -46,7 +46,7 @@ interface LibraryAlphabetNavigationProps {
 export function LibraryAlphabetNavigation({ activeLetter, onSelectLetter }: LibraryAlphabetNavigationProps) {
 	return (
 		<aside className="fixed top-1/2 right-6 z-30 hidden -translate-y-1/2 pt-16 lg:flex" aria-label={m.web_library_alphabet_aria()}>
-			<div className="flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-card/70 p-1.5 shadow-lg backdrop-blur-xl">
+			<div className="border-border bg-card/70 flex flex-col items-center gap-0.5 rounded-2xl border p-1.5 shadow-lg backdrop-blur-xl">
 				{ALPHABET.map((char) => {
 					const isActive = activeLetter === char;
 
@@ -58,7 +58,7 @@ export function LibraryAlphabetNavigation({ activeLetter, onSelectLetter }: Libr
 							aria-pressed={isActive}
 							title={isActive ? m.web_library_alphabet_clear() : m.web_library_alphabet_jump({ letter: char })}
 							className={cn(
-								"flex size-6 items-center justify-center rounded-lg font-bold text-xs transition-colors duration-150",
+								"flex size-6 items-center justify-center rounded-lg text-xs font-bold transition-colors duration-150",
 								isActive ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:bg-primary hover:text-primary-foreground",
 							)}
 						>

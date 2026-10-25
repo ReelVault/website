@@ -125,7 +125,7 @@ function AdminHeader() {
 	const activeWorkers = statsQuery.data?.workers?.active ?? 0;
 
 	return (
-		<header className="sticky top-0 z-10 border-border/80 border-b bg-background/95 backdrop-blur-sm">
+		<header className="border-border/80 bg-background/95 sticky top-0 z-10 border-b backdrop-blur-sm">
 			<PageContainer className="flex min-h-14 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
 				<div className="flex min-w-0 items-center gap-3">
 					<SidebarTrigger />
@@ -163,7 +163,7 @@ function AdminHeader() {
 					{activeWorkers > 0 && (
 						<Link
 							to="/admin/worker"
-							className="hidden items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-primary text-xs transition-colors hover:bg-primary/20 md:flex"
+							className="border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 hidden items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors md:flex"
 						>
 							<Zap className="size-3 animate-pulse" />
 							<span className="font-semibold tabular-nums">{activeWorkers}</span>
@@ -196,7 +196,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 		<RequireAdmin>
 			<SidebarProvider>
 				<AdminSidebar />
-				<main className="min-h-svh w-full min-w-0 bg-background">
+				<main className="bg-background min-h-svh w-full min-w-0">
 					<AdminHeader />
 					<PageContainer className="py-6 sm:py-8">{children}</PageContainer>
 				</main>

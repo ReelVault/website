@@ -22,20 +22,20 @@ function downloadUrl(fileName: string): string {
 
 export function DatabaseBackupCard({ backup, isPending, onDelete, onRestore, restorePending }: DatabaseBackupCardProps) {
 	return (
-		<div className="flex flex-col gap-3 rounded-xl border border-border/80 bg-card/60 p-4 transition-colors hover:border-primary/40 sm:flex-row sm:items-center sm:justify-between">
+		<div className="border-border/80 bg-card/60 hover:border-primary/40 flex flex-col gap-3 rounded-xl border p-4 transition-colors sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex items-center gap-3.5">
-				<div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+				<div className="border-primary/20 bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-lg border">
 					<Database className="size-4" />
 				</div>
 				<div className="min-w-0">
-					<h3 className="truncate font-mono font-semibold text-foreground text-sm">{backup.fileName}</h3>
-					<p className="mt-0.5 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
+					<h3 className="text-foreground truncate font-mono text-sm font-semibold">{backup.fileName}</h3>
+					<p className="text-muted-foreground mt-0.5 flex flex-wrap items-center gap-2 text-xs">
 						<span className="flex items-center gap-1">
 							<Clock className="size-3" />
 							{formatFullDateTime(backup.createdAt)}
 						</span>
 						<span>{m.common_dot_separator()}</span>
-						<span className="font-mono text-foreground">{formatFileSize(backup.sizeBytes)}</span>
+						<span className="text-foreground font-mono">{formatFileSize(backup.sizeBytes)}</span>
 					</p>
 				</div>
 			</div>

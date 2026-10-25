@@ -19,19 +19,19 @@ export function FailedDownloadCard({
 	isRetrying: boolean;
 }) {
 	return (
-		<div className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-muted/20 p-4 sm:flex-row sm:items-center sm:justify-between">
+		<div className="border-border/60 bg-muted/20 flex flex-col gap-3 rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex min-w-0 items-center gap-3">
-				<div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-destructive/10 text-destructive">
+				<div className="bg-destructive/10 text-destructive flex size-9 shrink-0 items-center justify-center rounded-xl">
 					<Trash2 className="size-4" />
 				</div>
 				<div className="min-w-0">
 					<div className="flex items-center gap-2">
-						<p className="truncate font-semibold text-xs">{job.fileName}</p>
+						<p className="truncate text-xs font-semibold">{job.fileName}</p>
 						<Badge size="sm" variant="destructive">
 							{job.status === "cancelled" ? m.common_cancelled() : m.common_error()}
 						</Badge>
 					</div>
-					{job.errorCode && <p className="truncate text-destructive text-xs">{translateCode(job.errorCode, m.download_failed())}</p>}
+					{job.errorCode && <p className="text-destructive truncate text-xs">{translateCode(job.errorCode, m.download_failed())}</p>}
 				</div>
 			</div>
 

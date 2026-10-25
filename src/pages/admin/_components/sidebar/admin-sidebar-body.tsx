@@ -65,12 +65,12 @@ export function AdminSidebarBody() {
 				</Link>
 				<div className="relative group-data-[collapsible=icon]:hidden">
 					<SidebarInput placeholder={m.admin_sidebar_search_placeholder()} value={searchQuery} onChange={handleSearchChange} leadingIcon />
-					<Search className="pointer-events-none absolute top-2.5 left-2.5 size-4 text-muted-foreground" />
+					<Search className="text-muted-foreground pointer-events-none absolute top-2.5 left-2.5 size-4" />
 					<button
 						type="button"
 						aria-label={m.components_search_clear()}
 						onClick={handleClearSearch}
-						className="absolute top-2.5 right-2.5 p-0.5 text-muted-foreground transition-colors hover:text-foreground"
+						className="text-muted-foreground hover:text-foreground absolute top-2.5 right-2.5 p-0.5 transition-colors"
 					>
 						<X className="size-4" />
 					</button>
@@ -106,7 +106,7 @@ export function AdminSidebarBody() {
 					))
 				) : (
 					<div className="flex flex-col items-center justify-center gap-2 px-4 py-8 text-center">
-						<Search className="size-5 text-muted-foreground/50" />
+						<Search className="text-muted-foreground/50 size-5" />
 						<p className="text-muted-foreground text-xs">{m.admin_sidebar_no_results({ searchQuery })}</p>
 					</div>
 				)}

@@ -51,18 +51,18 @@ export function DetailsHeaderMenu({
 			<DropdownMenuContent align="start" className="w-64">
 				<DropdownMenuGroup>
 					<DropdownMenuItem onClick={onCopyLink} className="cursor-pointer">
-						<Share2 className="size-4 text-muted-foreground" />
+						<Share2 className="text-muted-foreground size-4" />
 						<span>{m.web_share()}</span>
 					</DropdownMenuItem>
 					{playableMediaFileId && (
 						<DropdownMenuItem onClick={() => detach(resetProgress(playableMediaFileId, "title"))} className="cursor-pointer">
-							<RotateCcw className="size-4 text-muted-foreground" />
+							<RotateCcw className="text-muted-foreground size-4" />
 							<span>{m.web_reset_title_progress()}</span>
 						</DropdownMenuItem>
 					)}
 					{playableMediaFileId && (
 						<DropdownMenuItem onClick={onDownloadOpen} className="cursor-pointer">
-							<Download className="size-4 text-primary" />
+							<Download className="text-primary size-4" />
 							<span>{m.player_download_offline_mp4()}</span>
 						</DropdownMenuItem>
 					)}
@@ -84,23 +84,23 @@ export function DetailsHeaderMenu({
 								render={<Link to="/admin/metadata/$id" params={{ id: metadataId }} />}
 								className="cursor-pointer"
 							>
-								<Pencil className="size-4 text-primary" />
+								<Pencil className="text-primary size-4" />
 								<span>{m.common_edit()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={onRefreshMetadata} className="cursor-pointer">
-								<RefreshCw className="size-4 text-primary" />
+								<RefreshCw className="text-primary size-4" />
 								<span>{m.components_metadata_card_refresh_metadata()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={onRefreshImages} className="cursor-pointer">
-								<ImageDown className="size-4 text-primary" />
+								<ImageDown className="text-primary size-4" />
 								<span>{m.components_metadata_card_force_artwork()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={onIdentifyOpen} className="cursor-pointer">
-								<Search className="size-4 text-primary" />
+								<Search className="text-primary size-4" />
 								<span>{m.components_metadata_card_change_match()}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={onCopyId} className="cursor-pointer">
-								<Copy className="size-4 text-muted-foreground" />
+								<Copy className="text-muted-foreground size-4" />
 								<span>{m.common_copy_id()}</span>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>

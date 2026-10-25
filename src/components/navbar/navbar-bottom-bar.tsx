@@ -18,7 +18,7 @@ export function NavbarBottomBar({ pathname }: NavbarBottomBarProps) {
 	const primaryLinks = filterHiddenPages(NAVBAR_LINKS, hiddenPages).slice(0, PRIMARY_MOBILE_LINK_COUNT);
 
 	return (
-		<div className="fixed inset-x-0 bottom-0 z-40 border-border border-t bg-background/90 backdrop-blur-md md:hidden">
+		<div className="border-border bg-background/90 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-md md:hidden">
 			<div className="mx-auto flex max-w-md items-stretch gap-1 px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))]">
 				{primaryLinks.map(({ label, href, icon: Icon }) => {
 					const isActive = isLinkActive(href);
@@ -40,7 +40,7 @@ export function NavbarBottomBar({ pathname }: NavbarBottomBarProps) {
 				})}
 				<button
 					type="button"
-					className="flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-muted-foreground text-xs transition-colors hover:bg-muted/40 hover:text-foreground"
+					className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-xs transition-colors"
 					onClick={() => setNavbarMobileMenuOpen(true)}
 				>
 					<Ellipsis className="size-5" aria-hidden="true" />

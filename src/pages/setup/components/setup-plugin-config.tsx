@@ -53,7 +53,7 @@ function SetupPluginConfigFields({
 				event.preventDefault();
 				detach(() => updateConfig(formValues));
 			}}
-			className="flex flex-col gap-3 rounded-md border border-border bg-background/60 p-3"
+			className="border-border bg-background/60 flex flex-col gap-3 rounded-md border p-3"
 		>
 			<div className="grid grid-cols-1 gap-3">
 				{configDetails.fields.map((field) => (

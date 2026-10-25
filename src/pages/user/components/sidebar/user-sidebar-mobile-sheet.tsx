@@ -23,7 +23,7 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 				render={
 					<button
 						type="button"
-						className="flex min-h-12 w-16 shrink-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-muted-foreground text-xs transition-colors hover:bg-muted/40 hover:text-foreground lg:hidden"
+						className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex min-h-12 w-16 shrink-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-xs transition-colors lg:hidden"
 						aria-label={m.user_profile_and_account()}
 						onClick={() => onOpenChange(true)}
 					/>
@@ -40,13 +40,13 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 				<div className="flex flex-col gap-1 px-4 pb-6">
 					{isLoading ? <Skeleton className="h-14" /> : <SidebarProfileCard profile={profile} account={account} />}
 					<SheetClose render={<Link to="/auth/profiles" />}>
-						<span className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-muted-foreground text-sm hover:bg-muted/60 hover:text-foreground">
+						<span className="text-muted-foreground hover:bg-muted/60 hover:text-foreground flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm">
 							<RotateCcw className="size-4.5" />
 							{m.user_switch_profile()}
 						</span>
 					</SheetClose>
 					<SheetClose render={<Link to="/" />}>
-						<span className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-muted-foreground text-sm hover:bg-muted/60 hover:text-foreground">
+						<span className="text-muted-foreground hover:bg-muted/60 hover:text-foreground flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm">
 							<House className="size-4.5" />
 							{m.user_back_to_service()}
 						</span>
@@ -57,7 +57,7 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 						confirmLabel={m.components_navbar_log_out()}
 						onConfirm={onLogout}
 						onError={() => toast.error(m.components_navbar_logout_failed())}
-						className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-muted-foreground text-sm transition-colors hover:bg-destructive/30 hover:text-destructive"
+						className="text-muted-foreground hover:bg-destructive/30 hover:text-destructive flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors"
 					>
 						<LogOut className="size-4.5" />
 						{m.components_navbar_log_out()}

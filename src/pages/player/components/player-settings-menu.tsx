@@ -80,10 +80,10 @@ function PreferenceRow({
 			aria-pressed={checked}
 			disabled={disabled}
 			onClick={onToggle}
-			className="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left text-sm transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
+			className="hover:bg-accent flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left text-sm transition-colors disabled:pointer-events-none disabled:opacity-50"
 		>
 			{label}
-			{checked && <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />}
+			{checked && <Check className="text-primary size-4 shrink-0" aria-hidden="true" />}
 		</button>
 	);
 }
@@ -104,11 +104,11 @@ function SpeedSlider({
 
 	return (
 		<div className={cn("relative flex h-10 items-center sm:h-8", className)}>
-			<div className="relative z-0 h-1.25 w-full rounded-sm bg-foreground/30">
-				<div className="absolute inset-y-0 left-0 rounded-sm bg-primary transition-[width]" style={{ width: `${fillPercent}%` }} />
+			<div className="bg-foreground/30 relative z-0 h-1.25 w-full rounded-sm">
+				<div className="bg-primary absolute inset-y-0 left-0 rounded-sm transition-[width]" style={{ width: `${fillPercent}%` }} />
 				<div className="absolute inset-0 flex items-center justify-between px-0">
 					{PLAYBACK_SPEED_STEPS.map((step) => (
-						<div key={step} className="h-1.5 w-0.5 bg-muted-foreground opacity-60" />
+						<div key={step} className="bg-muted-foreground h-1.5 w-0.5 opacity-60" />
 					))}
 				</div>
 			</div>
@@ -119,7 +119,7 @@ function SpeedSlider({
 				step={0.25}
 				value={playbackRate}
 				aria-label={m.player_speed_playback_playbackrate_2({ playbackRate })}
-				className="absolute inset-0 z-10 h-full w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-foreground [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-foreground"
+				className="[&::-moz-range-thumb]:bg-foreground [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-foreground absolute inset-0 z-10 h-full w-full cursor-pointer appearance-none bg-transparent [&::-moz-range-progress]:bg-transparent [&::-moz-range-thumb]:size-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:size-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border"
 				onChange={(e) => onRateChange(Number(e.target.value))}
 			/>
 		</div>
@@ -197,8 +197,8 @@ export function PlayerSettingsMenu({
 				<div className="flex flex-col gap-5 overflow-y-auto px-1 pb-6">
 					{availableVersions.length > 1 && (
 						<section className="flex flex-col gap-1">
-							<p className="flex items-center gap-1.5 px-1 font-bold text-muted-foreground text-xs uppercase tracking-wider">
-								<Layers className="size-3.5 text-primary" />
+							<p className="text-muted-foreground flex items-center gap-1.5 px-1 text-xs font-bold tracking-wider uppercase">
+								<Layers className="text-primary size-3.5" />
 								{m.player_version_named({ count: availableVersions.length })}
 							</p>
 							{availableVersions.map((file, idx) => {
@@ -212,18 +212,18 @@ export function PlayerSettingsMenu({
 										type="button"
 										onClick={() => selectVersion(file.id)}
 										className={cn(
-											"flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-accent",
+											"hover:bg-accent flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-left transition-colors",
 											isSelected && "bg-primary/10",
 										)}
 									>
 										<span className="flex flex-col gap-0.5">
-											<span className="flex items-center gap-1.5 font-medium text-sm">
+											<span className="flex items-center gap-1.5 text-sm font-medium">
 												{label}
-												{file.isDefault && <span className="text-[10px] text-primary">{m.web_default()}</span>}
+												{file.isDefault && <span className="text-primary text-[10px]">{m.web_default()}</span>}
 											</span>
 											{meta && <span className="text-muted-foreground text-xs">{meta}</span>}
 										</span>
-										{isSelected && <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />}
+										{isSelected && <Check className="text-primary size-4 shrink-0" aria-hidden="true" />}
 									</button>
 								);
 							})}
@@ -231,7 +231,7 @@ export function PlayerSettingsMenu({
 					)}
 
 					<section className="flex flex-col gap-1">
-						<p className="px-1 font-bold text-muted-foreground text-xs uppercase tracking-wider">
+						<p className="text-muted-foreground px-1 text-xs font-bold tracking-wider uppercase">
 							{m.player_quality_label({ activeQualityLabel })}
 						</p>
 						{QUALITY_OPTIONS.map((option) => {
@@ -243,19 +243,19 @@ export function PlayerSettingsMenu({
 									type="button"
 									onClick={() => selectQuality(option.value)}
 									className={cn(
-										"flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left font-medium text-sm transition-colors hover:bg-accent",
+										"hover:bg-accent flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left text-sm font-medium transition-colors",
 										isSelected && "bg-primary/10",
 									)}
 								>
 									{option.label}
-									{isSelected && <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />}
+									{isSelected && <Check className="text-primary size-4 shrink-0" aria-hidden="true" />}
 								</button>
 							);
 						})}
 					</section>
 
 					<section className="flex flex-col gap-2">
-						<p className="px-1 font-bold text-muted-foreground text-xs uppercase tracking-wider">
+						<p className="text-muted-foreground px-1 text-xs font-bold tracking-wider uppercase">
 							{m.player_speed_playback_playbackrate({ playbackRate })}
 						</p>
 						<SpeedSlider playbackRate={playbackRate} onRateChange={(rate) => actions.setPlaybackRate(rate)} className="mx-1" />
@@ -281,9 +281,9 @@ export function PlayerSettingsMenu({
 							<button
 								type="button"
 								onClick={onOpenEqualizer}
-								className="flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-left text-sm transition-colors hover:bg-accent"
+								className="hover:bg-accent flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-left text-sm transition-colors"
 							>
-								<SlidersHorizontal className="size-4 text-muted-foreground" />
+								<SlidersHorizontal className="text-muted-foreground size-4" />
 								{m.player_audio_equalizer()}
 							</button>
 						</section>
@@ -293,20 +293,20 @@ export function PlayerSettingsMenu({
 						<button
 							type="button"
 							onClick={() => onShortcutsDisabledChange?.(!shortcutsDisabled)}
-							className="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left text-sm transition-colors hover:bg-accent"
+							className="hover:bg-accent flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 text-left text-sm transition-colors"
 						>
 							<span className="flex items-center gap-2.5">
-								<Keyboard className="size-4 text-muted-foreground" />
+								<Keyboard className="text-muted-foreground size-4" />
 								{m.player_shortcuts_enabled_status()}
 							</span>
-							{!shortcutsDisabled && <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />}
+							{!shortcutsDisabled && <Check className="text-primary size-4 shrink-0" aria-hidden="true" />}
 						</button>
 						<button
 							type="button"
 							onClick={handleOpenShortcuts}
-							className="flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-left text-sm transition-colors hover:bg-accent"
+							className="hover:bg-accent flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-left text-sm transition-colors"
 						>
-							<Keyboard className="size-4 text-muted-foreground" />
+							<Keyboard className="text-muted-foreground size-4" />
 							{m.player_list_shortcut_key()}
 						</button>
 					</section>
@@ -341,7 +341,7 @@ export function PlayerSettingsMenu({
 							<>
 								<DropdownMenuRadioGroup value={info.mediaFileId} onValueChange={(newId) => selectVersion(String(newId))}>
 									<DropdownMenuLabel className="flex items-center">
-										<Layers className="size-3.5 text-primary" />
+										<Layers className="text-primary size-3.5" />
 										<span>{m.player_version_named({ count: availableVersions.length })}</span>
 									</DropdownMenuLabel>
 									{availableVersions.map((file, idx) => {
@@ -351,9 +351,9 @@ export function PlayerSettingsMenu({
 										return (
 											<DropdownMenuRadioItem key={file.id} value={file.id} className="cursor-pointer">
 												<div className="flex flex-col gap-0.5">
-													<div className="flex items-center gap-1.5 font-medium text-sm">
+													<div className="flex items-center gap-1.5 text-sm font-medium">
 														<span>{label}</span>
-														{file.isDefault && <span className="text-[10px] text-primary">{m.web_default()}</span>}
+														{file.isDefault && <span className="text-primary text-[10px]">{m.web_default()}</span>}
 													</div>
 													{meta && <span className="text-muted-foreground text-xs">{meta}</span>}
 												</div>
@@ -405,7 +405,7 @@ export function PlayerSettingsMenu({
 						<DropdownMenuGroup>
 							{onOpenEqualizer && (
 								<DropdownMenuItem onClick={onOpenEqualizer} className="cursor-pointer">
-									<SlidersHorizontal className="size-4 text-muted-foreground" />
+									<SlidersHorizontal className="text-muted-foreground size-4" />
 									<span>{m.player_audio_equalizer()}</span>
 								</DropdownMenuItem>
 							)}
@@ -417,11 +417,11 @@ export function PlayerSettingsMenu({
 								onCheckedChange={(checked) => onShortcutsDisabledChange?.(!checked)}
 								className="cursor-pointer"
 							>
-								<Keyboard className="size-4 text-muted-foreground" />
+								<Keyboard className="text-muted-foreground size-4" />
 								<span>{m.player_shortcuts_enabled_status()}</span>
 							</DropdownMenuCheckboxItem>
 							<DropdownMenuItem onClick={handleOpenShortcuts} className="cursor-pointer">
-								<Keyboard className="size-4 text-muted-foreground" />
+								<Keyboard className="text-muted-foreground size-4" />
 								<span>{m.player_list_shortcut_key()}</span>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>

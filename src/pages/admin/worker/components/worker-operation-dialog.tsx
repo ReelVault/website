@@ -89,7 +89,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 				<FullscreenDialogHeader className="border-b">
 					<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 						<div className="flex items-center gap-3">
-							<div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
+							<div className="border-primary/20 bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-xl border">
 								<ListTree className="size-5" />
 							</div>
 							<div>
@@ -120,7 +120,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 							disabled={isLoading}
 							className="shrink-0"
 						>
-							<RotateCcw className={cn("size-3.5", isLoading && "animate-spin text-primary")} />
+							<RotateCcw className={cn("size-3.5", isLoading && "text-primary animate-spin")} />
 							<span>{m.common_refresh()}</span>
 						</Button>
 					</div>
@@ -149,9 +149,9 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 					{!isLoading && isError && <AppErrorState error={query.error} onRetry={() => detach(refetch())} />}
 
 					{!(isLoading || isError) && items.length === 0 && (
-						<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-10 text-center">
-							<p className="font-medium text-foreground text-xs">{m.admin_worker_no_matching_jobs()}</p>
-							<p className="mt-0.5 text-muted-foreground text-xs">
+						<div className="border-border/70 bg-card/30 flex flex-col items-center justify-center rounded-xl border border-dashed p-10 text-center">
+							<p className="text-foreground text-xs font-medium">{m.admin_worker_no_matching_jobs()}</p>
+							<p className="text-muted-foreground mt-0.5 text-xs">
 								{total === 0 ? m.admin_worker_no_registered_items() : m.admin_worker_no_jobs_match()}
 							</p>
 						</div>
@@ -159,7 +159,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 
 					{!(isLoading || isError) && items.length > 0 && (
 						<div className="flex flex-col gap-3">
-							<div className="overflow-hidden rounded-xl border border-border/60 bg-card/40">
+							<div className="border-border/60 bg-card/40 overflow-hidden rounded-xl border">
 								<Table>
 									<TableHeader>
 										<TableRow className="border-b">
@@ -171,7 +171,7 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 											<TableHead className="w-24 text-right" />
 										</TableRow>
 									</TableHeader>
-									<TableBody className="divide-y divide-border/40">
+									<TableBody className="divide-border/40 divide-y">
 										{items.map((item) => (
 											<OperationItemRow
 												key={item.id}

@@ -27,7 +27,7 @@ export function NavbarDownloadsIndicator() {
 			className="relative"
 		>
 			<Download data-icon="inline-start" aria-hidden="true" />
-			<span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 rounded bg-primary px-1 font-semibold text-primary-foreground text-xs tabular-nums">
+			<span className="bg-primary text-primary-foreground absolute -bottom-0.5 left-1/2 -translate-x-1/2 rounded px-1 text-xs font-semibold tabular-nums">
 				{m.common_percent_value({ value: averagePercent })}
 			</span>
 		</Button>

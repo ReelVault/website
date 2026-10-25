@@ -22,7 +22,7 @@ export function DiscoverRow({ title, description, items }: DiscoverRowProps) {
 						<h2 id={`discovery-${title}`}>{title}</h2>
 						<p>{description}</p>
 					</div>
-					<span className="font-mono text-muted-foreground text-xs tabular-nums">{items.length.toString().padStart(2, "0")}</span>
+					<span className="text-muted-foreground font-mono text-xs tabular-nums">{items.length.toString().padStart(2, "0")}</span>
 				</div>
 				<div className="poster-shelf mt-7">
 					{items.map((item) => (

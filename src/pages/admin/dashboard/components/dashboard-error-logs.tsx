@@ -35,9 +35,9 @@ export function DashboardErrorLogs() {
 	} else if (logs.length === 0) {
 		logsContent = (
 			<div className="flex flex-col items-center justify-center py-10 text-center">
-				<CheckCircle2 className="size-8 text-success" />
-				<p className="mt-3 font-semibold text-foreground text-sm">{m.admin_dashboard_no_log_errors()}</p>
-				<p className="mt-1 text-muted-foreground text-xs">{m.admin_dashboard_server_healthy()}</p>
+				<CheckCircle2 className="text-success size-8" />
+				<p className="text-foreground mt-3 text-sm font-semibold">{m.admin_dashboard_no_log_errors()}</p>
+				<p className="text-muted-foreground mt-1 text-xs">{m.admin_dashboard_server_healthy()}</p>
 			</div>
 		);
 	} else {
@@ -58,12 +58,12 @@ export function DashboardErrorLogs() {
 							)}
 						>
 							<div className="flex items-center justify-between gap-2 text-xs">
-								<span className={isError ? "min-w-0 truncate font-bold text-destructive" : "min-w-0 truncate font-bold text-warning"}>
+								<span className={isError ? "text-destructive min-w-0 truncate font-bold" : "text-warning min-w-0 truncate font-bold"}>
 									{m.admin_dashboard_log_source_line({ level: log.levelName.toUpperCase(), module: log.module ?? "system" })}
 								</span>
-								<span className="shrink-0 text-muted-foreground">{logTimeFormatter.format(new Date(log.timestamp))}</span>
+								<span className="text-muted-foreground shrink-0">{logTimeFormatter.format(new Date(log.timestamp))}</span>
 							</div>
-							<p className="truncate text-foreground text-xs">{log.msg ?? m.admin_dashboard_no_error_message()}</p>
+							<p className="text-foreground truncate text-xs">{log.msg ?? m.admin_dashboard_no_error_message()}</p>
 						</div>
 					);
 				})}

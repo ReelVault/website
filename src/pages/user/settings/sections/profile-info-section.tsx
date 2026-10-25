@@ -78,12 +78,12 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 				<div className="flex flex-col items-center gap-10 sm:flex-row">
 					<AvatarPicker currentAvatar={profile.avatarUrl ?? undefined} onSave={handleAvatarSave} onUpload={handleAvatarUpload} />
 					<div className="text-center sm:text-left">
-						<h1 className="font-bold text-2xl tracking-tight">{profile.name}</h1>
-						<p className="mt-2 flex items-center justify-center gap-2 font-medium text-muted-foreground text-xs sm:justify-start">
-							<ShieldCheck aria-hidden="true" className="size-4 text-primary" />
+						<h1 className="text-2xl font-bold tracking-tight">{profile.name}</h1>
+						<p className="text-muted-foreground mt-2 flex items-center justify-center gap-2 text-xs font-medium sm:justify-start">
+							<ShieldCheck aria-hidden="true" className="text-primary size-4" />
 							{m.user_active_profile()}
 						</p>
-						<p className="mt-4 max-w-md text-muted-foreground text-sm leading-relaxed">{m.user_profile_avatar_hint()}</p>
+						<p className="text-muted-foreground mt-4 max-w-md text-sm leading-relaxed">{m.user_profile_avatar_hint()}</p>
 					</div>
 				</div>
 
@@ -143,7 +143,7 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 				</Field>
 			</div>
 
-			<div className="mt-12 flex items-center justify-end border-border border-t pt-8">
+			<div className="border-border mt-12 flex items-center justify-end border-t pt-8">
 				<AsyncButton
 					type="submit"
 					disabled={!hasChanges || hasPartialPin}

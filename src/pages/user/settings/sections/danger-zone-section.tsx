@@ -13,11 +13,11 @@ export function DangerZoneSection({ profileName, onDelete }: DangerZoneSectionPr
 	return (
 		<UserSurface className="border-destructive/40 bg-card/60">
 			<div className="flex items-center gap-3">
-				<span className="flex size-9 items-center justify-center rounded-xl bg-destructive/15 text-destructive text-sm">
+				<span className="bg-destructive/15 text-destructive flex size-9 items-center justify-center rounded-xl text-sm">
 					<Trash2 className="size-4" aria-hidden="true" />
 				</span>
 				<div>
-					<h3 className="font-bold text-foreground text-sm">{m.user_danger_zone()}</h3>
+					<h3 className="text-foreground text-sm font-bold">{m.user_danger_zone()}</h3>
 					<p className="text-muted-foreground text-xs">{m.user_profile_deletion_irreversible()}</p>
 				</div>
 			</div>

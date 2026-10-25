@@ -84,7 +84,7 @@ export function WatchlistGrid({ metadata }: { metadata: WatchlistItem[] }) {
 							<SelectItem value="year">{m.web_watchlist_sort_year()}</SelectItem>
 						</SelectContent>
 					</Select>
-					<p className="hidden px-4 text-muted-foreground text-sm sm:block">{m.common_items_count({ count: filteredMetadata.length })}</p>
+					<p className="text-muted-foreground hidden px-4 text-sm sm:block">{m.common_items_count({ count: filteredMetadata.length })}</p>
 				</div>
 			</div>
 

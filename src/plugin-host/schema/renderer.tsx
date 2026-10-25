@@ -160,7 +160,7 @@ function SchemaNodeView({ node, scope, runtime }: SchemaNodeProps<PluginSchemaNo
 			return <SchemaTextNode node={node} scope={scope} runtime={runtime} />;
 		case "code":
 			return (
-				<pre className="wrap-break-word max-h-80 overflow-auto whitespace-pre-wrap rounded-md border bg-muted/40 p-3 font-mono text-xs">
+				<pre className="bg-muted/40 max-h-80 overflow-auto rounded-md border p-3 font-mono text-xs wrap-break-word whitespace-pre-wrap">
 					{resolveLabel(node.text, scope)}
 				</pre>
 			);
@@ -218,7 +218,7 @@ function SchemaCardNode({ node, scope, runtime }: SchemaNodeProps<"card">) {
 function SchemaSectionNode({ node, scope, runtime }: SchemaNodeProps<"section">) {
 	return (
 		<section className="flex flex-col gap-3">
-			{node.title ? <h2 className="font-semibold text-lg">{resolveLabel(node.title, scope)}</h2> : null}
+			{node.title ? <h2 className="text-lg font-semibold">{resolveLabel(node.title, scope)}</h2> : null}
 			{node.description ? <p className="text-muted-foreground text-sm">{resolveLabel(node.description, scope)}</p> : null}
 			<SchemaNodes nodes={node.children} scope={scope} runtime={runtime} />
 		</section>
@@ -246,9 +246,9 @@ function SchemaTabsNode({ node, scope, runtime }: SchemaNodeProps<"tabs">) {
 
 function SchemaHeadingNode({ node, scope }: SchemaNodeProps<"heading">) {
 	return node.level === 3 ? (
-		<h3 className="font-semibold text-base">{resolveLabel(node.text, scope)}</h3>
+		<h3 className="text-base font-semibold">{resolveLabel(node.text, scope)}</h3>
 	) : (
-		<h2 className="font-semibold text-lg">{resolveLabel(node.text, scope)}</h2>
+		<h2 className="text-lg font-semibold">{resolveLabel(node.text, scope)}</h2>
 	);
 }
 
@@ -313,10 +313,10 @@ function SchemaStatsNode({ node, scope }: SchemaNodeProps<"stats">) {
 					<Card key={`stat-${index}`}>
 						<CardContent className="flex flex-col gap-1">
 							<div className="flex items-center justify-between">
-								<span className="text-muted-foreground text-xs uppercase tracking-wider">{resolveLabel(item.label, scope)}</span>
-								{item.icon ? <PluginIcon name={item.icon} className="size-4 text-primary" /> : null}
+								<span className="text-muted-foreground text-xs tracking-wider uppercase">{resolveLabel(item.label, scope)}</span>
+								{item.icon ? <PluginIcon name={item.icon} className="text-primary size-4" /> : null}
 							</div>
-							<span className="font-semibold text-2xl">{toDisplay(resolveExpression(item.value, scope))}</span>
+							<span className="text-2xl font-semibold">{toDisplay(resolveExpression(item.value, scope))}</span>
 						</CardContent>
 					</Card>
 				);
@@ -409,9 +409,9 @@ function SchemaForeachNode({ node, scope, runtime }: SchemaNodeProps<"foreach">)
 
 function SchemaEmptyNode({ node, scope }: SchemaNodeProps<"empty">) {
 	return (
-		<div className="rounded-lg border border-border border-dashed p-6 text-center">
-			<p className="font-medium text-sm">{resolveLabel(node.title ?? "Nothing here", scope)}</p>
-			{node.description ? <p className="mt-1 text-muted-foreground text-xs">{resolveLabel(node.description, scope)}</p> : null}
+		<div className="border-border rounded-lg border border-dashed p-6 text-center">
+			<p className="text-sm font-medium">{resolveLabel(node.title ?? "Nothing here", scope)}</p>
+			{node.description ? <p className="text-muted-foreground mt-1 text-xs">{resolveLabel(node.description, scope)}</p> : null}
 		</div>
 	);
 }

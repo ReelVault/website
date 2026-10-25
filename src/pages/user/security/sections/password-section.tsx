@@ -13,7 +13,7 @@ export function PasswordSection() {
 			<UserSectionTitle title={m.user_password_section_heading()} description={m.user_password_section_description()} />
 			<UserSurface className="flex items-center justify-between gap-4">
 				<div className="flex items-center gap-4">
-					<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+					<div className="bg-primary/10 text-primary flex size-12 shrink-0 items-center justify-center rounded-2xl">
 						<KeyRound className="size-6" />
 					</div>
 					<p className="text-muted-foreground text-xs">{m.user_change_password_description()}</p>

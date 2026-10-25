@@ -138,7 +138,7 @@ export default function AdminDownloadsPage() {
 				{downloads.length === 0 ? (
 					<AppEmptyState title={m.admin_downloads_no_jobs()} description={m.admin_downloads_empty()} />
 				) : (
-					<div className="divide-y divide-border/40 rounded-xl border border-border/60 bg-card/40">
+					<div className="divide-border/40 border-border/60 bg-card/40 divide-y rounded-xl border">
 						{downloads.map((job) => {
 							let statusVariant: "default" | "destructive" | "secondary" = "secondary";
 							if (job.status === "completed") {
@@ -151,14 +151,14 @@ export default function AdminDownloadsPage() {
 								<div key={job.id} className="flex items-center justify-between p-4">
 									<div className="flex flex-col gap-1">
 										<div className="flex flex-wrap items-center gap-2">
-											<span className="font-medium text-sm">{job.fileName ?? job.id}</span>
+											<span className="text-sm font-medium">{job.fileName ?? job.id}</span>
 											<Badge variant={statusVariant}>{job.status}</Badge>
 											<Badge variant="outline">{job.quality}</Badge>
-											<span className="font-mono text-muted-foreground text-xs">
+											<span className="text-muted-foreground font-mono text-xs">
 												{m.admin_downloads_profile_label({ id: job.profileId })}
 											</span>
 										</div>
-										<div className="flex items-center gap-3 text-muted-foreground text-xs">
+										<div className="text-muted-foreground flex items-center gap-3 text-xs">
 											{job.sizeBytes && (
 												<span>
 													{m.common_size_label()} {formatFileSize(job.sizeBytes)}

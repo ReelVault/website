@@ -41,8 +41,8 @@ export function MediaFileSubtitlesSection({
 					))}
 				</div>
 			) : (
-				<div className="flex items-center gap-3 rounded-xl border border-border/80 border-dashed bg-muted/20 p-4 text-muted-foreground text-xs">
-					<Subtitles className="size-4 shrink-0 text-muted-foreground/60" />
+				<div className="border-border/80 bg-muted/20 text-muted-foreground flex items-center gap-3 rounded-xl border border-dashed p-4 text-xs">
+					<Subtitles className="text-muted-foreground/60 size-4 shrink-0" />
 					<span>{m.admin_media_no_subtitle_tracks()}</span>
 				</div>
 			)}
@@ -56,19 +56,19 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 	const isEmbedded = subtitle.type === "embedded";
 
 	return (
-		<div className="flex flex-col gap-2 rounded-xl border border-border/80 bg-muted/20 p-3 text-xs">
+		<div className="border-border/80 bg-muted/20 flex flex-col gap-2 rounded-xl border p-3 text-xs">
 			<div className="flex flex-wrap items-center justify-between gap-2">
 				<div className="flex flex-wrap items-center gap-2">
 					<Badge weight="bold" variant="outline" size="sm" font="mono">
 						{subtitle.language || "UND"}
 					</Badge>
 
-					<span className="font-semibold text-foreground">
+					<span className="text-foreground font-semibold">
 						{subtitle.label ?? (isEmbedded ? m.admin_media_subtitle_label_embedded() : m.admin_media_subtitle_label_external())}
 					</span>
 
 					{subtitle.format && (
-						<span className="rounded-md border border-border/60 bg-background/60 px-1.5 py-0.5 font-mono text-muted-foreground text-xs">
+						<span className="border-border/60 bg-background/60 text-muted-foreground rounded-md border px-1.5 py-0.5 font-mono text-xs">
 							{subtitle.format}
 						</span>
 					)}
@@ -106,9 +106,9 @@ function SubtitleRow({ subtitle }: { subtitle: NonNullable<MediaFileWithRelation
 			</div>
 
 			{subtitle.filePath && (
-				<div className="mt-0.5 flex items-center justify-between gap-2 rounded-lg border border-border/50 bg-background/50 px-2.5 py-1.5">
-					<div className="flex min-w-0 items-center gap-1.5 font-mono text-muted-foreground text-xs">
-						<FileText className="size-3 shrink-0 text-primary" />
+				<div className="border-border/50 bg-background/50 mt-0.5 flex items-center justify-between gap-2 rounded-lg border px-2.5 py-1.5">
+					<div className="text-muted-foreground flex min-w-0 items-center gap-1.5 font-mono text-xs">
+						<FileText className="text-primary size-3 shrink-0" />
 						<span className="truncate" title={subtitle.filePath}>
 							{subtitle.filePath}
 						</span>

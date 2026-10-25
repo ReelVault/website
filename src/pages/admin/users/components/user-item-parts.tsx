@@ -17,15 +17,15 @@ export function UserSummary({ user }: { user: AdminUser }) {
 				<Link
 					to="/admin/users/$id"
 					params={{ id: user.id }}
-					className="truncate font-medium text-foreground hover:text-primary hover:underline"
+					className="text-foreground hover:text-primary truncate font-medium hover:underline"
 				>
 					{user.name}
 				</Link>
-				<span className="font-mono text-muted-foreground text-xs" title={m.admin_users_account_code({ id: user.id.slice(0, 8) })}>
+				<span className="text-muted-foreground font-mono text-xs" title={m.admin_users_account_code({ id: user.id.slice(0, 8) })}>
 					{m.admin_users_id_short({ id: user.id.slice(0, 8) })}
 				</span>
 			</div>
-			<p className="truncate text-muted-foreground text-xs">{user.email}</p>
+			<p className="text-muted-foreground truncate text-xs">{user.email}</p>
 		</div>
 	);
 }
@@ -34,7 +34,7 @@ export function UserStatus({ user }: { user: AdminUser }) {
 	return (
 		<div className="flex min-w-0 flex-col items-start gap-1">
 			<StatusBadge status={user.banned ? "error" : "success"} label={user.banned ? m.admin_users_blocked_status() : m.common_active()} />
-			{user.banned && user.banReason && <p className="max-w-48 truncate text-muted-foreground text-xs">{user.banReason}</p>}
+			{user.banned && user.banReason && <p className="text-muted-foreground max-w-48 truncate text-xs">{user.banReason}</p>}
 		</div>
 	);
 }

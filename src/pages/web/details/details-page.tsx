@@ -83,7 +83,7 @@ export default function DetailsByIdPage() {
 	}
 
 	return (
-		<div className="relative min-h-screen bg-background text-foreground">
+		<div className="bg-background text-foreground relative min-h-screen">
 			<DetailsHeader metadata={metadata} isAdmin={isAdmin} />
 
 			<PageContainer className="relative flex flex-col gap-16 py-16 lg:gap-24">

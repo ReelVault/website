@@ -31,7 +31,7 @@ function PluginVersionRow({ version, isLatest, isInstalled, isBusy, onInstall }:
 	return (
 		<Collapsible open={expanded}>
 			<CollapsibleTrigger type="button" variant="row" onClick={() => setExpanded((value) => !value)}>
-				<span className="font-mono font-semibold text-sm">{m.common_version_badge({ version: version.version })}</span>
+				<span className="font-mono text-sm font-semibold">{m.common_version_badge({ version: version.version })}</span>
 				{version.date && <span className="text-muted-foreground text-sm">{formatDateTime(version.date)}</span>}
 				{isLatest && (
 					<Badge variant="secondary" size="count">
@@ -43,11 +43,11 @@ function PluginVersionRow({ version, isLatest, isInstalled, isBusy, onInstall }:
 						{m.admin_plugins_catalog_version_installed()}
 					</Badge>
 				)}
-				<ChevronDown className={cn("ml-auto size-4 shrink-0 text-muted-foreground transition-transform", !expanded && "-rotate-90")} />
+				<ChevronDown className={cn("text-muted-foreground ml-auto size-4 shrink-0 transition-transform", !expanded && "-rotate-90")} />
 			</CollapsibleTrigger>
 			<CollapsibleContent>
 				<div className="flex flex-col gap-3 px-4 pb-4">
-					{version.changelog && <p className="wrap-break-word whitespace-pre-line text-muted-foreground text-sm">{version.changelog}</p>}
+					{version.changelog && <p className="text-muted-foreground text-sm wrap-break-word whitespace-pre-line">{version.changelog}</p>}
 					{!isInstalled && (
 						<Button variant="outline" size="sm" disabled={isBusy} onClick={() => onInstall(version.version)} className="self-start">
 							<Download className="size-3.5" />
@@ -68,11 +68,11 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 	return (
 		<div className="flex flex-col gap-8">
 			<header className="flex items-start gap-4">
-				<div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary/10 text-primary">
+				<div className="bg-primary/10 text-primary flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl">
 					{entry.iconUrl ? <img src={entry.iconUrl} alt="" className="size-full object-contain p-2" /> : <Puzzle className="size-6" />}
 				</div>
 				<div className="flex min-w-0 flex-col gap-1.5">
-					<h1 className="font-extrabold font-heading text-3xl tracking-tight sm:text-4xl">{entry.name}</h1>
+					<h1 className="font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">{entry.name}</h1>
 					<p className="text-muted-foreground text-sm">
 						{entry.installedVersion ? `${m.admin_plugins_catalog_installed_label({ version: entry.installedVersion })} · ` : ""}
 						{m.admin_plugins_catalog_installed_version({ version: entry.version })}
@@ -83,7 +83,7 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 			</header>
 
 			<section className="flex flex-col gap-4">
-				{entry.description && <p className="text-base text-muted-foreground leading-relaxed">{entry.description}</p>}
+				{entry.description && <p className="text-muted-foreground text-base leading-relaxed">{entry.description}</p>}
 
 				<div className="flex flex-wrap items-center gap-2">
 					<Badge variant="secondary">{pluginCatalogCategoryLabel(entry.category)}</Badge>
@@ -102,16 +102,16 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 			</section>
 
 			{entry.changelog && (
-				<section className="rounded-xl border bg-muted/40 p-4">
-					<h2 className="font-semibold text-sm">{m.admin_plugins_catalog_changelog()}</h2>
-					<p className="wrap-break-word mt-2 whitespace-pre-line text-muted-foreground text-sm">{entry.changelog}</p>
+				<section className="bg-muted/40 rounded-xl border p-4">
+					<h2 className="text-sm font-semibold">{m.admin_plugins_catalog_changelog()}</h2>
+					<p className="text-muted-foreground mt-2 text-sm wrap-break-word whitespace-pre-line">{entry.changelog}</p>
 				</section>
 			)}
 
 			{(entry.versions?.length ?? 0) > 0 && (
 				<section className="flex flex-col gap-2">
-					<h2 className="font-semibold text-sm">{m.admin_plugins_catalog_revision_history()}</h2>
-					<div className="divide-y divide-border/60 overflow-hidden rounded-xl border bg-muted/20">
+					<h2 className="text-sm font-semibold">{m.admin_plugins_catalog_revision_history()}</h2>
+					<div className="divide-border/60 bg-muted/20 divide-y overflow-hidden rounded-xl border">
 						{entry.versions?.map((version) => (
 							<PluginVersionRow
 								key={version.version}
@@ -127,7 +127,7 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 			)}
 
 			<section className="flex flex-col gap-2">
-				<h2 className="font-semibold text-sm">{m.admin_plugins_catalog_capabilities()}</h2>
+				<h2 className="text-sm font-semibold">{m.admin_plugins_catalog_capabilities()}</h2>
 				<div className="flex flex-wrap gap-1.5">
 					{(entry.capabilities ?? []).map((capability) => (
 						<Badge key={capability} variant="outline" font="mono">
@@ -138,12 +138,12 @@ export function PluginCatalogDetail({ entry, isBusy, onInstall, onUninstall }: P
 				</div>
 			</section>
 
-			<div className="flex items-start gap-2 rounded-xl border border-warning/30 bg-warning/10 p-4 text-sm text-warning">
+			<div className="border-warning/30 bg-warning/10 text-warning flex items-start gap-2 rounded-xl border p-4 text-sm">
 				<AlertTriangle className="mt-0.5 size-4 shrink-0" />
 				<span>{m.admin_plugins_catalog_trust_warning()}</span>
 			</div>
 
-			<div className="flex flex-col-reverse gap-3 border-border/60 border-t pt-5 sm:flex-row sm:justify-end">
+			<div className="border-border/60 flex flex-col-reverse gap-3 border-t pt-5 sm:flex-row sm:justify-end">
 				{isInstalled ? (
 					<ConfirmAction
 						trigger={

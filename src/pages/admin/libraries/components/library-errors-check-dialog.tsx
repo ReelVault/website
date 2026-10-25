@@ -44,9 +44,9 @@ export function LibraryErrorsCheckDialog({ operationId, isOpen, onOpenChange }: 
 				) : (
 					<ul className="flex max-h-[60vh] flex-col gap-2 overflow-y-auto">
 						{listedFiles.map((file) => (
-							<li key={file.filePath} className="flex flex-col gap-1 rounded-lg border border-border p-3">
-								<span className="break-all font-mono text-xs">{file.filePath}</span>
-								<span className="whitespace-pre-wrap break-words text-muted-foreground text-xs">
+							<li key={file.filePath} className="border-border flex flex-col gap-1 rounded-lg border p-3">
+								<span className="font-mono text-xs break-all">{file.filePath}</span>
+								<span className="text-muted-foreground text-xs break-words whitespace-pre-wrap">
 									{file.errors.slice(0, MESSAGE_PREVIEW_LENGTH)}
 								</span>
 							</li>

@@ -53,7 +53,7 @@ export function RemoteSessionsListSection({
 								: "border-border/70 bg-card/70 hover:border-primary/40",
 						)}
 					>
-						<div className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary/10 text-primary">
+						<div className="bg-primary/10 text-primary relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl">
 							{session.posterImageId ? (
 								<ApiImage
 									fileId={session.posterImageId}
@@ -69,14 +69,14 @@ export function RemoteSessionsListSection({
 						</div>
 						<div className="min-w-0 flex-1">
 							<h2 className="truncate font-bold">{session.title ?? m.common_playback()}</h2>
-							<p className="mt-1 text-muted-foreground text-xs">
+							<p className="text-muted-foreground mt-1 text-xs">
 								{m.user_remote_mode_activity({
 									mode: session.mode === "transcode" ? m.common_transcoding() : m.common_direct_stream(),
 									activity: m.user_remote_last_activity({ time: formatDateTime(new Date(session.lastActivity)) }),
 								})}
 							</p>
 							{session.positionSeconds != null && (
-								<p className="mt-0.5 text-muted-foreground text-xs">
+								<p className="text-muted-foreground mt-0.5 text-xs">
 									{m.user_playback_position({ time: formatDuration(session.positionSeconds) })}
 									{session.paused ? ` · ${m.user_playback_paused()}` : ""}
 								</p>

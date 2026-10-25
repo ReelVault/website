@@ -5,8 +5,8 @@ export function SettingsCategory({ title, description, children }: { title: stri
 	return (
 		<section className="flex flex-col gap-5">
 			<div>
-				<h3 className="font-semibold text-lg">{title}</h3>
-				{description ? <p className="mt-1 text-muted-foreground text-sm">{description}</p> : null}
+				<h3 className="text-lg font-semibold">{title}</h3>
+				{description ? <p className="text-muted-foreground mt-1 text-sm">{description}</p> : null}
 			</div>
 			{children}
 		</section>

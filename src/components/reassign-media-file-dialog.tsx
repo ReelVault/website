@@ -34,12 +34,12 @@ export function ReassignMediaFileDialog({ mediaFileId, fileName, mediaType, open
 			<DialogContent className="sm:max-w-3xl">
 				<DialogHeader>
 					<DialogTitle className="flex items-center">
-						<Layers className="size-5 text-primary" />
+						<Layers className="text-primary size-5" />
 						{m.components_reassign_dialog_title()}
 					</DialogTitle>
 					<DialogDescription>
 						{m.components_reassign_dialog_desc_1()}
-						<span className="font-mono text-foreground">{fileName}</span> {m.components_reassign_dialog_desc_2()}
+						<span className="text-foreground font-mono">{fileName}</span> {m.components_reassign_dialog_desc_2()}
 					</DialogDescription>
 				</DialogHeader>
 

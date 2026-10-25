@@ -21,7 +21,7 @@ export function LogRawViewer({ logs, page }: LogRawViewerProps) {
 
 	return (
 		<ScrollArea className="h-full">
-			<div className="flex select-text flex-col gap-1 p-4">
+			<div className="flex flex-col gap-1 p-4 select-text">
 				{logs.map((log, idx) => {
 					const lineText = log.msg ?? extractErrorMessage(log.err) ?? stringifyLogDetail(log.errorDetails) ?? JSON.stringify(log);
 					const isError = log.levelName === "error" || lineText.toLowerCase().includes("error");
@@ -32,11 +32,11 @@ export function LogRawViewer({ logs, page }: LogRawViewerProps) {
 					logKeyCounts.set(baseKey, occurrence + 1);
 
 					return (
-						<div key={`${baseKey}-${occurrence}`} className="flex items-start gap-3 rounded px-1.5 py-0.5 hover:bg-muted/40">
-							<span className="w-8 shrink-0 select-none text-right text-muted-foreground/60 text-xs tabular-nums">{lineIndex}</span>
+						<div key={`${baseKey}-${occurrence}`} className="hover:bg-muted/40 flex items-start gap-3 rounded px-1.5 py-0.5">
+							<span className="text-muted-foreground/60 w-8 shrink-0 text-right text-xs tabular-nums select-none">{lineIndex}</span>
 							<pre
 								className={cn(
-									"flex-1 overflow-x-auto whitespace-pre-wrap break-all font-mono text-xs leading-relaxed",
+									"flex-1 overflow-x-auto font-mono text-xs leading-relaxed break-all whitespace-pre-wrap",
 									getLogLineClass(isError, isWarn),
 								)}
 							>

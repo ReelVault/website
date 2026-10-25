@@ -86,11 +86,11 @@ export default function AdminPeoplePage() {
 			<div className="flex flex-col gap-6">
 				<div className="flex flex-wrap items-center justify-between gap-3">
 					<label className="flex cursor-pointer items-center gap-2 text-sm">
-						<input type="checkbox" className="size-4 accent-primary" checked={allOnPageSelected} onChange={() => toggleAllOnPage()} />
+						<input type="checkbox" className="accent-primary size-4" checked={allOnPageSelected} onChange={() => toggleAllOnPage()} />
 						{m.admin_people_select_all()}
 					</label>
 					{selectedIds.size > 0 && (
-						<div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card p-3">
+						<div className="border-border/80 bg-card flex flex-wrap items-center gap-2 rounded-xl border p-3">
 							<span className="text-sm">{m.admin_people_selected_count({ count: selectedIds.size })}</span>
 							<Button size="sm" variant="outline" disabled={bulkRefreshPeople.isPending} onClick={() => detach(refreshSelectedPeople())}>
 								{m.admin_people_refresh_selected()}

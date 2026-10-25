@@ -27,7 +27,7 @@ export function CollectionTimeline({ items }: CollectionTimelineProps) {
 				<div className="flex gap-6 text-sm">
 					<div>
 						<p className="text-muted-foreground text-xs">{m.web_average()}</p>
-						<p className="mt-1 flex items-center gap-1 font-bold text-lg text-primary">
+						<p className="text-primary mt-1 flex items-center gap-1 text-lg font-bold">
 							{averageRating == null ? "b/d" : formatRating(averageRating)}{" "}
 							{averageRating != null && <Star className="size-3.5 fill-current" aria-hidden="true" />}
 						</p>
@@ -42,7 +42,7 @@ export function CollectionTimeline({ items }: CollectionTimelineProps) {
 					))}
 				</div>
 			) : (
-				<div className="rounded-2xl border border-border p-10 text-center text-muted-foreground">{m.web_collection_no_titles()}</div>
+				<div className="border-border text-muted-foreground rounded-2xl border p-10 text-center">{m.web_collection_no_titles()}</div>
 			)}
 		</main>
 	);

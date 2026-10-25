@@ -654,7 +654,7 @@ function AppPlayerSurface() {
 			<div
 				ref={containerRef}
 				className={cn(
-					"group/player relative h-screen w-full select-none overflow-hidden bg-background",
+					"group/player bg-background relative h-screen w-full overflow-hidden select-none",
 					!effectiveControlsVisible && "cursor-none",
 				)}
 				onMouseMove={handleSurfaceMouseMove}

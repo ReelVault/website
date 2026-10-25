@@ -33,8 +33,8 @@ export function DetailsSection({
 
 						{/* Title */}
 						<div className="flex flex-col items-start justify-center">
-							<h2 className="font-bold text-2xl text-foreground tracking-tight sm:text-3xl">{title}</h2>
-							<h2 className="font-bold text-base text-foreground/45 tracking-tight sm:text-xl">{subtitle}</h2>
+							<h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
+							<h2 className="text-foreground/45 text-base font-bold tracking-tight sm:text-xl">{subtitle}</h2>
 						</div>
 					</div>
 

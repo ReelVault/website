@@ -36,11 +36,11 @@ export function RealtimeStatusIndicator() {
 	return (
 		<div
 			role="status"
-			className="flex items-center gap-1.5 rounded-full border border-warning/30 bg-warning/10 px-2.5 py-1 text-warning text-xs"
+			className="border-warning/30 bg-warning/10 text-warning flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs"
 		>
 			<span className="relative flex size-2">
-				<span className="absolute inline-flex size-full animate-ping rounded-full bg-warning opacity-60" />
-				<span className="relative inline-flex size-2 rounded-full bg-warning" />
+				<span className="bg-warning absolute inline-flex size-full animate-ping rounded-full opacity-60" />
+				<span className="bg-warning relative inline-flex size-2 rounded-full" />
 			</span>
 			{m.realtime_reconnecting()}
 		</div>

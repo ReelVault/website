@@ -13,11 +13,11 @@ export function UserPageHeader({
 	action?: ReactNode;
 }) {
 	return (
-		<header className="flex flex-col gap-6 border-border/60 border-b pb-8 sm:flex-row sm:items-end sm:justify-between">
+		<header className="border-border/60 flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-end sm:justify-between">
 			<div className="min-w-0">
 				<p className="cinema-kicker">{eyebrow}</p>
-				<h1 className="mt-3 font-black text-4xl tracking-[-0.055em] sm:text-5xl">{title}</h1>
-				{description && <p className="mt-3 max-w-2xl text-muted-foreground text-sm leading-relaxed">{description}</p>}
+				<h1 className="mt-3 text-4xl font-black tracking-[-0.055em] sm:text-5xl">{title}</h1>
+				{description && <p className="text-muted-foreground mt-3 max-w-2xl text-sm leading-relaxed">{description}</p>}
 			</div>
 			{action && <div className="shrink-0">{action}</div>}
 		</header>

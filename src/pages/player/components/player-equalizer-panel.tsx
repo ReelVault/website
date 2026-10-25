@@ -86,11 +86,11 @@ export function PlayerEqualizerPanel() {
 	return (
 		<div className="space-y-6 py-1">
 			{/* Top Header & Reset */}
-			<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border/40 bg-muted/40 p-4">
+			<div className="border-border/40 bg-muted/40 flex flex-wrap items-center justify-between gap-3 rounded-lg border p-4">
 				<div className="space-y-0.5">
 					<div className="flex items-center gap-2">
-						<Sliders className="size-4 text-primary" />
-						<h3 className="font-semibold text-foreground text-sm">{m.player_equalizer_compressor()}</h3>
+						<Sliders className="text-primary size-4" />
+						<h3 className="text-foreground text-sm font-semibold">{m.player_equalizer_compressor()}</h3>
 						<Badge variant={active ? "default" : "secondary"} size="xs">
 							{active ? m.player_active_direct_play() : m.player_bypass_original()}
 						</Badge>
@@ -105,7 +105,7 @@ export function PlayerEqualizerPanel() {
 
 			{/* Presets Grid */}
 			<div className="space-y-2">
-				<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_ready_profiles()}</span>
+				<span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_ready_profiles()}</span>
 				<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
 					{EQUALIZER_PRESETS.map((p) => {
 						const isSelected = config.preset === p.id;
@@ -118,15 +118,15 @@ export function PlayerEqualizerPanel() {
 								className={cn(
 									"flex flex-col items-start rounded-lg border p-3 text-left transition-colors",
 									isSelected
-										? "border-primary/80 bg-primary/10 text-foreground shadow-xs ring-1 ring-primary/30"
+										? "border-primary/80 bg-primary/10 text-foreground ring-primary/30 shadow-xs ring-1"
 										: "border-border/40 bg-muted/20 text-muted-foreground hover:border-border hover:bg-muted/40 hover:text-foreground",
 								)}
 							>
-								<div className="flex w-full items-center justify-between gap-1 font-medium text-xs">
-									<span className={cn(isSelected && "font-semibold text-primary")}>{p.label}</span>
-									{isSelected && <Check className="size-3.5 shrink-0 text-primary" />}
+								<div className="flex w-full items-center justify-between gap-1 text-xs font-medium">
+									<span className={cn(isSelected && "text-primary font-semibold")}>{p.label}</span>
+									{isSelected && <Check className="text-primary size-3.5 shrink-0" />}
 								</div>
-								<span className="mt-1 line-clamp-2 text-[11px] text-muted-foreground leading-tight">{p.description}</span>
+								<span className="text-muted-foreground mt-1 line-clamp-2 text-[11px] leading-tight">{p.description}</span>
 							</button>
 						);
 					})}
@@ -134,14 +134,14 @@ export function PlayerEqualizerPanel() {
 			</div>
 
 			{/* Dynamics Compressor Card */}
-			<div className="flex items-center justify-between gap-4 rounded-lg border border-border/40 bg-muted/20 p-4 transition-colors hover:border-border/80">
+			<div className="border-border/40 bg-muted/20 hover:border-border/80 flex items-center justify-between gap-4 rounded-lg border p-4 transition-colors">
 				<div className="flex items-start gap-3">
-					<div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+					<div className="bg-primary/10 text-primary mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md">
 						<Moon className="size-4" />
 					</div>
 					<div className="space-y-1">
 						<div className="flex items-center gap-2">
-							<span className="font-semibold text-foreground text-sm">{m.player_compressor_night_mode()}</span>
+							<span className="text-foreground text-sm font-semibold">{m.player_compressor_night_mode()}</span>
 							{config.compressorEnabled && (
 								<Badge variant="primary-outline" size="xs">
 									{m.admin_resources_enabled()}
@@ -157,12 +157,12 @@ export function PlayerEqualizerPanel() {
 			{/* Equalizer Frequency Sliders */}
 			<div className="space-y-3">
 				<div className="flex items-center justify-between">
-					<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{m.player_eq_bands_label()}</span>
+					<span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_eq_bands_label()}</span>
 
-					{config.preset === "custom" && <span className="font-mono text-[11px] text-muted-foreground">{m.player_manual_profile()}</span>}
+					{config.preset === "custom" && <span className="text-muted-foreground font-mono text-[11px]">{m.player_manual_profile()}</span>}
 				</div>
 
-				<div className="grid grid-cols-1 gap-3 rounded-lg border border-border/40 bg-muted/10 p-4 sm:grid-cols-5 sm:gap-4">
+				<div className="border-border/40 bg-muted/10 grid grid-cols-1 gap-3 rounded-lg border p-4 sm:grid-cols-5 sm:gap-4">
 					{EQUALIZER_BANDS.map((band, index) => {
 						const gain = config.gains[index] ?? 0;
 						const displayGain = gain > 0 ? `+${gain} dB` : `${gain} dB`;
@@ -171,12 +171,12 @@ export function PlayerEqualizerPanel() {
 						return (
 							<div
 								key={band.label}
-								className="flex flex-col items-center justify-between rounded-md border border-border/20 bg-background/50 p-3"
+								className="border-border/20 bg-background/50 flex flex-col items-center justify-between rounded-md border p-3"
 							>
 								{/* Band label & subtext */}
 								<div className="text-center">
-									<span className="font-mono font-semibold text-foreground text-xs">{band.label}</span>
-									<p className="text-[10px] text-muted-foreground">{desc}</p>
+									<span className="text-foreground font-mono text-xs font-semibold">{band.label}</span>
+									<p className="text-muted-foreground text-[10px]">{desc}</p>
 								</div>
 
 								{/* Vertical Slider on desktop / Horizontal on mobile */}
@@ -200,7 +200,7 @@ export function PlayerEqualizerPanel() {
 								<span
 									className={cn(
 										"rounded-sm px-1.5 py-0.5 font-mono text-[11px]",
-										gain > 0 ? "bg-primary/20 font-semibold text-primary" : "bg-muted text-muted-foreground",
+										gain > 0 ? "bg-primary/20 text-primary font-semibold" : "bg-muted text-muted-foreground",
 									)}
 								>
 									{displayGain}

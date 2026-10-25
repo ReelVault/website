@@ -66,7 +66,7 @@ export default function AdminAnalyticsPage() {
 				description={m.admin_analytics_overview_description()}
 				actions={
 					<div className="flex min-w-0 flex-wrap items-center gap-2">
-						<div className="flex w-full min-w-0 flex-wrap gap-1 rounded-xl border border-border/70 bg-card/70 p-1 sm:w-auto sm:flex-nowrap">
+						<div className="border-border/70 bg-card/70 flex w-full min-w-0 flex-wrap gap-1 rounded-xl border p-1 sm:w-auto sm:flex-nowrap">
 							{TIME_FILTER_OPTIONS.map((opt) => (
 								<Button
 									key={opt.label}

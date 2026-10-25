@@ -72,7 +72,7 @@ export function FilterRangeSliders({
 
 			<Field>
 				<FieldLabel htmlFor="library-duration-range" className="gap-2">
-					<Timer className="size-3.5 text-primary" aria-hidden="true" />
+					<Timer className="text-primary size-3.5" aria-hidden="true" />
 					{m.web_filter_duration_range({ min: localDurationRange[0], max: localDurationRange[1] })}
 				</FieldLabel>
 				<Slider

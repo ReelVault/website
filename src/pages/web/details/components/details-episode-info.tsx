@@ -27,8 +27,8 @@ export function DetailsEpisodeInfo({ episode, filesLength, defaultFile, isWatche
 		<div className="flex flex-1 flex-col gap-3">
 			<div className="flex flex-col gap-2">
 				<div className="flex flex-wrap items-center gap-2">
-					<h3 className="line-clamp-1 font-bold text-foreground text-lg transition-colors group-hover:text-primary md:text-xl">
-						<span className="mr-2 text-muted-foreground/60">{numberLabel}</span>
+					<h3 className="text-foreground group-hover:text-primary line-clamp-1 text-lg font-bold transition-colors md:text-xl">
+						<span className="text-muted-foreground/60 mr-2">{numberLabel}</span>
 						{episode.title ?? m.web_episode_number_short({ number: episode.episodeNumber })}
 					</h3>
 					<div className="flex flex-wrap items-center gap-2">
@@ -57,7 +57,7 @@ export function DetailsEpisodeInfo({ episode, filesLength, defaultFile, isWatche
 					</div>
 				</div>
 
-				<div className="flex flex-wrap items-center gap-4 text-muted-foreground text-sm">
+				<div className="text-muted-foreground flex flex-wrap items-center gap-4 text-sm">
 					{episode.airDate && (
 						<div className="flex items-center gap-1.5">
 							<Calendar className="size-3.5" />
@@ -71,21 +71,21 @@ export function DetailsEpisodeInfo({ episode, filesLength, defaultFile, isWatche
 						</span>
 					</div>
 					{defaultFile?.qualityTag && (
-						<span className="rounded bg-muted/60 px-2 py-0.5 font-mono text-foreground/80 text-xs">{defaultFile.qualityTag}</span>
+						<span className="bg-muted/60 text-foreground/80 rounded px-2 py-0.5 font-mono text-xs">{defaultFile.qualityTag}</span>
 					)}
 				</div>
 			</div>
 			{episodePlayback?.status === "in_progress" && (
-				<div className="h-1 overflow-hidden rounded-full bg-muted">
+				<div className="bg-muted h-1 overflow-hidden rounded-full">
 					<div
-						className="h-full bg-primary"
+						className="bg-primary h-full"
 						style={{
 							width: `${getProgressPercent(episodePlayback.progress?.position, episodePlayback.progress?.duration)}%`,
 						}}
 					/>
 				</div>
 			)}
-			<p className="line-clamp-3 text-muted-foreground/90 text-sm leading-relaxed">{episode.overview ?? m.web_no_episode_description()}</p>
+			<p className="text-muted-foreground/90 line-clamp-3 text-sm leading-relaxed">{episode.overview ?? m.web_no_episode_description()}</p>
 		</div>
 	);
 }

@@ -55,7 +55,7 @@ export function TwoFactorDisableDialog({ open, onOpenChange }: TwoFactorDisableD
 
 				<form onSubmit={handleDisable} className="flex flex-col gap-4 py-2">
 					<div className="flex flex-col gap-2">
-						<label htmlFor="2fa-disable-password" className="font-semibold text-muted-foreground text-xs">
+						<label htmlFor="2fa-disable-password" className="text-muted-foreground text-xs font-semibold">
 							{m.user_account_password()}
 						</label>
 						<Input

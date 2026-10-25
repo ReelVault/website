@@ -292,7 +292,7 @@ export default function SetupPage() {
 
 	if (statusError) {
 		return (
-			<div className="flex min-h-svh items-center justify-center bg-background px-4">
+			<div className="bg-background flex min-h-svh items-center justify-center px-4">
 				<AppErrorState
 					title={m.setup_check_config_failed()}
 					onRetry={() => {
@@ -306,9 +306,9 @@ export default function SetupPage() {
 
 	if (!(isRequired || setupMutation.isSuccess || readResumableStep() > 0)) {
 		return (
-			<div className="flex min-h-svh items-center justify-center bg-background px-4">
-				<div className="flex max-w-md flex-col items-center gap-4 rounded-lg border border-border bg-card p-6 text-center">
-					<h1 className="font-semibold text-xl">{m.setup_already_done()}</h1>
+			<div className="bg-background flex min-h-svh items-center justify-center px-4">
+				<div className="border-border bg-card flex max-w-md flex-col items-center gap-4 rounded-lg border p-6 text-center">
+					<h1 className="text-xl font-semibold">{m.setup_already_done()}</h1>
 					<p className="text-muted-foreground text-sm">{m.setup_already_done_desc()}</p>
 					<Button nativeButton={false} render={<Link to="/auth/login" />}>
 						{m.setup_go_to_login()}
@@ -319,15 +319,15 @@ export default function SetupPage() {
 	}
 
 	return (
-		<div className="min-h-svh bg-background px-4 py-8 sm:py-12">
+		<div className="bg-background min-h-svh px-4 py-8 sm:py-12">
 			<div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
 				<div className="flex justify-center">
 					<Logo className="w-48" />
 				</div>
-				<section className="flex flex-col gap-8 rounded-lg border border-border bg-card p-6 sm:p-8">
+				<section className="border-border bg-card flex flex-col gap-8 rounded-lg border p-6 sm:p-8">
 					<header className="flex flex-col gap-2">
-						<p className="font-medium text-primary text-xs">{m.setup_first_run()}</p>
-						<h1 className="font-semibold text-3xl tracking-tight">{m.setup_configure_reelvault()}</h1>
+						<p className="text-primary text-xs font-medium">{m.setup_first_run()}</p>
+						<h1 className="text-3xl font-semibold tracking-tight">{m.setup_configure_reelvault()}</h1>
 						<p className="text-muted-foreground text-sm">{m.setup_steps_desc()}</p>
 					</header>
 

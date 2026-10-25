@@ -82,7 +82,7 @@ export function TaxonomyPage({
 			<main className="cinema-shell relative">
 				<Link
 					to={backTo}
-					className="inline-flex min-h-10 items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-primary sm:min-h-0"
+					className="text-muted-foreground hover:text-primary inline-flex min-h-10 items-center gap-2 text-sm transition-colors sm:min-h-0"
 				>
 					<ArrowLeft className="size-4" aria-hidden="true" /> {backLabel}
 				</Link>
@@ -101,8 +101,8 @@ export function TaxonomyPage({
 				{item && (
 					<>
 						<SimpleAnimation direction="none" duration={260}>
-							<header className="mt-8 flex flex-col gap-5 border-border/70 border-b pb-10 sm:mt-10 sm:flex-row sm:items-end">
-								<div className="cinema-surface flex size-28 shrink-0 items-center justify-center overflow-hidden p-4 text-primary">
+							<header className="border-border/70 mt-8 flex flex-col gap-5 border-b pb-10 sm:mt-10 sm:flex-row sm:items-end">
+								<div className="cinema-surface text-primary flex size-28 shrink-0 items-center justify-center overflow-hidden p-4">
 									{logoImageId ? (
 										<ApiImage
 											fileId={logoImageId}
@@ -119,7 +119,7 @@ export function TaxonomyPage({
 								<div className="min-w-0">
 									<p className="cinema-kicker">{taxonomyLabel}</p>
 									<h1 className="cinema-title mt-4">{item.name}</h1>
-									{headerSubtitle && <p className="mt-3 text-muted-foreground">{headerSubtitle}</p>}
+									{headerSubtitle && <p className="text-muted-foreground mt-3">{headerSubtitle}</p>}
 								</div>
 							</header>
 						</SimpleAnimation>

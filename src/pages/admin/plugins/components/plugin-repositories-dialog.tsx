@@ -88,22 +88,22 @@ export function PluginRepositoriesDialog({
 
 				<div className="flex flex-col gap-3">
 					{repositories.length === 0 && (
-						<p className="py-4 text-center text-muted-foreground text-sm">{m.admin_plugins_repositories_empty()}</p>
+						<p className="text-muted-foreground py-4 text-center text-sm">{m.admin_plugins_repositories_empty()}</p>
 					)}
 					{repositories.map((repository) => (
-						<div key={repository.id} className="flex flex-col gap-2 rounded-lg border bg-muted/30 p-3">
+						<div key={repository.id} className="bg-muted/30 flex flex-col gap-2 rounded-lg border p-3">
 							<div className="flex items-start justify-between gap-3">
 								<div className="min-w-0">
 									<div className="flex items-center gap-2">
-										<span className="truncate font-medium text-sm">{repository.name}</span>
+										<span className="truncate text-sm font-medium">{repository.name}</span>
 										{repository.hasToken ? (
-											<KeyRound className="size-3.5 shrink-0 text-primary" aria-label={m.admin_plugins_repositories_token_set()} />
+											<KeyRound className="text-primary size-3.5 shrink-0" aria-label={m.admin_plugins_repositories_token_set()} />
 										) : (
-											<LockOpen className="size-3.5 shrink-0 text-muted-foreground" aria-label={m.admin_plugins_repositories_no_token()} />
+											<LockOpen className="text-muted-foreground size-3.5 shrink-0" aria-label={m.admin_plugins_repositories_no_token()} />
 										)}
 									</div>
-									<p className="truncate font-mono text-muted-foreground text-xs">{repository.url}</p>
-									<p className="mt-0.5 text-muted-foreground text-xs">
+									<p className="text-muted-foreground truncate font-mono text-xs">{repository.url}</p>
+									<p className="text-muted-foreground mt-0.5 text-xs">
 										{repository.lastRefreshedAt
 											? m.admin_plugins_repositories_last_refreshed({ date: formatDateTime(repository.lastRefreshedAt) })
 											: m.admin_plugins_repositories_never_refreshed()}
@@ -146,7 +146,7 @@ export function PluginRepositoriesDialog({
 								</div>
 							</div>
 							{repository.lastErrorCode && (
-								<p className="wrap-break-word text-destructive text-xs">
+								<p className="text-destructive text-xs wrap-break-word">
 									{m.admin_plugins_repositories_last_error_value({
 										error: translateCode(repository.lastErrorCode, m.plugin_repository_unavailable()),
 									})}
@@ -157,7 +157,7 @@ export function PluginRepositoriesDialog({
 				</div>
 
 				<div className="flex flex-col gap-3 rounded-lg border border-dashed p-3">
-					<h4 className="font-semibold text-sm">{m.admin_plugins_repositories_add_title()}</h4>
+					<h4 className="text-sm font-semibold">{m.admin_plugins_repositories_add_title()}</h4>
 					<div className="flex flex-col gap-2">
 						<Label htmlFor="plugin-repo-name">{m.admin_plugins_repositories_name_label()}</Label>
 						<Input

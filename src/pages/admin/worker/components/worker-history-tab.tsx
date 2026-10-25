@@ -83,7 +83,7 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 							type="button"
 							onClick={() => setStatusFilter(filter.value)}
 							className={cn(
-								"inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-medium text-xs transition-[border-color,background-color,color,box-shadow]",
+								"inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-[border-color,background-color,color,box-shadow]",
 								statusFilter === filter.value
 									? "border-border bg-secondary text-foreground shadow-xs"
 									: "border-border/40 bg-card/40 text-muted-foreground hover:bg-muted/40 hover:text-foreground",
@@ -107,9 +107,9 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 				{historyStatus.isError && <AppErrorState title={m.admin_worker_data_error()} description={m.admin_worker_failed_to_fetch_list()} />}
 
 				{!(historyStatus.isLoading || historyStatus.isError) && operations.length === 0 && (
-					<div className="flex flex-col items-center justify-center rounded-xl border border-border/70 border-dashed bg-card/30 p-8 text-center">
-						<p className="font-medium text-foreground text-xs">{m.admin_workers_no_history()}</p>
-						<p className="mt-0.5 text-muted-foreground text-xs">{m.admin_worker_no_matching_ops()}</p>
+					<div className="border-border/70 bg-card/30 flex flex-col items-center justify-center rounded-xl border border-dashed p-8 text-center">
+						<p className="text-foreground text-xs font-medium">{m.admin_workers_no_history()}</p>
+						<p className="text-muted-foreground mt-0.5 text-xs">{m.admin_worker_no_matching_ops()}</p>
 					</div>
 				)}
 

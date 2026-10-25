@@ -78,7 +78,7 @@ export function MetadataCardPoster({
 
 	return (
 		<div
-			className="pointer-events-none relative z-20 overflow-hidden rounded-xl bg-card ring-primary/0 ring-offset-2 ring-offset-background transition-[box-shadow,transform] duration-200 group-hover:scale-[1.01] group-hover:ring-2"
+			className="bg-card ring-primary/0 ring-offset-background pointer-events-none relative z-20 overflow-hidden rounded-xl ring-offset-2 transition-[box-shadow,transform] duration-200 group-hover:scale-[1.01] group-hover:ring-2"
 			style={transitionName ? { viewTransitionName: transitionName } : undefined}
 		>
 			<AspectRatio ratio={2 / 3}>
@@ -96,7 +96,7 @@ export function MetadataCardPoster({
 				<div className="absolute top-2.5 left-2.5 z-30 flex items-center gap-1.5">
 					{isOnWatchlist === true && (
 						<div
-							className="flex size-8 items-center justify-center rounded-full bg-accent/90 text-accent-foreground shadow-md"
+							className="bg-accent/90 text-accent-foreground flex size-8 items-center justify-center rounded-full shadow-md"
 							title={m.components_on_watchlist_title()}
 						>
 							<Bookmark className="size-4 fill-current" aria-hidden="true" />
@@ -108,7 +108,7 @@ export function MetadataCardPoster({
 				<MetadataCardGenreBadges genres={genres} />
 
 				{/* Interaction Overlays */}
-				<div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center bg-background/40 opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
+				<div className="bg-background/40 pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
 					{overlayAction}
 
 					{/* Action Menu (Bottom Right corner of the poster) */}

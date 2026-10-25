@@ -44,7 +44,7 @@ export function NavbarProfile() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="ghost" size="icon-lg" aria-label={profileName} />}>
-				<Avatar className="size-7 group-hover:ring-primary/50">
+				<Avatar className="group-hover:ring-primary/50 size-7">
 					<AvatarImage src={resolveApiAssetUrl(profile?.avatarUrl)} alt={profileName} />
 					<AvatarFallback>
 						<User className="size-5" />
@@ -63,7 +63,7 @@ export function NavbarProfile() {
 								</AvatarFallback>
 							</Avatar>
 							<div>
-								<p className="font-bold text-foreground">{profileName}</p>
+								<p className="text-foreground font-bold">{profileName}</p>
 								<p className="text-muted-foreground text-sm">{m.common_active_profile()}</p>
 							</div>
 						</div>
@@ -78,28 +78,28 @@ export function NavbarProfile() {
 
 					<Link to={"/remote"}>
 						<DropdownMenuItem size="lg">
-							<MonitorSmartphone className="size-4 text-muted-foreground" />
+							<MonitorSmartphone className="text-muted-foreground size-4" />
 							{m.user_remote_pilot_heading()}
 						</DropdownMenuItem>
 					</Link>
 
 					<Link to={"/quick-connect"}>
 						<DropdownMenuItem size="lg">
-							<Unplug className="size-4 text-muted-foreground" />
+							<Unplug className="text-muted-foreground size-4" />
 							{m.components_navbar_quick_connect()}
 						</DropdownMenuItem>
 					</Link>
 
 					<Link to={"/devices"}>
 						<DropdownMenuItem size="lg">
-							<Monitor className="size-4 text-muted-foreground" />
+							<Monitor className="text-muted-foreground size-4" />
 							{m.components_navbar_my_devices()}
 						</DropdownMenuItem>
 					</Link>
 
 					<Link to={"/settings"}>
 						<DropdownMenuItem size="lg">
-							<Settings className="size-4 text-muted-foreground" />
+							<Settings className="text-muted-foreground size-4" />
 							{m.navbar_settings()}
 						</DropdownMenuItem>
 					</Link>
@@ -119,7 +119,7 @@ export function NavbarProfile() {
 				<DropdownMenuGroup>
 					<Link to={"/auth/profiles"}>
 						<DropdownMenuItem size="lg">
-							<Users className="size-4 text-muted-foreground" />
+							<Users className="text-muted-foreground size-4" />
 							{m.components_navbar_change_profile()}
 						</DropdownMenuItem>
 					</Link>

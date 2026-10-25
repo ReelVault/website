@@ -23,11 +23,11 @@ export function LibraryFloatingInfo({
 			<Card>
 				<CardContent className="flex items-center gap-3">
 					<div className="flex min-w-0 flex-1 items-center gap-3">
-						<div className="rounded-lg bg-primary/10 p-2 text-primary">
+						<div className="bg-primary/10 text-primary rounded-lg p-2">
 							<Zap className="size-4" aria-hidden="true" />
 						</div>
 						<div className="min-w-0">
-							<div className="truncate font-medium text-foreground text-sm">{currentLibraryName}</div>
+							<div className="text-foreground truncate text-sm font-medium">{currentLibraryName}</div>
 							<div className="text-muted-foreground text-xs">
 								{m.common_items_count({ count: validMetadataLength })} {m.common_dot_separator()}{" "}
 								{m.common_genres_count({ count: availableGenresLength })}

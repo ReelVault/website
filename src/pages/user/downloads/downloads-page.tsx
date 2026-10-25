@@ -137,7 +137,7 @@ export default function DownloadsPage() {
 			/>
 
 			{quota && (
-				<p className="-mt-6 text-muted-foreground text-xs">
+				<p className="text-muted-foreground -mt-6 text-xs">
 					{quota.maxBytes > 0
 						? m.user_download_quota({ used: formatFileSize(quota.usedBytes), limit: formatFileSize(quota.maxBytes) })
 						: m.user_download_quota_unlimited({ used: formatFileSize(quota.usedBytes) })}

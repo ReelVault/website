@@ -28,18 +28,18 @@ export default function LibraryFindingsPage() {
 		<main className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12">
 			<Link
 				to="/admin/libraries"
-				className="inline-flex min-h-11 w-fit items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex min-h-11 w-fit items-center gap-2 text-sm transition-colors"
 			>
 				<ArrowLeft className="size-4" aria-hidden="true" />
 				{m.common_back()}
 			</Link>
 
 			<header className="flex flex-col gap-3">
-				<h1 className="flex items-center gap-2.5 font-extrabold font-heading text-3xl tracking-tight sm:text-4xl">
-					<AlertTriangle className="size-6 shrink-0 text-muted-foreground" aria-hidden="true" />
+				<h1 className="font-heading flex items-center gap-2.5 text-3xl font-extrabold tracking-tight sm:text-4xl">
+					<AlertTriangle className="text-muted-foreground size-6 shrink-0" aria-hidden="true" />
 					{heading}
 				</h1>
-				{library && <p className="font-semibold text-foreground">{library.name}</p>}
+				{library && <p className="text-foreground font-semibold">{library.name}</p>}
 				<p className="text-muted-foreground text-sm">{m.admin_libraries_needs_attention_desc()}</p>
 			</header>
 

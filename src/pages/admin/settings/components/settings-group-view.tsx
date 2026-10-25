@@ -179,7 +179,7 @@ export function SettingsGroupView({
 				)}
 			</div>
 
-			<div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-border/80 border-t pt-4">
+			<div className="border-border/80 mt-2 flex flex-wrap items-center justify-between gap-3 border-t pt-4">
 				<ConfirmAction
 					trigger={
 						<Button type="button" variant="destructive-outline" size="sm" disabled={disabled}>

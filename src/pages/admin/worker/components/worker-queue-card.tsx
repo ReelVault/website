@@ -60,7 +60,7 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 			className={cn(
 				"group relative flex flex-col justify-between rounded-xl border p-3.5 transition-[border-color,background-color,color,box-shadow] duration-200",
 				isBusy
-					? "border-primary/40 bg-primary/2 shadow-xs ring-1 ring-primary/15"
+					? "border-primary/40 bg-primary/2 ring-primary/15 shadow-xs ring-1"
 					: "border-border/50 bg-card/40 hover:border-border/80 hover:bg-card/70",
 			)}
 		>
@@ -78,10 +78,10 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 						{icon}
 					</div>
 					<div className="min-w-0">
-						<h4 className="truncate font-semibold text-foreground text-xs tracking-tight" title={displayName}>
+						<h4 className="text-foreground truncate text-xs font-semibold tracking-tight" title={displayName}>
 							{displayName}
 						</h4>
-						<span className="block truncate font-mono text-muted-foreground text-xs" title={worker.id}>
+						<span className="text-muted-foreground block truncate font-mono text-xs" title={worker.id}>
 							{worker.id}
 						</span>
 					</div>
@@ -92,23 +92,23 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 			</div>
 
 			{/* Metrics Bar */}
-			<div className="mt-3 grid grid-cols-2 gap-1.5 border-border/40 border-t pt-2.5 font-mono text-xs">
-				<div className="flex items-center justify-between rounded-md bg-muted/30 px-2 py-1 text-muted-foreground">
+			<div className="border-border/40 mt-3 grid grid-cols-2 gap-1.5 border-t pt-2.5 font-mono text-xs">
+				<div className="bg-muted/30 text-muted-foreground flex items-center justify-between rounded-md px-2 py-1">
 					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_threads_label()}</span>
-					<span className="font-semibold text-foreground">{worker.concurrency}</span>
+					<span className="text-foreground font-semibold">{worker.concurrency}</span>
 				</div>
-				<div className="flex items-center justify-between rounded-md bg-muted/30 px-2 py-1 text-muted-foreground">
+				<div className="bg-muted/30 text-muted-foreground flex items-center justify-between rounded-md px-2 py-1">
 					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_limit_label()}</span>
-					<span className="font-medium text-foreground">{formatMsDuration(worker.timeoutMs)}</span>
+					<span className="text-foreground font-medium">{formatMsDuration(worker.timeoutMs)}</span>
 				</div>
-				<div className="flex items-center justify-between rounded-md bg-muted/30 px-2 py-1 text-muted-foreground">
+				<div className="bg-muted/30 text-muted-foreground flex items-center justify-between rounded-md px-2 py-1">
 					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_finished_colon()}</span>
-					<span className="font-semibold text-success tabular-nums">{worker.stats.completed}</span>
+					<span className="text-success font-semibold tabular-nums">{worker.stats.completed}</span>
 				</div>
 				<div
 					className={cn(
-						"flex items-center justify-between rounded-md px-2 py-1 text-muted-foreground",
-						hasFailed ? "bg-destructive/10 font-semibold text-destructive" : "bg-muted/30",
+						"text-muted-foreground flex items-center justify-between rounded-md px-2 py-1",
+						hasFailed ? "bg-destructive/10 text-destructive font-semibold" : "bg-muted/30",
 					)}
 				>
 					<span className="text-xs">{m.admin_worker_errors_label()}</span>

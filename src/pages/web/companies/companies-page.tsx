@@ -19,7 +19,7 @@ export default function CompaniesPage() {
 		<div className="cinema-page">
 			<main className="cinema-shell relative">
 				<SimpleAnimation direction="none" duration={260}>
-					<header className="max-w-3xl border-border/70 border-b pb-10 sm:pb-14">
+					<header className="border-border/70 max-w-3xl border-b pb-10 sm:pb-14">
 						<p className="cinema-kicker">
 							<Building2 className="size-4" aria-hidden="true" />
 							{m.web_catalog_productions()}
@@ -67,10 +67,10 @@ export default function CompaniesPage() {
 										<Link
 											to="/companies/$id"
 											params={{ id: company.id }}
-											className="group cinema-surface flex min-w-0 items-center gap-4 p-3 transition-[border-color,background-color,transform] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-card focus-visible:ring-2 focus-visible:ring-primary"
+											className="group cinema-surface hover:border-primary/50 hover:bg-card focus-visible:ring-primary flex min-w-0 items-center gap-4 p-3 transition-[border-color,background-color,transform] hover:-translate-y-0.5 focus-visible:ring-2"
 											style={{ transitionDelay: `${Math.min(index, 8) * 20}ms` }}
 										>
-											<div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-background text-primary">
+											<div className="bg-background text-primary flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl">
 												{company.imageId ? (
 													<ApiImage
 														fileId={company.imageId}
@@ -85,11 +85,11 @@ export default function CompaniesPage() {
 												)}
 											</div>
 											<div className="min-w-0 flex-1">
-												<h2 className="truncate font-bold text-foreground transition-colors group-hover:text-primary">{company.name}</h2>
-												{company.originalName && <p className="mt-1 truncate text-muted-foreground text-sm">{company.originalName}</p>}
+												<h2 className="text-foreground group-hover:text-primary truncate font-bold transition-colors">{company.name}</h2>
+												{company.originalName && <p className="text-muted-foreground mt-1 truncate text-sm">{company.originalName}</p>}
 											</div>
 											<ArrowRight
-												className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary"
+												className="text-muted-foreground group-hover:text-primary size-4 shrink-0 transition-transform group-hover:translate-x-1"
 												aria-hidden="true"
 											/>
 										</Link>

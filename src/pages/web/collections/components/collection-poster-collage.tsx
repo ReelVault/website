@@ -21,7 +21,7 @@ export function CollectionPosterCollage({ posterImages, className }: CollectionP
 	return (
 		<div
 			className={cn(
-				"absolute inset-0 grid gap-px bg-border",
+				"bg-border absolute inset-0 grid gap-px",
 				{
 					"grid-cols-1": count <= 1,
 					"grid-cols-2": count === 2,
@@ -53,7 +53,7 @@ export function CollectionPosterCollage({ posterImages, className }: CollectionP
 							className="object-cover"
 						/>
 					) : (
-						<div key={uniqueKey} className="flex items-center justify-center bg-muted/60 text-muted-foreground">
+						<div key={uniqueKey} className="bg-muted/60 text-muted-foreground flex items-center justify-center">
 							<LayoutGrid className="size-5" />
 						</div>
 					);

@@ -59,16 +59,16 @@ export function LibraryFilterBar({
 			>
 				<ToggleGroupItem value="all" aria-label={m.admin_libraries_filter_all()}>
 					<span>{m.common_all()}</span>
-					<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{totalCount}</span>
+					<span className="bg-muted py-0.2 text-muted-foreground rounded-full px-1.5 font-mono text-xs">{totalCount}</span>
 				</ToggleGroupItem>
 				<ToggleGroupItem value="movies" aria-label={m.admin_libraries_filter_movies()}>
-					<Clapperboard className="size-3.5 text-primary" />
+					<Clapperboard className="text-primary size-3.5" />
 					<span>{m.web_watchlist_stats_movies()}</span>
-					<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{movieCount}</span>
+					<span className="bg-muted py-0.2 text-muted-foreground rounded-full px-1.5 font-mono text-xs">{movieCount}</span>
 				</ToggleGroupItem>
 				<ToggleGroupItem value="tv_shows" aria-label={m.admin_libraries_filter_series()}>
 					<span>{m.web_watchlist_stats_series()}</span>
-					<span className="rounded-full bg-muted px-1.5 py-0.2 font-mono text-muted-foreground text-xs">{tvCount}</span>
+					<span className="bg-muted py-0.2 text-muted-foreground rounded-full px-1.5 font-mono text-xs">{tvCount}</span>
 				</ToggleGroupItem>
 			</ToggleGroup>
 

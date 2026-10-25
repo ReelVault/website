@@ -48,17 +48,17 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 				<ContextMenuTrigger render={<Card variant="interactive" />}>
 					<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 						<div className="flex min-w-0 items-center gap-4">
-							<div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+							<div className="bg-primary/10 text-primary flex size-12 shrink-0 items-center justify-center rounded-2xl">
 								{isMobile ? <Smartphone className="size-5" aria-hidden="true" /> : <Laptop className="size-5" aria-hidden="true" />}
 							</div>
 							<div className="min-w-0">
 								<div className="flex items-center gap-3">
 									<h2 className="truncate font-bold">{deviceTitle}</h2>
 									{session.isCurrent && (
-										<span className="rounded-full bg-primary/10 px-2 py-1 font-bold text-primary text-xs">{m.user_this_device()}</span>
+										<span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-bold">{m.user_this_device()}</span>
 									)}
 								</div>
-								<p className="mt-1 flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
+								<p className="text-muted-foreground mt-1 flex flex-wrap items-center gap-2 text-xs">
 									<Clock className="size-3.5" aria-hidden="true" />{" "}
 									{m.user_devices_last_activity({ time: formatDateTime(session.updatedAt) })}
 									{session.ipAddress ? ` · ${session.ipAddress}` : ""}
@@ -93,7 +93,7 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 								}}
 								className="cursor-pointer"
 							>
-								<Globe className="size-4 text-muted-foreground" />
+								<Globe className="text-muted-foreground size-4" />
 								<span>{m.common_copy_ip()}</span>
 							</ContextMenuItem>
 						)}
@@ -104,7 +104,7 @@ export function DeviceSessionCard({ session, index, isRevoking, onRevoke }: Devi
 								}}
 								className="cursor-pointer"
 							>
-								<Copy className="size-4 text-muted-foreground" />
+								<Copy className="text-muted-foreground size-4" />
 								<span>{m.common_copy_user_agent()}</span>
 							</ContextMenuItem>
 						)}

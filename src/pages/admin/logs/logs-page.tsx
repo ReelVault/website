@@ -108,7 +108,7 @@ export default function AdminLogsPage() {
 				<div
 					className={cn(
 						"flex flex-col gap-4 lg:col-span-8",
-						c.isFullscreen && "fixed inset-4 z-50 flex h-[calc(100vh-2rem)] flex-col gap-3 rounded-2xl border bg-background p-4 shadow-2xl",
+						c.isFullscreen && "bg-background fixed inset-4 z-50 flex h-[calc(100vh-2rem)] flex-col gap-3 rounded-2xl border p-4 shadow-2xl",
 					)}
 				>
 					<LogViewerControls

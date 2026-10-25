@@ -4,13 +4,13 @@ import { m } from "@/paraglide/messages";
 export function DashboardHeroSkeleton() {
 	return (
 		<div
-			className="relative h-[88svh] w-full overflow-hidden bg-background lg:h-screen lg:min-h-150"
+			className="bg-background relative h-[88svh] w-full overflow-hidden lg:h-screen lg:min-h-150"
 			role="status"
 			aria-label={m.web_loading_recommendations()}
 		>
 			{/* Backdrop Gradient Base */}
-			<div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-background/10" />
-			<div className="absolute inset-0 bg-linear-to-r from-background via-background/60 to-transparent" />
+			<div className="from-background via-background/40 to-background/10 absolute inset-0 bg-linear-to-t" />
+			<div className="from-background via-background/60 absolute inset-0 bg-linear-to-r to-transparent" />
 
 			{/* Main Content Skeleton */}
 			<div className="relative flex h-full items-center px-6 sm:px-10 lg:px-24">

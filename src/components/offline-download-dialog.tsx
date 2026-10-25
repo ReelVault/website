@@ -136,7 +136,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 			<DialogContent size="xl">
 				<DialogHeader>
 					<div className="flex items-center gap-2">
-						<div className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+						<div className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg">
 							<Download className="size-5" />
 						</div>
 						<div>
@@ -149,14 +149,14 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 				</DialogHeader>
 
 				{fileName && (
-					<div className="truncate rounded-lg border border-border/60 bg-muted/30 px-3 py-2 font-mono text-muted-foreground text-xs">
+					<div className="border-border/60 bg-muted/30 text-muted-foreground truncate rounded-lg border px-3 py-2 font-mono text-xs">
 						{m.components_offline_source_file({ fileName })}
 					</div>
 				)}
 
 				{!activeJobId && (
 					<div className="flex flex-col gap-3 py-2">
-						<span className="font-semibold text-muted-foreground text-xs">{m.components_offline_select_quality()}</span>
+						<span className="text-muted-foreground text-xs font-semibold">{m.components_offline_select_quality()}</span>
 						<RadioGroup
 							value={selectedQuality}
 							onValueChange={(value) => {
@@ -174,7 +174,7 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 										key={opt.id}
 										htmlFor={`quality-${opt.id}`}
 										className={cn(
-											"flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 text-left transition-[border-color,background-color,color,box-shadow] has-[[data-slot=radio-group-item]:focus-visible]:ring-2 has-[[data-slot=radio-group-item]:focus-visible]:ring-ring/50",
+											"has-[[data-slot=radio-group-item]:focus-visible]:ring-ring/50 flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 text-left transition-[border-color,background-color,color,box-shadow] has-[[data-slot=radio-group-item]:focus-visible]:ring-2",
 											{
 												"border-primary bg-primary/5 shadow-sm": isSelected,
 												"border-border/60 bg-background/60 hover:border-border hover:bg-muted/30": !isSelected,
@@ -191,15 +191,15 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 										</div>
 										<div className="flex flex-1 flex-col gap-0.5">
 											<div className="flex items-center gap-2">
-												<span className="font-bold text-foreground text-sm">{opt.label}</span>
+												<span className="text-foreground text-sm font-bold">{opt.label}</span>
 												{opt.recommended && (
 													<Badge weight="semibold" variant="secondary" size="sm">
-														<Sparkles className="size-3 text-primary" />
+														<Sparkles className="text-primary size-3" />
 														{m.components_offline_recommended()}
 													</Badge>
 												)}
 											</div>
-											<span className="font-mono text-muted-foreground text-xs">{opt.resolution}</span>
+											<span className="text-muted-foreground font-mono text-xs">{opt.resolution}</span>
 											<span className="text-muted-foreground/80 text-xs">{opt.description}</span>
 										</div>
 										<RadioGroupItem value={opt.id} id={`quality-${opt.id}`} className="mt-1" />
@@ -212,39 +212,39 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 
 				{activeJobId && (
 					<div className="flex flex-col gap-4 py-4">
-						<div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border/60 bg-muted/20 p-6 text-center">
+						<div className="border-border/60 bg-muted/20 flex flex-col items-center justify-center gap-3 rounded-xl border p-6 text-center">
 							{isProcessing && (
 								<>
-									<div className="relative flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+									<div className="bg-primary/10 text-primary relative flex size-14 items-center justify-center rounded-full">
 										<Spinner size="xl" />
 									</div>
 									<div className="flex flex-col gap-1">
-										<span className="font-bold text-base text-foreground">{m.components_offline_in_progress()}</span>
+										<span className="text-foreground text-base font-bold">{m.components_offline_in_progress()}</span>
 										<span className="text-muted-foreground text-xs">
 											{m.components_offline_server_transcoding_desc({ profile: jobStatus?.quality ?? selectedQuality })}
 										</span>
 									</div>
 									<div className="w-full max-w-md">
 										<Progress value={jobStatus?.progressPercent ?? 1} aria-label={m.common_progress()} className="w-full gap-1.5">
-											<div className="flex w-full justify-between gap-1 font-medium text-muted-foreground text-xs">
+											<div className="text-muted-foreground flex w-full justify-between gap-1 text-xs font-medium">
 												<span>{jobStatus?.status === "processing" ? m.common_processing() : m.common_queued_ellipsis()}</span>
-												<span className="font-bold text-primary">
+												<span className="text-primary font-bold">
 													{jobStatus?.progressPercent ? `${Math.round(jobStatus.progressPercent)}%` : ""}
 												</span>
 											</div>
 										</Progress>
 									</div>
-									<p className="mt-2 text-muted-foreground text-xs">{m.components_offline_close_window_note()}</p>
+									<p className="text-muted-foreground mt-2 text-xs">{m.components_offline_close_window_note()}</p>
 								</>
 							)}
 
 							{isCompleted && (
 								<>
-									<div className="flex size-14 items-center justify-center rounded-full bg-success/10 text-success">
+									<div className="bg-success/10 text-success flex size-14 items-center justify-center rounded-full">
 										<Check className="size-7" />
 									</div>
 									<div className="flex flex-col gap-1">
-										<span className="font-bold text-base text-success">{m.components_offline_ready()}</span>
+										<span className="text-success text-base font-bold">{m.components_offline_ready()}</span>
 										<span className="text-muted-foreground text-xs">
 											{jobStatus.fileName}
 											{jobStatus.sizeBytes ? ` • ${formatFileSize(jobStatus.sizeBytes)}` : ""}
@@ -265,11 +265,11 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 
 							{isFailed && (
 								<>
-									<div className="flex size-14 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+									<div className="bg-destructive/10 text-destructive flex size-14 items-center justify-center rounded-full">
 										<Trash2 className="size-7" />
 									</div>
 									<div className="flex flex-col gap-1">
-										<span className="font-bold text-base text-destructive">{m.components_offline_transcode_error()}</span>
+										<span className="text-destructive text-base font-bold">{m.components_offline_transcode_error()}</span>
 										<span className="text-muted-foreground text-xs">
 											{translateCode(jobStatus.errorCode, m.components_offline_unexpected_ffmpeg_error())}
 										</span>

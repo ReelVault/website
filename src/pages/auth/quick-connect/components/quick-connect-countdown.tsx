@@ -28,9 +28,9 @@ export function QuickConnectCountdown({ expiresAt, onExpire, gapClass = "gap-2" 
 	}, [expiresAt, onExpire]);
 
 	return (
-		<div className={`flex items-center ${gapClass} font-medium text-muted-foreground text-xs`}>
+		<div className={`flex items-center ${gapClass} text-muted-foreground text-xs font-medium`}>
 			<Clock className="size-3.5" aria-hidden="true" /> {m.auth_valid_for_label()}{" "}
-			<span className="font-bold text-foreground">{formatCountdown(remainingSeconds)}</span>
+			<span className="text-foreground font-bold">{formatCountdown(remainingSeconds)}</span>
 		</div>
 	);
 }

@@ -57,7 +57,7 @@ export function MediaAuditView({ audit }: { audit: ReturnType<typeof useAdminMed
 				<div className="flex flex-col gap-4">
 					<div className="flex items-center justify-between">
 						<div>
-							<h3 className="font-semibold text-foreground text-lg">
+							<h3 className="text-foreground text-lg font-semibold">
 								{m.admin_media_suspected_mismatches_detected({ suspectsCount: suspects.length })}
 							</h3>
 							<p className="text-muted-foreground text-sm">{m.admin_media_audit_mismatch_desc()}</p>

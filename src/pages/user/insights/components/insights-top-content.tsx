@@ -19,7 +19,7 @@ export function InsightsTopContent({ topMovies, topShows }: InsightsTopContentPr
 			<CardHeader className="flex flex-row items-center justify-between">
 				<div>
 					<div className="flex items-center gap-2">
-						<Award className="size-5 text-warning" />
+						<Award className="text-warning size-5" />
 						<CardTitle>{m.user_most_watched_titles()}</CardTitle>
 					</div>
 					<CardDescription size="xs">{m.user_top_titles_ranking()}</CardDescription>
@@ -40,7 +40,7 @@ export function InsightsTopContent({ topMovies, topShows }: InsightsTopContentPr
 
 					<TabsContent value="movies">
 						{topMovies.length === 0 ? (
-							<div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+							<div className="text-muted-foreground flex flex-col items-center justify-center py-12 text-center">
 								<Film className="mb-2 size-8 opacity-40" />
 								<p className="text-xs">{m.user_no_movies_in_period()}</p>
 							</div>
@@ -55,7 +55,7 @@ export function InsightsTopContent({ topMovies, topShows }: InsightsTopContentPr
 
 					<TabsContent value="shows">
 						{topShows.length === 0 ? (
-							<div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+							<div className="text-muted-foreground flex flex-col items-center justify-center py-12 text-center">
 								<Tv className="mb-2 size-8 opacity-40" />
 								<p className="text-xs">{m.user_no_series_in_period()}</p>
 							</div>
@@ -79,9 +79,9 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 	const formattedDuration = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
 
 	return (
-		<div className="group relative flex flex-col overflow-hidden rounded-xl border border-border/60 bg-background/50 transition-[border-color,background-color,color,box-shadow] hover:border-primary/50 hover:shadow-lg">
+		<div className="group border-border/60 bg-background/50 hover:border-primary/50 relative flex flex-col overflow-hidden rounded-xl border transition-[border-color,background-color,color,box-shadow] hover:shadow-lg">
 			{/* Poster Container */}
-			<div className="relative aspect-2/3 w-full overflow-hidden bg-muted">
+			<div className="bg-muted relative aspect-2/3 w-full overflow-hidden">
 				<ApiImage
 					fileId={extractFileIdFromUrl(item.posterUrl)}
 					cacheKey={item.posterUpdatedAt}
@@ -91,12 +91,12 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 					zoom
 					className="object-cover"
 				/>
-				<div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-black/30" />
+				<div className="from-background/90 absolute inset-0 bg-linear-to-t via-transparent to-black/30" />
 
 				{/* Rank Badge */}
 				<div className="absolute top-2 left-2">
 					<div
-						className={cn("flex size-7 items-center justify-center rounded-lg border font-black text-xs", {
+						className={cn("flex size-7 items-center justify-center rounded-lg border text-xs font-black", {
 							"border-warning/40 bg-warning/25 text-warning": rank === 1,
 							"border-border/40 bg-muted/60 text-foreground/80": rank === 2,
 							"border-warning/25 bg-warning/10 text-warning": rank === 3,
@@ -120,18 +120,18 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 			{/* Info */}
 			<div className="flex flex-1 flex-col justify-between p-3">
 				<div>
-					<p className="truncate font-bold text-foreground text-sm" title={item.title}>
+					<p className="text-foreground truncate text-sm font-bold" title={item.title}>
 						{item.title}
 					</p>
-					{item.releaseYear && <p className="font-mono text-muted-foreground text-xs">{item.releaseYear}</p>}
+					{item.releaseYear && <p className="text-muted-foreground font-mono text-xs">{item.releaseYear}</p>}
 				</div>
 
-				<div className="mt-3 flex items-center justify-between border-border/40 border-t pt-2 text-xs">
-					<div className="flex items-center gap-1 font-semibold text-primary">
+				<div className="border-border/40 mt-3 flex items-center justify-between border-t pt-2 text-xs">
+					<div className="text-primary flex items-center gap-1 font-semibold">
 						<Clock className="size-3" />
 						<span>{formattedDuration}</span>
 					</div>
-					<div className="flex items-center gap-1 text-muted-foreground text-xs">
+					<div className="text-muted-foreground flex items-center gap-1 text-xs">
 						<Play className="size-3 fill-current opacity-60" />
 						<span>
 							{item.type === "tv_show"

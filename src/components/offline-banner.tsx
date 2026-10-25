@@ -43,7 +43,7 @@ export function OfflineBanner() {
 	return (
 		<div
 			role="status"
-			className="fixed inset-x-0 bottom-0 z-90 flex items-center justify-center gap-2 bg-warning px-4 py-2 font-semibold text-warning-foreground text-xs shadow-lg"
+			className="bg-warning text-warning-foreground fixed inset-x-0 bottom-0 z-90 flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold shadow-lg"
 		>
 			<WifiOff className="size-4" aria-hidden="true" />
 			{m.common_offline_banner()}

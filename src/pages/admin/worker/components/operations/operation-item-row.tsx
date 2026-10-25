@@ -84,8 +84,8 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 
 				<TableCell size="sm">
 					<div>
-						<span className="font-semibold text-foreground">{meta.title}</span>
-						<span className="block font-mono text-muted-foreground text-xs">{item.workerId}</span>
+						<span className="text-foreground font-semibold">{meta.title}</span>
+						<span className="text-muted-foreground block font-mono text-xs">{item.workerId}</span>
 					</div>
 				</TableCell>
 
@@ -95,7 +95,7 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 
 				<TableCell size="sm">
 					<span className="text-muted-foreground">{stage}</span>
-					{countdownLabel && <span className="block font-mono text-primary text-xs">{countdownLabel}</span>}
+					{countdownLabel && <span className="text-primary block font-mono text-xs">{countdownLabel}</span>}
 				</TableCell>
 
 				<TableCell tone="mono" size="sm">
@@ -123,19 +123,19 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 					<TableCell colSpan={6} className="pl-10">
 						<div className="flex flex-col gap-2">
 							{item.error && (
-								<div className="rounded-lg border border-destructive/30 bg-destructive/10 p-2.5 text-destructive text-xs">
+								<div className="border-destructive/30 bg-destructive/10 text-destructive rounded-lg border p-2.5 text-xs">
 									<p className="mb-1 flex items-center gap-1.5 font-semibold">
 										<AlertCircle className="size-3.5" />
 										{m.admin_workers_error_exec()}
 									</p>
-									<pre className="whitespace-pre-wrap break-all font-mono text-xs leading-relaxed">{item.error}</pre>
+									<pre className="font-mono text-xs leading-relaxed break-all whitespace-pre-wrap">{item.error}</pre>
 								</div>
 							)}
 
 							{(hasValue(item.referenceType) || hasValue(item.referenceId) || hasValue(item.dedupeKey)) && (
-								<div className="rounded-lg border border-border/60 bg-card/60 p-2.5 text-xs">
-									<span className="mb-1 block font-semibold text-muted-foreground text-xs">{m.admin_workers_job_refs()}</span>
-									<div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-muted-foreground text-xs">
+								<div className="border-border/60 bg-card/60 rounded-lg border p-2.5 text-xs">
+									<span className="text-muted-foreground mb-1 block text-xs font-semibold">{m.admin_workers_job_refs()}</span>
+									<div className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
 										{item.referenceType && (
 											<span>
 												{m.admin_workers_ref_type()} <strong className="text-foreground">{item.referenceType}</strong>
@@ -155,9 +155,9 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 								</div>
 							)}
 
-							<div className="rounded-lg border border-border/60 bg-card/60 p-2.5 text-xs">
-								<span className="mb-1 block font-semibold text-muted-foreground text-xs">{m.admin_workers_job_meta()}</span>
-								<div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-muted-foreground text-xs">
+							<div className="border-border/60 bg-card/60 rounded-lg border p-2.5 text-xs">
+								<span className="text-muted-foreground mb-1 block text-xs font-semibold">{m.admin_workers_job_meta()}</span>
+								<div className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
 									<span>
 										{m.admin_workers_job_priority_label()}
 										<strong className="text-foreground">{item.priority}</strong>
@@ -192,9 +192,9 @@ export function OperationItemRow({ item, timeoutMs, isExpanded, onToggleExpand, 
 							</div>
 
 							{item.result !== undefined && item.result !== null && (
-								<div className="rounded-lg border border-success/20 bg-success/3 p-2.5">
-									<span className="mb-1 block font-semibold text-success text-xs">{m.admin_workers_result_out()}</span>
-									<pre className="max-h-48 overflow-auto font-mono text-foreground text-xs leading-relaxed">
+								<div className="border-success/20 bg-success/3 rounded-lg border p-2.5">
+									<span className="text-success mb-1 block text-xs font-semibold">{m.admin_workers_result_out()}</span>
+									<pre className="text-foreground max-h-48 overflow-auto font-mono text-xs leading-relaxed">
 										{typeof item.result === "string" ? item.result : JSON.stringify(item.result, null, 2)}
 									</pre>
 								</div>

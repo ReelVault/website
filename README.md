@@ -28,18 +28,18 @@ Open http://localhost:3000 and sign in to your local server.
 
 ## Commands
 
-| Command | What it does |
-|---|---|
-| `bun run dev` | Vite dev server with hot reload |
-| `bun run build` | Production build in `dist/`, with precompressed `.br` and `.gz` files |
-| `bun run start` | Static server for `dist/`, with Brotli and gzip and SPA fallback |
-| `bun run check-types` | Generate routes and translations, then type-check |
-| `bun run lint` | Biome and oxlint |
-| `bun run format` | Format with Biome |
-| `bun run deadcode` | Find unused code with Knip |
-| `bun run test` | Unit tests |
-| `bun run doctor` | React best-practice scan (react-doctor) |
-| `bun run i18n:unused` | Find translation keys that nothing uses |
+| Command               | What it does                                                          |
+| --------------------- | --------------------------------------------------------------------- |
+| `bun run dev`         | Vite dev server with hot reload                                       |
+| `bun run build`       | Production build in `dist/`, with precompressed `.br` and `.gz` files |
+| `bun run start`       | Static server for `dist/`, with Brotli and gzip and SPA fallback      |
+| `bun run check-types` | Generate routes and translations, then type-check                     |
+| `bun run lint`        | Biome and oxlint                                                      |
+| `bun run format`      | Format with Biome                                                     |
+| `bun run deadcode`    | Find unused code with Knip                                            |
+| `bun run test`        | Unit tests                                                            |
+| `bun run doctor`      | React best-practice scan (react-doctor)                               |
+| `bun run i18n:unused` | Find translation keys that nothing uses                               |
 
 ## Configuration
 

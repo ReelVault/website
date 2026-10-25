@@ -73,7 +73,7 @@ export default function CreateProfilePage() {
 			<Link
 				to="/auth/profiles"
 				search={profilesSearch}
-				className="inline-flex min-h-11 w-fit items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex min-h-11 w-fit items-center gap-2 text-sm transition-colors"
 			>
 				<ArrowLeft className="size-4" aria-hidden="true" />
 				{m.common_back()}
@@ -81,7 +81,7 @@ export default function CreateProfilePage() {
 
 			<header className="flex flex-col gap-3">
 				<p className="cinema-kicker">{m.auth_personalization_label()}</p>
-				<h1 className="font-extrabold font-heading text-3xl tracking-tight sm:text-4xl">{m.auth_new_profile()}</h1>
+				<h1 className="font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">{m.auth_new_profile()}</h1>
 			</header>
 
 			<form onSubmit={handleSubmit} className="flex flex-col gap-8">
@@ -112,7 +112,7 @@ export default function CreateProfilePage() {
 				{error && <AppErrorState title={m.auth_failed_to_create_profile_short()} description={error} />}
 
 				{/* Footer: copy-from on the left, save on the right; stacked on phones */}
-				<div className="flex flex-col gap-6 border-border border-t pt-8 sm:flex-row sm:items-end sm:justify-between">
+				<div className="border-border flex flex-col gap-6 border-t pt-8 sm:flex-row sm:items-end sm:justify-between">
 					{profiles.length > 0 && (
 						<div className="flex flex-col gap-2 sm:w-72">
 							<Label tone="muted" size="xs">
@@ -138,7 +138,7 @@ export default function CreateProfilePage() {
 						isPending={createProfileMutation.isPending}
 						pendingLabel={m.admin_users_creating_profile()}
 						disabled={!name.trim()}
-						className="h-12 w-full rounded-xl font-semibold text-base sm:ml-auto sm:w-auto sm:px-8"
+						className="h-12 w-full rounded-xl text-base font-semibold sm:ml-auto sm:w-auto sm:px-8"
 					>
 						{m.admin_users_save_profile()}
 					</AsyncButton>

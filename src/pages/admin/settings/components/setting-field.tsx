@@ -189,7 +189,7 @@ export function SettingField({
 	}
 
 	return (
-		<div className="flex flex-col justify-between gap-3 rounded-lg border border-border/60 bg-card/50 p-4 transition-[border-color,background-color,color,box-shadow] hover:border-border sm:flex-row sm:items-center">
+		<div className="border-border/60 bg-card/50 hover:border-border flex flex-col justify-between gap-3 rounded-lg border p-4 transition-[border-color,background-color,color,box-shadow] sm:flex-row sm:items-center">
 			<div className="flex flex-1 flex-col gap-1">
 				<div className="flex flex-wrap items-center gap-2">
 					<Label weight="semibold" htmlFor={fieldId}>
@@ -206,10 +206,10 @@ export function SettingField({
 					{isUnsaved && <Badge variant="warning-outline">{m.admin_settings_unsaved_change()}</Badge>}
 				</div>
 				{description && <p className="text-muted-foreground text-xs leading-relaxed">{description}</p>}
-				{item.restartRequired && <p className="font-medium text-warning text-xs">{m.admin_settings_takes_effect_on_restart()}</p>}
-				<p className="font-mono text-muted-foreground/80 text-xs">
+				{item.restartRequired && <p className="text-warning text-xs font-medium">{m.admin_settings_takes_effect_on_restart()}</p>}
+				<p className="text-muted-foreground/80 font-mono text-xs">
 					{m.admin_settings_default_word()}{" "}
-					<span className="font-medium text-foreground/80">
+					<span className="text-foreground/80 font-medium">
 						{item.default === null ? m.common_none_lowercase() : settingValueToText(item.default)}
 					</span>
 				</p>

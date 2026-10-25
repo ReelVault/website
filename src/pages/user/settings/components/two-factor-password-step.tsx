@@ -24,7 +24,7 @@ export function TwoFactorPasswordStep({ isPending, onSubmit, onCancel }: TwoFact
 	return (
 		<form onSubmit={handleSubmit} className="flex flex-col gap-4 py-2">
 			<div className="flex flex-col gap-2">
-				<label htmlFor="2fa-setup-password" className="font-semibold text-muted-foreground text-sm">
+				<label htmlFor="2fa-setup-password" className="text-muted-foreground text-sm font-semibold">
 					{m.user_account_password()}
 				</label>
 				<div className="relative">
@@ -36,7 +36,7 @@ export function TwoFactorPasswordStep({ isPending, onSubmit, onCancel }: TwoFact
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<Lock className="absolute top-3 right-3 size-4 text-muted-foreground" />
+					<Lock className="text-muted-foreground absolute top-3 right-3 size-4" />
 				</div>
 			</div>
 			<div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
