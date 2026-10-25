@@ -10,6 +10,15 @@ export function redirectSearchValidator(search: Record<string, unknown>): Redire
 	return typeof search.redirect === "string" ? { redirect: search.redirect } : {};
 }
 
+export interface SearchPageSearch {
+	q?: string;
+}
+
+/** Keeps only a non-empty string `q` — anything else falls back to an empty search page. */
+export function searchPageSearchValidator(search: Record<string, unknown>): SearchPageSearch {
+	return typeof search.q === "string" && search.q.trim() !== "" ? { q: search.q } : {};
+}
+
 /**
  * URL search serialization without JSON quoting. The router default
  * (`stringifySearchWith(JSON.stringify, JSON.parse)`) encodes string values as

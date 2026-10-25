@@ -33,5 +33,6 @@ export function useGlobalMetadataSearch(options?: GlobalMetadataSearchOptions) {
 		isFetching: metadataQuery.isFetching,
 		isError: metadataQuery.isError,
 		hasResults,
+		refetch: metadataQuery.refetch,
 	};
 }

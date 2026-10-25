@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { coerceSearchBoolean, parseSearchParams, stringifySearchParams } from "@/types/search-params";
+import { coerceSearchBoolean, parseSearchParams, searchPageSearchValidator, stringifySearchParams } from "@/types/search-params";
 
 describe("search param serialization", () => {
 	it("keeps plain string values unquoted", () => {
@@ -28,5 +28,13 @@ describe("search param serialization", () => {
 		expect(coerceSearchBoolean("")).toBe(false);
 		expect(coerceSearchBoolean(undefined)).toBeUndefined();
 		expect(coerceSearchBoolean(true)).toBe(true);
+	});
+
+	it("keeps only a non-empty string q for the search page", () => {
+		expect(searchPageSearchValidator({ q: "matrix" })).toEqual({ q: "matrix" });
+		expect(searchPageSearchValidator({ q: "  " })).toEqual({});
+		expect(searchPageSearchValidator({ q: "" })).toEqual({});
+		expect(searchPageSearchValidator({ q: 5 })).toEqual({});
+		expect(searchPageSearchValidator({ q: ["matrix"] })).toEqual({});
 	});
 });

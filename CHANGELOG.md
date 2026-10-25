@@ -401,3 +401,17 @@ Production build served by `server.ts` (precompressed `.br`/`.gz`), headless Chr
 - Total JS: 4,955,841 → 4,694,330 B raw (−5.3%), 1,627,048 → 1,619,191 B gzip (−0.5%).
 - Regression: JS requests per cold load rise from 110 to 113 on `/auth/login` and from 109 to 111 on `/quick-connect`, because the split chunks are statically imported and fetched in parallel from the modulepreload list.
 - `react-doctor` score: 81 (threshold 70).
+
+# v1.3.2
+
+### Features
+
+- **Dedicated global search page** — the navbar search and `Ctrl+K` now open `/search` instead of a dialog. The query lives in `?q=`, so results are shareable and Back from a title returns to the same search.
+
+### UI
+
+- **Full-width search results** — the new page uses the whole content area for larger poster, people, collection, genre and external-catalog sections, with section counts and a persistent external-catalog toggle.
+
+### Fixes
+
+- **Chromium search result navigation** — search results are real links now. The old dialog mixed `cmdk` selection, a synthetic history entry and programmatic navigation, which could swallow the click in Chromium-based browsers while working in Firefox.

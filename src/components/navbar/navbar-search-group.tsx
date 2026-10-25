@@ -1,77 +1,82 @@
-import { useLocation } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { type MouseEvent, useEffect } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { detach } from "@/lib/detach";
+import { GLOBAL_SEARCH_INPUT_ID } from "@/lib/global-search";
 import { m } from "@/paraglide/messages";
 import { Button } from "../ui/button";
-
-// cmdk and the whole command palette are interaction-only. Keeping them in a
-// lazy chunk removes them from the eager navbar graph; below the 2xl breakpoint
-// the palette is reachable only via Ctrl+K or the icon, so it is not mounted
-// (nor fetched) until then.
-const loadNavbarSearch = () => import("./navbar-search");
-const NavbarSearch = lazy(async () => {
-	const mod = await loadNavbarSearch();
-
-	return { default: mod.NavbarSearch };
-});
 
 const DESKTOP_SEARCH_QUERY = "(min-width: 1536px)";
 
 /**
- * Search icon button + full search field in one — open state, the Ctrl+K shortcut
- * and close-on-navigate live here so opening the search does not
- * re-render the whole navbar.
+ * Search entry point in the navbar. The search lives on its own page so results
+ * get the full viewport; Ctrl+K opens it from anywhere.
  */
 export function NavbarSearchGroup() {
 	const { pathname } = useLocation();
-	const [isSearchOpen, setIsSearchOpen] = useState(false);
+	const navigate = useNavigate();
 	const isDesktopSearch = useMediaQuery(DESKTOP_SEARCH_QUERY);
+	const isActive = pathname === "/search";
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
-			if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-				event.preventDefault();
-				detach(loadNavbarSearch());
-				setIsSearchOpen(true);
+			if (!((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k")) {
+				return;
 			}
+
+			event.preventDefault();
+			if (isActive) {
+				document.getElementById(GLOBAL_SEARCH_INPUT_ID)?.focus();
+				return;
+			}
+
+			detach(navigate({ to: "/search" }));
 		};
 		window.addEventListener("keydown", handleKeyDown);
 
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, []);
+	}, [isActive, navigate]);
 
-	// Close the search on page change (navigating by clicking a card).
-	// Adjusting state during render (react.dev "adjusting state when props change")
-	// closes the overlay in the same pass as the navigation, without an effect.
-	const [prevPathname, setPrevPathname] = useState(pathname);
-	if (pathname !== prevPathname) {
-		setPrevPathname(pathname);
-		setIsSearchOpen(false);
-	}
+	const label = m.components_search_open_shortcut();
+	const activeProps = isActive ? { "aria-current": "page" as const } : {};
+	const handleSearchLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+		if (!isActive || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+		event.preventDefault();
+		document.getElementById(GLOBAL_SEARCH_INPUT_ID)?.focus();
+	};
 
 	return (
 		<>
 			<Button
-				aria-label={m.components_search_open_shortcut()}
+				aria-label={label}
+				aria-keyshortcuts="Control+K"
 				variant="ghost"
 				size="icon-lg"
 				className="2xl:hidden"
-				onClick={() => {
-					detach(loadNavbarSearch());
-					setIsSearchOpen(true);
-				}}
+				nativeButton={false}
+				render={<Link to="/search" onClick={handleSearchLinkClick} {...activeProps} />}
 			>
 				<Search data-icon="inline-start" aria-hidden="true" />
 			</Button>
-			{(isDesktopSearch || isSearchOpen) && (
-				<div className={isDesktopSearch ? "hidden 2xl:block" : "hidden"}>
-					<Suspense fallback={null}>
-						<NavbarSearch isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />
-					</Suspense>
-				</div>
-			)}
+			<div className={isDesktopSearch ? "hidden 2xl:block" : "hidden"}>
+				<Button
+					aria-label={label}
+					aria-keyshortcuts="Control+K"
+					variant="outline"
+					size="sm"
+					className="flex items-center"
+					nativeButton={false}
+					render={<Link to="/search" onClick={handleSearchLinkClick} {...activeProps} />}
+				>
+					<Search className="size-4 text-muted-foreground transition-colors group-hover:text-primary" />
+					<span className="font-medium">{m.components_navbar_search_catalog()}</span>
+					<kbd className="hidden items-center gap-0.5 rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-muted-foreground text-xs shadow-xs sm:inline-flex">
+						{m.common_shortcut_ctrl_k()}
+					</kbd>
+				</Button>
+			</div>
 		</>
 	);
 }
