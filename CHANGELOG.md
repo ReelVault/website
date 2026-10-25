@@ -415,36 +415,32 @@ Production build served by `server.ts` (precompressed `.br`/`.gz`), headless Chr
 ### Fixes
 
 - **Chromium search result navigation** — search results are real links now. The old dialog mixed `cmdk` selection, a synthetic history entry and programmatic navigation, which could swallow the click in Chromium-based browsers while working in Firefox.
-- **Resource alerts in the notification list** — memory and disk alerts are stored with the server's message key in `title` (`system.memory_high`) plus the reading in `data.percent`, but the client had no branch for them, so the list and the notification card showed the raw key. They now render a translated title with the rounded reading ("Memory usage is high (87%)"); unknown resource codes still show their raw key instead of disappearing.
+- **Resource alerts showed raw codes** — `system.memory_high`, `system.memory_critical` and `system.disk_low` now render translated with the rounded reading ("Memory usage is high (87%)"); unknown codes keep their raw key.
 
 ### Performance
 
-- **Error-message catalog off the startup path** — the code→message catalog (`utils/translate-error`, 331 message modules) sat in the eager graph because `toastError`, `getSdkErrorMessage` and the route error screen imported it statically: every visitor downloaded it before first paint although it only runs when something fails. `toastError`, the route error screen and the shared `AppErrorState` now load it on demand (the error surface renders its fallback text first and swaps in the translated message when the chunk arrives), and `getSdkErrorMessage` moved to `src/client/sdk-error-message.ts` so `client.ts` no longer imports it; the eight fixed HTTP-status messages are referenced directly. Eager JS drops 180.4 → 163.7 KB brotli, and the catalog becomes its own 17.6 KB brotli chunk that only admin pages rendering translated codes inline (media, settings, resources, plugins, downloads, libraries, analytics, updates) and actual error paths request — the public dashboard, library, details, search, login and player routes never touch it. Trade-off: the description of the first error toast appears once the chunk arrives; the toast, its title and every other error path are unchanged.
-- **Route loaders stop dragging page hooks into the startup graph** — 23 route files imported their query-option factories from `@/client/hooks/*`, and route modules are part of the eager graph, so every visitor downloaded all admin and user hooks (22 of the 25 hook modules, 119 KB authored; only the profile, realtime and plugin hooks the shell itself needs remain). Each loader now `import()`s its options module inside the existing fire-and-forget `detach` block, `/movies` and `/series` (blocking redirects) read the two library options from the new `src/client/library-queries.ts`, and the admin-metadata URL parsers moved to `src/types/search-params.ts`. Eager JS falls further to 146.7 KB brotli (−18.7% against the 180.4 KB starting point) and the modulepreload list shrinks from 12 to 9 files. Trade-off: the prefetch starts after the options chunk resolves — that chunk is the one the page component already needs, so it is requested once and in parallel with the page.
-- **Release notes render markdown on first expand** — the updates page imported `MarkdownText` (react-markdown + remark-gfm + GitHub alerts, 42.1 KB brotli) into its route chunk for notes that sit inside a collapsed panel. It is now a `React.lazy` component inside that panel: the route chunk falls from 47.7 to 7.1 KB brotli and the markdown chunk is fetched only when a release note is opened.
+- **Error catalog out of the startup bundle** — loaded on demand by `toastError`, the route error screen and `AppErrorState`. Eager JS 180.4 → 163.7 KB br; the catalog is a 17.6 KB br chunk requested only by error paths and admin pages that show translated codes.
+- **Route loaders no longer pull hooks into the startup bundle** — query options are imported inside the existing fire-and-forget prefetch (23 route files); library options moved to `src/client/library-queries.ts`. Eager JS 163.7 → 146.7 KB br (−18.7% overall), modulepreloads 12 → 9.
+- **Release-notes markdown loads on first expand** — updates route chunk 47.7 → 7.1 KB br; the react-markdown chunk (42.1 KB br) is fetched only when a note is opened.
 
 ### Performance benchmarks
 
-Production build, brotli sizes of the files `index.html` loads or statically preloads, plus the files a route adds on first navigation.
+Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 | Area | Benchmark | Before | After | Change |
 | --- | --- | ---: | ---: | ---: |
-| Bundle | Eager JS (entry + modulepreloads) | 180.4 KB | 146.7 KB | **−18.7%** |
+| Bundle | Eager JS | 180.4 KB | 146.7 KB | **−18.7%** |
 | Bundle | Eager JS files | 13 | 10 | −3 |
-| Route | `/dashboard` total JS | 301.6 KB | 278.7 KB | −7.6% |
-| Route | `/auth/login` total JS | 257.2 KB | 225.3 KB | −12.4% |
-| Route | `/search` total JS | 245.3 KB | 212.0 KB | **−13.6%** |
-| Route | library view total JS | 319.4 KB | 298.7 KB | −6.5% |
-| Route | `/details/$id` total JS | 283.1 KB | 256.5 KB | −9.4% |
-| Route | `/player/$id` total JS | 282.0 KB | 259.3 KB | −8.1% |
-| Route | `/admin/updates` total JS | 299.2 KB | 242.4 KB | **−19.0%** |
-| Route | `/admin/settings` total JS | 314.1 KB | 298.0 KB | −5.1% |
-| Route | `/admin/media` total JS | 298.5 KB | 289.0 KB | −3.2% |
-| Route | `/admin/providers` total JS | 272.0 KB | 238.6 KB | −12.3% |
-| Route | admin dashboard total JS | 266.9 KB | 237.4 KB | −11.1% |
+| Route | `/dashboard` | 301.6 KB | 278.7 KB | −7.6% |
+| Route | `/auth/login` | 257.2 KB | 225.3 KB | −12.4% |
+| Route | `/search` | 245.3 KB | 212.0 KB | **−13.6%** |
+| Route | Library view | 319.4 KB | 298.7 KB | −6.5% |
+| Route | `/details/$id` | 283.1 KB | 256.5 KB | −9.4% |
+| Route | `/player/$id` | 282.0 KB | 259.3 KB | −8.1% |
+| Route | `/admin/updates` | 299.2 KB | 242.4 KB | **−19.0%** |
 
 ### Additional measurements
 
-- Requests per route rise by 0–10 (for example `/dashboard` 87 → 95, library view 102 → 110, `/player/$id` 40 → 50) because the hooks that left the eager chunk now sit in their own small chunks next to the page that needs them. All of them are fetched in parallel over HTTP/2; bytes per route still fall (see the table).
-- Total JS across the whole app: 4,536 KB → 4,554 KB raw (+0.4%), 1,372 KB → 1,388 KB brotli (+1.2%), 559 → 587 files.
-- `react-doctor` score: 81 (threshold 70).
+- Requests per route +0–10 (finer chunks, parallel over HTTP/2). Total JS 4,536 → 4,554 KB raw, 559 → 587 files.
+- Regression: `/admin/media` −3.2% and `/admin/settings` −5.1% only, because both render translated codes inline.
+- `react-doctor` score: 81.
