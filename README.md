@@ -75,8 +75,9 @@ When the server contract changes, rebuild the SDK and refresh the local copy. [A
 
 ## CI
 
-- `ci.yaml`: type-check, lint, Knip and tests.
+- `ci.yml`: type-check, lint, Knip and tests. Also called by the release workflow as its gate.
 - `react-doctor.yml`: advisory React scan on pull requests and on pushes to `main`.
+- `release.yml`: builds the web artifacts for a `v*` tag after the CI gate passes and publishes the GitHub release.
 
 ## License
 
