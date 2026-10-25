@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { adminMediaFilesQueryOptions } from "@/client/hooks/use-admin-media";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -26,7 +25,11 @@ function adminMediaSearchValidator(search: Record<string, unknown>): AdminMediaS
 export const Route = createFileRoute("/admin/media/")({
 	validateSearch: adminMediaSearchValidator,
 	loader: ({ context: { queryClient } }) => {
-		detach(queryClient.query(adminMediaFilesQueryOptions()));
+		detach(async () => {
+			const { adminMediaFilesQueryOptions } = await import("@/client/hooks/use-admin-media");
+
+			await queryClient.query(adminMediaFilesQueryOptions());
+		});
 	},
 	component: AdminMediaPage,
 });

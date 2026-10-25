@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { librariesQueryOptions } from "@/client/hooks/use-libraries";
+import { librariesQueryOptions } from "@/client/library-queries";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
 const MoviesPage = lazyRouteComponent(() => import("@/pages/web/_libraries/movies/movies-page"));

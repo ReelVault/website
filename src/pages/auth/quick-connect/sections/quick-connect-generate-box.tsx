@@ -1,7 +1,7 @@
 import { KeyRound } from "lucide-react";
 import { useState } from "react";
-import { getSdkErrorMessage } from "@/client/client";
 import { useQuickConnectGenerate } from "@/client/hooks/use-auth";
+import { getSdkErrorMessage } from "@/client/sdk-error-message";
 import { AsyncButton } from "@/components/async-button";
 import { CopyIcon } from "@/components/copy-icon";
 import { QrCode } from "@/components/qr-code";

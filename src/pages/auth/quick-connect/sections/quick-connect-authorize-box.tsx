@@ -1,7 +1,7 @@
 import { KeyRound, Sparkles, Tv } from "lucide-react";
 import { useState } from "react";
-import { getSdkErrorMessage } from "@/client/client";
 import { useQuickConnectAuthorize } from "@/client/hooks/use-auth";
+import { getSdkErrorMessage } from "@/client/sdk-error-message";
 import { AsyncButton } from "@/components/async-button";
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";

@@ -1,15 +1,45 @@
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { Suspense, use } from "react";
 import { AlertTriangleIcon, HomeIcon, RefreshCwIcon } from "@/components/router/route-screen-icons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
-import { translateError } from "@/utils/translate-error";
+import type { translateError as translateErrorFn } from "@/utils/translate-error";
+
+type TranslateError = typeof translateErrorFn;
+
+let translatorPromise: Promise<TranslateError | null> | undefined;
+
+/**
+ * Loaded on demand: the error catalog is ~20 KB br and this screen only renders
+ * after a failed route, so it must not sit in the eager graph.
+ */
+async function loadTranslateErrorModule(): Promise<TranslateError | null> {
+	try {
+		const mod = await import("@/utils/translate-error");
+
+		return mod.translateError;
+	} catch {
+		// Do not cache the failure — the next error screen retries the import.
+		translatorPromise = undefined;
+
+		return null;
+	}
+}
+
+function loadTranslateError(): Promise<TranslateError | null> {
+	translatorPromise ??= loadTranslateErrorModule();
+
+	return translatorPromise;
+}
+
+function ErrorDescription({ error }: { error: unknown }) {
+	const translateError = use(loadTranslateError());
+
+	return <>{translateError ? translateError(error, m.components_route_error_description()) : m.components_route_error_description()}</>;
+}
 
 export function RouteErrorScreen({ error, reset }: ErrorComponentProps) {
-	// Rendered for route-level loader/render failures — show a human message
-	// (e.g. translated 429 with retry seconds), never the raw technical string.
-	const errorMessage = translateError(error, m.components_route_error_description());
-
 	return (
 		<main className="relative flex min-h-[60vh] w-full flex-col items-center justify-center p-6 text-foreground">
 			<div className="pointer-events-none absolute top-1/2 left-1/2 size-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--destructive)_12%,transparent)_0%,transparent_70%)]" />
@@ -20,7 +50,11 @@ export function RouteErrorScreen({ error, reset }: ErrorComponentProps) {
 				</div>
 
 				<h1 className="mt-5 font-black text-2xl tracking-tight sm:text-3xl">{m.components_route_error_heading()}</h1>
-				<p className="mt-2 text-muted-foreground text-sm leading-relaxed">{errorMessage}</p>
+				<p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+					<Suspense fallback={null}>
+						<ErrorDescription error={error} />
+					</Suspense>
+				</p>
 
 				<div className="mt-6 flex flex-wrap items-center justify-center gap-3">
 					{

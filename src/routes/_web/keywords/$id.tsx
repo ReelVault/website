@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { taxonomyDetailsQueryOptions } from "@/client/hooks/use-taxonomy-details";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -15,12 +14,14 @@ function pageSearchValidator(search: Record<string, unknown>): { page?: number }
 export const Route = createFileRoute("/_web/keywords/$id")({
 	validateSearch: pageSearchValidator,
 	loader: ({ context: { queryClient }, params }) => {
-		detach(
-			queryClient.query({
+		detach(async () => {
+			const { taxonomyDetailsQueryOptions } = await import("@/client/hooks/use-taxonomy-details");
+
+			await queryClient.query({
 				...taxonomyDetailsQueryOptions("keyword", params.id),
 				staleTime: "static",
-			}),
-		);
+			});
+		});
 	},
 	component: KeywordDetailPage,
 });

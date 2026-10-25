@@ -1,9 +1,9 @@
 import { useNavigate, useSearch, useRouter as useTanStackRouter } from "@tanstack/react-router";
 import { Tv } from "lucide-react";
 import { useState } from "react";
-import { getSdkErrorMessage } from "@/client/client";
 import { useQuickConnectAuthorize, useQuickConnectRedeem } from "@/client/hooks/use-auth";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
+import { getSdkErrorMessage } from "@/client/sdk-error-message";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { detach } from "@/lib/detach";
 import { useSpatialNavigation } from "@/lib/use-spatial-navigation";

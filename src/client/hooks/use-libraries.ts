@@ -1,25 +1,11 @@
 import type { MetadataType, ScanFindingStatus } from "@reelvault/sdk";
-import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
-import { libraryDetailFields, libraryListFields } from "../utils/fields";
+import { librariesQueryOptions, libraryDetailQueryOptions } from "../library-queries";
 import { libraryKeys } from "../utils/query-keys";
-
-export const librariesQueryOptions = (type: "movies" | "tv_shows") =>
-	queryOptions({
-		queryKey: libraryKeys.list(type),
-		queryFn: () => reelvault.libraries.getAll({ type, fields: libraryListFields }),
-		staleTime: Number.POSITIVE_INFINITY,
-	});
-
-export const libraryDetailQueryOptions = (id: string) =>
-	queryOptions({
-		queryKey: libraryKeys.detail(id),
-		queryFn: () => reelvault.libraries.getById(id, { fields: libraryDetailFields }),
-		staleTime: 1000 * 60 * 10,
-	});
 
 export function useLibrariesQuery(type: "movies" | "tv_shows") {
 	return useQuery(librariesQueryOptions(type));

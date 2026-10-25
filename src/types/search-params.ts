@@ -87,6 +87,28 @@ export function coerceSearchBoolean(value: unknown): boolean | undefined {
 	return Boolean(value);
 }
 
+export const ADMIN_METADATA_MIN_MATCH_SCORES = [0.5, 0.7, 0.9] as const;
+
+/** Whole years from 1 to 9999; anything else (empty input, text, fractions) is no filter. */
+export function parseMetadataYear(value: unknown): number | undefined {
+	if (typeof value !== "number" && typeof value !== "string") return undefined;
+
+	const year = Number(value);
+
+	return Number.isInteger(year) && year >= 1 && year <= 9999 ? year : undefined;
+}
+
+export function parseMetadataMinMatchScore(value: unknown): (typeof ADMIN_METADATA_MIN_MATCH_SCORES)[number] | undefined {
+	return ADMIN_METADATA_MIN_MATCH_SCORES.find((score) => String(score) === String(value));
+}
+
+const STARTS_WITH_PATTERN = /^[A-Z#]$/;
+
+/** First-letter browse: `A`–`Z`, or `#` for titles that start with anything else. */
+export function parseMetadataStartsWith(value: unknown): string | undefined {
+	return typeof value === "string" && STARTS_WITH_PATTERN.test(value) ? value : undefined;
+}
+
 /** Reads back values written by the previous JSON-quoting serializer. */
 function decodeJsonQuotedString(raw: string): string {
 	if (raw.length >= 2 && raw.startsWith('"') && raw.endsWith('"')) {

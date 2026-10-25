@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { playbackViewQueryOptions } from "@/client/hooks/use-playback-session";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 import { coerceSearchBoolean } from "@/types/search-params";
@@ -32,7 +31,11 @@ export const Route = createFileRoute("/player/$id")({
 		// kick off the gating fetches while the chunk is still downloading.
 		if (!params.id) return;
 
-		detach(context.queryClient.query(playbackViewQueryOptions(params.id)));
+		detach(async () => {
+			const { playbackViewQueryOptions } = await import("@/client/hooks/use-playback-session");
+
+			await context.queryClient.query(playbackViewQueryOptions(params.id));
+		});
 	},
 	component: PlayerLayout,
 	validateSearch: playerSearchValidator,

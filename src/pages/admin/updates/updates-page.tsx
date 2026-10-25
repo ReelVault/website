@@ -1,7 +1,7 @@
 import type { AdminUpdateEnvironment, AdminUpdateHistoryEntry, AdminUpdateStatus, AdminUpdateTarget } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpCircle, ChevronDown, ExternalLink, History, Info, Monitor, RefreshCw, Server, X } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { lazy, type ReactNode, Suspense, useState } from "react";
 import {
 	CANCELLABLE_UPDATE_JOB_STATES,
 	UPDATE_JOB_STATE_LABELS,
@@ -10,7 +10,6 @@ import {
 } from "@/client/hooks/use-admin-update";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
-import { MarkdownText } from "@/components/markdown-text";
 import { SimplePagination } from "@/components/simple-pagination";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,6 +21,17 @@ import { m } from "@/paraglide/messages";
 import { formatDateTime } from "@/utils/format-utils";
 import { translateCode } from "@/utils/translate-error";
 import { UpdateStreamBlockDialog } from "./components/update-stream-block-dialog";
+
+/**
+ * Release notes are the only markdown surface in the app, and they sit inside a
+ * collapsed panel. Loaded on first expand, keeps react-markdown + remark (~39 KB
+ * brotli) off the updates page.
+ */
+const MarkdownText = lazy(async () => {
+	const mod = await import("@/components/markdown-text");
+
+	return { default: mod.MarkdownText };
+});
 
 function VersionStateBadge({ status, target }: { status: AdminUpdateStatus; target: AdminUpdateTarget }) {
 	const isServer = target === "server";
@@ -177,7 +187,9 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 						<CollapsibleContent>
 							<div className="mt-2 border-border/60 border-t pt-1">
 								{latest.notes ? (
-									<MarkdownText>{latest.notes}</MarkdownText>
+									<Suspense fallback={null}>
+										<MarkdownText>{latest.notes}</MarkdownText>
+									</Suspense>
 								) : (
 									<p className="text-muted-foreground text-xs">{m.admin_updates_no_release_notes()}</p>
 								)}

@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { notificationsQueryOptions } from "@/client/hooks/use-notifications";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -7,12 +6,14 @@ const NotificationsPage = lazyRouteComponent(() => import("@/pages/user/notifica
 
 export const Route = createFileRoute("/_user/notifications")({
 	loader: ({ context: { queryClient } }) => {
-		detach(
-			queryClient.query({
+		detach(async () => {
+			const { notificationsQueryOptions } = await import("@/client/hooks/use-notifications");
+
+			await queryClient.query({
 				...notificationsQueryOptions(),
 				staleTime: "static",
-			}),
-		);
+			});
+		});
 	},
 	component: NotificationsPage,
 });

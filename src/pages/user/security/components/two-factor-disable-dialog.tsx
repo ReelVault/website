@@ -1,7 +1,7 @@
 import type React from "react";
 import { useState } from "react";
-import { getSdkErrorMessage } from "@/client/client";
 import { useTwoFactor } from "@/client/hooks/use-two-factor";
+import { getSdkErrorMessage } from "@/client/sdk-error-message";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";

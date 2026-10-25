@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { adminUsersQueryOptions } from "@/client/hooks/use-admin-users";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -25,7 +24,11 @@ function adminUsersSearchValidator(search: Record<string, unknown>): AdminUsersS
 export const Route = createFileRoute("/admin/users/")({
 	validateSearch: adminUsersSearchValidator,
 	loader: ({ context: { queryClient } }) => {
-		detach(queryClient.query(adminUsersQueryOptions({ search: "" })));
+		detach(async () => {
+			const { adminUsersQueryOptions } = await import("@/client/hooks/use-admin-users");
+
+			await queryClient.query(adminUsersQueryOptions({ search: "" }));
+		});
 	},
 	component: AdminUsersPage,
 });

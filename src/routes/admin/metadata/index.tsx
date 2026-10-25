@@ -1,12 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	adminMetadataQueryOptions,
-	parseMetadataMinMatchScore,
-	parseMetadataStartsWith,
-	parseMetadataYear,
-} from "@/client/hooks/use-admin-metadata";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
+import { parseMetadataMinMatchScore, parseMetadataStartsWith, parseMetadataYear } from "@/types/search-params";
 
 const AdminMetadataPage = lazyRouteComponent(() => import("@/pages/admin/metadata/metadata-page"));
 
@@ -41,7 +36,11 @@ function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMet
 export const Route = createFileRoute("/admin/metadata/")({
 	validateSearch: adminMetadataSearchValidator,
 	loader: ({ context: { queryClient } }) => {
-		detach(queryClient.query(adminMetadataQueryOptions({ page: 1, pageSize: 20, search: "" })));
+		detach(async () => {
+			const { adminMetadataQueryOptions } = await import("@/client/hooks/use-admin-metadata");
+
+			await queryClient.query(adminMetadataQueryOptions({ page: 1, pageSize: 20, search: "" }));
+		});
 	},
 	component: AdminMetadataPage,
 });

@@ -1,8 +1,8 @@
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { getSdkErrorMessage } from "@/client/client";
 import { useCreateProfile, useProfiles } from "@/client/hooks/use-profiles";
+import { getSdkErrorMessage } from "@/client/sdk-error-message";
 import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { Label } from "@/components/ui/label";

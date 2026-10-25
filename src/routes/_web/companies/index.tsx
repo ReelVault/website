@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { companiesListQueryOptions } from "@/client/hooks/use-companies";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -7,12 +6,14 @@ const CompaniesPage = lazyRouteComponent(() => import("@/pages/web/companies/com
 
 export const Route = createFileRoute("/_web/companies/")({
 	loader: ({ context: { queryClient } }) => {
-		detach(
-			queryClient.query({
+		detach(async () => {
+			const { companiesListQueryOptions } = await import("@/client/hooks/use-companies");
+
+			await queryClient.query({
 				...companiesListQueryOptions(),
 				staleTime: "static",
-			}),
-		);
+			});
+		});
 	},
 	component: CompaniesPage,
 });

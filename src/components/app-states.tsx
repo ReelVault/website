@@ -1,7 +1,7 @@
 import { cn } from "cn";
 import { CircleAlert, RefreshCw } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
-import { getSdkErrorMessage } from "@/client/client";
+import { SdkErrorMessage } from "@/components/sdk-error-message";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
@@ -38,7 +38,9 @@ export function AppErrorState({
 				<CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-destructive" />
 				<div className="min-w-0 flex-1 space-y-0.5">
 					<AlertTitle>{title}</AlertTitle>
-					<AlertDescription>{getSdkErrorMessage(error) ?? description}</AlertDescription>
+					<AlertDescription>
+						<SdkErrorMessage error={error} fallback={description} />
+					</AlertDescription>
 				</div>
 			</div>
 			{onRetry !== undefined && (

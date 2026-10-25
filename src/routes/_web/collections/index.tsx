@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { collectionsPageQueryOptions } from "@/client/hooks/use-collections";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -15,7 +14,11 @@ function pageSearchValidator(search: Record<string, unknown>): { page?: number }
 export const Route = createFileRoute("/_web/collections/")({
 	validateSearch: pageSearchValidator,
 	loader: ({ context: { queryClient } }) => {
-		detach(queryClient.query(collectionsPageQueryOptions(1)));
+		detach(async () => {
+			const { collectionsPageQueryOptions } = await import("@/client/hooks/use-collections");
+
+			await queryClient.query(collectionsPageQueryOptions(1));
+		});
 	},
 	component: CollectionsPage,
 });

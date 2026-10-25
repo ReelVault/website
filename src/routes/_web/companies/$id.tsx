@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { companyDetailsQueryOptions } from "@/client/hooks/use-companies";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
 
@@ -15,12 +14,14 @@ function pageSearchValidator(search: Record<string, unknown>): { page?: number }
 export const Route = createFileRoute("/_web/companies/$id")({
 	validateSearch: pageSearchValidator,
 	loader: ({ context: { queryClient }, params }) => {
-		detach(
-			queryClient.query({
+		detach(async () => {
+			const { companyDetailsQueryOptions } = await import("@/client/hooks/use-companies");
+
+			await queryClient.query({
 				...companyDetailsQueryOptions(params.id),
 				staleTime: "static",
-			}),
-		);
+			});
+		});
 	},
 	component: CompanyDetailPage,
 });

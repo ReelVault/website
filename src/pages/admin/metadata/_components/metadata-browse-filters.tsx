@@ -1,14 +1,13 @@
-import {
-	ADMIN_METADATA_MIN_MATCH_SCORES,
-	type AdminMetadataBrowseFilters,
-	parseMetadataMinMatchScore,
-	parseMetadataStartsWith,
-	parseMetadataYear,
-	useMetadataStatuses,
-} from "@/client/hooks/use-admin-metadata";
+import { type AdminMetadataBrowseFilters, useMetadataStatuses } from "@/client/hooks/use-admin-metadata";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { m } from "@/paraglide/messages";
+import {
+	ADMIN_METADATA_MIN_MATCH_SCORES,
+	parseMetadataMinMatchScore,
+	parseMetadataStartsWith,
+	parseMetadataYear,
+} from "@/types/search-params";
 
 const ANY = "any";
 const LETTERS = [...Array.from({ length: 26 }, (_, index) => String.fromCharCode(65 + index)), "#"];

@@ -34,6 +34,24 @@ const CREDENTIAL_PATTERNS = [
 	/-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----/,
 ];
 
+/**
+ * Files evaluated before the first paint. The code→message catalog
+ * (`utils/translate-error`, ~20 KB br) only ever runs on a failure, so it must be
+ * reached through a dynamic import from these — a static import drags it back
+ * into the eager startup graph.
+ */
+const STARTUP_FILES = [
+	"main.tsx",
+	"routes/__root.tsx",
+	"pages/root-layout.tsx",
+	"client/client.ts",
+	"utils/toast-utils.ts",
+	"components/router/route-error-screen.tsx",
+];
+
+const STATIC_TRANSLATE_ERROR_IMPORT = /^\s*import\s+(?!type\b)[^;]*["'][^"']*translate-error["']/m;
+const STATIC_SDK_ERROR_MESSAGE_IMPORT = /^\s*import\s+(?!type\b)[^;]*["']@\/client\/sdk-error-message["']/m;
+
 function sourceFiles(dir = SRC): string[] {
 	const files: string[] = [];
 	for (const entry of readdirSync(dir)) {
@@ -107,5 +125,18 @@ describe("source guards", () => {
 		const offenders = FILES.filter((file) => CREDENTIAL_PATTERNS.some((pattern) => pattern.test(read(file)))).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
+	});
+
+	test("the error-message catalog stays out of the eager startup graph", () => {
+		const offenders = STARTUP_FILES.filter((file) => STATIC_TRANSLATE_ERROR_IMPORT.test(read(join(SRC, file))));
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("the shared page states load the error catalog only when an error renders", () => {
+		const file = read(join(SRC, "components/app-states.tsx"));
+
+		expect(STATIC_TRANSLATE_ERROR_IMPORT.test(file)).toBe(false);
+		expect(STATIC_SDK_ERROR_MESSAGE_IMPORT.test(file)).toBe(false);
 	});
 });

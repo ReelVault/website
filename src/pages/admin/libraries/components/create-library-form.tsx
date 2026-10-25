@@ -2,8 +2,8 @@ import type { SidecarFlavor } from "@reelvault/sdk";
 import { useForm } from "@tanstack/react-form";
 import { FolderPlus, TriangleAlert } from "lucide-react";
 import { useState } from "react";
-import { getSdkErrorMessage } from "@/client/client";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
+import { getSdkErrorMessage } from "@/client/sdk-error-message";
 import { AsyncButton } from "@/components/async-button";
 import {
 	FullscreenDialogDescription,
