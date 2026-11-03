@@ -190,6 +190,16 @@ export function usePlayerShortcuts({
 				}
 			}
 
+			// Space on a focused control must activate that control (mute, menu,
+			// fullscreen), not toggle playback.
+			if (
+				e.key === " " &&
+				target instanceof HTMLElement &&
+				target.closest("button, a, [role='button'], [role='link'], [role='menuitem']")
+			) {
+				return;
+			}
+
 			switch (e.key) {
 				// Play / Pause
 				case " ":

@@ -18,6 +18,8 @@ import { MAX_PLAYER_VOLUME } from "../utils/player-audio-boost";
  */
 interface UsePlayerTouchGesturesParams {
 	onSingleTap: () => void;
+	/** State volume, not video.volume: the Web Audio pipeline pins the element at 1. */
+	volume: number;
 }
 
 const DOUBLE_TAP_WINDOW_MS = 300;
@@ -39,7 +41,7 @@ function haptic(durationMs: number) {
 	}
 }
 
-export function usePlayerTouchGestures({ onSingleTap }: UsePlayerTouchGesturesParams) {
+export function usePlayerTouchGestures({ onSingleTap, volume }: UsePlayerTouchGesturesParams) {
 	const { videoRef, seek, getAbsoluteTime, setVolume, setMuted, setPlaybackRate } = usePlayerActions();
 
 	const paramsRef = useRef({ onSingleTap });
@@ -120,7 +122,7 @@ export function usePlayerTouchGestures({ onSingleTap }: UsePlayerTouchGesturesPa
 			g.startY = event.clientY;
 			g.moved = false;
 			g.volumeMode = false;
-			g.startVolume = videoRef.current?.volume ?? 1;
+			g.startVolume = volume;
 
 			g.longPressTimer = setTimeout(() => {
 				g.longPressTimer = null;
@@ -138,7 +140,7 @@ export function usePlayerTouchGestures({ onSingleTap }: UsePlayerTouchGesturesPa
 				haptic(20);
 			}, LONG_PRESS_MS);
 		},
-		[clearLongPressTimer, endBoost, setPlaybackRate, videoRef],
+		[clearLongPressTimer, endBoost, setPlaybackRate, videoRef, volume],
 	);
 
 	const onPointerMove = useCallback(

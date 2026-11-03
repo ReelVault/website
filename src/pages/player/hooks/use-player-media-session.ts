@@ -83,11 +83,18 @@ export function usePlayerMediaSession({
 		}
 	}, [isPaused]);
 
-	// 3. Position state setup
+	// 3. Position state setup — the playhead updates several times per second,
+	// while the OS media panel does not need more than one refresh per second.
+	const lastPositionUpdateRef = useRef(0);
 	useEffect(() => {
 		if (typeof window === "undefined" || !("mediaSession" in navigator)) return;
 
 		if (typeof navigator.mediaSession.setPositionState !== "function") return;
+
+		const now = performance.now();
+		// While paused, a seek is the only position change; do not throttle it.
+		if (!isPaused && now - lastPositionUpdateRef.current < 1000) return;
+		lastPositionUpdateRef.current = now;
 
 		if (duration > 0 && Number.isFinite(duration) && Number.isFinite(currentTime)) {
 			try {
@@ -100,7 +107,7 @@ export function usePlayerMediaSession({
 				// Out of range or invalid state
 			}
 		}
-	}, [duration, currentTime, playbackRate]);
+	}, [duration, currentTime, playbackRate, isPaused]);
 
 	// 4. Action handlers setup
 	useEffect(() => {

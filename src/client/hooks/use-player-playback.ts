@@ -10,9 +10,10 @@ export function useSubtitleContent(subtitleId: string | undefined) {
 	return useQuery({
 		queryKey: subtitleKeys.content(subtitleId),
 		staleTime: Number.POSITIVE_INFINITY,
-		// Subtitle files are immutable per id — never garbage-collect mid-session,
-		// otherwise returning to the player after >10 min re-downloads the content.
-		gcTime: Number.POSITIVE_INFINITY,
+		// Subtitle files are immutable per id, but a long watch session can select
+		// hundreds of tracks; keep them long enough to avoid a re-download without
+		// retaining every file until the tab closes.
+		gcTime: 1000 * 60 * 30,
 		queryFn: () => reelvault.subtitles.getContent(subtitleId ?? ""),
 		enabled: Boolean(subtitleId),
 	});
@@ -23,7 +24,15 @@ export function usePlaybackDiagnostics(sessionId: string, enabled: boolean, refe
 		queryKey: playbackSessionKeys.diagnostics(sessionId),
 		queryFn: () => reelvault.playbackSessions.getDiagnostics(sessionId),
 		enabled: enabled && Boolean(sessionId),
-		refetchInterval: enabled ? refetchInterval : false,
+		// A diagnostics endpoint that keeps failing must not be hammered every 2.5 s;
+		// back off first, then stop so a transient blip is not permanent.
+		refetchInterval: (query) => {
+			if (!enabled) return false;
+			if (query.state.fetchFailureCount >= 6) return false;
+			if (query.state.fetchFailureCount >= 3) return 30_000;
+
+			return refetchInterval;
+		},
 	});
 }
 
@@ -75,6 +84,11 @@ export function useTranscodeProgress(sessionId: string | undefined, enabled: boo
 		enabled: enabled && Boolean(sessionId),
 		refetchInterval: (query) => {
 			if (!(enabled && sessionId)) return false;
+
+			// A missing/expired session answers 404 forever; back off, then stop
+			// instead of polling a dead session every 5 s.
+			if (query.state.fetchFailureCount >= 6) return false;
+			if (query.state.fetchFailureCount >= 3) return 30_000;
 
 			return transcodePollInterval(query.state.data);
 		},

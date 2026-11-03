@@ -61,6 +61,7 @@ export interface PlayerVolumeState {
 }
 
 const HEARTBEAT_INTERVAL_MS = 10_000;
+const MIN_HEARTBEAT_INTERVAL_MS = 5_000;
 const DIAGNOSTICS_POLL_INTERVAL_MS = 2500;
 // One departure (tab close, navigate away, unmount) can fire visibilitychange,
 // pagehide, beforeunload AND the effect cleanup — collapse those saves into one.
@@ -682,6 +683,7 @@ export function usePlayerController({
 
 	const rafIdRef = useRef(0);
 	const pendingTimeRef = useRef(0);
+	const heartbeatInFlightRef = useRef(false);
 
 	const updatePlaybackTime = (videoCurrentTime: number) => {
 		const safeVideoTime = typeof videoCurrentTime === "number" && Number.isFinite(videoCurrentTime) ? Math.max(0, videoCurrentTime) : 0;
@@ -703,6 +705,7 @@ export function usePlayerController({
 	// -------------------------------------------------------------------------
 
 	const pendingSeekAbortRef = useRef<AbortController | null>(null);
+	const seekRequestIdRef = useRef(0);
 
 	const seek = useCallback(
 		// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: seek branches on buffered-range heuristics; splitting them would reshuffle the hls.js seek sequence
@@ -714,6 +717,7 @@ export function usePlayerController({
 			pendingSeekAbortRef.current?.abort();
 			const controller = new AbortController();
 			pendingSeekAbortRef.current = controller;
+			const requestId = ++seekRequestIdRef.current;
 
 			const video = videoRef.current;
 			const targetLocalOffset = video ? targetPosition - streamStartTimeRef.current : -1;
@@ -766,7 +770,7 @@ export function usePlayerController({
 
 			try {
 				const response = await seekPlaybackSession(sessionId, targetPosition);
-				if (controller.signal.aborted) return;
+				if (controller.signal.aborted || requestId !== seekRequestIdRef.current) return;
 
 				streamStartTimeRef.current = response.startTime;
 				applyTime(response.position);
@@ -816,7 +820,7 @@ export function usePlayerController({
 					detach(() => transcodeProgressQuery.refetch());
 				}
 			} catch (error) {
-				if (controller.signal.aborted) return;
+				if (controller.signal.aborted || requestId !== seekRequestIdRef.current) return;
 
 				pendingSeekPositionRef.current = null;
 				setIsBuffering(false);
@@ -864,12 +868,15 @@ export function usePlayerController({
 
 	useInterval({
 		callback: () => {
-			if (!isMountedRef.current || isTerminatedRef.current) return;
+			if (!isMountedRef.current || isTerminatedRef.current || heartbeatInFlightRef.current || isRecoveringSessionRef.current) return;
 
 			if (typeof window !== "undefined" && !window.location.pathname.startsWith("/player")) return;
 
 			// One request for liveness + piggy-backed progress — the server persists
-			// the position (and subtitle/audio selection) with the heartbeat.
+			// the position (and subtitle/audio selection) with the heartbeat. The
+			// in-flight guard matters because the SDK timeout is longer than this
+			// interval, so a slow link would otherwise stack overlapping requests.
+			heartbeatInFlightRef.current = true;
 			detach(async () => {
 				try {
 					await reelvault.playbackSessions.keepAlive(sessionId, {
@@ -879,7 +886,9 @@ export function usePlayerController({
 						duration: mediaFile.duration ?? null,
 						isPaused,
 					});
+					heartbeatInFlightRef.current = false;
 				} catch (err: unknown) {
+					heartbeatInFlightRef.current = false;
 					if (!isMountedRef.current) return;
 
 					const error = toPlaybackError(err);
@@ -894,7 +903,8 @@ export function usePlayerController({
 				}
 			});
 		},
-		delay: session.heartbeatIntervalMs ?? HEARTBEAT_INTERVAL_MS,
+		// A malformed/legacy server value must not turn into a tight loop.
+		delay: Math.max(MIN_HEARTBEAT_INTERVAL_MS, session.heartbeatIntervalMs ?? HEARTBEAT_INTERVAL_MS),
 	});
 
 	const lastProgressFlushAtRef = useRef(0);
@@ -960,6 +970,8 @@ export function usePlayerController({
 			document.removeEventListener("visibilitychange", handleVisibilityChange);
 			window.removeEventListener("pagehide", handlePageHide);
 			window.removeEventListener("beforeunload", handlePageHide);
+			pendingSeekAbortRef.current?.abort();
+			pendingSeekAbortRef.current = null;
 			if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
 
 			if (video) {
@@ -973,21 +985,11 @@ export function usePlayerController({
 				hlsRef.current = null;
 			}
 
-			detach(async () => {
-				await flushProgressOnce();
-				try {
-					await Promise.all([
-						queryClient.invalidateQueries({ queryKey: mePlaybackKeys.continueWatching() }),
-						queryClient.invalidateQueries({ queryKey: mePlaybackKeys.progressAll() }),
-						queryClient.invalidateQueries({ queryKey: mePlaybackKeys.suggestionsAll() }),
-						queryClient.invalidateQueries({ queryKey: watchedHistoryKeys.listAll() }),
-					]);
-				} catch (error: unknown) {
-					console.error("Failed to invalidate playback queries after flush:", error);
-				}
-			});
+			// syncPlaybackProgress already invalidates the four playback families on
+			// a successful save; invalidating them again here doubled every exit.
+			detach(() => flushProgressOnce());
 		};
-	}, [flushProgressOnce, handleSessionTerminated, queryClient, reconnectAfterSessionExpiry, sessionId, videoRef]);
+	}, [flushProgressOnce, handleSessionTerminated, reconnectAfterSessionExpiry, sessionId, videoRef]);
 
 	// -------------------------------------------------------------------------
 	// Navigation & episodes

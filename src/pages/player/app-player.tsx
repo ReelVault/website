@@ -5,6 +5,7 @@ import { reelvault } from "@/client/client";
 import { getPlaybackPlaylistUrl } from "@/client/hooks/use-playback-session";
 import { PortalContainerProvider } from "@/components/portal-container";
 import { detach, noopCleanup } from "@/lib/detach";
+import { importWithTimeout } from "@/lib/with-timeout";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { PlayerChrome } from "./components/player-chrome";
@@ -44,11 +45,11 @@ interface HlsErrorData {
  */
 async function loadHlsClass(): Promise<typeof Hls | null> {
 	try {
-		const mod = await import("hls.js/light");
+		const mod = await importWithTimeout(() => import("hls.js/light"), "hls.js");
 
 		return mod.default;
 	} catch (error: unknown) {
-		console.error(error);
+		console.error("Failed to load hls.js", error);
 
 		return null;
 	}
@@ -117,6 +118,7 @@ export function AppPlayer({
 function AppPlayerSurface() {
 	const info = usePlayerInfo();
 	const actions = usePlayerActions();
+	const actionsRef = useRef(actions);
 	const subtitles = usePlayerSubtitles();
 	const captionTrackRef = useRef<HTMLTrackElement | null>(null);
 	useCaptionTrack(captionTrackRef, subtitles.subtitleContent);
@@ -134,7 +136,18 @@ function AppPlayerSurface() {
 		let cancelled = false;
 		detach(async () => {
 			const cls = await loadHlsClass();
-			if (!cancelled && cls) setHlsModule({ cls });
+			if (cancelled) return;
+
+			if (cls) {
+				setHlsModule({ cls });
+
+				return;
+			}
+
+			// Without hls.js the video never gets a source, so the loading overlay
+			// used to spin forever. Surface the failure through the player's error UI.
+			actionsRef.current.setPlayerError(true);
+			toast.error(m.player_playback_start_failed());
 		});
 
 		return () => {
@@ -149,7 +162,6 @@ function AppPlayerSurface() {
 
 	const playerSettings = usePlayerSettings();
 
-	const actionsRef = useRef(actions);
 	const infoRef = useRef(info);
 	const playerSettingsRef = useRef(playerSettings);
 	const statusRef = useRef({ ...status, ...volumeState });
@@ -596,6 +608,7 @@ function AppPlayerSurface() {
 	const lastTouchTsRef = useRef(0);
 
 	const touchGestures = usePlayerTouchGestures({
+		volume: volumeState.volume,
 		onSingleTap: () => {
 			if (effectiveControlsVisible) {
 				hideControls();

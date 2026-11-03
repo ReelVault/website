@@ -1,6 +1,7 @@
 import type { ClientCapabilities, MyPlaybackSessionsResponse, PlaybackCommand, PlaybackSession } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { safeUuid } from "@/utils/id-utils";
 import { toastError } from "../../utils/toast-utils";
@@ -20,6 +21,7 @@ export function usePlaybackSession(
 	const [session, setSession] = useState<PlaybackSession>();
 	const activeSessionIdRef = useRef<string | null>(null);
 	const requestedConfigurationRef = useRef<string | null>(null);
+	const requestGenerationRef = useRef(0);
 	const isMountedRef = useRef<boolean>(true);
 	// Explicit boolean return keeps control-flow narrowing from freezing the
 	// ref's initial value inside the memoized callbacks below.
@@ -67,23 +69,31 @@ export function usePlaybackSession(
 	});
 	const { mutateAsync } = mutation;
 
+	// Releasing an old/stale session is cleanup, not part of creating the new
+	// one. Awaiting it here made a failed release fail the whole create() and
+	// could re-create a session that was already valid.
+	const releaseSession = useCallback((sessionId: string): void => {
+		detach(() => reelvault.playbackSessions.release(sessionId));
+	}, []);
+
 	const create = useCallback(async () => {
 		if (!(request && configurationKey && isMounted())) return;
 
+		const generation = ++requestGenerationRef.current;
 		requestedConfigurationRef.current = configurationKey;
 		try {
 			const nextSession = await mutateAsync(request);
 			// A newer configuration request superseded this one while it was in
 			// flight (bitrate/audio/HDR changes). Discard the stale session instead
 			// of overwriting — and then releasing — the session the user is on.
-			if (requestedConfigurationRef.current !== configurationKey) {
-				await reelvault.playbackSessions.release(nextSession.sessionId);
+			if (requestedConfigurationRef.current !== configurationKey || generation !== requestGenerationRef.current) {
+				releaseSession(nextSession.sessionId);
 
 				return;
 			}
 
 			if (!isMounted()) {
-				await reelvault.playbackSessions.release(nextSession.sessionId);
+				releaseSession(nextSession.sessionId);
 
 				return;
 			}
@@ -92,13 +102,17 @@ export function usePlaybackSession(
 			activeSessionIdRef.current = nextSession.sessionId;
 			setSession(nextSession);
 			if (previousSessionId && previousSessionId !== nextSession.sessionId) {
-				await reelvault.playbackSessions.release(previousSessionId);
+				releaseSession(previousSessionId);
 			}
 		} catch (error) {
-			requestedConfigurationRef.current = null;
+			// Only clear the marker if it still belongs to this request. A slower
+			// failed request must not invalidate a newer successful configuration.
+			if (requestedConfigurationRef.current === configurationKey && generation === requestGenerationRef.current) {
+				requestedConfigurationRef.current = null;
+			}
 			throw error;
 		}
-	}, [request, configurationKey, mutateAsync, isMounted]);
+	}, [request, configurationKey, mutateAsync, isMounted, releaseSession]);
 
 	useEffect(() => {
 		if (!(request && configurationKey) || requestedConfigurationRef.current === configurationKey) return;
@@ -122,17 +136,9 @@ export function usePlaybackSession(
 			requestedConfigurationRef.current = null;
 			const sessionId = activeSessionIdRef.current;
 			activeSessionIdRef.current = null;
-			if (sessionId) {
-				startTransition(async () => {
-					try {
-						await reelvault.playbackSessions.release(sessionId);
-					} catch (error) {
-						console.error(error);
-					}
-				});
-			}
+			if (sessionId) releaseSession(sessionId);
 		};
-	}, []);
+	}, [releaseSession]);
 
 	const reconnect = async () => {
 		if (!isMountedRef.current) return;
@@ -199,6 +205,7 @@ export function useMyPlaybackSessions(options?: { refetchInterval?: number }) {
 			isActive: (data) => (data?.data.length ?? 0) > 0,
 			activeMs: options?.refetchInterval ?? 15_000,
 			idleMs: 60_000,
+			stopAfterFailures: 3,
 		}),
 		refetchIntervalInBackground: false,
 	});
