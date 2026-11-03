@@ -450,3 +450,23 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 ### Fixes
 
 - **Plugin search requests** — a title already pending, approved or in progress no longer offers the request action again, and a rejected request is reported as failed instead of showing a success toast.
+- **Player recovery** — heartbeat requests no longer stack while a slow keep-alive is in flight, a dead session stops its transcode/diagnostics polls, and leaving the player no longer invalidates the same four playback caches twice.
+- **Player position** — stale seek responses are ignored, and Media Session position updates are throttled to once per second while playing (paused seeks still update immediately).
+- **Playback session creation** — a failed release of the previous session no longer discards a valid new session, and a slower failed request can no longer invalidate a newer configuration.
+- **Player startup** — a failed hls.js chunk now shows the player error UI instead of an endless loading overlay; route chunks retry after a rejected dynamic import and time out instead of suspending forever.
+- **Plugin surfaces** — schema defaults that resolve to objects no longer rewrite the form on every render, and a plugin update now asks for a page reload instead of silently keeping the old custom element.
+- **Polling** — status pollers stop after three consecutive failures, so an expired session or a missing operation is not hammered every 1.5–5 s forever.
+- **Realtime reconnect** — only active queries are invalidated, and React Query's own reconnect refetch is disabled, removing the double refetch storm.
+- **Overlays and unsaved changes** — stacked overlays no longer close each other, and a navigation waiting for the unsaved-changes answer no longer hangs when the page unmounts.
+- **Merge dialog** — candidates are filtered per current title instead of inside the shared cache, so opening it for another title no longer hides a valid candidate or offers the title itself.
+- **Watchlist loading** — pages are fetched four at a time and capped at 10k titles instead of firing every page in parallel for very large lists.
+- **Auth and boot** — network/5xx failures no longer redirect a signed-in user to the login page, and pending route loads show the app loading screen instead of a blank page.
+- **Quick Connect** — authorization polling is sequential (recursive timeout) instead of stacking requests every 2.5 s.
+- **Dates** — invalid API/plugin dates render an em dash instead of throwing `RangeError` from `Intl.DateTimeFormat`.
+- **Desktop keyboard** — arrow keys scroll normally outside TV mode; Space on a focused player control activates that control instead of toggling playback.
+- **PWA and proxy** — navigations fall back to the cached shell after 3 s, and the production proxy aborts the upstream request when the browser disconnects.
+- **Local diagnostics** — uncaught browser errors, unhandled rejections and React render errors are logged locally with component context; no external error reporter is contacted.
+
+### Performance
+
+- **React Doctor score: 69 → 81** after fixing effect cleanup/timer false positives, plugin-context churn and the player heartbeat loop; the score is now above the project's 70 threshold.

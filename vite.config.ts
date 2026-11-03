@@ -154,6 +154,9 @@ export default defineConfig(({ mode }) => {
 							handler: "NetworkFirst",
 							options: {
 								cacheName: "reelvault-pages",
+								// A half-open connection must fall back to the cached shell
+								// instead of leaving the user on a blank navigation.
+								networkTimeoutSeconds: 3,
 								precacheFallback: { fallbackURL: "/index.html" },
 								expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
 							},

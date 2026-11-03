@@ -51,6 +51,8 @@ const STARTUP_FILES = [
 
 const STATIC_TRANSLATE_ERROR_IMPORT = /^\s*import\s+(?!type\b)[^;]*["'][^"']*translate-error["']/m;
 const STATIC_SDK_ERROR_MESSAGE_IMPORT = /^\s*import\s+(?!type\b)[^;]*["']@\/client\/sdk-error-message["']/m;
+const BARE_INVALIDATE_QUERIES = /invalidateQueries\(\s*\)/;
+const INLINE_QUERY_KEY = /queryKey:\s*\[/;
 
 function sourceFiles(dir = SRC): string[] {
 	const files: string[] = [];
@@ -123,6 +125,20 @@ describe("source guards", () => {
 
 	test("no credential-shaped strings are committed to the sources", () => {
 		const offenders = FILES.filter((file) => CREDENTIAL_PATTERNS.some((pattern) => pattern.test(read(file)))).map((file) => rel(file));
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("no bare queryClient.invalidateQueries() invalidates every cache entry", () => {
+		const offenders = FILES.filter((file) => BARE_INVALIDATE_QUERIES.test(read(file))).map((file) => rel(file));
+
+		expect(offenders).toEqual([]);
+	});
+
+	test("query keys are declared in the factory module, not inline in hooks/components", () => {
+		const offenders = FILES.filter(
+			(file) => file !== join(SRC, "client", "utils", "query-keys.ts") && INLINE_QUERY_KEY.test(read(file)),
+		).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
 	});

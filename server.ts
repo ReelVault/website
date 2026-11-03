@@ -132,6 +132,9 @@ function proxyToApi(req: Request, url: URL, clientIp: string | undefined): Promi
 		headers: proxyHeaders,
 		body: req.body,
 		redirect: "manual",
+		// Abort the upstream request when the browser disconnects; without this
+		// an abandoned media/API request kept running against the backend.
+		signal: req.signal,
 	});
 }
 
