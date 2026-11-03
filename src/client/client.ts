@@ -13,7 +13,9 @@ function isIpAddress(hostname: string): boolean {
 
 	if (hostname === "::1" || hostname === "[::1]") return true;
 
-	return false;
+	// Any other IPv6 literal arrives bracketed (e.g. [fd00::1]); treating it as
+	// a domain produced an invalid api.* hostname.
+	return hostname.startsWith("[") || hostname.includes(":");
 }
 
 /**
@@ -107,6 +109,10 @@ export function getReelVaultApiUrl(): string {
  */
 export function resolveApiAssetUrl(url: string | null | undefined): string | undefined {
 	if (!url) return undefined;
+
+	// Protocol-relative URLs already carry their own host; do not resolve them
+	// against the API origin.
+	if (url.startsWith("//")) return url;
 
 	if (!url.startsWith("/")) return url;
 

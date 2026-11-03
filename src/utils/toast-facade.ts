@@ -5,6 +5,7 @@
  */
 import type { toast as sonnerToast } from "sonner";
 import { detach } from "@/lib/detach";
+import { importWithTimeout } from "@/lib/with-timeout";
 
 type SonnerToast = typeof sonnerToast;
 type MessageArgs = Parameters<SonnerToast["success"]>;
@@ -12,17 +13,38 @@ type DismissArgs = Parameters<SonnerToast["dismiss"]>;
 type PromiseArgs = Parameters<SonnerToast["promise"]>;
 type CustomArgs = Parameters<SonnerToast["custom"]>;
 
+const MAX_PENDING_TOASTS = 50;
+const LOAD_RETRY_MS = 30_000;
+
 const pending: Array<(t: SonnerToast) => void> = [];
 let sonner: SonnerToast | null = null;
+let loadPromise: Promise<void> | undefined;
+let retryAt = 0;
 
-async function load(): Promise<void> {
-	if (sonner) return;
+function load(): Promise<void> {
+	if (sonner) return Promise.resolve();
+	if (loadPromise) return loadPromise;
+	if (Date.now() < retryAt) return Promise.resolve();
 
-	const mod = await import("sonner");
-	sonner = mod.toast;
-	for (const run of pending.splice(0)) {
-		run(sonner);
-	}
+	loadPromise = (async () => {
+		try {
+			const mod = await importWithTimeout(() => import("sonner"), "sonner");
+			sonner = mod.toast;
+			for (const run of pending.splice(0)) {
+				run(sonner);
+			}
+		} catch (error: unknown) {
+			// A failed chunk load must not grow an unbounded queue of toast
+			// callbacks; drop them and retry the import after a backoff.
+			pending.splice(0);
+			retryAt = Date.now() + LOAD_RETRY_MS;
+			console.error("Toast module failed to load", error);
+		} finally {
+			loadPromise = undefined;
+		}
+	})();
+
+	return loadPromise;
 }
 
 function enqueue(run: (t: SonnerToast) => void): void {
@@ -32,6 +54,9 @@ function enqueue(run: (t: SonnerToast) => void): void {
 		return;
 	}
 
+	if (Date.now() < retryAt) return;
+
+	if (pending.length >= MAX_PENDING_TOASTS) pending.shift();
 	pending.push(run);
 	detach(load());
 }

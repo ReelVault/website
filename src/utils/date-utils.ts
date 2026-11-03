@@ -3,7 +3,9 @@ import { getAppLocale } from "@/utils/locale";
 export function getYearFromDate(date: string | null | undefined) {
 	if (!date) return "N/A";
 
-	return new Date(date).getFullYear();
+	const parsed = new Date(date);
+
+	return Number.isNaN(parsed.getTime()) ? "N/A" : parsed.getFullYear();
 }
 
 /** Wrapped so calling it during render stays opaque to the React purity lint. */

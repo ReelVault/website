@@ -1,5 +1,7 @@
 import type { AsyncRouteComponent } from "@tanstack/react-router";
 import { createElement, type FunctionComponent, type ReactNode, use } from "react";
+import { createRetryableLoader } from "./retryable-loader";
+import { importWithTimeout } from "./with-timeout";
 
 function getModuleNotFoundMessage(error: Error): string | null {
 	const { message } = error;
@@ -26,11 +28,6 @@ function markReloadAttempt(message: string): boolean {
 		return true;
 	}
 }
-
-const neverSettles = <T>(): Promise<T> =>
-	new Promise<T>(() => {
-		// Intentionally left pending while the document reloads.
-	});
 
 interface LazyRouteViewProps<TProps extends object> {
 	load: () => Promise<FunctionComponent<TProps>>;
@@ -68,11 +65,9 @@ function withLazyRoute<TProps extends object>(
 export function lazyRouteComponent<TProps extends object = Record<string, unknown>>(
 	importer: () => Promise<{ default: FunctionComponent<TProps> }>,
 ): AsyncRouteComponent<TProps> {
-	let loadPromise: Promise<FunctionComponent<TProps>> | undefined;
-
 	const loadModule = async (): Promise<FunctionComponent<TProps>> => {
 		try {
-			const module = await importer();
+			const module = await importWithTimeout(importer, "route module");
 
 			return module.default;
 		} catch (caught) {
@@ -81,18 +76,15 @@ export function lazyRouteComponent<TProps extends object = Record<string, unknow
 			if (notFoundMessage !== null && markReloadAttempt(notFoundMessage)) {
 				window.location.reload();
 
-				return neverSettles<FunctionComponent<TProps>>();
+				// Do not leave the route suspended forever if the reload is blocked.
+				throw error;
 			}
 
 			throw error;
 		}
 	};
 
-	const load = (): Promise<FunctionComponent<TProps>> => {
-		loadPromise ??= loadModule();
-
-		return loadPromise;
-	};
+	const load = createRetryableLoader(loadModule);
 
 	return withLazyRoute(LazyRouteView, load);
 }

@@ -1,12 +1,32 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { safeUuid } from "@/utils/id-utils";
 
 /** History state carrying the synthetic overlay marker pushed while open. */
 interface OverlayHistoryState {
-	overlayOpen?: boolean;
+	overlayId?: string;
 }
 
 function isOverlayHistoryState(value: unknown): value is OverlayHistoryState {
-	return typeof value === "object" && value !== null && "overlayOpen" in value;
+	return typeof value === "object" && value !== null && "overlayId" in value;
+}
+
+// Stack of currently mounted overlays. A back gesture pops the top entry, while
+// a UI close of the top overlay also pops one entry — the latter must not make
+// the overlay underneath think the user pressed Back.
+const openOverlayIds: string[] = [];
+let suppressNextPop = false;
+
+function pushOverlay(id: string): void {
+	openOverlayIds.push(id);
+}
+
+function removeOverlay(id: string): void {
+	const index = openOverlayIds.indexOf(id);
+	if (index !== -1) openOverlayIds.splice(index, 1);
+}
+
+function isTopOverlay(id: string): boolean {
+	return openOverlayIds[openOverlayIds.length - 1] === id;
 }
 
 /**
@@ -20,6 +40,7 @@ function isOverlayHistoryState(value: unknown): value is OverlayHistoryState {
  * Back press on that page. Safe by design: never closes mid-navigation.
  */
 export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
+	const [overlayId] = useState(() => safeUuid());
 	const onCloseRef = useRef(onClose);
 	useEffect(() => {
 		onCloseRef.current = onClose;
@@ -28,24 +49,39 @@ export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
 	useEffect(() => {
 		let closedByPop = false;
 		const onPopState = () => {
+			// A UI close of the overlay above already consumed this pop.
+			if (suppressNextPop) {
+				suppressNextPop = false;
+
+				return;
+			}
+
 			// The listener lives across open/close cycles; ignore pops while closed.
-			if (!isOpen) return;
+			if (!(isOpen && isTopOverlay(overlayId))) return;
 
 			closedByPop = true;
+			removeOverlay(overlayId);
 			onCloseRef.current();
 		};
 
 		if (isOpen) {
-			window.history.pushState({ ...window.history.state, overlayOpen: true }, "");
+			pushOverlay(overlayId);
+			window.history.pushState({ ...window.history.state, overlayId }, "");
 		}
 
 		window.addEventListener("popstate", onPopState);
 
 		return () => {
 			window.removeEventListener("popstate", onPopState);
-			if (isOpen && !closedByPop && isOverlayHistoryState(window.history.state) && window.history.state.overlayOpen) {
+			removeOverlay(overlayId);
+
+			// Closing via the UI consumes the synthetic entry, but a pop that
+			// returns to a lower overlay must not close that lower overlay.
+			if (isOpen && !closedByPop && isOverlayHistoryState(window.history.state) && window.history.state.overlayId === overlayId) {
+				// Only a still-open lower overlay needs to ignore this programmatic pop.
+				suppressNextPop = openOverlayIds.length > 0;
 				window.history.back();
 			}
 		};
-	}, [isOpen]);
+	}, [isOpen, overlayId]);
 }

@@ -23,7 +23,17 @@ export function buildImageUrl(
 ): string | null {
 	if (!fileId) return null;
 
-	const url = new URL(`/v1/images/${encodeURIComponent(fileId)}`, getReelVaultApiUrl());
+	// `getReelVaultApiUrl()` may be relative (`/api`) or an IPv6 origin. Resolve
+	// it against the page origin so `new URL` never throws during render.
+	const pageOrigin = typeof window === "undefined" ? "http://localhost" : window.location.origin;
+	let base: string;
+	try {
+		base = new URL(getReelVaultApiUrl(), pageOrigin).toString();
+	} catch {
+		base = pageOrigin;
+	}
+
+	const url = new URL(`/v1/images/${encodeURIComponent(fileId)}`, base);
 
 	if (options?.cacheKey != null) {
 		url.searchParams.set("v", String(options.cacheKey));

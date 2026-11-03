@@ -10,6 +10,8 @@ import {
 	formatRating,
 	formatTimeAgo,
 	formatTimestamp,
+	shortDateFormatter,
+	shortTimeFormatter,
 } from "@/utils/format-utils";
 
 // The assertions below expect English formatting; without this pin the
@@ -49,6 +51,23 @@ describe("formatDurationPrecise (worker durations)", () => {
 
 	it("formats days", () => {
 		expect(formatDurationPrecise(86400 * 2 * 1000)).toBe("2d 0h 0m");
+	});
+});
+
+describe("invalid date handling", () => {
+	it("renders an em dash instead of throwing RangeError", () => {
+		expect(formatDate("not-a-date")).toBe("—");
+		expect(formatDateTime("not-a-date")).toBe("—");
+		expect(formatTimeAgo("not-a-date")).toBe("—");
+	});
+
+	it("keeps valid dates formatted", () => {
+		expect(formatDate("2024-01-15T00:00:00.000Z")).not.toBe("—");
+	});
+
+	it("the shared short formatters also survive an invalid date", () => {
+		expect(shortDateFormatter.format(new Date("not-a-date"))).toBe("—");
+		expect(shortTimeFormatter.format(new Date("not-a-date"))).toBe("—");
 	});
 });
 

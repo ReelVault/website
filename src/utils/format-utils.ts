@@ -45,20 +45,32 @@ export function getRelativeTimeFormatter(
 	return formatter;
 }
 
+function isInvalidDate(value: Date | number): boolean {
+	return typeof value === "number" ? !Number.isFinite(value) : Number.isNaN(value.getTime());
+}
+
 export const shortTimeFormatter = {
 	format(date?: Date | number): string {
+		if (date !== undefined && isInvalidDate(date)) return "—";
+
 		return getDateTimeFormatter({ timeStyle: "medium" }).format(date);
 	},
 	formatToParts(date?: Date | number): Intl.DateTimeFormatPart[] {
+		if (date !== undefined && isInvalidDate(date)) return [{ type: "literal", value: "—" }];
+
 		return getDateTimeFormatter({ timeStyle: "medium" }).formatToParts(date);
 	},
 };
 
 export const shortDateFormatter = {
 	format(date?: Date | number): string {
+		if (date !== undefined && isInvalidDate(date)) return "—";
+
 		return getDateTimeFormatter({ dateStyle: "medium" }).format(date);
 	},
 	formatToParts(date?: Date | number): Intl.DateTimeFormatPart[] {
+		if (date !== undefined && isInvalidDate(date)) return [{ type: "literal", value: "—" }];
+
 		return getDateTimeFormatter({ dateStyle: "medium" }).formatToParts(date);
 	},
 };
@@ -71,26 +83,52 @@ export function formatRating(value: number | null | undefined): string {
 	return value == null ? "—" : getNumberFormatter({ minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
 }
 
+/** Intl formatters throw RangeError on an invalid Date; API/plugin data may contain one. */
+function toValidDate(value: Date | string | number): Date | null {
+	const date = value instanceof Date ? value : new Date(value);
+
+	return Number.isNaN(date.getTime()) ? null : date;
+}
+
 export function formatDate(value: Date | string | number | null | undefined): string {
-	return value == null ? "—" : getDateTimeFormatter({ dateStyle: "medium" }).format(new Date(value));
+	if (value == null) return "—";
+
+	const date = toValidDate(value);
+
+	return date ? getDateTimeFormatter({ dateStyle: "medium" }).format(date) : "—";
 }
 
 export function formatDateTime(value: Date | string | number | null | undefined): string {
-	return value == null ? "—" : getDateTimeFormatter({ dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+	if (value == null) return "—";
+
+	const date = toValidDate(value);
+
+	return date ? getDateTimeFormatter({ dateStyle: "medium", timeStyle: "short" }).format(date) : "—";
 }
 
 export function formatFullDateTime(value: Date | string | number | null | undefined): string {
-	return value == null ? "—" : getDateTimeFormatter({ dateStyle: "medium", timeStyle: "medium" }).format(new Date(value));
+	if (value == null) return "—";
+
+	const date = toValidDate(value);
+
+	return date ? getDateTimeFormatter({ dateStyle: "medium", timeStyle: "medium" }).format(date) : "—";
 }
 
 export function formatWeekday(value: Date | string | number | null | undefined): string {
-	return value == null ? "—" : getDateTimeFormatter({ weekday: "short" }).format(new Date(value));
+	if (value == null) return "—";
+
+	const date = toValidDate(value);
+
+	return date ? getDateTimeFormatter({ weekday: "short" }).format(date) : "—";
 }
 
 export function formatTimeAgo(value: Date | string | number | null | undefined): string {
 	if (value == null) return "—";
 
-	const diffSeconds = Math.max(0, Math.floor((Date.now() - new Date(value).getTime()) / 1000));
+	const date = toValidDate(value);
+	if (!date) return "—";
+
+	const diffSeconds = Math.max(0, Math.floor((Date.now() - date.getTime()) / 1000));
 	if (diffSeconds < 60) return m.common_just_new();
 
 	const diffMinutes = Math.floor(diffSeconds / 60);
