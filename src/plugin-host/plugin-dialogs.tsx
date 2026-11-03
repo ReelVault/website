@@ -18,10 +18,12 @@ const LazyPluginDialogHost = lazy(() => loadPluginDialogHost());
  */
 export function PluginDialogProvider({ children }: { children: ReactNode }) {
 	const [request, setRequest] = useState<PluginDialogRequest | null>(null);
+	// `setRequest` is stable; a one-time state initializer keeps the context value
+	// stable without a manual useMemo (React Compiler owns memoization here).
+	const [contextValue] = useState(() => ({ openDialog: setRequest, closeDialog: () => setRequest(null) }));
 
 	return (
-		// React Compiler memoizes this value; the explicit useMemo rule does not apply.
-		<PluginDialogContext.Provider value={{ openDialog: setRequest, closeDialog: () => setRequest(null) }}>
+		<PluginDialogContext.Provider value={contextValue}>
 			{children}
 			{request ? (
 				<Suspense fallback={null}>
