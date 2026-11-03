@@ -36,6 +36,9 @@ export function useCurrentUser(options?: { enabled?: boolean }) {
 		profile: query.data?.profile ?? null,
 		isLoading: query.isLoading,
 		isFetching: query.isFetching,
+		isError: query.isError,
+		error: query.error instanceof Error ? query.error : null,
+		refetch: query.refetch,
 		isAuthenticated: !!query.data?.user,
 	};
 }

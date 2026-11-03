@@ -70,34 +70,36 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 		};
 	}, [isUserLoading, hasUser, urlRedeem, pairCode, initiatePairing, applyPairing]);
 
-	// Background polling for authorization on this device
+	// Background polling for authorization on this device. Recursive timeout:
+	// a slow request must finish before the next one starts, otherwise a 30 s
+	// SDK timeout stacks twelve overlapping requests on every 2.5 s tick.
 	useEffect(() => {
 		let cancelled = false;
-		let interval: ReturnType<typeof setInterval> | undefined;
-		const pollAuthorization = async () => {
+		let timer: ReturnType<typeof setTimeout> | undefined;
+
+		const pollAuthorization = async (): Promise<void> => {
 			try {
 				const res = await reelvault.auth.quickConnectCheck(pairSecret);
 				if (cancelled) return;
 
-				if (res.authenticated && interval !== undefined) {
-					clearInterval(interval);
-					interval = undefined;
+				if (res.authenticated) {
 					toast.success(m.auth_device_authorized());
 					onSuccessRef.current();
+
+					return;
 				}
 			} catch {
 				// Polling errors are ignored; the next tick retries.
 			}
+
+			if (!cancelled) timer = setTimeout(() => detach(pollAuthorization), 2500);
 		};
-		if (pairSecret && !hasUser && enabled && !isExpired) {
-			interval = setInterval(() => {
-				detach(pollAuthorization());
-			}, 2500);
-		}
+
+		if (pairSecret && !hasUser && enabled && !isExpired) timer = setTimeout(() => detach(pollAuthorization), 2500);
 
 		return () => {
 			cancelled = true;
-			if (interval !== undefined) clearInterval(interval);
+			if (timer !== undefined) clearTimeout(timer);
 		};
 	}, [pairSecret, hasUser, enabled, isExpired]);
 

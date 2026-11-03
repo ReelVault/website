@@ -1,3 +1,4 @@
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { isRedirect, redirect } from "@tanstack/react-router";
 import { currentProfileQueryOptions } from "@/client/hooks/use-current-profile";
 import type { RouterContext } from "./__root";
@@ -22,6 +23,13 @@ export async function ensureAuthenticated(context: RouterContext, { requireProfi
 	} catch (error) {
 		if (isRedirect(error)) throw error;
 
-		redirect({ to: "/auth/login", replace: true, throw: true });
+		// Only an auth rejection means "signed out". A timeout/5xx is a server
+		// problem and must not silently bounce a user with a valid session to
+		// the login page.
+		if (error instanceof ReelVaultError && (error.status === 401 || error.status === 403)) {
+			redirect({ to: "/auth/login", replace: true, throw: true });
+		}
+
+		throw error;
 	}
 }

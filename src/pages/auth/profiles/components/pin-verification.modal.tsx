@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { detach } from "@/lib/detach";
+import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 
 export function PinVerificationModal({
@@ -40,11 +40,11 @@ export function PinVerificationModal({
 	};
 
 	useEffect(() => {
-		const timeout = isOpen ? window.setTimeout(() => inputRef.current?.focus(), 100) : undefined;
+		if (!isOpen) return noopCleanup;
 
-		return () => {
-			if (timeout !== undefined) window.clearTimeout(timeout);
-		};
+		const timeout = window.setTimeout(() => inputRef.current?.focus(), 100);
+
+		return () => window.clearTimeout(timeout);
 	}, [isOpen]);
 
 	const submitPin = async () => {

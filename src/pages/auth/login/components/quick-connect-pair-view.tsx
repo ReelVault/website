@@ -6,7 +6,7 @@ import { useQuickConnectInitiate } from "@/client/hooks/use-auth";
 import { AppErrorState } from "@/components/app-states";
 import { QrCode } from "@/components/qr-code";
 import { Button } from "@/components/ui/button";
-import { detach } from "@/lib/detach";
+import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { formatCountdown } from "@/utils/format-utils";
 
@@ -75,49 +75,47 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 
 	// Countdown timer for pairing mode
 	useEffect(() => {
-		const timer =
-			pairExpiresAt > 0
-				? window.setInterval(() => {
-						const left = Math.max(0, Math.floor((pairExpiresAt - Date.now()) / 1000));
-						setPairRemainingSeconds(left);
-						if (left <= 0) {
-							window.clearInterval(timer);
-						}
-					}, 1000)
-				: 0;
+		if (pairExpiresAt <= 0) return noopCleanup;
 
-		return () => {
-			window.clearInterval(timer);
-		};
+		const timer = window.setInterval(() => {
+			const left = Math.max(0, Math.floor((pairExpiresAt - Date.now()) / 1000));
+			setPairRemainingSeconds(left);
+			if (left <= 0) {
+				window.clearInterval(timer);
+			}
+		}, 1000);
+
+		return () => window.clearInterval(timer);
 	}, [pairExpiresAt]);
 
-	// Polling for device pairing check
+	// Polling for device pairing check. Recursive timeout prevents overlapping
+	// requests while a slow quick-connect check is still in flight.
 	useEffect(() => {
 		let cancelled = false;
-		let interval: ReturnType<typeof setInterval> | undefined;
-		const pollPairing = async () => {
+		let timer: ReturnType<typeof setTimeout> | undefined;
+
+		const pollPairing = async (): Promise<void> => {
 			try {
 				const res = await reelvault.auth.quickConnectCheck(pairSecret);
 				if (cancelled) return;
 
-				if (res.authenticated && interval !== undefined) {
-					clearInterval(interval);
-					interval = undefined;
+				if (res.authenticated) {
 					onAuthenticatedRef.current();
+
+					return;
 				}
 			} catch {
 				// Polling check errors are ignored; the next tick retries.
 			}
+
+			if (!cancelled) timer = setTimeout(() => detach(pollPairing), 2500);
 		};
-		if (pairSecret && !isExpired) {
-			interval = setInterval(() => {
-				detach(pollPairing());
-			}, 2500);
-		}
+
+		if (pairSecret && !isExpired) timer = setTimeout(() => detach(pollPairing), 2500);
 
 		return () => {
 			cancelled = true;
-			if (interval !== undefined) clearInterval(interval);
+			if (timer !== undefined) clearTimeout(timer);
 		};
 	}, [pairSecret, isExpired]);
 

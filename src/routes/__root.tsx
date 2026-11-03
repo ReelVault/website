@@ -5,6 +5,7 @@ import { TanStackDevtools } from "@/components/dev/tanstack-devtools";
 import { NotFoundScreen } from "@/components/router/not-found-screen";
 import { RouteErrorScreen } from "@/components/router/route-error-screen";
 import { RouteProgressBar } from "@/components/router/route-progress-bar";
+import { withTimeout } from "@/lib/with-timeout";
 import { RootLayout } from "@/pages/root-layout";
 
 export interface RouterContext {
@@ -33,7 +34,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 			// sessionStorage unavailable (privacy mode) — fall through to the check
 		}
 
-		const data = await reelvault.setup.getStatus();
+		// Do not leave the whole app on a blank screen for the SDK's full 30 s
+		// timeout (plus retry) when the server is unreachable.
+		const data = await withTimeout(reelvault.setup.getStatus(), 10_000, "setup status");
 		if (data.required) {
 			redirect({
 				to: "/setup",

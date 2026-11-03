@@ -10,7 +10,7 @@ import { ensureDom, unregisterDom } from "./register-dom";
 // React reads the browser's event support when it loads, so the DOM is installed before Testing Library and the page.
 ensureDom();
 
-const { cleanup, render } = await import("@testing-library/react");
+const { act, cleanup, render } = await import("@testing-library/react");
 const { QueryClient, QueryClientProvider } = await import("@tanstack/react-query");
 const { reelvault } = await import("@/client/client");
 const { QuickConnectPairView } = await import("@/pages/auth/login/components/quick-connect-pair-view");
@@ -40,7 +40,9 @@ afterEach(() => {
 
 afterAll(async () => {
 	// React may still have one scheduled task for the last unmount; it has to run before the DOM globals are removed.
-	await wait(50);
+	await act(async () => {
+		await wait(50);
+	});
 	unregisterDom();
 });
 
@@ -52,7 +54,9 @@ describe("sign-in pairing code expiry", () => {
 
 		await view.findByText(EXPIRED_TEXT, undefined, { timeout: 6000 });
 		const callsAtExpiry = check.mock.calls.length;
-		await wait(3000);
+		await act(async () => {
+			await wait(3000);
+		});
 
 		expect(check.mock.calls.length).toBe(callsAtExpiry);
 		expect(view.queryByText("Waiting for authorization…")).toBeNull();
@@ -64,7 +68,9 @@ describe("sign-in pairing code expiry", () => {
 		const view = renderPairView();
 
 		await view.findByText("AB1-CD2");
-		await wait(3000);
+		await act(async () => {
+			await wait(3000);
+		});
 
 		expect(check.mock.calls.length).toBeGreaterThan(0);
 		expect(view.queryByText(EXPIRED_TEXT)).toBeNull();

@@ -6,7 +6,7 @@ import { usePlaybackMutations } from "@/client/hooks/use-me-playback";
 import { AppEmptyState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { detach } from "@/lib/detach";
+import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { DetailsEpisodeCard } from "./details-episode-card";
 
@@ -77,17 +77,14 @@ export function DetailsEpisodes({
 
 	// Scroll to highlighted episode from URL
 	useEffect(() => {
-		const timer =
-			highlightEpisodeNumber !== undefined && episodes.length > 0
-				? window.setTimeout(() => {
-						const el = episodeRefs.current.get(highlightEpisodeNumber);
-						el?.scrollIntoView({ behavior: "smooth", block: "center" });
-					}, 150)
-				: 0;
+		if (highlightEpisodeNumber === undefined || episodes.length === 0) return noopCleanup;
 
-		return () => {
-			window.clearTimeout(timer);
-		};
+		const timer = window.setTimeout(() => {
+			const el = episodeRefs.current.get(highlightEpisodeNumber);
+			el?.scrollIntoView({ behavior: "smooth", block: "center" });
+		}, 150);
+
+		return () => window.clearTimeout(timer);
 	}, [highlightEpisodeNumber, episodes.length]);
 
 	if (episodes.length === 0) {
