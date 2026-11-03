@@ -444,3 +444,9 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 - Requests per route +0–10 (finer chunks, parallel over HTTP/2). Total JS 4,536 → 4,554 KB raw, 559 → 587 files.
 - Regression: `/admin/media` −3.2% and `/admin/settings` −5.1% only, because both render translated codes inline.
 - `react-doctor` score: 81.
+
+# v1.3.3
+
+### Fixes
+
+- **Plugin search requests** — a title already pending, approved or in progress no longer offers the request action again, and a rejected request is reported as failed instead of showing a success toast.

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Film, Globe, Send, Tv } from "lucide-react";
 import type { PluginSearchItem, PluginSearchProvider } from "@/client/hooks/use-plugin-ui";
+import { isPluginSearchItemRequestable, isPluginSearchItemRequested } from "@/client/utils/plugin-search-state";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
@@ -85,7 +86,8 @@ function ExternalCatalogCard({
 	isRequesting: boolean;
 	onRequest: (item: PluginSearchItem) => void;
 }) {
-	const requested = item.state === "pending" || item.state === "approved";
+	const requested = isPluginSearchItemRequested(item.state);
+	const requestable = isPluginSearchItemRequestable(item.state);
 	const artwork = <ExternalCardArtwork item={item} requested={requested} />;
 	const text = <ExternalCardText item={item} />;
 
@@ -101,7 +103,7 @@ function ExternalCatalogCard({
 					{artwork}
 					{text}
 				</Link>
-				{requestEndpoint && (
+				{requestEndpoint && requestable && (
 					<ExternalRequestButton
 						item={item}
 						isRequesting={isRequesting}
@@ -113,7 +115,7 @@ function ExternalCatalogCard({
 		);
 	}
 
-	if (requestEndpoint) {
+	if (requestEndpoint && requestable) {
 		return (
 			<button
 				type="button"

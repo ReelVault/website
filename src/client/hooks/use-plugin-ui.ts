@@ -13,6 +13,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "@tanstack/react-router";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { useRealtimeEvent } from "@/client/hooks/use-realtime";
+import type { PluginSearchItemState } from "@/client/utils/plugin-search-state";
 import { useDebounce } from "@/hooks/use-debounce";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -212,7 +213,7 @@ export interface PluginSearchItem {
 	imageUrl?: string | undefined;
 	overview?: string | undefined;
 	/** Availability in this library / request pipeline. */
-	state: "available" | "pending" | "approved" | "rejected" | "none";
+	state: PluginSearchItemState;
 }
 
 export interface PluginSearchProvider {
@@ -278,20 +279,30 @@ export function usePluginSearch(provider: PluginSearchProvider | null, term: str
 		mutationFn: async (item: PluginSearchItem) => {
 			if (!provider?.requestEndpoint) throw new Error("Request action is not available");
 
-			return await reelvault.plugins.call(provider.pluginId, provider.requestEndpoint, {
-				method: "POST",
-				body: {
-					title: item.title,
-					mediaType: item.mediaType,
-					year: item.year,
-					providerId: item.providerId,
-					externalId: item.externalId,
-					posterPath: item.posterPath,
-					overview: item.overview,
-					// The requests plugin shows the requester's name; the detail and discover views send the same value.
-					requestedByName: user?.name,
+			const response = await reelvault.plugins.call<{ error?: string; request?: { status?: string }; success?: boolean }>(
+				provider.pluginId,
+				provider.requestEndpoint,
+				{
+					method: "POST",
+					body: {
+						title: item.title,
+						mediaType: item.mediaType,
+						year: item.year,
+						providerId: item.providerId,
+						externalId: item.externalId,
+						posterPath: item.posterPath,
+						overview: item.overview,
+						// The requests plugin shows the requester's name; the detail and discover views send the same value.
+						requestedByName: user?.name,
+					},
 				},
-			});
+			);
+
+			// A plugin that predates proper error statuses answers 200 with `{ error }`.
+			if (response.error) throw new Error(response.error);
+			if (!response.request) throw new Error("The request was not created");
+
+			return response;
 		},
 		onSuccess: async () => {
 			toast.success(m.components_search_plugin_requested_toast());
