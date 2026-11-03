@@ -82,7 +82,10 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 
 			if (status === "open" && dropped) {
 				dropped = false;
-				detach(queryClient.invalidateQueries());
+				// Only what is on screen: invalidating every cached query after a
+				// reconnect (combined with refetchOnReconnect) caused a full refetch
+				// storm on flaky links.
+				detach(queryClient.invalidateQueries({ type: "active" }));
 			}
 		});
 	}, [queryClient]);

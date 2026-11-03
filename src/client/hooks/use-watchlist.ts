@@ -9,18 +9,30 @@ import { metadataKeys, watchlistKeys } from "../utils/query-keys";
 // Server-side hydration: every item embeds its metadata card — the old
 // list→metadata waterfall is gone (one request for the whole page).
 const WATCHLIST_PAGE_LIMIT = 500;
+// The watchlist page filters/sorts locally, so it needs the whole list. Bound
+// the work: 20 pages = 10k titles, fetched four at a time instead of firing
+// every page at once (a 100k watchlist used to issue 200 parallel requests).
+const MAX_WATCHLIST_PAGES = 20;
+const WATCHLIST_FETCH_CONCURRENCY = 4;
 
-/** The endpoint paginates (default 20/page); the page shows the whole list, so every page is fetched and merged. */
 async function fetchFullWatchlist() {
 	const first = await reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT });
-	const rest = await Promise.all(
-		Array.from({ length: Math.max(first.totalPages - 1, 0) }, (_, index) =>
-			reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page: index + 2 }),
-		),
-	);
+	const pagesToFetch = Math.min(Math.max(first.totalPages - 1, 0), MAX_WATCHLIST_PAGES - 1);
+	const pageNumbers = Array.from({ length: pagesToFetch }, (_, index) => index + 2);
+	const rest: Array<Awaited<ReturnType<typeof reelvault.me.getWatchlist>>> = [];
+
+	for (let start = 0; start < pageNumbers.length; start += WATCHLIST_FETCH_CONCURRENCY) {
+		const batch = pageNumbers.slice(start, start + WATCHLIST_FETCH_CONCURRENCY);
+		rest.push(
+			...(await Promise.all(
+				batch.map((page) => reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page })),
+			)),
+		);
+	}
+
 	const data = [...first.data, ...rest.flatMap((next) => next.data)];
 
-	return { ...first, data };
+	return { ...first, data, totalPages: Math.min(first.totalPages, MAX_WATCHLIST_PAGES) };
 }
 
 export const watchlistQueryOptions = () =>

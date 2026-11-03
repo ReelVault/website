@@ -1,6 +1,6 @@
 import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { Search } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import type { metadataCardFields } from "@/client/utils/fields";
 import { AppEmptyState } from "@/components/app-states";
@@ -14,22 +14,30 @@ export function LibraryContentGrid({
 	validMetadata,
 	isLoadingMore,
 	hasNextPage,
+	hasError,
 	onLoadMore,
 }: {
 	validMetadata: Array<RequireFields<MetadataWithRelation, typeof metadataCardFields>>;
 	isLoadingMore?: boolean;
 	hasNextPage?: boolean;
+	hasError?: boolean;
 	onLoadMore?: () => void;
 }) {
 	const { ref: loadMoreRef, inView } = useInView({
 		rootMargin: "300px",
 	});
+	const onLoadMoreRef = useRef(onLoadMore);
+	useEffect(() => {
+		onLoadMoreRef.current = onLoadMore;
+	});
 
 	useEffect(() => {
-		if (inView && hasNextPage && !isLoadingMore) {
-			onLoadMore?.();
+		// A failed page must not re-trigger immediately: hasNextPage stays true and
+		// isLoadingMore flips back to false, which used to create a request loop.
+		if (inView && hasNextPage && !isLoadingMore && !hasError) {
+			onLoadMoreRef.current?.();
 		}
-	}, [inView, hasNextPage, isLoadingMore, onLoadMore]);
+	}, [inView, hasNextPage, isLoadingMore, hasError]);
 
 	if (validMetadata.length === 0) {
 		return (

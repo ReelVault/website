@@ -9,6 +9,12 @@ interface PollWhileOptions<TData> {
 	activeMs: number;
 	/** Interval once inactive; `false` (default) stops polling entirely. */
 	idleMs?: number | false | undefined;
+	/**
+	 * Stop after this many consecutive failures. A status endpoint that keeps
+	 * returning 404/500 must not be hammered forever; the next user action or
+	 * realtime event can restart the query.
+	 */
+	stopAfterFailures?: number | undefined;
 }
 
 /**
@@ -19,6 +25,8 @@ interface PollWhileOptions<TData> {
 export function pollWhile<TData>(options: PollWhileOptions<TData>) {
 	return (query: Query<TData>): number | false => {
 		if (options.enabled === false) return false;
+
+		if (options.stopAfterFailures !== undefined && query.state.fetchFailureCount >= options.stopAfterFailures) return false;
 
 		return options.isActive(query.state.data) ? options.activeMs : (options.idleMs ?? false);
 	};

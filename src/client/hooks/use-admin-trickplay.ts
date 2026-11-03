@@ -94,7 +94,7 @@ export function useTrickplayRegenerationReport(operationId: string | undefined) 
 		queryKey: adminKeys.trickplayRegenerationReport(operationId ?? ""),
 		queryFn: () => reelvault.admin.getTrickplayRegenerationReport(operationId ?? ""),
 		enabled: operationId !== undefined,
-		refetchInterval: pollWhile({ isActive: (data) => (data?.unfinished ?? 0) > 0, activeMs: 3_000 }),
+		refetchInterval: pollWhile({ isActive: (data) => (data?.unfinished ?? 0) > 0, activeMs: 3_000, stopAfterFailures: 3 }),
 	});
 }
 

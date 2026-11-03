@@ -164,6 +164,7 @@ export function useAdminRefreshMediaFile() {
 				return !(status && TERMINAL_OPERATION_STATUSES.has(status));
 			},
 			activeMs: 2_000,
+			stopAfterFailures: 3,
 		}),
 	});
 	useEffect(() => {
@@ -312,7 +313,8 @@ export function useAdminMediaFileAudit(options?: { enabled?: boolean }) {
 
 	const statusQuery = useQuery({
 		queryKey: mediaKeys.audit(operationId ?? undefined),
-		enabled: Boolean(operationId),
+		// Leaving the audit view must also stop its status poll.
+		enabled: Boolean(operationId) && enabled,
 		queryFn: () => reelvault.media.getAuditStatus(operationId ?? ""),
 		staleTime: 0,
 		refetchInterval: pollWhile({
@@ -322,6 +324,7 @@ export function useAdminMediaFileAudit(options?: { enabled?: boolean }) {
 				return !(status && TERMINAL_OPERATION_STATUSES.has(status));
 			},
 			activeMs: 2_000,
+			stopAfterFailures: 3,
 		}),
 	});
 

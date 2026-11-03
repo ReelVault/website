@@ -202,6 +202,7 @@ export const adminKeys = {
 			: ([...adminKeys.all, "worker-operation-jobs", operationId] as const),
 	workerOperationJobsPrefix: () => [...adminKeys.all, "worker-operation-jobs"] as const,
 	stats: () => [...adminKeys.all, "stats"] as const,
+	dashboardView: () => [...adminKeys.all, "dashboard-view"] as const,
 	updateStatus: () => [...adminKeys.all, "update-status"] as const,
 	updateHistoryAll: () => [...adminKeys.all, "update-history"] as const,
 	updateHistory: (page: number, limit: number) => [...adminKeys.updateHistoryAll(), page, limit] as const,

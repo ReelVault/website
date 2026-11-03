@@ -13,6 +13,8 @@ export function useAdminLiveActivity() {
 		// Live telemetry while sessions are active; backoff on an idle server,
 		// so an empty response does not poll every 3 s (the biggest network offender in admin).
 		refetchInterval: (query) => {
+			if (query.state.fetchFailureCount >= 3) return false;
+
 			const data = query.state.data;
 			const hasActivity = (data?.activeStreams.length ?? 0) > 0 || (data?.activeDevices.length ?? 0) > 0;
 
@@ -27,7 +29,7 @@ export function useAdminEndedLiveSessions() {
 	return useQuery<AdminEndedLiveSessionsResponse>({
 		queryKey: adminKeys.endedLiveSessions(),
 		queryFn: () => reelvault.admin.getEndedLiveSessions({ limit: 50 }),
-		refetchInterval: 15_000,
+		refetchInterval: (query) => (query.state.fetchFailureCount >= 3 ? false : 15_000),
 		staleTime: 5000,
 	});
 }

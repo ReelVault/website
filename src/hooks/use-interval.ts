@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { noopCleanup } from "@/lib/detach";
 
 /**
  * React hook for creating a stable interval that properly handles component re-renders and cleanup
@@ -38,7 +39,9 @@ export function useInterval({ callback, delay }: { callback: () => void; delay: 
 	}, [callback]);
 
 	useEffect(() => {
-		const intervalId = delay === null ? 0 : window.setInterval(() => callbackRef.current(), delay);
+		if (delay === null) return noopCleanup;
+
+		const intervalId = window.setInterval(() => callbackRef.current(), delay);
 
 		return () => {
 			window.clearInterval(intervalId);

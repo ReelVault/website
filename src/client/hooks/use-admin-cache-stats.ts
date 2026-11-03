@@ -9,7 +9,7 @@ export function useAdminCacheStats() {
 	return useQuery({
 		queryKey: adminKeys.cacheStats(),
 		queryFn: () => reelvault.admin.getCacheStats(),
-		refetchInterval: 30_000,
+		refetchInterval: (query) => (query.state.fetchFailureCount >= 3 ? false : 30_000),
 		refetchIntervalInBackground: false,
 		staleTime: 20_000,
 	});

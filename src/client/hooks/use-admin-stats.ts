@@ -14,6 +14,7 @@ export const adminStatsQueryOptions = () => ({
 		isActive: (data) => (data?.streaming.activeSessions ?? 0) > 0 || (data?.workers?.active ?? 0) + (data?.workers?.waiting ?? 0) > 0,
 		activeMs: 15_000,
 		idleMs: 60_000,
+		stopAfterFailures: 3,
 	}),
 	refetchIntervalInBackground: false,
 	staleTime: 10_000,

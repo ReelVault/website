@@ -213,6 +213,8 @@ export function useLibraryErrorsCheckStatus(operationId: string | null) {
 		},
 		enabled: Boolean(operationId),
 		refetchInterval: (query) => {
+			if (query.state.fetchFailureCount >= 3) return false;
+
 			const status = query.state.data?.status;
 
 			return status === "completed" || status === "failed" || status === "cancelled" ? false : 2000;
@@ -240,7 +242,7 @@ export function useLibraryScanProgress() {
 	return useQuery({
 		queryKey: libraryKeys.scanProgress(),
 		queryFn: () => reelvault.libraries.getScanProgress(),
-		refetchInterval: (query) => (query.state.data?.data.length ? SCAN_PROGRESS_POLL_MS : false),
+		refetchInterval: (query) => (query.state.fetchFailureCount < 3 && query.state.data?.data.length ? SCAN_PROGRESS_POLL_MS : false),
 	});
 }
 

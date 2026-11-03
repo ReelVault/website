@@ -14,7 +14,7 @@ export function useAdminLogFiles() {
 		queryKey: adminKeys.logFiles(),
 		queryFn: () => reelvault.admin.getLogFiles(),
 		staleTime: 15_000,
-		refetchInterval: 60_000,
+		refetchInterval: (queryState) => (queryState.state.fetchFailureCount >= 3 ? false : 60_000),
 		refetchIntervalInBackground: false,
 	});
 
@@ -75,7 +75,7 @@ export function useAdminLogs(params: UseAdminLogsParams = {}, autoRefresh = true
 	const { fileId, level, search, module, exclude, from, to, page = 1, limit = 25 } = params;
 	const effectiveLevel = level && level !== "all" ? level : undefined;
 
-	const query = useQuery({
+	const logsQuery = useQuery({
 		queryKey: adminKeys.logs({ fileId, level: effectiveLevel, search, module, exclude, from, to, page, limit }),
 		placeholderData: keepPreviousData,
 		queryFn: () =>
@@ -91,21 +91,21 @@ export function useAdminLogs(params: UseAdminLogsParams = {}, autoRefresh = true
 				page,
 			}),
 		staleTime: 15_000,
-		refetchInterval: autoRefresh ? 3000 : false,
+		refetchInterval: autoRefresh ? (queryState) => (queryState.state.fetchFailureCount >= 3 ? false : 3000) : false,
 	});
 
 	const empty = emptyPagination(limit);
 
 	return {
-		logs: query.data?.data ?? [],
-		total: query.data?.total ?? empty.total,
-		totalPages: query.data?.totalPages ?? empty.totalPages,
-		truncated: query.data?.truncated ?? false,
-		windowBytes: query.data?.windowBytes ?? 0,
-		isLoading: query.isLoading,
-		isFetching: query.isFetching,
-		error: query.error,
-		refetch: query.refetch,
+		logs: logsQuery.data?.data ?? [],
+		total: logsQuery.data?.total ?? empty.total,
+		totalPages: logsQuery.data?.totalPages ?? empty.totalPages,
+		truncated: logsQuery.data?.truncated ?? false,
+		windowBytes: logsQuery.data?.windowBytes ?? 0,
+		isLoading: logsQuery.isLoading,
+		isFetching: logsQuery.isFetching,
+		error: logsQuery.error,
+		refetch: logsQuery.refetch,
 	};
 }
 

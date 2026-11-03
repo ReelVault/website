@@ -14,6 +14,7 @@ export function useAdminProcesses(autoRefresh = true) {
 			isActive: (data) => (data?.counts.total ?? 0) > 0,
 			activeMs: 5_000,
 			idleMs: 30_000,
+			stopAfterFailures: 3,
 		}),
 		staleTime: 3_000,
 	});

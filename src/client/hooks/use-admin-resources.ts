@@ -6,7 +6,7 @@ export function useAdminResources(hours = 24) {
 	return useQuery({
 		queryKey: adminKeys.resources(hours),
 		queryFn: () => reelvault.admin.getResources({ hours }),
-		refetchInterval: 15_000,
+		refetchInterval: (query) => (query.state.fetchFailureCount >= 3 ? false : 15_000),
 		refetchIntervalInBackground: false,
 		staleTime: 10_000,
 	});

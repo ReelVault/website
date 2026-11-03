@@ -107,6 +107,7 @@ function LibraryInfiniteContent({
 					validMetadata={displayMetadata}
 					isLoadingMore={queryResult.isFetchingNextPage}
 					hasNextPage={queryResult.hasNextPage}
+					hasError={queryResult.isError}
 					onLoadMore={() => {
 						detach(queryResult.fetchNextPage());
 					}}

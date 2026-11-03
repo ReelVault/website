@@ -17,6 +17,7 @@ export function useWorkerStats(autoRefresh = true) {
 			enabled: autoRefresh,
 			isActive: (data) => data?.some((w) => w.stats.active > 0 || w.stats.waiting > 0) ?? false,
 			activeMs: 5_000,
+			stopAfterFailures: 3,
 		}),
 	});
 }

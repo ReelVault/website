@@ -40,6 +40,7 @@ export function useAdminOperationJobs(
 			enabled: autoRefresh,
 			isActive: (data) => data?.data.some((i: WorkerJob) => i.status === "pending" || i.status === "running") ?? false,
 			activeMs: 5_000,
+			stopAfterFailures: 3,
 		}),
 	});
 
@@ -70,6 +71,7 @@ export function useAdminActiveOperations(autoRefresh = true) {
 			isActive: (data) => (data?.data.length ?? 0) > 0,
 			activeMs: 3_000,
 			idleMs: 15_000,
+			stopAfterFailures: 3,
 		}),
 	});
 }
@@ -136,6 +138,7 @@ export function useAdminJobs(
 			enabled: autoRefresh,
 			isActive: (data) => data?.data.some((op: WorkerOperation) => ACTIVE_OPERATION_STATUSES.has(op.status)) ?? false,
 			activeMs: 5_000,
+			stopAfterFailures: 3,
 		}),
 	});
 
@@ -152,6 +155,7 @@ export function useAdminJobs(
 				return Boolean(opStatus && !TERMINAL_OPERATION_STATUSES.has(opStatus));
 			},
 			activeMs: 5_000,
+			stopAfterFailures: 3,
 		}),
 	});
 
@@ -168,6 +172,7 @@ export function useAdminJobs(
 				return Boolean(opStatus && !TERMINAL_OPERATION_STATUSES.has(opStatus));
 			},
 			activeMs: 5_000,
+			stopAfterFailures: 3,
 		}),
 	});
 

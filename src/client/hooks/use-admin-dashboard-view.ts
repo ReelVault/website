@@ -52,7 +52,7 @@ export function useAdminDashboardView() {
 	const queryClient = useQueryClient();
 
 	return useQuery({
-		queryKey: [...adminKeys.all, "dashboard-view"] as const,
+		queryKey: adminKeys.dashboardView(),
 		queryFn: async () => {
 			const data = await reelvault.admin.getDashboardView();
 			// Seed at fetch resolution (not during render) so consumers read the

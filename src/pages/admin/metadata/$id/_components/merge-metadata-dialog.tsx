@@ -43,12 +43,15 @@ export function MergeMetadataDialog({
 				limit: 20,
 			});
 
-			return res.data.filter((item) => item.id !== metadata.id);
+			// Keep the shared cache id-independent: filtering the current title in
+			// queryFn made a cache entry created for A omit A from B's candidates
+			// and offer B itself. Filter at the consumer instead.
+			return res.data;
 		},
 		staleTime: 120_000,
 	});
 
-	const candidates = candidatesQuery.data ?? [];
+	const candidates = (candidatesQuery.data ?? []).filter((item) => item.id !== metadata.id);
 
 	const handleConfirmMerge = () => {
 		if (!selectedSourceId) {

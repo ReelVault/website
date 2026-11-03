@@ -22,6 +22,7 @@ export function useUserDownloads() {
 		refetchInterval: pollWhile({
 			isActive: (data) => data?.data.some((item) => item.status === "pending" || item.status === "processing") ?? false,
 			activeMs: 1500,
+			stopAfterFailures: 3,
 		}),
 	});
 }
@@ -64,6 +65,8 @@ export function useDownloadJobStatus(jobId: string | null | undefined) {
 		},
 		enabled: Boolean(jobId),
 		refetchInterval: (query) => {
+			if (query.state.fetchFailureCount >= 3) return false;
+
 			const data = query.state.data;
 			if (!data) return false;
 
@@ -145,6 +148,7 @@ export function useAdminDownloadJobs(params: { page: number; status?: "pending" 
 		refetchInterval: pollWhile({
 			isActive: (data) => data?.data.some((item) => item.status === "pending" || item.status === "processing") ?? false,
 			activeMs: 1500,
+			stopAfterFailures: 3,
 		}),
 	});
 }

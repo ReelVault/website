@@ -21,6 +21,10 @@ export function createQueryClient(): QueryClient {
 				staleTime: 60 * 1000,
 				gcTime: 10 * 60 * 1000,
 				refetchOnWindowFocus: false,
+				// RealtimeProvider invalidates the active queries once the socket
+				// reconnects (events sent during the drop are lost). Leaving React
+				// Query's own reconnect refetch on top doubled every request.
+				refetchOnReconnect: false,
 				retry: retryQuery,
 				networkMode: "offlineFirst",
 			},
