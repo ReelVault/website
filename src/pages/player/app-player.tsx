@@ -133,10 +133,10 @@ function AppPlayerSurface() {
 	const [hlsModule, setHlsModule] = useState<{ cls: typeof Hls } | null>(null);
 
 	useEffect(() => {
-		let cancelled = false;
+		const controller = new AbortController();
 		detach(async () => {
 			const cls = await loadHlsClass();
-			if (cancelled) return;
+			if (controller.signal.aborted) return;
 
 			if (cls) {
 				setHlsModule({ cls });
@@ -151,7 +151,7 @@ function AppPlayerSurface() {
 		});
 
 		return () => {
-			cancelled = true;
+			controller.abort();
 		};
 	}, []);
 

@@ -53,11 +53,11 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 
 	// Auto-initiate pairing on first load if not logged in
 	useEffect(() => {
-		let isCancelled = false;
+		const controller = new AbortController();
 		if (!(isUserLoading || hasUser || urlRedeem || pairCode)) {
 			initiatePairing(undefined, {
 				onSuccess: (res) => {
-					if (isCancelled) return;
+					if (controller.signal.aborted) return;
 
 					applyPairing(res);
 				},
@@ -66,7 +66,7 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 		}
 
 		return () => {
-			isCancelled = true;
+			controller.abort();
 		};
 	}, [isUserLoading, hasUser, urlRedeem, pairCode, initiatePairing, applyPairing]);
 
@@ -74,13 +74,13 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 	// a slow request must finish before the next one starts, otherwise a 30 s
 	// SDK timeout stacks twelve overlapping requests on every 2.5 s tick.
 	useEffect(() => {
-		let cancelled = false;
-		let timer: ReturnType<typeof setTimeout> | undefined;
+		const controller = new AbortController();
+		const timers: { current: ReturnType<typeof setTimeout> | undefined } = { current: undefined };
 
 		const pollAuthorization = async (): Promise<void> => {
 			try {
 				const res = await reelvault.auth.quickConnectCheck(pairSecret);
-				if (cancelled) return;
+				if (controller.signal.aborted) return;
 
 				if (res.authenticated) {
 					toast.success(m.auth_device_authorized());
@@ -92,14 +92,14 @@ export function useQuickConnectPairing({ enabled, isUserLoading, hasUser, urlRed
 				// Polling errors are ignored; the next tick retries.
 			}
 
-			if (!cancelled) timer = setTimeout(() => detach(pollAuthorization), 2500);
+			if (!controller.signal.aborted) timers.current = setTimeout(() => detach(pollAuthorization), 2500);
 		};
 
-		if (pairSecret && !hasUser && enabled && !isExpired) timer = setTimeout(() => detach(pollAuthorization), 2500);
+		if (pairSecret && !hasUser && enabled && !isExpired) timers.current = setTimeout(() => detach(pollAuthorization), 2500);
 
 		return () => {
-			cancelled = true;
-			if (timer !== undefined) clearTimeout(timer);
+			controller.abort();
+			if (timers.current !== undefined) clearTimeout(timers.current);
 		};
 	}, [pairSecret, hasUser, enabled, isExpired]);
 

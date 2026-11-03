@@ -41,13 +41,14 @@ function isTopOverlay(id: string): boolean {
  */
 export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
 	const [overlayId] = useState(() => safeUuid());
+	const closedByPopRef = useRef(false);
 	const onCloseRef = useRef(onClose);
 	useEffect(() => {
 		onCloseRef.current = onClose;
 	});
 
 	useEffect(() => {
-		let closedByPop = false;
+		closedByPopRef.current = false;
 		const onPopState = () => {
 			// A UI close of the overlay above already consumed this pop.
 			if (suppressNextPop) {
@@ -59,7 +60,7 @@ export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
 			// The listener lives across open/close cycles; ignore pops while closed.
 			if (!(isOpen && isTopOverlay(overlayId))) return;
 
-			closedByPop = true;
+			closedByPopRef.current = true;
 			removeOverlay(overlayId);
 			onCloseRef.current();
 		};
@@ -77,7 +78,12 @@ export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
 
 			// Closing via the UI consumes the synthetic entry, but a pop that
 			// returns to a lower overlay must not close that lower overlay.
-			if (isOpen && !closedByPop && isOverlayHistoryState(window.history.state) && window.history.state.overlayId === overlayId) {
+			if (
+				isOpen &&
+				!closedByPopRef.current &&
+				isOverlayHistoryState(window.history.state) &&
+				window.history.state.overlayId === overlayId
+			) {
 				// Only a still-open lower overlay needs to ignore this programmatic pop.
 				suppressNextPop = openOverlayIds.length > 0;
 				window.history.back();

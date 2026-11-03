@@ -56,10 +56,10 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 
 	// Initiate pairing on mount
 	useEffect(() => {
-		let cancelled = false;
+		const controller = new AbortController();
 		initiateQuickConnect(undefined, {
 			onSuccess: (res) => {
-				if (cancelled) return;
+				if (controller.signal.aborted) return;
 
 				setPairCode(res.code);
 				setPairSecret(res.secret);
@@ -69,7 +69,7 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 		});
 
 		return () => {
-			cancelled = true;
+			controller.abort();
 		};
 	}, [initiateQuickConnect]);
 
@@ -91,13 +91,13 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 	// Polling for device pairing check. Recursive timeout prevents overlapping
 	// requests while a slow quick-connect check is still in flight.
 	useEffect(() => {
-		let cancelled = false;
-		let timer: ReturnType<typeof setTimeout> | undefined;
+		const controller = new AbortController();
+		const timers: { current: ReturnType<typeof setTimeout> | undefined } = { current: undefined };
 
 		const pollPairing = async (): Promise<void> => {
 			try {
 				const res = await reelvault.auth.quickConnectCheck(pairSecret);
-				if (cancelled) return;
+				if (controller.signal.aborted) return;
 
 				if (res.authenticated) {
 					onAuthenticatedRef.current();
@@ -108,14 +108,14 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 				// Polling check errors are ignored; the next tick retries.
 			}
 
-			if (!cancelled) timer = setTimeout(() => detach(pollPairing), 2500);
+			if (!controller.signal.aborted) timers.current = setTimeout(() => detach(pollPairing), 2500);
 		};
 
-		if (pairSecret && !isExpired) timer = setTimeout(() => detach(pollPairing), 2500);
+		if (pairSecret && !isExpired) timers.current = setTimeout(() => detach(pollPairing), 2500);
 
 		return () => {
-			cancelled = true;
-			if (timer !== undefined) clearTimeout(timer);
+			controller.abort();
+			if (timers.current !== undefined) clearTimeout(timers.current);
 		};
 	}, [pairSecret, isExpired]);
 

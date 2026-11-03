@@ -42,7 +42,7 @@ export function PluginCustomElement({ pluginId, tag, moduleUrl, context, onClose
 	const host = usePluginElementHost({ pluginId, context, onClose });
 
 	useEffect(() => {
-		let ignore = false;
+		const controller = new AbortController();
 		const ensureElement = async (): Promise<void> => {
 			try {
 				const existingTag = customElements.get(tag);
@@ -56,11 +56,11 @@ export function PluginCustomElement({ pluginId, tag, moduleUrl, context, onClose
 				}
 
 				if (!existingTag) await loadPluginElement(moduleUrl, tag);
-				if (ignore) return;
+				if (controller.signal.aborted) return;
 
 				setState("ready");
 			} catch (err) {
-				if (!ignore) {
+				if (!controller.signal.aborted) {
 					setError(err instanceof Error ? err.message : String(err));
 					setState("error");
 				}
@@ -69,7 +69,7 @@ export function PluginCustomElement({ pluginId, tag, moduleUrl, context, onClose
 		detach(ensureElement());
 
 		return () => {
-			ignore = true;
+			controller.abort();
 		};
 	}, [moduleUrl, tag]);
 

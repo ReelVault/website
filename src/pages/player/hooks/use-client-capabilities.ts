@@ -216,13 +216,13 @@ export function useClientCapabilities(): ClientCapabilities | undefined {
 	const [capabilities, setCapabilities] = useState<ClientCapabilities>();
 
 	useEffect(() => {
-		let cancelled = false;
+		const controller = new AbortController();
 		// One async resolution (HDR probes included) BEFORE the first state set —
 		// a late-arriving hdrTransfers field would change the session request
 		// shape and force a needless session restart.
 		const compute = async () => {
 			const hdrTransfers = await probeHdrTransfers();
-			if (cancelled) return;
+			if (controller.signal.aborted) return;
 
 			setCapabilities({
 				videoCodecs: VIDEO_CODEC_PROBES.flatMap(({ mimeTypes, codec }) =>
@@ -238,7 +238,7 @@ export function useClientCapabilities(): ClientCapabilities | undefined {
 		detach(compute);
 
 		return () => {
-			cancelled = true;
+			controller.abort();
 		};
 	}, []);
 
