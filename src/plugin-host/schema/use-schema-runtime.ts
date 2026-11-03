@@ -1,6 +1,6 @@
 import type { PluginLocalizedText, PluginSchemaAction, PluginSchemaCondition, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { detach } from "@/lib/detach";
 import { toast } from "@/utils/toast-facade";
@@ -54,6 +54,7 @@ export function useSchemaRuntime(
 	const [dataLoading, setDataLoading] = useState(() => Object.keys(schema.data ?? {}).length > 0);
 	const [dataErrors, setDataErrors] = useState<Record<string, string>>({});
 	const scopeRef = useRef<SchemaScope>({ form: formValues, data: dataValues, context });
+	const contextRef = useRef(context);
 	const isMountedRef = useRef(true);
 	/** Fields the user edited — data-driven defaults must never overwrite them. */
 	const touchedFieldsRef = useRef<Set<string>>(new Set());
@@ -115,13 +116,24 @@ export function useSchemaRuntime(
 		setFormValues((previous) => ({ ...previous, [name]: value }));
 	};
 
+	// Keep the latest context available to the defaults merge without making the
+	// effect re-run for a fresh object identity on every render.
+	useLayoutEffect(() => {
+		contextRef.current = context;
+	});
+
 	// Defaults referencing `{{data.*}}` cannot resolve at mount; fill them for
 	// untouched fields once (and whenever) the data sources arrive.
 	useEffect(() => {
 		setFormValues((previous) =>
-			mergeSchemaDefaults(schema.body, previous, { form: previous, data: dataValues, context }, touchedFieldsRef.current),
+			mergeSchemaDefaults(
+				schema.body,
+				previous,
+				{ form: previous, data: dataValues, context: contextRef.current },
+				touchedFieldsRef.current,
+			),
 		);
-	}, [dataValues, schema.body, context]);
+	}, [dataValues, schema.body]);
 
 	const refresh = (scope: SchemaScope, sources?: string[]): void => {
 		reloadSources(sources && sources.length > 0 ? sources : allSourceNames, scope);

@@ -85,4 +85,25 @@ describe("schema defaults", () => {
 
 		expect(merged).toBe(current);
 	});
+
+	test("an object default from the context does not rewrite the form on every render", () => {
+		const objectBody: PluginSchemaNode[] = [
+			{
+				type: "field",
+				input: "text",
+				name: "user",
+				label: "User",
+				default: "{{context.user}}",
+			},
+		];
+		const current = { user: { id: "u1", name: "Ada", role: "user" } };
+		const merged = mergeSchemaDefaults(
+			objectBody,
+			current,
+			scope({ context: { ...scope().context, user: { id: "u1", name: "Ada", role: "user" } } }),
+			new Set(),
+		);
+
+		expect(merged).toBe(current);
+	});
 });

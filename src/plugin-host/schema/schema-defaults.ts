@@ -38,6 +38,22 @@ export function collectSchemaDefaults(nodes: PluginSchemaNode[], scope: SchemaSc
 }
 
 /**
+ * Compares default values structurally. A default can resolve to an object from
+ * the plugin context (`{{context.user}}`), and that object is recreated on every
+ * render; reference equality would then write a new form state forever.
+ */
+function schemaValuesEqual(left: unknown, right: unknown): boolean {
+	if (Object.is(left, right)) return true;
+	if (typeof left !== "object" || typeof right !== "object" || left === null || right === null) return false;
+
+	try {
+		return JSON.stringify(left) === JSON.stringify(right);
+	} catch {
+		return false;
+	}
+}
+
+/**
  * Re-applies schema defaults for fields the user has not touched.
  *
  * Defaults that reference `{{data.*}}` resolve to `undefined` at mount — the
@@ -56,7 +72,7 @@ export function mergeSchemaDefaults(
 	let next = current;
 
 	for (const [name, value] of Object.entries(defaults)) {
-		if (touched.has(name) || value === undefined || current[name] === value) continue;
+		if (touched.has(name) || value === undefined || schemaValuesEqual(current[name], value)) continue;
 		if (next === current) next = { ...current };
 		next[name] = value;
 	}
