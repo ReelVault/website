@@ -137,13 +137,14 @@ export function useMetadataForm(metadata: MetadataQueryData, updateMutation: Upd
 			sortTitle: basic.sortTitle.trim() || null,
 			// Explicit null clears the override.
 			numberingMode: toNumberingMode(basic.numberingMode),
-			originalTitle: basic.originalTitle.trim() || undefined,
-			overview: overview.trim() || undefined,
-			tagline: basic.tagline.trim() || undefined,
-			status: basic.status.trim() || undefined,
+			// An emptied field is sent as null so the server clears it (undefined would keep the old value).
+			originalTitle: basic.originalTitle.trim() || null,
+			overview: overview.trim() || null,
+			tagline: basic.tagline.trim() || null,
+			status: basic.status.trim() || null,
 			releaseDate: basic.releaseDate,
-			budget: basic.budget ? Number(basic.budget) : undefined,
-			revenue: basic.revenue ? Number(basic.revenue) : undefined,
+			budget: basic.budget ? Number(basic.budget) : null,
+			revenue: basic.revenue ? Number(basic.revenue) : null,
 			lockedFields,
 		});
 	};
