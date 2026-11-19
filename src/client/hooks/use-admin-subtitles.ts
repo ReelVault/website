@@ -4,6 +4,7 @@ import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
 import { mediaKeys, subtitleKeys } from "../utils/query-keys";
+import { chunkIds } from "./use-bulk-refresh";
 
 const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
@@ -88,8 +89,8 @@ export function useBulkDeleteSubtitles() {
 		mutationFn: async (subtitleIds: string[]) => {
 			const deletedIds: string[] = [];
 			let failed = 0;
-			for (let start = 0; start < subtitleIds.length; start += BULK_DELETE_CHUNK_SIZE) {
-				const { results } = await reelvault.subtitles.bulkDelete(subtitleIds.slice(start, start + BULK_DELETE_CHUNK_SIZE));
+			for (const chunk of chunkIds(subtitleIds, BULK_DELETE_CHUNK_SIZE)) {
+				const { results } = await reelvault.subtitles.bulkDelete(chunk);
 				for (const result of results) {
 					if (result.ok) deletedIds.push(result.id);
 					else failed += 1;
@@ -98,13 +99,13 @@ export function useBulkDeleteSubtitles() {
 
 			return { deletedIds, failed };
 		},
-		onSuccess: async ({ deletedIds, failed }) => {
-			await queryClient.invalidateQueries({ queryKey: subtitleKeys.all });
+		onSuccess: ({ deletedIds, failed }) => {
 			for (const id of deletedIds) queryClient.removeQueries({ queryKey: subtitleKeys.adminDetail(id) });
 			toast.success(m.admin_subtitles_deleted_count({ count: deletedIds.length }));
 			if (failed > 0) toast.error(m.admin_subtitles_delete_partial({ failed }));
 		},
 		onError: (error) => toastError(m.admin_subtitles_delete_failed(), error),
+		onSettled: () => queryClient.invalidateQueries({ queryKey: subtitleKeys.all }),
 	});
 }
 

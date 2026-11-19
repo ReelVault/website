@@ -63,9 +63,17 @@ describe("translateByKey", () => {
 		expect(translateByKey("validation")).not.toBe("validation");
 	});
 
-	test("translates media audit reason codes", () => {
-		expect(translateByKey("year_mismatch")).not.toBe("year_mismatch");
-		expect(translateByKey("sequel_mismatch")).not.toBe("sequel_mismatch");
+	test("translates media audit reason codes with the values the server sends", () => {
+		expect(translateByKey("year_mismatch", { recognizedYear: 2001, assignedYear: 2003, diff: 2 })).toBe(
+			"Year mismatch: file says 2001, metadata says 2003 (2 years apart).",
+		);
+		expect(translateByKey("sequel_mismatch", { recognizedTitle: "Alien", assignedTitle: "Aliens" })).toBe(
+			"Part mismatch: file recognized as “Alien”, assigned to “Aliens”.",
+		);
+	});
+
+	test("falls back to the code when a parameterised message arrives without its values", () => {
+		expect(translateByKey("rate_limit_exceeded")).toBe("rate_limit_exceeded");
 	});
 
 	test("translates live-activity warning codes", () => {

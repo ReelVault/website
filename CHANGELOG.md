@@ -475,6 +475,15 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Bulk actions after a failure** — when a bulk refresh or delete stopped on a failed request, the chunks already processed were not refreshed in the lists; bulk-deleted titles stayed in cached details and rails.
+- **Scan all libraries** — with the library list not loaded yet, the button scanned nothing but reported that every scan had started.
+- **Stacked overlays and Back** — closing the top dialog could also close the one beneath it.
+- **Error messages with missing values** — a parameterised server message that arrived without its values showed a sentence with blanks (for example "retry after  seconds"); it now falls back to the plain message.
+- **New-episode notifications** — the episode title was wrapped in Polish quotes in every language.
+- **Refreshing a person** — the admin people list kept the old data until reload.
+- **Purge and cleanup previews** — after clearing worker history or old logs, the preview kept the old counts; the worker-history error used a webhook message.
+- **Rating stars** — a details refetch in flight could undo the star change made a moment before.
+- **Next episode** — an episode whose season was missing from the list was treated as season 1, putting it first in the order.
 - **Profile names** — an admin could save a blank or whitespace-only profile name.
 - **Worker job details** — a job whose only detail was a non-text result (an object or a number) had no expand toggle, so its result could not be seen.
 - **Worker dialogs** — inspecting another operation kept the previous page, search and filters; unsaved trigger edits were discarded whenever polling refreshed the task.

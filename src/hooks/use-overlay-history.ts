@@ -14,7 +14,10 @@ function isOverlayHistoryState(value: unknown): value is OverlayHistoryState {
 // a UI close of the top overlay also pops one entry — the latter must not make
 // the overlay underneath think the user pressed Back.
 const openOverlayIds: string[] = [];
-let suppressNextPop = false;
+// The overlay that must ignore the next pop: the one left on top after a UI
+// close consumed the synthetic entry. Naming it keeps other listeners (closed
+// overlays included) from consuming the suppression first.
+let suppressPopFor: string | null = null;
 
 function pushOverlay(id: string): void {
 	openOverlayIds.push(id);
@@ -50,15 +53,15 @@ export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
 	useEffect(() => {
 		closedByPopRef.current = false;
 		const onPopState = () => {
+			// The listener lives across open/close cycles; ignore pops while closed.
+			if (!(isOpen && isTopOverlay(overlayId))) return;
+
 			// A UI close of the overlay above already consumed this pop.
-			if (suppressNextPop) {
-				suppressNextPop = false;
+			if (suppressPopFor === overlayId) {
+				suppressPopFor = null;
 
 				return;
 			}
-
-			// The listener lives across open/close cycles; ignore pops while closed.
-			if (!(isOpen && isTopOverlay(overlayId))) return;
 
 			closedByPopRef.current = true;
 			removeOverlay(overlayId);
@@ -85,7 +88,7 @@ export function useOverlayHistory(isOpen: boolean, onClose: () => void) {
 				window.history.state.overlayId === overlayId
 			) {
 				// Only a still-open lower overlay needs to ignore this programmatic pop.
-				suppressNextPop = openOverlayIds.length > 0;
+				suppressPopFor = openOverlayIds.at(-1) ?? null;
 				window.history.back();
 			}
 		};

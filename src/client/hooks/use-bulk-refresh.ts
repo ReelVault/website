@@ -6,13 +6,13 @@ import { activeStreamsBlocking } from "@/utils/stream-block";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 
-/** Most ids one bulk refresh request carries; the server answers a larger request with a validation error. */
+/** Most ids one bulk request carries; the server answers a larger request with a validation error. */
 const BULK_REFRESH_CHUNK_SIZE = 50;
 
-function chunkIds(ids: readonly string[]): string[][] {
+export function chunkIds(ids: readonly string[], size = BULK_REFRESH_CHUNK_SIZE): string[][] {
 	const chunks: string[][] = [];
-	for (let start = 0; start < ids.length; start += BULK_REFRESH_CHUNK_SIZE) {
-		chunks.push(ids.slice(start, start + BULK_REFRESH_CHUNK_SIZE));
+	for (let start = 0; start < ids.length; start += size) {
+		chunks.push(ids.slice(start, start + size));
 	}
 
 	return chunks;
@@ -44,14 +44,16 @@ export function useBulkRefresh({ send, invalidationKeys, successMessage }: UseBu
 
 			return outcome;
 		},
-		onSuccess: async ({ succeeded, failed }) => {
-			await Promise.all(invalidationKeys.map((queryKey) => queryClient.invalidateQueries({ queryKey })));
+		onSuccess: ({ succeeded, failed }) => {
 			if (failed === 0) toast.success(successMessage(succeeded));
 			else toast.error(m.admin_bulk_refresh_partial({ succeeded, failed }));
 		},
 		onError: (error) => {
 			toastError(m.admin_bulk_refresh_failed(), error);
 		},
+		// A failed request stops the run after earlier chunks went through, so the
+		// cache is refreshed whatever the outcome.
+		onSettled: () => Promise.all(invalidationKeys.map((queryKey) => queryClient.invalidateQueries({ queryKey }))),
 	});
 }
 
@@ -96,8 +98,7 @@ export function useBulkDelete({ send, invalidationKeys, successMessage }: UseBul
 
 			return outcome;
 		},
-		onSuccess: async ({ succeeded, failed, held }) => {
-			await Promise.all(invalidationKeys.map((queryKey) => queryClient.invalidateQueries({ queryKey })));
+		onSuccess: ({ succeeded, failed, held }) => {
 			if (held) setStreamBlock(held);
 			if (failed > 0) toast.error(m.admin_bulk_delete_partial({ succeeded, failed }));
 			else if (succeeded > 0) toast.success(successMessage(succeeded));
@@ -105,6 +106,7 @@ export function useBulkDelete({ send, invalidationKeys, successMessage }: UseBul
 		onError: (error) => {
 			toastError(m.admin_bulk_delete_failed(), error);
 		},
+		onSettled: () => Promise.all(invalidationKeys.map((queryKey) => queryClient.invalidateQueries({ queryKey }))),
 	});
 
 	return {

@@ -8,8 +8,10 @@ export const metadataKeys = {
 	related: (id: string) => [...metadataKeys.all, "related", id] as const,
 	similarByActor: (id?: string) => [...metadataKeys.all, "similar_by_actor", id] as const,
 	collection: (id?: string, sortBy?: string, sortOrder?: string) => [...metadataKeys.all, "collection", id, sortBy, sortOrder] as const,
+	/** Every sort of one collection's order (prefix of `collectionOrder`). */
+	collectionOrderAll: (collectionId: string) => [...metadataKeys.all, "collection-order", collectionId] as const,
 	collectionOrder: (collectionId: string, sortBy?: string, sortOrder?: string) =>
-		[...metadataKeys.all, "collection-order", collectionId, sortBy, sortOrder] as const,
+		[...metadataKeys.collectionOrderAll(collectionId), sortBy, sortOrder] as const,
 	person: (id: string) => [...metadataKeys.all, "person", id] as const,
 	popular: (limit: number) => [...metadataKeys.all, "popular", limit] as const,
 	recentlyAdded: (limit: number, type?: MetadataType) =>
@@ -188,8 +190,9 @@ export const adminKeys = {
 	workerOperation: (operationId: string) => [...adminKeys.all, "worker-operation", operationId] as const,
 	workers: () => [...adminKeys.all, "workers"] as const,
 	workerWatchdog: () => [...adminKeys.all, "worker-watchdog"] as const,
+	workerHistoryPurgePreviewAll: () => [...adminKeys.all, "worker-history-purge-preview"] as const,
 	workerHistoryPurgePreview: (status: string, olderThanDays: number) =>
-		[...adminKeys.all, "worker-history-purge-preview", status, olderThanDays] as const,
+		[...adminKeys.workerHistoryPurgePreviewAll(), status, olderThanDays] as const,
 	processes: () => [...adminKeys.all, "processes"] as const,
 	workerOperationJobs: (operationId: string, params?: { page?: number; limit?: number; status?: string; search?: string }) =>
 		params

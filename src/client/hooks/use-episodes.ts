@@ -71,11 +71,14 @@ function computeEpisodeInfo(
 
 	const seasonMap = new Map(seasons.map((season) => [season.id, season.seasonNumber]));
 
+	// An episode of a season missing from the map has no known place in the order; guessing season 1
+	// would put it before everything else, so it is left out of the next-episode lookup.
 	const allEpisodes = rawEpisodes
+		.filter((ep) => seasonMap.has(ep.seasonId))
 		.map((ep) => ({
 			episodeId: ep.id,
 			seasonId: ep.seasonId,
-			seasonNumber: seasonMap.get(ep.seasonId) ?? 1,
+			seasonNumber: seasonMap.get(ep.seasonId) ?? 0,
 			episodeNumber: ep.episodeNumber,
 			title: ep.title,
 			// Continue-watching navigates to the watched file, which on a

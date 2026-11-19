@@ -35,7 +35,7 @@ export function usePersonData(personId: string) {
 export function useRefreshPerson() {
 	return useEntityRefreshMutation({
 		mutationFn: (personId: string) => reelvault.people.refresh(personId),
-		invalidationKeys: [personKeys.all, metadataKeys.all],
+		invalidationKeys: [personKeys.all, metadataKeys.all, adminKeys.people()],
 		successMessage: m.toast_person_refreshed(),
 		errorMessage: m.toast_person_refresh_failed(),
 	});
@@ -53,7 +53,7 @@ export function useBulkRefreshPeople() {
 export function useRefreshPersonImage() {
 	return useEntityRefreshMutation({
 		mutationFn: (personId: string) => reelvault.people.refreshImage(personId),
-		invalidationKeys: [personKeys.all, metadataKeys.all],
+		invalidationKeys: [personKeys.all, metadataKeys.all, adminKeys.people()],
 		successMessage: m.toast_person_photo_forced(),
 		errorMessage: m.toast_person_photo_failed(),
 	});

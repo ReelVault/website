@@ -246,15 +246,17 @@ export function useRefreshMetadata() {
 	});
 }
 
-/** Force-refreshes the artwork of the selected titles in requests of at most 50 (see `useBulkRefresh`). */
+/** Deletes the selected titles in requests of at most 50 (see `useBulkDelete`). */
 export function useBulkDeleteMetadata() {
 	return useBulkDelete({
 		send: (metadataIds, force) => reelvault.metadata.bulkDelete(metadataIds, { force }),
-		invalidationKeys: [metadataKeys.adminAll()],
+		// Deleted titles live on in every metadata cache (details, rails, grids), not only the admin list.
+		invalidationKeys: [metadataKeys.all],
 		successMessage: (count) => m.admin_bulk_metadata_deleted({ count }),
 	});
 }
 
+/** Force-refreshes the artwork of the selected titles in requests of at most 50 (see `useBulkRefresh`). */
 export function useBulkRefreshMetadataImages() {
 	return useBulkRefresh({
 		send: (metadataIds) => reelvault.metadata.bulkRefreshImages(metadataIds),

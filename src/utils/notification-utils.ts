@@ -23,7 +23,8 @@ export function getNotificationText(notification: Notification): { title: string
 	if (notification.type === "new_episode") {
 		const data = notification.data;
 		const title = m.notification_new_episode({ showTitle: fieldToText(data.showTitle) });
-		const episodeTitle = typeof data.episodeTitle === "string" && data.episodeTitle ? ` „${data.episodeTitle}”` : "";
+		const episodeTitle =
+			typeof data.episodeTitle === "string" && data.episodeTitle ? m.notification_episode_title_quoted({ title: data.episodeTitle }) : "";
 		const seasonNumber = fieldToText(data.seasonNumber);
 		const episodeNumber = fieldToText(data.episodeNumber);
 		const body = m.notification_new_episode_body({ seasonNumber, episodeNumber, episodeTitle });

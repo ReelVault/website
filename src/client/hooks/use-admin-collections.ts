@@ -61,7 +61,7 @@ export function useAdminCollections(search?: string, page = 1, sort: AdminCollec
 	const updateOrderMutation = useMutation({
 		mutationFn: ({ id, metadataIds }: { id: string; metadataIds: string[] }) => reelvault.collections.updateOrder(id, metadataIds),
 		onSuccess: async (_, { id }) => {
-			await Promise.all([invalidate(), queryClient.invalidateQueries({ queryKey: [...metadataKeys.all, "collection-order", id] })]);
+			await Promise.all([invalidate(), queryClient.invalidateQueries({ queryKey: metadataKeys.collectionOrderAll(id) })]);
 			toast.success(m.toast_collections_order_saved());
 		},
 		onError: (error) => {

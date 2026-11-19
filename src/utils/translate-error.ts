@@ -38,7 +38,8 @@ function routeOverrideMessage(inputs: MessageParams | undefined): string | null 
  * client chunk.
  */
 const dynamicMessages = {
-	admin_live_active_streams: (inputs) => m.admin_live_active_streams({ viewers: String(inputs?.viewers ?? "") }),
+	admin_live_active_streams: (inputs) =>
+		hasParams(inputs, ["viewers"]) ? m.admin_live_active_streams({ viewers: String(inputs.viewers) }) : null,
 	admin_live_no_streams: () => m.admin_live_no_streams(),
 	// Reasons a playback session can end with (the server's stream reason codes, hyphens normalized).
 	inactivity_timeout: () => m.admin_live_end_reason_inactivity_timeout(),
@@ -49,8 +50,10 @@ const dynamicMessages = {
 	superseded_by_same_title: () => m.admin_live_end_reason_superseded(),
 	admin_terminated: () => m.admin_live_end_reason_admin_terminated(),
 	admin_settings_invalid_value: (inputs) =>
-		m.admin_settings_invalid_value({ key: String(inputs?.key ?? ""), min: String(inputs?.min ?? ""), max: String(inputs?.max ?? "") }),
-	admin_settings_unknown_key: (inputs) => m.admin_settings_unknown_key({ key: String(inputs?.key ?? "") }),
+		hasParams(inputs, ["key", "min", "max"])
+			? m.admin_settings_invalid_value({ key: String(inputs.key), min: String(inputs.min), max: String(inputs.max) })
+			: null,
+	admin_settings_unknown_key: (inputs) => (hasParams(inputs, ["key"]) ? m.admin_settings_unknown_key({ key: String(inputs.key) }) : null),
 	auth_email_registered: () => m.auth_email_registered(),
 	auth_invalid_credentials: () => m.auth_invalid_credentials(),
 	auth_invalid_current_password: () => m.auth_invalid_current_password(),
@@ -62,7 +65,9 @@ const dynamicMessages = {
 	auth_weak_password: () => m.auth_weak_password(),
 	conflict: () => m.conflict(),
 	database_restore_blocked_active_streams: (inputs) =>
-		m.database_restore_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
+		hasParams(inputs, ["activeStreams"])
+			? m.database_restore_blocked_active_streams({ activeStreams: String(inputs.activeStreams) })
+			: null,
 	database_backup_invalid: () => m.database_backup_invalid(),
 	database_backup_failed: () => m.database_backup_failed(),
 	database_backup_upload_disabled: () => m.database_backup_upload_disabled(),
@@ -70,10 +75,11 @@ const dynamicMessages = {
 	plugin_subtitle_provider_disabled: () => m.plugin_subtitle_provider_disabled(),
 	validation_invalid_cursor: () => m.validation_invalid_cursor(),
 	validation_cursor_not_supported: () => m.validation_cursor_not_supported(),
-	validation_fields_too_long: (inputs) => m.validation_fields_too_long({ max: String(inputs?.max ?? "") }),
-	validation_fields_too_many: (inputs) => m.validation_fields_too_many({ max: String(inputs?.max ?? "") }),
-	validation_fields_too_deep: (inputs) => m.validation_fields_too_deep({ max: String(inputs?.max ?? "") }),
-	validation_filter_too_many_values: (inputs) => m.validation_filter_too_many_values({ max: String(inputs?.max ?? "") }),
+	validation_fields_too_long: (inputs) => (hasParams(inputs, ["max"]) ? m.validation_fields_too_long({ max: String(inputs.max) }) : null),
+	validation_fields_too_many: (inputs) => (hasParams(inputs, ["max"]) ? m.validation_fields_too_many({ max: String(inputs.max) }) : null),
+	validation_fields_too_deep: (inputs) => (hasParams(inputs, ["max"]) ? m.validation_fields_too_deep({ max: String(inputs.max) }) : null),
+	validation_filter_too_many_values: (inputs) =>
+		hasParams(inputs, ["max"]) ? m.validation_filter_too_many_values({ max: String(inputs.max) }) : null,
 	download_empty_output: () => m.download_empty_output(),
 	download_failed: () => m.download_failed(),
 	download_ffmpeg_failed: () => m.download_ffmpeg_failed(),
@@ -94,17 +100,19 @@ const dynamicMessages = {
 	downloads_quota_exceeded: () => m.downloads_quota_exceeded(),
 	downloads_season_exceeds_quota: () => m.downloads_season_exceeds_quota(),
 	episode_mismatch: (inputs) =>
-		m.episode_mismatch({
-			recognizedEpisode: String(inputs?.recognizedEpisode ?? ""),
-			assignedEpisode: String(inputs?.assignedEpisode ?? ""),
-		}),
+		hasParams(inputs, ["recognizedEpisode", "assignedEpisode"])
+			? m.episode_mismatch({
+					recognizedEpisode: String(inputs.recognizedEpisode),
+					assignedEpisode: String(inputs.assignedEpisode),
+				})
+			: null,
 	forbidden: () => m.forbidden(),
 	internal: () => m.internal(),
 	library_invalid_metadata_language: () => m.library_invalid_metadata_language(),
 	library_name_conflict: () => m.library_name_conflict(),
 	library_path_conflict: () => m.library_path_conflict(),
 	library_path_not_found: () => m.library_path_not_found(),
-	low_confidence: (inputs) => m.low_confidence({ percent: String(inputs?.percent ?? "") }),
+	low_confidence: (inputs) => (hasParams(inputs, ["percent"]) ? m.low_confidence({ percent: String(inputs.percent) }) : null),
 	media_decode_failed: () => m.media_decode_failed(),
 	media_file_missing: () => m.media_file_missing(),
 	media_probe_failed: () => m.media_probe_failed(),
@@ -121,43 +129,56 @@ const dynamicMessages = {
 			? m.profile_pin_invalid()
 			: m.profile_pin_invalid_attempts({ attempts: String(inputs.attemptsRemaining) }),
 	profile_pin_locked: (inputs) =>
-		m.profile_pin_locked({ minutes: String(Math.max(1, Math.ceil(Number(inputs?.retryAfterSeconds ?? 0) / 60))) }),
-	rate_limit_exceeded: (inputs) => m.rate_limit_exceeded({ retryAfterSeconds: String(inputs?.retryAfterSeconds ?? "") }),
-	remote_access_bind_external: (inputs) => m.remote_access_bind_external({ bindHost: String(inputs?.bindHost ?? "") }),
+		hasParams(inputs, ["retryAfterSeconds"])
+			? m.profile_pin_locked({ minutes: String(Math.max(1, Math.ceil(Number(inputs.retryAfterSeconds) / 60))) })
+			: null,
+	rate_limit_exceeded: (inputs) =>
+		hasParams(inputs, ["retryAfterSeconds"]) ? m.rate_limit_exceeded({ retryAfterSeconds: String(inputs.retryAfterSeconds) }) : null,
+	remote_access_bind_external: (inputs) =>
+		hasParams(inputs, ["bindHost"]) ? m.remote_access_bind_external({ bindHost: String(inputs.bindHost) }) : null,
 	remote_access_bind_loopback: () => m.remote_access_bind_loopback(),
 	remote_access_https_disabled: () => m.remote_access_https_disabled(),
 	remote_access_https_enabled: () => m.remote_access_https_enabled(),
 	remote_access_https_no_public_url: () => m.remote_access_https_no_public_url(),
 	remote_access_public_url_missing: () => m.remote_access_public_url_missing(),
-	remote_access_public_url_set: (inputs) => m.remote_access_public_url_set({ publicUrl: String(inputs?.publicUrl ?? "") }),
+	remote_access_public_url_set: (inputs) =>
+		hasParams(inputs, ["publicUrl"]) ? m.remote_access_public_url_set({ publicUrl: String(inputs.publicUrl) }) : null,
 	remote_access_reachable_failed: () => m.remote_access_reachable_failed(),
 	remote_access_reachable_not_configured: () => m.remote_access_reachable_not_configured(),
 	remote_access_reachable_ok: () => m.remote_access_reachable_ok(),
 	remote_access_trusted_proxy_missing: () => m.remote_access_trusted_proxy_missing(),
-	remote_access_trusted_proxy_set: (inputs) => m.remote_access_trusted_proxy_set({ count: String(inputs?.count ?? "") }),
+	remote_access_trusted_proxy_set: (inputs) =>
+		hasParams(inputs, ["count"]) ? m.remote_access_trusted_proxy_set({ count: String(inputs.count) }) : null,
 	request_timeout: () => m.request_timeout(),
 	scan_reason_no_metadata_match: () => m.scan_reason_no_metadata_match(),
 	scan_reason_probe_failed: () => m.scan_reason_probe_failed(),
 	scan_reason_recognition_failed: () => m.scan_reason_recognition_failed(),
 	scan_reason_type_mismatch: () => m.scan_reason_type_mismatch(),
 	season_mismatch: (inputs) =>
-		m.season_mismatch({
-			recognizedSeason: String(inputs?.recognizedSeason ?? ""),
-			assignedSeason: String(inputs?.assignedSeason ?? ""),
-		}),
-	stream_creation_throttled: (inputs) => m.stream_creation_throttled({ retryAfterSeconds: String(inputs?.retryAfterSeconds ?? "") }),
-	stream_limit_reached: (inputs) => m.stream_limit_reached({ limit: String(inputs?.limit ?? "") }),
+		hasParams(inputs, ["recognizedSeason", "assignedSeason"])
+			? m.season_mismatch({
+					recognizedSeason: String(inputs.recognizedSeason),
+					assignedSeason: String(inputs.assignedSeason),
+				})
+			: null,
+	stream_creation_throttled: (inputs) =>
+		hasParams(inputs, ["retryAfterSeconds"]) ? m.stream_creation_throttled({ retryAfterSeconds: String(inputs.retryAfterSeconds) }) : null,
+	stream_limit_reached: (inputs) => (hasParams(inputs, ["limit"]) ? m.stream_limit_reached({ limit: String(inputs.limit) }) : null),
 	sequel_mismatch: (inputs) =>
-		m.sequel_mismatch({
-			recognizedTitle: String(inputs?.recognizedTitle ?? ""),
-			assignedTitle: String(inputs?.assignedTitle ?? ""),
-		}),
+		hasParams(inputs, ["recognizedTitle", "assignedTitle"])
+			? m.sequel_mismatch({
+					recognizedTitle: String(inputs.recognizedTitle),
+					assignedTitle: String(inputs.assignedTitle),
+				})
+			: null,
 	timeout: () => m.timeout(),
 	title_mismatch: (inputs) =>
-		m.title_mismatch({
-			recognizedTitle: String(inputs?.recognizedTitle ?? ""),
-			assignedTitle: String(inputs?.assignedTitle ?? ""),
-		}),
+		hasParams(inputs, ["recognizedTitle", "assignedTitle"])
+			? m.title_mismatch({
+					recognizedTitle: String(inputs.recognizedTitle),
+					assignedTitle: String(inputs.assignedTitle),
+				})
+			: null,
 	too_many_requests: () => m.too_many_requests(),
 	unauthorized: () => m.unauthorized(),
 	update_check_failed: () => m.update_check_failed(),
@@ -165,16 +186,19 @@ const dynamicMessages = {
 	update_database_integrity_failed: () => m.update_database_integrity_failed(),
 	update_install_failed: () => m.update_install_failed(),
 	update_rollback_failed: () => m.update_rollback_failed(),
-	update_blocked_active_streams: (inputs) => m.update_blocked_active_streams({ activeStreams: String(inputs?.activeStreams ?? "") }),
+	update_blocked_active_streams: (inputs) =>
+		hasParams(inputs, ["activeStreams"]) ? m.update_blocked_active_streams({ activeStreams: String(inputs.activeStreams) }) : null,
 	update_not_cancellable: () => m.update_not_cancellable(),
 	update_not_running: () => m.update_not_running(),
 	validation: () => m.validation(),
 	year_mismatch: (inputs) =>
-		m.year_mismatch({
-			recognizedYear: String(inputs?.recognizedYear ?? ""),
-			assignedYear: String(inputs?.assignedYear ?? ""),
-			diff: String(inputs?.diff ?? ""),
-		}),
+		hasParams(inputs, ["recognizedYear", "assignedYear", "diff"])
+			? m.year_mismatch({
+					recognizedYear: String(inputs.recognizedYear),
+					assignedYear: String(inputs.assignedYear),
+					diff: String(inputs.diff),
+				})
+			: null,
 	plugin_manifest_not_object: () => m.plugin_manifest_not_object(),
 	plugin_field_not_object: (inputs) => (hasParams(inputs, ["field"]) ? m.plugin_field_not_object({ field: String(inputs.field) }) : null),
 	plugin_field_not_array: (inputs) => (hasParams(inputs, ["field"]) ? m.plugin_field_not_array({ field: String(inputs.field) }) : null),

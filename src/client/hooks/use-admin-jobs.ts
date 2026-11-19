@@ -234,10 +234,13 @@ export function usePurgeWorkerHistory() {
 		mutationFn: (options?: PurgeWorkerHistoryOptions) => reelvault.admin.purgeWorkerHistory(options),
 		onSuccess: async (data) => {
 			toast.success(m.hooks_history_cleared_full({ operations: data.deletedOperationsCount, jobs: data.deletedJobsCount }));
-			await invalidateWorkerQueries(queryClient);
+			await Promise.all([
+				invalidateWorkerQueries(queryClient),
+				queryClient.invalidateQueries({ queryKey: adminKeys.workerHistoryPurgePreviewAll() }),
+			]);
 		},
 		onError: (error) => {
-			toastError(m.plugins_webhooks_clear_failed(), error);
+			toastError(m.hooks_worker_history_clear_failed(), error);
 		},
 	});
 }

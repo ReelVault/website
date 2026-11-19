@@ -39,6 +39,7 @@ export function useAdminLogFiles() {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: adminKeys.logFiles() }),
 				queryClient.invalidateQueries({ queryKey: adminKeys.logsAll }),
+				queryClient.invalidateQueries({ queryKey: adminKeys.logCleanupPreview() }),
 			]);
 		},
 		onError: (err) => {

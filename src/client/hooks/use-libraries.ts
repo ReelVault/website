@@ -119,17 +119,18 @@ export function useAdminLibraries() {
 	});
 	const scanAllMutation = useMutation({
 		mutationFn: async () => {
-			const libs = librariesQuery.data?.data ?? [];
-			if (libs.length === 0) return { queued: 0, total: 0 };
-
 			// One request covers every library: the server queues them in order.
 			// A rate limit therefore applies to the whole batch, not to each library.
 			const result = await reelvault.libraries.scanAll();
+			const queued = result.queued.length;
 
-			return { queued: result.queued.length, total: libs.length };
+			// The cached list, when there is one, says how many libraries should have been queued.
+			return { queued, total: librariesQuery.data?.data.length ?? queued };
 		},
 		onSuccess: async ({ queued, total }) => {
 			await invalidateLibraries();
+			if (queued === 0) return;
+
 			if (queued === total) {
 				toast.success(m.toast_all_libraries_scan_started());
 			} else {

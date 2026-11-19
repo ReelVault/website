@@ -22,7 +22,9 @@ export function useUserRatingMutations(metadataId: string) {
 
 	// Optimistic: the stars react before the round-trip; the invalidated
 	// composite (onSuccess) is the source of truth, a failure rolls back.
-	const patchRating = (rating: number | null) => {
+	const patchRating = async (rating: number | null) => {
+		// An in-flight details refetch would otherwise land after the patch and undo it.
+		await queryClient.cancelQueries({ queryKey: metadataKeys.detailsView(metadataId) });
 		const previous = queryClient.getQueryData<DetailsViewUserState>(metadataKeys.detailsView(metadataId));
 		if (!previous) return null;
 
