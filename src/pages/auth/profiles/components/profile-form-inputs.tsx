@@ -3,6 +3,7 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { m } from "@/paraglide/messages";
+import { PROFILE_PIN_MAX_LENGTH } from "@/utils/form-utils";
 
 interface ProfileFormInputsProps {
 	name: string;
@@ -42,7 +43,7 @@ export function ProfileFormInputs({ name, pin, onNameChange, onPinChange }: Prof
 						autoComplete="new-password"
 						type="password"
 						placeholder={m.auth_profile_pin_hint()}
-						maxLength={8}
+						maxLength={PROFILE_PIN_MAX_LENGTH}
 						value={pin}
 						onChange={(event) => onPinChange(event.target.value.replace(/\D/g, ""))}
 					/>

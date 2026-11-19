@@ -2,6 +2,7 @@ import { useReceivedNotificationTypes } from "@/client/hooks/use-notifications";
 import { useProfilePreferences } from "@/client/hooks/use-profiles";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { notificationTypeLabel } from "@/utils/notification-utils";
 
 /** Notification types this profile has muted: they stop interrupting and leave the profile's list and badge. */
 export function MutedNotificationTypes({ profileId }: { profileId: string }) {
@@ -35,7 +36,7 @@ export function MutedNotificationTypes({ profileId }: { profileId: string }) {
 						disabled={isSaving}
 						onChange={(event) => toggle(type, event.currentTarget.checked)}
 					/>
-					<span className="font-mono text-xs">{type}</span>
+					<span>{notificationTypeLabel(type)}</span>
 				</label>
 			))}
 		</fieldset>

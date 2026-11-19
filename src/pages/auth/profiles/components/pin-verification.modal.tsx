@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { isValidProfilePin, PROFILE_PIN_MAX_LENGTH } from "@/utils/form-utils";
 
 export function PinVerificationModal({
 	profile,
@@ -48,7 +49,7 @@ export function PinVerificationModal({
 	}, [isOpen]);
 
 	const submitPin = async () => {
-		if (!profile || pin.length < 4 || pin.length > 8) {
+		if (!(profile && isValidProfilePin(pin))) {
 			setError(m.auth_enter_pin_range());
 
 			return;
@@ -133,7 +134,7 @@ export function PinVerificationModal({
 							inputMode="numeric"
 							autoComplete="one-time-code"
 							value={pin}
-							maxLength={8}
+							maxLength={PROFILE_PIN_MAX_LENGTH}
 							aria-invalid={Boolean(error)}
 							className="sr-only"
 							onChange={(event) => {

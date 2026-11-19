@@ -475,6 +475,9 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Profile PIN in settings** — the settings form accepted exactly 4 digits and said so, while the server, the unlock dialog and profile creation accept 4–8; a 5–8 digit PIN could not be set there. All PIN fields now share one 4–8 rule.
+- **Muted notification types** — the settings list showed raw type identifiers such as `resource_alert`; server types now have readable names (plugin types keep their identifier).
+- **Downloads page title** — the browser tab showed only "ReelVault" on the offline downloads page.
 - **Avatars** — after one avatar image failed to load, every later avatar in the picker showed the placeholder.
 - **Remote control** — the Play button reported itself as pressed while playing (screen readers).
 - **Watchlist order** — pages of the watchlist were requested without an order, so items could repeat or go missing across pages; they are now fetched newest first.

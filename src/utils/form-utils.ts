@@ -27,3 +27,11 @@ export function formatQuickConnectCode(value: string): string {
 export function isCompleteQuickConnectCode(value: string): boolean {
 	return quickConnectCodeChars(value).length === QUICK_CONNECT_CODE_LENGTH;
 }
+
+/** A profile PIN is 4–8 digits (the server's rule); every PIN field checks against it. */
+export const PROFILE_PIN_MAX_LENGTH = 8;
+const PROFILE_PIN_PATTERN = /^\d{4,8}$/;
+
+export function isValidProfilePin(pin: string): boolean {
+	return PROFILE_PIN_PATTERN.test(pin);
+}

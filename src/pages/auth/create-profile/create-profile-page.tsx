@@ -10,12 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { isValidProfilePin } from "@/utils/form-utils";
 import { AVATAR_SEEDS, AVATAR_STYLES, buildDicebearAvatarUrl } from "../profiles/components/avatar-picker-constants";
 import { ProfileAvatarPreview } from "../profiles/components/profile-avatar-preview";
 import { ProfileAvatarSelector } from "../profiles/components/profile-avatar-selector";
 import { ProfileFormInputs } from "../profiles/components/profile-form-inputs";
-
-const PROFILE_PIN_PATTERN = /^\d{4,8}$/;
 
 export default function CreateProfilePage() {
 	usePageTitle(m.auth_new_profile());
@@ -63,7 +62,7 @@ export default function CreateProfilePage() {
 		}
 
 		// The server accepts 4–8 digits; checking here names the problem before the round trip.
-		if (pin && !PROFILE_PIN_PATTERN.test(pin)) {
+		if (pin && !isValidProfilePin(pin)) {
 			setError(m.auth_enter_pin_range());
 
 			return;

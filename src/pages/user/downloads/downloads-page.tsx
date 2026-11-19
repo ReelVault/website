@@ -3,6 +3,7 @@ import { useDeleteDownload, useRetryDownload, useUserDownloadQuota, useUserDownl
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
@@ -13,6 +14,8 @@ import { CompletedDownloadCard } from "./components/completed-download-card";
 import { FailedDownloadCard } from "./components/failed-download-card";
 
 export default function DownloadsPage() {
+	// Not in the user sidebar (reached from the navbar indicator), so the layout cannot name it.
+	usePageTitle(m.user_downloads_heading());
 	const { data: downloads = [], isLoading, isError, error, refetch } = useUserDownloads();
 	const deleteMutation = useDeleteDownload();
 	const retryMutation = useRetryDownload();

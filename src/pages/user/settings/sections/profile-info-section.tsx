@@ -10,6 +10,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { detach } from "@/lib/detach";
 import { AvatarPicker } from "@/pages/user/components/user-avatar";
 import { m } from "@/paraglide/messages";
+import { isValidProfilePin, PROFILE_PIN_MAX_LENGTH } from "@/utils/form-utils";
 
 interface ProfileInfoSectionProps {
 	profile: {
@@ -35,15 +36,16 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 		setName(profile.name);
 	}
 
-	const hasChanges = Boolean(name.trim() && (name.trim() !== profile.name || pin.length === 4));
-	// Partial PIN (1–3 digits) would be silently dropped on submit — block the
-	// button until the user completes or clears it.
-	const hasPartialPin = pin.length > 0 && pin.length < 4;
+	const isPinValid = isValidProfilePin(pin);
+	const hasChanges = Boolean(name.trim() && (name.trim() !== profile.name || isPinValid));
+	// An invalid PIN would be silently dropped on submit — block the button until
+	// the user completes or clears it.
+	const hasPartialPin = pin.length > 0 && !isPinValid;
 
 	const submitProfile = async () => {
 		await updateProfile.mutateAsync({
 			id: profile.id,
-			data: { name: name.trim(), ...(pin.length === 4 ? { pin } : {}) },
+			data: { name: name.trim(), ...(isPinValid ? { pin } : {}) },
 		});
 		setPin("");
 	};
@@ -115,13 +117,13 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 							type="password"
 							inputMode="numeric"
 							autoComplete="new-password"
-							maxLength={4}
+							maxLength={PROFILE_PIN_MAX_LENGTH}
 							value={pin}
 							onChange={(event) => setPin(event.target.value.replace(/\D/g, ""))}
 							placeholder={m.admin_users_pin_keep_empty()}
 						/>
 					</InputGroup>
-					<FieldDescription>{m.user_pin_exact_digits()}</FieldDescription>
+					<FieldDescription>{m.auth_enter_pin_range()}</FieldDescription>
 					{pinStatus.data?.hasPin && (
 						<ConfirmAction
 							trigger={
@@ -135,9 +137,9 @@ export function ProfileInfoSection({ profile }: ProfileInfoSectionProps) {
 							onConfirm={removePin}
 						/>
 					)}
-					{pin.length > 0 && pin.length !== 4 && (
+					{hasPartialPin && (
 						<p role="alert" aria-live="polite" className="text-destructive text-xs">
-							{m.user_pin_4_digits()}
+							{m.auth_enter_pin_range()}
 						</p>
 					)}
 				</Field>

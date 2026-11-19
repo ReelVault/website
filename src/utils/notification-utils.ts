@@ -114,3 +114,19 @@ export function getNotificationColor(type: string): NotificationColorClass {
 
 	return "bg-primary/10 text-primary";
 }
+
+const NOTIFICATION_TYPE_LABELS: Record<string, () => string> = {
+	new_episode: () => m.notification_type_new_episode(),
+	update_available: () => m.notification_type_update_available(),
+	update_failed: () => m.notification_type_update_failed(),
+	worker_failed: () => m.notification_type_worker_failed(),
+	resource_alert: () => m.notification_type_resource_alert(),
+	notification_channel_failed: () => m.notification_type_notification_channel_failed(),
+	system: () => m.notification_type_system(),
+	security: () => m.notification_type_security(),
+};
+
+/** A readable name for a notification type; plugin-defined types fall back to their identifier. */
+export function notificationTypeLabel(type: string): string {
+	return NOTIFICATION_TYPE_LABELS[type]?.() ?? type;
+}
