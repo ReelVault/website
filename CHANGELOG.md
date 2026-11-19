@@ -470,3 +470,10 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 ### Performance
 
 - **React Doctor score: 69 → 81** after fixing effect cleanup/timer false positives, plugin-context churn and the player heartbeat loop; the score is now above the project's 70 threshold.
+
+# v1.3.4
+
+### Fixes
+
+- **Recently added** — a show that gets new episodes moves to the front of the dashboard's "Recently added" row. The row sorted by when the title was first inserted, so an existing show never came back after its new episodes were added; it now sorts by the newest file and lists only titles with files.
+- **Plugin reload notice** — opening a plugin page no longer shows "The plugin was updated. Reload the page" when nothing was updated. The host recorded only the element it asked a plugin module for, so any other element registered by the same module looked like an older version. Imports are now tracked per module URL and shared between elements mounting at the same time; a real version change still asks for a reload.

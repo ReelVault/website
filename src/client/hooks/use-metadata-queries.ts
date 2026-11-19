@@ -129,8 +129,10 @@ export function useMetadataRecentlyAdded(limit = 10, type?: MetadataType, option
 		queryFn: () =>
 			reelvault.metadata.getAll({
 				fields: metadataRecentlyAddedFields,
-				sortBy: "createdAt",
+				// Last file added, so a show with new episodes moves to the front.
+				sortBy: "recentlyAdded",
 				sortOrder: "desc",
+				hasMediaFiles: true,
 				limit,
 				type,
 			}),
