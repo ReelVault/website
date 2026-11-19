@@ -26,14 +26,14 @@ This is the web app for [ReelVault](https://github.com/ReelVault/reelvault). It'
 
 ## What you get
 
-| | |
-|---|---|
-| 🎬 **A library that's easy to browse** | Posters, ratings, filters, search and an A–Z index across your movies and shows. The dashboard shows recent additions and what you were watching. |
-| ▶ **A player that remembers** | Resume, subtitles, audio tracks, skip buttons, a sleep timer and playback stats. Start on the TV, finish on your phone — your progress is tied to your profile. |
-| 👤 **A space that's yours** | Watchlist, downloads, notifications and settings belong to your profile, so nobody else's choices get in your way. |
-| ⚙️ **Admin tools, too** | Manage libraries, users, plugins, background jobs, streaming and diagnostics from the same app. |
-| 📱 **Made for phones, too** | The layout adapts to phones and tablets, with dialogs that slide up from the bottom and buttons big enough for a thumb. |
-| 🌍 **Available in your language** | English is the base, with more locales available. Audio and subtitle languages are set separately from the interface language. |
+|                                        |                                                                                                                                                                 |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🎬 **A library that's easy to browse** | Posters, ratings, filters, search and an A–Z index across your movies and shows. The dashboard shows recent additions and what you were watching.               |
+| ▶ **A player that remembers**          | Resume, subtitles, audio tracks, skip buttons, a sleep timer and playback stats. Start on the TV, finish on your phone — your progress is tied to your profile. |
+| 👤 **A space that's yours**            | Watchlist, downloads, notifications and settings belong to your profile, so nobody else's choices get in your way.                                              |
+| ⚙️ **Admin tools, too**                | Manage libraries, users, plugins, background jobs, streaming and diagnostics from the same app.                                                                 |
+| 📱 **Made for phones, too**            | The layout adapts to phones and tablets, with dialogs that slide up from the bottom and buttons big enough for a thumb.                                         |
+| 🌍 **Available in your language**      | English is the base, with more locales available. Audio and subtitle languages are set separately from the interface language.                                  |
 
 ## Development
 
@@ -69,23 +69,23 @@ These are project scripts — run them with `bun run` from the repository root:
 
 **Everyday**
 
-| Command | What it does |
-| --- | --- |
-| `bun run dev` | Starts Vite with hot reload at `http://localhost:3000`. API calls are proxied to the server on port 3030. |
-| `bun run build` | Builds the app into `dist/` and pre-compresses the files with Brotli and gzip. |
+| Command         | What it does                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------- |
+| `bun run dev`   | Starts Vite with hot reload at `http://localhost:3000`. API calls are proxied to the server on port 3030.     |
+| `bun run build` | Builds the app into `dist/` and pre-compresses the files with Brotli and gzip.                                |
 | `bun run start` | Serves the built app from `dist/`, with Brotli/gzip support and a fallback to the SPA for client-side routes. |
 
 **Checks and maintenance**
 
-| Command | What it does |
-| --- | --- |
+| Command               | What it does                                                           |
+| --------------------- | ---------------------------------------------------------------------- |
 | `bun run check-types` | Regenerates route and translation types, then type-checks the project. |
-| `bun run lint` | Runs Biome and oxlint. |
-| `bun run format` | Formats the code with Biome. |
-| `bun run deadcode` | Finds unused files, exports and dependencies with Knip. |
-| `bun run test` | Runs the unit tests. |
-| `bun run doctor` | Scans React components for common mistakes (react-doctor). |
-| `bun run i18n:unused` | Lists unused translation keys. |
+| `bun run lint`        | Runs Biome and oxlint.                                                 |
+| `bun run format`      | Formats the code with Biome.                                           |
+| `bun run deadcode`    | Finds unused files, exports and dependencies with Knip.                |
+| `bun run test`        | Runs the unit tests.                                                   |
+| `bun run doctor`      | Scans React components for common mistakes (react-doctor).             |
+| `bun run i18n:unused` | Lists unused translation keys.                                         |
 
 ### Configuration
 
