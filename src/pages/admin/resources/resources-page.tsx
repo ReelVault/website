@@ -22,8 +22,8 @@ import { SystemCpuInfo } from "./components/system-cpu-info";
 import { WorkerAllocations } from "./components/worker-allocations";
 
 const SKELETON_KEYS = ["1", "2", "3", "4"] as const;
-/** History windows in hours; 168 h matches the metrics retention. */
-const RESOURCE_WINDOWS: readonly number[] = [1, 6, 24, 168];
+/** History windows in hours; the server keeps (and serves) at most 24 h of metrics. */
+const RESOURCE_WINDOWS: readonly number[] = [1, 6, 24];
 
 function windowLabel(hours: number): string {
 	return hours >= 24 ? m.admin_resources_window_days({ count: hours / 24 }) : m.admin_resources_window_hours({ count: hours });

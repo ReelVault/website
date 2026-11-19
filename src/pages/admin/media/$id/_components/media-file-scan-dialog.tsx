@@ -20,14 +20,18 @@ export function MediaFileScanDialog({ open, onOpenChange, mediaFileId, fileName 
 	const [durationPreset, setDurationPreset] = useState<DurationPreset>("10");
 	const [customDuration, setCustomDuration] = useState<string>("120");
 
+	// null means "decode the whole file" — only the "all" preset may ask for it; an
+	// empty or invalid custom value must not silently turn into a full decode.
+	const parsedCustom = Number.parseInt(customDuration, 10);
+	const isCustomInvalid = durationPreset === "custom" && !(parsedCustom > 0);
+
 	const handleScan = () => {
+		if (isCustomInvalid) return;
+
 		let durationSeconds: number | null = null;
 		if (durationPreset === "10") durationSeconds = 10;
 		else if (durationPreset === "60") durationSeconds = 60;
-		else if (durationPreset === "custom") {
-			const parsed = Number.parseInt(customDuration, 10);
-			durationSeconds = Number.isNaN(parsed) || parsed <= 0 ? null : parsed;
-		}
+		else if (durationPreset === "custom") durationSeconds = parsedCustom;
 
 		detach(scanMediaFile({ mediaFileId, durationSeconds }));
 	};
@@ -74,7 +78,7 @@ export function MediaFileScanDialog({ open, onOpenChange, mediaFileId, fileName 
 							<Button variant="ghost" onClick={handleClose}>
 								{m.common_cancel()}
 							</Button>
-							<Button onClick={handleScan}>
+							<Button onClick={handleScan} disabled={isCustomInvalid}>
 								<Play className="size-3.5" />
 								{m.admin_media_run_scan()}
 							</Button>

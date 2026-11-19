@@ -71,9 +71,11 @@ export function ConfirmAction({
 
 	return (
 		<AlertDialog open={open} onOpenChange={handleOpenChange}>
-			<AlertDialogTrigger nativeButton={nativeButton} render={trigger} className={className}>
-				{children}
-			</AlertDialogTrigger>
+			{(trigger !== undefined || children !== undefined) && (
+				<AlertDialogTrigger nativeButton={nativeButton} render={trigger} className={className}>
+					{children}
+				</AlertDialogTrigger>
+			)}
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>{title}</AlertDialogTitle>

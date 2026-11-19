@@ -72,10 +72,8 @@ function NumberSettingInput({
 				}}
 				onBlur={commit}
 				onKeyDown={(event) => {
-					if (event.key === "Enter") {
-						commit();
-						event.currentTarget.blur();
-					}
+					// Blur commits; committing here as well saved the value twice.
+					if (event.key === "Enter") event.currentTarget.blur();
 				}}
 				disabled={disabled}
 				aria-invalid={isInvalid}
@@ -164,10 +162,7 @@ export function SettingField({
 				defaultValue={Array.isArray(currentValue) ? currentValue.join(", ") : settingValueToText(currentValue)}
 				onBlur={(e) => parseArrayField(e.target.value)}
 				onKeyDown={(e) => {
-					if (e.key === "Enter") {
-						parseArrayField(e.currentTarget.value);
-						e.currentTarget.blur();
-					}
+					if (e.key === "Enter") e.currentTarget.blur();
 				}}
 				disabled={disabled}
 				placeholder=".mp4, .mkv, .avi"

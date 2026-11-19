@@ -68,8 +68,7 @@ export default function AdminPluginsPage() {
 			return next;
 		});
 	};
-	const applyToSelected = (enabled: boolean) => {
-		const pluginIds = [...selectedIds];
+	const applyToSelected = (enabled: boolean, pluginIds: string[]) => {
 		setSelectedIds(new Set());
 		detach(setPluginsEnabled({ pluginIds, enabled }));
 	};
@@ -142,6 +141,9 @@ export default function AdminPluginsPage() {
 
 		return query.length === 0 || `${plugin.name} ${plugin.description ?? ""} ${plugin.id}`.toLowerCase().includes(query);
 	});
+	// A bulk action only touches plugins the admin can see: a filter change hides
+	// earlier picks from the count and the action without forgetting them.
+	const visibleSelectedIds = installedPlugins.filter((plugin) => selectedIds.has(plugin.id)).map((plugin) => plugin.id);
 
 	const setView = (next: CatalogView) => {
 		detach(navigate({ search: (previous: Record<string, unknown>) => ({ ...previous, view: next === "available" ? undefined : next }) }));
@@ -252,13 +254,13 @@ export default function AdminPluginsPage() {
 
 					{!(pluginsQuery.isLoading || pluginsQuery.isError) && installedPlugins.length > 0 && (
 						<>
-							{selectedIds.size > 0 && (
+							{visibleSelectedIds.length > 0 && (
 								<div className="border-border/80 bg-card flex flex-wrap items-center gap-2 rounded-lg border p-3 text-xs">
-									<span className="font-medium">{m.admin_plugins_bulk_selected({ count: selectedIds.size })}</span>
-									<Button size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(true)}>
+									<span className="font-medium">{m.admin_plugins_bulk_selected({ count: visibleSelectedIds.length })}</span>
+									<Button size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(true, visibleSelectedIds)}>
 										{m.admin_plugins_bulk_enable()}
 									</Button>
-									<Button variant="outline" size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(false)}>
+									<Button variant="outline" size="sm" disabled={isBulkUpdating} onClick={() => applyToSelected(false, visibleSelectedIds)}>
 										{m.admin_plugins_bulk_disable()}
 									</Button>
 									<Button variant="ghost" size="sm" onClick={() => setSelectedIds(new Set())}>

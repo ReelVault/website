@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { MetadataLockToggle } from "./metadata-lock-toggle";
+import type { LockableField } from "./use-metadata-form";
 
 const MAX_VISIBLE_KEYWORDS = 15;
 
@@ -124,7 +125,7 @@ function TaxonomyGroup({
 }: {
 	icon: LucideIcon;
 	label: string;
-	field: string;
+	field: LockableField;
 	isLocked: boolean;
 	onToggleLock: (field: string) => void;
 	isFirst: boolean;

@@ -94,7 +94,12 @@ export function MetadataTitlesFields({ basic, isLocked, onChange, onToggleLock }
 			<div className="flex flex-col gap-1.5 sm:col-span-2">
 				<div className="flex items-center justify-between">
 					<Label htmlFor="metadata-tagline">{m.admin_metadata_tagline_label()}</Label>
-					<MetadataLockToggle field="tagline" label="Tagline" isLocked={isLocked("tagline")} onToggle={onToggleLock} />
+					<MetadataLockToggle
+						field="tagline"
+						label={m.admin_metadata_tagline_label()}
+						isLocked={isLocked("tagline")}
+						onToggle={onToggleLock}
+					/>
 				</div>
 				<Input
 					id="metadata-tagline"

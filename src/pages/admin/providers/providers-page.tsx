@@ -32,7 +32,11 @@ export default function AdminProvidersPage() {
 
 		const next = move(items, event);
 		setItems(next);
-		reorderProviders.mutate(next.map((item) => item.id));
+		// A failed save puts the saved order back instead of leaving the unsaved one on screen.
+		reorderProviders.mutate(
+			next.map((item) => item.id),
+			{ onError: () => setItems(providers ?? []) },
+		);
 	};
 
 	const isSaving = updateProvider.isPending || reorderProviders.isPending;

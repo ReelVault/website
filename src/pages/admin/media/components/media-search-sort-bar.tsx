@@ -69,7 +69,7 @@ export function MediaSearchSortBar({
 				variant="outline"
 				size="default"
 				isPending={isRefreshingAll}
-				pendingLabel="Zlecanie…"
+				pendingLabel={m.common_processing()}
 				onClick={onRefreshAll}
 				className="gap-2 shadow-xs"
 			>

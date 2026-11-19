@@ -142,10 +142,18 @@ export default function AdminSubtitlesPage() {
 		}
 	};
 
-	const handleDelete = (id: string) => {
-		if (deleteMutation.isPending) return;
+	const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+	const handleDelete = (id: string) => setPendingDeleteId(id);
+	const confirmDelete = async () => {
+		if (pendingDeleteId === null) return;
 
-		deleteMutation.mutate(id);
+		await deleteMutation.mutateAsync(pendingDeleteId);
+		setSelectedIds((current) => {
+			const next = new Set(current);
+			next.delete(pendingDeleteId);
+
+			return next;
+		});
 	};
 
 	let listContent: ReactNode;
@@ -278,6 +286,16 @@ export default function AdminSubtitlesPage() {
 						{m.admin_subtitles_select_page()}
 					</label>
 				)}
+				<ConfirmAction
+					open={pendingDeleteId !== null}
+					onOpenChange={(open) => {
+						if (!open) setPendingDeleteId(null);
+					}}
+					title={m.admin_subtitles_delete_one_title()}
+					description={m.admin_subtitles_delete_one_description()}
+					confirmLabel={m.common_delete()}
+					onConfirm={confirmDelete}
+				/>
 				{selectedIds.size > 0 && (
 					<div className="border-border bg-card flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3 text-sm">
 						<span>{m.admin_subtitles_selected({ count: selectedIds.size })}</span>

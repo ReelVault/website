@@ -2,6 +2,7 @@ import { Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { m } from "@/paraglide/messages";
+import type { LockableField } from "./use-metadata-form";
 
 export function MetadataLockToggle({
 	field,
@@ -10,7 +11,7 @@ export function MetadataLockToggle({
 	label,
 	className,
 }: {
-	field: string;
+	field: LockableField;
 	isLocked: boolean;
 	onToggle: (field: string) => void;
 	label?: string;

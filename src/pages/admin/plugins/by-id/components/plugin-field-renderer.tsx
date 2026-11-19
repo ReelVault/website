@@ -1,5 +1,6 @@
 import type { PluginConfigDetails } from "@reelvault/sdk";
 import { Eye, EyeOff, KeyRound } from "lucide-react";
+import { useState } from "react";
 import { resolvePluginText } from "@/client/hooks/use-plugin-ui";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -70,6 +71,9 @@ function BooleanFieldRenderer({ field, value, onChange }: FieldRendererProps) {
 function NumberFieldRenderer({ field, value, onChange }: FieldRendererProps) {
 	const numericDefault = typeof field.default === "number" ? field.default : 0;
 	const numValue = typeof value === "number" ? value : numericDefault;
+	// The box keeps its own text, so it can be cleared and retyped; only a finite
+	// number reaches the form (Number("") would commit 0).
+	const [draft, setDraft] = useState(String(numValue));
 
 	return (
 		<Card variant="subtle">
@@ -94,11 +98,16 @@ function NumberFieldRenderer({ field, value, onChange }: FieldRendererProps) {
 				</div>
 				<Input
 					type="number"
-					value={numValue}
+					value={draft}
 					min={field.min}
 					max={field.max}
 					step={field.step ?? 1}
-					onChange={(e) => onChange(Number(e.target.value))}
+					onChange={(e) => {
+						setDraft(e.target.value);
+						const parsed = Number(e.target.value);
+						if (e.target.value.trim() !== "" && Number.isFinite(parsed)) onChange(parsed);
+					}}
+					onBlur={() => setDraft(String(numValue))}
 					placeholder={field.default !== undefined ? defaultToText(field.default) : ""}
 					font="mono"
 					className="max-w-xs"
@@ -209,7 +218,7 @@ function TextFieldRenderer({ field, value, showSecret, onToggleSecret, onChange 
 							size="icon-sm"
 							onClick={onToggleSecret}
 							className="absolute top-1/2 right-1 -translate-y-1/2"
-							title={showSecret ? m.admin_plugins_show_secret() : m.admin_plugins_show_secret()}
+							title={showSecret ? m.admin_plugins_hide_secret() : m.admin_plugins_show_secret()}
 						>
 							{showSecret ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
 						</Button>

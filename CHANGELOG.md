@@ -475,6 +475,15 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **File scan duration** — an empty or invalid custom duration ran a full decode of the whole file, the same as the "All" preset; the Run button now stays disabled until the value is valid.
+- **Provider order** — a failed reorder left the unsaved order on screen until reload; it now goes back to the saved order.
+- **Deleting one subtitle** — the row's Delete removed the file without asking, and the id stayed in the bulk selection; it now asks first and leaves the selection.
+- **Metadata locks** — "Lock all" skipped the collections field, though it has its own lock; every lock toggle is now typed against the lockable list. The tagline lock tooltip was hard-coded English.
+- **Plugin settings** — a number field could not be cleared and retyped (clearing saved 0), and the hide-secret button was labelled "Show secret".
+- **Server settings** — pressing Enter in a number or list field saved it twice.
+- **Resource history** — the "7 days" window showed 24 hours (the server keeps 24 hours of metrics) and is gone; the chart now plots the whole selected window instead of the last 24 samples (about two minutes).
+- **Plugin bulk actions** — picks hidden by a search or category filter were still counted and enabled or disabled.
+- **Media refresh button** — the pending label was hard-coded Polish.
 - **Sleep timer across episodes** — a "stop after N minutes" timer was cleared when the player advanced to the next episode; it now lasts for the whole viewing session.
 - **Equalizer and volume** — turning the equalizer on raised a 50% volume to 100% and saved it.
 - **Seek slider keys** — with the progress bar focused, the arrow keys moved 0.1 s; they now step 10 s like the player shortcuts, and Home/End jump to the start and end.

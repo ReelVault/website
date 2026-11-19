@@ -61,14 +61,24 @@ const CHART_HEIGHT = 176;
 
 const formatTime = (entry: HistoryEntry) => (entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString(getLocaleTag()) : "");
 
+/** Most points the chart draws; longer windows are thinned evenly, keeping the newest sample. */
+const MAX_CHART_POINTS = 120;
+
+function thinSamples(history: HistoryEntry[]): HistoryEntry[] {
+	const step = Math.ceil(history.length / MAX_CHART_POINTS);
+	if (step <= 1) return history;
+
+	return history.filter((_, index) => (history.length - 1 - index) % step === 0);
+}
+
 /**
- * 24h CPU/RAM/disk history as a hand-rolled SVG area chart — one shared 0-100%
- * scale, hover guide with exact sample values (incl. active worker count from
- * workersJson). Colors come from the theme tokens, not a fixed palette.
+ * CPU/RAM/disk history of the selected window as a hand-rolled SVG area chart —
+ * one shared 0-100% scale, hover guide with exact sample values (incl. active
+ * worker count from workersJson). Colors come from the theme tokens.
  */
 export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-	const samples = history.slice(-24);
+	const samples = thinSamples(history);
 
 	const values: Record<(typeof SERIES)[number]["key"], number[]> = {
 		cpu: samples.map((entry) => readSeries(entry, "cpu")),

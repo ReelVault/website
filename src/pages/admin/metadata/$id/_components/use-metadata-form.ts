@@ -17,9 +17,13 @@ export const ALL_LOCKABLE_FIELDS = [
 	"genres",
 	"companies",
 	"keywords",
+	"collections",
 	"posters",
 	"backdrops",
 ] as const;
+
+/** A field the editor can lock; every lock toggle names one, so "Lock all" covers them all. */
+export type LockableField = (typeof ALL_LOCKABLE_FIELDS)[number];
 
 type MetadataQueryData = NonNullable<ReturnType<typeof useAdminMetadataEditor>["metadataQuery"]["data"]>;
 type UpdateMutation = ReturnType<typeof useAdminMetadataEditor>["updateMutation"];
