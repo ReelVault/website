@@ -1,6 +1,7 @@
-import { usePluginUiManifest } from "@/client/hooks/use-plugin-ui";
+import { resolvePluginText, usePluginUiManifest } from "@/client/hooks/use-plugin-ui";
 import { usePlugins } from "@/client/hooks/use-plugins";
 import { Spinner } from "@/components/ui/spinner";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { m } from "@/paraglide/messages";
 import { PluginSurface } from "./surface";
 
@@ -18,6 +19,9 @@ const SHELL_CLASS = "min-h-screen bg-background pt-16 pb-16 lg:pt-20";
 export function PluginPageHost({ pluginId, pagePath, params }: PluginPageHostProps) {
 	const { isPluginActive, isLoading: pluginsLoading } = usePlugins();
 	const { data: manifest, isLoading: manifestLoading } = usePluginUiManifest();
+	const pluginManifest = manifest?.plugins[pluginId];
+	const page = pluginManifest?.pages?.find((candidate) => candidate.path === pagePath);
+	usePageTitle(page ? resolvePluginText(page.name, pluginManifest?.defaultLocale) : undefined);
 
 	if (pluginsLoading || manifestLoading) {
 		return (
@@ -29,7 +33,6 @@ export function PluginPageHost({ pluginId, pagePath, params }: PluginPageHostPro
 		);
 	}
 
-	const page = manifest?.plugins[pluginId]?.pages?.find((candidate) => candidate.path === pagePath);
 	if (!(isPluginActive(pluginId) && page)) {
 		return (
 			<div className={SHELL_CLASS}>

@@ -475,6 +475,7 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Plugin page titles** — a plugin page kept the browser-tab title of the page opened before it; it now shows the plugin page's name.
 - **Profile PIN in settings** — the settings form accepted exactly 4 digits and said so, while the server, the unlock dialog and profile creation accept 4–8; a 5–8 digit PIN could not be set there. All PIN fields now share one 4–8 rule.
 - **Muted notification types** — the settings list showed raw type identifiers such as `resource_alert`; server types now have readable names (plugin types keep their identifier).
 - **Downloads page title** — the browser tab showed only "ReelVault" on the offline downloads page.
