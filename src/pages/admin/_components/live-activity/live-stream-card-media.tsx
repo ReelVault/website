@@ -46,7 +46,7 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 				</h4>
 
 				<div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
-					{stream.releaseYear && <span>{stream.releaseYear}</span>}
+					{stream.releaseYear != null && stream.releaseYear > 0 && <span>{stream.releaseYear}</span>}
 					{stream.type === "tv_show" && stream.seasonNumber !== null && (
 						<span>
 							{m.admin_live_episode_label({

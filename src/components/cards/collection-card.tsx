@@ -2,7 +2,6 @@ import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
 import { Copy, Eye, Shield } from "lucide-react";
-import { startTransition } from "react";
 import { useCurrentUser } from "@/client/hooks/use-current-profile";
 import { defineFields } from "@/client/utils/fields";
 import { isAdminUser } from "@/components/auth/admin-access";
@@ -17,10 +16,10 @@ import {
 	ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { m } from "@/paraglide/messages";
-import { copyEntityLink, copyToClipboard } from "@/utils/clipboard-utils";
 import { getYearFromDate } from "@/utils/date-utils";
 import { getMetadataBackdrop } from "@/utils/metadata-utils";
 import { ApiImage } from "../ui/api-image";
+import { copyTitleId, copyTitleLink } from "./use-metadata-card-actions";
 
 const collectionFields = defineFields<MetadataWithRelation>()(
 	"id",
@@ -42,13 +41,8 @@ export function CollectionCard({
 	const isAdmin = isAdminUser(user);
 	const backdropId = getMetadataBackdrop(metadata)?.id;
 
-	const handleCopyLink = (): void => {
-		startTransition(() => copyEntityLink(`/details/${metadata.id}`, m.components_collection_card_title_link()));
-	};
-
-	const handleCopyId = (): void => {
-		startTransition(() => copyToClipboard(metadata.id, m.components_copy_metadata_id()));
-	};
+	const handleCopyLink = () => copyTitleLink(metadata.id);
+	const handleCopyId = () => copyTitleId(metadata.id);
 
 	return (
 		<ContextMenu>

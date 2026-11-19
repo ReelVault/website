@@ -1,6 +1,6 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Search, Sparkles, X } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useGlobalMetadataSearch } from "@/client/hooks/use-metadata-search";
 import { type PluginSearchItem, usePluginSearch, usePluginSearchProvider } from "@/client/hooks/use-plugin-ui";
 import { AppEmptyState, AppErrorState } from "@/components/app-states";
@@ -8,7 +8,6 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
-import { useDebounce } from "@/hooks/use-debounce";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { GLOBAL_SEARCH_INPUT_ID } from "@/lib/global-search";
@@ -41,8 +40,11 @@ export default function SearchPage() {
 	usePageTitle(m.web_search_page_title());
 	const { q } = useSearch({ from: "/_web/search" });
 	const navigate = useNavigate();
-	const [query, setQuery] = useState(q ?? "");
-	const debouncedQuery = useDebounce({ value: query, delay: 500 });
+	// The input is the URL value itself, so Back and refresh restore it.
+	const query = q ?? "";
+	const setQuery = (value: string) => {
+		detach(navigate({ to: ".", search: (prev) => ({ ...prev, q: value || undefined }), replace: true, viewTransition: false }));
+	};
 	const hasMinimumQuery = query.trim().length >= 2;
 
 	const { results, isLoading, isFetching, isError, hasResults, refetch } = useGlobalMetadataSearch({ query });
@@ -57,21 +59,6 @@ export default function SearchPage() {
 		isFetching: isPluginFetching,
 	} = usePluginSearch(searchProvider, query, hasMinimumQuery && pluginSearchEnabled);
 	const pluginItems = pluginResults.filter((item) => item.state !== "available").slice(0, PLUGIN_SEARCH_LIMIT);
-
-	useEffect(() => {
-		const nextQuery = debouncedQuery.trim();
-		const currentQuery = q?.trim() ?? "";
-		if (nextQuery === currentQuery) return;
-
-		detach(
-			navigate({
-				to: ".",
-				search: (prev) => ({ ...prev, q: nextQuery || undefined }),
-				replace: true,
-				viewTransition: false,
-			}),
-		);
-	}, [debouncedQuery, navigate, q]);
 
 	const handlePluginSearchToggle = (enabled: boolean) => {
 		setPluginSearchEnabled(enabled);

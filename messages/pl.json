@@ -71,6 +71,7 @@
 	"admin_api_keys_created_title": "Klucz utworzony",
 	"admin_api_keys_created_value": "Utworzono: {date}",
 	"admin_api_keys_created_warning": "Skopiuj sekret teraz — jest pokazywany tylko raz i nie da się go odzyskać.",
+	"admin_api_keys_secret_label": "klucz API",
 	"admin_api_keys_description": "Klucze integracyjne dla zewnętrznych narzędzi. Klucz działa jak jego twórca; klucze tylko do odczytu przyjmują wyłącznie żądania GET.",
 	"admin_api_keys_empty": "Brak kluczy API",
 	"admin_api_keys_empty_description": "Utwórz klucz, aby zewnętrzne narzędzia mogły łączyć się z serwerem.",

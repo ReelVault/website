@@ -19,7 +19,7 @@ export function CreateUserDialog({
 }: {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	onCreate: (body: { name: string; email: string; password: string; role: "user" | "admin" }) => Promise<unknown>;
+	onCreate: (body: { name: string; email: string; password: string; role: "user" | "admin" }) => Promise<boolean>;
 	isCreating: boolean;
 }) {
 	const { formState, setFormState, handleOpenChange } = useDialogForm<{
@@ -47,13 +47,14 @@ export function CreateUserDialog({
 		if (!(formState.name.trim() && formState.email.trim() && formState.password)) return;
 
 		detach(async () => {
-			await onCreate({
+			const created = await onCreate({
 				name: formState.name.trim(),
 				email: formState.email.trim(),
 				password: formState.password,
 				role: formState.role,
 			});
-			handleOpenChange(false, onOpenChange);
+			// A failed create keeps the dialog and what was typed.
+			if (created) handleOpenChange(false, onOpenChange);
 		});
 	};
 

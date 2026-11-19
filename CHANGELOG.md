@@ -475,6 +475,12 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Stray "0" next to file details** — durations, bitrates, sizes, years and runtime limits of zero rendered a literal "0" in file cards, stream lists, download jobs, history and live streams; they are now hidden.
+- **Copy buttons** — a failed copy no longer flips the icon to "copied", the new API key secret reports a failed copy instead of always toasting success, and the audit inspector's three copy buttons no longer light up together.
+- **Search fields and the Back button** — on the admin media and metadata lists and the search page, Back restored the URL but the field kept (and on admin pages re-applied) the previously typed term. The fields now read the URL directly.
+- **Double toasts** — deleting a user, deleting a download job and stopping a live stream each showed two messages for one result.
+- **Create user** — a failed create closed the dialog and cleared what was typed; the dialog now stays open.
+- **Errors shown as empty** — update history, the plugin catalog entry, a plugin's page and the FFmpeg diagnostics showed "empty", "not found" or nothing when their request failed; they now show the error with a retry.
 - **Recently added in libraries and collections** — the library "Recently added" sort and the collection "Recently added" order use the newest file, like the dashboard row, so a show that gets new episodes moves up.
 - **Library grid** — a failed "load more" keeps the loaded titles and offers a retry under the grid instead of replacing the whole grid with an error. Page 1 prefetched by the route is now used on first paint; the prefetch and the grid asked for different default sorting, so the grid always started from a skeleton.
 - **Linked files in the metadata editor** — the section showed "No linked files" when the title had files and an empty list when it had none.

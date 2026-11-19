@@ -22,7 +22,7 @@ interface UserTableProps {
 	onToggleBan: (user: AdminUser) => Promise<void>;
 	onToggleRole: (user: AdminUser) => Promise<void>;
 	onDelete: (id: string, name: string) => Promise<void>;
-	onCopy: (text: string, label: string) => Promise<void>;
+	onCopy: (text: string, label: string) => Promise<boolean>;
 	selectedIds: ReadonlySet<string>;
 	onToggleSelect: (id: string) => void;
 	onToggleSelectAll: (ids: string[]) => void;

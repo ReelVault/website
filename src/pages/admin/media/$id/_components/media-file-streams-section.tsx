@@ -52,7 +52,9 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 									</span>
 									{stream.pixelFormat && <span>{m.common_dot_pixel_format({ format: stream.pixelFormat })}</span>}
 									{stream.frameRate && <span>{m.common_dot_frame_rate({ rate: stream.frameRate })}</span>}
-									{stream.bitRate && <span>{m.admin_media_bit_rate({ value: Math.round(stream.bitRate / 1000) })}</span>}
+									{stream.bitRate != null && stream.bitRate > 0 && (
+										<span>{m.admin_media_bit_rate({ value: Math.round(stream.bitRate / 1000) })}</span>
+									)}
 									{stream.colorTransfer && <span>{m.common_dot_value({ value: stream.colorTransfer })}</span>}
 									{stream.colorPrimaries && <span>{m.common_dot_value({ value: stream.colorPrimaries })}</span>}
 									{stream.colorSpace && <span>{m.admin_media_color_space({ value: stream.colorSpace })}</span>}
@@ -121,8 +123,12 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 											layout: stream.channelLayout ? `(${stream.channelLayout})` : "",
 										})}
 									</span>
-									{stream.sampleRate && <span>{m.admin_media_sample_rate({ rate: formatNumber(stream.sampleRate) })}</span>}
-									{stream.bitRate && <span>{m.admin_media_bit_rate({ value: Math.round(stream.bitRate / 1000) })}</span>}
+									{stream.sampleRate != null && stream.sampleRate > 0 && (
+										<span>{m.admin_media_sample_rate({ rate: formatNumber(stream.sampleRate) })}</span>
+									)}
+									{stream.bitRate != null && stream.bitRate > 0 && (
+										<span>{m.admin_media_bit_rate({ value: Math.round(stream.bitRate / 1000) })}</span>
+									)}
 								</div>
 
 								{stream.title && (

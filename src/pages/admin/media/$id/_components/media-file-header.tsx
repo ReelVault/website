@@ -60,7 +60,7 @@ export function MediaFileHeader({ file, mediaFileId, isRefreshing, isUpdating, r
 										{formatFileSize(file.size)}
 									</span>
 								)}
-								{file.duration && (
+								{file.duration != null && file.duration > 0 && (
 									<span className="flex items-center gap-1 font-mono">
 										<Clock className="size-3.5" />
 										{m.admin_media_duration_minutes({ minutes: Math.floor(file.duration / 60) })}

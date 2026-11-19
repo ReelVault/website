@@ -1,6 +1,6 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { FileVideo, X } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useState } from "react";
 import {
 	type AdminMediaFileSortBy,
 	useAdminMediaFileAudit,
@@ -38,7 +38,12 @@ export default function AdminMediaFilesPage() {
 	const search = useSearch({ from: "/admin/media/" });
 	const navigate = useNavigate({ from: "/admin/media/" });
 	const [viewMode, setViewMode] = useState<"all" | "audit">("all");
-	const [searchQuery, setSearchQuery] = useState(search.q ?? "");
+	// The input is the URL value itself: typing rewrites ?q= (replace) and the
+	// query fires on the debounced copy, so Back and refresh restore both.
+	const searchQuery = search.q ?? "";
+	const setSearchQuery = (value: string) => {
+		detach(navigate({ search: (prev) => ({ ...prev, q: value || undefined, page: undefined }), replace: true }));
+	};
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 500 });
 	const sortOption: SortOptionValue = typeof search.sort === "string" && isSortOptionValue(search.sort) ? search.sort : "updatedAt:desc";
 	const currentPage = search.page ?? 1;
@@ -54,18 +59,6 @@ export default function AdminMediaFilesPage() {
 
 	const clearSelection = () => setSelection(new Map());
 
-	// Typing flows debounce → URL; browser Back/refresh restores both.
-	useEffect(() => {
-		if (debouncedSearch !== (search.q ?? "")) {
-			detach(() => navigate({ search: (prev) => ({ ...prev, q: debouncedSearch || undefined, page: undefined }), replace: true }));
-		}
-	}, [debouncedSearch, navigate, search.q]);
-
-	const [syncedSearch, setSyncedSearch] = useState(search.q);
-	if (search.q !== syncedSearch) {
-		setSyncedSearch(search.q);
-		setSearchQuery(search.q ?? "");
-	}
 	const { refreshAllMediaFiles, isRefreshingAll } = useAdminRefreshAllMediaFiles();
 	const audit = useAdminMediaFileAudit({ enabled: viewMode === "audit" });
 	const { suspectCount } = audit;
@@ -146,10 +139,6 @@ export default function AdminMediaFilesPage() {
 	};
 
 	const handleDelete = (mediaFileId: string, _fileName: string) => deleteMediaFile(mediaFileId);
-
-	const handleSearchChange = (value: string) => {
-		setSearchQuery(value);
-	};
 
 	const handleSortChange = (value: string | null) => {
 		if (!(value && isSortOptionValue(value))) return;
@@ -282,7 +271,7 @@ export default function AdminMediaFilesPage() {
 					<MediaSearchSortBar
 						viewMode={viewMode}
 						searchQuery={searchQuery}
-						onSearchChange={handleSearchChange}
+						onSearchChange={setSearchQuery}
 						sortOption={sortOption}
 						onSortChange={handleSortChange}
 						isRefreshingAll={isRefreshingAll}

@@ -39,7 +39,7 @@ export function HistoryCard({ item }: { item: HistoryItem }) {
 							{m.user_history_season_episode({ season: item.season?.seasonNumber ?? "?", episode: item.episode.episodeNumber })}
 						</span>
 					)}
-					{item.durationWatched && (
+					{item.durationWatched != null && item.durationWatched > 0 && (
 						<span className="text-muted-foreground text-xs font-medium">
 							{m.user_history_watched_minutes({ minutes: Math.floor(item.durationWatched / 60) })}
 						</span>

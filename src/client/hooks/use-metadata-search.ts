@@ -16,7 +16,7 @@ export function useGlobalMetadataSearch(options?: GlobalMetadataSearchOptions) {
 	const query = options?.query ?? internalQuery;
 	const debouncedQuery = useDebounce({ value: query, delay: options?.debounceDelay ?? 500 });
 	const metadataQuery = useQuery({
-		queryKey: metadataKeys.search(debouncedQuery),
+		queryKey: metadataKeys.search(debouncedQuery, options?.limit ?? 20),
 		placeholderData: keepPreviousData,
 		queryFn: () => reelvault.metadata.searchGlobal(debouncedQuery, options?.limit ?? 20),
 		enabled: debouncedQuery.length >= 2,

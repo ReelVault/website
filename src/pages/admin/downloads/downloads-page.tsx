@@ -14,7 +14,6 @@ import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { formatDateTime } from "@/utils/format-utils";
 import { toast } from "@/utils/toast-facade";
-import { toastError } from "@/utils/toast-utils";
 import { translateCode } from "@/utils/translate-error";
 
 type StatusFilter = "all" | "pending" | "processing" | "completed" | "failed" | "cancelled";
@@ -40,12 +39,11 @@ export default function AdminDownloadsPage() {
 	};
 
 	const handleDelete = async (jobId: string) => {
-		try {
-			await deleteMutation.mutateAsync(jobId);
-			toast.success(m.admin_downloads_job_deleted());
-		} catch (err) {
-			toastError(m.admin_downloads_failed_to_delete(), err);
-		}
+		// The hook reports a failure itself.
+		await deleteMutation.mutateAsync(jobId).then(
+			() => toast.success(m.admin_downloads_job_deleted()),
+			() => null,
+		);
 	};
 
 	if (isLoading) {
@@ -159,7 +157,7 @@ export default function AdminDownloadsPage() {
 											</span>
 										</div>
 										<div className="text-muted-foreground flex items-center gap-3 text-xs">
-											{job.sizeBytes && (
+											{job.sizeBytes != null && job.sizeBytes > 0 && (
 												<span>
 													{m.common_size_label()} {formatFileSize(job.sizeBytes)}
 												</span>

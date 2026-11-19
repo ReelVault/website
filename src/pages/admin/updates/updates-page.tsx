@@ -8,6 +8,7 @@ import {
 	useAdminUpdate,
 	useAdminUpdateHistory,
 } from "@/client/hooks/use-admin-update";
+import { AppErrorState } from "@/components/app-states";
 import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { SimplePagination } from "@/components/simple-pagination";
@@ -306,20 +307,26 @@ function HistoryRow({ entry }: { entry: AdminUpdateHistoryEntry }) {
 
 function UpdateHistorySection() {
 	const [page, setPage] = useState(1);
-	const { data, isLoading, isFetching } = useAdminUpdateHistory(page);
+	const { data, isLoading, isFetching, error, refetch } = useAdminUpdateHistory(page);
 	const entries = data?.data ?? [];
+
+	let body: ReactNode;
+	if (error) body = <AppErrorState error={error} onRetry={() => detach(refetch())} className="m-4" />;
+	else if (!isLoading && entries.length === 0)
+		body = <p className="text-muted-foreground p-4 text-sm">{m.admin_updates_history_empty()}</p>;
+	else {
+		body = (
+			<ul className="divide-border divide-y">
+				{entries.map((entry) => (
+					<HistoryRow key={entry.id} entry={entry} />
+				))}
+			</ul>
+		);
+	}
 
 	return (
 		<AdminSection title={m.admin_updates_history_title()} description={m.admin_updates_history_description()} contentClassName="p-0">
-			{!isLoading && entries.length === 0 ? (
-				<p className="text-muted-foreground p-4 text-sm">{m.admin_updates_history_empty()}</p>
-			) : (
-				<ul className="divide-border divide-y">
-					{entries.map((entry) => (
-						<HistoryRow key={entry.id} entry={entry} />
-					))}
-				</ul>
-			)}
+			{body}
 			<div className="border-border border-t p-3">
 				<SimplePagination
 					variant="admin"

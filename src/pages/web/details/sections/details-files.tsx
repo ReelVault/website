@@ -89,7 +89,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 
 											{/* Inline parameters (time, size, bitrate, format) */}
 											<div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-												{file.duration && (
+												{file.duration != null && file.duration > 0 && (
 													<div className="flex items-center gap-1.5">
 														<Clock className="text-muted-foreground/75 size-3.5" />
 														<span>{formatDuration(file.duration)}</span>
@@ -101,7 +101,7 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 														<span>{formatFileSize(file.size)}</span>
 													</div>
 												)}
-												{file.bitRate && (
+												{file.bitRate != null && file.bitRate > 0 && (
 													<div className="flex items-center gap-1.5">
 														<Layers className="text-muted-foreground/75 size-3.5" />
 														<span>{formatBitrate(file.bitRate)}</span>

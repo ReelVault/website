@@ -1,6 +1,6 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Film } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
 	type ADMIN_METADATA_SORTS,
 	type AdminMetadataBrowseFilters,
@@ -77,7 +77,12 @@ function getSectionDescription(mediaFilter: MediaFilter): string {
 export default function AdminMetadataPage() {
 	const search = useSearch({ from: "/admin/metadata/" });
 	const navigate = useNavigate({ from: "/admin/metadata/" });
-	const [searchQuery, setSearchQuery] = useState(search.q ?? "");
+	// The input is the URL value itself: typing rewrites ?q= (replace) and the
+	// query fires on the debounced copy, so Back and refresh restore both.
+	const searchQuery = search.q ?? "";
+	const setSearchQuery = (value: string) => {
+		detach(navigate({ search: (prev) => ({ ...prev, q: value || undefined, page: undefined }), replace: true }));
+	};
 	const debouncedSearch = useDebounce({ value: searchQuery, delay: 500 });
 	const currentPage = search.page ?? 1;
 	const mediaFilter: MediaFilter =
@@ -97,19 +102,6 @@ export default function AdminMetadataPage() {
 		startsWith: search.startsWith,
 		status: search.status,
 	};
-
-	// Typing flows debounce → URL; browser Back/refresh restores both.
-	useEffect(() => {
-		if (debouncedSearch !== (search.q ?? "")) {
-			detach(() => navigate({ search: (prev) => ({ ...prev, q: debouncedSearch || undefined, page: undefined }), replace: true }));
-		}
-	}, [debouncedSearch, navigate, search.q]);
-
-	const [syncedSearch, setSyncedSearch] = useState(search.q);
-	if (search.q !== syncedSearch) {
-		setSyncedSearch(search.q);
-		setSearchQuery(search.q ?? "");
-	}
 
 	let hasMediaFiles: boolean | undefined;
 	if (mediaFilter === "with_media") hasMediaFiles = true;
@@ -145,10 +137,6 @@ export default function AdminMetadataPage() {
 	);
 
 	const handleDelete = (id: string, title: string) => deleteMetadata({ id, title });
-
-	const handleSearchChange = (value: string) => {
-		setSearchQuery(value);
-	};
 
 	const handleFilterChange = (value: MediaFilter) => {
 		detach(() =>
@@ -250,7 +238,7 @@ export default function AdminMetadataPage() {
 			<div className="flex flex-col gap-3">
 				<MetadataFilterBar
 					searchQuery={searchQuery}
-					onSearchChange={handleSearchChange}
+					onSearchChange={setSearchQuery}
 					mediaFilter={mediaFilter}
 					onFilterChange={handleFilterChange}
 					typeFilter={typeFilter}
@@ -312,7 +300,7 @@ export default function AdminMetadataPage() {
 							deletingIds={deletingIds}
 							isOrphanView={mediaFilter === "without_media"}
 							onDelete={handleDelete}
-							onResetSearch={() => handleSearchChange("")}
+							onResetSearch={() => setSearchQuery("")}
 							selectedIds={selectedIds}
 							onToggleSelect={toggleSelect}
 						/>

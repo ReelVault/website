@@ -14,7 +14,7 @@ export const metadataKeys = {
 	popular: (limit: number) => [...metadataKeys.all, "popular", limit] as const,
 	recentlyAdded: (limit: number, type?: MetadataType) =>
 		type ? ([...metadataKeys.all, "recently-added", limit, type] as const) : ([...metadataKeys.all, "recently-added", limit] as const),
-	search: (query: string) => [...metadataKeys.all, "search", query] as const,
+	search: (query: string, limit: number) => [...metadataKeys.all, "search", query, limit] as const,
 	reassignSearch: (mediaType?: string, search?: string) => [...metadataKeys.all, "reassign-search", mediaType, search] as const,
 	library: (libraryId: string, type: string, limit: number, filters: object) =>
 		[...metadataKeys.all, "library", libraryId, type, limit, filters] as const,

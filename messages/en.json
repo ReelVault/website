@@ -69,6 +69,7 @@
 	"admin_api_keys_created_title": "Key created",
 	"admin_api_keys_created_value": "Created: {date}",
 	"admin_api_keys_created_warning": "Copy the secret now — it is shown only once and cannot be recovered.",
+	"admin_api_keys_secret_label": "API key",
 	"admin_api_keys_description": "Machine integration keys for external tools. Keys act as their creator; read-only keys accept GET requests only.",
 	"admin_api_keys_empty": "No API keys",
 	"admin_api_keys_empty_description": "Create a key to let external tools talk to this server.",

@@ -14,8 +14,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { copyToClipboard } from "@/utils/clipboard-utils";
 import { formatDate } from "@/utils/format-utils";
-import { toast } from "@/utils/toast-facade";
 
 type Scope = "read_only" | "full";
 
@@ -372,12 +372,7 @@ function CreateKeyDialog({
 						</DialogHeader>
 						<div className="border-border bg-muted/40 rounded-xl border p-3 font-mono text-xs break-all">{state.createdSecret}</div>
 						<DialogFooter>
-							<Button
-								onClick={() => {
-									detach(navigator.clipboard.writeText(state.createdSecret ?? ""));
-									toast.success(m.common_copied());
-								}}
-							>
+							<Button onClick={() => detach(copyToClipboard(state.createdSecret ?? "", m.admin_api_keys_secret_label()))}>
 								{m.common_copy()}
 							</Button>
 							<Button variant="outline" onClick={() => state.setCreatedSecret(null)}>

@@ -29,7 +29,7 @@ export function TaskTriggerItem({ trigger, onDelete }: TaskTriggerItemProps) {
 							{trigger.type}
 						</Badge>
 					</div>
-					{trigger.maxRuntimeMinutes && (
+					{trigger.maxRuntimeMinutes != null && trigger.maxRuntimeMinutes > 0 && (
 						<p className="text-muted-foreground text-xs">{m.admin_worker_runtime_limit({ minutes: trigger.maxRuntimeMinutes })}</p>
 					)}
 				</div>

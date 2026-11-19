@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
-import { toastError } from "@/utils/toast-utils";
 import { translateByKey } from "@/utils/translate-error";
 import { ActiveDeviceCard } from "./live-activity/active-device-card";
 import { EndedSessionsList } from "./live-activity/ended-sessions-list";
@@ -33,12 +32,11 @@ export function AdminLiveActivitySection() {
 		if (terminateMutation.isPending) return;
 
 		setTerminatingSessionId(sessionId);
-		try {
-			await terminateMutation.mutateAsync({ sessionId });
-			toast.success(m.admin_live_session_stopped_toast({ viewer }));
-		} catch (error) {
-			toastError(m.admin_session_stop_error(), error);
-		}
+		// The hook reports a failure itself.
+		await terminateMutation.mutateAsync({ sessionId }).then(
+			() => toast.success(m.admin_live_session_stopped_toast({ viewer })),
+			() => null,
+		);
 
 		setTerminatingSessionId(null);
 	};

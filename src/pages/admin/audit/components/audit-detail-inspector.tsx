@@ -10,7 +10,9 @@ import { formatFullDateTime, formatTimeAgo } from "@/utils/format-utils";
 export type AuditEntryItem = NonNullable<Awaited<ReturnType<typeof reelvault.admin.getAudit>>["data"]>[number];
 
 export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
-	const { hasCopied, copy } = useCopyToClipboard();
+	const resourceCopy = useCopyToClipboard();
+	const actorCopy = useCopyToClipboard();
+	const ipCopy = useCopyToClipboard();
 	const beforeSnapshot = entry.before !== undefined ? JSON.stringify(entry.before, null, 2) : "";
 	const afterSnapshot = entry.after !== undefined ? JSON.stringify(entry.after, null, 2) : "";
 
@@ -78,12 +80,12 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 								type="button"
 								onClick={() => {
 									const { resourceId } = entry;
-									if (resourceId !== null) detach(() => copy(resourceId, m.admin_audit_resource_id()));
+									if (resourceId !== null) detach(() => resourceCopy.copy(resourceId, m.admin_audit_resource_id()));
 								}}
 								className="hover:text-foreground"
 								title={m.admin_audit_copy_resource_id()}
 							>
-								<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
+								<CopyIcon copied={resourceCopy.hasCopied} className="size-3" copiedClassName="text-primary" />
 							</button>
 						</div>
 					)}
@@ -102,12 +104,12 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 									type="button"
 									onClick={() => {
 										const { actorUserId } = entry;
-										if (actorUserId !== null) detach(() => copy(actorUserId, m.admin_audit_actor_id()));
+										if (actorUserId !== null) detach(() => actorCopy.copy(actorUserId, m.admin_audit_actor_id()));
 									}}
 									className="hover:text-foreground"
 									title={m.admin_audit_copy_actor_id()}
 								>
-									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
+									<CopyIcon copied={actorCopy.hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</div>
 						</div>
@@ -126,12 +128,12 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 									type="button"
 									onClick={() => {
 										const { ipAddress } = entry;
-										if (ipAddress !== null) detach(() => copy(ipAddress, m.admin_audit_ip_word()));
+										if (ipAddress !== null) detach(() => ipCopy.copy(ipAddress, m.admin_audit_ip_word()));
 									}}
 									className="hover:text-foreground"
 									title={m.admin_audit_copy_ip()}
 								>
-									<CopyIcon copied={hasCopied} className="size-3" copiedClassName="text-primary" />
+									<CopyIcon copied={ipCopy.hasCopied} className="size-3" copiedClassName="text-primary" />
 								</button>
 							</div>
 						) : (

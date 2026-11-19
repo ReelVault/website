@@ -123,7 +123,9 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 					<p className="text-foreground truncate text-sm font-bold" title={item.title}>
 						{item.title}
 					</p>
-					{item.releaseYear && <p className="text-muted-foreground font-mono text-xs">{item.releaseYear}</p>}
+					{item.releaseYear != null && item.releaseYear > 0 && (
+						<p className="text-muted-foreground font-mono text-xs">{item.releaseYear}</p>
+					)}
 				</div>
 
 				<div className="border-border/40 mt-3 flex items-center justify-between border-t pt-2 text-xs">

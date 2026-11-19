@@ -84,7 +84,9 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 						<span className="text-muted-foreground text-xs font-semibold">{m.admin_media_recognized_from_file()}</span>
 						<p className="text-foreground text-sm font-bold">{item.recognized.title}</p>
 						<div className="text-muted-foreground flex flex-wrap gap-2 text-xs">
-							{item.recognized.year && <span>{m.admin_media_year_label({ year: item.recognized.year })}</span>}
+							{item.recognized.year != null && item.recognized.year > 0 && (
+								<span>{m.admin_media_year_label({ year: item.recognized.year })}</span>
+							)}
 							{!isMovie && item.recognized.season !== null && (
 								<span>
 									{m.admin_media_season_episode({ season: item.recognized.season ?? "?", episode: item.recognized.episode ?? "?" })}

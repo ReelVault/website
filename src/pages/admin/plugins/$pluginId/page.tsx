@@ -5,6 +5,7 @@ import { resolvePluginText, usePluginUiManifest } from "@/client/hooks/use-plugi
 import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { getPluginIcon } from "@/plugin-host/icons";
@@ -26,6 +27,10 @@ export default function PluginAdminPage() {
 
 	if (pluginsQuery.isLoading) {
 		return <AppLoadingState label={m.admin_plugins_loading_view()} className="min-h-96" />;
+	}
+
+	if (pluginsQuery.isError) {
+		return <AppErrorState error={pluginsQuery.error} onRetry={() => detach(pluginsQuery.refetch())} />;
 	}
 
 	const plugin = plugins.find((candidate) => candidate.id === pluginId);

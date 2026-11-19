@@ -17,6 +17,16 @@ interface MetadataCardTarget {
 	title: string;
 }
 
+/** Copies the public details link of a title. */
+export function copyTitleLink(metadataId: string): void {
+	detach(copyEntityLink(`/details/${metadataId}`, m.components_collection_card_title_link()));
+}
+
+/** Copies the id of a title. */
+export function copyTitleId(metadataId: string): void {
+	detach(copyToClipboard(metadataId, m.components_copy_metadata_id()));
+}
+
 export function useMetadataCardActions(metadata: MetadataCardTarget) {
 	const navigate = useNavigate();
 	const [identifyOpen, setIdentifyOpen] = useState(false);
@@ -69,13 +79,8 @@ export function useMetadataCardActions(metadata: MetadataCardTarget) {
 		});
 	};
 
-	const handleCopyLink = (): void => {
-		startTransition(() => copyEntityLink(`/details/${metadata.id}`, m.components_collection_card_title_link()));
-	};
-
-	const handleCopyId = (): void => {
-		startTransition(() => copyToClipboard(metadata.id, m.components_copy_metadata_id()));
-	};
+	const handleCopyLink = () => copyTitleLink(metadata.id);
+	const handleCopyId = () => copyTitleId(metadata.id);
 
 	const handleInteract = () => {
 		if (!isInteracted) setIsInteracted(true);

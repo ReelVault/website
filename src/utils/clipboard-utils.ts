@@ -2,16 +2,21 @@ import { useEffect, useRef, useState } from "react";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 
-export async function copyToClipboard(text: string, label = "text") {
+/** Copies text and toasts the outcome; resolves to whether the copy succeeded. */
+export async function copyToClipboard(text: string, label = "text"): Promise<boolean> {
 	try {
 		await navigator.clipboard.writeText(text);
 		toast.success(m.utils_copied_label({ label }));
+
+		return true;
 	} catch {
 		toast.error(m.utils_copy_failed_label({ label }));
+
+		return false;
 	}
 }
 
-/** Kopiuje absolutny link do encji (origin + path) z toastem. */
+/** Copies the absolute link to an entity (origin + path). */
 export function copyEntityLink(path: string, label = "link") {
 	return copyToClipboard(`${window.location.origin}${path}`, label);
 }
@@ -47,8 +52,7 @@ export function useCopyToClipboard(resetMs = 2000) {
 	};
 
 	const copy = async (text: string, label?: string) => {
-		await copyToClipboard(text, label);
-		markCopied();
+		if (await copyToClipboard(text, label)) markCopied();
 	};
 
 	return { hasCopied, copy, markCopied, reset };

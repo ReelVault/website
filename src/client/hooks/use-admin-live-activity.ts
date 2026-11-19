@@ -58,7 +58,6 @@ export function useTerminateLiveStream() {
 	return useMutation({
 		mutationFn: ({ sessionId, reason }: { sessionId: string; reason?: string }) => reelvault.admin.terminateLiveStream(sessionId, reason),
 		onSuccess: async () => {
-			toast.success(m.toast_stream_stopped());
 			await queryClient.invalidateQueries({ queryKey: adminKeys.liveActivity() });
 		},
 		onError: (error) => {

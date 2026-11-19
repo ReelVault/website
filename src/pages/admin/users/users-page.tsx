@@ -81,15 +81,18 @@ export default function AdminUsersPage() {
 		detach(navigate({ search: (prev) => ({ ...prev, page: next > 1 ? next : undefined }), replace: true }));
 	};
 
-	const handleCreate = async (body: Parameters<typeof createUser>[0]) => {
-		if (isCreating) return;
+	const handleCreate = async (body: Parameters<typeof createUser>[0]): Promise<boolean> => {
+		if (isCreating) return false;
 
 		try {
 			const created = await createUser(body);
 			toast.success(m.admin_users_account_created_named({ name: created.name }));
-			setCreateOpen(false);
+
+			return true;
 		} catch (err) {
 			toastError(m.admin_users_failed_to_create(), err);
+
+			return false;
 		}
 	};
 
@@ -161,13 +164,19 @@ export default function AdminUsersPage() {
 		const target = deleteTarget;
 		if (!target || updatingId === target.id) return;
 
-		try {
-			await deleteUser(target.id);
-			toast.success(m.admin_users_account_deleted({ name: target.name }));
-			setDeleteTarget(null);
-		} catch (err) {
-			toastError(m.admin_users_account_delete_failed_named({ name: target.name }), err);
-		}
+		// The delete hook reports success and failure itself; a failure keeps the dialog open.
+		await deleteUser(target.id).then(
+			() => {
+				setDeleteTarget(null);
+				setSelectedIds((prev) => {
+					const next = new Set(prev);
+					next.delete(target.id);
+
+					return next;
+				});
+			},
+			() => null,
+		);
 	};
 
 	let listContent: ReactNode;

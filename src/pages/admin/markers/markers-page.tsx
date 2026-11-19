@@ -143,9 +143,9 @@ export default function AdminMediaMarkersPage() {
 				search={search}
 				typeFilter={typeFilter}
 				sourceFilter={sourceFilter}
-				onOpenEdit={(marker) => openEditDialog(marker)}
-				onDelete={(id) => detach(() => handleDeleteMarker(id))}
-				onCopy={(value) => detach(() => copyToClipboard(value))}
+				onOpenEdit={openEditDialog}
+				onDelete={(marker) => detach(() => handleDeleteMarker(marker))}
+				onCopy={(value, label) => detach(() => copyToClipboard(value, label))}
 			/>
 
 			<SimplePagination currentPage={page} totalPages={totalPages} isLoading={markersQuery.isFetching} onPageChange={setPage} />

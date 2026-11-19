@@ -2,7 +2,7 @@ import type { PluginCatalogEntry } from "@reelvault/sdk";
 import { Link, useNavigate, useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { usePluginCatalog } from "@/client/hooks/use-plugin-catalog";
-import { AppEmptyState, AppLoadingState } from "@/components/app-states";
+import { AppEmptyState, AppErrorState, AppLoadingState } from "@/components/app-states";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
@@ -15,7 +15,7 @@ export default function PluginCatalogPage() {
 	const entry = catalog.find((item) => item.id === id);
 	const isBusy = isInstalling || isInstallingArchive || isUninstalling;
 
-	usePageTitle(entry?.name ?? m.plugins_plugin_not_found_heading());
+	usePageTitle(entry?.name ?? (catalogQuery.isSuccess ? m.plugins_plugin_not_found_heading() : m.common_loading_catalog()));
 
 	// Install and uninstall return to the plugin list, which shows the new state.
 	const goToPlugins = () => detach(navigate({ to: "/admin/plugins" }));
@@ -39,6 +39,7 @@ export default function PluginCatalogPage() {
 	};
 
 	if (catalogQuery.isPending) return <AppLoadingState />;
+	if (catalogQuery.isError) return <AppErrorState error={catalogQuery.error} onRetry={() => detach(catalogQuery.refetch())} />;
 
 	return (
 		<main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12">

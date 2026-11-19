@@ -3,9 +3,11 @@ import { cn } from "cn";
 import { CheckCircle2, Gpu, RefreshCw, TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { useFfmpegCapabilities } from "@/client/hooks/use-ffmpeg-capabilities";
+import { AppErrorState } from "@/components/app-states";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { translateByKey } from "@/utils/translate-error";
@@ -56,7 +58,7 @@ function VerificationRow({ label, ok, code, detail }: { label: string; ok: boole
 }
 
 export function FfmpegHwaccelDiagnostics() {
-	const { capabilities, isLoading, isRefreshing, refresh } = useFfmpegCapabilities();
+	const { capabilities, isLoading, isRefreshing, refresh, error, refetch } = useFfmpegCapabilities();
 
 	if (isLoading) {
 		return (
@@ -71,7 +73,13 @@ export function FfmpegHwaccelDiagnostics() {
 		);
 	}
 
-	if (!capabilities) return null;
+	if (!capabilities) {
+		return (
+			<AdminSection title={m.admin_resources_detected_capabilities()}>
+				<AppErrorState error={error} onRetry={() => detach(refetch())} />
+			</AdminSection>
+		);
+	}
 
 	const { effective, verification, decodeTest } = capabilities;
 	const isHardware = effective.type !== "none";

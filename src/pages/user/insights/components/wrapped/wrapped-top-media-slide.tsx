@@ -40,7 +40,9 @@ export function WrappedTopMediaSlide({ data }: WrappedTopMediaSlideProps) {
 							<h4 className="text-foreground truncate text-lg font-bold sm:text-xl" title={data.topMovie.title}>
 								{data.topMovie.title}
 							</h4>
-							{data.topMovie.releaseYear && <p className="text-muted-foreground font-mono text-xs">{data.topMovie.releaseYear}</p>}
+							{data.topMovie.releaseYear != null && data.topMovie.releaseYear > 0 && (
+								<p className="text-muted-foreground font-mono text-xs">{data.topMovie.releaseYear}</p>
+							)}
 							<div className="flex items-center justify-center gap-3 pt-2 text-xs sm:justify-start">
 								<span className="text-primary text-sm font-bold">
 									{m.common_duration_hours_minutes({ hours: Math.floor(data.topMovie.minutes / 60), minutes: data.topMovie.minutes % 60 })}
@@ -75,7 +77,9 @@ export function WrappedTopMediaSlide({ data }: WrappedTopMediaSlideProps) {
 							<h4 className="text-foreground truncate text-lg font-bold sm:text-xl" title={data.topShow.title}>
 								{data.topShow.title}
 							</h4>
-							{data.topShow.releaseYear && <p className="text-muted-foreground font-mono text-xs">{data.topShow.releaseYear}</p>}
+							{data.topShow.releaseYear != null && data.topShow.releaseYear > 0 && (
+								<p className="text-muted-foreground font-mono text-xs">{data.topShow.releaseYear}</p>
+							)}
 							<div className="flex items-center justify-center gap-3 pt-2 text-xs sm:justify-start">
 								<span className="text-primary text-sm font-bold">
 									{m.common_duration_hours_minutes({ hours: Math.floor(data.topShow.minutes / 60), minutes: data.topShow.minutes % 60 })}
