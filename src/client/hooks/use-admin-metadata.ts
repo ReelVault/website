@@ -236,7 +236,6 @@ export function useRefreshMetadata() {
 			// isn't updated yet anyway.
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: metadataKeys.byId(metadataId) }),
-				queryClient.invalidateQueries({ queryKey: metadataKeys.details(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.adminAll() }),
 			]);
@@ -273,7 +272,6 @@ export function useRefreshMetadataImages() {
 			toast.success(m.hooks_artwork_force_fetched());
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: metadataKeys.byId(metadataId) }),
-				queryClient.invalidateQueries({ queryKey: metadataKeys.details(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.adminAll() }),
 			]);

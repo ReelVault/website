@@ -7,23 +7,21 @@ import { detach } from "@/lib/detach";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-export type LibrarySortBy = "title" | "sortTitle" | "releaseDate" | "popularity" | "createdAt" | "updatedAt";
+export const LIBRARY_SORT_BY_VALUES = ["title", "sortTitle", "releaseDate", "popularity", "recentlyAdded", "updatedAt"] as const;
+export const LIBRARY_SORT_ORDER_VALUES = ["asc", "desc"] as const;
+export const LIBRARY_WATCHED_VALUES = ["all", "watched", "unwatched", "in_progress"] as const;
+export const LIBRARY_RATING_VALUES = ["all", "liked", "disliked", "unrated"] as const;
 
-export type LibrarySortOrder = "asc" | "desc";
-
-export type LibraryWatchedFilter = "all" | "watched" | "unwatched" | "in_progress";
-
-export type LibraryRatingFilter = "all" | "liked" | "disliked" | "unrated";
+export type LibrarySortBy = (typeof LIBRARY_SORT_BY_VALUES)[number];
+export type LibrarySortOrder = (typeof LIBRARY_SORT_ORDER_VALUES)[number];
+export type LibraryWatchedFilter = (typeof LIBRARY_WATCHED_VALUES)[number];
+export type LibraryRatingFilter = (typeof LIBRARY_RATING_VALUES)[number];
 
 const DURATION_SLIDER_MIN = 0;
 const DURATION_SLIDER_MAX = 240;
 
-const LIBRARY_SORT_BY_VALUES: readonly LibrarySortBy[] = ["title", "sortTitle", "releaseDate", "popularity", "createdAt", "updatedAt"];
-const LIBRARY_WATCHED_VALUES: readonly LibraryWatchedFilter[] = ["all", "watched", "unwatched", "in_progress"];
-const LIBRARY_RATING_VALUES: readonly LibraryRatingFilter[] = ["all", "liked", "disliked", "unrated"];
-
-function isOneOf<T extends string>(values: readonly T[], value: string | null): value is T {
-	return value !== null && (values as readonly string[]).includes(value);
+export function isOneOf<T extends string>(values: readonly T[], value: unknown): value is T {
+	return values.some((candidate) => candidate === value);
 }
 
 function useLibrarySearchParams() {
@@ -99,7 +97,7 @@ export function useLibraryLogic(
 	const rawSortBy = readString("sortBy");
 	const initialSortBy: LibrarySortBy = isOneOf(LIBRARY_SORT_BY_VALUES, rawSortBy) ? rawSortBy : "title";
 	const rawSortOrder = readString("sortOrder");
-	const initialSortOrder: LibrarySortOrder = rawSortOrder === "desc" ? "desc" : "asc";
+	const initialSortOrder: LibrarySortOrder = isOneOf(LIBRARY_SORT_ORDER_VALUES, rawSortOrder) ? rawSortOrder : "asc";
 	const rawWatched = readString("watched");
 	const initialWatchedStatus: LibraryWatchedFilter = isOneOf(LIBRARY_WATCHED_VALUES, rawWatched) ? rawWatched : "all";
 	const rawRating = readString("rating");

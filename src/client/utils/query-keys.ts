@@ -3,7 +3,6 @@ import type { MetadataType, ScanFindingStatus } from "@reelvault/sdk";
 export const metadataKeys = {
 	all: ["metadata"] as const,
 	byId: (id: string) => [...metadataKeys.all, id] as const,
-	details: (id: string) => [...metadataKeys.all, "details", id] as const,
 	detailsView: (id: string) => [...metadataKeys.all, "details-view", id] as const,
 	statuses: () => [...metadataKeys.all, "statuses"] as const,
 	related: (id: string) => [...metadataKeys.all, "related", id] as const,
@@ -17,8 +16,8 @@ export const metadataKeys = {
 		type ? ([...metadataKeys.all, "recently-added", limit, type] as const) : ([...metadataKeys.all, "recently-added", limit] as const),
 	search: (query: string) => [...metadataKeys.all, "search", query] as const,
 	reassignSearch: (mediaType?: string, search?: string) => [...metadataKeys.all, "reassign-search", mediaType, search] as const,
-	library: (libraryId: string, type: string, limit: number, filters: object, scope: "ui" | "filtered") =>
-		[...metadataKeys.all, "library", libraryId, type, limit, filters, scope] as const,
+	library: (libraryId: string, type: string, limit: number, filters: object) =>
+		[...metadataKeys.all, "library", libraryId, type, limit, filters] as const,
 	admin: (
 		page: number,
 		limit: number,
@@ -81,13 +80,11 @@ export const mePlaybackKeys = {
 	suggestionsBatch: (metadataIds: readonly string[]) => [...mePlaybackKeys.suggestionsAll(), "batch", metadataIds] as const,
 	progress: (metadataId: string) => [...mePlaybackKeys.all, "progress", metadataId] as const,
 	progressAll: () => [...mePlaybackKeys.all, "progress"] as const,
-	streamPrefs: (mediaFileId: string) => [...mePlaybackKeys.all, "stream-prefs", mediaFileId] as const,
 	continueWatching: () => [...mePlaybackKeys.all, "continue-watching"] as const,
 };
 
 export const subtitleKeys = {
 	all: ["subtitles"] as const,
-	list: (mediaFileId: string) => [...subtitleKeys.all, mediaFileId] as const,
 	content: (subtitleId: string | undefined) => [...subtitleKeys.all, "content", subtitleId] as const,
 	admin: (params: { page: number; limit: number; mediaFileId?: string; language?: string; sortBy?: string; sortOrder?: "asc" | "desc" }) =>
 		[...subtitleKeys.all, "admin", params] as const,
@@ -148,8 +145,6 @@ export const profileKeys = {
 };
 
 export const mediaKeys = {
-	all: ["media"] as const,
-	file: (id: string) => ["media", id] as const,
 	files: () => ["media-files"] as const,
 	byMetadata: (metadataId: string | null | undefined) => ["media-files", "by-metadata", metadataId] as const,
 	byEpisode: (episodeId: string | null | undefined) => ["media-files", "by-episode", episodeId] as const,

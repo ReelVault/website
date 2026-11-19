@@ -23,7 +23,6 @@ function LibraryInfiniteContent({
 	libraryName,
 	availableGenresLength,
 	type,
-	initialData,
 	filters,
 	onTotalItemsChange,
 }: {
@@ -31,11 +30,10 @@ function LibraryInfiniteContent({
 	libraryName: string;
 	availableGenresLength: number;
 	type: MetadataType;
-	initialData?: LibraryMetadataResponse;
 	filters: UseLibraryMetadataInfiniteFilters;
 	onTotalItemsChange?: (total: number) => void;
 }) {
-	const queryResult = useLibraryMetadataInfinite(libraryId, type, initialData, {
+	const queryResult = useLibraryMetadataInfinite(libraryId, type, {
 		limit: 40,
 		filters,
 	});
@@ -85,7 +83,8 @@ function LibraryInfiniteContent({
 	// the old grid stays on screen until the fresh data commits.
 	if (queryResult.isPending && displayMetadata.length === 0) return <GridSkeleton />;
 
-	if (queryResult.isError) {
+	// A failed later page keeps the loaded grid; the grid offers its own retry.
+	if (queryResult.isError && displayMetadata.length === 0) {
 		return (
 			<div className="cinema-shell py-10 lg:py-16">
 				<AppErrorState
@@ -142,11 +141,9 @@ function GridSkeleton() {
 export function LibraryLayout({
 	currentLibrary,
 	allLibraries,
-	initialData,
 }: {
 	currentLibrary: RequireFields<Library, "id" | "type" | "name">;
 	allLibraries: Array<RequireFields<Library, "id" | "name">>;
-	initialData?: LibraryMetadataResponse;
 }) {
 	const { state, actions, data, filters } = useLibraryLogic(currentLibrary, allLibraries);
 	const [totalItems, setTotalItems] = useState(0);
@@ -193,7 +190,6 @@ export function LibraryLayout({
 				libraryName={currentLibrary.name}
 				availableGenresLength={availableGenreNames.length}
 				type={currentLibrary.type === "movies" ? "movie" : "tv_show"}
-				initialData={initialData}
 				filters={filters}
 				onTotalItemsChange={setTotalItems}
 			/>

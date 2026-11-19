@@ -52,7 +52,6 @@ export function useRematchMetadata({
 		onSuccess: async () => {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: metadataKeys.byId(metadataId) }),
-				queryClient.invalidateQueries({ queryKey: metadataKeys.details(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.adminAll() }),
 				queryClient.invalidateQueries({ queryKey: seasonKeys.byMetadata(metadataId) }),
@@ -76,7 +75,6 @@ export function useRematchMetadata({
 		onSuccess: async () => {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: metadataKeys.byId(metadataId) }),
-				queryClient.invalidateQueries({ queryKey: metadataKeys.details(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(metadataId) }),
 				queryClient.invalidateQueries({ queryKey: metadataKeys.adminAll() }),
 				queryClient.invalidateQueries({ queryKey: seasonKeys.byMetadata(metadataId) }),

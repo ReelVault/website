@@ -109,15 +109,7 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 	// Listen for library scan completion
 	useRealtimeEvent("library:scan:completed", (data) => {
 		toast.success(m.components_realtime_library_scan_finished({ libraryTitle: data.libraryTitle ?? "" }));
-		invalidateCoalesced([
-			libraryKeys.all,
-			mediaKeys.all,
-			mediaKeys.files(),
-			metadataKeys.all,
-			episodeKeys.all,
-			seasonKeys.all,
-			discoveryKeys.all,
-		]);
+		invalidateCoalesced([libraryKeys.all, mediaKeys.files(), metadataKeys.all, episodeKeys.all, seasonKeys.all, discoveryKeys.all]);
 	});
 
 	// Listen for worker tasks completion

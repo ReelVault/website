@@ -7,7 +7,7 @@ import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { m } from "@/paraglide/messages";
-import { formatQuickConnectCode } from "@/utils/form-utils";
+import { formatQuickConnectCode, isCompleteQuickConnectCode, QUICK_CONNECT_INPUT_MAX_LENGTH } from "@/utils/form-utils";
 import { toast } from "@/utils/toast-facade";
 
 interface QuickConnectAuthorizeBoxProps {
@@ -66,7 +66,7 @@ export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: Quick
 								onChange={(e) => handleAuthorizeCodeChange(e.target.value)}
 								placeholder={m.auth_quick_connect_code_placeholder()}
 								font="mono"
-								maxLength={7}
+								maxLength={QUICK_CONNECT_INPUT_MAX_LENGTH}
 							/>
 						</InputGroup>
 						<FieldDescription>{m.auth_enter_login_code()}</FieldDescription>
@@ -76,7 +76,7 @@ export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: Quick
 				<AsyncButton
 					type="submit"
 					className="w-full rounded-xl"
-					disabled={authorizeCode.replace(/[^0-9a-zA-Z]/g, "").length < 6}
+					disabled={!isCompleteQuickConnectCode(authorizeCode)}
 					isPending={authorizeMutation.isPending}
 					pendingLabel={m.admin_metadata_linking()}
 				>

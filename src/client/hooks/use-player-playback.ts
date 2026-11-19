@@ -108,7 +108,7 @@ export function useSubtitleDownload(mediaFileId: string, onDownloaded: (subtitle
 			reelvault.subtitles.downloadFromProvider(providerId, { mediaFileId, subtitleId }),
 		onSuccess: async (subtitle) => {
 			onDownloaded(subtitle.id);
-			await queryClient.invalidateQueries({ queryKey: subtitleKeys.list(mediaFileId) });
+			await queryClient.invalidateQueries({ queryKey: playbackSessionKeys.playbackView(mediaFileId) });
 		},
 	});
 }

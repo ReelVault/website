@@ -8,6 +8,5 @@ import { metadataKeys } from "./query-keys";
  */
 export function purgeMetadataCaches(queryClient: QueryClient, metadataId: string): void {
 	queryClient.removeQueries({ queryKey: metadataKeys.byId(metadataId) });
-	queryClient.removeQueries({ queryKey: metadataKeys.details(metadataId) });
 	queryClient.removeQueries({ queryKey: metadataKeys.detailsView(metadataId) });
 }

@@ -48,7 +48,7 @@ export function MetadataMediaFilesSection({ metadataId }: { metadataId: string }
 				onRetry={() => detach(filesQuery.refetch())}
 			/>
 		);
-	} else if (files.length > 0) {
+	} else if (files.length === 0) {
 		sectionBody = (
 			<AppEmptyState
 				icon={FileVideo}

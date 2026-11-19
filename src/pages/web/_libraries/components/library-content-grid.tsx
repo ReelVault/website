@@ -1,5 +1,5 @@
 import type { MetadataWithRelation, RequireFields } from "@reelvault/sdk";
-import { Search } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import type { metadataCardFields } from "@/client/utils/fields";
@@ -7,6 +7,7 @@ import { AppEmptyState } from "@/components/app-states";
 import { MetadataCard } from "@/components/cards/metadata-card";
 import { LazyRender } from "@/components/lazy-render";
 import { SimpleAnimation } from "@/components/simple-animation";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
 
@@ -65,6 +66,12 @@ export function LibraryContentGrid({
 
 			{hasNextPage && (
 				<div ref={loadMoreRef} className="mt-8 flex min-h-15 justify-center py-8">
+					{hasError && !isLoadingMore && (
+						<Button type="button" variant="outline" size="sm" onClick={onLoadMore}>
+							<RefreshCw className="mr-1 size-3" />
+							{m.common_try_again()}
+						</Button>
+					)}
 					{isLoadingMore && (
 						<div className="text-muted-foreground flex items-center gap-2 text-sm">
 							<Spinner />

@@ -46,13 +46,12 @@ export function useRefreshMediaFile(metadataId?: string) {
 	const queryClient = useQueryClient();
 	const mutation = useMutation({
 		mutationFn: (mediaFileId: string) => reelvault.media.refresh(mediaFileId),
-		onSuccess: async (_, mediaFileId) => {
+		onSuccess: async () => {
 			await Promise.all([
-				queryClient.invalidateQueries({ queryKey: mediaKeys.file(mediaFileId) }),
+				queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
 				...(metadataId ? [queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(metadataId) })] : []),
 				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.progressAll() }),
 				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.continueWatching() }),
-				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.streamPrefs(mediaFileId) }),
 			]);
 			toast.success(m.toast_file_info_refreshed());
 		},

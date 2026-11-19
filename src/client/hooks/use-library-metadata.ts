@@ -18,8 +18,10 @@ export type UseLibraryMetadataInfiniteFilters = MetadataFilters & MetadataSortin
 export interface UseLibraryMetadataInfiniteOptions {
 	limit?: number;
 	filters?: UseLibraryMetadataInfiniteFilters;
-	isForUI?: boolean;
 }
+
+/** The filters an unfiltered library view sends; the route loaders prefetch page 1 under this key. */
+export const DEFAULT_LIBRARY_FILTERS: UseLibraryMetadataInfiniteFilters = { sortBy: "title", sortOrder: "asc" };
 
 /** Infinite-query options, exported so route loaders can prefetch page 1 into the same cache entry. */
 export function libraryMetadataInfiniteQueryOptions(
@@ -27,10 +29,10 @@ export function libraryMetadataInfiniteQueryOptions(
 	type: MetadataType,
 	options: UseLibraryMetadataInfiniteOptions = {},
 ) {
-	const { limit = 40, filters = {}, isForUI = false } = options;
+	const { limit = 40, filters = DEFAULT_LIBRARY_FILTERS } = options;
 
 	return {
-		queryKey: metadataKeys.library(libraryId, type, limit, filters, isForUI ? "ui" : "filtered"),
+		queryKey: metadataKeys.library(libraryId, type, limit, filters),
 		queryFn: async ({ pageParam }: { pageParam: number }) => {
 			const response = await reelvault.metadata.getAll({
 				fields: metadataCardFields,
@@ -60,25 +62,8 @@ export function libraryMetadataInfiniteQueryOptions(
 	};
 }
 
-export function useLibraryMetadataInfinite(
-	libraryId: string,
-	type: MetadataType,
-	initialData?: LibraryMetadataResponse,
-	options: UseLibraryMetadataInfiniteOptions = {},
-) {
-	const initialPages =
-		initialData && !Object.values(options.filters ?? {}).some(Boolean) ? { pages: [initialData], pageParams: [1] } : undefined;
-
-	return useInfiniteQuery({
-		...libraryMetadataInfiniteQueryOptions(libraryId, type, options),
-		// Fresh prefetched pages land in the same cache entry, so this only
-		// applies to explicitly provided initial data with no active filters.
-		// The property must be absent (not merely undefined) while there is no
-		// initial data: TanStack types `data` as non-nullable as soon as the
-		// initialData property exists, which would hide the brief `undefined`
-		// window while a new filter key is loading.
-		...(initialPages !== undefined ? { initialData: initialPages } : {}),
-	});
+export function useLibraryMetadataInfinite(libraryId: string, type: MetadataType, options: UseLibraryMetadataInfiniteOptions = {}) {
+	return useInfiniteQuery(libraryMetadataInfiniteQueryOptions(libraryId, type, options));
 }
 
 export function useLibraryGenres() {

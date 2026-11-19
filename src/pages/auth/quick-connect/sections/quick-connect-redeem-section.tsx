@@ -10,7 +10,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { Label } from "@/components/ui/label";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { formatQuickConnectCode } from "@/utils/form-utils";
+import { formatQuickConnectCode, isCompleteQuickConnectCode, QUICK_CONNECT_INPUT_MAX_LENGTH } from "@/utils/form-utils";
 
 interface QuickConnectRedeemSectionProps {
 	initialCode?: string;
@@ -71,7 +71,7 @@ export function QuickConnectRedeemSection({
 								placeholder={m.auth_quick_connect_code_placeholder()}
 								font="mono"
 								className="text-center"
-								maxLength={7}
+								maxLength={QUICK_CONNECT_INPUT_MAX_LENGTH}
 								autoFocus
 							/>
 						</InputGroup>
@@ -82,7 +82,7 @@ export function QuickConnectRedeemSection({
 				<AsyncButton
 					type="submit"
 					className="w-full rounded-2xl py-5 font-black tracking-widest uppercase"
-					disabled={manualCode.replace(/[^0-9a-zA-Z]/g, "").length < 6}
+					disabled={!isCompleteQuickConnectCode(manualCode)}
 					isPending={isPending}
 					pendingLabel={m.common_signing_in()}
 				>

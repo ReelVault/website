@@ -62,9 +62,11 @@ export function useAdminMediaFiles(params: UseAdminMediaFilesParams = {}) {
 		},
 		onSuccess: async (_, mediaFileId) => {
 			toast.success(m.toast_media_file_deleted());
-			queryClient.removeQueries({ queryKey: mediaKeys.file(mediaFileId) });
 			queryClient.removeQueries({ queryKey: mediaKeys.adminFile(mediaFileId) });
-			await queryClient.invalidateQueries({ queryKey: mediaKeys.adminFiles() });
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFiles() }),
+				queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
+			]);
 		},
 		onError: (err) => {
 			toastError(m.user_failed_to_delete_file(), err);
@@ -111,7 +113,7 @@ export function useAdminUpdateMediaFile() {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFiles() }),
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFile(mediaFileId) }),
-				queryClient.invalidateQueries({ queryKey: mediaKeys.file(mediaFileId) }),
+				queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
 			]);
 			toast.success(m.hooks_changes_saved());
 		},
@@ -144,7 +146,7 @@ export function useAdminRefreshMediaFile() {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFiles() }),
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFile(mediaFileId) }),
-				queryClient.invalidateQueries({ queryKey: mediaKeys.file(mediaFileId) }),
+				queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
 			]);
 			toast.success(m.toast_media_refresh_scheduled());
 		},
@@ -177,7 +179,7 @@ export function useAdminRefreshMediaFile() {
 			startTransition(async () => {
 				await Promise.all([
 					queryClient.invalidateQueries({ queryKey: mediaKeys.adminFile(refreshState.mediaFileId ?? "") }),
-					queryClient.invalidateQueries({ queryKey: mediaKeys.file(refreshState.mediaFileId ?? "") }),
+					queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
 					queryClient.invalidateQueries({ queryKey: mePlaybackKeys.progressAll() }),
 					queryClient.invalidateQueries({ queryKey: mePlaybackKeys.continueWatching() }),
 				]);
@@ -239,7 +241,7 @@ export function useAdminScanMediaFile() {
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFiles() }),
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFile(mediaFileId) }),
-				queryClient.invalidateQueries({ queryKey: mediaKeys.file(mediaFileId) }),
+				queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
 			]);
 		},
 		onError: (err) => {
@@ -263,14 +265,12 @@ export function useAdminReassignMediaFile() {
 		onSuccess: async (_, { mediaFileId, body }) => {
 			const invalidations = [
 				// The media-files family (by-metadata / by-episode / details-modal)
-				// holds the old + new relations; mediaKeys.all never touched it.
+				// holds the old + new relations.
 				queryClient.invalidateQueries({ queryKey: mediaKeys.files() }),
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFiles() }),
 				queryClient.invalidateQueries({ queryKey: mediaKeys.adminFile(mediaFileId) }),
-				queryClient.invalidateQueries({ queryKey: mediaKeys.file(mediaFileId) }),
 				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.progressAll() }),
 				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.continueWatching() }),
-				queryClient.invalidateQueries({ queryKey: mePlaybackKeys.streamPrefs(mediaFileId) }),
 			];
 			if (body.targetMetadataId) {
 				invalidations.push(queryClient.invalidateQueries({ queryKey: metadataKeys.detailsView(body.targetMetadataId) }));

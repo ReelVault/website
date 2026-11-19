@@ -475,5 +475,11 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Recently added in libraries and collections** — the library "Recently added" sort and the collection "Recently added" order use the newest file, like the dashboard row, so a show that gets new episodes moves up.
+- **Library grid** — a failed "load more" keeps the loaded titles and offers a retry under the grid instead of replacing the whole grid with an error. Page 1 prefetched by the route is now used on first paint; the prefetch and the grid asked for different default sorting, so the grid always started from a skeleton.
+- **Linked files in the metadata editor** — the section showed "No linked files" when the title had files and an empty list when it had none.
+- **Quick Connect on the login page** — the "Log in with code" button required 8 characters while codes have 6, so it never enabled. All three code fields now share one completeness rule.
+- **Stale file data after refresh, scan or edit** — media-file mutations and the library-scan event invalidated a cache key no query used, so file details (duration, streams, relations) stayed stale for up to 10 minutes. They now refresh the media-files queries.
+- **Downloaded subtitles in the player** — a subtitle fetched from a provider is listed and shown at once; the download refreshed a list no view reads, so the new track appeared only after the playback view refetched.
 - **Recently added** — a show that gets new episodes moves to the front of the dashboard's "Recently added" row. The row sorted by when the title was first inserted, so an existing show never came back after its new episodes were added; it now sorts by the newest file and lists only titles with files.
 - **Plugin reload notice** — opening a plugin page no longer shows "The plugin was updated. Reload the page" when nothing was updated. The host recorded only the element it asked a plugin module for, so any other element registered by the same module looked like an older version. Imports are now tracked per module URL and shared between elements mounting at the same time; a real version change still asks for a reload.

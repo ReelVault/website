@@ -1,14 +1,17 @@
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { m } from "@/paraglide/messages";
-import type { LibraryRatingFilter, LibrarySortBy, LibrarySortOrder, LibraryWatchedFilter } from "./use-library-logic";
-
-const LIBRARY_SORT_BY_VALUES: readonly LibrarySortBy[] = ["title", "sortTitle", "releaseDate", "popularity", "createdAt", "updatedAt"];
-const LIBRARY_SORT_ORDER_VALUES: readonly LibrarySortOrder[] = ["asc", "desc"];
-const LIBRARY_WATCHED_VALUES: readonly LibraryWatchedFilter[] = ["all", "watched", "unwatched", "in_progress"];
-const LIBRARY_RATING_VALUES: readonly LibraryRatingFilter[] = ["all", "liked", "disliked", "unrated"];
-
-const isOneOf = <T extends string>(values: readonly T[], value: unknown): value is T => values.some((candidate) => candidate === value);
+import {
+	isOneOf,
+	LIBRARY_RATING_VALUES,
+	LIBRARY_SORT_BY_VALUES,
+	LIBRARY_SORT_ORDER_VALUES,
+	LIBRARY_WATCHED_VALUES,
+	type LibraryRatingFilter,
+	type LibrarySortBy,
+	type LibrarySortOrder,
+	type LibraryWatchedFilter,
+} from "./use-library-logic";
 
 interface FilterSortSelectsProps {
 	sortBy: LibrarySortBy;
@@ -51,7 +54,7 @@ export function FilterSortSelects({
 								<SelectItem value="sortTitle">{m.web_title_custom_order()}</SelectItem>
 								<SelectItem value="releaseDate">{m.common_release_year()}</SelectItem>
 								<SelectItem value="popularity">{m.admin_metadata_popularity()}</SelectItem>
-								<SelectItem value="createdAt">{m.admin_media_sort_recently_added()}</SelectItem>
+								<SelectItem value="recentlyAdded">{m.admin_media_sort_recently_added()}</SelectItem>
 								<SelectItem value="updatedAt">{m.admin_media_sort_recently_updated()}</SelectItem>
 							</SelectGroup>
 						</SelectContent>

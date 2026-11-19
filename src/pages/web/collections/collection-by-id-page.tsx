@@ -31,7 +31,7 @@ const COLLECTION_SORT: Record<
 		description: m.web_collection_alphabetical_description(),
 	},
 	recently_added: {
-		sortBy: "createdAt",
+		sortBy: "recentlyAdded",
 		sortOrder: "desc",
 		description: m.web_collection_newest_description(),
 	},
