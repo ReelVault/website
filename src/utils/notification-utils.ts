@@ -3,11 +3,8 @@ import type { LucideIcon } from "lucide-react";
 import { CheckCircle2, CircleAlert, Info, Settings, Tv } from "lucide-react";
 import { m } from "@/paraglide/messages";
 
-/** Interpolation value accepted by paraglide message inputs. */
-type MessageInputValue = string | number;
-
 /** Converts an unknown JSON field to display text, tolerating only primitives. */
-function fieldToText(value: unknown): MessageInputValue {
+function fieldToText(value: unknown) {
 	if (typeof value === "string") return value;
 
 	if (typeof value === "number") return value;

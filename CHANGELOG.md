@@ -128,7 +128,6 @@ The table counts API requests fired by a cold open of each view (for the details
 | Network | Admin dashboard — unused `admin/stats` prefetch     |         1 |         0 | **-100%** |
 | Polling | Remote sessions — idle poll interval                |      15 s |      60 s |  **-75%** |
 
-
 ## Additional measurements
 
 Only smaller measurements without a complete Before/After pair are kept here, so the main benchmark table stays limited to directly comparable results.
@@ -472,6 +471,10 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 - **React Doctor score: 69 → 81** after fixing effect cleanup/timer false positives, plugin-context churn and the player heartbeat loop; the score is now above the project's 70 threshold.
 
 # v1.3.4
+
+### Features
+
+- **Server 1.3.6 required** — the client now declares a 1.3.6 server floor; older servers show the update-required state instead of failing on the newer metadata, profile and plugin contracts.
 
 ### Fixes
 
