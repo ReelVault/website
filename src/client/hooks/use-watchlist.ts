@@ -15,8 +15,17 @@ const WATCHLIST_PAGE_LIMIT = 500;
 const MAX_WATCHLIST_PAGES = 20;
 const WATCHLIST_FETCH_CONCURRENCY = 4;
 
+// Every page asks for the same explicit order: pages of an unspecified order can
+// repeat or skip items, and the "added" sort relies on newest-first.
+const WATCHLIST_ORDER = { sortBy: "createdAt", sortOrder: "desc" } as const;
+
 async function fetchFullWatchlist() {
-	const first = await reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT });
+	const first = await reelvault.me.getWatchlist({
+		fields: watchlistFields,
+		hydrate: true,
+		limit: WATCHLIST_PAGE_LIMIT,
+		...WATCHLIST_ORDER,
+	});
 	const pagesToFetch = Math.min(Math.max(first.totalPages - 1, 0), MAX_WATCHLIST_PAGES - 1);
 	const pageNumbers = Array.from({ length: pagesToFetch }, (_, index) => index + 2);
 	const rest: Array<Awaited<ReturnType<typeof reelvault.me.getWatchlist>>> = [];
@@ -25,7 +34,9 @@ async function fetchFullWatchlist() {
 		const batch = pageNumbers.slice(start, start + WATCHLIST_FETCH_CONCURRENCY);
 		rest.push(
 			...(await Promise.all(
-				batch.map((page) => reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page })),
+				batch.map((page) =>
+					reelvault.me.getWatchlist({ fields: watchlistFields, hydrate: true, limit: WATCHLIST_PAGE_LIMIT, page, ...WATCHLIST_ORDER }),
+				),
 			)),
 		);
 	}

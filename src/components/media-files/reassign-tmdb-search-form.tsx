@@ -9,8 +9,6 @@ import { m } from "@/paraglide/messages";
 export interface TmdbSearchParams {
 	title: string;
 	year?: number;
-	seasonNumber?: number;
-	episodeNumber?: number;
 }
 
 interface ReassignTmdbSearchFormProps {
@@ -19,13 +17,26 @@ interface ReassignTmdbSearchFormProps {
 	mediaType: "movie" | "tv_show";
 	isSearching: boolean;
 	onSearch: (params: TmdbSearchParams) => void;
+	/** The episode a picked result is assigned to; owned by the tab, which applies it. */
+	seasonNumber: string;
+	episodeNumber: string;
+	onSeasonNumberChange: (value: string) => void;
+	onEpisodeNumberChange: (value: string) => void;
 }
 
-export function ReassignTmdbSearchForm({ initialTitle, initialYear, mediaType, isSearching, onSearch }: ReassignTmdbSearchFormProps) {
+export function ReassignTmdbSearchForm({
+	initialTitle,
+	initialYear,
+	mediaType,
+	isSearching,
+	onSearch,
+	seasonNumber,
+	episodeNumber,
+	onSeasonNumberChange,
+	onEpisodeNumberChange,
+}: ReassignTmdbSearchFormProps) {
 	const [tmdbTitle, setTmdbTitle] = useState(initialTitle);
 	const [tmdbYear, setTmdbYear] = useState<string>(initialYear ? String(initialYear) : "");
-	const [tmdbSeasonNumber, setTmdbSeasonNumber] = useState<string>("1");
-	const [tmdbEpisodeNumber, setTmdbEpisodeNumber] = useState<string>("1");
 
 	const handleSubmit = (e?: React.SyntheticEvent<HTMLFormElement>) => {
 		e?.preventDefault();
@@ -33,15 +44,8 @@ export function ReassignTmdbSearchForm({ initialTitle, initialYear, mediaType, i
 		if (!trimmedTitle) return;
 
 		const yearNum = tmdbYear.trim() ? Number(tmdbYear.trim()) : undefined;
-		const seasonNum = mediaType === "tv_show" ? Number(tmdbSeasonNumber || 1) : undefined;
-		const episodeNum = mediaType === "tv_show" ? Number(tmdbEpisodeNumber || 1) : undefined;
 
-		onSearch({
-			title: trimmedTitle,
-			year: yearNum,
-			seasonNumber: seasonNum,
-			episodeNumber: episodeNum,
-		});
+		onSearch({ title: trimmedTitle, year: yearNum });
 	};
 
 	return (
@@ -77,13 +81,13 @@ export function ReassignTmdbSearchForm({ initialTitle, initialYear, mediaType, i
 			{mediaType === "tv_show" && (
 				<div className="border-border/80 bg-muted/20 grid grid-cols-2 gap-3 rounded-lg border p-3">
 					<div className="space-y-1.5">
-						<Label htmlFor="tmdb-season">{m.common_episode_number()}</Label>
+						<Label htmlFor="tmdb-season">{m.common_season_number()}</Label>
 						<Input
 							id="tmdb-season"
 							type="number"
 							min={0}
-							value={tmdbSeasonNumber}
-							onChange={(e) => setTmdbSeasonNumber(e.target.value)}
+							value={seasonNumber}
+							onChange={(e) => onSeasonNumberChange(e.target.value)}
 							placeholder="1"
 						/>
 					</div>
@@ -93,8 +97,8 @@ export function ReassignTmdbSearchForm({ initialTitle, initialYear, mediaType, i
 							id="tmdb-episode"
 							type="number"
 							min={1}
-							value={tmdbEpisodeNumber}
-							onChange={(e) => setTmdbEpisodeNumber(e.target.value)}
+							value={episodeNumber}
+							onChange={(e) => onEpisodeNumberChange(e.target.value)}
 							placeholder="1"
 						/>
 					</div>

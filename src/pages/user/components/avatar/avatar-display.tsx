@@ -19,7 +19,9 @@ interface AvatarDisplayProps {
 
 export function AvatarDisplay({ currentAvatar, size, editable }: AvatarDisplayProps) {
 	const editBadge = AVATAR_EDIT_BADGE[size];
-	const [failed, setFailed] = useState(false);
+	// Remembers which avatar failed, so picking another one tries to load it.
+	const [failedAvatar, setFailedAvatar] = useState<string | undefined>();
+	const failed = currentAvatar !== undefined && failedAvatar === currentAvatar;
 
 	return (
 		<>
@@ -40,7 +42,7 @@ export function AvatarDisplay({ currentAvatar, size, editable }: AvatarDisplayPr
 							loading="lazy"
 							decoding="async"
 							className="h-full w-full object-cover"
-							onError={() => setFailed(true)}
+							onError={() => setFailedAvatar(currentAvatar)}
 						/>
 					) : (
 						<User className={cn("text-primary/20", AVATAR_PLACEHOLDER_ICON_SIZE[size])} />

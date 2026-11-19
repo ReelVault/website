@@ -88,8 +88,10 @@ const ADMIN_RESOURCE_ROUTES: Record<AdminResource, "/admin" | `/admin/${Resource
 /** Breadcrumb and document-title labels come from the sidebar so the two never drift. */
 const sidebarItemLabels = new Map(staticMenuGroups.flatMap((group) => group.items).map((item) => [item.href, item.name] as const));
 const resourceLabels: Record<string, string> = {
-	dashboard: m.admin_nav_dashboard(),
 	...Object.fromEntries(RESOURCE_KEYS.map((key) => [key, sidebarItemLabels.get(`/admin/${key}`) ?? key])),
+	dashboard: m.admin_nav_dashboard(),
+	// The plugins section is built from the installed plugins, not from the static sidebar items.
+	plugins: m.admin_plugin_management(),
 };
 
 function AdminHeader() {

@@ -118,9 +118,13 @@ export function OfflineDownloadDialog({ open, onOpenChange, mediaFileId, title, 
 	const handleCancel = (): void => {
 		startTransition(async () => {
 			if (activeJobId) {
-				await deleteMutation.mutateAsync(activeJobId).catch(() => {
-					// Cancellation failure is non-fatal — the dialog still closes.
-				});
+				// The delete hook reports a failure itself; the job then stays active.
+				const cancelled = await deleteMutation.mutateAsync(activeJobId).then(
+					() => true,
+					() => false,
+				);
+				if (!cancelled) return;
+
 				setActiveJobId(null);
 				toast.success(m.components_download_cancelled());
 			}

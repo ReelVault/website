@@ -18,12 +18,10 @@ interface ReassignTmdbTabProps {
 }
 
 export function ReassignTmdbTab({ mediaFileId, mediaType, initialTitle, initialYear, onSuccess }: ReassignTmdbTabProps) {
-	const [searchParams, setSearchParams] = useState<TmdbSearchParams>({
-		title: initialTitle,
-		year: initialYear,
-		seasonNumber: 1,
-		episodeNumber: 1,
-	});
+	const [searchParams, setSearchParams] = useState<TmdbSearchParams>({ title: initialTitle, year: initialYear });
+	// Read when a result is applied, so an edit after the last search still counts.
+	const [seasonNumber, setSeasonNumber] = useState("1");
+	const [episodeNumber, setEpisodeNumber] = useState("1");
 
 	const { reassignMediaFile, isReassigning } = useAdminReassignMediaFile();
 
@@ -41,8 +39,8 @@ export function ReassignTmdbTab({ mediaFileId, mediaType, initialTitle, initialY
 					body: {
 						providerId,
 						externalId,
-						seasonNumber: mediaType === "tv_show" ? (searchParams.seasonNumber ?? 1) : undefined,
-						episodeNumber: mediaType === "tv_show" ? (searchParams.episodeNumber ?? 1) : undefined,
+						seasonNumber: mediaType === "tv_show" ? Number(seasonNumber || 1) : undefined,
+						episodeNumber: mediaType === "tv_show" ? Number(episodeNumber || 1) : undefined,
 					},
 				});
 				onSuccess();
@@ -121,6 +119,10 @@ export function ReassignTmdbTab({ mediaFileId, mediaType, initialTitle, initialY
 				mediaType={mediaType}
 				isSearching={tmdbQuery.isFetching}
 				onSearch={setSearchParams}
+				seasonNumber={seasonNumber}
+				episodeNumber={episodeNumber}
+				onSeasonNumberChange={setSeasonNumber}
+				onEpisodeNumberChange={setEpisodeNumber}
 			/>
 
 			<div className="max-h-[50vh] overflow-y-auto pr-1">{tmdbContent}</div>

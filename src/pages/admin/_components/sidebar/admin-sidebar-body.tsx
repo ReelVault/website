@@ -52,6 +52,29 @@ export function AdminSidebarBody() {
 	const isPluginsMainActive =
 		pathname === "/admin/plugins" || (pathname.startsWith("/admin/plugins/") && !pathname.startsWith("/admin/plugins/pages"));
 
+	// Plugins sit after "operations"; while a search hides that group they follow the
+	// nearest visible group before it, or lead the list, so a plugin match always shows.
+	const operationsIndex = staticMenuGroups.findIndex((group) => group.id === "operations");
+	const pluginsAnchorId = filteredStaticGroups.findLast(
+		(group) => staticMenuGroups.findIndex((candidate) => candidate.id === group.id) <= operationsIndex,
+	)?.id;
+	const pluginsSection = showPluginsSection ? (
+		<>
+			<SidebarSeparator />
+			<AdminSidebarPluginsGroup
+				pathname={pathname}
+				isPluginsMainMatch={isPluginsMainMatch}
+				isPluginsMainActive={isPluginsMainActive}
+				filteredPluginPages={filteredPluginPages}
+				pluginSidebarLinksCount={pluginSidebarLinks.length}
+				activePluginsWithViewsCount={activePluginsWithViews.length}
+				pluginsOpen={pluginsOpen}
+				setPluginsOpen={setPluginsOpen}
+				hasQuery={Boolean(q)}
+			/>
+		</>
+	) : null;
+
 	const handleClearSearch = () => setSearchQuery("");
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(event.target.value);
@@ -79,31 +102,16 @@ export function AdminSidebarBody() {
 
 			<SidebarContent size="comfortable" className="gap-2">
 				{hasAnyResults ? (
-					filteredStaticGroups.map((group, groupIndex) => (
-						<div key={group.id}>
-							<AdminSidebarGroup group={group} pathname={pathname} stats={stats} />
-
-							{/* Dynamic plugins section inserted after the last static group */}
-							{group.id === "operations" && showPluginsSection ? (
-								<>
-									<SidebarSeparator />
-									<AdminSidebarPluginsGroup
-										pathname={pathname}
-										isPluginsMainMatch={isPluginsMainMatch}
-										isPluginsMainActive={isPluginsMainActive}
-										filteredPluginPages={filteredPluginPages}
-										pluginSidebarLinksCount={pluginSidebarLinks.length}
-										activePluginsWithViewsCount={activePluginsWithViews.length}
-										pluginsOpen={pluginsOpen}
-										setPluginsOpen={setPluginsOpen}
-										hasQuery={Boolean(q)}
-									/>
-								</>
-							) : null}
-
-							{groupIndex < filteredStaticGroups.length - 1 && <SidebarSeparator />}
-						</div>
-					))
+					<>
+						{pluginsAnchorId === undefined && pluginsSection}
+						{filteredStaticGroups.map((group, groupIndex) => (
+							<div key={group.id}>
+								<AdminSidebarGroup group={group} pathname={pathname} stats={stats} />
+								{group.id === pluginsAnchorId && pluginsSection}
+								{groupIndex < filteredStaticGroups.length - 1 && <SidebarSeparator />}
+							</div>
+						))}
+					</>
 				) : (
 					<div className="flex flex-col items-center justify-center gap-2 px-4 py-8 text-center">
 						<Search className="text-muted-foreground/50 size-5" />

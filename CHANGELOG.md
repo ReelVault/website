@@ -475,10 +475,17 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Avatars** — after one avatar image failed to load, every later avatar in the picker showed the placeholder.
+- **Remote control** — the Play button reported itself as pressed while playing (screen readers).
+- **Watchlist order** — pages of the watchlist were requested without an order, so items could repeat or go missing across pages; they are now fetched newest first.
+- **Admin sidebar search** — a search matching only a plugin showed neither the plugin nor "no results" when the operations group was filtered out.
+- **Plugins breadcrumb** — the plugin management page showed the raw key "plugins" as its breadcrumb and title.
+- **Offline download cancel** — a failed cancel still said the download was cancelled and dropped the job.
+- **Reassigning an episode** — editing the season or episode and clicking a result without searching again assigned the previous episode; the season field was also labelled "Episode number".
 - **Bulk actions after a failure** — when a bulk refresh or delete stopped on a failed request, the chunks already processed were not refreshed in the lists; bulk-deleted titles stayed in cached details and rails.
 - **Scan all libraries** — with the library list not loaded yet, the button scanned nothing but reported that every scan had started.
 - **Stacked overlays and Back** — closing the top dialog could also close the one beneath it.
-- **Error messages with missing values** — a parameterised server message that arrived without its values showed a sentence with blanks (for example "retry after  seconds"); it now falls back to the plain message.
+- **Error messages with missing values** — a parameterised server message that arrived without its values showed a sentence with blanks (for example "retry after seconds"); it now falls back to the plain message.
 - **New-episode notifications** — the episode title was wrapped in Polish quotes in every language.
 - **Refreshing a person** — the admin people list kept the old data until reload.
 - **Purge and cleanup previews** — after clearing worker history or old logs, the preview kept the old counts; the worker-history error used a webhook message.

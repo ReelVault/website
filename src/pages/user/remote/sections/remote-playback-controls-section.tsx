@@ -108,7 +108,7 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						variant={isPaused === false ? "default" : "outline"}
 						size="icon"
 						aria-label={m.user_remote_pause()}
-						aria-pressed={!isPaused}
+						aria-pressed={isPaused === false}
 						disabled={isPending}
 						onClick={handlePause}
 					>
@@ -119,7 +119,7 @@ export function RemotePlaybackControlsSection({ session, onSendCommand, isPendin
 						variant={isPaused === true ? "default" : "outline"}
 						size="icon"
 						aria-label={m.user_remote_play()}
-						aria-pressed={!isPaused}
+						aria-pressed={isPaused === true}
 						disabled={isPending}
 						onClick={handlePlay}
 					>

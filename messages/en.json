@@ -2749,6 +2749,7 @@
 	"common_email": "email",
 	"common_email_label": "E-mail",
 	"common_episode_number": "Episode number",
+	"common_season_number": "Season number",
 	"common_error": "Error",
 	"common_ffmpeg_process_label": "FFmpeg process:",
 	"common_file_size_not_available": "Size n/a",
