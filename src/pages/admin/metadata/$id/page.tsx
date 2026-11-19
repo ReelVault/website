@@ -91,12 +91,10 @@ function MetadataEditorContent({
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Top breadcrumb navigation */}
 			<div className="flex items-center gap-2">
 				<AdminBackLink to="/admin/metadata" label={m.admin_metadata_back_to_list()} />
 			</div>
 
-			{/* Hero Header Card */}
 			<MetadataHero
 				metadata={metadata}
 				lockedFields={lockedFields}
@@ -116,7 +114,6 @@ function MetadataEditorContent({
 				isDeleting={deleteMutation.isPending}
 			/>
 
-			{/* Main Grid: Form / Taxonomy & Artwork */}
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<div className="flex flex-col gap-6 lg:col-span-2">
 					<MetadataBasicInfoSection basic={basic} lockedFields={lockedFields} onChange={setField} onToggleLock={toggleFieldLock} />
@@ -151,7 +148,6 @@ function MetadataEditorContent({
 				<LazyRender>{() => <MetadataMediaFilesSection metadataId={metadataId} />}</LazyRender>
 			</Suspense>
 
-			{/* Dialogs */}
 			{dialogOpen && (
 				<Suspense fallback={null}>
 					<MetadataArtworkDialog metadataId={metadataId} type={dialogType} open={dialogOpen} onOpenChange={setDialogOpen} />

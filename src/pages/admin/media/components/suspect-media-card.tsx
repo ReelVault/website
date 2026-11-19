@@ -16,7 +16,6 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 	return (
 		<>
 			<div className="border-destructive/30 bg-card hover:border-destructive/60 flex flex-col justify-between gap-4 rounded-xl border p-5 shadow-2xs transition-[border-color,background-color,color,box-shadow] duration-150 hover:shadow-sm">
-				{/* Top Header: Filename & Path */}
 				<div className="flex flex-col gap-2">
 					<div className="flex items-start justify-between gap-3">
 						<div className="flex min-w-0 items-center gap-3">
@@ -35,7 +34,6 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 						)}
 					</div>
 
-					{/* Issues Badges */}
 					<div className="mt-1 flex flex-wrap gap-1.5">
 						{item.reasons.map((r) => {
 							const key = `${r.code}-${r.params ? JSON.stringify(r.params) : ""}`;
@@ -67,7 +65,6 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 						})}
 					</div>
 
-					{/* Detailed Messages */}
 					<div className="border-border/50 bg-muted/30 mt-1 flex flex-col gap-1 rounded-lg border p-2.5 text-xs">
 						{item.reasons.map((r) => (
 							<p key={`msg-${r.code}-${r.params ? JSON.stringify(r.params) : ""}`} className="text-muted-foreground">
@@ -77,9 +74,7 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 					</div>
 				</div>
 
-				{/* Comparison Grid: Recognized vs Assigned */}
 				<div className="border-border/60 bg-muted/20 grid grid-cols-1 gap-2 rounded-xl border p-3 sm:grid-cols-2">
-					{/* Left: Recognized from file */}
 					<div className="border-border/40 bg-background/60 flex flex-col gap-1 rounded-lg border p-2.5">
 						<span className="text-muted-foreground text-xs font-semibold">{m.admin_media_recognized_from_file()}</span>
 						<p className="text-foreground text-sm font-bold">{item.recognized.title}</p>
@@ -95,7 +90,6 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 						</div>
 					</div>
 
-					{/* Right: Currently assigned */}
 					<div className="border-border/40 bg-background/60 flex flex-col gap-1 rounded-lg border p-2.5">
 						<span className="text-muted-foreground text-xs font-semibold">{m.admin_media_current_metadata()}</span>
 						<p className="text-foreground text-sm font-bold">{item.currentMetadata.title}</p>
@@ -121,7 +115,6 @@ export function SuspectMediaCard({ item, onFixed }: { item: MediaFileAuditItem; 
 					</div>
 				</div>
 
-				{/* Actions */}
 				<div className="border-border/50 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
 					<div className="flex items-center gap-2">
 						<Link

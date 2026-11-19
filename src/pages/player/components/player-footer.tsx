@@ -38,7 +38,6 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 	);
 
 	// -------------------------------------------------------------------------
-	// Derived icon for volume button
 	// -------------------------------------------------------------------------
 
 	const isBoosted = volume > 1 && !isMuted;
@@ -95,7 +94,6 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 
 			<div className="flex w-full flex-wrap items-center justify-between gap-y-2">
 				<div className="flex items-center gap-2 sm:gap-3">
-					{/* Play / Pause */}
 					<PlayerControlButton
 						description={isPaused ? m.player_play_action() : m.player_pause_action()}
 						variant="primary"
@@ -104,7 +102,6 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 						{isPaused ? <Play className="ml-0.5 size-5 fill-current" /> : <Pause className="size-5 fill-current" />}
 					</PlayerControlButton>
 
-					{/* Seek -10s */}
 					<PlayerControlButton
 						description={m.player_seek_back_10s()}
 						render={<button type="button" onClick={() => seekRelative(-10)} aria-label={m.player_seek_back_10s()} />}
@@ -112,7 +109,6 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 						<Rewind className="size-5" />
 					</PlayerControlButton>
 
-					{/* Seek +10s */}
 					<PlayerControlButton
 						description={m.player_seek_forward_10s()}
 						render={<button type="button" onClick={() => seekRelative(10)} aria-label={m.player_seek_forward_10s()} />}
@@ -120,7 +116,6 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 						<FastForward className="size-5" />
 					</PlayerControlButton>
 
-					{/* Next episode */}
 					{nextEpisode && (
 						<PlayerControlButton
 							description={m.player_next_episode_with_title({
@@ -160,12 +155,9 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 							<VolumeIcon className={cn("size-5", isBoosted && "text-warning")} />
 						</PlayerControlButton>
 
-						{/* Volume slider */}
 						<div className="relative flex h-6 w-0 cursor-pointer items-center overflow-hidden transition-[width] duration-300 group-hover/volume:w-28">
 							<div className="bg-foreground/30 relative h-1.25 w-full overflow-hidden rounded-sm">
-								{/* 100% indicator notch */}
 								<div className="bg-foreground/40 pointer-events-none absolute inset-y-0 left-1/2 z-10 w-0.5 -translate-x-1/2" />
-								{/* Filled track */}
 								<div
 									className={cn("h-full rounded-sm transition-[width] duration-75", isBoosted ? "bg-warning" : "bg-primary")}
 									style={{ width: `${((isMuted ? 0 : volume) / MAX_PLAYER_VOLUME) * 100}%` }}
@@ -204,7 +196,6 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 						</PlayerControlButton>
 					</div>
 
-					{/* Fullscreen */}
 					<PlayerControlButton
 						description={m.admin_logs_fullscreen()}
 						render={<button type="button" onClick={handleFullscreen} aria-label={m.admin_logs_fullscreen()} />}

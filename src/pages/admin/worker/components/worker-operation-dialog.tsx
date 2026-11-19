@@ -85,7 +85,6 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 	return (
 		<FullscreenDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
 			<FullscreenDialogContent className="flex max-h-[90vh] w-[95vw] max-w-5xl flex-col overflow-hidden">
-				{/* Dialog Header */}
 				<FullscreenDialogHeader className="border-b">
 					<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 						<div className="flex items-center gap-3">
@@ -125,7 +124,6 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 						</Button>
 					</div>
 
-					{/* Search & Filter Bar */}
 					<OperationFilterBar
 						searchQuery={searchQuery}
 						onSearchChange={handleSearchChange}
@@ -135,7 +133,6 @@ export function WorkerOperationDialog({ operation, workerTimeouts, isOpen, onClo
 					/>
 				</FullscreenDialogHeader>
 
-				{/* Dialog Content List */}
 				<div className="flex flex-1 flex-col gap-4 overflow-y-auto py-3 pr-1">
 					{isLoading && (
 						<div className="flex flex-col gap-2.5">

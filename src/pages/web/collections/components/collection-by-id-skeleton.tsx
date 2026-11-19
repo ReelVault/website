@@ -4,7 +4,6 @@ import { m } from "@/paraglide/messages";
 export function CollectionByIdSkeleton() {
 	return (
 		<div className="bg-background text-foreground min-h-screen overflow-x-hidden" role="status" aria-label={m.web_loading_collection()}>
-			{/* Hero Skeleton */}
 			<section className="border-border relative min-h-[62vh] border-b lg:min-h-[70vh]">
 				<div className="bg-card absolute inset-0 overflow-hidden">
 					<div className="from-background via-background/65 to-background/10 absolute inset-0 bg-linear-to-t" />
@@ -24,7 +23,6 @@ export function CollectionByIdSkeleton() {
 				</div>
 			</section>
 
-			{/* Main Content Skeleton */}
 			<main className="cinema-shell py-16 lg:py-24">
 				<div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
 					<div className="space-y-2">
@@ -37,18 +35,15 @@ export function CollectionByIdSkeleton() {
 				<div className="space-y-12">
 					{["item-1", "item-2", "item-3"].map((key) => (
 						<article key={key} className="border-border/70 grid gap-8 border-b pb-12 lg:grid-cols-[5rem_13rem_1fr] lg:gap-10">
-							{/* Index / Number */}
 							<div className="hidden pt-2 text-right lg:block">
 								<Skeleton className="ml-auto h-9 w-12" />
 								<Skeleton className="mt-2 ml-auto h-3.5 w-14" />
 							</div>
 
-							{/* Poster */}
 							<div className="flex justify-center lg:justify-start">
 								<Skeleton className="aspect-2/3 w-48" />
 							</div>
 
-							{/* Details */}
 							<div className="min-w-0 space-y-4 lg:pt-3">
 								<div className="flex items-center gap-3">
 									<Skeleton className="h-4 w-12" />

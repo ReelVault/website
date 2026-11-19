@@ -82,7 +82,6 @@ export function PlayerEqualizerPanel() {
 
 	return (
 		<div className="space-y-6 py-1">
-			{/* Top Header & Reset */}
 			<div className="border-border/40 bg-muted/40 flex flex-wrap items-center justify-between gap-3 rounded-lg border p-4">
 				<div className="space-y-0.5">
 					<div className="flex items-center gap-2">
@@ -100,7 +99,6 @@ export function PlayerEqualizerPanel() {
 				</Button>
 			</div>
 
-			{/* Presets Grid */}
 			<div className="space-y-2">
 				<span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_ready_profiles()}</span>
 				<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
@@ -130,7 +128,6 @@ export function PlayerEqualizerPanel() {
 				</div>
 			</div>
 
-			{/* Dynamics Compressor Card */}
 			<div className="border-border/40 bg-muted/20 hover:border-border/80 flex items-center justify-between gap-4 rounded-lg border p-4 transition-colors">
 				<div className="flex items-start gap-3">
 					<div className="bg-primary/10 text-primary mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md">
@@ -151,7 +148,6 @@ export function PlayerEqualizerPanel() {
 				<Switch checked={config.compressorEnabled} onCheckedChange={toggleCompressor} aria-label={m.player_enable_compressor()} />
 			</div>
 
-			{/* Equalizer Frequency Sliders */}
 			<div className="space-y-3">
 				<div className="flex items-center justify-between">
 					<span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_eq_bands_label()}</span>
@@ -170,13 +166,11 @@ export function PlayerEqualizerPanel() {
 								key={band.label}
 								className="border-border/20 bg-background/50 flex flex-col items-center justify-between rounded-md border p-3"
 							>
-								{/* Band label & subtext */}
 								<div className="text-center">
 									<span className="text-foreground font-mono text-xs font-semibold">{band.label}</span>
 									<p className="text-muted-foreground text-[10px]">{desc}</p>
 								</div>
 
-								{/* Vertical Slider on desktop / Horizontal on mobile */}
 								<div className={cn("flex w-full items-center justify-center", isMobile ? "h-10" : "my-3 h-32 sm:h-36")}>
 									<Slider
 										orientation={isMobile ? "horizontal" : "vertical"}
@@ -193,7 +187,6 @@ export function PlayerEqualizerPanel() {
 									/>
 								</div>
 
-								{/* Gain readout badge */}
 								<span
 									className={cn(
 										"rounded-sm px-1.5 py-0.5 font-mono text-[11px]",

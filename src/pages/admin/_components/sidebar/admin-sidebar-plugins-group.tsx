@@ -48,7 +48,6 @@ export function AdminSidebarPluginsGroup({
 			<SidebarGroupLabel>{m.admin_sidebar_extensions()}</SidebarGroupLabel>
 			<SidebarGroupContent>
 				<SidebarMenu className="gap-1">
-					{/* Plugin main panel pinned on top */}
 					{isPluginsMainMatch && (
 						<SidebarMenuItem>
 							<SidebarMenuButton

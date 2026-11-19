@@ -61,7 +61,6 @@ export function ScheduledTasksList({
 	const debouncedQuery = useDebounce({ value: searchQuery, delay: 250 });
 	const q = debouncedQuery.trim().toLowerCase();
 
-	// Filter tasks by quick filter and search query
 	const filteredTasks = tasks.filter((task) => {
 		if (categoryFilter === "scheduled" && !isScheduled(task)) return false;
 
@@ -108,7 +107,6 @@ export function ScheduledTasksList({
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Filters & Search Header */}
 			<ScheduledTasksFilters
 				searchQuery={searchQuery}
 				onSearchChange={setSearchQuery}
@@ -119,7 +117,6 @@ export function ScheduledTasksList({
 				activeCount={tasks.filter((t) => isActive(t)).length}
 			/>
 
-			{/* Task List by Categories */}
 			<div className="flex flex-col gap-8">
 				{tasks.length > 0 && filteredTasks.length === 0 && (
 					<AppEmptyState title={m.admin_workers_no_matches()} description={m.admin_workers_no_matches_description()} />

@@ -80,7 +80,6 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 
 	return (
 		<div className="group border-border/60 bg-background/50 hover:border-primary/50 relative flex flex-col overflow-hidden rounded-xl border transition-[border-color,background-color,color,box-shadow] hover:shadow-lg">
-			{/* Poster Container */}
 			<div className="bg-muted relative aspect-2/3 w-full overflow-hidden">
 				<ApiImage
 					fileId={extractFileIdFromUrl(item.posterUrl)}
@@ -93,7 +92,6 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 				/>
 				<div className="from-background/90 absolute inset-0 bg-linear-to-t via-transparent to-black/30" />
 
-				{/* Rank Badge */}
 				<div className="absolute top-2 left-2">
 					<div
 						className={cn("flex size-7 items-center justify-center rounded-lg border text-xs font-black", {
@@ -117,7 +115,6 @@ function MediaRankCard({ item, rank }: { item: TopWatchedMedia; rank: number }) 
 				)}
 			</div>
 
-			{/* Info */}
 			<div className="flex flex-1 flex-col justify-between p-3">
 				<div>
 					<p className="text-foreground truncate text-sm font-bold" title={item.title}>

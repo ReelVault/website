@@ -107,7 +107,6 @@ export function MetadataCardPoster({
 				{/* Genre Tags (Clean static badges, non-jittery) */}
 				<MetadataCardGenreBadges genres={genres} />
 
-				{/* Interaction Overlays */}
 				<div className="bg-background/40 pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
 					{overlayAction}
 

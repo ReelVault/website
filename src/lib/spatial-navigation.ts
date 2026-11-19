@@ -1,7 +1,7 @@
 /**
  * Spatial navigation (D-pad / arrow keys) tuned for TV and keyboard.
  *
- * Oparta o zasady algorytmu W3C CSS Spatial Navigation Level 1:
+ * Based on the W3C CSS Spatial Navigation Level 1 algorithm:
  * - Edge-to-edge projection instead of center-to-center
  * - Orthogonal overlap band without cross-axis penalties
  * - Directional cone that avoids diagonal jumps

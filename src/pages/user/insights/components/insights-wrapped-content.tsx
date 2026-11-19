@@ -149,10 +149,8 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 
 	return (
 		<FullscreenDialogContent className="flex h-[88vh] max-h-205 w-[95vw] max-w-4xl flex-col overflow-hidden p-0 lg:max-w-5xl">
-			{/* Top Story-style Progress Bars */}
 			<WrappedProgressBar slideIndex={slideIndex} onSelectSlide={setSlideIndex} />
 
-			{/* Header Info */}
 			<FullscreenDialogHeader className="relative z-20 flex flex-row items-center justify-between">
 				<div className="flex items-center gap-3">
 					<div className="flex size-9 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400">
@@ -173,12 +171,10 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 				</div>
 			</FullscreenDialogHeader>
 
-			{/* Slide Main Canvas */}
 			<div className="relative flex flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-6 sm:px-12">
 				{renderSlideArea()}
 			</div>
 
-			{/* Bottom Navigation Controls */}
 			<div className="border-border/60 bg-card/60 relative z-20 flex items-center justify-between border-t px-8 py-4">
 				<Button type="button" variant="ghost" size="default" onClick={handlePrev} disabled={slideIndex === 0} className="cursor-pointer">
 					<ChevronLeft className="size-4" />

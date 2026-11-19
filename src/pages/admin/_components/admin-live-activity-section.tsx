@@ -81,7 +81,6 @@ export function AdminLiveActivitySection() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* 1. Maintenance & Safe Restart Banner */}
 			<LiveMaintenanceBanner
 				canSafelyUpdate={canSafelyUpdate}
 				activeStreamsCount={activeStreams.length}
@@ -89,7 +88,6 @@ export function AdminLiveActivitySection() {
 				warningText={warningText}
 			/>
 
-			{/* 2. Live Playing Streams Grid */}
 			<div className="flex flex-col gap-3">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
@@ -170,7 +168,6 @@ export function AdminLiveActivitySection() {
 				)}
 			</div>
 
-			{/* 3. Connected Devices (Browsing / Idle) */}
 			{activeDevices.length > 0 && (
 				<div className="flex flex-col gap-3 pt-2">
 					<div className="flex items-center gap-2">

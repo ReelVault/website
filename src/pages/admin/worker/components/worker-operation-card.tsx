@@ -89,7 +89,6 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 			})}
 		>
 			<div className="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
-				{/* Left Info */}
 				<div className="flex min-w-0 flex-1 items-start gap-3.5">
 					<div
 						className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl border shadow-xs transition-colors", {
@@ -129,7 +128,6 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 							)}
 						</div>
 
-						{/* Progress Bar when Active */}
 						{isActive && (
 							<div className="flex flex-col gap-1.5 pt-1">
 								<div className="flex items-center justify-between font-mono text-xs">
@@ -143,7 +141,6 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 							</div>
 						)}
 
-						{/* Meta details bar */}
 						<div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 pt-0.5 font-mono text-xs">
 							<span>{m.admin_worker_total_jobs({ totalItems: operation.totalItems })}</span>
 							<span>{m.admin_worker_completed_count({ completedItems: operation.completedItems })}</span>
@@ -172,7 +169,6 @@ export function WorkerOperationCard({ operation, cancelling, resuming, resumeOpe
 					</div>
 				</div>
 
-				{/* Right Actions */}
 				<div className="flex shrink-0 items-center justify-end gap-2 pt-2 sm:pt-0">
 					<Button tone="muted" type="button" variant="outline" size="sm" onClick={() => onInspect(operation)}>
 						<ListTree className="size-3.5" />

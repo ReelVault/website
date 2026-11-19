@@ -58,7 +58,6 @@ export default function DetailsHeader({
 
 	return (
 		<div className="relative overflow-hidden lg:min-h-[80vh]">
-			{/* Background with Gradient */}
 			<div className="absolute inset-0">
 				<ApiImage
 					fileId={backdrop?.id}
@@ -74,7 +73,6 @@ export default function DetailsHeader({
 				<div className="from-background to-background/30 absolute inset-0 bg-linear-to-r via-transparent" />
 			</div>
 
-			{/* Main Content */}
 			<PageContainer className="relative pt-24 pb-12 lg:pt-32">
 				<div className="flex flex-col gap-8 lg:flex-row lg:gap-16">
 					{/* Compact mobile header: mini poster + title and genres */}
@@ -88,7 +86,6 @@ export default function DetailsHeader({
 						genres={metadata.genres}
 					/>
 
-					{/* Left: Poster */}
 					<DetailsHeaderPoster
 						metadataId={metadata.id}
 						title={metadata.title}
@@ -97,9 +94,7 @@ export default function DetailsHeader({
 						rating={metadata.rating}
 					/>
 
-					{/* Right: Content */}
 					<SimpleAnimation direction="right" delay={100} className="flex-1">
-						{/* Title & Genres (Desktop) */}
 						<DetailsHeaderDesktopTitle
 							title={metadata.title}
 							originalTitle={metadata.originalTitle}
@@ -108,7 +103,6 @@ export default function DetailsHeader({
 							metadataId={metadata.id}
 						/>
 
-						{/* Action Buttons & Rating */}
 						<div className="mb-8 flex flex-wrap items-center gap-3">
 							<DetailsPlayButton suggestion={view?.smartPlay} />
 							<DetailsWatchlistButton metadataId={metadata.id} />
@@ -123,7 +117,6 @@ export default function DetailsHeader({
 								}}
 							/>
 
-							{/* Actions / Admin tools dropdown */}
 							<DetailsHeaderMenu
 								metadataId={metadata.id}
 								playableMediaFileId={playableMediaFileId}
@@ -152,7 +145,6 @@ export default function DetailsHeader({
 							<DetailsUserRating metadataId={metadata.id} />
 						</div>
 
-						{/* Overview */}
 						<div className="max-w-3xl">
 							<h2 className="text-foreground mb-3 text-lg font-bold">{m.admin_metadata_plot_description()}</h2>
 							<p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
@@ -160,7 +152,6 @@ export default function DetailsHeader({
 							</p>
 						</div>
 
-						{/* Specs Grid */}
 						<DetailsHeaderSpecs
 							directors={directors}
 							studios={studios}
@@ -172,7 +163,6 @@ export default function DetailsHeader({
 				</div>
 			</PageContainer>
 
-			{/* Dialogi akcyjne (lazy) */}
 			<DetailsHeaderDialogs
 				metadataId={metadata.id}
 				title={metadata.title}

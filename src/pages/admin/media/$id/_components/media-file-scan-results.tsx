@@ -16,7 +16,6 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 			<div className="flex flex-col gap-3">
 				<h3 className="text-foreground text-sm font-semibold">{m.admin_scan_result()}</h3>
 
-				{/* Status 1: file availability */}
 				<div className="border-border bg-muted/40 flex items-start justify-between gap-3 rounded-xl border p-3.5">
 					<div className="flex flex-col gap-1">
 						<p className="text-foreground text-xs font-semibold">{m.admin_media_disk_availability()}</p>
@@ -35,7 +34,6 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 					)}
 				</div>
 
-				{/* Status 2: ffprobe */}
 				<div className="border-border bg-muted/40 flex items-start justify-between gap-3 rounded-xl border p-3.5">
 					<div className="flex w-full flex-col gap-1 overflow-hidden">
 						<p className="text-foreground text-xs font-semibold">{m.admin_media_container_analysis()}</p>
@@ -55,7 +53,6 @@ export function MediaFileScanResults({ scanResult }: MediaFileScanResultsProps) 
 					)}
 				</div>
 
-				{/* Status 3: ffmpeg */}
 				<div className="border-border bg-muted/40 flex items-start justify-between gap-3 rounded-xl border p-3.5">
 					<div className="flex w-full flex-col gap-1 overflow-hidden">
 						<p className="text-foreground text-xs font-semibold">{m.admin_media_decode_streams_test()}</p>

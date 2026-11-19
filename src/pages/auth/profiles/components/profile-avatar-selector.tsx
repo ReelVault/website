@@ -17,7 +17,6 @@ interface ProfileAvatarSelectorProps {
 export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, onSelectSeed }: ProfileAvatarSelectorProps) {
 	return (
 		<div className="flex min-w-0 flex-col gap-4 md:w-2/3">
-			{/* Scrollable style bar */}
 			<div className="flex min-w-0 flex-col gap-2">
 				<Label tone="muted" size="xs">
 					{m.auth_avatar_style()}
@@ -44,7 +43,6 @@ export function ProfileAvatarSelector({ activeStyle, activeSeed, onSelectStyle, 
 				</ScrollArea>
 			</div>
 
-			{/* Siatka nasion (Seeds) */}
 			<div className="flex flex-col gap-2">
 				<Label tone="muted" size="xs">
 					{m.auth_choose_character()}

@@ -273,7 +273,6 @@ export function PlayerEpisodesDrawer() {
 						{headerBadge}
 					</div>
 
-					{/* Season picker */}
 					{!isCollectionMode && seasons.length > 0 && (
 						<ScrollArea className="w-full whitespace-nowrap">
 							<div className="flex w-max gap-2 py-1">
@@ -302,7 +301,6 @@ export function PlayerEpisodesDrawer() {
 					)}
 				</DrawerHeader>
 
-				{/* Item list */}
 				<div className="custom-scrollbar flex-1 overflow-y-auto px-4 py-3">{listContent}</div>
 			</DrawerContent>
 		</Drawer>
@@ -359,7 +357,6 @@ function DrawerItemRow({
 				<span className={cn("text-base font-bold tabular-nums", isCurrent ? "text-primary" : "text-muted-foreground/70")}>{number}</span>
 			</div>
 
-			{/* Thumbnail */}
 			<div className="border-border/40 relative aspect-video w-24 shrink-0 overflow-hidden rounded-md border shadow-sm sm:w-32">
 				<ApiImage fileId={imageFileId} cacheKey={imageCacheKey} alt={imageAlt} fill sizes="128px" zoom className="object-cover" />
 
@@ -381,7 +378,6 @@ function DrawerItemRow({
 				)}
 			</div>
 
-			{/* Information */}
 			<div className="flex h-full min-w-0 flex-1 flex-col justify-center space-y-1.5 py-0.5">
 				<div className="flex items-center gap-2">
 					{isCurrent && (

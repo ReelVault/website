@@ -40,7 +40,6 @@ export function QuickConnectPairSection({
 			<div className="mt-8 flex flex-col items-center gap-6">
 				{Boolean(error) && <AppErrorState title={m.auth_code_generation_error()} error={error} onRetry={onStartPairing} />}
 
-				{/* QR Code and Device Code Display */}
 				<div className="border-primary/20 bg-primary/5 flex flex-col items-center gap-4 rounded-2xl border p-6 text-center sm:p-8">
 					{qrUrl && (
 						<div className="relative">
@@ -74,7 +73,6 @@ export function QuickConnectPairSection({
 					)}
 				</div>
 
-				{/* Step-by-step guidance */}
 				<div className="border-border/70 bg-card/40 text-muted-foreground w-full space-y-2 rounded-2xl border p-4 text-left text-xs">
 					<p className="text-foreground font-bold">{m.auth_how_it_works()}</p>
 					<ol className="list-decimal space-y-1 pl-4">

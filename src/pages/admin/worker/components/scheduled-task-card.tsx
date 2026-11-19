@@ -86,7 +86,6 @@ export function ScheduledTaskCard({
 			)}
 		>
 			<div className="flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
-				{/* Task Info Left */}
 				<div className="flex min-w-0 flex-1 items-start gap-3.5">
 					<div
 						className={cn(
@@ -124,7 +123,6 @@ export function ScheduledTaskCard({
 
 						<p className="text-muted-foreground line-clamp-1 text-xs leading-relaxed">{taskDescription}</p>
 
-						{/* Execution history & Triggers line */}
 						{!isRunning && (
 							<div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-0.5 text-xs">
 								{task.lastExecution ? (
@@ -150,7 +148,6 @@ export function ScheduledTaskCard({
 									<span className="text-muted-foreground/80 text-xs italic">{m.admin_workers_never_run()}</span>
 								)}
 
-								{/* Triggers Pills */}
 								<ScheduledTaskTriggersLine taskId={task.id} triggers={task.triggers} onConfigureTriggers={onConfigureTriggers} />
 								{task.nextRunAt && (
 									<span className="text-primary text-xs">{m.admin_workers_next_run({ time: formatDateTime(task.nextRunAt) })}</span>
@@ -160,7 +157,6 @@ export function ScheduledTaskCard({
 					</div>
 				</div>
 
-				{/* Action Buttons Right */}
 				<ScheduledTaskActions
 					taskId={task.id}
 					taskName={task.name}
@@ -175,7 +171,6 @@ export function ScheduledTaskCard({
 				/>
 			</div>
 
-			{/* Progress bar when running */}
 			{isRunning && (
 				<div className="border-border/40 mt-3 flex flex-col gap-1.5 border-t pt-2.5">
 					<div className="flex items-center justify-between font-mono text-xs">

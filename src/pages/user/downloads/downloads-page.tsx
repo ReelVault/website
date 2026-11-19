@@ -68,7 +68,6 @@ export default function DownloadsPage() {
 
 		return (
 			<div className="flex flex-col gap-8">
-				{/* W TRAKCIE PRZETWARZANIA */}
 				{activeDownloads.length > 0 && (
 					<section>
 						<UserSectionTitle title={m.user_downloads_in_preparation()} description={m.user_files_being_processed()} />
@@ -80,7 +79,6 @@ export default function DownloadsPage() {
 					</section>
 				)}
 
-				{/* GOTOWE DO POBRANIA */}
 				{completedDownloads.length > 0 && (
 					<section>
 						<UserSectionTitle title={m.user_downloads_ready_title()} description={m.user_downloads_ready_desc()} />
@@ -92,7 +90,6 @@ export default function DownloadsPage() {
 					</section>
 				)}
 
-				{/* FAILED / CANCELLED */}
 				{failedDownloads.length > 0 && (
 					<section>
 						<UserSectionTitle title={m.user_history_error()} description={m.user_finished_errored_jobs()} />

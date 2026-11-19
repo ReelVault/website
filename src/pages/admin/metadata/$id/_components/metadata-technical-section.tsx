@@ -14,11 +14,9 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 	return (
 		<AdminSection title={m.admin_metadata_system_info_section()} description={m.admin_metadata_identifiers_sync_description()}>
 			<div className="flex flex-col gap-3">
-				{/* IDs with copy buttons */}
 				<IdRow label={m.admin_metadata_internal_id()} value={metadata.id} />
 				<IdRow label={m.admin_metadata_stable_key_label()} value={metadata.stableKey} />
 
-				{/* Key-Value Details */}
 				<div className="border-border/50 grid grid-cols-2 gap-2.5 border-t pt-2">
 					<DetailItem
 						icon={Sparkles}
@@ -34,7 +32,6 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 					<DetailItem icon={TrendingUp} label={m.admin_metadata_popularity()} value={metadata.popularity.toFixed(1)} />
 				</div>
 
-				{/* Translation status */}
 				<div className="border-border/60 bg-muted/20 flex items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs">
 					<span className="text-muted-foreground">{m.admin_metadata_translation_state()}</span>
 					{metadata.hasMissingTranslation ? (
@@ -48,7 +45,6 @@ export function MetadataTechnicalSection({ metadata }: { metadata: MetadataWithR
 					)}
 				</div>
 
-				{/* Timestamps */}
 				<div className="border-border/50 text-muted-foreground flex flex-col gap-1 border-t pt-2 text-xs">
 					<div className="flex justify-between">
 						<span>{m.admin_metadata_created_in_db()}</span>

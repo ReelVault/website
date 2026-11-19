@@ -64,7 +64,6 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 					: "border-border/50 bg-card/40 hover:border-border/80 hover:bg-card/70",
 			)}
 		>
-			{/* Header */}
 			<div className="flex items-start justify-between gap-2.5">
 				<div className="flex min-w-0 items-center gap-2.5">
 					<div
@@ -87,11 +86,9 @@ export function WorkerQueueCard({ worker }: WorkerQueueCardProps) {
 					</div>
 				</div>
 
-				{/* Status Badge */}
 				{statusBadge}
 			</div>
 
-			{/* Metrics Bar */}
 			<div className="border-border/40 mt-3 grid grid-cols-2 gap-1.5 border-t pt-2.5 font-mono text-xs">
 				<div className="bg-muted/30 text-muted-foreground flex items-center justify-between rounded-md px-2 py-1">
 					<span className="text-muted-foreground/80 text-xs">{m.admin_worker_threads_label()}</span>

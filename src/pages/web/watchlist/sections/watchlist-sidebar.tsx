@@ -59,7 +59,6 @@ export function WatchlistSidebar({
 				</div>
 			</SimpleAnimation>
 
-			{/* Quick Tip */}
 			{totalCount > 0 && (
 				<SimpleAnimation direction="none" delay={100} duration={300}>
 					<div className="border-primary/20 bg-primary/5 rounded-xl border p-6">

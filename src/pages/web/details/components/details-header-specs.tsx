@@ -19,7 +19,6 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 	return (
 		<div className="border-border/70 mt-8 flex flex-col gap-4 border-y py-5">
 			<div className="flex flex-col gap-6">
-				{/* Directing */}
 				{showDirecting ? (
 					<div className="flex flex-col gap-1.5">
 						<span className="text-muted-foreground flex items-center gap-2 text-xs font-semibold">
@@ -41,7 +40,6 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 					</div>
 				) : null}
 
-				{/* Studios */}
 				<div className="flex flex-col gap-1.5">
 					<span className="text-muted-foreground flex items-center gap-2 text-xs font-semibold">
 						<Building2 className="text-primary size-3.5" aria-hidden="true" /> {m.admin_companies_word()}
@@ -85,7 +83,6 @@ export function DetailsHeaderSpecs({ directors, studios, keywords, providers, me
 				)}
 			</div>
 
-			{/* Dostawcy */}
 			{providers && providers.length > 0 && (
 				<div className="border-border/40 flex flex-wrap items-center gap-2 border-t pt-3">
 					<span className="text-muted-foreground min-w-20 text-xs font-semibold">{m.web_providers_label()}</span>

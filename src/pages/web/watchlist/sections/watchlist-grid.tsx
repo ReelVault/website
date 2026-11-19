@@ -51,7 +51,6 @@ export function WatchlistGrid({ metadata }: { metadata: WatchlistItem[] }) {
 
 	return (
 		<main className="flex min-w-0 flex-1 flex-col gap-10">
-			{/* Filters Bar */}
 			<div className="cinema-surface flex flex-col gap-3 p-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
 				<Tabs value={filter} onValueChange={(value: string) => runTransition("tab", () => setFilter(value))}>
 					<TabsList aria-label={m.web_filter_watchlist()}>

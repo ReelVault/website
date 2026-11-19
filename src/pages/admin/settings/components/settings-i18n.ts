@@ -7,7 +7,7 @@ export interface SettingTranslation {
 }
 
 export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
-	// ==================== ZASOBY & CPU (SMART ENGINE) ====================
+	// ==================== RESOURCES & CPU ====================
 	"system.resources.cpuProfile": {
 		label: m.admin_settings_label_cpu_profile(),
 		description: m.admin_settings_cpu_split_description(),
@@ -90,7 +90,7 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		description: m.admin_settings_seek_debounce_ms_description(),
 	},
 
-	// ==================== SKANOWANIE & PLIKI ====================
+	// ==================== SCANNING & FILES ====================
 	"scanning.autoWatcherEnabled": {
 		label: m.admin_settings_realtime_monitoring(),
 		description: m.admin_settings_autoscan_description(),
@@ -112,7 +112,7 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		description: m.admin_settings_max_ffprobe_processes(),
 	},
 
-	// ==================== OBRAZY & MEDIA ====================
+	// ==================== IMAGES & MEDIA ====================
 	"images.defaultQuality": {
 		label: m.admin_settings_default_webp_quality(),
 		description: m.admin_settings_thumbnail_compression(),
@@ -134,7 +134,7 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		description: m.admin_settings_max_upload_bytes(),
 	},
 
-	// ==================== WORKERY & KOLEJKI ====================
+	// ==================== WORKERS & QUEUES ====================
 	"workers.scheduling.pollIntervalMs": {
 		label: m.admin_settings_queue_check_ms(),
 		description: m.admin_settings_scheduler_interval_ms(),
@@ -277,7 +277,7 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		},
 	},
 
-	// ==================== ZAAWANSOWANE & SYSTEM ====================
+	// ==================== ADVANCED & SYSTEM ====================
 	"paths.transcodes": {
 		label: m.admin_settings_label_transcodes_path(),
 		description: m.admin_settings_workdir_description(),
@@ -357,7 +357,7 @@ export const SETTINGS_TRANSLATIONS: Record<string, SettingTranslation> = {
 		description: m.admin_settings_private_networks_description(),
 	},
 
-	// ==================== MONITORING / RESCUE (RAW KEYS FILLED) ====================
+	// ==================== MONITORING / RESCUE ====================
 	"system.resources.monitoringEnabled": {
 		label: m.admin_settings_monitoring_enabled(),
 		description: m.admin_settings_monitoring_enabled_description(),

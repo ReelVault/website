@@ -177,7 +177,6 @@ export default function AdminDatabasePage() {
 
 			{!uploadEnabled && <p className="text-muted-foreground text-xs">{m.admin_database_upload_disabled_hint()}</p>}
 
-			{/* Info Cards */}
 			<DatabaseStatsGrid backups={backups} />
 
 			{integrityMutation.data ? (
@@ -195,7 +194,6 @@ export default function AdminDatabasePage() {
 				</AdminSection>
 			) : null}
 
-			{/* Backups List */}
 			<DatabaseMigrationsSection />
 
 			<AdminSection title={m.admin_database_available_snapshots()} description={m.admin_database_retention_notice()}>

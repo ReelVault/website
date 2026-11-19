@@ -54,7 +54,7 @@ export function DashboardServerResources({ stats }: { stats?: AdminStats }) {
 	if (stats) {
 		resourcesContent = (
 			<div className="flex flex-col gap-4">
-				{/* Pasek sterty Heap — live objects vs limit sterty V8 */}
+				{/* V8 heap bar — live objects against the heap limit */}
 				<div className="border-border/70 bg-card/60 flex flex-col gap-2 rounded-xl border p-4">
 					<div className="flex items-center justify-between text-xs">
 						<span className="text-foreground font-medium">{m.admin_resources_v8_heap_usage()}</span>
@@ -90,7 +90,6 @@ export function DashboardServerResources({ stats }: { stats?: AdminStats }) {
 					</div>
 				)}
 
-				{/* Detailed measurements */}
 				<div className="grid grid-cols-2 gap-3">
 					<div className="border-border/50 bg-background/50 rounded-xl border p-3.5">
 						<p className="text-muted-foreground text-xs font-medium">{m.admin_dashboard_rss_memory()}</p>

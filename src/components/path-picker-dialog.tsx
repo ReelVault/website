@@ -62,7 +62,6 @@ export function PathPickerDialog({ open, onOpenChange, initialPath = "/", onSele
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="flex max-h-[90vh] w-full max-w-[calc(100%-2rem)] flex-col overflow-hidden p-0 sm:max-w-2xl">
-				{/* HEADER */}
 				<DialogHeader className="shrink-0 border-b">
 					<div className="flex items-center gap-2.5">
 						<div className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-xl shadow-xs">
@@ -75,13 +74,11 @@ export function PathPickerDialog({ open, onOpenChange, initialPath = "/", onSele
 					</div>
 				</DialogHeader>
 
-				{/* FORMULARZ WYSZUKIWANIA I NAWIGACJI */}
 				<div className="border-border/60 bg-background/50 flex shrink-0 flex-col gap-3 border-b p-4 sm:px-6">
 					<PathPickerSearchForm key={activePath} activePath={activePath} onNavigate={handleNavigate} />
 					<PathPickerBreadcrumbs activePath={activePath} onNavigate={handleNavigate} />
 				</div>
 
-				{/* SUBDIRECTORY LIST */}
 				<PathPickerDirectoryList
 					data={query.data}
 					isPending={query.isPending}
@@ -91,7 +88,6 @@ export function PathPickerDialog({ open, onOpenChange, initialPath = "/", onSele
 					onNavigate={handleNavigate}
 				/>
 
-				{/* FOOTER WITH STATUS AND CONFIRM BUTTON */}
 				<PathPickerFooter exists={query.data?.exists} onCancel={handleCancel} onConfirm={handleConfirm} />
 			</DialogContent>
 		</Dialog>

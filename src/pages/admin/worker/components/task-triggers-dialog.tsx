@@ -92,10 +92,8 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 						)}
 					</div>
 
-					{/* Form: Add Trigger */}
 					{isAdding && <TaskTriggerForm onAdd={handleAddTrigger} onCancel={() => setIsAdding(false)} />}
 
-					{/* Triggers list */}
 					<div className="flex max-h-75 flex-col gap-2 overflow-y-auto pr-1">
 						{triggers.length === 0 ? (
 							<div className="border-border/70 bg-card/30 flex flex-col items-center justify-center rounded-xl border border-dashed p-6 text-center">

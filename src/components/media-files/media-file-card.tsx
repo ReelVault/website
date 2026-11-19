@@ -45,7 +45,6 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 
 	return (
 		<div className="border-border/80 bg-card hover:border-primary/40 flex flex-col gap-4 rounded-xl border p-5 shadow-xs transition-colors">
-			{/* FILE HEADER */}
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<div className="flex min-w-0 flex-1 items-start gap-3.5">
 					<div className="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl shadow-xs">
@@ -136,7 +135,6 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				</Suspense>
 			)}
 
-			{/* PODSTAWOWE METRYKI */}
 			<div className="border-border/60 bg-muted/40 grid grid-cols-2 gap-3 rounded-xl border p-3.5 sm:grid-cols-4">
 				<div className="flex items-center gap-2.5">
 					<Clock className="text-primary size-4 shrink-0" />
@@ -177,7 +175,6 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				</div>
 			</div>
 
-			{/* FILE PATH */}
 			<div className="flex flex-col gap-1.5">
 				<span className="text-muted-foreground text-xs font-semibold">{m.components_media_file_disk_path()}</span>
 				<div className="border-border/70 bg-background flex items-center justify-between gap-3 rounded-lg border p-3">
@@ -191,7 +188,6 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				</div>
 			</div>
 
-			{/* STRUMIENIE WIDEO */}
 			{file.videoStreams.length > 0 && (
 				<div className="flex flex-col gap-2">
 					<div className="text-foreground flex items-center gap-2 text-xs font-bold">
@@ -228,7 +224,6 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				</div>
 			)}
 
-			{/* STRUMIENIE AUDIO */}
 			{file.audioStreams.length > 0 && (
 				<div className="flex flex-col gap-2">
 					<div className="text-foreground flex items-center gap-2 text-xs font-bold">
@@ -266,7 +261,6 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 				</div>
 			)}
 
-			{/* NAPISY */}
 			{file.subtitles.length > 0 && (
 				<div className="flex flex-col gap-2">
 					<div className="text-foreground flex items-center gap-2 text-xs font-bold">

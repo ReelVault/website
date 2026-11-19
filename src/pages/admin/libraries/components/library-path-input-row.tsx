@@ -34,7 +34,6 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 				)}
 			</div>
 
-			{/* Path input */}
 			<div className="flex flex-col gap-1.5">
 				<span className="text-muted-foreground text-xs">{m.admin_libraries_system_path()}</span>
 				<div className="flex items-center gap-2">
@@ -65,7 +64,6 @@ export function LibraryPathInputRow({ path, index, idPrefix, canRemove, onUpdate
 				</div>
 			</div>
 
-			{/* Metadata mode selector */}
 			<div className="border-border/50 flex flex-col gap-1.5 border-t pt-2.5">
 				<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
 					<HardDrive className="size-3.5" />

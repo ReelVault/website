@@ -8,7 +8,6 @@ export function NotFoundScreen() {
 
 	return (
 		<main className="bg-background text-foreground relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6">
-			{/* Subtle ambient lighting */}
 			<div className="pointer-events-none absolute top-1/2 left-1/2 size-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_12%,transparent)_0%,transparent_70%)]" />
 
 			<div className="relative z-10 flex max-w-md flex-col items-center text-center">

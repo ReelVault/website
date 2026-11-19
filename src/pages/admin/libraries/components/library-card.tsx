@@ -88,7 +88,6 @@ export function LibraryCard({
 				}
 			>
 				<div>
-					{/* Header */}
 					<LibraryCardHeader
 						lib={lib}
 						onScan={onScan}
@@ -107,10 +106,8 @@ export function LibraryCard({
 							</Button>
 						)}
 
-						{/* Micro-metrics bar */}
 						<LibraryCardMetrics mediaCount={mediaCount} totalSize={totalSize} pathsCount={paths.length} />
 
-						{/* Paths section */}
 						<Collapsible open={pathsExpanded} onOpenChange={setPathsExpanded} className="flex flex-col gap-2.5">
 							<div className="flex items-center justify-between">
 								<CollapsibleTrigger
@@ -163,14 +160,12 @@ export function LibraryCard({
 						</Collapsible>
 					</CardContent>
 
-					{/* Timestamps Row */}
 					<div className="border-border/50 bg-muted/5 text-muted-foreground flex flex-wrap items-center justify-between gap-2 border-t px-5 py-2 font-mono text-xs">
 						<span>{m.common_created_at_value({ date: formatDateTime(lib.createdAt) })}</span>
 						<span>{m.admin_libraries_updated_at({ date: formatTimeAgo(lib.updatedAt) })}</span>
 					</div>
 				</div>
 
-				{/* Card Footer */}
 				<div className="border-border/60 bg-muted/10 flex items-center gap-2.5 border-t p-4">
 					<AsyncButton
 						variant="default"
@@ -207,7 +202,6 @@ export function LibraryCard({
 				</div>
 			</ContextMenuTrigger>
 
-			{/* Context Menu */}
 			<LibraryCardContextMenu
 				onCancelScans={onCancelScans}
 				lib={lib}

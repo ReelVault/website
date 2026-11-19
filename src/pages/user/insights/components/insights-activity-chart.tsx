@@ -35,7 +35,6 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 	return (
 		<section className="border-border/70 bg-card/65 col-span-1 row-span-2 overflow-hidden rounded-2xl border p-6 md:col-span-6 lg:col-span-12">
 			<div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-				{/* Chart Header */}
 				<div className="flex shrink-0 flex-col gap-2">
 					<div className="flex items-center gap-2">
 						<div className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg">
@@ -57,7 +56,6 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 					</p>
 				</div>
 
-				{/* Bars Container */}
 				<TooltipProvider delay={50}>
 					<div className="w-full min-w-0 flex-1 scrollbar-thin overflow-x-auto pb-2">
 						<div className="flex h-44 min-w-[320px] items-end justify-end gap-1 pt-6 sm:gap-2">
@@ -67,14 +65,12 @@ export function InsightsActivityChart({ weeklyActivity, maxActivity, selectedRan
 								const mins = value % 60;
 								const timeStr = hours > 0 ? `${hours}h ${mins}m` : `${mins} min`;
 
-								// Label display logic for clean axis
 								const showLabel =
 									!isLongRange ||
 									weeklyActivity.length <= 14 ||
 									index % Math.ceil(weeklyActivity.length / 10) === 0 ||
 									index === weeklyActivity.length - 1;
 
-								// Format short date label
 								const dateParts = date.split("-");
 								const shortLabel = isLongRange && dateParts[2] ? `${Number(dateParts[2])}.${Number(dateParts[1])}` : day;
 

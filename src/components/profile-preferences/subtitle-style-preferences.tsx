@@ -99,7 +99,6 @@ export function SubtitleStylePreferences({ preferences, onChange }: SubtitleStyl
 				/>
 			</div>
 
-			{/* Live preview */}
 			<div className="border-border relative flex h-28 w-full items-center justify-center overflow-hidden rounded-xl border bg-slate-900/90 p-4">
 				<span className="text-muted-foreground absolute top-2 left-3 text-xs font-semibold">{m.admin_subtitles_preview()}</span>
 				<div

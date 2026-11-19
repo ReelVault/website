@@ -42,7 +42,6 @@ export function ScheduledTasksFilters({
 				/>
 			</div>
 
-			{/* Quick status filters */}
 			<div className="flex flex-wrap items-center gap-1.5">
 				{filterButtons.map((f) => (
 					<button

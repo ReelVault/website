@@ -95,7 +95,6 @@ export default function CreateProfilePage() {
 
 			<form onSubmit={handleSubmit} className="flex flex-col gap-8">
 				<div className="flex min-w-0 flex-col gap-8 md:flex-row">
-					{/* LEFT SIDE: preview and details */}
 					<div className="flex min-w-0 flex-col items-center gap-6 md:w-1/3">
 						<ProfileAvatarPreview avatarUrl={selectedAvatar} onRandomize={randomizeAvatar} />
 						<ProfileFormInputs
@@ -109,7 +108,6 @@ export default function CreateProfilePage() {
 						/>
 					</div>
 
-					{/* RIGHT SIDE: style and seed selection */}
 					<ProfileAvatarSelector
 						activeStyle={activeStyle}
 						activeSeed={activeSeed}

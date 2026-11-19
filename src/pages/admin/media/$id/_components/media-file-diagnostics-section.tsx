@@ -22,7 +22,6 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 
 	return (
 		<AdminSection title={m.admin_media_technical_values()} description={m.admin_media_container_metrics()}>
-			{/* Visual Metrics Cards */}
 			<div className="mb-4 grid gap-3 sm:grid-cols-3">
 				<div className="border-border/80 bg-background flex flex-col gap-1 rounded-xl border p-3.5 shadow-2xs">
 					<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
@@ -54,7 +53,6 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 				</div>
 			</div>
 
-			{/* Raw Inputs */}
 			<div className="grid gap-4 sm:grid-cols-3">
 				<div className="flex flex-col gap-1.5">
 					<Label htmlFor="media-duration" tone="muted" size="xs">
@@ -108,7 +106,6 @@ export function MediaFileDiagnosticsSection({ duration, size, bitRate, file }: M
 				</div>
 			</div>
 
-			{/* Filesystem & Database Timestamps */}
 			{file && (
 				<div className="border-border/60 bg-muted/20 mt-4 flex flex-col gap-2 rounded-xl border p-3.5 text-xs">
 					<div className="text-muted-foreground flex items-center gap-1.5 text-xs font-semibold">

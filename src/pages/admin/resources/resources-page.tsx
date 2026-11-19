@@ -97,7 +97,6 @@ export default function AdminResourcesPage() {
 				{/* Stall-protection: prominent banner while rescuing, slim strip when healthy */}
 				<ServerRescueStatus rescue={data.rescue} />
 
-				{/* Current metrics */}
 				<ResourceMetricsGrid current={data.current} />
 
 				{/* Monitoring / throttling configuration — compact strip */}

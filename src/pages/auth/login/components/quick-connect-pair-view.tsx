@@ -54,7 +54,6 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 		});
 	};
 
-	// Initiate pairing on mount
 	useEffect(() => {
 		const controller = new AbortController();
 		initiateQuickConnect(undefined, {
@@ -73,7 +72,6 @@ export function QuickConnectPairView({ onAuthenticated, onSwitchToRedeem }: Quic
 		};
 	}, [initiateQuickConnect]);
 
-	// Countdown timer for pairing mode
 	useEffect(() => {
 		if (pairExpiresAt <= 0) return noopCleanup;
 

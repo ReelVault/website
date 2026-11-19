@@ -107,7 +107,6 @@ export default function DashboardHero() {
 			<div className="from-background via-background/80 to-background/20 absolute inset-0 bg-linear-to-r" />
 			<div className="from-background via-background/20 max-lg:via-background/75 absolute inset-0 bg-linear-to-t to-transparent" />
 
-			{/* Info: active item only */}
 			{/* Phones: content sits at the bottom (near the thumb and the slide dots); desktop centres it. */}
 			<div className="flex h-full items-end justify-start gap-12 px-5 pt-24 pb-16 sm:px-6 lg:items-center lg:px-24 lg:pt-0 lg:pb-0">
 				{items.length > 1 && (

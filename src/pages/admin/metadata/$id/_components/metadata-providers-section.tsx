@@ -34,7 +34,6 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 			}
 		>
 			<div className="flex flex-col gap-4">
-				{/* Primary Provider Highlight Banner */}
 				<div className="border-primary/20 bg-primary/5 flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between">
 					<div className="flex items-start gap-3">
 						<div className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-lg">
@@ -67,7 +66,6 @@ export function MetadataProvidersSection({ metadata, onOpenIdentify }: { metadat
 					</Button>
 				</div>
 
-				{/* Providers Cards Grid */}
 				{providers.length > 0 ? (
 					<div className="grid gap-3 sm:grid-cols-2">
 						{providers.map((p) => (
@@ -163,7 +161,6 @@ function ProviderCard({ provider, metadata }: { provider: MetadataWithRelation["
 						}
 					>
 						<span>
-							{/* TODO: fix */}
 							{m.admin_metadata_open_in()} {shortName}
 						</span>
 						<ExternalLink className="size-3" />

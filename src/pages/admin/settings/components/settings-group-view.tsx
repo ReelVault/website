@@ -83,7 +83,7 @@ function matchesSettingSearch(item: SystemSettingItemView, normalizedQuery: stri
 	);
 }
 
-/** TanStack Form pilot (T5): dynamic-key form — one field per setting, dirty diff at submit. */
+/** Dynamic-key TanStack form — one field per setting, dirty diff at submit. */
 export function SettingsGroupView({
 	items,
 	onSave,

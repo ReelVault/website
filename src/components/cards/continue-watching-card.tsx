@@ -66,7 +66,6 @@ export function ContinueWatchingCard({
 
 						<div className="from-background via-background/40 absolute inset-0 z-10 bg-linear-to-t to-transparent" />
 
-						{/* Ikona Play - taka sama waga jak w MetadataCard (size-14, ring-owy button) */}
 						<div className="bg-background/20 absolute inset-0 z-20 flex items-center justify-center opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
 							<div className="bg-primary text-primary-foreground flex size-14 items-center justify-center rounded-full shadow-2xl transition-transform duration-200 group-hover:scale-105">
 								<Play className="ml-0.5 size-6 fill-current" aria-hidden="true" />

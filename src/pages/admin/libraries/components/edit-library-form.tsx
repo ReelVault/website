@@ -90,10 +90,8 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 			}}
 			className="flex flex-col gap-6"
 		>
-			{/* Step 1: Type Selection */}
 			<LibraryTypeSelector value={type} onChange={setType} />
 
-			{/* Step 2: Name */}
 			<div className="flex flex-col gap-2">
 				<Label htmlFor="edit-lib-name">{m.admin_libraries_name_label()}</Label>
 				<Input
@@ -107,13 +105,10 @@ export function EditLibraryForm({ library, onClose }: EditLibraryFormProps) {
 				/>
 			</div>
 
-			{/* Step 3: Source Paths */}
 			<LibraryPathsSection paths={paths} onChange={setPaths} idPrefix="edit" showDashedAddButton={paths.length === 1} />
 
-			{/* Step 4: Sidecar NFO format */}
 			<SidecarFlavorSelector value={sidecarFlavor} onChange={setSidecarFlavor} />
 
-			{/* Step 4b: Per-library metadata language */}
 			<MetadataLanguageSelector value={metadataLanguage} onChange={setMetadataLanguage} />
 
 			{/* Step 5: Metadata provider overrides (empty = global order) */}

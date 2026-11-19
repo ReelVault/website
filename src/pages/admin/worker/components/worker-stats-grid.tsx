@@ -54,7 +54,6 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 			}
 		>
 			<div className="flex flex-col gap-4">
-				{/* Search and Category Filter */}
 				<div className="flex flex-wrap items-center justify-end gap-2">
 					<div className="relative">
 						<Search className="text-muted-foreground absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
@@ -107,7 +106,6 @@ export function WorkerStatsGrid({ workerStats, isLoading, isError }: WorkerStats
 					</div>
 				)}
 
-				{/* Worker Queues Cards Grid */}
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 					{filteredStats.map((ws) => (
 						<WorkerQueueCard key={ws.id} worker={ws} />

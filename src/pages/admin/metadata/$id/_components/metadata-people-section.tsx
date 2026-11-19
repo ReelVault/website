@@ -37,7 +37,6 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 					</TabsList>
 				</div>
 
-				{/* Cast Content */}
 				{cast.length > 0 && (
 					<TabsContent value="cast" className="pt-4">
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -73,7 +72,6 @@ export function MetadataPeopleSection({ metadata }: { metadata: MetadataWithRela
 					</TabsContent>
 				)}
 
-				{/* Crew Content */}
 				{crew.length > 0 && (
 					<TabsContent value="crew" className="pt-4">
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

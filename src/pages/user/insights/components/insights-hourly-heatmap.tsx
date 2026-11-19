@@ -163,7 +163,6 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 				<TooltipProvider delay={100}>
 					<div className="overflow-x-auto pb-2">
 						<div className="min-w-120">
-							{/* Hours Header */}
 							<div className="text-muted-foreground mb-1 grid grid-cols-[36px_repeat(24,1fr)] gap-1 text-center font-mono text-xs">
 								<div />
 								{HOURS.map((hour) => (
@@ -173,7 +172,6 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 								))}
 							</div>
 
-							{/* Grid Rows */}
 							<div className="space-y-1">
 								{DAYS_ORDER.map((day) => (
 									<div key={day.index} className="grid grid-cols-[36px_repeat(24,1fr)] items-center gap-1">
@@ -210,7 +208,6 @@ export function InsightsHourlyHeatmap({ heatmap }: InsightsHourlyHeatmapProps) {
 								))}
 							</div>
 
-							{/* Legend */}
 							<div className="border-border/40 text-muted-foreground mt-3 flex items-center justify-between border-t pt-3 text-xs">
 								<div className="flex items-center gap-1.5">
 									<Info className="size-3" />

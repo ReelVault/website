@@ -11,7 +11,6 @@ export default function DashboardContinueWatching() {
 
 	return (
 		<section className="flex flex-col gap-4">
-			{/* Section header */}
 			<div className="flex items-center gap-4">
 				<div className="from-border/0 via-border to-border/0 h-px flex-1 bg-linear-to-r" />
 				<div className="flex items-center gap-3">
@@ -21,7 +20,6 @@ export default function DashboardContinueWatching() {
 				<div className="from-border/0 via-border to-border/0 h-px flex-1 bg-linear-to-r" />
 			</div>
 
-			{/* Horizontally scrolling video list */}
 			<div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
 				<div className="flex scrollbar-none gap-4 overflow-x-auto pb-2 md:gap-6">
 					{items.map((item) => (

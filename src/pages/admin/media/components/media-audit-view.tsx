@@ -32,7 +32,6 @@ export function MediaAuditView({ audit }: { audit: ReturnType<typeof useAdminMed
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Stats Overview */}
 			<MediaAuditStatsGrid
 				totalFilesChecked={totalFilesChecked}
 				suspectCount={suspectCount}
@@ -40,7 +39,6 @@ export function MediaAuditView({ audit }: { audit: ReturnType<typeof useAdminMed
 				onRefetch={() => refetch()}
 			/>
 
-			{/* Suspects List or Clean State */}
 			{suspects.length === 0 ? (
 				<AppEmptyState
 					icon={CheckCircle2}

@@ -72,7 +72,6 @@ export function SubtitleItemRow({ subtitle, onView, onEdit, onDelete, selected, 
 				</div>
 			</div>
 
-			{/* Actions */}
 			<div className="flex items-center gap-1">
 				<Button variant="ghost" size="icon" aria-label={m.admin_subtitles_preview()} onClick={() => onView(subtitle.id)}>
 					<Eye className="text-muted-foreground size-4" />

@@ -39,7 +39,6 @@ export function PathPickerDirectoryList({ data, isPending, isError, error, onRet
 
 			{!(isPending || isError) && (
 				<div className="flex flex-col gap-2">
-					{/* PARENT LEVEL BUTTON */}
 					{data?.parentPath !== null && data?.parentPath !== undefined && (
 						<button
 							type="button"

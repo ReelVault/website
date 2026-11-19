@@ -100,7 +100,6 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 			<ContextMenuTrigger>
 				<Link to="/person/$id" params={{ id: personId }} className="block">
 					<div className="group relative flex w-36 flex-col sm:w-44">
-						{/* Kontener obrazka */}
 						<div className="border-border/70 bg-card group-hover:border-primary/50 relative overflow-hidden rounded-xl border shadow-sm transition-[border-color,box-shadow,transform] duration-200 group-hover:scale-[1.02] group-hover:shadow-md">
 							<AspectRatio ratio={2 / 3}>
 								<ApiImage
@@ -113,11 +112,9 @@ export function PersonCard({ person }: { person: RequireFields<Cast, typeof pers
 								/>
 							</AspectRatio>
 
-							{/* Overlay */}
 							<div className="from-background/90 absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-80 transition-opacity group-hover:opacity-60" />
 						</div>
 
-						{/* Sekcja Tekstowa */}
 						<div className="mt-3 flex flex-col gap-0.5 px-1 text-center">
 							<p className="text-foreground group-hover:text-primary truncate text-sm font-bold tracking-tight transition-colors duration-200">
 								{personName}

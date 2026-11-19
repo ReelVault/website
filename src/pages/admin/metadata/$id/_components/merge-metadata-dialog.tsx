@@ -86,7 +86,6 @@ export function MergeMetadataDialog({
 					</DialogDescription>
 				</DialogHeader>
 
-				{/* Search bar */}
 				<div className="relative">
 					<Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
 					<Input
@@ -98,7 +97,6 @@ export function MergeMetadataDialog({
 					/>
 				</div>
 
-				{/* Candidate list */}
 				<div className="flex max-h-72 flex-col gap-2 overflow-y-auto pr-1">
 					{candidatesQuery.isLoading && <SkeletonList count={3} itemClassName="h-16 w-full rounded-xl" />}
 
@@ -131,7 +129,6 @@ export function MergeMetadataDialog({
 					))}
 				</div>
 
-				{/* Warning banner */}
 				<div className="border-warning/30 bg-warning/10 text-warning flex items-start gap-3 rounded-xl border p-3.5 text-xs leading-relaxed">
 					<AlertTriangle className="size-4 shrink-0" />
 					<span>

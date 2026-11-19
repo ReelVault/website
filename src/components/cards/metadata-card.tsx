@@ -100,7 +100,6 @@ export function MetadataCard({
 						onRefreshImages={actions.handleRefreshImages}
 					/>
 
-					{/* TEXT INFO */}
 					<div className="flex flex-col gap-0.5 px-1">
 						<h3 className="text-foreground group-hover:text-primary line-clamp-1 text-sm font-semibold tracking-tight transition-colors">
 							{metadata.title}
@@ -149,7 +148,6 @@ export function MetadataCard({
 				/>
 			</ContextMenu>
 
-			{/* DIALOGI AKCYJNE */}
 			<MetadataCardDialogs
 				metadataId={metadata.id}
 				title={metadata.title}

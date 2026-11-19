@@ -52,9 +52,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 			<div className="group border-border/80 bg-card hover:border-primary/50 relative flex flex-col justify-between overflow-hidden rounded-2xl border shadow-lg transition-[border-color,background-color,color,box-shadow]">
 				<LiveStreamCardMedia stream={stream} />
 
-				{/* Progress Bar & Telemetry */}
 				<div className="flex flex-col gap-2.5 p-4 pt-3">
-					{/* Progress Line */}
 					<div className="flex flex-col gap-1">
 						<div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
 							<div
@@ -71,7 +69,6 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						</div>
 					</div>
 
-					{/* Quick Pipeline Badges */}
 					<div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
 						<Badge variant="outline" size="compact">
 							{stream.videoTranscode ? (
@@ -118,7 +115,6 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						</div>
 					)}
 
-					{/* User Footer & Actions */}
 					<div className="border-border/50 flex items-center justify-between border-t pt-2.5">
 						<div className="flex min-w-0 items-center gap-2">
 							<Avatar className="size-6">
@@ -146,7 +142,6 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 				</div>
 			</div>
 
-			{/* Stream Details Dialog Modal */}
 			{isDetailsOpen && (
 				<Suspense fallback={null}>
 					<LiveStreamDetailsDialog

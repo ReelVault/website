@@ -16,7 +16,6 @@ export function MetadataRatingsSection({ metadata }: { metadata: MetadataWithRel
 	return (
 		<AdminSection title={m.admin_metadata_ratings_section()} description={m.admin_metadata_rating_stats_description()}>
 			<div className="flex flex-col gap-4">
-				{/* Average Score Summary Card */}
 				<div className="border-border/80 bg-background flex flex-col gap-4 rounded-xl border p-5 shadow-xs sm:flex-row sm:items-center sm:justify-between">
 					<div className="flex items-center gap-4">
 						<div className="border-warning/20 bg-warning/10 text-warning flex size-14 shrink-0 items-center justify-center rounded-2xl border shadow-xs">
@@ -39,7 +38,6 @@ export function MetadataRatingsSection({ metadata }: { metadata: MetadataWithRel
 					</div>
 				</div>
 
-				{/* Individual Score Cards Grid */}
 				{scores.length > 0 ? (
 					<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 						{scores.map((score) => (

@@ -144,7 +144,6 @@ export function ReassignLocalTab({ mediaFileId, mediaType, onSuccess }: Reassign
 
 			<div className="max-h-[38vh] overflow-y-auto pr-1">{localContent}</div>
 
-			{/* For TV Show: Season and Episode Selectors */}
 			{mediaType === "tv_show" && selectedLocalMetadataId && (
 				<ReassignTvSelectors
 					metadataId={selectedLocalMetadataId}

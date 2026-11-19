@@ -65,7 +65,6 @@ export default function AdminDashboardPage() {
 		);
 	}
 
-	// Server media and queue data from the database
 	const totalMediaFiles = stats?.media?.totalFiles ?? 0;
 	const totalMediaSize = stats?.media?.totalSize ?? 0;
 
@@ -75,10 +74,8 @@ export default function AdminDashboardPage() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* 1. HEADER WITH QUICK ACTIONS */}
 			<DashboardHeader libraries={libraries} />
 
-			{/* 3. MAIN KPI METRICS */}
 			<DashboardKpiStats
 				stats={stats}
 				totalMediaSize={totalMediaSize}
@@ -87,7 +84,6 @@ export default function AdminDashboardPage() {
 				failedJobs={failedJobs}
 			/>
 
-			{/* 3. RESOURCES AND LIBRARY STRUCTURE */}
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<DashboardServerResources stats={stats} />
 
@@ -96,7 +92,6 @@ export default function AdminDashboardPage() {
 				<DashboardUpdateStatus />
 			</div>
 
-			{/* 4. WORKER QUEUE + AUDIT FEED + WARNING LOGS */}
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<DashboardWorkerQueue />
 				<DashboardAuditFeed />

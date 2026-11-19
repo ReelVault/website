@@ -125,7 +125,6 @@ export function MetadataArtworkDialog({
 					<DialogDescription>{m.admin_metadata_artwork_dialog_desc()}</DialogDescription>
 				</DialogHeader>
 
-				{/* Upload Bar */}
 				<div className="border-border/80 bg-muted/20 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3.5">
 					<div className="flex items-center gap-3">
 						<input
@@ -161,7 +160,6 @@ export function MetadataArtworkDialog({
 					)}
 				</div>
 
-				{/* Gallery Grid */}
 				<div className="max-h-[60vh] overflow-y-auto pr-1">{galleryContent}</div>
 			</DialogContent>
 		</Dialog>

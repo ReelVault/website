@@ -48,7 +48,6 @@ export default function InsightsPage() {
 
 	return (
 		<div className="flex flex-col gap-8 pb-16">
-			{/* Page Header */}
 			<UserPageHeader
 				eyebrow={m.user_insights_eyebrow()}
 				title={m.user_insights_heading()}
@@ -74,13 +73,10 @@ export default function InsightsPage() {
 				}
 			/>
 
-			{/* KPI Summary Grid */}
 			<InsightsKpiGrid insight={insight} selectedRange={selectedRange} />
 
-			{/* Extra KPI Metric Cards */}
 			<InsightsMetricsRibbon insight={insight} />
 
-			{/* Top Watched Content Podium */}
 			<LazyRender minHeight={300} rootMargin="350px 0px">
 				{() => (
 					<SimpleAnimation direction="up" duration={260}>
@@ -89,7 +85,6 @@ export default function InsightsPage() {
 				)}
 			</LazyRender>
 
-			{/* Heatmap & Genre Distribution Grid */}
 			<LazyRender minHeight={350} rootMargin="350px 0px">
 				{() => (
 					<SimpleAnimation direction="up" duration={260}>

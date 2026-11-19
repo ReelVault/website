@@ -331,7 +331,6 @@ export function PlayerAudioSubtitlesDialog() {
 					{/* Main two-column view: audio on the left, subtitles on the right */}
 					<TabsContent value="media" className="mt-0">
 						<div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
-							{/* Left column: audio */}
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between gap-2">
 									<div className="bg-muted/80 text-foreground flex-1 rounded-md px-4 py-2 text-center text-sm font-semibold tracking-wide shadow-xs">
@@ -393,7 +392,6 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 							</div>
 
-							{/* Right column: subtitles */}
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between gap-2">
 									<div className="bg-muted/80 text-foreground flex-1 rounded-md px-4 py-2 text-center text-sm font-semibold tracking-wide shadow-xs">
@@ -422,7 +420,6 @@ export function PlayerAudioSubtitlesDialog() {
 									</button>
 								)}
 								<div className="custom-scrollbar divide-border/15 mt-3 max-h-[48vh] divide-y overflow-y-auto pr-1">
-									{/* Disabled */}
 									<button
 										type="button"
 										onClick={() => setSelectedSubtitleId(undefined)}
@@ -437,7 +434,6 @@ export function PlayerAudioSubtitlesDialog() {
 										<span>{m.common_disabled()}</span>
 									</button>
 
-									{/* Subtitle track list */}
 									{visibleSubtitles.map((subtitle) => {
 										const isBitmap = isBitmapSubtitle(subtitle.format);
 										const isSelected = selectedSubtitleId === subtitle.id;
@@ -466,7 +462,6 @@ export function PlayerAudioSubtitlesDialog() {
 									})}
 								</div>
 
-								{/* Szybkie akcje pod napisami */}
 								<div className="border-border/30 mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
 									<Button tone="muted" type="button" variant="ghost" size="sm" onClick={() => setActiveTab("styling")}>
 										<SlidersHorizontal className="mr-1.5 size-3.5" />
@@ -481,10 +476,8 @@ export function PlayerAudioSubtitlesDialog() {
 						</div>
 					</TabsContent>
 
-					{/* Subtitle styling and position tab */}
 					<TabsContent value="styling" className="mt-0 space-y-5 py-1">
 						<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-							{/* Size */}
 							<div className="space-y-2">
 								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_size()}</h4>
 								<div className="flex flex-col gap-1.5">
@@ -504,7 +497,6 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 							</div>
 
-							{/* Pozycja */}
 							<div className="space-y-2">
 								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_position_heading()}</h4>
 								<div className="flex flex-col gap-1.5">
@@ -524,7 +516,6 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 							</div>
 
-							{/* Text color */}
 							<div className="space-y-2">
 								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_text_color()}</h4>
 								<div className="flex flex-col gap-1.5">
@@ -545,7 +536,6 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 							</div>
 
-							{/* Background style */}
 							<div className="space-y-2">
 								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.user_background_style()}</h4>
 								<div className="flex flex-col gap-1.5">
@@ -566,7 +556,6 @@ export function PlayerAudioSubtitlesDialog() {
 							</div>
 						</div>
 
-						{/* Live preview */}
 						<div className="border-border/50 relative flex h-28 w-full items-center justify-center rounded-xl border bg-black/90 p-4 shadow-inner">
 							<span className="text-muted-foreground/60 absolute top-2.5 left-3 font-mono text-[10px] tracking-wider uppercase">
 								{m.player_live_preview()}
@@ -589,10 +578,8 @@ export function PlayerAudioSubtitlesDialog() {
 						</div>
 					</TabsContent>
 
-					{/* Subtitle sync tab */}
 					<TabsContent value="sync" className="mt-0 space-y-6 py-2">
 						<div className="flex flex-col gap-6">
-							{/* Current offset preview */}
 							<div className="border-border/60 bg-muted/40 flex flex-col items-center justify-center rounded-2xl border p-6 text-center shadow-xs">
 								<span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
 									{m.player_subtitle_offset_field()}
@@ -606,7 +593,6 @@ export function PlayerAudioSubtitlesDialog() {
 								<p className="text-muted-foreground mt-2 max-w-md text-xs">{offsetStatus}</p>
 							</div>
 
-							{/* Quick adjustment buttons */}
 							<div className="space-y-2">
 								<h4 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{m.player_quick_fix()}</h4>
 								<div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -659,7 +645,6 @@ export function PlayerAudioSubtitlesDialog() {
 								</div>
 							</div>
 
-							{/* Smooth slider */}
 							<div className="space-y-3 pt-2">
 								<div className="text-muted-foreground flex justify-between text-xs">
 									<span>{m.player_seek_earlier_10s()}</span>
@@ -681,7 +666,6 @@ export function PlayerAudioSubtitlesDialog() {
 								/>
 							</div>
 
-							{/* Keyboard shortcut hint */}
 							<div className="border-border/40 bg-card/40 text-muted-foreground rounded-xl border p-4 text-xs">
 								<div className="text-foreground flex items-center gap-2 font-medium">
 									<Timer className="text-primary size-4" />
@@ -695,7 +679,6 @@ export function PlayerAudioSubtitlesDialog() {
 						</div>
 					</TabsContent>
 
-					{/* Online subtitle search tab */}
 					<TabsContent value="search" className="mt-0 py-2">
 						<PlayerSubtitleSearchPanel />
 					</TabsContent>

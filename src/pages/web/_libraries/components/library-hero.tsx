@@ -43,7 +43,6 @@ export function LibraryHero({
 
 	return (
 		<header className="border-border relative flex min-h-95 flex-col items-center justify-center overflow-hidden border-b px-4 pt-24 pb-14 md:min-h-110 md:px-6 md:pt-28 md:pb-16">
-			{/* Background effects - using translate3d for GPU acceleration */}
 			<div className="from-primary/5 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent to-transparent" />
 			<div className="pointer-events-none absolute top-1/2 left-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_8%,transparent)_0%,transparent_70%)]" />
 
@@ -60,7 +59,6 @@ export function LibraryHero({
 					/>
 				)}
 
-				{/* Main Title - flex-[2] (valid Tailwind) */}
 				<div className="flex flex-2 flex-col items-center px-4 md:px-8">
 					<div className="mb-4 flex items-center gap-3">
 						<div className="to-primary h-px w-12 bg-linear-to-r from-transparent" />

@@ -299,7 +299,6 @@ export function PlayerDiagnostics() {
 			aria-label={m.player_diagnostics_label()}
 			className="border-border/80 bg-popover/95 text-popover-foreground absolute top-14 left-3 z-40 max-h-[85vh] w-[min(36rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border p-3.5 font-mono text-xs shadow-2xl md:top-16 md:left-8 md:p-4"
 		>
-			{/* Header */}
 			<div className="border-border/40 mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5 font-sans">
 				<div className="flex flex-wrap items-center gap-2">
 					<div className="flex items-center gap-1.5">

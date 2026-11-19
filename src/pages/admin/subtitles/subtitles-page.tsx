@@ -210,23 +210,19 @@ export default function AdminSubtitlesPage() {
 				}
 			/>
 
-			{/* Overview */}
 			<div className="grid gap-3 sm:grid-cols-3">
 				<AdminStatCard label={m.common_all()} value={total} icon={FileText} tone="default" />
 				<AdminStatCard label={m.admin_subtitles_embedded()} value={embeddedTotal} icon={Captions} tone="muted" />
 				<AdminStatCard label={m.admin_subtitles_external()} value={externalTotal} icon={Globe} tone="muted" />
 			</div>
 
-			{/* Providers section */}
 			{providers && providers.length > 0 && <SubtitleProvidersSection providers={providers} />}
 
-			{/* Subtitles list */}
 			<AdminSection
 				title={m.admin_subtitles_indexed_section()}
 				description={m.admin_subtitles_all_sources()}
 				contentClassName="flex flex-col gap-3"
 			>
-				{/* Type filter */}
 				<div className="flex flex-wrap items-center gap-1.5">
 					{TYPE_FILTERS.map((filter) => (
 						<button
@@ -319,11 +315,9 @@ export default function AdminSubtitlesPage() {
 				)}
 				{listContent}
 
-				{/* Pagination */}
 				<SimplePagination variant="admin" currentPage={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
 			</AdminSection>
 
-			{/* Dialogs */}
 			{viewingId !== null && (
 				<Suspense fallback={null}>
 					<LazySubtitleDetailDialog subtitleId={viewingId} isOpen onOpenChange={(open) => !open && setViewingId(null)} />

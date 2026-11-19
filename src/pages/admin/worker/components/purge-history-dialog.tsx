@@ -62,7 +62,6 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4 py-2">
-					{/* Status Selection */}
 					<div className="flex flex-col gap-2">
 						<Label weight="semibold" size="xs">
 							{m.admin_worker_record_type()}
@@ -85,7 +84,6 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 						</Select>
 					</div>
 
-					{/* Age / Retention Selection */}
 					<div className="flex flex-col gap-2">
 						<Label weight="semibold" size="xs">
 							{m.admin_worker_record_age()}
@@ -109,7 +107,6 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 						</Select>
 					</div>
 
-					{/* Preview Count */}
 					{preview.data && (
 						<p className="text-muted-foreground text-xs">
 							{m.admin_worker_purge_preview({
@@ -119,7 +116,6 @@ export function PurgeHistoryDialog({ isOpen, onClose }: PurgeHistoryDialogProps)
 						</p>
 					)}
 
-					{/* Warning Note */}
 					<div className="border-destructive/30 bg-destructive/5 text-muted-foreground flex items-start gap-2.5 rounded-xl border p-3 text-xs">
 						<AlertTriangle className="text-destructive mt-0.5 size-4 shrink-0" />
 						<p>

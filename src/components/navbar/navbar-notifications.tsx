@@ -40,7 +40,6 @@ export function NavbarNotifications() {
 			/>
 
 			<DropdownMenuContent align="end" sideOffset={8} className="w-[min(24rem,calc(100vw-2rem))] p-0">
-				{/* Header */}
 				<div className="border-border/40 flex items-center justify-between border-b px-4 py-3">
 					<div className="flex items-center gap-2">
 						<span className="text-foreground text-sm font-semibold">{m.user_notifications_heading()}</span>
@@ -72,7 +71,6 @@ export function NavbarNotifications() {
 					)}
 				</div>
 
-				{/* Items List */}
 				<div className="divide-border/20 max-h-88 divide-y overflow-y-auto">
 					{isLoading && (
 						<div className="flex flex-col gap-2 p-3">
@@ -157,7 +155,6 @@ export function NavbarNotifications() {
 						})}
 				</div>
 
-				{/* Footer */}
 				<div className="border-border/40 border-t p-2">
 					<Button
 						variant="primary-ghost"

@@ -73,7 +73,6 @@ export function PluginCard({
 
 	return (
 		<article className="border-border bg-card hover:border-primary/40 flex flex-col gap-4 rounded-xl border p-5 shadow-xs transition-[border-color,box-shadow] hover:shadow-md">
-			{/* Identity: icon, name and the state the plugin is in */}
 			<div className="flex items-start gap-3">
 				<div className="bg-primary/10 text-primary flex size-12 shrink-0 items-center justify-center rounded-xl">
 					<Puzzle className="size-6" />
@@ -100,7 +99,6 @@ export function PluginCard({
 
 			{plugin.description && <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">{plugin.description}</p>}
 
-			{/* Counters: what the plugin contributes */}
 			<dl className="grid grid-cols-3 gap-2 text-sm">
 				<div className="bg-muted/50 flex items-center justify-between gap-2 rounded-lg px-3 py-2">
 					<dt className="text-muted-foreground truncate text-xs">{m.common_providers_label()}</dt>
@@ -135,7 +133,6 @@ export function PluginCard({
 				</p>
 			)}
 
-			{/* Configuration read error */}
 			{plugin.configReadError && (
 				<div className="border-warning/30 bg-warning/10 text-warning flex items-start gap-1.5 rounded-lg border p-3 text-xs">
 					<AlertTriangle className="mt-px size-3.5 shrink-0" />
@@ -143,7 +140,6 @@ export function PluginCard({
 				</div>
 			)}
 
-			{/* Error Banner */}
 			{plugin.errorCode && (
 				<div className="border-destructive/30 bg-destructive/10 text-destructive rounded-lg border p-3 text-xs">
 					<div className="flex items-center gap-1.5 font-bold">

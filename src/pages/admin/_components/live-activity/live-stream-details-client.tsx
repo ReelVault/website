@@ -18,7 +18,6 @@ export function LiveStreamDetailsClient({ stream }: LiveStreamDetailsClientProps
 
 	return (
 		<>
-			{/* Client and connection */}
 			<div className="border-border/50 bg-background/60 flex flex-col gap-1.5 rounded-lg border p-3">
 				<div className="text-foreground flex items-center gap-1.5 font-sans text-xs font-semibold">
 					<Monitor className="text-primary size-3.5" />
@@ -71,7 +70,6 @@ export function LiveStreamDetailsClient({ stream }: LiveStreamDetailsClientProps
 				</div>
 			</div>
 
-			{/* Server-side buffer */}
 			{stream.bufferedSeconds !== null && (
 				<div className="border-border/50 bg-background/60 flex flex-col gap-1.5 rounded-lg border p-3">
 					<div className="text-foreground flex items-center gap-1.5 font-sans text-xs font-semibold">

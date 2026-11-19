@@ -90,7 +90,6 @@ export default function AdminDownloadsPage() {
 				}
 			/>
 
-			{/* Statistics */}
 			<div className="grid gap-3 sm:grid-cols-3">
 				<AdminStatCard
 					label={m.admin_downloads_active_jobs()}
@@ -114,7 +113,6 @@ export default function AdminDownloadsPage() {
 				/>
 			</div>
 
-			{/* Job list */}
 			<AdminSection title={m.admin_downloads_job_queue()} description={m.admin_downloads_current_and_finished_files()}>
 				<ToggleGroup
 					multiple={false}

@@ -31,14 +31,12 @@ export function DetailsSection({
 							<Icon className="size-5" />
 						</Badge>
 
-						{/* Title */}
 						<div className="flex flex-col items-start justify-center">
 							<h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
 							<h2 className="text-foreground/45 text-base font-bold tracking-tight sm:text-xl">{subtitle}</h2>
 						</div>
 					</div>
 
-					{/* Decorative Line */}
 					<Separator className="ml-4 flex-1" />
 					{action && <div>{action}</div>}
 				</div>

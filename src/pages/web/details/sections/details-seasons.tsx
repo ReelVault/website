@@ -89,7 +89,6 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 			icon={Tv}
 		>
 			<div className="flex flex-col gap-8">
-				{/* --- SEASON TABS WITH ARTWORK --- */}
 				<ScrollArea className="w-full whitespace-nowrap">
 					<div className="flex w-max gap-3 p-2">
 						{seasons.map((season) => {

@@ -16,16 +16,12 @@ export function MediaFileSidebar({ file }: MediaFileSidebarProps) {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Attached Metadata Card */}
 			<MediaFileMetadataCard file={file} onOpenReassign={() => setIsReassignDialogOpen(true)} />
 
-			{/* System Relations */}
 			<MediaFileRelationsSection file={file} onOpenReassign={() => setIsReassignDialogOpen(true)} />
 
-			{/* Subtitles Section */}
 			<MediaFileSubtitlesSection mediaFileId={file.id} subtitles={file.subtitles} />
 
-			{/* Video & Audio Streams */}
 			<MediaFileStreamsSection videoStreams={file.videoStreams} audioStreams={file.audioStreams} />
 
 			{isReassignDialogOpen && (

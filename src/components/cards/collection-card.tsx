@@ -68,10 +68,8 @@ export function CollectionCard({
 							className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
 						/>
 
-						{/* Gradient Overlay */}
 						<div className="from-background/95 via-background/40 absolute inset-0 bg-linear-to-t to-transparent" />
 
-						{/* Content */}
 						<div className="absolute bottom-0 left-0 w-full p-4">
 							<div className="flex items-end justify-between gap-2">
 								<p
@@ -95,7 +93,6 @@ export function CollectionCard({
 							</div>
 						</div>
 
-						{/* Now playing indicator if current */}
 						{highlight && (
 							<div className="bg-primary text-primary-foreground absolute top-3 right-3 flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-bold shadow-md">
 								<div className="bg-primary-foreground size-1.5 animate-pulse rounded-full" />

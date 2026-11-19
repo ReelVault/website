@@ -19,7 +19,6 @@ export function PersonSidebar({
 
 	return (
 		<SimpleAnimation direction="none" className="flex h-fit shrink-0 flex-col gap-10 lg:sticky lg:top-32 lg:w-80">
-			{/* Profile photo */}
 			<div className="relative z-10 mx-auto w-full max-w-70 lg:max-w-none">
 				<div className="border-border bg-card/60 hover:border-primary/40 aspect-3/4 overflow-hidden rounded-xl border shadow-2xl transition-[border-color] duration-500">
 					<ApiImage
@@ -34,7 +33,6 @@ export function PersonSidebar({
 				</div>
 			</div>
 
-			{/* Quick Info Grid */}
 			<div className="grid grid-cols-2 gap-3">
 				{[
 					{
@@ -66,7 +64,6 @@ export function PersonSidebar({
 				))}
 			</div>
 
-			{/* Bio */}
 			<div className="border-border/50 bg-card/60 relative space-y-4 rounded-xl border p-6">
 				<Quote className="text-primary/10 absolute top-4 right-4 size-8" />
 				<h3 className="text-primary/80 text-xs font-black">{m.web_about_artist()}</h3>
@@ -75,7 +72,6 @@ export function PersonSidebar({
 				</p>
 			</div>
 
-			{/* Filmografia (Timeline) */}
 			<section className="space-y-4">
 				<h2 className="text-foreground/50 px-1 text-xs font-black">{m.web_person_filmography()}</h2>
 				<ScrollArea className="h-64 pr-4">

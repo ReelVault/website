@@ -99,7 +99,6 @@ export default function AdminLibrariesPage() {
 		if (lib.type === "tv_shows") tvLibs++;
 	}
 
-	// Filter libraries by search query and type filter
 	const normalizedQuery = search.trim().toLowerCase();
 	const filteredLibraries = libraries.filter((lib) => {
 		if (typeFilter !== "all" && lib.type !== typeFilter) return false;
@@ -116,7 +115,6 @@ export default function AdminLibrariesPage() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Page Header */}
 			<LibraryHeader
 				total={total}
 				onAddClick={() => setIsCreateModalOpen(true)}
@@ -124,10 +122,8 @@ export default function AdminLibrariesPage() {
 				isScanningAll={isScanningAll}
 			/>
 
-			{/* KPI Stats overview */}
 			{!isLoading && libraries.length > 0 && <LibraryKpiGrid libraries={libraries} total={total} />}
 
-			{/* Filter & Search Bar */}
 			{libraries.length > 0 && (
 				<LibraryFilterBar
 					typeFilter={typeFilter}
@@ -142,7 +138,6 @@ export default function AdminLibrariesPage() {
 				/>
 			)}
 
-			{/* Libraries Grid */}
 			<LibraryGrid
 				libraries={sortedLibraries}
 				isLoading={isLoading}
@@ -163,7 +158,6 @@ export default function AdminLibrariesPage() {
 				onShowHealth={setHealthLibraryId}
 			/>
 
-			{/* Dialogs */}
 			<LibraryHealthDialog
 				libraryName={libraries.find((lib) => lib.id === healthLibraryId)?.name ?? null}
 				health={healthLibraryId ? healthByLibraryId.get(healthLibraryId) : undefined}

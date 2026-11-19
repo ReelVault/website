@@ -86,12 +86,10 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 				}}
 				className="flex flex-col gap-6"
 			>
-				{/* Step 1: Type Selection */}
 				<form.Field name="type">
 					{(field) => <LibraryTypeSelector value={field.state.value} onChange={(next) => field.handleChange(next)} />}
 				</form.Field>
 
-				{/* Step 2: Name */}
 				<form.Field name="name">
 					{(field) => (
 						<div className="flex flex-col gap-2">
@@ -113,17 +111,14 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 					)}
 				</form.Field>
 
-				{/* Step 3: Source Paths */}
 				<form.Field name="paths">
 					{(field) => <LibraryPathsSection paths={field.state.value} onChange={field.handleChange} idPrefix="create" showDashedAddButton />}
 				</form.Field>
 
-				{/* Step 4: Sidecar NFO format */}
 				<form.Field name="sidecarFlavor">
 					{(field) => <SidecarFlavorSelector value={field.state.value} onChange={(next) => field.handleChange(next)} />}
 				</form.Field>
 
-				{/* Step 4b: Per-library metadata language */}
 				<form.Field name="metadataLanguage">
 					{(field) => <MetadataLanguageSelector value={field.state.value} onChange={(next) => field.handleChange(next)} />}
 				</form.Field>
@@ -135,7 +130,6 @@ export function CreateLibraryForm({ onClose }: CreateLibraryFormProps) {
 					</Alert>
 				)}
 
-				{/* Footer */}
 				<FullscreenDialogFooter className="gap-3 border-t sm:justify-end">
 					<Button type="button" variant="outline" size="default" onClick={onClose}>
 						{m.common_cancel()}

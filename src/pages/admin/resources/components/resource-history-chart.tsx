@@ -110,7 +110,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 
 	return (
 		<div className="flex flex-col gap-3">
-			{/* Legend */}
 			<div className="flex items-center gap-4 text-xs">
 				{SERIES.map((series) => (
 					<span key={series.key} className="flex items-center gap-2">
@@ -120,7 +119,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 				))}
 			</div>
 
-			{/* Chart */}
 			<div className="relative">
 				<svg
 					viewBox="0 0 100 100"
@@ -132,7 +130,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 					onMouseMove={handleMove}
 					onMouseLeave={() => setHoverIndex(null)}
 				>
-					{/* Horizontal gridlines at 25/50/75% */}
 					{[25, 50, 75].map((y) => (
 						<line
 							key={y}
@@ -160,7 +157,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 						/>
 					))}
 
-					{/* Hover guide */}
 					{hovered && (
 						<line
 							x1={hoverX}
@@ -176,7 +172,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 					)}
 				</svg>
 
-				{/* Hover tooltip */}
 				{hovered && (
 					<div
 						className="border-border/70 bg-popover text-popover-foreground pointer-events-none absolute -top-1 z-10 min-w-44 -translate-x-1/2 rounded-lg border p-2.5 shadow-md"
@@ -206,7 +201,6 @@ export function ResourceHistoryChart({ history }: { history: HistoryEntry[] }) {
 				)}
 			</div>
 
-			{/* X labels: first / middle / last */}
 			{samples.length > 0 && (
 				<div className="text-muted-foreground flex justify-between text-xs">
 					{(samples.length >= 3 ? [0, Math.floor((samples.length - 1) / 2), samples.length - 1] : [0]).map((index) => {

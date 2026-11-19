@@ -13,7 +13,6 @@ interface MediaFileStreamsSectionProps {
 export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFileStreamsSectionProps) {
 	return (
 		<>
-			{/* Video Streams */}
 			<AdminSection title={m.admin_media_video_streams_section()} description={m.admin_media_image_tracks_detected()}>
 				{videoStreams && videoStreams.length > 0 ? (
 					<div className="flex flex-col gap-2.5">
@@ -81,7 +80,6 @@ export function MediaFileStreamsSection({ videoStreams, audioStreams }: MediaFil
 				)}
 			</AdminSection>
 
-			{/* Audio Streams */}
 			<AdminSection title={m.admin_media_audio_streams_section()} description={m.admin_media_audio_tracks_detected()}>
 				{audioStreams && audioStreams.length > 0 ? (
 					<div className="flex flex-col gap-2.5">

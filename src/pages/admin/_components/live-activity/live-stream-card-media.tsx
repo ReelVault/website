@@ -26,7 +26,6 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 			/>
 			<div className="from-background via-background/70 absolute inset-0 bg-linear-to-t to-black/60" />
 
-			{/* Top Client Header */}
 			<div className="absolute top-3 right-3 left-3 flex items-center justify-between text-white shadow-md">
 				<div className="flex items-center gap-2">
 					<DeviceIcon name={stream.clientName ?? stream.browser ?? ""} />
@@ -39,7 +38,6 @@ export function LiveStreamCardMedia({ stream }: LiveStreamCardMediaProps) {
 				<Badge variant={isDirect ? "success" : "warning"}>{isDirect ? m.common_direct_stream() : m.common_transcoding()}</Badge>
 			</div>
 
-			{/* Title Overlay Info */}
 			<div className="absolute right-3 bottom-3 left-3 flex flex-col gap-1">
 				<h4 className="text-foreground truncate text-base font-black" title={stream.title}>
 					{stream.title}

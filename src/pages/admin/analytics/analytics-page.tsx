@@ -58,7 +58,6 @@ export default function AdminAnalyticsPage() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Page Header */}
 			<AdminPageHeader
 				icon={BarChart3}
 				eyebrow={m.admin_analytics_watch_statistics()}
@@ -90,29 +89,23 @@ export default function AdminAnalyticsPage() {
 				}
 			/>
 
-			{/* Live activity & restart-readiness monitor */}
 			<AdminLiveActivitySection />
 
-			{/* KPI Statistics Grid */}
 			<AnalyticsKpiGrid data={data} />
 
-			{/* User Leaderboard & Top Content Grid */}
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
 				<AnalyticsUserLeaderboard leaderboard={data.userLeaderboard} />
 				<AnalyticsTopContent topContent={data.topContent} />
 			</div>
 
-			{/* Heatmap Section */}
 			<AdminSection title={m.admin_analytics_activity_hours()}>
 				<InsightsHourlyHeatmap heatmap={data.hourlyActivity} />
 			</AdminSection>
 
-			{/* Daily activity (minutes + play count per day) */}
 			<AdminSection title={m.admin_analytics_daily_activity()}>
 				<AnalyticsDailyActivity dailyActivity={data.dailyActivity} />
 			</AdminSection>
 
-			{/* Recent Stream Activity Table */}
 			<AnalyticsRecentStreams recentPlays={data.recentPlays} />
 		</div>
 	);

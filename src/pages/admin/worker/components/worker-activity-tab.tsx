@@ -38,7 +38,6 @@ export function WorkerActivityTab({
 		<div className="flex flex-col gap-6">
 			<WorkerStatsGrid workerStats={statsQuery.data ?? []} isLoading={statsQuery.isLoading} isError={statsQuery.isError} />
 
-			{/* Live child-process view (ffmpeg/ffprobe) */}
 			<WorkerProcessesCard autoRefresh={autoRefresh} />
 
 			<AdminSection

@@ -123,7 +123,6 @@ export function PlayerProgressBar() {
 				onPointerMove={handlePointerMove}
 				onPointerLeave={handlePointerLeave}
 			>
-				{/* Seek hover & scrubbing tooltip with Trickplay preview */}
 				{(isHovering || isScrubbing) && activeTooltipTime !== null && activeTooltipPercent !== null && (
 					<div
 						className="pointer-events-none absolute bottom-8 z-40 flex -translate-x-1/2 flex-col items-center gap-1 transition-[border-color,background-color,color,box-shadow] duration-75 select-none"
@@ -175,7 +174,6 @@ export function PlayerProgressBar() {
 					</div>
 				)}
 
-				{/* Main track background */}
 				<div aria-hidden className="absolute h-1.5 w-full rounded-full bg-white/20 transition-[height] duration-150 group-hover/track:h-2">
 					{/* Transcoded so far (server) — darker underlay reaching hours ahead */}
 					{transcodedRanges.map((range) => {
@@ -205,10 +203,8 @@ export function PlayerProgressBar() {
 						);
 					})}
 
-					{/* Played progress */}
 					<span className="bg-primary absolute inset-y-0 left-0 rounded-full shadow-xs" style={{ width: `${playedPercent}%` }} />
 
-					{/* Media markers overlay */}
 					{markers.map((segment) => {
 						const isPoint = segment.type === "highlight" || segment.startSeconds === segment.endSeconds;
 						const start = Math.min(100, Math.max(0, (segment.startSeconds / safeDuration) * 100));
@@ -244,7 +240,6 @@ export function PlayerProgressBar() {
 					})}
 				</div>
 
-				{/* Range slider for interaction */}
 				<input
 					type="range"
 					min={0}

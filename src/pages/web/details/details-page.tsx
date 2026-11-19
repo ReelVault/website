@@ -87,7 +87,6 @@ export default function DetailsByIdPage() {
 			<DetailsHeader metadata={metadata} isAdmin={isAdmin} />
 
 			<PageContainer className="relative flex flex-col gap-16 py-16 lg:gap-24">
-				{/* 01 // COLLECTION */}
 				<LazyRender minHeight={260} rootMargin="400px 0px">
 					{() => (
 						<Suspense fallback={null}>
@@ -96,7 +95,6 @@ export default function DetailsByIdPage() {
 					)}
 				</LazyRender>
 
-				{/* 03 // AVAILABLE VERSIONS (movies only) */}
 				{metadata.type === "movie" && (
 					<LazyRender minHeight={200} rootMargin="400px 0px">
 						{() => (
@@ -107,7 +105,6 @@ export default function DetailsByIdPage() {
 					</LazyRender>
 				)}
 
-				{/* 03 // SEASONS (series only) */}
 				{metadata.type === "tv_show" && (
 					<LazyRender minHeight={350} rootMargin="400px 0px">
 						{() => (
@@ -119,7 +116,6 @@ export default function DetailsByIdPage() {
 					</LazyRender>
 				)}
 
-				{/* 02 // OBSADA */}
 				<LazyRender minHeight={240} rootMargin="400px 0px">
 					{() => (
 						<Suspense fallback={null}>
@@ -128,7 +124,6 @@ export default function DetailsByIdPage() {
 					)}
 				</LazyRender>
 
-				{/* 04 // PODOBNE */}
 				<LazyRender minHeight={350} rootMargin="400px 0px">
 					{() => (
 						<Suspense fallback={null}>
@@ -137,7 +132,6 @@ export default function DetailsByIdPage() {
 					)}
 				</LazyRender>
 
-				{/* DYNAMIC CAST SECTIONS */}
 				{actorsToDisplay.map((actor) => (
 					<LazyRender key={actor.data?.id} minHeight={320} rootMargin="400px 0px">
 						{() => (

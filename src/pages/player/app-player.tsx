@@ -540,7 +540,6 @@ function AppPlayerSurface() {
 	};
 
 	// -------------------------------------------------------------------------
-	// Keyboard shortcuts hook
 	// -------------------------------------------------------------------------
 
 	usePlayerShortcuts({
@@ -674,7 +673,6 @@ function AppPlayerSurface() {
 				onMouseMove={handleSurfaceMouseMove}
 				onMouseLeave={hideControls}
 			>
-				{/* Native video element */}
 				<video
 					ref={setVideoNode}
 					className="absolute inset-0 size-full"

@@ -54,7 +54,6 @@ export function MetadataHero({
 	return (
 		<Card variant="subtle" className="overflow-hidden">
 			<div className="flex flex-col gap-5 p-6 sm:p-7">
-				{/* Poster & title details */}
 				<div className="flex flex-col gap-5 sm:flex-row sm:items-start">
 					<div className="group border-border/80 bg-muted/40 relative h-36 w-24 shrink-0 overflow-hidden rounded-xl border shadow-sm sm:h-44 sm:w-30">
 						<ApiImage
@@ -103,7 +102,6 @@ export function MetadataHero({
 					</div>
 				</div>
 
-				{/* Action toolbar */}
 				<MetadataHeroActions
 					title={metadata.title}
 					isSaving={isSaving}

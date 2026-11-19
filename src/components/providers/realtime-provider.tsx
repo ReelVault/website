@@ -100,19 +100,16 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 		}
 	}, [isAuthenticated, isLoading, profile?.id]);
 
-	// Listen for remote session revocation
 	useRealtimeEvent("auth:session:revoked", () => {
 		toast.error(m.components_realtime_session_terminated());
 		window.location.assign("/auth/login");
 	});
 
-	// Listen for library scan completion
 	useRealtimeEvent("library:scan:completed", (data) => {
 		toast.success(m.components_realtime_library_scan_finished({ libraryTitle: data.libraryTitle ?? "" }));
 		invalidateCoalesced([libraryKeys.all, mediaKeys.files(), metadataKeys.all, episodeKeys.all, seasonKeys.all, discoveryKeys.all]);
 	});
 
-	// Listen for worker tasks completion
 	useRealtimeEvent("worker:job:completed", () => {
 		invalidateCoalesced([
 			adminKeys.workerOperations(),
@@ -138,7 +135,6 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 		invalidateCoalesced([adminSettingsKeys.all]);
 	});
 
-	// Listen for new notifications
 	useRealtimeEvent("notification:created", (data) => {
 		if (data.title) {
 			toast.info(data.title, { description: data.message });

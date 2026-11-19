@@ -75,7 +75,6 @@ export function WorkerHistoryTab({ autoRefresh, onInspect }: { autoRefresh: bool
 			actions={<PurgeHistoryAction />}
 		>
 			<div className="flex flex-col gap-4">
-				{/* Status filters */}
 				<div className="flex flex-wrap items-center gap-1.5">
 					{filters.map((filter) => (
 						<button

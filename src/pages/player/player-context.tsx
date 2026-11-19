@@ -308,7 +308,6 @@ export function usePlayerNextEpisode(): PlayerNextEpisodeValue {
 }
 
 // ---------------------------------------------------------------------------
-// Markers
 // ---------------------------------------------------------------------------
 
 interface PlayerMarkersValue {
@@ -338,7 +337,6 @@ export function usePlayerEpisodes(): PlayerEpisodesValue {
 }
 
 // ---------------------------------------------------------------------------
-// Provider
 // ---------------------------------------------------------------------------
 
 export type PendingChange = "quality" | "audio";

@@ -62,7 +62,6 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 						<ContextMenu key={file.id}>
 							<ContextMenuTrigger render={<Card variant="interactive" />} className="group relative">
 								<CardContent className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-									{/* Left side: resolution icon + title and tags */}
 									<div className="flex items-start gap-3.5 sm:items-center">
 										<div className="border-border/55 bg-background flex size-11 shrink-0 items-center justify-center rounded-lg border shadow-xs">
 											<FileVideo className="text-primary size-5" />
@@ -87,7 +86,6 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 												</div>
 											)}
 
-											{/* Inline parameters (time, size, bitrate, format) */}
 											<div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
 												{file.duration != null && file.duration > 0 && (
 													<div className="flex items-center gap-1.5">
@@ -114,7 +112,6 @@ export function DetailsFiles({ metadataId, isAdmin }: { metadataId: string; isAd
 										</div>
 									</div>
 
-									{/* Right side: actions */}
 									<div className="flex items-center justify-end pt-2 sm:pt-0">
 										{isAdmin && (
 											<Button

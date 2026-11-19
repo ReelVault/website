@@ -77,7 +77,6 @@ export function PlayerChrome({
 			<PlayerMediaSessionBridge />
 			<PlayerSleepTimerController />
 
-			{/* Overlays */}
 			<PlayerLoadingOverlay />
 			<PlayerErrorOverlay />
 			<PlayerNextEpisodeOverlay />

@@ -36,7 +36,6 @@ export default function PersonByIdPage({ id = "" }: { id?: string }) {
 
 	return (
 		<div className="cinema-page">
-			{/* Background Decoration */}
 			<div className="pointer-events-none absolute top-0 left-1/4 h-125 w-125 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_12%,transparent)_0%,transparent_70%)]" />
 
 			<div className="relative flex flex-col gap-16 px-6 py-12 sm:px-12 lg:flex-row lg:px-24">
