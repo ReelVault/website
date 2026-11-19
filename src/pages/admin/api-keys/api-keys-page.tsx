@@ -1,4 +1,4 @@
-import type { UpdateApiKeyRequest } from "@reelvault/sdk";
+import type { ApiKey, ApiKeyScope, CreateApiKeyRequest, UpdateApiKeyRequest } from "@reelvault/sdk";
 import { KeyRound } from "lucide-react";
 import { useState } from "react";
 import { useAdminApiKeys } from "@/client/hooks/use-admin-api-keys";
@@ -16,19 +16,6 @@ import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { copyToClipboard } from "@/utils/clipboard-utils";
 import { formatDate } from "@/utils/format-utils";
-
-type Scope = "read_only" | "full";
-
-interface ApiKeyRow {
-	id: string;
-	name: string;
-	scope: Scope;
-	keyPrefix: string;
-	expiresAt: string | null;
-	lastUsedAt: string | null;
-	createdAt: string;
-	createdByName: string | null;
-}
 
 const SKELETON_KEYS = ["1", "2", "3"] as const;
 /** A key expiring inside this window is listed by the "expiring soon" filter. */
@@ -159,7 +146,7 @@ function isExpired(expiresAt: string): boolean {
 	return new Date(expiresAt).getTime() < Date.now();
 }
 
-function isExpiringSoon(apiKey: ApiKeyRow): boolean {
+function isExpiringSoon(apiKey: ApiKey): boolean {
 	if (!apiKey.expiresAt) return false;
 
 	const remainingMs = new Date(apiKey.expiresAt).getTime() - Date.now();
@@ -176,7 +163,7 @@ function useAdminApiKeysPageState() {
 	const [createOpen, setCreateOpen] = useState(false);
 	const [createdSecret, setCreatedSecret] = useState<string | null>(null);
 	const [secretKind, setSecretKind] = useState<"created" | "rotated">("created");
-	const [editingKey, setEditingKey] = useState<ApiKeyRow | null>(null);
+	const [editingKey, setEditingKey] = useState<ApiKey | null>(null);
 	const [expiringOnly, setExpiringOnly] = useState(false);
 
 	const openCreate = () => setCreateOpen(true);
@@ -186,7 +173,7 @@ function useAdminApiKeysPageState() {
 		setCreatedSecret(secret);
 	};
 
-	const onCreate = async (input: { name: string; scope: Scope; expiresAtDays?: number }) => {
+	const onCreate = async (input: CreateApiKeyRequest) => {
 		const created = await query.createMutation.mutateAsync(input);
 		setCreateOpen(false);
 		showSecret(created.key, "created");
@@ -199,7 +186,7 @@ function useAdminApiKeysPageState() {
 
 	return {
 		apiKeysQuery: query.apiKeysQuery,
-		apiKeys: (query.apiKeysQuery.data ?? []) as ApiKeyRow[],
+		apiKeys: query.apiKeysQuery.data ?? [],
 		createMutation: query.createMutation,
 		revokeMutation: query.revokeMutation,
 		rotateMutation: query.rotateMutation,
@@ -226,7 +213,7 @@ function EditKeyDialog({
 	onSave,
 	pending,
 }: {
-	apiKey: ApiKeyRow | null;
+	apiKey: ApiKey | null;
 	onClose: () => void;
 	onSave: (id: string, body: UpdateApiKeyRequest) => Promise<unknown>;
 	pending: boolean;
@@ -247,7 +234,7 @@ function EditKeyForm({
 	onSave,
 	pending,
 }: {
-	apiKey: ApiKeyRow;
+	apiKey: ApiKey;
 	onClose: () => void;
 	onSave: (id: string, body: UpdateApiKeyRequest) => Promise<unknown>;
 	pending: boolean;
@@ -324,13 +311,13 @@ function CreateKeyDialog({
 		createdSecret: string | null;
 		secretKind: "created" | "rotated";
 		setCreatedSecret: (secret: string | null) => void;
-		onCreate: (input: { name: string; scope: Scope; expiresAtDays?: number }) => Promise<unknown>;
+		onCreate: (input: CreateApiKeyRequest) => Promise<unknown>;
 	};
-	onCreate: (input: { name: string; scope: Scope; expiresAtDays?: number }) => Promise<unknown>;
+	onCreate: (input: CreateApiKeyRequest) => Promise<unknown>;
 	pending: boolean;
 }) {
 	const [name, setName] = useState("");
-	const [scope, setScope] = useState<Scope>("read_only");
+	const [scope, setScope] = useState<ApiKeyScope>("read_only");
 	const [expiresInDays, setExpiresInDays] = useState("");
 
 	const reset = () => {

@@ -45,7 +45,8 @@ export default function DownloadsPage() {
 			completedDownloads.push(d);
 		} else if (d.status === "pending" || d.status === "processing") {
 			activeDownloads.push(d);
-		} else if (d.status === "failed" || d.status === "cancelled") {
+		} else {
+			// The union is exhausted: failed and cancelled are the remaining statuses.
 			failedDownloads.push(d);
 		}
 	}

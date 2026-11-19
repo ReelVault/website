@@ -1,4 +1,4 @@
-import type { UpdateApiKeyRequest } from "@reelvault/sdk";
+import type { CreateApiKeyRequest, UpdateApiKeyRequest } from "@reelvault/sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
@@ -16,7 +16,7 @@ export function useAdminApiKeys() {
 	});
 
 	const createMutation = useMutation({
-		mutationFn: (input: { name: string; scope: "read_only" | "full"; expiresAtDays?: number }) => reelvault.admin.createApiKey(input),
+		mutationFn: (input: CreateApiKeyRequest) => reelvault.admin.createApiKey(input),
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({ queryKey: adminKeys.apiKeys() });
 		},

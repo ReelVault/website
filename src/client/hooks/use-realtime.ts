@@ -1,6 +1,5 @@
-import type { PlaybackCommand, RealtimeEventMap, RealtimeEventMessage } from "@reelvault/sdk";
+import type { RealtimeEventMap, RealtimeEventMessage } from "@reelvault/sdk";
 import { useEffect, useRef } from "react";
-import { safeUuid } from "@/utils/id-utils";
 import { reelvault } from "../client";
 
 type EventCallback<T = unknown> = (data: T, event: RealtimeEventMessage<T>) => void;
@@ -60,7 +59,6 @@ const PING_INTERVAL_MS = 25_000;
 // Reset the reconnect backoff only after the socket has stayed up this long — a
 // server that accepts then immediately closes must not cause a 1 s retry loop.
 const STABLE_CONNECTION_MS = 5_000;
-const COMMAND_ACK_TIMEOUT_MS = 2_000;
 // WebSocket close codes that mean "retrying cannot succeed" (auth rejected).
 const AUTH_CLOSE_CODES = new Set([4001, 4401, 4403]);
 
@@ -103,7 +101,6 @@ class RealtimeConnection {
 	private pingTimer: ReturnType<typeof setInterval> | null = null;
 	private lastPongAt = 0;
 	private stableTimer: ReturnType<typeof setTimeout> | null = null;
-	private readonly pendingCommands = new Map<string, { resolve: (delivered: boolean) => void; timer: ReturnType<typeof setTimeout> }>();
 
 	constructor() {
 		// While the tab/app is hidden (phone in pocket, background tab) a dead
@@ -221,24 +218,11 @@ class RealtimeConnection {
 
 			return;
 		}
-
-		if (value.type === "playback_command_ack") {
-			const requestId = typeof value.requestId === "string" ? value.requestId : undefined;
-			if (requestId) this.resolvePendingCommand(requestId, value.delivered === true);
-
-			return;
-		}
-
-		if (value.type === "playback_command_error") {
-			const requestId = typeof value.requestId === "string" ? value.requestId : undefined;
-			if (requestId) this.resolvePendingCommand(requestId, false);
-		}
 	}
 
 	private readonly handleClose = (event: CloseEvent): void => {
 		const wasOpen = this.socket !== null;
 		this.cleanup();
-		this.resolveAllPendingCommands(false);
 		// Auth rejection: retrying the same socket cannot succeed; the next API
 		// 401 drives the re-authentication redirect instead.
 		if (AUTH_CLOSE_CODES.has(event.code)) {
@@ -253,7 +237,6 @@ class RealtimeConnection {
 
 	private readonly handleError = (): void => {
 		this.cleanup();
-		this.resolveAllPendingCommands(false);
 		setRealtimeStatus(realtimeStatus === "idle" ? "idle" : "reconnecting");
 		this.scheduleReconnect();
 	};
@@ -336,50 +319,6 @@ class RealtimeConnection {
 		this.sessionSubscriptions.delete(sessionId);
 		if (this.socket && this.socket.readyState === WebSocket.OPEN) {
 			this.socket.send(JSON.stringify({ type: "unsubscribe_session", sessionId }));
-		}
-	}
-
-	/**
-	 * Sends a playback command and waits for the server's ack, so the remote can
-	 * tell "delivered to a player" from "nobody is subscribed". Returns `null`
-	 * when no socket is open (caller should fall back to HTTP); `false` on an
-	 * explicit not-delivered ack or when the ack does not arrive in time.
-	 */
-	async sendCommandWithAck(sessionId: string, command: PlaybackCommand, timeoutMs = COMMAND_ACK_TIMEOUT_MS): Promise<boolean | null> {
-		const socket = this.socket;
-		if (!socket || socket.readyState !== WebSocket.OPEN) return null;
-
-		const requestId = safeUuid();
-		const delivered = await new Promise<boolean>((resolve) => {
-			const timer = setTimeout(() => {
-				if (this.pendingCommands.delete(requestId)) resolve(false);
-			}, timeoutMs);
-			this.pendingCommands.set(requestId, {
-				resolve: (value) => {
-					clearTimeout(timer);
-					resolve(value);
-				},
-				timer,
-			});
-			socket.send(JSON.stringify({ type: "playback_command", sessionId, command, requestId }));
-		});
-
-		return delivered;
-	}
-
-	private resolvePendingCommand(requestId: string, delivered: boolean): void {
-		const entry = this.pendingCommands.get(requestId);
-		if (!entry) return;
-
-		this.pendingCommands.delete(requestId);
-		entry.resolve(delivered);
-	}
-
-	private resolveAllPendingCommands(delivered: boolean): void {
-		for (const [requestId, entry] of this.pendingCommands) {
-			clearTimeout(entry.timer);
-			entry.resolve(delivered);
-			this.pendingCommands.delete(requestId);
 		}
 	}
 

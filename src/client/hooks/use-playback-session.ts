@@ -8,7 +8,6 @@ import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { pollWhile } from "../utils/poll-while";
 import { playbackSessionKeys } from "../utils/query-keys";
-import { realtimeConnection } from "./use-realtime";
 
 export function usePlaybackSession(
 	mediaFileId: string | undefined,
@@ -173,13 +172,9 @@ export function usePlaybackCommand(sessionId?: string) {
 		mutationFn: async (command: PlaybackCommand) => {
 			if (!sessionId) throw new Error("sessionId is required");
 
-			// Prefer WS but only trust it when the server acked delivery to a player;
-			// otherwise (no socket, nobody subscribed, or a lost ack) fall back to HTTP.
-			const deliveredOverWs = await realtimeConnection.sendCommandWithAck(sessionId, command);
-			if (deliveredOverWs === true) {
-				return { delivered: true, command: command.type };
-			}
-
+			// HTTP is the one send path: the server fans the command out to the
+			// same subscribed players as the WS route, and its response reports
+			// delivery. A second send after a lost WS ack executed commands twice.
 			return await reelvault.playbackSessions.sendCommand(sessionId, command);
 		},
 		onError: (error) => toastError(m.toast_command_send_failed(), error),

@@ -475,6 +475,7 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Remote commands sent twice** — a lost WebSocket ack made the remote resend the same command over HTTP, so a relative seek jumped twice as far. Commands now go through the one HTTP send path and WebSocket stays the receive channel.
 - **`media-file-card-actions` plugin slot** — documented as per-file card actions, it was mounted in every title card menu without any file context. It now renders as buttons on each media file card and passes `mediaFileId` in the slot params.
 - **Untranslated text** — CPU profile and worker names on the resources page, the total watch time and per-play minutes in analytics, stream bitrates and the software-encoding label in live activity, download job statuses, a log line without a message and the plugin schema fallbacks ("No data", "Request failed", ...) were hard-coded English; they now come from the translations.
 - **Match audit tab** — the tab showed the green "all clear" badge before any audit had run, even with mismatched files; it shows no badge until an audit has run.
