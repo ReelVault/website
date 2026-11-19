@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
+import { parsePageParam } from "@/routes/-search-params";
 
 const AdminMediaPage = lazyRouteComponent(() => import("@/pages/admin/media/media-page"));
 
@@ -17,7 +18,7 @@ function adminMediaSearchValidator(search: Record<string, unknown>): AdminMediaS
 	return {
 		q: typeof search.q === "string" ? search.q : undefined,
 		sort: typeof search.sort === "string" ? search.sort : undefined,
-		page: Number.isFinite(Number(search.page)) && Number(search.page) > 0 ? Number(search.page) : undefined,
+		page: parsePageParam(search.page),
 		libraryId: typeof search.libraryId === "string" ? search.libraryId : undefined,
 	};
 }

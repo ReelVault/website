@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
+import { parsePageParam } from "@/routes/-search-params";
 
 const AdminAuditPage = lazyRouteComponent(() => import("@/pages/admin/audit/audit-page"));
 
@@ -23,8 +24,6 @@ export interface AdminAuditSearch {
 const AUDIT_ACTIONS: readonly AdminAuditActionFilter[] = ["all", "create", "update", "delete"];
 
 function adminAuditSearchValidator(search: Record<string, unknown>): AdminAuditSearch {
-	const rawPage = Number(search.page);
-
 	return {
 		action: AUDIT_ACTIONS.find(
 			(candidate): candidate is Exclude<AdminAuditActionFilter, "all"> => candidate === search.action && candidate !== "all",
@@ -36,7 +35,7 @@ function adminAuditSearchValidator(search: Record<string, unknown>): AdminAuditS
 		q: typeof search.q === "string" && search.q !== "" ? search.q : undefined,
 		from: typeof search.from === "string" && search.from !== "" ? search.from : undefined,
 		to: typeof search.to === "string" && search.to !== "" ? search.to : undefined,
-		page: Number.isInteger(rawPage) && rawPage > 1 ? rawPage : undefined,
+		page: parsePageParam(search.page),
 	};
 }
 

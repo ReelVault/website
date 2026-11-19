@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { detach } from "@/lib/detach";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
+import { parsePageParam } from "@/routes/-search-params";
 import { parseMetadataMinMatchScore, parseMetadataStartsWith, parseMetadataYear } from "@/types/search-params";
 
 const AdminMetadataPage = lazyRouteComponent(() => import("@/pages/admin/metadata/metadata-page"));
@@ -21,7 +22,7 @@ interface AdminMetadataSearch {
 function adminMetadataSearchValidator(search: Record<string, unknown>): AdminMetadataSearch {
 	return {
 		q: typeof search.q === "string" ? search.q : undefined,
-		page: Number.isFinite(Number(search.page)) && Number(search.page) > 0 ? Number(search.page) : undefined,
+		page: parsePageParam(search.page),
 		filter: typeof search.filter === "string" ? search.filter : undefined,
 		type: typeof search.type === "string" ? search.type : undefined,
 		sort: typeof search.sort === "string" ? search.sort : undefined,

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { AdminSubtitleSort } from "@/client/hooks/use-admin-subtitles";
 import { lazyRouteComponent } from "@/lib/lazy-route-component";
+import { parsePageParam } from "@/routes/-search-params";
 
 const AdminSubtitlesPage = lazyRouteComponent(() => import("@/pages/admin/subtitles/subtitles-page"));
 
@@ -17,10 +18,8 @@ const SUBTITLE_TYPES: ReadonlyArray<"embedded" | "external"> = ["embedded", "ext
 const SUBTITLE_SORTS: readonly AdminSubtitleSort[] = ["added", "updated", "language", "title"];
 
 function adminSubtitlesSearchValidator(search: Record<string, unknown>): AdminSubtitlesSearch {
-	const rawPage = Number(search.page);
-
 	return {
-		page: Number.isInteger(rawPage) && rawPage > 1 ? rawPage : undefined,
+		page: parsePageParam(search.page),
 		type: SUBTITLE_TYPES.find((candidate) => candidate === search.type),
 		language: typeof search.language === "string" && search.language !== "" ? search.language : undefined,
 		q: typeof search.q === "string" && search.q !== "" ? search.q : undefined,
