@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
+import { fileCountOf } from "../../libraries/components/library-card-utils";
 
 export function DashboardStorageBreakdown({
 	libraries,
@@ -37,7 +38,7 @@ export function DashboardStorageBreakdown({
 			) : (
 				<div className="flex flex-col gap-3">
 					{libraries.map((lib) => {
-						const libCount = lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
+						const libCount = fileCountOf(lib);
 						const libSize = lib.totalSize ?? 0;
 						const percentage = totalMediaSize > 0 ? Math.round((libSize / totalMediaSize) * 100) : 0;
 

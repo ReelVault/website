@@ -1,7 +1,12 @@
 import type { LibraryWithRelations, MetadataStorageMode } from "@reelvault/sdk";
 import { m } from "@/paraglide/messages";
 
-export function getPathStats(_lib: LibraryWithRelations, path: LibraryWithRelations["paths"][number]) {
+/** Files in a library; the list endpoint sends `totalMediaFiles`, older payloads only `mediaFileCount`. */
+export function fileCountOf(lib: LibraryWithRelations): number {
+	return lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
+}
+
+export function getPathStats(path: LibraryWithRelations["paths"][number]) {
 	if (path.totalSize !== undefined && path.fileCount !== undefined) {
 		return { count: path.fileCount, size: path.totalSize };
 	}
@@ -30,7 +35,7 @@ export type PathSortOption = (typeof PATH_SORT_OPTIONS)[number];
 /** Source directories of one library in the chosen order. The input array is not modified. */
 export function sortLibraryPaths(lib: LibraryWithRelations, sort: PathSortOption): LibraryWithRelations["paths"] {
 	return lib.paths.toSorted((left, right) => {
-		if (sort === "size-desc") return getPathStats(lib, right).size - getPathStats(lib, left).size;
+		if (sort === "size-desc") return getPathStats(right).size - getPathStats(left).size;
 
 		const order = left.path.localeCompare(right.path);
 		return sort === "path-desc" ? -order : order;

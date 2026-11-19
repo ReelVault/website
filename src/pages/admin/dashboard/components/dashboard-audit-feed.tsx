@@ -8,22 +8,8 @@ import { SkeletonList } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
+import { auditEntryLabel } from "../../audit/audit-entry-label";
 import { auditDateFormatter } from "./dashboard-utils";
-
-function auditEntryLabel(entry: {
-	summary?: string | null;
-	resourceType?: string;
-	resourceName?: string | null;
-	actorUserId?: string | null;
-}): string {
-	if (entry.summary) return entry.summary;
-
-	if (entry.resourceName) return `${entry.resourceType ?? "resource"}: ${entry.resourceName}`;
-
-	if (entry.actorUserId) return m.admin_dashboard_action_by_user({ actorId: entry.actorUserId.slice(0, 8) });
-
-	return m.admin_dashboard_action_by_system();
-}
 
 export function DashboardAuditFeed() {
 	const { entries, isLoading, error, refetch } = useAdminAudit({ limit: 6 });

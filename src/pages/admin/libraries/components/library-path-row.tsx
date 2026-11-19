@@ -12,15 +12,14 @@ import { formatStorageMode, getPathStats } from "./library-card-utils";
 interface LibraryPathRowProps {
 	libraryId: string;
 	path: LibraryWithRelations["paths"][number];
-	lib: LibraryWithRelations;
 	isPathScanning: boolean;
 	onPathScan: (libraryId: string, pathId: string) => void;
 }
 
-export function LibraryPathRow({ libraryId, path, lib, isPathScanning, onPathScan }: LibraryPathRowProps) {
+export function LibraryPathRow({ libraryId, path, isPathScanning, onPathScan }: LibraryPathRowProps) {
 	const { hasCopied: isCopied, copy: copyPath } = useCopyToClipboard();
 	const { hasCopied: isKeyCopied, copy: copyStableKey } = useCopyToClipboard();
-	const stats = getPathStats(lib, path);
+	const stats = getPathStats(path);
 	const pathMode = formatStorageMode(path.metadataStorageMode);
 
 	return (

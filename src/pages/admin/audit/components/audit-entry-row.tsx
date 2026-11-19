@@ -3,22 +3,8 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { shortDateFormatter } from "@/utils/format-utils";
+import { auditEntryLabel } from "../audit-entry-label";
 import { AuditDetailInspector, type AuditEntryItem } from "./audit-detail-inspector";
-
-function auditEntryLabel(entry: {
-	summary?: string | null;
-	resourceType?: string;
-	resourceName?: string | null;
-	resourceId?: string | null;
-}): string {
-	if (entry.summary) return entry.summary;
-
-	const type = entry.resourceType ?? "resource";
-	if (entry.resourceName) return `${type}: ${entry.resourceName}`;
-
-	// Raw ids are long UUIDs — the row stays scannable with the short form.
-	return `${type} / ${entry.resourceId?.slice(0, 8) ?? "—"}`;
-}
 
 export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 	const [expanded, setExpanded] = useState(false);

@@ -4,6 +4,7 @@ import { AdminStatCard } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { formatNumber } from "@/utils/format-utils";
+import { fileCountOf } from "./library-card-utils";
 
 interface LibraryKpiGridProps {
 	libraries: LibraryWithRelations[];
@@ -17,7 +18,7 @@ export function LibraryKpiGrid({ libraries, total }: LibraryKpiGridProps) {
 
 	for (const lib of libraries) {
 		totalPaths += lib.paths.length;
-		totalMedia += lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
+		totalMedia += fileCountOf(lib);
 		totalSize += lib.totalSize ?? 0;
 	}
 

@@ -16,7 +16,7 @@ import { formatDateTime, formatTimeAgo } from "@/utils/format-utils";
 import { LibraryCardContextMenu } from "./library-card-context-menu";
 import { LibraryCardHeader } from "./library-card-header";
 import { LibraryCardMetrics } from "./library-card-metrics";
-import { PATH_SORT_OPTIONS, type PathSortOption, sortLibraryPaths } from "./library-card-utils";
+import { fileCountOf, PATH_SORT_OPTIONS, type PathSortOption, sortLibraryPaths } from "./library-card-utils";
 import { LibraryPathRow } from "./library-path-row";
 
 const PATH_SORT_LABELS: Record<PathSortOption, () => string> = {
@@ -78,7 +78,7 @@ export function LibraryCard({
 	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 	const [pathSort, setPathSort] = useState<PathSortOption>("path-asc");
 	const totalSize = lib.totalSize ?? 0;
-	const mediaCount = lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
+	const mediaCount = fileCountOf(lib);
 
 	return (
 		<ContextMenu>
@@ -147,7 +147,6 @@ export function LibraryCard({
 											key={path.id}
 											libraryId={lib.id}
 											path={path}
-											lib={lib}
 											isPathScanning={isScanning || scanningPathIds.has(path.id)}
 											onPathScan={onPathScan}
 										/>

@@ -7,14 +7,13 @@ import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { CreateLibraryDialog } from "./components/create-library-dialog";
 import { IgnoredAssetsDialog } from "./components/ignored-assets-dialog";
+import { fileCountOf } from "./components/library-card-utils";
 import { LibraryErrorsCheckDialog } from "./components/library-errors-check-dialog";
 import { LibraryFilterBar, type LibrarySortOption, type LibraryTypeFilter } from "./components/library-filter-bar";
 import { LibraryGrid } from "./components/library-grid";
 import { LibraryHeader } from "./components/library-header";
 import { LibraryHealthDialog } from "./components/library-health-dialog";
 import { LibraryKpiGrid } from "./components/library-kpi-grid";
-
-const fileCountOf = (lib: LibraryWithRelations): number => lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
 
 const LIBRARY_SORTERS: Record<LibrarySortOption, (a: LibraryWithRelations, b: LibraryWithRelations) => number> = {
 	name: (a, b) => a.name.localeCompare(b.name),
