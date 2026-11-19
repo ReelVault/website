@@ -51,7 +51,7 @@ function MenuItem({ item, parts }: { item: MetadataCardMenuItem; parts: MenuPart
 }
 
 /** Title, main actions and (for admins) the admin tools of a title card menu, in either menu flavour. */
-export function MetadataCardMenuSections({ state, parts, extra }: { state: MetadataCardMenuState; parts: MenuParts; extra?: ReactNode }) {
+export function MetadataCardMenuSections({ state, parts }: { state: MetadataCardMenuState; parts: MenuParts }) {
 	const { Group, Label, Separator } = parts;
 	const items = buildMetadataCardMenuItems(state);
 	const mainItems = items.filter((item) => item.admin !== true);
@@ -67,7 +67,6 @@ export function MetadataCardMenuSections({ state, parts, extra }: { state: Metad
 				{mainItems.map((item) => (
 					<MenuItem key={item.id} item={item} parts={parts} />
 				))}
-				{extra}
 			</Group>
 			{state.isAdmin === true && (
 				<>

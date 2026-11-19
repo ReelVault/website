@@ -10,7 +10,6 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { m } from "@/paraglide/messages";
-import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 import type { MetadataCardMenuState } from "./metadata-card-menu-items";
 import { type MenuParts, MetadataCardMenuSections } from "./metadata-card-menu-sections";
 
@@ -32,7 +31,7 @@ export function MetadataCardDropdownMenu(state: MetadataCardMenuState) {
 				<MoreVertical className="text-foreground size-4" />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-64">
-				<MetadataCardMenuSections state={state} parts={DROPDOWN_MENU_PARTS} extra={<PluginSlotHost name="media-file-card-actions" />} />
+				<MetadataCardMenuSections state={state} parts={DROPDOWN_MENU_PARTS} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

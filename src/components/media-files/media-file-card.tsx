@@ -10,6 +10,7 @@ import { LazyOfflineDownloadDialog, LazyReassignMediaFileDialog } from "@/compon
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
+import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { formatDuration } from "@/utils/duration-utils";
 import { formatFileSize } from "@/utils/file-utils";
@@ -104,6 +105,7 @@ export function MediaFileCard({ file, metadataId }: MediaFileCardProps) {
 							</Button>
 						</>
 					)}
+					<PluginSlotHost name="media-file-card-actions" params={{ mediaFileId: file.id }} />
 					<Button nativeButton={false} render={<Link to="/player/$id" params={{ id: file.id }} />}>
 						<Play data-icon="inline-start" className="size-4 fill-current" aria-hidden="true" />
 						{m.components_metadata_card_play()}

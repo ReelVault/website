@@ -21,7 +21,7 @@ const SLOT_VARIANTS: Record<PluginSlotName, PluginSlotVariant> = {
 	"details-action-bar": "buttons",
 	"root-floating-overlay": "floating",
 	"navbar-profile-menu": "menu-items",
-	"media-file-card-actions": "menu-items",
+	"media-file-card-actions": "buttons",
 	"details-dropdown": "menu-items",
 	"admin-sidebar-plugin-section": "admin-sidebar-links",
 	"dashboard-section": "sections",
