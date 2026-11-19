@@ -32,7 +32,7 @@ export const EQUALIZER_PRESETS: readonly EqualizerPreset[] = [
 	{
 		id: "flat",
 		get label() {
-			return m.plugins_webhooks_disabled();
+			return m.common_disabled();
 		},
 		get description() {
 			return m.player_audio_original_note();

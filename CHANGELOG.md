@@ -475,6 +475,14 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Sleep timer across episodes** — a "stop after N minutes" timer was cleared when the player advanced to the next episode; it now lasts for the whole viewing session.
+- **Equalizer and volume** — turning the equalizer on raised a 50% volume to 100% and saved it.
+- **Seek slider keys** — with the progress bar focused, the arrow keys moved 0.1 s; they now step 10 s like the player shortcuts, and Home/End jump to the start and end.
+- **Seek feedback** — the number keys (10%–90%) and Home showed "+50s"-style text; they now show the target time.
+- **Long-press 2x speed** — leaving the player while holding the long-press boost kept (and saved) the 2x rate.
+- **"Stopped by admin"** — any playback error whose message contained "admin" ended the session as stopped by an administrator; only a 403 does now.
+- **Subtitle style** — a failed save of size, position or colour now shows an error instead of failing silently.
+- **"Disabled" labels** — the equalizer's flat preset and the resource monitoring settings used a webhook-specific translation; they use the shared one.
 - **More double error toasts** — blocking, unblocking and role changes, deleting a user from its page, signing out, signing out other devices, live-stream playback commands and deleting a download each showed two error messages for one failure.
 - **Analytics "Full history"** — the option could not be selected; it fell back to 30 days.
 - **Admin dashboard errors** — any failure of the dashboard request said the server was too old; only a missing route (404) says that now, other failures show the error with a retry.

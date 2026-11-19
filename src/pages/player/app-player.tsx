@@ -25,6 +25,7 @@ import {
 	usePlayerVolume,
 } from "./player-context";
 import type { PlaybackSettings, PlaybackSettingsActions, PlayerMediaFile, PlayerSession } from "./utils/player.types";
+import { isAudioPipelineActive } from "./utils/player-audio-boost";
 import { toPlaybackError } from "./utils/player-preferences.storage";
 import { toggleFullscreen } from "./utils/player-utils";
 import { getShortcutsDisabledCookie, setShortcutsDisabledCookie } from "./utils/shortcuts-cookie";
@@ -454,9 +455,9 @@ function AppPlayerSurface() {
 		const onEnded = () => actionsRef.current.onMediaEnd();
 
 		const onVolumeChange = () => {
-			if (video.volume === 1 && statusRef.current.volume > 1) {
-				// Native video.volume is pegged at 1.0 while volume is boosted (> 100%),
-				// so avoid clobbering the boosted state.
+			if (video.volume === 1 && (statusRef.current.volume > 1 || isAudioPipelineActive(video))) {
+				// Native video.volume is pegged at 1.0 while the Web Audio pipeline owns
+				// loudness (boost above 100% or an active equalizer), so it is not user input.
 			} else {
 				actionsRef.current.setVolume(video.volume);
 			}

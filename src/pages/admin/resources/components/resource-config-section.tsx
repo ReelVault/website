@@ -11,7 +11,7 @@ export function ResourceConfigSection({ config }: { config: ResourceConfig }) {
 			label: m.admin_resources_monitoring_label(),
 			node: (
 				<Badge variant={config.monitoringEnabled ? "success" : "muted"}>
-					{config.monitoringEnabled ? m.admin_resources_enabled() : m.plugins_webhooks_disabled()}
+					{config.monitoringEnabled ? m.admin_resources_enabled() : m.common_disabled()}
 				</Badge>
 			),
 		},
@@ -19,7 +19,7 @@ export function ResourceConfigSection({ config }: { config: ResourceConfig }) {
 			label: m.admin_resources_dynamic_throttling(),
 			node: (
 				<Badge variant={config.enableDynamicThrottling ? "success" : "muted"}>
-					{config.enableDynamicThrottling ? m.admin_resources_enabled() : m.plugins_webhooks_disabled()}
+					{config.enableDynamicThrottling ? m.admin_resources_enabled() : m.common_disabled()}
 				</Badge>
 			),
 		},

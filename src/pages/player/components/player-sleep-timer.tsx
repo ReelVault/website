@@ -23,7 +23,5 @@ export function PlayerSleepTimerController() {
 		return () => clearTimeout(timeout);
 	}, [sleepTimer, videoRef, setUserPlayIntent]);
 
-	useEffect(() => () => setSleepTimer({ kind: "off" }), []);
-
 	return null;
 }

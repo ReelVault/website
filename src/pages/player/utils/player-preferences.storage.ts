@@ -25,11 +25,7 @@ export function toPlaybackError(value: unknown): PlaybackErrorShape {
 
 /** The server ends the session on admin stop or expiry — both surface as 403. */
 export function isForbiddenPlaybackError(error: PlaybackErrorShape): boolean {
-	return (
-		error.status === 403 ||
-		error.code === "forbidden" ||
-		(typeof error.message === "string" && (error.message.includes("administratora") || error.message.includes("admin")))
-	);
+	return error.status === 403 || error.code === "forbidden";
 }
 
 export const getStoredVolume = (): number => {

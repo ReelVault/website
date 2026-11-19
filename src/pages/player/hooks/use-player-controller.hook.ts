@@ -25,6 +25,7 @@ import { useInterval } from "@/hooks/use-interval";
 import { detach, noopCleanup } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
+import { toastError } from "@/utils/toast-utils";
 import type { PlaybackSettings, PlayerMediaFile, PlayerSession, SubtitlePreferences } from "../utils/player.types";
 import { toCaptionFormat } from "../utils/player.types";
 import {
@@ -1283,8 +1284,12 @@ export function usePlayerController({
 	const updateSubtitlePreferences = async (prefs: Partial<SubtitlePreferences>) => {
 		if (!profileId) return;
 
-		const updated = await reelvault.profiles.updatePreferences(profileId, prefs);
-		queryClient.setQueryData(profileKeys.preferences(profileId), updated);
+		try {
+			const updated = await reelvault.profiles.updatePreferences(profileId, prefs);
+			queryClient.setQueryData(profileKeys.preferences(profileId), updated);
+		} catch (error) {
+			toastError(m.toast_preferences_save_failed(), error);
+		}
 	};
 
 	const subtitlesValue = {

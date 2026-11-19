@@ -401,7 +401,7 @@ export function usePlayerShortcuts({
 						const percent = Number(e.key) * 10;
 						const targetTime = (percent / 100) * mediaDuration;
 						detach(() => doSeek(targetTime));
-						showPlayerFeedback({ type: "seek", delta: percent, value: targetTime });
+						showPlayerFeedback({ type: "seek", value: targetTime });
 					}
 
 					break;
@@ -410,7 +410,7 @@ export function usePlayerShortcuts({
 				case "Home":
 					e.preventDefault();
 					detach(() => doSeek(0));
-					showPlayerFeedback({ type: "seek", delta: 0, value: 0 });
+					showPlayerFeedback({ type: "seek", value: 0 });
 					break;
 
 				// End (Seek to end)

@@ -3,6 +3,7 @@ import { FastForward, Gauge, Maximize, Minimize, Pause, Play, Rewind, Subtitles,
 import { useEffect, useState } from "react";
 import { m } from "@/paraglide/messages";
 import { MAX_PLAYER_VOLUME } from "../utils/player-audio-boost";
+import { formatTime } from "../utils/player-utils";
 
 export interface FeedbackEvent {
 	id: number;
@@ -102,10 +103,12 @@ export function PlayerFeedbackHud() {
 			case "volume":
 				return <VolumeFeedback event={activeEvent} />;
 			case "seek": {
-				const delta = activeEvent.delta ?? 0;
-				const isForward = delta >= 0;
+				// A relative seek shows its step; an absolute jump (percent keys, Home) shows the target time.
+				const { delta } = activeEvent;
+				const isForward = (delta ?? 0) >= 0;
 				const Icon = isForward ? FastForward : Rewind;
-				const text = isForward ? `+${delta}s` : `${delta}s`;
+				let text = formatTime(typeof activeEvent.value === "number" ? activeEvent.value : 0);
+				if (delta !== undefined) text = isForward ? `+${delta}s` : `${delta}s`;
 
 				return (
 					<div className="flex items-center gap-2.5 rounded-2xl bg-black/75 px-5 py-3 text-white shadow-2xl ring-1 ring-white/10">

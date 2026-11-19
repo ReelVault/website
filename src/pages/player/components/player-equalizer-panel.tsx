@@ -9,7 +9,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { m } from "@/paraglide/messages";
 import { usePlayerActions, usePlayerVolume } from "../player-context";
 import {
-	applyAudioPipeline,
+	applyVolumeToElement,
 	EQUALIZER_BANDS,
 	EQUALIZER_PRESETS,
 	type EqualizerConfig,
@@ -42,10 +42,7 @@ export function PlayerEqualizerPanel() {
 		setConfig(nextConfig);
 		saveStoredEqualizerConfig(nextConfig);
 		const video = actionsRef.current.videoRef.current;
-		if (video) {
-			video.volume = 1;
-			applyAudioPipeline(video, volume, nextConfig);
-		}
+		if (video) applyVolumeToElement(video, volume);
 	};
 
 	const selectPreset = (presetId: EqualizerPresetId) => {

@@ -29,6 +29,15 @@ const SEGMENT_COLORS: Record<string, { bg: string; title: string }> = {
 	},
 };
 
+const SLIDER_SEEK_STEP_SECONDS = 10;
+
+const SLIDER_KEY_TARGETS: Record<string, (current: number, duration: number) => number> = {
+	ArrowLeft: (current) => Math.max(0, current - SLIDER_SEEK_STEP_SECONDS),
+	ArrowRight: (current, duration) => Math.min(duration, current + SLIDER_SEEK_STEP_SECONDS),
+	Home: () => 0,
+	End: (_, duration) => duration,
+};
+
 export function PlayerProgressBar() {
 	const info = usePlayerInfo();
 	const { duration, mediaFileId } = info;
@@ -269,10 +278,14 @@ export function PlayerProgressBar() {
 					onPointerCancel={() => {
 						setIsScrubbing(false);
 					}}
-					onKeyUp={(event) => {
-						if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") {
-							commitSeek();
-						}
+					onKeyDown={(event) => {
+						// The global shortcuts skip focused inputs, so the slider owns its keys: arrows
+						// use the same 10 s step as the shortcuts instead of the 0.1 s range step.
+						const target = SLIDER_KEY_TARGETS[event.key]?.(currentTime, safeDuration);
+						if (target === undefined) return;
+
+						event.preventDefault();
+						detach(() => seek(target));
 					}}
 				/>
 			</div>

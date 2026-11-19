@@ -239,15 +239,18 @@ export function usePlayerTouchGestures({ onSingleTap, volume }: UsePlayerTouchGe
 		g.moved = false;
 	}, [clearLongPressTimer, endBoost]);
 
-	// Safety: if the surface unmounts mid-gesture (route change), timers must not fire.
+	// Safety: if the surface unmounts mid-gesture (route change), timers must not fire
+	// and a held long-press boost must not leave (and persist) the 2x rate.
 	useEffect(
 		() => () => {
 			const g = gestureRef.current;
 			if (g.longPressTimer) clearTimeout(g.longPressTimer);
 
 			if (g.singleTapTimer) clearTimeout(g.singleTapTimer);
+
+			endBoost();
 		},
-		[],
+		[endBoost],
 	);
 
 	return { onPointerDown, onPointerMove, onPointerUp, onPointerCancel };
