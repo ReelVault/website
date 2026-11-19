@@ -9,9 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
-import { toast } from "@/utils/toast-facade";
-import { toastError } from "@/utils/toast-utils";
 import { BanUserDialog } from "../components/ban-user-dialog";
+import { blockAccount, toggleAccountRole, unblockAccount } from "../user-account-actions";
 import { ChangePasswordDialog } from "./components/change-password-dialog";
 import { CreateProfileDialog } from "./components/create-profile-dialog";
 import { ProfileCard } from "./components/profile-card";
@@ -57,12 +56,7 @@ export default function AdminUserProfilesPage() {
 		if (!user) return;
 
 		if (user.banned) {
-			try {
-				await updateUser({ banned: false, banReason: null });
-				toast.success(m.admin_users_account_unblocked_named({ name: user.name }));
-			} catch (err) {
-				toastError(m.admin_users_failed_to_unblock(), err);
-			}
+			await unblockAccount({ user, update: updateUser });
 
 			return;
 		}
@@ -73,24 +67,13 @@ export default function AdminUserProfilesPage() {
 	const confirmBan = async (reason: string | null) => {
 		if (!user) return;
 
-		try {
-			await updateUser({ banned: true, banReason: reason });
-			toast.success(m.admin_users_account_blocked_named({ name: user.name }));
-			setBanOpen(false);
-		} catch (err) {
-			toastError(m.admin_users_failed_to_block(), err);
-		}
+		if (await blockAccount({ user, update: updateUser }, reason)) setBanOpen(false);
 	};
 
 	const toggleRole = async () => {
 		if (!user) return;
 
-		try {
-			await updateUser({ role: user.role === "admin" ? "user" : "admin" });
-			toast.success(user.role === "admin" ? m.admin_users_admin_revoked() : m.admin_users_admin_granted());
-		} catch (err) {
-			toastError(m.admin_users_failed_to_change_role(), err);
-		}
+		await toggleAccountRole({ user, update: updateUser });
 	};
 
 	const removeUser = async () => {

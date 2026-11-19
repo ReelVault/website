@@ -21,6 +21,7 @@ import { DeleteUserDialog } from "./components/delete-user-dialog";
 import { UserFilterBar } from "./components/user-filter-bar";
 import type { AdminUser } from "./components/user-item-parts";
 import { UserTable } from "./components/user-table";
+import { blockAccount, toggleAccountRole, unblockAccount } from "./user-account-actions";
 
 export default function AdminUsersPage() {
 	const { q, role, status, page: urlPage = 1 } = useSearch({ from: "/admin/users/" });
@@ -96,20 +97,13 @@ export default function AdminUsersPage() {
 		}
 	};
 
-	const unbanUser = async (user: AdminUser) => {
-		try {
-			await updateUser(user.id, { banned: false, banReason: null });
-			toast.success(m.admin_users_account_unblocked_named({ name: user.name }));
-		} catch (err) {
-			toastError(m.admin_users_failed_to_unblock(), err);
-		}
-	};
+	const accountOf = (user: AdminUser) => ({ user, update: (body: Parameters<typeof updateUser>[1]) => updateUser(user.id, body) });
 
 	const toggleBan = async (user: AdminUser) => {
 		if (updatingId === user.id) return;
 
 		if (user.banned) {
-			await unbanUser(user);
+			await unblockAccount(accountOf(user));
 
 			return;
 		}
@@ -121,43 +115,13 @@ export default function AdminUsersPage() {
 		const user = banTarget;
 		if (!user || updatingId === user.id) return;
 
-		try {
-			await updateUser(user.id, { banned: true, banReason: reason });
-			toast.success(m.admin_users_account_blocked_named({ name: user.name }), {
-				duration: 8000,
-				action: {
-					label: m.common_undo(),
-					onClick: () => {
-						detach(async () => {
-							try {
-								await updateUser(user.id, { banned: false, banReason: null });
-								toast.success(m.admin_users_block_lifted({ name: user.name }));
-							} catch (err) {
-								toastError(m.admin_users_failed_to_lift_block(), err);
-							}
-						});
-					},
-				},
-			});
-			setBanTarget(null);
-		} catch (err) {
-			toastError(m.admin_users_failed_to_block(), err);
-		}
+		if (await blockAccount(accountOf(user), reason)) setBanTarget(null);
 	};
 
 	const toggleRole = async (user: AdminUser) => {
 		if (updatingId === user.id) return;
 
-		try {
-			await updateUser(user.id, { role: user.role === "admin" ? "user" : "admin" });
-			toast.success(
-				user.role === "admin"
-					? m.admin_users_admin_revoked_named({ name: user.name })
-					: m.admin_users_admin_granted_named({ name: user.name }),
-			);
-		} catch (err) {
-			toastError(m.admin_users_failed_to_change_role(), err);
-		}
+		await toggleAccountRole(accountOf(user));
 	};
 
 	const confirmDelete = async () => {
