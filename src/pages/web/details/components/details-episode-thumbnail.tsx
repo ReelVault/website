@@ -9,7 +9,6 @@ import { m } from "@/paraglide/messages";
 
 interface DetailsEpisodeThumbnailProps {
 	imageId?: string | null;
-	imageUpdatedAt?: string | Date | null;
 	episodeTitle: string;
 	mediaFileId?: string;
 	isWatched: boolean;
@@ -24,7 +23,6 @@ interface DetailsEpisodeThumbnailProps {
 
 export function DetailsEpisodeThumbnail({
 	imageId,
-	imageUpdatedAt,
 	episodeTitle,
 	mediaFileId,
 	isWatched,
@@ -41,7 +39,6 @@ export function DetailsEpisodeThumbnail({
 			<div className="border-border group-hover:border-primary/30 relative aspect-video w-full overflow-hidden rounded-lg border shadow-md transition-[border-color,box-shadow] duration-300 group-hover:shadow-xl md:w-48 lg:w-56">
 				<ApiImage
 					fileId={imageId}
-					cacheKey={imageUpdatedAt ?? undefined}
 					alt={episodeTitle}
 					width={256}
 					aspectRatio={16 / 9}

@@ -128,7 +128,6 @@ export function MetadataCard({
 					/>
 				</ContextMenuTrigger>
 
-				{/* CONTEXT MENU (PRAWY PRZYCISK MYSZY) */}
 				<MetadataCardContextMenu
 					title={metadata.title}
 					metadataId={metadata.id}

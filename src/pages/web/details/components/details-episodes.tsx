@@ -1,12 +1,11 @@
 import type { SeasonWithEpisodes } from "@reelvault/sdk";
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
 import { useRefreshEpisode, useRefreshEpisodeImage } from "@/client/hooks/use-episodes";
 import { usePlaybackMutations } from "@/client/hooks/use-me-playback";
 import { AppEmptyState } from "@/components/app-states";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { detach, noopCleanup } from "@/lib/detach";
+import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { DetailsEpisodeCard } from "./details-episode-card";
 
@@ -14,16 +13,12 @@ import { DetailsEpisodeCard } from "./details-episode-card";
 // lists), so this section is a pure render of view data — no fetch, no paging.
 export function DetailsEpisodes({
 	metadataId,
-	seasonId,
 	episodes,
-	highlightEpisodeNumber,
 	playback,
 	isAdmin,
 }: {
 	metadataId: string;
-	seasonId: string | null;
 	episodes: SeasonWithEpisodes["episodes"];
-	highlightEpisodeNumber?: number;
 	playback?: {
 		totalEpisodes?: number;
 		completedEpisodes?: number;
@@ -48,7 +43,6 @@ export function DetailsEpisodes({
 			}),
 		);
 	};
-	const episodeRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 
 	const refreshEpisodeMutation = useRefreshEpisode(metadataId);
 	const refreshEpisodeImageMutation = useRefreshEpisodeImage(metadataId);
@@ -65,27 +59,6 @@ export function DetailsEpisodes({
 		setWatchState,
 		isSettingWatchState,
 	} = usePlaybackMutations(metadataId);
-
-	// Drop stale episode refs whenever the season changes.
-	const lastSeasonRef = useRef<string | null>(null);
-	useEffect(() => {
-		if (lastSeasonRef.current !== seasonId) {
-			lastSeasonRef.current = seasonId;
-			episodeRefs.current.clear();
-		}
-	}, [seasonId]);
-
-	// Scroll to highlighted episode from URL
-	useEffect(() => {
-		if (highlightEpisodeNumber === undefined || episodes.length === 0) return noopCleanup;
-
-		const timer = window.setTimeout(() => {
-			const el = episodeRefs.current.get(highlightEpisodeNumber);
-			el?.scrollIntoView({ behavior: "smooth", block: "center" });
-		}, 150);
-
-		return () => window.clearTimeout(timer);
-	}, [highlightEpisodeNumber, episodes.length]);
 
 	if (episodes.length === 0) {
 		return <AppEmptyState title={m.web_no_episodes_in_season()} />;
@@ -139,14 +112,12 @@ export function DetailsEpisodes({
 						const files = episode.mediaFiles;
 						const defaultFile = files.find((f) => f.isDefault) ?? files[0];
 						const mediaFileId = defaultFile?.id;
-						const isHighlighted = highlightEpisodeNumber === episode.episodeNumber;
 						const episodePlayback = playback?.episodes?.[episode.id];
 
 						return (
 							<DetailsEpisodeCard
 								key={episode.id}
 								episode={episode}
-								isHighlighted={isHighlighted}
 								episodePlayback={episodePlayback}
 								isAdmin={isAdmin}
 								isEpisodeMarking={isMarkingWatched && markingMediaFileId === mediaFileId}
@@ -160,9 +131,6 @@ export function DetailsEpisodes({
 								onSelectForFiles={openEpisodeFiles}
 								onRefreshEpisode={(id) => refreshEpisodeMutation.mutate(id)}
 								onRefreshImage={(id) => refreshEpisodeImageMutation.mutate(id)}
-								onRegisterRef={(el) => {
-									if (el) episodeRefs.current.set(episode.episodeNumber, el);
-								}}
 							/>
 						);
 					})}

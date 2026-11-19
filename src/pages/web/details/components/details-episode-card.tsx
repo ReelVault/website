@@ -12,7 +12,6 @@ type EpisodeItem = SeasonWithEpisodes["episodes"][number];
 
 interface DetailsEpisodeCardProps {
 	episode: EpisodeItem;
-	isHighlighted: boolean;
 	episodePlayback?: {
 		status?: string;
 		progress?: { position?: number; duration?: number } | null;
@@ -27,12 +26,10 @@ interface DetailsEpisodeCardProps {
 	onSelectForFiles: (ep: { id: string; number: number; title?: string | null }) => void;
 	onRefreshEpisode?: (id: string) => void;
 	onRefreshImage?: (id: string) => void;
-	onRegisterRef?: (el: HTMLDivElement | null) => void;
 }
 
 export function DetailsEpisodeCard({
 	episode,
-	isHighlighted,
 	episodePlayback,
 	isAdmin,
 	isEpisodeMarking,
@@ -44,7 +41,6 @@ export function DetailsEpisodeCard({
 	onSelectForFiles,
 	onRefreshEpisode,
 	onRefreshImage,
-	onRegisterRef,
 }: DetailsEpisodeCardProps) {
 	const files = episode.mediaFiles;
 	const defaultFile = files.find((f) => f.isDefault) ?? files[0];
@@ -72,7 +68,6 @@ export function DetailsEpisodeCard({
 			{() => (
 				<ContextMenu>
 					<ContextMenuTrigger
-						ref={onRegisterRef}
 						tabIndex={0}
 						data-spatial
 						onKeyDown={(event) => {
@@ -81,7 +76,7 @@ export function DetailsEpisodeCard({
 								onNavigateToPlayer(mediaFileId);
 							}
 						}}
-						render={<Card variant="interactive" selected={isHighlighted} />}
+						render={<Card variant="interactive" />}
 						className="group relative block"
 					>
 						<CardContent>

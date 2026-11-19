@@ -134,7 +134,6 @@ export function DetailsSeasons({ metadataId, isAdmin }: { metadataId: string; is
 				<div aria-live="polite">
 					<DetailsEpisodes
 						metadataId={metadataId}
-						seasonId={selectedSeasonId}
 						episodes={seasons.find((season) => season.id === selectedSeasonId)?.episodes ?? []}
 						playback={playback}
 						isAdmin={isAdmin}

@@ -10,14 +10,9 @@ import { m } from "@/paraglide/messages";
 import { formatQuickConnectCode, isCompleteQuickConnectCode, QUICK_CONNECT_INPUT_MAX_LENGTH } from "@/utils/form-utils";
 import { toast } from "@/utils/toast-facade";
 
-interface QuickConnectAuthorizeBoxProps {
-	initialCode?: string;
-	onSessionChange?: () => void;
-}
-
-export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: QuickConnectAuthorizeBoxProps) {
+export function QuickConnectAuthorizeBox() {
 	const authorizeMutation = useQuickConnectAuthorize();
-	const [authorizeCode, setAuthorizeCode] = useState(initialCode ?? "");
+	const [authorizeCode, setAuthorizeCode] = useState("");
 
 	const handleAuthorizeCodeChange = (value: string) => {
 		setAuthorizeCode(formatQuickConnectCode(value));
@@ -31,7 +26,6 @@ export function QuickConnectAuthorizeBox({ initialCode, onSessionChange }: Quick
 			onSuccess: () => {
 				toast.success(m.auth_device_linked_success());
 				setAuthorizeCode("");
-				onSessionChange?.();
 			},
 			onError: (error) => {
 				toast.error(getSdkErrorMessage(error));
