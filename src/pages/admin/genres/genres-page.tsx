@@ -54,7 +54,7 @@ export default function AdminGenresPage() {
 							</div>
 						))}
 
-						{genres.length === 0 && (
+						{genres.length === 0 && !isLoading && (
 							<div className="w-full">
 								<AppEmptyState
 									icon={Tag}

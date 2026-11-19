@@ -9,7 +9,7 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 
-export function DashboardHeader({ isServerOffline, libraries }: { isServerOffline: boolean; libraries: LibraryWithRelations[] }) {
+export function DashboardHeader({ libraries }: { libraries: LibraryWithRelations[] }) {
 	const [isScanningAll, setIsScanningAll] = useState(false);
 
 	const scanAllLibraries = async () => {
@@ -35,7 +35,7 @@ export function DashboardHeader({ isServerOffline, libraries }: { isServerOfflin
 	return (
 		<AdminPageHeader
 			icon={Server}
-			eyebrow={isServerOffline ? m.admin_dashboard_no_api_connection() : m.admin_dashboard_system_online()}
+			eyebrow={m.admin_dashboard_system_online()}
 			title={m.admin_dashboard_command_center()}
 			description={m.admin_dashboard_live_monitoring_description()}
 			actions={

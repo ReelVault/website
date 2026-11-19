@@ -13,7 +13,7 @@ export default function LibraryFindingsPage() {
 	const { id } = useParams({ from: "/admin/libraries/$id/findings" });
 	const { status } = useSearch({ from: "/admin/libraries/$id/findings" });
 	const navigate = useNavigate();
-	const { libraries, scanLibrary, isScanning, mutationVariables } = useAdminLibraries();
+	const { libraries, scanLibrary, scanningIds } = useAdminLibraries();
 	const library = libraries.find((lib) => lib.id === id);
 	const { data } = useLibraryScanFindings(id, status, true);
 
@@ -68,7 +68,7 @@ export default function LibraryFindingsPage() {
 						detach(navigate({ to: "/admin/libraries" }));
 						detach(scanLibrary(id));
 					}}
-					isPending={isScanning && mutationVariables.scan === id}
+					isPending={scanningIds.has(id)}
 					pendingLabel={m.admin_libraries_scanning()}
 				>
 					<RefreshCw className="size-3.5" />

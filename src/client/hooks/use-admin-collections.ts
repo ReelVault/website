@@ -5,7 +5,7 @@ import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { collectionAdminFields } from "../utils/fields";
-import { adminKeys, collectionKeys } from "../utils/query-keys";
+import { adminKeys, collectionKeys, metadataKeys } from "../utils/query-keys";
 
 export const COLLECTIONS_PAGE_SIZE = 25;
 
@@ -60,8 +60,8 @@ export function useAdminCollections(search?: string, page = 1, sort: AdminCollec
 
 	const updateOrderMutation = useMutation({
 		mutationFn: ({ id, metadataIds }: { id: string; metadataIds: string[] }) => reelvault.collections.updateOrder(id, metadataIds),
-		onSuccess: async () => {
-			await invalidate();
+		onSuccess: async (_, { id }) => {
+			await Promise.all([invalidate(), queryClient.invalidateQueries({ queryKey: [...metadataKeys.all, "collection-order", id] })]);
 			toast.success(m.toast_collections_order_saved());
 		},
 		onError: (error) => {

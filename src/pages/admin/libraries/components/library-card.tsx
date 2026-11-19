@@ -75,6 +75,7 @@ export function LibraryCard({
 	const paths = lib.paths;
 	const scanProgress = useLibraryScanProgress().data?.data.find((scan) => scan.libraryId === lib.id);
 	const [pathsExpanded, setPathsExpanded] = useState(true);
+	const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 	const [pathSort, setPathSort] = useState<PathSortOption>("path-asc");
 	const totalSize = lib.totalSize ?? 0;
 	const mediaCount = lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
@@ -92,7 +93,7 @@ export function LibraryCard({
 						lib={lib}
 						onScan={onScan}
 						onEdit={onEdit}
-						onDelete={onDelete}
+						onDelete={() => setIsDeleteConfirmOpen(true)}
 						onCheckErrors={onCheckErrors}
 						onShowIgnoredAssets={onShowIgnoredAssets}
 						onShowScanFindings={onShowScanFindings}
@@ -201,6 +202,8 @@ export function LibraryCard({
 						description={m.admin_libraries_detach_warning()}
 						confirmLabel={m.admin_libraries_delete_library()}
 						onConfirm={() => onDelete(lib.id, lib.name)}
+						open={isDeleteConfirmOpen}
+						onOpenChange={setIsDeleteConfirmOpen}
 					/>
 				</div>
 			</ContextMenuTrigger>
@@ -211,7 +214,7 @@ export function LibraryCard({
 				lib={lib}
 				onScan={onScan}
 				onEdit={onEdit}
-				onDelete={onDelete}
+				onDelete={() => setIsDeleteConfirmOpen(true)}
 				onCheckErrors={onCheckErrors}
 				onShowIgnoredAssets={onShowIgnoredAssets}
 				onShowScanFindings={onShowScanFindings}

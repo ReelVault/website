@@ -475,6 +475,14 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **More double error toasts** — blocking, unblocking and role changes, deleting a user from its page, signing out, signing out other devices, live-stream playback commands and deleting a download each showed two error messages for one failure.
+- **Analytics "Full history"** — the option could not be selected; it fell back to 30 days.
+- **Admin dashboard errors** — any failure of the dashboard request said the server was too old; only a missing route (404) says that now, other failures show the error with a retry.
+- **Deleting a library** — "Delete library" in the card's menu and right-click menu deleted at once; it now asks for the same confirmation as the trash button.
+- **Library spinners** — starting a second scan or delete cleared the spinner of the first library while its request was still running.
+- **Library error check** — a failed status request showed "running 0%" forever; it now reports the check as failed.
+- **Genres** — the "no genres" empty state flashed while the first page loaded.
+- **Collection order** — after saving a manual order, reopening the editor showed the old order for up to 5 minutes.
 - **Stray "0" next to file details** — durations, bitrates, sizes, years and runtime limits of zero rendered a literal "0" in file cards, stream lists, download jobs, history and live streams; they are now hidden.
 - **Copy buttons** — a failed copy no longer flips the icon to "copied", the new API key secret reports a failed copy instead of always toasting success, and the audit inspector's three copy buttons no longer light up together.
 - **Search fields and the Back button** — on the admin media and metadata lists and the search page, Back restored the URL but the field kept (and on admin pages re-applied) the previously typed term. The fields now read the URL directly.

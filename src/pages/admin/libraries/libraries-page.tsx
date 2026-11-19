@@ -14,8 +14,6 @@ import { LibraryHeader } from "./components/library-header";
 import { LibraryHealthDialog } from "./components/library-health-dialog";
 import { LibraryKpiGrid } from "./components/library-kpi-grid";
 
-const EMPTY_SET = new Set<string>();
-
 const fileCountOf = (lib: LibraryWithRelations): number => lib.totalMediaFiles ?? lib.mediaFileCount ?? 0;
 
 const LIBRARY_SORTERS: Record<LibrarySortOption, (a: LibraryWithRelations, b: LibraryWithRelations) => number> = {
@@ -30,15 +28,14 @@ export default function AdminLibrariesPage() {
 		libraries,
 		total,
 		scanLibrary,
-		isScanning,
+		scanningIds,
 		scanAllLibraries,
 		cancelLibraryScans,
 		isScanningAll,
 		scanLibraryPath,
-		isScanningPath,
+		scanningPathIds,
 		deleteLibrary,
-		mutationVariables,
-		isDeleting,
+		deletingIds,
 		isLoading,
 		error,
 		refetch,
@@ -94,10 +91,6 @@ export default function AdminLibrariesPage() {
 
 		detach(queueErrorsCheck(libraryPaths));
 	};
-
-	const scanningIds = isScanning && mutationVariables.scan ? new Set([mutationVariables.scan]) : EMPTY_SET;
-	const scanningPathIds = isScanningPath && mutationVariables.scanPath ? new Set([mutationVariables.scanPath.pathId]) : EMPTY_SET;
-	const deletingIds = isDeleting && mutationVariables.delete ? new Set([mutationVariables.delete]) : EMPTY_SET;
 
 	let movieLibs = 0;
 	let tvLibs = 0;

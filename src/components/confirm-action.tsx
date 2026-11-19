@@ -25,6 +25,8 @@ export function ConfirmAction({
 	onError,
 	className,
 	children,
+	open: controlledOpen,
+	onOpenChange,
 }: {
 	nativeButton?: boolean;
 	trigger?: ReactElement;
@@ -36,8 +38,16 @@ export function ConfirmAction({
 	onError?: (error: unknown) => void;
 	className?: string;
 	children?: ReactNode;
+	/** Controlled open state, for a dialog opened from several places (menu items, buttons). */
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
 }) {
-	const [open, setOpen] = useState(false);
+	const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+	const open = controlledOpen ?? uncontrolledOpen;
+	const setOpen = (nextOpen: boolean) => {
+		setUncontrolledOpen(nextOpen);
+		onOpenChange?.(nextOpen);
+	};
 	const [isPending, setIsPending] = useState(false);
 
 	const handleConfirm = (): void => {

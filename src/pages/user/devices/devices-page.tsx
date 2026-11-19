@@ -19,21 +19,14 @@ export default function DevicesPage() {
 	const handleRevokeOthers = async () => {
 		if (isRevokingOthers) return;
 
-		try {
-			await revokeOtherSessionsAsync();
-		} catch (error) {
-			toastError(m.user_logout_rest_failed(), error);
-		}
+		// The sessions hook reports a failure itself.
+		await revokeOtherSessionsAsync().catch(() => null);
 	};
 
 	const handleRevokeSession = async (id: string) => {
 		if (isRevoking) return;
 
-		try {
-			await revokeSessionAsync(id);
-		} catch (error) {
-			toastError(m.user_session_terminate_failed(), error);
-		}
+		await revokeSessionAsync(id).catch(() => null);
 	};
 
 	return (

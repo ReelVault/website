@@ -4,7 +4,6 @@ import { ConfirmAction } from "@/components/confirm-action";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { m } from "@/paraglide/messages";
-import { toast } from "@/utils/toast-facade";
 import { SidebarProfileCard } from "./sidebar-profile-card";
 
 interface UserSidebarMobileSheetProps {
@@ -56,7 +55,6 @@ export function UserSidebarMobileSheet({ open, onOpenChange, account, profile, i
 						description={m.user_current_session_terminated()}
 						confirmLabel={m.components_navbar_log_out()}
 						onConfirm={onLogout}
-						onError={() => toast.error(m.components_navbar_logout_failed())}
 						className="text-muted-foreground hover:bg-destructive/30 hover:text-destructive flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors"
 					>
 						<LogOut className="size-4.5" />

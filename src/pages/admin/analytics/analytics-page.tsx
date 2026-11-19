@@ -27,7 +27,7 @@ const TIME_FILTER_OPTIONS = [
 export default function AdminAnalyticsPage() {
 	const search = useSearch({ from: "/admin/analytics" });
 	const navigate = useNavigate({ from: "/admin/analytics" });
-	const selectedDays = search.days ?? 30;
+	const selectedDays = search.days === "all" ? undefined : (search.days ?? 30);
 	const analyticsQuery = useAdminAnalytics(selectedDays);
 	const data = analyticsQuery.data;
 
@@ -37,7 +37,7 @@ export default function AdminAnalyticsPage() {
 
 	const handleTimeFilterChange = (event: MouseEvent<HTMLButtonElement>) => {
 		const days = event.currentTarget.dataset.days;
-		const nextDays = days === "all" ? undefined : Number(days);
+		const nextDays = days === "all" ? "all" : Number(days);
 		detach(navigate({ search: (prev) => ({ ...prev, days: nextDays }), replace: true }));
 	};
 

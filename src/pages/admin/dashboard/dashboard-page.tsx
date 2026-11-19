@@ -1,3 +1,4 @@
+import { ReelVaultError } from "@reelvault/sdk/client";
 import { useAdminDashboardView } from "@/client/hooks/use-admin-dashboard-view";
 import { useAdminLibraries } from "@/client/hooks/use-libraries";
 import { AppErrorState } from "@/components/app-states";
@@ -17,28 +18,38 @@ export default function AdminDashboardPage() {
 	// below before they mount, so the child sections issue no fetches of their
 	// own on a warm composite.
 	const dashboardViewQuery = useAdminDashboardView();
-	const statsQuery = { data: dashboardViewQuery.data?.stats, isPending: dashboardViewQuery.isPending, isError: dashboardViewQuery.isError };
-	const stats = statsQuery.data;
+	const stats = dashboardViewQuery.data?.stats;
 
 	const { libraries } = useAdminLibraries();
 
 	// Server <= 1.1 has no dashboard-view route (404) — the composite requires
 	// a matching 1.2 server; the rest of the admin panel keeps working.
 	if (dashboardViewQuery.isError) {
+		const error = dashboardViewQuery.error;
+		const isServerTooOld = error instanceof ReelVaultError && error.status === 404;
+
 		return (
 			<div className="flex flex-col gap-6">
-				<AppErrorState
-					title={m.admin_dashboard_server_too_old()}
-					description={m.user_check_server_connection()}
-					onRetry={() => detach(dashboardViewQuery.refetch())}
-				/>
+				{isServerTooOld ? (
+					<AppErrorState
+						title={m.admin_dashboard_server_too_old()}
+						description={m.user_check_server_connection()}
+						onRetry={() => detach(dashboardViewQuery.refetch())}
+					/>
+				) : (
+					<AppErrorState
+						title={m.admin_dashboard_failed_to_fetch_data()}
+						error={error}
+						onRetry={() => detach(dashboardViewQuery.refetch())}
+					/>
+				)}
 			</div>
 		);
 	}
 
 	if (dashboardViewQuery.isPending) {
 		return (
-			<div className="flex flex-col gap-6" role="status" aria-label="Dashboard loading">
+			<div className="flex flex-col gap-6" role="status" aria-busy="true">
 				<div className="bg-muted/60 h-24 animate-pulse rounded-xl" />
 				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 					<div className="bg-muted/60 h-40 animate-pulse rounded-xl" />
@@ -54,10 +65,6 @@ export default function AdminDashboardPage() {
 		);
 	}
 
-	const handleRefetchStats = () => {
-		detach(dashboardViewQuery.refetch());
-	};
-
 	// Server media and queue data from the database
 	const totalMediaFiles = stats?.media?.totalFiles ?? 0;
 	const totalMediaSize = stats?.media?.totalSize ?? 0;
@@ -69,7 +76,7 @@ export default function AdminDashboardPage() {
 	return (
 		<div className="flex flex-col gap-6">
 			{/* 1. HEADER WITH QUICK ACTIONS */}
-			<DashboardHeader isServerOffline={statsQuery.isError} libraries={libraries} />
+			<DashboardHeader libraries={libraries} />
 
 			{/* 3. MAIN KPI METRICS */}
 			<DashboardKpiStats
@@ -82,12 +89,7 @@ export default function AdminDashboardPage() {
 
 			{/* 3. RESOURCES AND LIBRARY STRUCTURE */}
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-				<DashboardServerResources
-					stats={stats}
-					isPending={statsQuery.isPending}
-					isError={statsQuery.isError}
-					onRetry={handleRefetchStats}
-				/>
+				<DashboardServerResources stats={stats} />
 
 				<DashboardStorageBreakdown libraries={libraries} totalMediaFiles={totalMediaFiles} totalMediaSize={totalMediaSize} />
 

@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
-import { toastError } from "@/utils/toast-utils";
 import { formatStreamTime } from "./live-activity-utils";
 import { LiveStreamCardControls } from "./live-stream-card-controls";
 import { LiveStreamCardMedia } from "./live-stream-card-media";
@@ -38,12 +37,11 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 			commandToast = m.admin_live_stopped_for({ profile: stream.profileName });
 		}
 
-		try {
-			await commandMutation.mutateAsync({ type });
-			toast.success(commandToast);
-		} catch (error) {
-			toastError(m.admin_failed_to_send_command(), error);
-		}
+		// The command hook reports a failure itself.
+		await commandMutation.mutateAsync({ type }).then(
+			() => toast.success(commandToast),
+			() => null,
+		);
 	};
 
 	const formattedCurrent = formatStreamTime(stream.currentTime);

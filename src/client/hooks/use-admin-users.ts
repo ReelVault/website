@@ -1,7 +1,5 @@
 import type { AdminCreateUser } from "@reelvault/sdk";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { m } from "@/paraglide/messages";
-import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
 import { adminKeys } from "../utils/query-keys";
 import { useAdminDeleteUser } from "./use-admin-user";
@@ -30,13 +28,14 @@ export function useAdminUsers(filters: AdminUsersFilters, page = 1, limit = ADMI
 	const createMutation = useMutation({
 		mutationFn: (body: AdminCreateUser) => reelvault.admin.createUser(body),
 		onSuccess: invalidateUsers,
-		onError: (err) => toastError(m.toast_user_create_failed(), err),
 	});
 	const updateMutation = useMutation({
 		mutationFn: ({ id, body }: { id: string; body: { role?: "admin" | "user"; banned?: boolean; banReason?: string | null } }) =>
 			reelvault.admin.updateUser(id, body),
-		onSuccess: invalidateUsers,
-		onError: (err) => toastError(m.toast_user_update_failed(), err),
+		// Callers name the failed action (block, unblock, role) in their own toast.
+		onSuccess: async (_, { id }) => {
+			await Promise.all([invalidateUsers(), queryClient.invalidateQueries({ queryKey: adminKeys.user(id) })]);
+		},
 	});
 	const deleteUserMutation = useAdminDeleteUser();
 

@@ -36,7 +36,8 @@ interface LibraryCardHeaderProps {
 	lib: LibraryWithRelations;
 	onScan: (id: string) => void;
 	onEdit: (lib: LibraryWithRelations) => void;
-	onDelete: (id: string, name: string) => Promise<unknown>;
+	/** Opens the card's delete confirmation. */
+	onDelete: () => void;
 	onCheckErrors: (libraryPaths: string[]) => void;
 	onShowIgnoredAssets: (libraryId: string) => void;
 	onShowScanFindings: (libraryId: string) => void;
@@ -169,12 +170,7 @@ export function LibraryCardHeader({
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem
-								onClick={() => {
-									detach(onDelete(lib.id, lib.name));
-								}}
-								variant="destructive"
-							>
+							<DropdownMenuItem onClick={onDelete} variant="destructive">
 								<Trash2 className="size-3.5" />
 								<span>{m.admin_libraries_delete_library()}</span>
 							</DropdownMenuItem>

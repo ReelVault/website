@@ -7,7 +7,6 @@ import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { formatFileSize } from "@/utils/file-utils";
 import { toast } from "@/utils/toast-facade";
-import { toastError } from "@/utils/toast-utils";
 import { UserPageHeader, UserSectionTitle } from "../components/user-ui";
 import { ActiveDownloadCard } from "./components/active-download-card";
 import { CompletedDownloadCard } from "./components/completed-download-card";
@@ -20,12 +19,11 @@ export default function DownloadsPage() {
 	const { data: quota } = useUserDownloadQuota();
 
 	const handleDelete = async (jobId: string) => {
-		try {
-			await deleteMutation.mutateAsync(jobId);
-			toast.success(m.user_file_deleted_from_server());
-		} catch (err) {
-			toastError(m.user_failed_to_delete_file(), err);
-		}
+		// The delete hook reports a failure itself.
+		await deleteMutation.mutateAsync(jobId).then(
+			() => toast.success(m.user_file_deleted_from_server()),
+			() => null,
+		);
 	};
 
 	const handleRetry = async (jobId: string) => {

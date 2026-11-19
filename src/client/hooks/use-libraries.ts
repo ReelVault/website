@@ -1,5 +1,5 @@
 import type { MetadataType, ScanFindingStatus } from "@reelvault/sdk";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useMutationState, useQuery, useQueryClient } from "@tanstack/react-query";
 import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
@@ -51,6 +51,26 @@ export function useLibraryData(id: string, type: MetadataType) {
 	};
 }
 
+const LIBRARY_DELETE_KEY = ["libraries", "delete"] as const;
+const LIBRARY_SCAN_KEY = ["libraries", "scan"] as const;
+const LIBRARY_SCAN_PATH_KEY = ["libraries", "scan-path"] as const;
+
+/** Ids of every pending mutation under `mutationKey`, read from its variables. */
+function usePendingIds(mutationKey: readonly string[], toId: (variables: unknown) => string | undefined): Set<string> {
+	const ids = useMutationState({
+		filters: { mutationKey: [...mutationKey], status: "pending" },
+		select: (mutation) => toId(mutation.state.variables),
+	});
+
+	return new Set(ids.filter((id) => id !== undefined));
+}
+
+const libraryIdOf = (variables: unknown) => (typeof variables === "string" ? variables : undefined);
+const pathIdOf = (variables: unknown) =>
+	typeof variables === "object" && variables !== null && "pathId" in variables && typeof variables.pathId === "string"
+		? variables.pathId
+		: undefined;
+
 export function useAdminLibraries() {
 	const queryClient = useQueryClient();
 	const librariesQuery = useQuery({
@@ -60,6 +80,7 @@ export function useAdminLibraries() {
 
 	const invalidateLibraries = () => queryClient.invalidateQueries({ queryKey: libraryKeys.all });
 	const deleteMutation = useMutation({
+		mutationKey: LIBRARY_DELETE_KEY,
 		mutationFn: (id: string) => reelvault.libraries.delete(id),
 		onSuccess: async (_, id) => {
 			queryClient.removeQueries({ queryKey: libraryKeys.detail(id) });
@@ -74,6 +95,7 @@ export function useAdminLibraries() {
 		},
 	});
 	const scanMutation = useMutation({
+		mutationKey: LIBRARY_SCAN_KEY,
 		mutationFn: (id: string) => reelvault.libraries.scan(id),
 		onSuccess: async () => {
 			await invalidateLibraries();
@@ -120,6 +142,7 @@ export function useAdminLibraries() {
 		},
 	});
 	const scanPathMutation = useMutation({
+		mutationKey: LIBRARY_SCAN_PATH_KEY,
 		mutationFn: ({ libraryId, pathId }: { libraryId: string; pathId: string }) => reelvault.libraries.scanPath(libraryId, pathId),
 		onSuccess: async () => {
 			await invalidateLibraries();
@@ -173,9 +196,11 @@ export function useAdminLibraries() {
 		isCreating: createMutation.isPending,
 		updateLibrary: updateMutation.mutateAsync,
 		isUpdating: updateMutation.isPending,
-		deleteStatus: deleteMutation.status,
-		scanStatus: scanMutation.status,
-		mutationVariables: { delete: deleteMutation.variables, scan: scanMutation.variables, scanPath: scanPathMutation.variables },
+		// Every in-flight request, not only the latest call: two libraries scanned
+		// back to back both keep their spinner until their own request settles.
+		deletingIds: usePendingIds(LIBRARY_DELETE_KEY, libraryIdOf),
+		scanningIds: usePendingIds(LIBRARY_SCAN_KEY, libraryIdOf),
+		scanningPathIds: usePendingIds(LIBRARY_SCAN_PATH_KEY, pathIdOf),
 	};
 }
 

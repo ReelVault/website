@@ -19,7 +19,8 @@ export function LibraryErrorsCheckDialog({ operationId, isOpen, onOpenChange }: 
 	const statusQuery = useLibraryErrorsCheckStatus(operationId);
 	const status = statusQuery.data;
 	const result = status?.result ?? null;
-	const isRunning = !status || status.status === "pending" || status.status === "running";
+	// A failed status request (polling stops after repeated failures) is a failed check, not a running one.
+	const isRunning = !statusQuery.isError && (!status || status.status === "pending" || status.status === "running");
 
 	let content: ReactNode;
 	if (isRunning) {

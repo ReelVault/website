@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { House, LogOut, RotateCcw } from "lucide-react";
 import { ConfirmAction } from "@/components/confirm-action";
 import { m } from "@/paraglide/messages";
-import { toast } from "@/utils/toast-facade";
 
 interface UserSidebarDesktopFooterProps {
 	onLogout: () => Promise<void>;
@@ -30,7 +29,6 @@ export function UserSidebarDesktopFooter({ onLogout }: UserSidebarDesktopFooterP
 				description={m.user_current_session_terminated()}
 				confirmLabel={m.components_navbar_log_out()}
 				onConfirm={onLogout}
-				onError={() => toast.error(m.components_navbar_logout_failed())}
 				className="text-muted-foreground hover:bg-destructive/30 hover:text-destructive flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
 			>
 				<LogOut className="size-4.5" />

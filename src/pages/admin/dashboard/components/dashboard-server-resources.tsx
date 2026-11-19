@@ -1,10 +1,8 @@
 import type { AdminStats } from "@reelvault/sdk";
 import { Activity } from "lucide-react";
 import type { ReactNode } from "react";
-import { AppErrorState } from "@/components/app-states";
 import { Badge, type BadgeVariant } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { SkeletonList } from "@/components/ui/skeleton";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import { formatMemory } from "./dashboard-utils";
@@ -43,17 +41,7 @@ const PRESSURE_STATE: Record<
 	},
 };
 
-export function DashboardServerResources({
-	stats,
-	isPending,
-	isError,
-	onRetry,
-}: {
-	stats?: AdminStats;
-	isPending: boolean;
-	isError: boolean;
-	onRetry: () => void;
-}) {
+export function DashboardServerResources({ stats }: { stats?: AdminStats }) {
 	const heapUsed = stats?.memory.heapUsed ?? 0;
 	// heapTotal is only the currently allocated heap — V8 grows it on demand,
 	// so used/total runs close to 100%. The real ceiling is the heap limit.
@@ -63,11 +51,7 @@ export function DashboardServerResources({
 	const pressureState = PRESSURE_STATE[stats?.pressure ?? "low"];
 
 	let resourcesContent: ReactNode;
-	if (isPending) {
-		resourcesContent = <SkeletonList count={3} itemClassName="h-12 rounded-xl" className="flex flex-col gap-3" />;
-	} else if (isError) {
-		resourcesContent = <AppErrorState title={m.admin_dashboard_failed_to_fetch_data()} onRetry={onRetry} />;
-	} else if (stats) {
+	if (stats) {
 		resourcesContent = (
 			<div className="flex flex-col gap-4">
 				{/* Pasek sterty Heap — live objects vs limit sterty V8 */}

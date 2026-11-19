@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { m } from "@/paraglide/messages";
 import { PluginSlotHost } from "@/plugin-host/slot-host.lazy";
-import { toast } from "@/utils/toast-facade";
 
 export function NavbarProfile() {
 	const navigate = useNavigate();
@@ -29,13 +28,15 @@ export function NavbarProfile() {
 	const handleLogout = (): void => {
 		// Transition consumes the async logout + navigation without a floating chain.
 		startTransition(async () => {
-			try {
-				await logoutMutation.mutateAsync();
-				await navigate({ to: "/auth/login", replace: true });
-				await router.invalidate();
-			} catch {
-				toast.error(m.components_navbar_logout_failed());
-			}
+			// The logout hook reports a failure itself.
+			const loggedOut = await logoutMutation.mutateAsync().then(
+				() => true,
+				() => false,
+			);
+			if (!loggedOut) return;
+
+			await navigate({ to: "/auth/login", replace: true });
+			await router.invalidate();
 		});
 	};
 

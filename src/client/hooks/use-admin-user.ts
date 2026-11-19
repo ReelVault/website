@@ -20,7 +20,6 @@ export function useAdminUser(userId: string) {
 			queryClient.setQueryData(adminKeys.user(userId), user);
 			await queryClient.invalidateQueries({ queryKey: adminKeys.usersAll() });
 		},
-		onError: (err) => toastError(m.toast_user_update_failed(), err),
 	});
 
 	return {

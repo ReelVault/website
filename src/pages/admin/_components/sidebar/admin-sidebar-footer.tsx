@@ -5,11 +5,6 @@ import { AsyncButton } from "@/components/async-button";
 import { ConfirmAction } from "@/components/confirm-action";
 import { SidebarFooter } from "@/components/ui/sidebar";
 import { m } from "@/paraglide/messages";
-import { toast } from "@/utils/toast-facade";
-
-const handleLogoutError = () => {
-	toast.error(m.components_navbar_logout_failed());
-};
 
 export function AdminSidebarFooter() {
 	const navigate = useNavigate();
@@ -51,7 +46,6 @@ export function AdminSidebarFooter() {
 				description={m.admin_current_session_terminated_notice()}
 				confirmLabel={m.auth_logout()}
 				onConfirm={handleLogout}
-				onError={handleLogoutError}
 			/>
 		</SidebarFooter>
 	);

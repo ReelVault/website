@@ -7,7 +7,6 @@ import {
 	ContextMenuLabel,
 	ContextMenuSeparator,
 } from "@/components/ui/context-menu";
-import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 
 interface LibraryCardContextMenuProps {
@@ -15,7 +14,8 @@ interface LibraryCardContextMenuProps {
 	onScan: (id: string) => void;
 	onCancelScans: (id: string) => void;
 	onEdit: (lib: LibraryWithRelations) => void;
-	onDelete: (id: string, name: string) => Promise<unknown>;
+	/** Opens the card's delete confirmation. */
+	onDelete: () => void;
 	onCheckErrors: (libraryPaths: string[]) => void;
 	onShowIgnoredAssets: (libraryId: string) => void;
 	onShowScanFindings: (libraryId: string) => void;
@@ -71,7 +71,7 @@ export function LibraryCardContextMenu({
 			</ContextMenuGroup>
 			<ContextMenuSeparator />
 			<ContextMenuGroup>
-				<ContextMenuItem onClick={() => detach(onDelete(lib.id, lib.name))} variant="destructive" className="cursor-pointer">
+				<ContextMenuItem onClick={onDelete} variant="destructive" className="cursor-pointer">
 					<Trash2 className="size-4" />
 					<span>{m.admin_libraries_delete_library()}</span>
 				</ContextMenuItem>

@@ -96,12 +96,12 @@ export default function AdminUserProfilesPage() {
 	const removeUser = async () => {
 		if (!user) return;
 
-		try {
-			await deleteUserMutation.mutateAsync(user.id);
-			await navigate({ to: "/admin/users" });
-		} catch (err) {
-			toastError(m.admin_users_failed_to_delete(), err);
-		}
+		// The delete hook reports a failure itself.
+		const deleted = await deleteUserMutation.mutateAsync(user.id).then(
+			() => true,
+			() => false,
+		);
+		if (deleted) await navigate({ to: "/admin/users" });
 	};
 
 	return (
