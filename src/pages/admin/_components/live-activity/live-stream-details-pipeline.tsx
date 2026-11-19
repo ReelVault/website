@@ -39,7 +39,7 @@ export function LiveStreamDetailsPipeline({ stream, isDirect, formattedCurrent }
 						{stream.videoTranscode
 							? m.admin_live_video_transcode_named({
 									encoder: stream.videoEncoder,
-									limit: stream.targetVideoBitrateKbps ? ` (limit ${stream.targetVideoBitrateKbps} kbps)` : "",
+									limit: stream.targetVideoBitrateKbps ? m.admin_live_video_bitrate_limit({ value: stream.targetVideoBitrateKbps }) : "",
 								})
 							: m.player_lossless_copy()}
 					</span>
@@ -60,7 +60,7 @@ export function LiveStreamDetailsPipeline({ stream, isDirect, formattedCurrent }
 					<span className="text-foreground font-medium">
 						{stream.hwaccel && stream.hwaccel !== "none"
 							? m.admin_live_gpu_label({ hwaccel: stream.hwaccel.toUpperCase() })
-							: "Software (CPU)"}
+							: m.admin_live_software_encoding()}
 					</span>
 				</div>
 				<div className="flex justify-between gap-2">

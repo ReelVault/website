@@ -5,10 +5,10 @@ import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
 const PROFILE_LABELS: Record<AdminSystemCpu["cpuProfile"], { label: string; badgeVariant: BadgeVariant }> = {
-	conservative: { label: "Conservative", badgeVariant: "info" },
-	balanced: { label: "Balanced", badgeVariant: "success" },
-	performance: { label: "Performance", badgeVariant: "warning" },
-	custom: { label: "Custom", badgeVariant: "primary" },
+	conservative: { label: m.admin_settings_conservative(), badgeVariant: "info" },
+	balanced: { label: m.admin_settings_balanced(), badgeVariant: "success" },
+	performance: { label: m.admin_settings_high_perf_performance(), badgeVariant: "warning" },
+	custom: { label: m.admin_settings_option_custom(), badgeVariant: "primary" },
 };
 
 function MetricItem({ label, value, unit }: { label: string; value: number; unit?: string }) {
@@ -51,8 +51,8 @@ export function SystemCpuInfo({ cpu }: { cpu?: AdminSystemCpu | null }) {
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 					<MetricItem label={m.admin_resources_detected_cores()} value={cpu.detectedCores} />
 					<MetricItem label={m.admin_resources_effective_cores()} value={cpu.effectiveCores} />
-					<MetricItem label="Speed Factor" value={Number(cpu.speedFactor.toFixed(2))} unit="×" />
-					<MetricItem label="Capacity" value={cpu.capacity} unit="equiv." />
+					<MetricItem label={m.admin_resources_speed_factor()} value={Number(cpu.speedFactor.toFixed(2))} unit="×" />
+					<MetricItem label={m.admin_resources_capacity()} value={cpu.capacity} unit={m.admin_resources_capacity_unit()} />
 				</div>
 
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -67,10 +67,10 @@ export function SystemCpuInfo({ cpu }: { cpu?: AdminSystemCpu | null }) {
 				</div>
 
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-					<MetricItem label="FFmpeg Threads" value={cpu.ffmpegThreads} />
+					<MetricItem label={m.admin_resources_ffmpeg_threads()} value={cpu.ffmpegThreads} />
 					<MetricItem label={m.admin_resources_sharp_images()} value={cpu.sharpConcurrency} />
 					<MetricItem label={m.admin_dashboard_worker_jobs_label()} value={cpu.workerPoolMaxConcurrent} />
-					<MetricItem label="Scanner" value={cpu.scannerConcurrency} />
+					<MetricItem label={m.admin_resources_scanner()} value={cpu.scannerConcurrency} />
 					<MetricItem label="FFprobe" value={cpu.ffprobeConcurrency} />
 				</div>
 

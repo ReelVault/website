@@ -40,7 +40,7 @@ export function LogFormattedViewer({ logs }: LogFormattedViewerProps) {
 					logKeyCounts.set(baseKey, occurrence + 1);
 					const isExpanded = expandedIndex === idx;
 					const level = log.levelName;
-					const message = log.msg ?? extractErrorMessage(log.err) ?? stringifyLogDetail(log.errorDetails) ?? "No message";
+					const message = log.msg ?? extractErrorMessage(log.err) ?? stringifyLogDetail(log.errorDetails) ?? m.admin_logs_no_message();
 					const errorStack = extractErrorStack(log.err);
 
 					return (

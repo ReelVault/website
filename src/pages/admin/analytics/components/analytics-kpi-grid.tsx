@@ -8,9 +8,10 @@ interface AnalyticsKpiGridProps {
 }
 
 export function AnalyticsKpiGrid({ data }: AnalyticsKpiGridProps) {
-	const totalHours = Math.floor(data.totalWatchMinutes / 60);
-	const totalMins = data.totalWatchMinutes % 60;
-	const formattedTotalTime = `${totalHours}h ${totalMins}m`;
+	const formattedTotalTime = m.common_duration_hours_minutes({
+		hours: Math.floor(data.totalWatchMinutes / 60),
+		minutes: data.totalWatchMinutes % 60,
+	});
 
 	return (
 		<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

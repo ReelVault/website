@@ -328,7 +328,7 @@ function SchemaStatsNode({ node, scope }: SchemaNodeProps<"stats">) {
 function SchemaTableNode({ node, scope, runtime }: SchemaNodeProps<"table">) {
 	const list = resolveRows(node.source, scope);
 	if (list.length === 0) {
-		return <p className="text-muted-foreground text-sm">{resolveLabel(node.empty ?? "No data", scope)}</p>;
+		return <p className="text-muted-foreground text-sm">{resolveLabel(node.empty ?? m.plugins_schema_no_data(), scope)}</p>;
 	}
 
 	return (
@@ -374,7 +374,8 @@ function SchemaTableNode({ node, scope, runtime }: SchemaNodeProps<"table">) {
 
 function SchemaListNode({ node, scope, runtime }: SchemaNodeProps<"list">) {
 	const list = resolveRows(node.source, scope);
-	if (list.length === 0) return <p className="text-muted-foreground text-sm">{resolveLabel(node.empty ?? "No data", scope)}</p>;
+	if (list.length === 0)
+		return <p className="text-muted-foreground text-sm">{resolveLabel(node.empty ?? m.plugins_schema_no_data(), scope)}</p>;
 
 	return (
 		<div className="flex flex-col gap-3">
@@ -410,7 +411,7 @@ function SchemaForeachNode({ node, scope, runtime }: SchemaNodeProps<"foreach">)
 function SchemaEmptyNode({ node, scope }: SchemaNodeProps<"empty">) {
 	return (
 		<div className="border-border rounded-lg border border-dashed p-6 text-center">
-			<p className="text-sm font-medium">{resolveLabel(node.title ?? "Nothing here", scope)}</p>
+			<p className="text-sm font-medium">{resolveLabel(node.title ?? m.plugins_schema_nothing_here(), scope)}</p>
 			{node.description ? <p className="text-muted-foreground mt-1 text-xs">{resolveLabel(node.description, scope)}</p> : null}
 		</div>
 	);
@@ -425,7 +426,7 @@ function SchemaEmbedNode({ node, scope }: SchemaNodeProps<"embed">) {
 		// overlay stays in sync.
 		<iframe
 			src={src}
-			title={resolveLabel(node.title ?? "Embedded content", scope)}
+			title={resolveLabel(node.title ?? m.plugins_schema_embedded_content(), scope)}
 			className={node.aspect === "square" ? "aspect-square w-full rounded-lg border-0" : "aspect-video w-full rounded-lg border-0"}
 			sandbox={embedSandbox(src)}
 			referrerPolicy={embedReferrerPolicy(src)}

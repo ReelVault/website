@@ -95,7 +95,7 @@ export function LiveStreamCard({ stream, onTerminate, onDownloadLog, isTerminati
 						{stream.width != null && stream.width > 0 && stream.height != null && stream.height > 0 && (
 							<span className="text-muted-foreground ml-auto text-xs">
 								{m.components_media_file_resolution({ width: stream.width, height: stream.height })}
-								{stream.bitrateKbps ? ` · ${Math.round(stream.bitrateKbps / 1000)} Mbps` : ""}
+								{stream.bitrateKbps ? m.admin_live_bitrate_mbps({ value: Math.round(stream.bitrateKbps / 1000) }) : ""}
 							</span>
 						)}
 					</div>

@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { detach } from "@/lib/detach";
+import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { isRecord } from "@/utils/type-guards";
 import { usePluginDialogController } from "../plugin-dialog-context";
@@ -98,7 +99,7 @@ export function useSchemaRuntime(
 				} catch (error) {
 					if (!isLatestFor()) return;
 
-					setDataErrors((previous) => ({ ...previous, [name]: error instanceof Error ? error.message : "Failed to load" }));
+					setDataErrors((previous) => ({ ...previous, [name]: error instanceof Error ? error.message : m.plugins_schema_load_failed() }));
 				}
 			}),
 		).finally(() => {
@@ -159,7 +160,7 @@ export function useSchemaRuntime(
 							bumpSchemaRefresh(surfaceToken);
 							if (action.close) onClose?.();
 						} catch (error) {
-							toast.error(error instanceof Error ? error.message : "Request failed");
+							toast.error(error instanceof Error ? error.message : m.plugins_schema_request_failed());
 						}
 					})(),
 				);
@@ -187,7 +188,7 @@ export function useSchemaRuntime(
 							bumpSchemaRefresh(surfaceToken);
 							if (action.close) onClose?.();
 						} catch (error) {
-							toast.error(error instanceof Error ? error.message : "Request failed");
+							toast.error(error instanceof Error ? error.message : m.plugins_schema_request_failed());
 						}
 					})(),
 				);

@@ -19,6 +19,16 @@ import { translateCode } from "@/utils/translate-error";
 type StatusFilter = "all" | "pending" | "processing" | "completed" | "failed" | "cancelled";
 
 const STATUS_FILTERS: readonly StatusFilter[] = ["all", "pending", "processing", "completed", "failed", "cancelled"];
+
+const DOWNLOAD_STATUS_LABELS: Record<string, () => string> = {
+	pending: () => m.admin_downloads_status_pending(),
+	processing: () => m.admin_downloads_status_processing(),
+	completed: () => m.admin_downloads_status_completed(),
+	failed: () => m.admin_downloads_status_failed(),
+	cancelled: () => m.admin_downloads_status_cancelled(),
+};
+
+const downloadStatusLabel = (status: string) => DOWNLOAD_STATUS_LABELS[status]?.() ?? status;
 const NO_COUNTS = { pending: 0, processing: 0, completed: 0, failed: 0, cancelled: 0 };
 
 export default function AdminDownloadsPage() {
@@ -127,7 +137,7 @@ export default function AdminDownloadsPage() {
 				>
 					{STATUS_FILTERS.map((option) => (
 						<ToggleGroupItem key={option} value={option} size="sm">
-							{option === "all" ? m.common_all() : option}
+							{option === "all" ? m.common_all() : downloadStatusLabel(option)}
 						</ToggleGroupItem>
 					))}
 				</ToggleGroup>
@@ -148,7 +158,7 @@ export default function AdminDownloadsPage() {
 									<div className="flex flex-col gap-1">
 										<div className="flex flex-wrap items-center gap-2">
 											<span className="text-sm font-medium">{job.fileName ?? job.id}</span>
-											<Badge variant={statusVariant}>{job.status}</Badge>
+											<Badge variant={statusVariant}>{downloadStatusLabel(job.status)}</Badge>
 											<Badge variant="outline">{job.quality}</Badge>
 											<span className="text-muted-foreground font-mono text-xs">
 												{m.admin_downloads_profile_label({ id: job.profileId })}

@@ -4,12 +4,12 @@ import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 
 const WORKER_LABELS: Record<string, string> = {
-	imageProcessing: "Image Processing",
-	mediaFileAnalysis: "Media File Analysis",
-	mediaFileTechnicalRefresh: "Media File Technical Refresh",
-	metadataRefresh: "Metadata Refresh",
-	scanning: "Scanning",
-	transcode: "Transcode",
+	imageProcessing: m.admin_resources_worker_image_processing(),
+	mediaFileAnalysis: m.admin_resources_worker_media_file_analysis(),
+	mediaFileTechnicalRefresh: m.admin_resources_worker_media_file_technical_refresh(),
+	metadataRefresh: m.admin_resources_worker_metadata_refresh(),
+	scanning: m.admin_resources_worker_scanning(),
+	transcode: m.admin_resources_worker_transcode(),
 };
 
 const REASON_LABELS: Record<string, string> = {
@@ -17,7 +17,7 @@ const REASON_LABELS: Record<string, string> = {
 	high_pressure_low_priority: m.admin_resources_high_pressure_low_priority(),
 	memory_pressure: m.admin_resources_memory_pressure(),
 	streaming_limit: m.admin_resources_streams_limit(),
-	server_rescue: "Server Rescue",
+	server_rescue: m.admin_server_rescue_mode(),
 };
 
 export function WorkerAllocations({ allocations }: { allocations?: AdminWorkerAllocation[] | null }) {

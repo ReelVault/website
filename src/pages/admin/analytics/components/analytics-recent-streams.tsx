@@ -29,7 +29,7 @@ function PlayStatus({ play }: { play: RecentPlay }) {
 
 function RecentPlayCard({ play }: { play: RecentPlay }) {
 	const mediaTypeLabel = play.mediaType === "movie" ? m.common_movie_word() : m.common_series_word();
-	const durationLabel = play.durationWatched ? `${play.durationWatched} min` : "—";
+	const durationLabel = play.durationWatched ? m.admin_analytics_minutes_watched({ minutes: play.durationWatched }) : "—";
 
 	return (
 		<div className="border-border/50 bg-background/40 flex flex-col gap-3 rounded-xl border p-4">
@@ -99,7 +99,7 @@ export function AnalyticsRecentStreams({ recentPlays }: AnalyticsRecentStreamsPr
 														</span>
 													</TableCell>
 													<TableCell tone="mono" size="sm" className="text-right">
-														{play.durationWatched ? `${play.durationWatched} min` : "—"}
+														{play.durationWatched ? m.admin_analytics_minutes_watched({ minutes: play.durationWatched }) : "—"}
 													</TableCell>
 													<TableCell className="text-center">
 														<PlayStatus play={play} />
