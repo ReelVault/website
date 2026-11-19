@@ -4616,6 +4616,7 @@
 	"plugin_ui_dialog_unknown": "Plik ui.json wskazuje nieistniejące okno dialogowe „{dialog}”.",
 	"plugin_ui_slot_unsupported": "Plik ui.json używa nieobsługiwanego miejsca „{slot}”.",
 	"plugin_ui_slot_entry_ambiguous": "Wpis miejsca „{slot}” w pliku ui.json musi zawierać dokładnie jedno z pól: action albo element.",
+	"plugin_ui_slot_element_required": "Wpisy slotu „{slot}” w ui.json muszą deklarować element; ten slot nie może pokazać akcji.",
 	"plugin_ui_action_type_missing": "Akcja w polu „{field}” pliku ui.json musi mieć typ.",
 	"plugin_ui_action_type_unsupported": "Akcja w polu „{field}” pliku ui.json ma nieobsługiwany typ „{type}”.",
 	"plugin_ui_data_too_many_sources": "Pole „{field}” w pliku ui.json deklaruje zbyt wiele źródeł danych.",

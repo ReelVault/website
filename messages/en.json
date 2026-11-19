@@ -4577,6 +4577,7 @@
 	"plugin_ui_dialog_unknown": "ui.json references the unknown dialog \"{dialog}\".",
 	"plugin_ui_slot_unsupported": "ui.json uses the unsupported slot \"{slot}\".",
 	"plugin_ui_slot_entry_ambiguous": "An entry of the slot \"{slot}\" in ui.json must declare exactly one of action or element.",
+	"plugin_ui_slot_element_required": "Entries of the slot \"{slot}\" in ui.json must declare an element; this slot cannot show an action.",
 	"plugin_ui_action_type_missing": "\"{field}\" in ui.json must declare an action type.",
 	"plugin_ui_action_type_unsupported": "\"{field}\" in ui.json uses the unsupported action type \"{type}\".",
 	"plugin_ui_data_too_many_sources": "\"{field}\" in ui.json declares too many data sources.",

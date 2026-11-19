@@ -269,6 +269,8 @@ const dynamicMessages = {
 		hasParams(inputs, ["dialog"]) ? m.plugin_ui_dialog_unknown({ dialog: String(inputs.dialog) }) : null,
 	plugin_ui_slot_unsupported: (inputs) =>
 		hasParams(inputs, ["slot"]) ? m.plugin_ui_slot_unsupported({ slot: String(inputs.slot) }) : null,
+	plugin_ui_slot_element_required: (inputs) =>
+		hasParams(inputs, ["slot"]) ? m.plugin_ui_slot_element_required({ slot: String(inputs.slot) }) : null,
 	plugin_ui_slot_entry_ambiguous: (inputs) =>
 		hasParams(inputs, ["slot"]) ? m.plugin_ui_slot_entry_ambiguous({ slot: String(inputs.slot) }) : null,
 	plugin_ui_action_type_missing: (inputs) =>
