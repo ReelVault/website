@@ -58,9 +58,13 @@ export function useSchemaRuntime(
 	const isMountedRef = useRef(true);
 	/** Fields the user edited — data-driven defaults must never overwrite them. */
 	const touchedFieldsRef = useRef<Set<string>>(new Set());
-	// Monotonic id so a slower earlier load cannot overwrite a newer one, and an
-	// unmounted surface never writes state.
+	// Monotonic ids so a slower earlier load cannot overwrite a newer one, and an
+	// unmounted surface never writes state. Data is guarded per source: reloading
+	// one source must not discard an in-flight result of another.
 	const loadRequestIdRef = useRef(0);
+	const sourceRequestIdsRef = useRef(new Map<string, number>());
+	// Identifies this surface on the refresh bus.
+	const [surfaceToken] = useState(() => ({}));
 
 	useEffect(() => {
 		isMountedRef.current = true;
@@ -78,22 +82,25 @@ export function useSchemaRuntime(
 
 		const requestId = ++loadRequestIdRef.current;
 		const isLatest = (): boolean => isMountedRef.current && requestId === loadRequestIdRef.current;
+		for (const name of names) sourceRequestIdsRef.current.set(name, requestId);
 
 		await Promise.all(
 			names.map(async (name) => {
 				const source = sources[name];
 				if (!source) return;
 
+				const isLatestFor = (): boolean => isMountedRef.current && sourceRequestIdsRef.current.get(name) === requestId;
+
 				try {
 					const query = toStringRecord(resolveTemplate(source.query ?? {}, scope));
 					const path = String(resolveTemplate(source.path, scope));
 					const result = await reelvault.plugins.call(pluginId, path, query ? { query } : undefined);
-					if (!isLatest()) return;
+					if (!isLatestFor()) return;
 
 					setDataValues((previous) => ({ ...previous, [name]: result }));
 					setDataErrors((previous) => ({ ...previous, [name]: "" }));
 				} catch (error) {
-					if (!isLatest()) return;
+					if (!isLatestFor()) return;
 
 					setDataErrors((previous) => ({ ...previous, [name]: error instanceof Error ? error.message : "Failed to load" }));
 				}
@@ -153,7 +160,7 @@ export function useSchemaRuntime(
 							if (action.successToast) toast.success(toastText(action.successToast, scope));
 
 							refresh(scope, action.refresh);
-							bumpSchemaRefresh();
+							bumpSchemaRefresh(surfaceToken);
 							if (action.close) onClose?.();
 						} catch (error) {
 							toast.error(error instanceof Error ? error.message : "Request failed");
@@ -181,7 +188,7 @@ export function useSchemaRuntime(
 							if (action.successToast) toast.success(toastText(action.successToast, scope));
 
 							refresh(scope, action.refresh);
-							bumpSchemaRefresh();
+							bumpSchemaRefresh(surfaceToken);
 							if (action.close) onClose?.();
 						} catch (error) {
 							toast.error(error instanceof Error ? error.message : "Request failed");
@@ -254,8 +261,11 @@ export function useSchemaRuntime(
 	useEffect(() => {
 		handlersRef.current?.mount();
 
-		return subscribeSchemaRefresh(() => handlersRef.current?.refresh());
-	}, []);
+		return subscribeSchemaRefresh((origin) => {
+			// The surface that ran the action already refreshed the sources it named.
+			if (origin !== surfaceToken) handlersRef.current?.refresh();
+		});
+	}, [surfaceToken]);
 
 	return {
 		scope: { form: formValues, data: dataValues, context },

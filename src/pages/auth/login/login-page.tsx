@@ -111,7 +111,14 @@ export default function LoginPage() {
 			);
 		}
 
-		return <LoginQuickConnectStep redirectUrl={redirectUrl} onSubStepChange={setQcSubStep} onBack={() => setStep("credentials")} />;
+		return (
+			<LoginQuickConnectStep
+				redirectUrl={redirectUrl}
+				subStep={qcSubStep}
+				onSubStepChange={setQcSubStep}
+				onBack={() => setStep("credentials")}
+			/>
+		);
 	};
 
 	return (

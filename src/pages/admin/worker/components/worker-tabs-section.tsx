@@ -124,6 +124,8 @@ export function WorkerTabsSection({
 			</Suspense>
 
 			<WorkerOperationDialog
+				// A new operation starts on page 1 with no filters or expanded rows.
+				key={inspectingOperation?.id}
 				operation={inspectingOperation}
 				workerTimeouts={workerTimeouts}
 				isOpen={Boolean(inspectingOperation)}

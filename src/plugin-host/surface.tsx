@@ -32,7 +32,9 @@ export function PluginSurface({ pluginId, tag, schema, page, dialog, params, pla
 			// isolate their own errors) — a throw here must not blank the whole page.
 			<PluginSlotBoundary pluginId={pluginId}>
 				<PluginSchemaSurface
-					key={pluginId}
+					// A schema loads its sources on mount, so a new page, dialog or params
+					// (another title on the details page) must mount a fresh surface.
+					key={`${pluginId}|${page ?? ""}|${dialog ?? ""}|${JSON.stringify(params ?? {})}`}
 					pluginId={pluginId}
 					schema={schema}
 					context={{ ...context, ...(pluginManifest?.defaultLocale ? { defaultLocale: pluginManifest.defaultLocale } : {}) }}

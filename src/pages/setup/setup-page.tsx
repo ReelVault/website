@@ -91,7 +91,6 @@ export default function SetupPage() {
 	const [currentStep, setCurrentStep] = useState(() => readResumableStep());
 	const [isFinished, setIsFinished] = useState(false);
 	const [form, setForm] = useState<SetupForm>(INITIAL_FORM);
-	const [error, setError] = useState<string>();
 	const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof SetupForm, string>>>({});
 	const { isLoading: statusLoading, isError: statusError, isRequired, tokenRequired, refetch } = useIsSetupRequired();
 	const setupMutation = useCreateAdmin();
@@ -120,7 +119,6 @@ export default function SetupPage() {
 	const isInputStep = stepId === "token" || stepId === "account" || stepId === "confirm";
 
 	const update = (field: keyof SetupForm, value: string) => {
-		setError(undefined);
 		if (setupMutation.isError) setupMutation.reset();
 
 		setFieldErrors((current) => (current[field] ? { ...current, [field]: undefined } : current));
@@ -221,7 +219,7 @@ export default function SetupPage() {
 				disabled={!canGoBack || setupMutation.isPending}
 				onClick={() => {
 					resetMutationError();
-					setCurrentStep(stepIndex - 1);
+					advance(stepIndex - 1);
 				}}
 			>
 				<ArrowLeft className="size-4" /> {m.common_back()}
@@ -246,12 +244,7 @@ export default function SetupPage() {
 		if (isInputStep) {
 			return (
 				<form onSubmit={handleSubmit} noValidate className="flex flex-col gap-8">
-					{(error !== undefined || setupMutation.isError) && (
-						<AppErrorState
-							title={setupMutation.isError ? m.setup_failed_to_configure() : m.setup_fill_form()}
-							description={error ?? mutationErrorDescription()}
-						/>
-					)}
+					{setupMutation.isError && <AppErrorState title={m.setup_failed_to_configure()} description={mutationErrorDescription()} />}
 
 					{stepId === "token" && (
 						<SetupStepToken value={form.setupToken} onChange={(val) => update("setupToken", val)} error={fieldErrors.setupToken} />

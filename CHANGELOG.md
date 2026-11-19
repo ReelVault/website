@@ -475,6 +475,13 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Profile names** — an admin could save a blank or whitespace-only profile name.
+- **Worker job details** — a job whose only detail was a non-text result (an object or a number) had no expand toggle, so its result could not be seen.
+- **Worker dialogs** — inspecting another operation kept the previous page, search and filters; unsaved trigger edits were discarded whenever polling refreshed the task.
+- **Setup wizard** — after Back and a page refresh, the wizard resumed at the later step.
+- **Profile PIN** — a PIN shorter than 4 digits was only rejected by the server; the form now says so before submitting.
+- **Quick Connect login** — after going back and returning, the header icon could show the code icon over the QR view.
+- **Plugin schema surfaces** — reloading one data source could discard another source's in-flight result, leaving it empty; a surface on the details page kept the previous title's data after moving to another title; an action refreshed its own surface twice.
 - **File scan duration** — an empty or invalid custom duration ran a full decode of the whole file, the same as the "All" preset; the Run button now stays disabled until the value is valid.
 - **Provider order** — a failed reorder left the unsaved order on screen until reload; it now goes back to the saved order.
 - **Deleting one subtitle** — the row's Delete removed the file without asking, and the id stayed in the bulk selection; it now asks first and leaves the selection.

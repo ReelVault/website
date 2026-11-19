@@ -1,6 +1,5 @@
 import { useNavigate, useRouter as useTanStackRouter } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
 import { useQuickConnectInitiate } from "@/client/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
@@ -13,23 +12,19 @@ export type QuickConnectSubStep = "redeem" | "pair";
 /** "quick-connect" step: redeem a code from another device or pair via QR (TV mode). */
 export function LoginQuickConnectStep({
 	redirectUrl,
-	onSubStepChange,
+	subStep: qcSubStep,
+	onSubStepChange: setQcSubStep,
 	onBack,
 }: {
 	redirectUrl?: string;
-	/** Parent tracks the sub-step for the header icon. */
+	/** Owned by the page, which also shows the sub-step in its header icon. */
+	subStep: QuickConnectSubStep;
 	onSubStepChange: (subStep: QuickConnectSubStep) => void;
 	onBack: () => void;
 }) {
 	const navigate = useNavigate();
 	const router = useTanStackRouter();
 	const quickConnectInitiateMutation = useQuickConnectInitiate();
-
-	const [qcSubStep, setQcSubStepState] = useState<QuickConnectSubStep>("pair");
-	const setQcSubStep = (subStep: QuickConnectSubStep) => {
-		setQcSubStepState(subStep);
-		onSubStepChange(subStep);
-	};
 
 	const navigateToProfiles = () => {
 		detach(

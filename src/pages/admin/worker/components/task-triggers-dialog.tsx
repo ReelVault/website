@@ -21,10 +21,12 @@ export function TaskTriggersDialog({ task, isOpen, onClose, onSave, isSaving }: 
 	const [triggers, setTriggers] = useState<TaskTrigger[]>([]);
 	const [isAdding, setIsAdding] = useState(false);
 
-	const [syncedTask, setSyncedTask] = useState<WorkerSummary | null | undefined>();
+	// Re-seed on opening or on another task only: polling hands in a new task object
+	// for the same task, which must not discard the edits in progress.
+	const [syncedTaskId, setSyncedTaskId] = useState<string | undefined>();
 	const [syncedOpen, setSyncedOpen] = useState<boolean | undefined>();
-	if (task !== syncedTask || isOpen !== syncedOpen) {
-		setSyncedTask(task);
+	if (task?.id !== syncedTaskId || isOpen !== syncedOpen) {
+		setSyncedTaskId(task?.id);
 		setSyncedOpen(isOpen);
 		if (task && isOpen) {
 			setTriggers([...task.triggers]);

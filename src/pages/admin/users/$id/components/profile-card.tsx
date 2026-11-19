@@ -32,8 +32,11 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 	const [preferencesOpen, setPreferencesOpen] = useState(false);
 	const { hasCopied, copy } = useCopyToClipboard();
 
+	const trimmedName = name.trim();
 	const save = () => {
-		const body = { ...(name !== profile.name ? { name } : {}), ...(pin ? { pin } : {}) };
+		if (!trimmedName) return;
+
+		const body = { ...(trimmedName !== profile.name ? { name: trimmedName } : {}), ...(pin ? { pin } : {}) };
 		detach(async () => {
 			if (Object.keys(body).length > 0) await onSave({ profileId: profile.id, body });
 
@@ -131,7 +134,7 @@ export function ProfileCard({ userId, profile, onSave, onDelete, disabled, isSav
 			</div>
 			<AsyncButton
 				isPending={isSaving}
-				disabled={disabled || (name === profile.name && !pin)}
+				disabled={disabled || !trimmedName || (trimmedName === profile.name && !pin)}
 				pendingLabel={m.common_saving_dots()}
 				onClick={save}
 			>

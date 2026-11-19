@@ -15,6 +15,8 @@ import { ProfileAvatarPreview } from "../profiles/components/profile-avatar-prev
 import { ProfileAvatarSelector } from "../profiles/components/profile-avatar-selector";
 import { ProfileFormInputs } from "../profiles/components/profile-form-inputs";
 
+const PROFILE_PIN_PATTERN = /^\d{4,8}$/;
+
 export default function CreateProfilePage() {
 	usePageTitle(m.auth_new_profile());
 	const { redirect } = useSearch({ from: "/auth/create-profile" });
@@ -56,6 +58,13 @@ export default function CreateProfilePage() {
 
 		if (!name.trim()) {
 			setError(m.auth_profile_name_required());
+
+			return;
+		}
+
+		// The server accepts 4–8 digits; checking here names the problem before the round trip.
+		if (pin && !PROFILE_PIN_PATTERN.test(pin)) {
+			setError(m.auth_enter_pin_range());
 
 			return;
 		}

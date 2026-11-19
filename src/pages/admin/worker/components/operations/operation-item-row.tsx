@@ -7,8 +7,8 @@ import { m } from "@/paraglide/messages";
 import { formatCountdown } from "@/utils/format-utils";
 import { formatDate, formatMsDuration, getWorkerMeta, labels, useCurrentTime } from "../worker-utils";
 
-/** Empty strings count as "no value" for presence checks. */
-const hasValue = (value: unknown): boolean => typeof value === "string" && value.length > 0;
+/** Missing values and empty strings count as "no value"; a result may be any JSON value. */
+const hasValue = (value: unknown): boolean => value !== undefined && value !== null && value !== "";
 
 function useItemTiming(item: WorkerJob, timeoutMs?: number) {
 	// Only pending/running rows need the 1 Hz clock — finished rows never re-render.
