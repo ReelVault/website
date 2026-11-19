@@ -14,7 +14,6 @@ import {
 import { type PlayerVolumeState, usePlayerController, usePlayerVolumeState } from "./hooks/use-player-controller.hook";
 import type {
 	AudioStream,
-	CaptionFormat,
 	CurrentEpisodeInfo,
 	NextEpisodeInfo,
 	PlaybackSettings,
@@ -175,7 +174,6 @@ interface PlayerSubtitlesValue {
 	selectedSubtitleId: string | undefined;
 	setSelectedSubtitleId: (subtitleId: string | undefined) => void;
 	selectedSubtitle: SubtitleOption | undefined;
-	subtitleFormat: CaptionFormat | undefined;
 	subtitleContent: string | undefined;
 	subtitleLanguage: string;
 	/** Lower-case language codes the profile prefers, best first. */

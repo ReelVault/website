@@ -10,14 +10,14 @@ import type { RouterContext } from "./__root";
  * fallback for in-app session invalidation (it only sees cache updates after
  * render, which is fine there).
  */
-export async function ensureAuthenticated(context: RouterContext, { requireProfile = true }: { requireProfile?: boolean } = {}) {
+export async function ensureAuthenticated(context: RouterContext) {
 	try {
 		const me = await context.queryClient.query(currentProfileQueryOptions());
 		if (!me.user) {
 			redirect({ to: "/auth/login", replace: true, throw: true });
 		}
 
-		if (requireProfile && !me.profile) {
+		if (!me.profile) {
 			redirect({ to: "/auth/profiles", replace: true, throw: true });
 		}
 	} catch (error) {

@@ -27,7 +27,6 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import type { PlaybackSettings, PlayerMediaFile, PlayerSession, SubtitlePreferences } from "../utils/player.types";
-import { toCaptionFormat } from "../utils/player.types";
 import {
 	applyVolumeToElement,
 	disposeAudioBoost,
@@ -343,7 +342,6 @@ export function usePlayerController({
 	// while the view query holds no data (a fresh [] per render would re-fire effects).
 	const subtitles = useMemo(() => viewQuery.data?.subtitles ?? [], [viewQuery.data?.subtitles]);
 	const selectedSubtitle = subtitles.find((subtitle) => subtitle.id === selectedSubtitleId);
-	const subtitleFormat = toCaptionFormat(selectedSubtitle?.format);
 
 	const subtitleContentQuery = useSubtitleContent(selectedSubtitle?.id);
 	const subtitleSearchMutation = useSubtitleSearch(mediaFileId, subtitleLanguage);
@@ -1291,7 +1289,6 @@ export function usePlayerController({
 		selectedSubtitleId,
 		setSelectedSubtitleId,
 		selectedSubtitle,
-		subtitleFormat,
 		subtitleContent: subtitleContentQuery.data,
 		subtitleLanguage,
 		preferredSubtitleLanguages,

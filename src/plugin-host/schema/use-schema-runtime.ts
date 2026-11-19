@@ -1,4 +1,4 @@
-import type { PluginLocalizedText, PluginSchemaAction, PluginSchemaCondition, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
+import type { PluginLocalizedText, PluginSchemaAction, PluginUiSchemaSurface } from "@reelvault/sdk/plugin";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
@@ -6,7 +6,7 @@ import { detach } from "@/lib/detach";
 import { toast } from "@/utils/toast-facade";
 import { isRecord } from "@/utils/type-guards";
 import { usePluginDialogController } from "../plugin-dialog-context";
-import { actionConfirmation, evaluateCondition, resolveLabel, resolveTemplate, type SchemaScope } from "./binding";
+import { actionConfirmation, resolveLabel, resolveTemplate, type SchemaScope } from "./binding";
 import { bumpSchemaRefresh, subscribeSchemaRefresh } from "./refresh-bus";
 import { collectSchemaDefaults, mergeSchemaDefaults } from "./schema-defaults";
 
@@ -16,7 +16,6 @@ export interface SchemaRuntime {
 	dataErrors: Record<string, string>;
 	setField: (name: string, value: unknown) => void;
 	runAction: (action: PluginSchemaAction, scope: SchemaScope) => void;
-	checkCondition: (condition: PluginSchemaCondition, scope: SchemaScope) => boolean;
 }
 
 function toStringRecord(value: unknown): Record<string, string> | undefined {
@@ -270,6 +269,5 @@ export function useSchemaRuntime(
 		dataErrors,
 		setField,
 		runAction,
-		checkCondition: evaluateCondition,
 	};
 }
