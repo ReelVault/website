@@ -20,7 +20,9 @@ const SAFE_REL = /noopener|noreferrer/;
 const SOURCE_FILE = /\.(ts|tsx)$/;
 const TEST_FILE = /\.test\.tsx?$/;
 const BLANK_TARGET = 'target="_blank"';
-const HARDCODED_POLISH_LABEL = /["'`](logi|ID operacji)["'`]/;
+// Polish belongs in messages/pl.json only: source text and comments are English.
+const POLISH_TEXT =
+	/[ąćęłńśźżĄĆĘŁŃŚŹŻ]|\b(przycisk|myszy|sekcja|dialogi|akcyjne|nasion|filmografia|zredukowany|dostawcy|oparta|algorytmu|odcinek|ustawienia|pobieranie|wyłączony)\b/i;
 const BROWSER_DIALOG_CALL = /(^|[^\w.$])(window\.)?(confirm|alert|prompt)\s*\(/;
 /** The card and the details footer each stop a live stream; both confirm in the app's dialog. */
 const LIVE_STREAM_STOP_FILES = [
@@ -77,8 +79,8 @@ describe("source guards", () => {
 		expect(FILES.length).toBeGreaterThan(300);
 	});
 
-	test("no interface label is hardcoded in Polish (clipboard toasts use the catalogue)", () => {
-		const offenders = FILES.filter((file) => HARDCODED_POLISH_LABEL.test(read(file))).map((file) => rel(file));
+	test("no Polish text in source or comments (translations live in messages/pl.json)", () => {
+		const offenders = FILES.filter((file) => POLISH_TEXT.test(read(file))).map((file) => rel(file));
 
 		expect(offenders).toEqual([]);
 	});

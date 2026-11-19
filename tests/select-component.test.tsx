@@ -58,5 +58,6 @@ describe("Select component label resolution", () => {
 		);
 
 		expect(html).toContain("Default server mode");
+		expect(html).not.toContain("Use global configuration");
 	});
 });

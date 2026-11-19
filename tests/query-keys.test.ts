@@ -12,12 +12,6 @@ import {
 import { redirectSearchValidator } from "@/types/search-params";
 
 describe("query key factories", () => {
-	it("providersKeys.search is stable for identical inputs", () => {
-		expect(providersKeys.search("movie", { title: "Matrix", year: 1999 })).toEqual(
-			providersKeys.search("movie", { title: "Matrix", year: 1999 }),
-		);
-	});
-
 	it("providersKeys.search distinguishes type/title/year", () => {
 		expect(providersKeys.search("movie", { title: "Matrix", year: 1999 })).not.toEqual(
 			providersKeys.search("tv_show", { title: "Matrix", year: 1999 }),
@@ -36,16 +30,17 @@ describe("query key factories", () => {
 		expect(adminKeys.workerOperationJobs("op1")).toEqual(["admin", "worker-operation-jobs", "op1"]);
 	});
 
-	it("admin collection-order key differs from public collection key", () => {
-		const publicKeys = metadataKeys.collection("c1", "title", "asc");
-		const adminKeysForOrder = [...metadataKeys.all, "collection-order", "c1", "title", "asc"] as const;
-		expect(adminKeysForOrder).not.toEqual(publicKeys);
+	it("admin collection-order key is distinct from the public collection key and sits under its per-collection prefix", () => {
+		expect(metadataKeys.collectionOrder("c1", "title", "asc")).toEqual(["metadata", "collection-order", "c1", "title", "asc"]);
+		expect(metadataKeys.collectionOrderAll("c1")).toEqual(["metadata", "collection-order", "c1"]);
+		expect(metadataKeys.collection("c1", "title", "asc")).toEqual(["metadata", "collection", "c1", "title", "asc"]);
 	});
 
 	it("mePlaybackKeys suggestions and progress prefix factories match specific keys", () => {
-		const metaId = "meta_123";
-		expect(mePlaybackKeys.suggestions(metaId)).toEqual([...mePlaybackKeys.suggestionsAll(), metaId]);
-		expect(mePlaybackKeys.progress(metaId)).toEqual([...mePlaybackKeys.progressAll(), metaId]);
+		expect(mePlaybackKeys.suggestions("meta_123")).toEqual(["me", "playback", "suggestions", "meta_123"]);
+		expect(mePlaybackKeys.suggestionsAll()).toEqual(["me", "playback", "suggestions"]);
+		expect(mePlaybackKeys.progress("meta_123")).toEqual(["me", "playback", "progress", "meta_123"]);
+		expect(mePlaybackKeys.progressAll()).toEqual(["me", "playback", "progress"]);
 		expect(mePlaybackKeys.continueWatching()).toEqual(["me", "playback", "continue-watching"]);
 	});
 

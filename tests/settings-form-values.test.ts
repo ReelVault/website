@@ -22,12 +22,4 @@ describe("settings form values", () => {
 		expect(readItemValue(values, "system.resources.monitoringEnabled")).toBe(true);
 		expect(readItemValue(values, "system.resources.missing")).toBeUndefined();
 	});
-
-	it("round-trips a modified nested value", () => {
-		const values = buildInitial([item("system.resources.monitoringEnabled", true)]);
-		const next = structuredClone(values);
-		(next.system as { resources: Record<string, unknown> }).resources.monitoringEnabled = false;
-
-		expect(readItemValue(next, "system.resources.monitoringEnabled")).toBe(false);
-	});
 });

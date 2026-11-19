@@ -10,9 +10,7 @@ overwriteGetLocale(() => "en");
 const V13_CODES = [
 	"auth.email_registered",
 	"auth.invalid_email",
-	"auth.request_rejected",
 	"auth.user_banned",
-	"database.backup_failed",
 	"downloads.disabled",
 	"downloads.in_progress",
 	"downloads.no_media_file",

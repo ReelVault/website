@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { overwriteGetLocale } from "@/paraglide/runtime";
 import { ensureDom, unregisterDom } from "./register-dom";
 
+const ADD_PROFILE_LINK = /Add profile/;
+
 /**
  * The "Who's watching" picker lists each profile by its name. Choosing a profile switches to it and returns to the
  * page the user came from (the dashboard by default). The add tile opens the create-profile page and keeps that same
@@ -103,16 +105,10 @@ describe("profile picker", () => {
 		expect(view.getByRole("button", { name: MAX_BUTTON })).toBeTruthy();
 	});
 
-	test("the add tile opens the create-profile page", () => {
+	test("the add tile is a link to the create-profile page", () => {
 		const view = renderPicker();
 
-		expect(view.getByText("Add profile").closest("a")?.getAttribute("href")).toBe("/auth/create-profile");
-	});
-
-	test("the add tile is announced as a link, not a button", () => {
-		const view = renderPicker();
-
-		expect(view.getByText("Add profile").closest("a")?.getAttribute("role")).toBe("link");
+		expect(view.getByRole("link", { name: ADD_PROFILE_LINK }).getAttribute("href")).toBe("/auth/create-profile");
 	});
 
 	test("the add tile keeps the redirect target", () => {

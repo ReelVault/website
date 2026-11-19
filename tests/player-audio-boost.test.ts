@@ -74,14 +74,19 @@ describe("player audio boost & equalizer", () => {
 	test("getStoredEqualizerConfig and saveStoredEqualizerConfig persist properly", () => {
 		const originalWindow = globalThis.window;
 		const storage = new Map<string, string>();
-		globalThis.window = {
-			localStorage: {
-				getItem: (key: string) => storage.get(key) ?? null,
-				setItem: (key: string, val: string) => storage.set(key, val),
-				removeItem: (key: string) => storage.delete(key),
-				clear: () => storage.clear(),
-			},
-		} as unknown as Window & typeof globalThis;
+		// A fresh window object per "page load": the module caches per window, so a new
+		// one forces the read back from storage instead of the in-memory copy.
+		const loadPage = () => {
+			globalThis.window = {
+				localStorage: {
+					getItem: (key: string) => storage.get(key) ?? null,
+					setItem: (key: string, val: string) => storage.set(key, val),
+					removeItem: (key: string) => storage.delete(key),
+					clear: () => storage.clear(),
+				},
+			} as unknown as Window & typeof globalThis;
+		};
+		loadPage();
 
 		try {
 			const initial = getStoredEqualizerConfig();
@@ -94,6 +99,7 @@ describe("player audio boost & equalizer", () => {
 				compressorEnabled: false,
 			});
 
+			loadPage();
 			const loaded = getStoredEqualizerConfig();
 			expect(loaded.preset).toBe("dialogue");
 			expect(loaded.gains).toEqual([-2, -1, 4, 3, 0]);
@@ -260,7 +266,8 @@ describe("player audio boost & equalizer", () => {
 				compressorEnabled: false,
 			});
 
-			// Verify 5 filters were created and chained
+			// The five bands carry the preset's gains, in band order.
+			expect(filterGains.slice(-5)).toEqual([-2, -1, 4, 3, 0]);
 			expect(connectedFilters.length).toBeGreaterThanOrEqual(5);
 			expect(lastFilterDestination).toBeInstanceOf(MockGainNode);
 			expect(compressorDestination).toBeNull();

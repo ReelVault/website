@@ -1,15 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 // Visual styling belongs to components/ui (variants and sizes). Call sites may only pass layout placement.
-// This guard finds className strings on UI elements that still carry visual tokens. Entries in the baseline are
-// known debt; any new violation fails the test. Regenerate the baseline only when a debt entry is removed:
-//   UPDATE_UI_BASELINE=1 bun test tests/ui-classname-guard.test.ts
+// This guard finds className strings on UI elements that carry visual tokens; there must be none.
 
 const ROOT = join(import.meta.dir, "..");
 const SRC = join(ROOT, "src");
-const BASELINE_PATH = join(ROOT, "tests", "ui-classname-baseline.json");
 
 const UI_IMPORT = /import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*["'](@\/components\/(?:ui\/[\w-]+|fullscreen-dialog))["']/g;
 
@@ -171,20 +168,7 @@ function collectViolations(): string[] {
 }
 
 describe("UI className guard", () => {
-	const current = collectViolations();
-
-	test("baseline is current (set UPDATE_UI_BASELINE=1 to regenerate)", () => {
-		if (process.env.UPDATE_UI_BASELINE) {
-			writeFileSync(BASELINE_PATH, `${JSON.stringify(current, null, "\t")}\n`);
-		}
-		expect(current.length).toBeGreaterThanOrEqual(0);
-	});
-
-	test("no new visual className overrides on components/ui elements", () => {
-		const parsed: unknown = JSON.parse(readFileSync(BASELINE_PATH, "utf8"));
-		if (!Array.isArray(parsed)) throw new Error("ui-classname-baseline.json must hold a JSON array");
-		const baseline = new Set<string>(parsed.filter((entry): entry is string => typeof entry === "string"));
-		const added = current.filter((entry) => !baseline.has(entry));
-		expect(added).toEqual([]);
+	test("no visual className overrides on components/ui elements", () => {
+		expect(collectViolations()).toEqual([]);
 	});
 });

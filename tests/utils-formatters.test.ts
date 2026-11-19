@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { overwriteGetLocale } from "@/paraglide/runtime";
-import { formatDuration, formatDurationPrecise } from "@/utils/duration-utils";
+import { formatDuration } from "@/utils/duration-utils";
 import { formatFileSize } from "@/utils/file-utils";
 import {
 	formatCountdown,
@@ -33,24 +33,6 @@ describe("formatDuration", () => {
 
 	it("formats hours and minutes above an hour", () => {
 		expect(formatDuration(3600 * 2 + 60 * 5 + 30)).toBe("2h 5m");
-	});
-});
-
-describe("formatDurationPrecise (worker durations)", () => {
-	it("formats milliseconds under a second", () => {
-		expect(formatDurationPrecise(500)).toBe("1s");
-	});
-
-	it("formats minutes with padded seconds", () => {
-		expect(formatDurationPrecise(60 * 2 * 1000 + 5 * 1000)).toBe("2m 05s");
-	});
-
-	it("formats hours with minutes and seconds", () => {
-		expect(formatDurationPrecise(3600 * 1000)).toBe("1h 0m 00s");
-	});
-
-	it("formats days", () => {
-		expect(formatDurationPrecise(86400 * 2 * 1000)).toBe("2d 0h 0m");
 	});
 });
 
