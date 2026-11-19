@@ -41,7 +41,7 @@
 		"@fontsource-variable/figtree": "^5.3.0",
 		"@inlang/paraglide-js": "^3.2.2",
 		"@inlang/paraglide-js-react": "^1.0.4",
-		"@reelvault/sdk": "^1.3.0",
+		"@reelvault/sdk": "^1.3.1",
 		"@tanstack/react-form": "^1.33.5",
 		"@tanstack/react-query": "^5.108.1",
 		"@tanstack/react-router": "^1.170.46",
