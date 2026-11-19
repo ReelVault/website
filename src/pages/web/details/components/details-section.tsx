@@ -1,5 +1,4 @@
 import type { LucideIcon } from "lucide-react";
-import { Flame } from "lucide-react";
 import type { ReactNode } from "react";
 import { SimpleAnimation } from "@/components/simple-animation";
 import { Badge } from "@/components/ui/badge";
@@ -7,23 +6,17 @@ import { Separator } from "@/components/ui/separator";
 
 export function DetailsSection({
 	title,
-	subtitle,
 	action,
-	icon = Flame,
+	icon: Icon,
 	children,
-	className,
 }: {
 	title: string;
-	subtitle?: string;
 	action?: ReactNode;
-	icon?: LucideIcon;
+	icon: LucideIcon;
 	children: ReactNode;
-	className?: string;
 }) {
-	const Icon = icon;
-
 	return (
-		<SimpleAnimation direction="up" duration={280} className={className}>
+		<SimpleAnimation direction="up" duration={280}>
 			<section>
 				<div className="mb-8 flex items-center gap-4">
 					<div className="flex flex-row items-center gap-4">
@@ -31,10 +24,7 @@ export function DetailsSection({
 							<Icon className="size-5" />
 						</Badge>
 
-						<div className="flex flex-col items-start justify-center">
-							<h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
-							<h2 className="text-foreground/45 text-base font-bold tracking-tight sm:text-xl">{subtitle}</h2>
-						</div>
+						<h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
 					</div>
 
 					<Separator className="ml-4 flex-1" />

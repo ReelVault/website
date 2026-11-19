@@ -20,7 +20,6 @@ export function ConfirmAction({
 	title,
 	description,
 	confirmLabel = m.common_confirm(),
-	cancelLabel = m.common_cancel(),
 	onConfirm,
 	onError,
 	className,
@@ -33,7 +32,6 @@ export function ConfirmAction({
 	title: string;
 	description: ReactNode;
 	confirmLabel?: string;
-	cancelLabel?: string;
 	onConfirm: () => unknown;
 	onError?: (error: unknown) => void;
 	className?: string;
@@ -82,7 +80,7 @@ export function ConfirmAction({
 					<AlertDialogDescription>{description}</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel disabled={isPending}>{cancelLabel}</AlertDialogCancel>
+					<AlertDialogCancel disabled={isPending}>{m.common_cancel()}</AlertDialogCancel>
 					<AlertDialogAction type="button" variant="destructive" disabled={isPending} onClick={handleConfirm}>
 						{isPending && <Spinner data-icon="inline-start" aria-hidden="true" />}
 						{isPending && m.common_processing()}

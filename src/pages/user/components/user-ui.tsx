@@ -9,7 +9,7 @@ export function UserPageHeader({
 }: {
 	eyebrow: string;
 	title: string;
-	description?: string;
+	description: string;
 	action?: ReactNode;
 }) {
 	return (
@@ -17,7 +17,7 @@ export function UserPageHeader({
 			<div className="min-w-0">
 				<p className="cinema-kicker">{eyebrow}</p>
 				<h1 className="mt-3 text-4xl font-black tracking-[-0.055em] sm:text-5xl">{title}</h1>
-				{description && <p className="text-muted-foreground mt-3 max-w-2xl text-sm leading-relaxed">{description}</p>}
+				<p className="text-muted-foreground mt-3 max-w-2xl text-sm leading-relaxed">{description}</p>
 			</div>
 			{action && <div className="shrink-0">{action}</div>}
 		</header>
@@ -32,14 +32,13 @@ export function UserSurface({ children, className, ...props }: HTMLAttributes<HT
 	);
 }
 
-export function UserSectionTitle({ title, description, action }: { title: string; description?: string; action?: ReactNode }) {
+export function UserSectionTitle({ title, description }: { title: string; description?: string | undefined }) {
 	return (
 		<div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
 			<div className="cinema-section-heading">
 				<h2>{title}</h2>
 				{description && <p>{description}</p>}
 			</div>
-			{action}
 		</div>
 	);
 }

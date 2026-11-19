@@ -545,7 +545,6 @@ function AppPlayerSurface() {
 	usePlayerShortcuts({
 		actions,
 		revealControls: showControls,
-		containerRef,
 		duration: info.duration,
 		volume: volumeState.volume,
 		isMuted: volumeState.isMuted,
@@ -658,8 +657,7 @@ function AppPlayerSurface() {
 			clickTimerRef.current = null;
 		}
 
-		const container = containerRef.current;
-		if (container) toggleFullscreen(container, actionsRef.current.videoRef.current);
+		toggleFullscreen(actionsRef.current.videoRef.current);
 	};
 
 	return (

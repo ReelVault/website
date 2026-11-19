@@ -115,7 +115,7 @@ function ComponentSection({ status, target }: { status: AdminUpdateStatus; targe
 							detach(install(target));
 						}}
 						isPending={isInstalling}
-						pendingLabel={isServer ? m.admin_updates_installing() : m.admin_updates_installing()}
+						pendingLabel={m.admin_updates_installing()}
 						disabled={jobRunning || !updateAvailable || incompatible}
 					>
 						<ArrowUpCircle className="size-4" />

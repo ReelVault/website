@@ -76,7 +76,7 @@ export function ScheduledTaskCard({
 	const isRunning = task.stats.active > 0;
 	const isQueued = task.stats.waiting > 0 && !isRunning;
 	const isBusy = runningTaskId === task.id || cancellingTaskId === task.id;
-	const progress = matchingOp?.progressPercent ?? (isRunning ? 0 : 0);
+	const progress = matchingOp?.progressPercent ?? 0;
 
 	return (
 		<div

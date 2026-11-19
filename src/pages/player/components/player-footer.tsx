@@ -50,14 +50,7 @@ export function PlayerFooter({ children }: { children: ReactNode }) {
 	else if (isBoosted) volumeDescription = m.player_mute_boosted({ percent: Math.round(volume * 100) });
 	else volumeDescription = m.player_mute();
 
-	// -------------------------------------------------------------------------
-	// Toggle fullscreen via the container (parent of this component)
-	// -------------------------------------------------------------------------
-
-	const handleFullscreen = () => {
-		const container = actions.videoRef.current?.closest<HTMLElement>(".group\\/player");
-		if (container) toggleFullscreen(container, actions.videoRef.current);
-	};
+	const handleFullscreen = () => toggleFullscreen(actions.videoRef.current);
 
 	// -------------------------------------------------------------------------
 	// PiP

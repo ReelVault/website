@@ -50,9 +50,9 @@ const PERSONALITY_MESSAGES: Record<string, { description: () => string; title: (
 };
 
 /** Heavy Wrapped content — lazy-loaded only when the modal first opens. */
-export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; resolvedYear: number }) {
+export function InsightsWrappedContent({ year }: { year: number }) {
 	const [slideIndex, setSlideIndex] = useState(0);
-	const wrappedQuery = useWrappedInsights(resolvedYear);
+	const wrappedQuery = useWrappedInsights(year);
 
 	const data = wrappedQuery.data;
 	const personalityMessages = data ? PERSONALITY_MESSAGES[data.viewerPersonality.code] : undefined;
@@ -122,7 +122,7 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 			return (
 				<div className="text-muted-foreground flex flex-col items-center justify-center gap-4 text-center">
 					<Film className="size-16 opacity-30" />
-					<h3 className="text-foreground text-xl font-bold">{m.user_no_activity_in_year({ year: resolvedYear })}</h3>
+					<h3 className="text-foreground text-xl font-bold">{m.user_no_activity_in_year({ year: year })}</h3>
 					<p className="max-w-md text-sm">{m.user_watch_to_unlock()}</p>
 				</div>
 			);
@@ -141,7 +141,7 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 				{slideIndex === 3 && <WrappedHabitsSlide data={data} />}
 
 				{slideIndex === 4 && (
-					<WrappedSummarySlide data={data} year={resolvedYear} personalityTitle={personalityTitle} onCopySummary={handleCopySummary} />
+					<WrappedSummarySlide data={data} year={year} personalityTitle={personalityTitle} onCopySummary={handleCopySummary} />
 				)}
 			</div>
 		);
@@ -158,7 +158,7 @@ export function InsightsWrappedContent({ year, resolvedYear }: { year?: number; 
 					</div>
 					<div>
 						<FullscreenDialogTitle>
-							{m.common_brand_name()} <span className="text-primary">{m.wrapped_title_year({ year: year ?? resolvedYear })}</span>
+							{m.common_brand_name()} <span className="text-primary">{m.wrapped_title_year({ year: year })}</span>
 						</FullscreenDialogTitle>
 						<FullscreenDialogDescription>{m.user_yearly_summary_desc()}</FullscreenDialogDescription>
 					</div>

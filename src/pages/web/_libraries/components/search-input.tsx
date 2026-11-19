@@ -3,15 +3,8 @@ import type React from "react";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { m } from "@/paraglide/messages";
 
-export function SearchInput({
-	value,
-	onChange,
-	placeholder = m.web_search_titles(),
-}: {
-	value: string;
-	onChange: (value: string) => void;
-	placeholder?: string;
-}) {
+export function SearchInput({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+	const placeholder = m.web_search_titles();
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(e.target.value);
 	};

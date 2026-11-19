@@ -1,4 +1,3 @@
-import type { MediaFileWithRelation } from "@reelvault/sdk";
 import { BadgeCheck, FileVideo, Film, Tv } from "lucide-react";
 import { m } from "@/paraglide/messages";
 import { AdminStatCard } from "../../admin-ui";
@@ -14,7 +13,6 @@ export function MediaStats({
 		episodesCount: number;
 		withQualityCount: number;
 	};
-	files?: MediaFileWithRelation[];
 	total: number;
 }) {
 	const totalFiles = stats?.totalFiles ?? total;

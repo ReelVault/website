@@ -45,7 +45,7 @@ function isWebkitVideo(video: HTMLVideoElement): video is WebkitVideoElement {
 }
 
 /** Toggle fullscreen, falling back to native video fullscreen on iPhone Safari. */
-export function toggleFullscreen(_container?: HTMLElement | null, video?: HTMLVideoElement | null): void {
+export function toggleFullscreen(video?: HTMLVideoElement | null): void {
 	if (document.fullscreenElement) {
 		detach(() => document.exitFullscreen());
 

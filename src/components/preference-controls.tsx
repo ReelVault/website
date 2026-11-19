@@ -11,20 +11,18 @@ export function PreferenceSelect({
 	value,
 	onChange,
 	options,
-	className,
 }: {
 	label: string;
 	description?: string;
 	value: string;
 	onChange: (value: string) => void;
 	options: string[][];
-	className?: string;
 }) {
 	return (
 		<Field className="gap-2">
 			<FieldLabel>{label}</FieldLabel>
 			<Select value={value} onValueChange={(nextValue) => nextValue !== null && onChange(nextValue)}>
-				<SelectTrigger className={className}>
+				<SelectTrigger>
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -47,23 +45,19 @@ export function PreferenceToggle({
 	description,
 	checked,
 	onChange,
-	className,
 }: {
 	label: string;
-	description?: string;
+	description: string;
 	checked: boolean;
 	onChange: (checked: boolean) => void;
-	className?: string;
 }) {
 	return (
-		<div
-			className={className ?? "border-border bg-background/40 flex min-h-14 flex-col justify-center gap-1 rounded-xl border p-3 text-sm"}
-		>
+		<div className="border-border bg-background/40 flex min-h-14 flex-col justify-center gap-1 rounded-xl border p-3 text-sm">
 			<div className="flex items-center gap-3">
 				<Switch checked={checked} onCheckedChange={(value) => onChange(value)} aria-label={label} />
 				<span>{label}</span>
 			</div>
-			{description ? <p className="text-muted-foreground text-xs leading-snug">{description}</p> : null}
+			<p className="text-muted-foreground text-xs leading-snug">{description}</p>
 		</div>
 	);
 }

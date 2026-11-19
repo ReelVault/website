@@ -138,7 +138,7 @@ export default function AdminMediaFilesPage() {
 		}
 	};
 
-	const handleDelete = (mediaFileId: string, _fileName: string) => deleteMediaFile(mediaFileId);
+	const handleDelete = (mediaFileId: string) => deleteMediaFile(mediaFileId);
 
 	const handleSortChange = (value: string | null) => {
 		if (!(value && isSortOptionValue(value))) return;

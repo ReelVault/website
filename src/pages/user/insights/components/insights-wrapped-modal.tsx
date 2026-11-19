@@ -15,8 +15,8 @@ const LazyInsightsWrappedContent = lazy(async () => {
  * Trigger + modal in one — the heavy chunk (slides + wrapped query) loads
  * only on first open, not on page mount.
  */
-export function InsightsWrappedModal({ year }: { year?: number }) {
-	const resolvedYear = year ?? currentYear();
+export function InsightsWrappedModal() {
+	const year = currentYear();
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -30,14 +30,14 @@ export function InsightsWrappedModal({ year }: { year?: number }) {
 				render={
 					<Button type="button" variant="default" size="sm" className="group relative overflow-hidden">
 						<Sparkles className="mr-2 size-4 animate-pulse text-amber-300" />
-						<span>{m.user_wrapped_title({ year: resolvedYear })}</span>
+						<span>{m.user_wrapped_title({ year })}</span>
 					</Button>
 				}
 			/>
 
 			{isOpen && (
 				<Suspense fallback={null}>
-					<LazyInsightsWrappedContent year={year} resolvedYear={resolvedYear} />
+					<LazyInsightsWrappedContent year={year} />
 				</Suspense>
 			)}
 		</FullscreenDialog>

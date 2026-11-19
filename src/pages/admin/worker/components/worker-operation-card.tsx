@@ -14,7 +14,6 @@ import { formatDate, formatMsDuration, getWorkerMeta, labels } from "./worker-ut
 
 interface WorkerOperationCardProps {
 	operation: WorkerOperation;
-	selected?: boolean;
 	cancelling: boolean;
 	resuming?: boolean | undefined;
 	resumeOperation?: (operationId: string) => Promise<unknown>;

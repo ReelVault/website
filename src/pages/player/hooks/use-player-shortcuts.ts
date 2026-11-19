@@ -14,7 +14,6 @@ interface UsePlayerShortcutsProps {
 	revealControls?: () => void;
 	/** Controller actions (video ref + playback commands) — read through stateRef, never during render. */
 	actions: PlayerActionsValue;
-	containerRef: React.RefObject<HTMLDivElement | null>;
 	duration: number;
 	volume: number;
 	isMuted: boolean;
@@ -47,7 +46,6 @@ function focusFirstPlayerControl(): void {
 export function usePlayerShortcuts({
 	actions,
 	revealControls,
-	containerRef,
 	duration,
 	volume,
 	isMuted,
@@ -215,8 +213,7 @@ export function usePlayerShortcuts({
 				case "F": {
 					e.preventDefault();
 					const wasFullscreen = Boolean(document.fullscreenElement);
-					const container = containerRef.current;
-					if (container) toggleFullscreen(container);
+					toggleFullscreen(video);
 
 					showPlayerFeedback({ type: "fullscreen", value: !wasFullscreen });
 					break;
@@ -430,5 +427,5 @@ export function usePlayerShortcuts({
 		window.addEventListener("keydown", handleKeyDown);
 
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [containerRef, revealControls]);
+	}, [revealControls]);
 }

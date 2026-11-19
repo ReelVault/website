@@ -9,13 +9,11 @@ export function MetadataLockToggle({
 	isLocked,
 	onToggle,
 	label,
-	className,
 }: {
 	field: LockableField;
 	isLocked: boolean;
 	onToggle: (field: string) => void;
 	label?: string;
-	className?: string;
 }) {
 	const tooltipText = isLocked
 		? m.admin_metadata_field_locked_unlock_hint({ field: label ?? field })
@@ -24,15 +22,7 @@ export function MetadataLockToggle({
 	return (
 		<Tooltip>
 			<TooltipTrigger
-				render={
-					<Button
-						type="button"
-						size="icon"
-						onClick={() => onToggle(field)}
-						variant={isLocked ? "warning" : "ghost"}
-						className={className}
-					/>
-				}
+				render={<Button type="button" size="icon" onClick={() => onToggle(field)} variant={isLocked ? "warning" : "ghost"} />}
 			>
 				{isLocked ? <Lock className="size-4" /> : <Unlock className="size-4" />}
 				<span className="sr-only">

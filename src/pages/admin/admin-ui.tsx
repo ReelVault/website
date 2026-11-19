@@ -1,12 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
-import { ArrowDownRight, ArrowLeft, ArrowUpRight, Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import type { ChangeEvent, ComponentType, ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
-import { m } from "@/paraglide/messages";
 
 /** Detail-page admin routes a back link can return to. */
 const ADMIN_BACK_LINK_ROUTES = ["/admin/users", "/admin/collections", "/admin/media", "/admin/metadata"] as const;
@@ -30,10 +29,10 @@ export function AdminPageHeader({
 	badge,
 	actions,
 }: {
-	icon?: ComponentType<{ className?: string }>;
+	icon: ComponentType<{ className?: string }>;
 	eyebrow: string;
 	title: string;
-	description?: ReactNode;
+	description: ReactNode;
 	count?: number | string;
 	badge?: ReactNode;
 	actions?: ReactNode;
@@ -42,7 +41,7 @@ export function AdminPageHeader({
 		<header className="border-border flex flex-col gap-4 border-b pb-6 lg:flex-row lg:items-end lg:justify-between">
 			<div className="flex min-w-0 flex-col gap-1.5">
 				<div className="text-muted-foreground flex items-center gap-2 text-xs font-medium">
-					{Icon !== undefined && <Icon className="text-primary size-4" />}
+					<Icon className="text-primary size-4" />
 					<span>{eyebrow}</span>
 				</div>
 				<div className="flex flex-wrap items-center gap-3">
@@ -54,7 +53,7 @@ export function AdminPageHeader({
 					)}
 					{badge}
 				</div>
-				{description !== undefined && <div className="text-muted-foreground max-w-3xl text-sm leading-relaxed">{description}</div>}
+				<div className="text-muted-foreground max-w-3xl text-sm leading-relaxed">{description}</div>
 			</div>
 			{actions !== undefined && <div className="flex flex-row flex-wrap items-center gap-2 pt-2 lg:pt-0">{actions}</div>}
 		</header>
@@ -111,10 +110,9 @@ export function AdminSearch({
 }: {
 	value: string;
 	onChange: (value: string) => void;
-	placeholder?: string;
+	placeholder: string;
 	className?: string;
 }) {
-	const resolvedPlaceholder = placeholder ?? `${m.common_search()}…`;
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value);
 
 	return (
@@ -125,10 +123,10 @@ export function AdminSearch({
 			<InputGroupInput
 				name="search"
 				autoComplete="off"
-				aria-label={resolvedPlaceholder}
+				aria-label={placeholder}
 				value={value}
 				onChange={handleChange}
-				placeholder={resolvedPlaceholder}
+				placeholder={placeholder}
 			/>
 		</InputGroup>
 	);
@@ -139,17 +137,13 @@ export function AdminStatCard({
 	value,
 	icon: Icon,
 	description,
-	trend,
 	tone = "default",
-	className,
 }: {
 	label: string;
 	value: ReactNode;
-	icon?: ComponentType<{ className?: string }>;
+	icon: ComponentType<{ className?: string }>;
 	description?: ReactNode;
-	trend?: { value: string | number; isPositive?: boolean; label?: string };
 	tone?: "default" | "success" | "warning" | "destructive" | "muted";
-	className?: string;
 }) {
 	const toneClasses = {
 		default: {
@@ -175,26 +169,17 @@ export function AdminStatCard({
 	}[tone];
 
 	return (
-		<Card variant="subtle" className={className}>
+		<Card variant="subtle">
 			<CardContent size="comfortable" className="flex flex-col gap-3">
 				<div className="flex items-center justify-between gap-2">
 					<span className="text-muted-foreground text-xs font-semibold">{label}</span>
-					{Icon !== undefined && (
-						<div className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg border", toneClasses.iconWrapper)}>
-							<Icon className="size-4" />
-						</div>
-					)}
+					<div className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg border", toneClasses.iconWrapper)}>
+						<Icon className="size-4" />
+					</div>
 				</div>
 
 				<div className="flex items-baseline justify-between gap-2">
 					<div className={cn("text-2xl font-bold tracking-tight tabular-nums sm:text-3xl", toneClasses.value)}>{value}</div>
-					{trend && (
-						<span className={cn("flex items-center gap-0.5 text-xs font-medium", trend.isPositive ? "text-success" : "text-destructive")}>
-							{trend.isPositive ? <ArrowUpRight className="size-3.5" /> : <ArrowDownRight className="size-3.5" />}
-							{trend.value}
-							{trend.label && <span className="text-muted-foreground text-xs">{trend.label}</span>}
-						</span>
-					)}
 				</div>
 
 				{description !== undefined && <div className="text-muted-foreground text-xs">{description}</div>}
