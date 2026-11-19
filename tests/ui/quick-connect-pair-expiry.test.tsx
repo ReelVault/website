@@ -46,6 +46,7 @@ afterAll(async () => {
 	unregisterDom();
 });
 
+// Each case waits for real timers (a 2 s code plus 3 s of observation), past Bun's 5 s default.
 describe("sign-in pairing code expiry", () => {
 	test("an expired code says so and is not asked about again", async () => {
 		spyOn(reelvault.auth, "quickConnectInitiate").mockResolvedValue({ code: "AB1-CD2", secret: "secret-1", expiresIn: 2 });
@@ -60,7 +61,7 @@ describe("sign-in pairing code expiry", () => {
 
 		expect(check.mock.calls.length).toBe(callsAtExpiry);
 		expect(view.queryByText("Waiting for authorization…")).toBeNull();
-	});
+	}, 10_000);
 
 	test("a code that is still valid keeps being checked", async () => {
 		spyOn(reelvault.auth, "quickConnectInitiate").mockResolvedValue({ code: "AB1-CD2", secret: "secret-2", expiresIn: 60 });
@@ -74,5 +75,5 @@ describe("sign-in pairing code expiry", () => {
 
 		expect(check.mock.calls.length).toBeGreaterThan(0);
 		expect(view.queryByText(EXPIRED_TEXT)).toBeNull();
-	});
+	}, 10_000);
 });
