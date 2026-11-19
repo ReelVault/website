@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import { memo, useMemo, useState } from "react";
+import { useState } from "react";
 import { usePlayerSubtitles, usePlayerTime } from "../player-context";
 import { parseSubtitleMarkup, sanitizeSubtitleMarkup } from "../utils/subtitle-markup.utils";
 import { parseVttTimestamp } from "../utils/vtt-timestamp";
@@ -270,7 +270,7 @@ function cuesActiveAt(cues: readonly SubtitleCue[], time: number): SubtitleCue[]
 /**
  * Returns the active cues keeping a stable reference as long as the set
  * of actually visible cues does not change. That lets `usePlayerTime` tick
- * several times a second while child components (wrapped in `memo`)
+ * several times a second while the cue components (memoized by the React Compiler)
  * are not re-rendered when nothing changed on screen anyway.
  */
 function useActiveCues(cues: readonly SubtitleCue[], effectiveTime: number): SubtitleCue[] {
@@ -304,7 +304,7 @@ function splitCuesByPosition(cues: readonly SubtitleCue[], subtitlePosition: "to
 	return buckets;
 }
 
-const SubtitleCueItem = memo(function SubtitleCueItem({ cue, styling }: { cue: SubtitleCue; styling: CueStyling }) {
+const SubtitleCueItem = function SubtitleCueItem({ cue, styling }: { cue: SubtitleCue; styling: CueStyling }) {
 	let alignClass = "text-center";
 	if (cue.hAlign === "left") alignClass = "text-left self-start";
 	else if (cue.hAlign === "right") alignClass = "text-right self-end";
@@ -342,7 +342,7 @@ const SubtitleCueItem = memo(function SubtitleCueItem({ cue, styling }: { cue: S
 			)}
 		</div>
 	);
-});
+};
 
 export function PlayerSubtitleOverlay({ controlsVisible }: { controlsVisible: boolean }) {
 	const { selectedSubtitle, subtitleContent, subtitleSize, subtitlePosition, subtitleColor, subtitleBackground, subtitleOffset } =
@@ -351,10 +351,7 @@ export function PlayerSubtitleOverlay({ controlsVisible }: { controlsVisible: bo
 
 	// Parsing the whole file on every currentTime tick (~4-5x/s) delays cue rendering —
 	// cues depend only on the subtitle content, so parse once per selection.
-	const cues = useMemo(
-		() => (!(selectedSubtitle && subtitleContent) ? [] : parseSubtitles(subtitleContent)),
-		[selectedSubtitle, subtitleContent],
-	);
+	const cues = !(selectedSubtitle && subtitleContent) ? [] : parseSubtitles(subtitleContent);
 
 	const effectiveTime = currentTime - subtitleOffset;
 	const activeCues = useActiveCues(cues, effectiveTime);

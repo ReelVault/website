@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import type Hls from "hls.js";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { getPlaybackPlaylistUrl } from "@/client/hooks/use-playback-session";
 import { PortalContainerProvider } from "@/components/portal-container";
@@ -177,9 +177,9 @@ function AppPlayerSurface() {
 	// Commit-phase callback ref: the shared <video> ref lives in the provider
 	// (via context), and reading it during render is not allowed — so the node
 	// is written through the stable actionsRef instead.
-	const setVideoNode = useCallback((node: HTMLVideoElement | null) => {
+	const setVideoNode = (node: HTMLVideoElement | null) => {
 		actionsRef.current.videoRef.current = node;
-	}, []);
+	};
 	// Portal target for Base UI, via state instead of a render-phase ref read —
 	// reading containerRef.current during render defeats compiler memoization
 	// for this whole subtree. One extra render after mount, then stable.
