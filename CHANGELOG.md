@@ -475,6 +475,7 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 
 ### Fixes
 
+- **Match audit tab** — the tab showed the green "all clear" badge before any audit had run, even with mismatched files; it shows no badge until an audit has run.
 - **Clearing metadata fields** — emptying the original title, overview, tagline, status, budget or revenue in the metadata editor kept the old value after saving; the editor now sends the cleared value.
 - **Audit log labels** — the audit log, its resource filter, the entry inspector and the dashboard feed showed raw identifiers (`plugin_catalog_install`, `update`); resource types and actions now have names in both languages.
 - **Plugin page titles** — a plugin page kept the browser-tab title of the page opened before it; it now shows the plugin page's name.

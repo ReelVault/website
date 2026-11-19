@@ -7,7 +7,8 @@ interface MediaViewModeToggleProps {
 	viewMode: "all" | "audit";
 	onViewModeChange: (mode: "all" | "audit") => void;
 	total: number;
-	suspectCount: number;
+	/** null until an audit has run in this view: no badge rather than a false "all clear". */
+	suspectCount: number | null;
 }
 
 export function MediaViewModeToggle({ viewMode, onViewModeChange, total, suspectCount }: MediaViewModeToggleProps) {
@@ -34,11 +35,12 @@ export function MediaViewModeToggle({ viewMode, onViewModeChange, total, suspect
 				<ToggleGroupItem value="audit" size="sm">
 					<AlertTriangle className="size-3.5" />
 					<span>{m.admin_media_match_audit()}</span>
-					{suspectCount > 0 ? (
+					{suspectCount !== null && suspectCount > 0 && (
 						<Badge variant="destructive" size="compact" className="ml-1">
 							{suspectCount}
 						</Badge>
-					) : (
+					)}
+					{suspectCount === 0 && (
 						<Badge variant="success-outline" size="sm" className="ml-1">
 							{m.admin_media_audit_zero()}
 						</Badge>

@@ -61,7 +61,7 @@ export default function AdminMediaFilesPage() {
 
 	const { refreshAllMediaFiles, isRefreshingAll } = useAdminRefreshAllMediaFiles();
 	const audit = useAdminMediaFileAudit({ enabled: viewMode === "audit" });
-	const { suspectCount } = audit;
+	const suspectCount = audit.auditData ? audit.suspectCount : null;
 
 	const statsQuery = useAdminStats();
 	// sortOption is the validated "sortBy:sortOrder" pair; resolve both halves
