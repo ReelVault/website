@@ -4,20 +4,12 @@ import { useAdminLogFiles, useAdminLogs } from "@/client/hooks/use-admin-logs";
 import { useDebounce } from "@/hooks/use-debounce";
 import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
+import { toIsoDateTime } from "@/utils/date-utils";
 import { isFfmpegLog, isServerLog } from "../components/log-file-utils";
 
 function openLogsBundle() {
 	const url = `${getReelVaultApiUrl()}/v1/admin/logs/bundle`;
 	window.open(url, "_blank", "noopener,noreferrer");
-}
-
-/** `datetime-local` values are local time without seconds; the API expects RFC 3339. */
-function toIsoDateTime(value: string): string | undefined {
-	if (!value) return undefined;
-
-	const date = new Date(value);
-
-	return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
 }
 
 export function useLogsPageController() {

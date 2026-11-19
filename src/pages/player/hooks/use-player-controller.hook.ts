@@ -45,7 +45,7 @@ import {
 } from "../utils/player-preferences.storage";
 import { consumeSleepAfterEpisode } from "../utils/player-sleep-timer";
 import type { PlayerTimeStore } from "../utils/player-time-store";
-import { hasBufferAt, isSafeSeek } from "../utils/player-utils";
+import { type BufferedRange, hasBufferAt, isSafeSeek } from "../utils/player-utils";
 
 // Same for "no markers" — applyTime/markersValue must not get fresh identities
 // on every controller render.
@@ -68,12 +68,6 @@ const DIAGNOSTICS_POLL_INTERVAL_MS = 2500;
 // pagehide, beforeunload AND the effect cleanup — collapse those saves into one.
 const PROGRESS_FLUSH_DEDUPE_MS = 2_000;
 const PLAYER_PATH_PREFIX_REGEX = /^\/player\//;
-
-/** Snapshot of browser-reported buffered ranges, in absolute playback time. */
-export interface BufferedRange {
-	startTime: number;
-	endTime: number;
-}
 
 // Stable identity for "no transcode data" — a fresh [] per render would churn
 // every closure that captures transcodedRanges (seek → actions slice).

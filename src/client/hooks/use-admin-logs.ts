@@ -3,10 +3,8 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "../../utils/toast-utils";
 import { reelvault } from "../client";
-import { emptyPagination } from "../utils/query-helpers";
+import { emptyPagination, emptyToUndefined } from "../utils/query-helpers";
 import { adminKeys } from "../utils/query-keys";
-
-const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
 export function useAdminLogFiles() {
 	const queryClient = useQueryClient();

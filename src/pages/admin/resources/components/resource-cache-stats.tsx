@@ -10,7 +10,7 @@ import { SkeletonList } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
-import { formatMemory } from "../../dashboard/components/dashboard-utils";
+import { formatFileSize } from "@/utils/file-utils";
 
 const DISK_ROWS: Array<{ key: keyof AdminCacheStats["disk"]; label: string; description: string }> = [
 	{ key: "transcodes", label: m.admin_resources_cache_transcodes(), description: m.admin_resources_cache_transcodes_desc() },
@@ -63,7 +63,7 @@ export function ResourceCacheStats() {
 											<p className="text-foreground text-sm font-medium">{row.label}</p>
 											<p className="text-muted-foreground mt-1 text-xs leading-relaxed">{row.description}</p>
 										</div>
-										<span className="text-primary shrink-0 font-mono text-sm font-bold tabular-nums">{formatMemory(stats.bytes)}</span>
+										<span className="text-primary shrink-0 font-mono text-sm font-bold tabular-nums">{formatFileSize(stats.bytes)}</span>
 									</div>
 									<p className="border-border/60 text-muted-foreground border-t pt-2 text-xs tabular-nums">
 										{m.admin_resources_files_label()} {stats.files}

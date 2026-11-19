@@ -27,14 +27,6 @@ const LazyPluginTabHost = lazy(async () => {
 	return { default: mod.PluginTabHost };
 });
 
-function safeDecode(value: string): string {
-	try {
-		return decodeURIComponent(value);
-	} catch {
-		return value;
-	}
-}
-
 /** A file this page may import: the export format, version 1, with its values object. */
 function isPluginConfigExport(value: unknown): value is PluginConfigExport {
 	if (typeof value !== "object" || value === null) return false;
@@ -66,7 +58,7 @@ function canRestoreField(field: { type: string; default?: unknown }, value: unkn
 
 export default function AdminPluginSettingsPage() {
 	const params = useParams({ from: "/admin/plugins/$id" });
-	const pluginId = safeDecode(params.id);
+	const pluginId = params.id;
 
 	const {
 		configDetails,

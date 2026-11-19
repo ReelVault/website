@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
+import { formatFileSize } from "@/utils/file-utils";
 import { formatTimestamp } from "@/utils/format-utils";
 import { toast } from "@/utils/toast-facade";
 import { usePlayerDiagnosticsData, usePlayerDiagnosticsToggle } from "../player-context";
@@ -19,10 +20,7 @@ type ClientMetrics = DiagnosticsData["clientMetrics"];
 function formatBytes(bytes?: number | null): string {
 	if (!bytes || bytes <= 0) return m.player_no_data();
 
-	const units = ["B", "KB", "MB", "GB", "TB"];
-	const i = Math.floor(Math.log(bytes) / Math.log(1024));
-
-	return `${(bytes / 1024 ** i).toFixed(2)} ${units[i] ?? ""}`;
+	return formatFileSize(bytes);
 }
 
 function audioLayoutLabel(layout: string | null, channels: number | null): string {

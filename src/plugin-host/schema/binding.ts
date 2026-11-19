@@ -1,5 +1,6 @@
 import type { PluginLocalizedText, PluginSchemaAction, PluginSchemaCondition, PluginUiContext } from "@reelvault/sdk/plugin";
 import { resolvePluginText } from "@/client/hooks/use-plugin-ui";
+import { isRecord } from "@/utils/type-guards";
 
 /**
  * Context available to schema expressions under `{{context.*}}`. It carries the
@@ -19,10 +20,6 @@ export interface SchemaScope {
 
 const INTERPOLATION = /\{\{\s*([^}]+?)\s*\}\}/g;
 const EXACT_INTERPOLATION = /^\{\{\s*([^}]+?)\s*\}\}$/;
-
-export function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === "object" && value !== null && !Array.isArray(value);
-}
 
 /** Resolves a dotted path (`data.reports.total`) against the scope. */
 export function readPath(root: unknown, path: string): unknown {

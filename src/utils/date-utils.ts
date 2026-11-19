@@ -40,3 +40,12 @@ export function formatWeekdayName(dayOfWeek: number): string {
 	// 2000-01-02 was a Sunday.
 	return formatter.format(new Date(2000, 0, 2 + dayOfWeek));
 }
+
+/** `datetime-local` values are local time without seconds; the API expects RFC 3339. */
+export function toIsoDateTime(value: string): string | undefined {
+	if (!value) return undefined;
+
+	const date = new Date(value);
+
+	return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}

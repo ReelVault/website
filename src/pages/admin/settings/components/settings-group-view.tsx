@@ -8,6 +8,7 @@ import { UnsavedChangesDialog } from "@/components/unsaved-changes-dialog";
 import { useUnsavedChangesGuard } from "@/hooks/use-unsaved-changes-guard";
 import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
+import { isRecord } from "@/utils/type-guards";
 import { SettingField } from "./setting-field";
 import { getSettingDescription, getSettingLabel } from "./settings-i18n";
 
@@ -73,10 +74,6 @@ function setNestedValue(target: Record<string, unknown>, path: string[], value: 
 
 	const last = path.at(-1);
 	if (last !== undefined) cursor[last] = value;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /** Matches a lowercase query against the setting's key, translated name and description. */

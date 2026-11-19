@@ -17,6 +17,7 @@ import { detach } from "@/lib/detach";
 import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import type { AdminAuditSearch } from "@/routes/admin/audit";
+import { toIsoDateTime } from "@/utils/date-utils";
 import { AuditActorSummary } from "./components/audit-actor-summary";
 import { AuditEntryRow } from "./components/audit-entry-row";
 
@@ -28,15 +29,6 @@ const ACTIONS: Array<{ value: AdminAuditAction; label: string }> = [
 	{ value: "update", label: m.admin_audit_edits() },
 	{ value: "delete", label: m.admin_audit_deletions() },
 ];
-
-/** `datetime-local` values are local time without seconds; the API expects RFC 3339. */
-function toIsoDateTime(value: string): string | undefined {
-	if (!value) return undefined;
-
-	const date = new Date(value);
-
-	return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
-}
 
 function AdminAuditContent() {
 	const search = useSearch({ from: "/admin/audit" });

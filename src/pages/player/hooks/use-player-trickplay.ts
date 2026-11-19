@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getReelVaultApiUrl, reelvault } from "@/client/client";
 import { mediaKeys } from "@/client/utils/query-keys";
+import { parseVttTimestamp } from "../utils/vtt-timestamp";
 
 export interface TrickplayCue {
 	startTime: number;
@@ -19,29 +20,6 @@ export interface TrickplayFrame {
 	y?: number;
 	width?: number;
 	height?: number;
-}
-
-function parseVttTimestamp(timestamp: string): number | null {
-	const clean = timestamp.trim().replace(",", ".");
-	const parts = clean.split(":");
-	if (parts.length === 3) {
-		const hours = Number.parseFloat(parts[0] ?? "0");
-		const minutes = Number.parseFloat(parts[1] ?? "0");
-		const seconds = Number.parseFloat(parts[2] ?? "0");
-		if (Number.isNaN(hours) || Number.isNaN(minutes) || Number.isNaN(seconds)) return null;
-
-		return hours * 3600 + minutes * 60 + seconds;
-	}
-
-	if (parts.length === 2) {
-		const minutes = Number.parseFloat(parts[0] ?? "0");
-		const seconds = Number.parseFloat(parts[1] ?? "0");
-		if (Number.isNaN(minutes) || Number.isNaN(seconds)) return null;
-
-		return minutes * 60 + seconds;
-	}
-
-	return null;
 }
 
 const CRLF_REGEX = /\r\n/g;

@@ -3,10 +3,9 @@ import { m } from "@/paraglide/messages";
 import { toast } from "@/utils/toast-facade";
 import { toastError } from "@/utils/toast-utils";
 import { reelvault } from "../client";
+import { emptyToUndefined } from "../utils/query-helpers";
 import { mediaKeys, subtitleKeys } from "../utils/query-keys";
 import { chunkIds } from "./use-bulk-refresh";
-
-const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
 export type AdminSubtitleSort = "added" | "updated" | "language" | "title";
 

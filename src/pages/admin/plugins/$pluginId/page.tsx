@@ -11,17 +11,9 @@ import { m } from "@/paraglide/messages";
 import { getPluginIcon } from "@/plugin-host/icons";
 import { PluginSurface } from "@/plugin-host/surface";
 
-function safeDecode(value: string): string {
-	try {
-		return decodeURIComponent(value);
-	} catch {
-		return value;
-	}
-}
-
 export default function PluginAdminPage() {
 	const params = useParams({ from: "/admin/plugins/pages/$pluginId" });
-	const pluginId = safeDecode(params.pluginId);
+	const pluginId = params.pluginId;
 	const { plugins, pluginsQuery } = useAdminPlugins();
 	const { data: manifest } = usePluginUiManifest();
 
@@ -54,12 +46,7 @@ export default function PluginAdminPage() {
 			title={plugin.name}
 			description={plugin.description ?? m.admin_plugins_admin_subpage_desc()}
 			actions={
-				<Button
-					variant="outline"
-					size="sm"
-					nativeButton={false}
-					render={<Link to="/admin/plugins/$id" params={{ id: encodeURIComponent(plugin.id) }} />}
-				>
+				<Button variant="outline" size="sm" nativeButton={false} render={<Link to="/admin/plugins/$id" params={{ id: plugin.id }} />}>
 					<Sliders className="size-3.5" />
 					{m.admin_plugins_settings_section()}
 				</Button>

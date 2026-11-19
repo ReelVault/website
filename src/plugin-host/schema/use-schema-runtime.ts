@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { reelvault } from "@/client/client";
 import { detach } from "@/lib/detach";
 import { toast } from "@/utils/toast-facade";
+import { isRecord } from "@/utils/type-guards";
 import { usePluginDialogController } from "../plugin-dialog-context";
 import { actionConfirmation, evaluateCondition, resolveLabel, resolveTemplate, type SchemaScope } from "./binding";
 import { bumpSchemaRefresh, subscribeSchemaRefresh } from "./refresh-bus";
@@ -16,10 +17,6 @@ export interface SchemaRuntime {
 	setField: (name: string, value: unknown) => void;
 	runAction: (action: PluginSchemaAction, scope: SchemaScope) => void;
 	checkCondition: (condition: PluginSchemaCondition, scope: SchemaScope) => boolean;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function toStringRecord(value: unknown): Record<string, string> | undefined {

@@ -84,6 +84,7 @@ export function hasBufferAt(video: HTMLVideoElement, position: number): boolean 
 	return false;
 }
 
+/** Snapshot of browser-reported buffered ranges, in absolute playback time. */
 export interface BufferedRange {
 	startTime: number;
 	endTime: number;

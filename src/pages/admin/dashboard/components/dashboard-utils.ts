@@ -1,5 +1,5 @@
 import { m } from "@/paraglide/messages";
-import { formatNumber, getDateTimeFormatter } from "@/utils/format-utils";
+import { getDateTimeFormatter } from "@/utils/format-utils";
 
 export const logTimeFormatter = {
 	format(date?: Date | number): string {
@@ -22,12 +22,4 @@ export function formatUptime(seconds: number) {
 	if (hours > 0) return `${hours} ${m.common_hours_short()} ${minutes} min`;
 
 	return `${minutes} min`;
-}
-
-export function formatMemory(bytes: number) {
-	if (bytes < 1024 * 1024) return `${formatNumber(bytes / 1024, { maximumFractionDigits: 1 })} KB`;
-
-	if (bytes < 1024 * 1024 * 1024) return `${formatNumber(bytes / (1024 * 1024), { maximumFractionDigits: 1 })} MB`;
-
-	return `${formatNumber(bytes / (1024 * 1024 * 1024), { maximumFractionDigits: 1 })} GB`;
 }

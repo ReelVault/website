@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { reelvault } from "../client";
-import { emptyPagination } from "../utils/query-helpers";
+import { emptyPagination, emptyToUndefined } from "../utils/query-helpers";
 import { adminKeys } from "../utils/query-keys";
 
 export type AdminAuditAction = "all" | "create" | "update" | "delete";
@@ -17,8 +17,6 @@ interface UseAdminAuditParams {
 	from?: string;
 	to?: string;
 }
-
-const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
 /** The audit filters the summary shares with the list (paging excluded). */
 export type AdminAuditSummaryFilters = Omit<UseAdminAuditParams, "page" | "limit">;

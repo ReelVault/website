@@ -5,7 +5,7 @@ import { Badge, type BadgeVariant } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
-import { formatMemory } from "./dashboard-utils";
+import { formatFileSize } from "@/utils/file-utils";
 
 const PRESSURE_STATE: Record<
 	"low" | "medium" | "high" | "critical",
@@ -63,9 +63,9 @@ export function DashboardServerResources({ stats }: { stats?: AdminStats }) {
 					<Progress value={heapPercent} />
 					<div className="text-muted-foreground flex items-center justify-between text-xs">
 						<span>
-							{m.admin_dashboard_used_label()} {formatMemory(heapUsed)}
+							{m.admin_dashboard_used_label()} {formatFileSize(heapUsed)}
 						</span>
-						<span>{m.admin_resources_limit_value({ value: formatMemory(heapCeiling) })}</span>
+						<span>{m.admin_resources_limit_value({ value: formatFileSize(heapCeiling) })}</span>
 					</div>
 				</div>
 
@@ -81,10 +81,10 @@ export function DashboardServerResources({ stats }: { stats?: AdminStats }) {
 						<Progress value={systemMemory.percent} />
 						<div className="text-muted-foreground flex items-center justify-between text-xs">
 							<span>
-								{m.admin_dashboard_used_label_system()} {formatMemory(systemMemory.usedMb * 1024 * 1024)}
+								{m.admin_dashboard_used_label_system()} {formatFileSize(systemMemory.usedMb * 1024 * 1024)}
 							</span>
 							<span>
-								{m.admin_dashboard_total_label()} {formatMemory(systemMemory.totalMb * 1024 * 1024)}
+								{m.admin_dashboard_total_label()} {formatFileSize(systemMemory.totalMb * 1024 * 1024)}
 							</span>
 						</div>
 					</div>
@@ -94,11 +94,11 @@ export function DashboardServerResources({ stats }: { stats?: AdminStats }) {
 				<div className="grid grid-cols-2 gap-3">
 					<div className="border-border/50 bg-background/50 rounded-xl border p-3.5">
 						<p className="text-muted-foreground text-xs font-medium">{m.admin_dashboard_rss_memory()}</p>
-						<p className="text-foreground mt-1 text-lg font-bold tabular-nums">{formatMemory(stats.memory.rss)}</p>
+						<p className="text-foreground mt-1 text-lg font-bold tabular-nums">{formatFileSize(stats.memory.rss)}</p>
 					</div>
 					<div className="border-border/50 bg-background/50 rounded-xl border p-3.5">
 						<p className="text-muted-foreground text-xs font-medium">{m.admin_resources_array_buffers()}</p>
-						<p className="text-foreground mt-1 text-lg font-bold tabular-nums">{formatMemory(stats.memory.arrayBuffers)}</p>
+						<p className="text-foreground mt-1 text-lg font-bold tabular-nums">{formatFileSize(stats.memory.arrayBuffers)}</p>
 					</div>
 				</div>
 

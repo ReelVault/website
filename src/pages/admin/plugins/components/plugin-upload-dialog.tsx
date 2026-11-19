@@ -10,7 +10,7 @@ import {
 } from "@/components/fullscreen-dialog";
 import { Button } from "@/components/ui/button";
 import { m } from "@/paraglide/messages";
-import { formatBytes } from "./plugin-upload-progress";
+import { formatFileSize } from "@/utils/file-utils";
 
 const ACCEPTED_EXTENSIONS = [".zip", ".tar", ".tgz", ".gz"] as const;
 
@@ -143,7 +143,7 @@ export function PluginUploadDialog({ open, onOpenChange, onInstall, isBusy }: Pl
 								<span className="min-w-0 flex-1 truncate text-sm" title={entry.file.name}>
 									{entry.file.name}
 								</span>
-								<span className="text-muted-foreground shrink-0 font-mono text-xs">{formatBytes(entry.file.size)}</span>
+								<span className="text-muted-foreground shrink-0 font-mono text-xs">{formatFileSize(entry.file.size)}</span>
 								<Button type="button" variant="ghost" size="icon-sm" aria-label={m.common_delete()} onClick={() => removeFile(entry.id)}>
 									<X className="size-4" />
 								</Button>

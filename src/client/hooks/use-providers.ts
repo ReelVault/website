@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { reelvault } from "../client";
+import { emptyToUndefined } from "../utils/query-helpers";
 import { providersKeys } from "../utils/query-keys";
-
-const emptyToUndefined = (value: string | undefined): string | undefined => (value === "" ? undefined : value);
 
 export function useProviderSearch(options: {
 	mediaType: "movie" | "tv_show";

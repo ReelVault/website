@@ -10,13 +10,13 @@ import { Spinner } from "@/components/ui/spinner";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { m } from "@/paraglide/messages";
+import { isRecord } from "@/utils/type-guards";
 import { EMBED_ALLOW, embedReferrerPolicy, embedSandbox } from "../embed-policy";
 import { getPluginIcon } from "../icons";
 import {
 	actionConfirmation,
 	evaluateCondition,
 	interpolate,
-	isRecord,
 	readPath,
 	resolveLabel,
 	type SchemaContext,

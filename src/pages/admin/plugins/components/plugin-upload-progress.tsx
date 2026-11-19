@@ -5,14 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Spinner } from "@/components/ui/spinner";
 import { m } from "@/paraglide/messages";
-
-export function formatBytes(bytes: number): string {
-	if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-
-	if (bytes >= 1024) return `${Math.round(bytes / 1024)} KB`;
-
-	return `${bytes} B`;
-}
+import { formatFileSize } from "@/utils/file-utils";
 
 function statusLabel(entry: PluginArchiveEntry): string {
 	switch (entry.status) {
@@ -104,8 +97,8 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 						<span>
 							{m.admin_plugins_upload_overall_stats({
 								percent: summary.overallPercent,
-								uploaded: formatBytes(summary.uploadedBytes),
-								total: formatBytes(summary.totalBytes),
+								uploaded: formatFileSize(summary.uploadedBytes),
+								total: formatFileSize(summary.totalBytes),
 							})}
 						</span>
 						{summary.etaSeconds !== null && (
@@ -126,7 +119,7 @@ export function PluginUploadProgress({ entries, summary, onClose }: PluginUpload
 								<span className="text-foreground min-w-0 flex-1 truncate text-xs font-medium" title={entry.file.name}>
 									{entry.file.name}
 								</span>
-								<span className="text-muted-foreground shrink-0 font-mono text-xs">{formatBytes(entry.file.size)}</span>
+								<span className="text-muted-foreground shrink-0 font-mono text-xs">{formatFileSize(entry.file.size)}</span>
 							</div>
 							<div className="flex items-center justify-between gap-2 pl-6">
 								<span className={entry.status === "failed" ? "text-destructive text-xs" : "text-muted-foreground text-xs"}>

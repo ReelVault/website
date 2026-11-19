@@ -160,7 +160,7 @@ export function PluginCard({
 					variant="outline"
 					size="sm"
 					nativeButton={false}
-					render={<Link to="/admin/plugins/$id" params={{ id: encodeURIComponent(plugin.id) }} />}
+					render={<Link to="/admin/plugins/$id" params={{ id: plugin.id }} />}
 					title={m.admin_plugins_configure_hint()}
 				>
 					<Sliders className="size-3.5" />

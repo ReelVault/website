@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { memo, useMemo, useState } from "react";
 import { usePlayerSubtitles, usePlayerTime } from "../player-context";
 import { parseSubtitleMarkup, sanitizeSubtitleMarkup } from "../utils/subtitle-markup.utils";
+import { parseVttTimestamp } from "../utils/vtt-timestamp";
 
 export type SubtitleVerticalAlign = "top" | "middle" | "bottom";
 
@@ -14,29 +15,6 @@ export interface SubtitleCue {
 	html: string;
 	vAlign: SubtitleVerticalAlign;
 	hAlign: SubtitleHorizontalAlign;
-}
-
-function parseTimestamp(timestamp: string): number | null {
-	const clean = timestamp.trim().replace(",", ".");
-	const parts = clean.split(":");
-	if (parts.length === 3) {
-		const hours = Number.parseFloat(parts[0] ?? "0");
-		const minutes = Number.parseFloat(parts[1] ?? "0");
-		const seconds = Number.parseFloat(parts[2] ?? "0");
-		if (Number.isNaN(hours) || Number.isNaN(minutes) || Number.isNaN(seconds)) return null;
-
-		return hours * 3600 + minutes * 60 + seconds;
-	}
-
-	if (parts.length === 2) {
-		const minutes = Number.parseFloat(parts[0] ?? "0");
-		const seconds = Number.parseFloat(parts[1] ?? "0");
-		if (Number.isNaN(minutes) || Number.isNaN(seconds)) return null;
-
-		return minutes * 60 + seconds;
-	}
-
-	return null;
 }
 
 const WHITESPACE_SPLIT_REGEX = /\s+/;
@@ -222,8 +200,8 @@ export function parseSubtitles(content: string): SubtitleCue[] {
 		const [startStr, endStr] = (timeRange ?? "").split("-->").map((s) => s.trim().split(" ")[0]);
 		if (!(startStr && endStr)) continue;
 
-		const startTime = parseTimestamp(startStr);
-		const endTime = parseTimestamp(endStr);
+		const startTime = parseVttTimestamp(startStr);
+		const endTime = parseVttTimestamp(endStr);
 		if (startTime === null || endTime === null || endTime <= startTime) continue;
 
 		const settingsStr = settingsRest.join(" ");
