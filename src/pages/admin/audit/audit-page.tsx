@@ -18,6 +18,7 @@ import { AdminPageHeader, AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
 import type { AdminAuditSearch } from "@/routes/admin/audit";
 import { toIsoDateTime } from "@/utils/date-utils";
+import { auditResourceTypeLabel } from "./audit-entry-label";
 import { AuditActorSummary } from "./components/audit-actor-summary";
 import { AuditEntryRow } from "./components/audit-entry-row";
 
@@ -173,7 +174,7 @@ function AdminAuditContent() {
 								<SelectItem value="">{m.admin_audit_any_resource_type()}</SelectItem>
 								{resourceTypes.map((type) => (
 									<SelectItem key={type} value={type}>
-										{type}
+										{auditResourceTypeLabel(type)}
 									</SelectItem>
 								))}
 							</SelectGroup>

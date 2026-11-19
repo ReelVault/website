@@ -8,7 +8,7 @@ import { SkeletonList } from "@/components/ui/skeleton";
 import { detach } from "@/lib/detach";
 import { AdminSection } from "@/pages/admin/admin-ui";
 import { m } from "@/paraglide/messages";
-import { auditEntryLabel } from "../../audit/audit-entry-label";
+import { auditActionLabel, auditEntryLabel, auditResourceTypeLabel } from "../../audit/audit-entry-label";
 import { auditDateFormatter } from "./dashboard-utils";
 
 export function DashboardAuditFeed() {
@@ -37,8 +37,8 @@ export function DashboardAuditFeed() {
 						</div>
 						<div className="min-w-0 flex-1">
 							<div className="flex items-center justify-between gap-2">
-								<span className="text-foreground truncate font-semibold capitalize">
-									{entry.action} {entry.resourceType}
+								<span className="text-foreground truncate font-semibold">
+									{`${auditActionLabel(entry.action)}: ${auditResourceTypeLabel(entry.resourceType)}`}
 								</span>
 								<span className="text-muted-foreground shrink-0 text-xs">{auditDateFormatter.format(new Date(entry.createdAt))}</span>
 							</div>

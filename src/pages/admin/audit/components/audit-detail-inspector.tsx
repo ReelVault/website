@@ -6,6 +6,7 @@ import { detach } from "@/lib/detach";
 import { m } from "@/paraglide/messages";
 import { useCopyToClipboard } from "@/utils/clipboard-utils";
 import { formatFullDateTime, formatTimeAgo } from "@/utils/format-utils";
+import { auditResourceTypeLabel } from "../audit-entry-label";
 
 export type AuditEntryItem = NonNullable<Awaited<ReturnType<typeof reelvault.admin.getAudit>>["data"]>[number];
 
@@ -68,8 +69,8 @@ export function AuditDetailInspector({ entry }: { entry: AuditEntryItem }) {
 				<div className="border-border/80 bg-background/60 flex flex-col gap-1 rounded-xl border p-3">
 					<span className="text-muted-foreground text-xs font-medium">{m.admin_audit_resource()}</span>
 					<div className="flex flex-wrap items-center gap-1.5">
-						<Badge variant="outline" font="mono">
-							{entry.resourceType}
+						<Badge variant="outline" title={entry.resourceType}>
+							{auditResourceTypeLabel(entry.resourceType)}
 						</Badge>
 						{renderResourceLink()}
 					</div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { shortDateFormatter } from "@/utils/format-utils";
-import { auditEntryLabel } from "../audit-entry-label";
+import { auditActionLabel, auditEntryLabel } from "../audit-entry-label";
 import { AuditDetailInspector, type AuditEntryItem } from "./audit-detail-inspector";
 
 export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
@@ -27,7 +27,7 @@ export function AuditEntryRow({ entry }: { entry: AuditEntryItem }) {
 					{expanded ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
 				</span>
 				<Badge variant={variant} className="shrink-0">
-					{entry.action}
+					{auditActionLabel(entry.action)}
 				</Badge>
 				<span className="min-w-0 flex-1 truncate">{auditEntryLabel(entry)}</span>
 				<time dateTime={entry.createdAt} className="text-muted-foreground shrink-0 text-xs tabular-nums">
