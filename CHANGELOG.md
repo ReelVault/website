@@ -550,3 +550,9 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 - **Downloaded subtitles in the player** — a subtitle fetched from a provider is listed and shown at once; the download refreshed a list no view reads, so the new track appeared only after the playback view refetched.
 - **Recently added** — a show that gets new episodes moves to the front of the dashboard's "Recently added" row. The row sorted by when the title was first inserted, so an existing show never came back after its new episodes were added; it now sorts by the newest file and lists only titles with files.
 - **Plugin reload notice** — opening a plugin page no longer shows "The plugin was updated. Reload the page" when nothing was updated. The host recorded only the element it asked a plugin module for, so any other element registered by the same module looked like an older version. Imports are now tracked per module URL and shared between elements mounting at the same time; a real version change still asks for a reload.
+
+# v1.3.5
+
+### Fixes
+
+- **Final playback position on close** — the progress write sent during page teardown could be cancelled, so the last heartbeat (~10 s) was the newest saved position. The write now uses keepalive and survives closing the player.

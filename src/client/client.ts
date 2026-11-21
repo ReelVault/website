@@ -123,9 +123,33 @@ export function resolveApiAssetUrl(url: string | null | undefined): string | und
 	}
 }
 
+/**
+ * Keeps the final playback-position write alive while the page is torn down.
+ * The player sends it on pagehide/beforeunload, where a plain fetch can be cancelled
+ * before it reaches the server. Only PUTs to /me/media-files/<id>/playback-progress
+ * are affected; every other request is returned unchanged.
+ */
+export function withPlaybackProgressKeepalive(url: string, options: RequestInit): { url: string; options: RequestInit } {
+	if (options.method?.toUpperCase() !== "PUT") return { url, options };
+
+	let pathname: string;
+	try {
+		pathname = new URL(url, "http://localhost").pathname;
+	} catch {
+		pathname = url;
+	}
+
+	if (!(pathname.endsWith("/playback-progress") && pathname.includes("/me/media-files/"))) {
+		return { url, options };
+	}
+
+	return { url, options: { ...options, keepalive: true } };
+}
+
 export const reelvault = new ReelVaultClient({
 	baseUrl: () => getReelVaultApiUrl(),
 	credentials: "include",
+	requestInterceptors: [withPlaybackProgressKeepalive],
 	// The SDK owns transient-failure retries (network/timeout/5xx/429) with its
 	// own backoff. The default of 3 multiplies with React Query's own retry into
 	// up to ~8 attempts per request on flaky links; one SDK retry plus the
