@@ -556,3 +556,10 @@ Brotli sizes of the eager files plus the files a route adds on first navigation.
 ### Fixes
 
 - **Final playback position on close** — the progress write sent during page teardown could be cancelled, so the last heartbeat (~10 s) was the newest saved position. The write now uses keepalive and survives closing the player.
+
+# v1.3.6
+
+### UI
+
+- **Separate movie and show recommendations** — Discover shows "Movies for you" and "Shows for you" rows when the server sends them, and keeps the single "For you" row for older servers.
+- **Why a title is recommended** — each recommended card shows a short reason under the year, such as "More from …", "Because you watched …" or a shared crew member with the job name the metadata provider uses ("Director: …"), in the app's language.
