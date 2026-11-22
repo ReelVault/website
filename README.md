@@ -121,9 +121,9 @@ When the API changes, rebuild the SDK and refresh your local copy. [AGENTS.md](A
 
 ### CI
 
-- `ci.yml`: type-check, lint, Knip and tests. Also called by the release workflow as its gate.
+- `ci.yml`: type-check, lint, Knip and tests. Also called by the release workflow as a fallback gate when the commit has no CI result.
 - `react-doctor.yml`: advisory React scan on PRs and pushes to `main`.
-- `release.yml`: builds the web artifacts for a `v*` tag after the CI gate passes and publishes the GitHub release.
+- `release.yml`: builds the web artifacts for a `v*` tag after the CI gate passes — it reuses the commit's existing CI result and only runs the checks itself when there is none — and publishes the GitHub release.
 
 Contributions are welcome — see [CONTRIBUTING.md](https://github.com/ReelVault/.github/blob/main/CONTRIBUTING.md).
 
