@@ -22,6 +22,7 @@ export function MetadataCard({
 	size = "default",
 	fluid = false,
 	transitionName,
+	caption,
 }: {
 	metadata: RequireFields<MetadataWithRelation, typeof metadataCardFields>;
 	size?: "default" | "lg";
@@ -33,6 +34,8 @@ export function MetadataCard({
 	 * so the "share" transition smoothly carries the poster between pages.
 	 */
 	transitionName?: string;
+	/** One muted line under the year, such as why the title was recommended. */
+	caption?: string | undefined;
 }) {
 	const navigate = useNavigate();
 	const actions = useMetadataCardActions(metadata);
@@ -116,6 +119,7 @@ export function MetadataCard({
 								</>
 							)}
 						</div>
+						{caption && <p className="text-muted-foreground line-clamp-1 text-xs">{caption}</p>}
 					</div>
 
 					{/* Link covering the whole card — visual hit area; navigation is handled by the named trigger above */}

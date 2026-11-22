@@ -9,9 +9,11 @@ interface DiscoverRowProps {
 	title: string;
 	description: string;
 	items: DiscoverItem[];
+	/** Text under each card, keyed by metadata id. */
+	captions?: ReadonlyMap<string, string> | undefined;
 }
 
-export function DiscoverRow({ title, description, items }: DiscoverRowProps) {
+export function DiscoverRow({ title, description, items, captions }: DiscoverRowProps) {
 	if (items.length === 0) return null;
 
 	return (
@@ -27,7 +29,7 @@ export function DiscoverRow({ title, description, items }: DiscoverRowProps) {
 				<div className="poster-shelf mt-7">
 					{items.map((item) => (
 						<LazyRender key={item.id} minHeight={320} rootMargin="350px 0px" className="flex min-w-0 justify-center">
-							{() => <MetadataCard metadata={item} fluid />}
+							{() => <MetadataCard metadata={item} fluid caption={captions?.get(item.id)} />}
 						</LazyRender>
 					))}
 				</div>

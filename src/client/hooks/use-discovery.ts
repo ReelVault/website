@@ -13,7 +13,14 @@ export function useDiscovery() {
 	const discoverQuery = useQuery(discoveryQueryOptions());
 	const discoverView = discoverQuery.data;
 	const discoveryItems = discoverView
-		? [...discoverView.recommendations, ...discoverView.trending, ...discoverView.recentlyAddedMovies, ...discoverView.recentlyAddedShows]
+		? [
+				...discoverView.recommendations,
+				...(discoverView.recommendedMovies ?? []),
+				...(discoverView.recommendedShows ?? []),
+				...discoverView.trending,
+				...discoverView.recentlyAddedMovies,
+				...discoverView.recentlyAddedShows,
+			]
 		: [];
 
 	return {

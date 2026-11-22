@@ -10,10 +10,14 @@ import { DiscoverRow } from "./components/discover-row";
 import { DiscoveryEmpty } from "./components/discovery-empty";
 import { DiscoveryLoading } from "./components/discovery-loading";
 import { DiscoveryHero } from "./sections/discovery-hero";
+import { recommendationReasonMap } from "./utils/recommendation-reason";
 
 export default function DiscoveryPage() {
 	usePageTitle(m.navbar_discovery());
 	const { discoverQuery, discoverView, discoveryItems } = useDiscovery();
+	const reasons = recommendationReasonMap(discoverView?.recommendationReasons);
+	// Servers before 1.3.9 send only the combined list.
+	const hasTypedRows = discoverView?.recommendedMovies !== undefined || discoverView?.recommendedShows !== undefined;
 
 	return (
 		<div className="cinema-page">
@@ -42,7 +46,29 @@ export default function DiscoveryPage() {
 
 				{discoverView && (
 					<div className="flex flex-col gap-16 py-12 sm:gap-20">
-						<DiscoverRow title={m.web_for_you()} description={m.web_based_on_activity()} items={discoverView.recommendations} />
+						{hasTypedRows ? (
+							<>
+								<DiscoverRow
+									title={m.web_movies_for_you()}
+									description={m.web_based_on_activity()}
+									items={discoverView.recommendedMovies ?? []}
+									captions={reasons}
+								/>
+								<DiscoverRow
+									title={m.web_shows_for_you()}
+									description={m.web_based_on_activity()}
+									items={discoverView.recommendedShows ?? []}
+									captions={reasons}
+								/>
+							</>
+						) : (
+							<DiscoverRow
+								title={m.web_for_you()}
+								description={m.web_based_on_activity()}
+								items={discoverView.recommendations}
+								captions={reasons}
+							/>
+						)}
 						<LazyRender minHeight={350} rootMargin="400px 0px">
 							{() => <DiscoverRow title={m.web_trending_now()} description={m.web_most_reached_titles()} items={discoverView.trending} />}
 						</LazyRender>
